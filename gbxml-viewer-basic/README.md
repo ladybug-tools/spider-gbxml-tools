@@ -1,4 +1,4 @@
-<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page](http://www.ladybug.tools/spider-gbxml-tools/index.html#gbxml-viewer-basic/README.md "View file as a web page." ) </span>
+<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page](https://www.ladybug.tools/spider-gbxml-tools/index.html#gbxml-viewer-basic/README.md "View file as a web page." ) </span>
 
 <div><input type=button class = "btn btn-primary" onclick="window.location.href='https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/gbxml-viewer-basic/README.md'";
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' ></div>
@@ -6,15 +6,15 @@ value='You are now in a GitHub web page view - Click this button to view this re
 # [gbXML Viewer Basic Read Me]( #gbxml-viewer-basic/README.md )
 
 
-<iframe class=iframeReadMe src=http://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/r4/gbxml-viewer-basic.html width=100% height=400px >Iframes are not displayed on github.com</iframe>
+<iframe class=iframeReadMe src=https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/r4/gbxml-viewer-basic.html width=100% height=400px >Iframes are not displayed on github.com</iframe>
 
 
-## Latest stable release: [gbXML Viewer Basic]( http://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/index.html )
+## Latest stable release: [gbXML Viewer Basic]( https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/index.html )
 
 
 ## Concept
 
-The ['Aragog' gbXML Viewer]( http://www.ladybug.tools/spider/gbxml-viewer/r13/gv-app-application/gv-app.html ) is a nice bit of work - or it will be one day - but the code base is getting lengthy and convoluted. It's no longer a place for beginners to start. You can't just open it up and see what's going on in fifteen minutes or so.
+The ['Aragog' gbXML Viewer]( https://www.ladybug.tools/spider/gbxml-viewer/ ) is a nice bit of work - or it will be one day - but the code base is getting lengthy and convoluted. It's no longer a place for beginners to start. You can't just open it up and see what's going on in fifteen minutes or so.
 
 Therefore we now have gbXML Viewer Basic
 
