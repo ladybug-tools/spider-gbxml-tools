@@ -5,8 +5,8 @@
 <meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
 <meta name=description content="Open, view gbXML files in 3D in your browser with free, open source entry-level Three.js JavaScript" >
 <meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-06-04" >
-<title>gbXML Viewer basic R4</title>
+<meta name = "date" content = "2018-07-13" >
+<title>gbXML Viewer basic R4.1</title>
 <style>
 
 	body { font: 11pt monospace; margin: 0; overflow: hidden; }
@@ -48,10 +48,10 @@
 		</p>
 
 		<p>
-			<button onclick = "requestGbxmlFile( '../../gbxml-sample-files/bristol-clifton-downs-fixed.xml' );" >clifton</button>
-			<button onclick = "requestGbxmlFile( '../../gbxml-sample-files/london-office.xml' );" >london office</button>
-			<button onclick = "requestGbxmlFile( '../../gbxml-sample-files/coventry-university-of-warwick-small.xml' );" >warwick</button>
-			<button onclick = "requestGbxmlFile( '../../gbxml-sample-files/samples-2/17134-M17.xml' );" >17134-M17</button>
+			<button onclick = "requestGbxmlFile( 'https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml' );" >clifton</button>
+			<button onclick = "requestGbxmlFile( 'https://www.ladybug.tools/spider/gbxml-sample-files/london-office.xml' );" >london office</button>
+			<button onclick = "requestGbxmlFile( 'https://www.ladybug.tools/spider/gbxml-sample-files/coventry-university-of-warwick-small.xml' );" >warwick</button>
+			<button onclick = "requestGbxmlFile( 'https://www.ladybug.tools/spider/gbxml-sample-files/samples-2/17134-M17.xml' );" >17134-M17</button>
 		</p>
 
 		<div id = "divLog" ></div>
@@ -60,8 +60,7 @@
 
 <script>
 
-	//const url = '../../gbxml-sample-files/bristol-clifton-downs-fixed.xml';
-	const url = '../../gbxml-sample-files/london-office.xml';
+	const url = 'https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml';
 	let timeStart;
 
 	var renderer, camera, controls, scene;
@@ -73,7 +72,7 @@
 
 	function init() {
 
-		const source = "https://github.com/ladybug-tools/spider/tree/master/gbxml-viewer-basic";
+		const source = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/gbxml-viewer-basic";
 		const title = document.title;
 
 		divTitle.innerHTML =
