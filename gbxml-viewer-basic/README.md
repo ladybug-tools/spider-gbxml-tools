@@ -49,6 +49,13 @@ The gbXML portions are also interesting. The routines end up with three sets of 
 
 ## Change Log
 
+### 2018-07-14 ~ Theo
+
+* Create develop branch
+* Update to gBV R5.0
+* GBX.parseFileXML( text ): now converts a string to XML
+* New function: GBX.getStringFromXml( xml ) returns an XML file converted to a string
+
 ### 2018-07-13 ~ Theo
 
 GVB R4.1
