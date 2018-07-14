@@ -39,17 +39,12 @@
 
 	// loads any xml file - from AJAX, file reader or location hash or wherever
 
-	GBX.parseFileXML = function( text ) {
-		//console.log( 'text', text );
+	GBX.parseFileXML = function( xml ) {
 
-		const parser = new window.DOMParser();
+		GBX.gbxml = xml;
 
-		GBX.gbxml = parser.parseFromString( text, 'text/xml' );
-		//console.log( 'GBX.gbxml', GBX.gbxml );
-
-		GBX.gbjson = GBX.getXML2jsobj( GBX.gbxml.documentElement );
-
-		console.log( 'GBX.gbjson', GBX.gbjson );
+		GBX.gbjson = GBX.getXML2jsobj( GBX.gbxml );
+		//console.log( 'GBX.gbjson', GBX.gbjson );
 
 		GBX.surfacesJson = GBX.gbjson.Campus.Surface;
 
@@ -68,19 +63,6 @@
 		return [ GBX.surfaceMeshes, GBX.surfaceEdges, GBX.surfaceOpenings ];
 
 	};
-
-
-
-	GBX.getStringFromXml = function( xml ){
-		// test in console : GBX.getStringFromXml( GBX.gbxml );
-
-		const string = new XMLSerializer().serializeToString( xml );
-		console.log( 'string', string );
-
-		return string
-
-	}
-
 
 
 	// https://www.sitepoint.com/how-to-convert-xml-to-a-javascript-object/
