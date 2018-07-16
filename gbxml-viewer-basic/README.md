@@ -9,7 +9,10 @@ value='You are now in a GitHub web page view - Click this button to view this re
 <iframe class=iframeReadMe src=https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/r4/gbxml-viewer-basic.html width=100% height=400px >Iframes are not displayed on github.com</iframe>
 
 
-## Latest stable release: [gbXML Viewer Basic]( https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/index.html )
+## Latest stable release: [gbXML Viewer Basic R4]( https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/index.html )
+
+## Latest development release: [gbXML Viewer Basic R5]( https://rawgit.com/ladybug-tools/spider-gbxml-tools/develop/gbxml-viewer-basic/r5/gbxml-viewer-basic.html )
+
 
 
 ## Concept
@@ -38,7 +41,7 @@ The gbXML portions are also interesting. The routines end up with three sets of 
 ## Issues
 
 * 2018-06-02 ~ Theo ~ Need a spider name - preferably one without a trademark, perhaps a nice-sounding latin name: https://en.wikipedia.org/wiki/List_of_spider_common_names
-* 2018-06-02 ~ Theo ~ currently surfaces, edges and opening are each their oen group of objects. Could nicer things happen if the edges and opening were children of their parent surface??
+* 2018-06-02 ~ Theo ~ currently surfaces, edges and opening are each their own group of objects. Could nicer things happen if the edges and opening were children of their parent surface??
 
 
 ## Links of Interest
@@ -48,6 +51,12 @@ The gbXML portions are also interesting. The routines end up with three sets of 
 
 
 ## Change Log
+
+
+### 2018-07-16 ~ Theo
+
+* Code cleanup
+* Update develop package JSON
 
 ### 2018-07-14 ~ Theo
 

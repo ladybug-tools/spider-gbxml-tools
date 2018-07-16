@@ -2,11 +2,11 @@
 /* globals THREE */
 /* jshint esversion: 6 */
 
-	var GBX = {};
+	var GBX = { release: "5.2"};
 
 	GBX.gbxml = null;
 	GBX.gbjson = null; // xnl converted to json
-	GBX.surfaceJson = null; // useful subset of GBX.gbjson
+	GBX.surfacesJson = null; // useful subset of GBX.gbjson
 
 	GBX.surfaceMeshes= null; // Three.js Shapes as Meshes created from GBX.surfaceJson
 	GBX.surfaceEdges= null; // Three.js edges helper creare from GBX.surfaceMeshes
@@ -28,7 +28,8 @@
 		RaisedFloor: 0x4B417D,
 		SlabOnGrade: 0x804000,
 		FreestandingColumn: 0x808080,
-		EmbeddedColumn: 0x80806E
+		EmbeddedColumn: 0x80806E,
+		Undefined: 0x88888888
 
 	};
 
@@ -146,7 +147,7 @@
 	GBX.getSurfaceMeshes = function() {
 
 		const surfaces = GBX.surfacesJson; // gbjson.Campus.Surface;
-		surfaceMeshes = [];
+		const surfaceMeshes = [];
 
 		for ( let surface of surfaces ) {
 
@@ -169,9 +170,9 @@
 
 			const polyloop = surface.PlanarGeometry.PolyLoop;
 			const vertices = GBX.getVertices( polyloop );
-
+			const color = GBX.colors[ surface.surfaceType ] ? GBX.colors[ surface.surfaceType ] : GBX.colors.Undefined
 			const material = new THREE.MeshPhongMaterial( {
-				color: GBX.colors[ surface.surfaceType ], side: 2, opacity: 0.85, transparent: true } );
+				color: color, side: 2, opacity: 0.85, transparent: true } );
 
 			const shape = GBX.get3dShape( vertices, material, holes );
 			shape.userData.data = surface;
@@ -187,7 +188,6 @@
 
 
 	GBX.getSurfaceEdges = function() {
-
 
 		const surfaceEdges = [];
 		const lineMaterial = new THREE.LineBasicMaterial( { color: 0x888888 } );
@@ -223,7 +223,7 @@
 
 				const points = GBX.getVertices( opening.PlanarGeometry.PolyLoop );
 				const shapeMesh = GBX.get3dShape( points, material );
-				shapeMesh.userData.opening = opening;
+				shapeMesh.userData.data = opening;
 				surfaceOpenings.push( shapeMesh );
 
 			}
@@ -312,6 +312,32 @@
 	}
 
 
+	//////////
+
+	GBX.setCardToggleVisibility = function( target, log ) {
+
+		target.innerHTML =
+
+		`<div>
+
+			<button class="btn" onclick="GBX.surfaceMeshes.visible=!GBX.surfaceMeshes.visible;"
+				title="toggle the flat bits" >surfaces</button>
+
+			<button class="btn" onclick="GBX.surfaceEdges.visible=!GBX.surfaceEdges.visible;" title="toggle the side lines" >edges</button>
+
+			<button class="btn" onclick="GBX.surfaceOpenings.visible=!GBX.surfaceOpenings.visible;" title="toggle the windows" >openings</button>
+
+			<button class="btn" onclick="GBX.setAllVisible();"
+			title="toggle the windows" >all</button>
+			|
+			<button class="btn"
+				onclick="GBX.setAllVisible();THR.zoomObjectBoundingSphere(GBX.surfaceEdges);"
+				title="Go to the home view" >reset view</button>
+		</div>`;
+
+	}
+
+
 
 	GBX.setAllVisible = function() {
 
@@ -324,12 +350,15 @@
 			if ( !child.material ) { continue; }
 
 			child.material = new THREE.MeshPhongMaterial( {
-				color: GBX.colors[ child.userData.data.surfaceType ], side: 2, opacity: 0.85, transparent: true }
-			);
+
+				color: GBX.colors[ child.userData.data.surfaceType ], side: 2, opacity: 0.85, transparent: true
+
+			} );
+
 			child.material.wireframe = false;
 			child.visible = true;
 
-		};
+		}
 
 		GBX.surfaceOpenings.visible = true;
 
@@ -338,13 +367,18 @@
 			if ( !child.material ) { continue; }
 
 			child.material = new THREE.MeshPhongMaterial( {
-				color: 0x000000, side: 2, opacity: 0.5, transparent: true }
-			);
+
+				color: 0x000000, side: 2, opacity: 0.5, transparent: true
+
+			} );
+
 			child.material.wireframe = false;
 			child.visible = true;
 
-		};
+		}
 
 		document.body.style.backgroundImage = '';
 
 	};
+
+

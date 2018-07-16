@@ -1,6 +1,6 @@
 {
   "name": "gbxml-viewer-basic",
-  "version": "0.4.1",
+  "version": "0.5.2",
   "description": "View gbXML files in your browser in 3D",
   "main": "r4/gbxml-viewer-basic.js",
   "repository": "ladybug-tools/spider-gbxml-tools",
