@@ -170,9 +170,8 @@
 
 			const polyloop = surface.PlanarGeometry.PolyLoop;
 			const vertices = GBX.getVertices( polyloop );
-			const color = GBX.colors[ surface.surfaceType ] ? GBX.colors[ surface.surfaceType ] : GBX.colors.Undefined
-			const material = new THREE.MeshPhongMaterial( {
-				color: color, side: 2, opacity: 0.85, transparent: true } );
+			const color = GBX.colors[ surface.surfaceType ] || GBX.colors.Undefined
+			const material = new THREE.MeshPhongMaterial( { color: color, side: 2, opacity: 0.85, transparent: true } );
 
 			const shape = GBX.get3dShape( vertices, material, holes );
 			shape.userData.data = surface;
@@ -216,7 +215,7 @@
 
 		for ( let surfJson of GBX.surfacesJson ) {
 
-			let openings = surfJson.Opening ? surfJson.Opening : [];
+			let openings = surfJson.Opening || [];
 			openings = Array.isArray( openings ) ? openings : [ openings ];
 
 			for ( let opening of openings ) {
