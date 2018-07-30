@@ -12,15 +12,30 @@ value="You are now in a GitHub web page view - Click this button to view this re
 
 * Scripts to help you view and manage gbXML files
 
-## [gbXML Viewer Basic]( https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/index.html )
+## [gbXML Viewer Basic R5]( https://rawgit.com/ladybug-tools/spider-gbxml-tools/develop/gbxml-viewer-basic/r5/gbxml-viewer-basic.html )
+
+<iframe class=iframeReadMe src=https://rawgit.com/ladybug-tools/spider-gbxml-tools/develop/gbxml-viewer-basic/r5/gbxml-viewer-basic.html width=100% height=400px >Iframes are not displayed on github.com</iframe>
+
+## [gbXML Viewer Basic R4]( https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/archive/index.html )
 
 <iframe class=iframeReadMe src=https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/index.html width=100% height=400px >Iframes are not displayed on github.com</iframe>
-
-_first project here_
 
 
 
 ## Links of Interest
+
+### NREL Open Studio gbXML Viewer
+
+> OpenStudio is a cross-platform (Windows, Mac, and Linux) collection of software tools to support whole building energy modeling using EnergyPlus and advanced daylight analysis using Radiance. OpenStudio is an open source project to facilitate community development, extension, and private sector adoption. OpenStudio includes graphical interfaces along with a Software Development Kit (SDK).
+
+Open Studio
+* https://www.openstudio.net/
+* https://github.com/NREL/OpenStudio
+
+Open Studio gbXML Viewer
+* https://github.com/NREL/OpenStudio/blob/develop/openstudiocore/src/openstudio_lib/library/embeddable_gbxml_editor.html
+* https://rawgit.com/NREL/OpenStudio/develop/openstudiocore/src/openstudio_lib/library/embeddable_gbxml_editor.html
+
 
 
 ### gbXML Home Page
