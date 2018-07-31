@@ -29,11 +29,16 @@ value="You are now in a GitHub web page view - Click this button to view this re
 > OpenStudio is a cross-platform (Windows, Mac, and Linux) collection of software tools to support whole building energy modeling using EnergyPlus and advanced daylight analysis using Radiance. OpenStudio is an open source project to facilitate community development, extension, and private sector adoption. OpenStudio includes graphical interfaces along with a Software Development Kit (SDK).
 
 Open Studio
+* https://www.nrel.gov/
 * https://www.openstudio.net/
 * https://github.com/NREL/OpenStudio
+* https://en.wikipedia.org/wiki/OpenStudio
 
-Open Studio gbXML Viewer
+Open Studio gbXML Viewer source code
+* https://github.com/NREL/OpenStudio/tree/develop/openstudiocore/src/openstudio_lib/library
 * https://github.com/NREL/OpenStudio/blob/develop/openstudiocore/src/openstudio_lib/library/embeddable_gbxml_editor.html
+
+Runnable version
 * https://rawgit.com/NREL/OpenStudio/develop/openstudiocore/src/openstudio_lib/library/embeddable_gbxml_editor.html
 
 
