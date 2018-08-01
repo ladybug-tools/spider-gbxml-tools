@@ -20,7 +20,8 @@ value='You are now in a GitHub web page view - Click this button to view this re
 ### Community-Driven Development
 
 * Features are decided and prioritized by user needs as expressed via GitHub Issues
-* Ass FOSS as possible
+* Add FOSS as possible
+* Work with all major libraries and languages
 
 
 ### User Interface
