@@ -19,7 +19,8 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 ### Community-Driven Development
 
-* Features are decided and prioritived by user needs as expressed via GitHub Issues
+* Features are decided and prioritized by user needs as expressed via GitHub Issues
+* Ass FOSS as possible
 
 
 ### User Interface
@@ -27,7 +28,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 * As little UI exposed in the app as possible
 * Make it easy for parent/outside apps to control the script through their UI
 * Supply many example of doing this
-
+* Able to support a gamut of uses from complex apps on desktops down to viewing files on old phones
 
 ## Styling / CSS
 
@@ -38,7 +39,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 ## Testing / QA Goals
 
 * Read any gbXML file from Revit
-* Default tret case files accepted by OpenStudio geometry Viewer
+* Default test case files accepted by OpenStudio geometry Viewer
 * Any file accepted by OpenStudio geometry viewer fixes applied by gbXML Viewer
 
 Coming next
