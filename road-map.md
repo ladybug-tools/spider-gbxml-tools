@@ -56,7 +56,7 @@ Coming next
 * Make available via NPM
 * Make available via Others ?
 * Add test cases
-* Minified versions>
+* Minified versions?
 
 ## Change Log
 
