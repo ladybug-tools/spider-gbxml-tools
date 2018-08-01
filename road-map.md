@@ -31,6 +31,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 * Supply many example of doing this
 * Able to support a gamut of uses from complex apps on desktops down to viewing files on old phones
 
+
 ## Styling / CSS
 
 * To support a broad range of CSS system
@@ -52,7 +53,10 @@ Coming next
 ## Long Term Support requirements
 
 * Maintain a version that supports Chrome R45
-
+* Make available via NPM
+* Make available via Others ?
+* Add test cases
+* Minified versions>
 
 ## Change Log
 
