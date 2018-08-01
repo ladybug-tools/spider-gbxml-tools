@@ -47,6 +47,11 @@ Coming next
 * Suggestions welcome
 
 
+## Long Term Support requirements
+
+* Maintain a version that supports Chrome R45
+
+
 ## Change Log
 
 ### 2018-08-01 ~ Theo
