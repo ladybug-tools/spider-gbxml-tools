@@ -22,7 +22,7 @@ value="You are now in a GitHub web page view - Click this button to view this re
 
 
 
-## [fetch assemble save R1]( https://www.ladybug.tools/spider-gbxml-tools/fetch-assemble-save/r1/fetch-assemble-save.html )
+## [fetch assemble save R1]( https://rawgit.com/ladybug-tools/spider-gbxml-tools/develop/fetch-assemble-save/r1/fetch-assemble-save.html )
 
 
 ## Links of Interest
