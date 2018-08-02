@@ -40,6 +40,8 @@
 
 	// loads any xml file - from AJAX, file reader or location hash or wherever
 
+
+
 	GBX.parseFileXML = function( text ) {
 		//console.log( 'text', text );
 
@@ -70,6 +72,16 @@
 
 	};
 
+
+
+
+	GBX.updateScene = function( text ) {
+
+		meshes = GBX.parseFileXML( text );
+		console.log( 'mm', meshes );
+		GBX.scene.add( meshes );
+
+	};
 
 
 	GBX.getStringFromXml = function( xml ){

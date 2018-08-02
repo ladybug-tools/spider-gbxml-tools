@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1">
+<meta name = "description" content = "fetch source files from a CDN and assemble into a single HTML file, save to file" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2018-01-19" >
+<title>fetch assemble save r1</title>
+<style>
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+/*	#divMenu { left: 0; margin: 20px; max-width: 300px; position: absolute; top: 0; } */
+
+</style>
+</head>
+<body>
+
+	<div id = "divMenu" >
+
+		<div id = "divTitle" ></div>
+
+		<p>
+			<button onclick=fetchFiles(plainVanillaThreejs); >plain vanilla Three.js current build</button>
+
+			<button onclick=fetchFiles(plainVanillaThreejsR74); >plain vanilla Three.js R74</button>
+		</p>
+
+		<p>
+			<button onclick=fetchFiles(threejsR74GbxmlViewerBasic); >threejsR74GbxmlViewerBasic</button>
+
+			<button onclick=testGbxmlViewer(); >testGbxmlViewer</button>
+		</p>
+
+
+	</div>
+
+	<div id = "divContents" ></div>
+	<p>
+
+		source code:
+		<textarea id=textArea style=width:100%;height:100px; ></textarea>
+		<iframe id=ifr width=100% height=500></iframe>
+	</p>
+
+	<p><button onclick=saveFile(); >Save File</button></p>
+
+
+<script>
+
+const plainVanillaThreejs = [
+	"https://cdn.rawgit.com/mrdoob/three.js/master/build/three.min.js",
+	"https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/controls/TrackballControls.js"
+];
+
+const plainVanillaThreejsR74 = [
+	"https://cdn.rawgit.com/mrdoob/three.js/r74/build/three.min.js",
+	"https://cdn.rawgit.com/mrdoob/three.js/r74/examples/js/controls/TrackballControls.js"
+];
+
+const threejsR74GbxmlViewerBasic = [
+	"https://cdn.rawgit.com/mrdoob/three.js/r93/build/three.min.js",
+	"https://cdn.rawgit.com/mrdoob/three.js/r93/examples/js/controls/TrackballControls.js",
+	"https://cdn.rawgit.com/ladybug-tools/spider-gbxml-tools/develop/gbxml-viewer-basic/r5/gbxml-viewer-basic.js"
+];
+
+
+init();
+
+function init() {
+
+	//const title = location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' );
+	const title = document.title;
+
+	divTitle.innerHTML =
+	`
+		<h1><a href="" >${title}</a></h1>
+		<p>${document.head.querySelector( '[name=description]' ).content }</p>
+	`;
+
+}
+
+
+
+function fetchFiles( urls) {
+
+	console.log( 'urls', urls );
+	divContents.innerHTML += `<p>${ urls }</p>`;
+
+	list = [];
+	results = [];
+
+	urls.forEach( function(url, i) {
+
+	list.push(
+		fetch(url)
+		.then( response => response.text() )
+		.then( text => {
+			//console.log( 'text', text );
+			results.push( text );
+
+		} )
+	);
+
+	});
+
+	Promise
+	.all( list )
+	.then( function() {
+		divContents.innerHTML = `<p style=color:red; >all fetch requests finished</p>` + divContents.innerHTML;
+		assemble( results );
+	 } );
+
+}
+
+
+
+
+function assemble( results ) {
+
+	const textThree = results.find( item => item.startsWith( '\/\/ threejs.org'));
+
+	const textTrackBall = results.find( item => item.includes( 'THREE.TrackballControls'));
+
+	const textGbxml = results.find( item => item.includes( 'GBX.gbxml'));
+
+	let text = baseFile.value;
+	text = text.replace( 'threejs=0', textThree );
+	text = text.replace( 'trackball=0', textTrackBall );
+	text = text.replace( 'gbxml=0', textGbxml );
+
+	textArea.value = text;
+	ifr.srcdoc = text;
+
+}
+
+
+
+function testGbxmlViewer() {
+
+	THREE = ifr.contentWindow.THREE;
+
+	url = 'https://rawgit.com/ladybug-tools/spider/master/gbxml-sample-files/bristol-clifton-downs-fixed.xml'
+
+	fetch(url)
+	.then( response => response.text() )
+	.then( text => {
+
+		//ifr.contentWindow.scene.remove( mesh );
+
+		meshes = ifr.contentWindow.GBX.parseFileXML( text );
+		console.log( 'mm', meshes );
+		//ifr.contentWindow.GBX.scene.add( meshes );
+
+		//ifr.contentWindow.GBX.updateScene( text );
+
+	} );
+
+}
+
+
+
+function saveFile() {
+
+	var blob = new Blob( [ textArea.value ] );
+	var a = document.body.appendChild( document.createElement( 'a' ) );
+	a.href = window.URL.createObjectURL( blob );
+	a.download = 'hello-world.html';
+	a.click();
+	//		delete a;
+	a = null;
+
+}
+
+
+</script>
+<script src="../gbxml-viewer-basic/r5/gbxml-viewer-basic.js" ></script>
+
+
+
+
+
+<!-- leaving reality -->
+
+
+<textarea id=baseFile hidden=true >
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="Real-time 3D in your browser using the Three.js JavaScript library" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-06-24" >
+<title></title>
+<style>
+
+	body { font: 11pt monospace; margin: 0; overflow: hidden; }
+
+</style>
+</head>
+<body>
+<script>threejs=0</script>
+<script>trackball=0</script>
+<script>gbxml=0</script>
+<script>
+
+let mesh;
+let renderer, camera, controls, scene;
+
+init();
+animate();
+
+function init() {
+
+	renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true } );
+	renderer.setPixelRatio( window.devicePixelRatio );
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	document.body.appendChild( renderer.domElement );
+
+	camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+	camera.position.set( - 100, - 100, 100 );
+	camera.up.set( 0, 0, 1 );
+
+	controls = new THREE.TrackballControls( camera, renderer.domElement );
+
+	scene = new THREE.Scene();
+
+	window.addEventListener( 'resize', onWindowResize, false );
+	window.addEventListener( 'orientationchange', onWindowResize, false );
+	window.addEventListener( 'keyup', () => sceneRotation = 0, false );
+	renderer.domElement.addEventListener( 'click', () => sceneRotation = 0, false );
+
+	const geometry = new THREE.BoxGeometry( 50, 50, 50 );
+	const material = new THREE.MeshNormalMaterial();
+	mesh = new THREE.Mesh( geometry, material );
+	scene.add( mesh );
+
+}
+
+
+
+function onWindowResize() {
+
+	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.updateProjectionMatrix();
+
+	renderer.setSize( window.innerWidth, window.innerHeight );
+
+	//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+}
+
+
+
+function animate() {
+
+	requestAnimationFrame( animate );
+	renderer.render( scene, camera );
+	controls.update();
+
+}
+
+</script>
+</body>
+</html>
+
+</textarea>
+
+<!-- back to reality -->
+
+</body>
+</html>
