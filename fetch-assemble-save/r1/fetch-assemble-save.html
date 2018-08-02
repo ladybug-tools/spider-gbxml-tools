@@ -154,11 +154,11 @@ function testGbxmlViewer() {
 
 		//ifr.contentWindow.scene.remove( mesh );
 
-		meshes = ifr.contentWindow.GBX.parseFileXML( text );
-		console.log( 'mm', meshes );
+		//meshes = ifr.contentWindow.GBX.parseFileXML( text );
+		//console.log( 'mm', meshes );
 		//ifr.contentWindow.GBX.scene.add( meshes );
 
-		//ifr.contentWindow.GBX.updateScene( text );
+		ifr.contentWindow.GBX.updateScene( text );
 
 	} );
 
@@ -180,7 +180,6 @@ function saveFile() {
 
 
 </script>
-<script src="../gbxml-viewer-basic/r5/gbxml-viewer-basic.js" ></script>
 
 
 
