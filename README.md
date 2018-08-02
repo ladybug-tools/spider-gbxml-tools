@@ -5,20 +5,25 @@
 <div><input type=button class = "btn btn-primary" onclick="window.location.href='https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-tools/README.md'"
 value="You are now in a GitHub web page view - Click this button to view this read me file as source code" ><div>
 
+<br>
+
 # [Spider gbXML Tools Read Me]( #README.md )
+
+
+<iframe class=iframeReadMe src=https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/index.html width=100% height=400px >Iframes are not displayed on github.com</iframe>
+
 
 
 ## Concept
 
-* scripts to help you view and manage gbXML files
-
-## [gbXML Viewer Basic]( https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/index.html )
-
-<iframe class=iframeReadMe src=https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/index.html width=100% height=400px >Iframes are not displayed on github.com</iframe>
-
-_first project here_
+Scripts to help you view and manage gbXML files
 
 
+### Full screen: [gbXML Viewer Basic]( https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/index.html )
+
+### [gbXML Viewer Basic Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#gbxml-viewer-basic/README.md )
+
+***
 
 ## Links of Interest
 
@@ -26,6 +31,7 @@ _first project here_
 ### gbXML Home Page
 
 * <http://www.gbxml.org/>
+
 > gbXML is an industry supported schema for sharing building information between disparate building design software tools.
 
 ### gbXML GitHub Presence
