@@ -2,15 +2,11 @@
 /* globals THREE */
 /* jshint esversion: 6 */
 
-<<<<<<< HEAD
-	var GBX = { release: "5.3"};
-=======
-	var GBX = { release: "5.2"};
->>>>>>> master
+	var GBX = {};
 
 	GBX.gbxml = null;
 	GBX.gbjson = null; // xnl converted to json
-	GBX.surfacesJson = null; // useful subset of GBX.gbjson
+	GBX.surfaceJson = null; // useful subset of GBX.gbjson
 
 	GBX.surfaceMeshes= null; // Three.js Shapes as Meshes created from GBX.surfaceJson
 	GBX.surfaceEdges= null; // Three.js edges helper creare from GBX.surfaceMeshes
@@ -32,8 +28,7 @@
 		RaisedFloor: 0x4B417D,
 		SlabOnGrade: 0x804000,
 		FreestandingColumn: 0x808080,
-		EmbeddedColumn: 0x80806E,
-		Undefined: 0x88888888
+		EmbeddedColumn: 0x80806E
 
 	};
 
@@ -44,19 +39,12 @@
 
 	// loads any xml file - from AJAX, file reader or location hash or wherever
 
+	GBX.parseFileXML = function( xml ) {
 
+		GBX.gbxml = xml;
 
-	GBX.parseFileXML = function( text ) {
-		//console.log( 'text', text );
-
-		const parser = new window.DOMParser();
-
-		GBX.gbxml = parser.parseFromString( text, 'text/xml' );
-		//console.log( 'GBX.gbxml', GBX.gbxml );
-
-		GBX.gbjson = GBX.getXML2jsobj( GBX.gbxml.documentElement );
-
-		console.log( 'GBX.gbjson', GBX.gbjson );
+		GBX.gbjson = GBX.getXML2jsobj( GBX.gbxml );
+		//console.log( 'GBX.gbjson', GBX.gbjson );
 
 		GBX.surfacesJson = GBX.gbjson.Campus.Surface;
 
@@ -75,29 +63,6 @@
 		return [ GBX.surfaceMeshes, GBX.surfaceEdges, GBX.surfaceOpenings ];
 
 	};
-
-
-
-
-	GBX.updateScene = function( text ) {
-
-		meshes = GBX.parseFileXML( text );
-		console.log( 'mm', meshes );
-		GBX.scene.add( meshes );
-
-	};
-
-
-	GBX.getStringFromXml = function( xml ){
-		// test in console : GBX.getStringFromXml( GBX.gbxml );
-
-		const string = new XMLSerializer().serializeToString( xml );
-		console.log( 'string', string );
-
-		return string
-
-	}
-
 
 
 	// https://www.sitepoint.com/how-to-convert-xml-to-a-javascript-object/
@@ -163,7 +128,7 @@
 	GBX.getSurfaceMeshes = function() {
 
 		const surfaces = GBX.surfacesJson; // gbjson.Campus.Surface;
-		const surfaceMeshes = [];
+		surfaceMeshes = [];
 
 		for ( let surface of surfaces ) {
 
@@ -186,8 +151,9 @@
 
 			const polyloop = surface.PlanarGeometry.PolyLoop;
 			const vertices = GBX.getVertices( polyloop );
-			const color = GBX.colors[ surface.surfaceType ] || GBX.colors.Undefined
-			const material = new THREE.MeshPhongMaterial( { color: color, side: 2, opacity: 0.85, transparent: true } );
+
+			const material = new THREE.MeshPhongMaterial( {
+				color: GBX.colors[ surface.surfaceType ], side: 2, opacity: 0.85, transparent: true } );
 
 			const shape = GBX.get3dShape( vertices, material, holes );
 			shape.userData.data = surface;
@@ -203,6 +169,7 @@
 
 
 	GBX.getSurfaceEdges = function() {
+
 
 		const surfaceEdges = [];
 		const lineMaterial = new THREE.LineBasicMaterial( { color: 0x888888 } );
@@ -231,14 +198,14 @@
 
 		for ( let surfJson of GBX.surfacesJson ) {
 
-			let openings = surfJson.Opening || [];
+			let openings = surfJson.Opening ? surfJson.Opening : [];
 			openings = Array.isArray( openings ) ? openings : [ openings ];
 
 			for ( let opening of openings ) {
 
 				const points = GBX.getVertices( opening.PlanarGeometry.PolyLoop );
 				const shapeMesh = GBX.get3dShape( points, material );
-				shapeMesh.userData.data = opening;
+				shapeMesh.userData.opening = opening;
 				surfaceOpenings.push( shapeMesh );
 
 			}
@@ -327,32 +294,6 @@
 	}
 
 
-	//////////
-
-	GBX.setCardToggleVisibility = function( target, log ) {
-
-		target.innerHTML =
-
-		`<div>
-
-			<button class="btn" onclick="GBX.surfaceMeshes.visible=!GBX.surfaceMeshes.visible;"
-				title="toggle the flat bits" >surfaces</button>
-
-			<button class="btn" onclick="GBX.surfaceEdges.visible=!GBX.surfaceEdges.visible;" title="toggle the side lines" >edges</button>
-
-			<button class="btn" onclick="GBX.surfaceOpenings.visible=!GBX.surfaceOpenings.visible;" title="toggle the windows" >openings</button>
-
-			<button class="btn" onclick="GBX.setAllVisible();"
-			title="toggle the windows" >all</button>
-			|
-			<button class="btn"
-				onclick="GBX.setAllVisible();THR.zoomObjectBoundingSphere(GBX.surfaceEdges);"
-				title="Go to the home view" >reset view</button>
-		</div>`;
-
-	}
-
-
 
 	GBX.setAllVisible = function() {
 
@@ -365,15 +306,12 @@
 			if ( !child.material ) { continue; }
 
 			child.material = new THREE.MeshPhongMaterial( {
-
-				color: GBX.colors[ child.userData.data.surfaceType ], side: 2, opacity: 0.85, transparent: true
-
-			} );
-
+				color: GBX.colors[ child.userData.data.surfaceType ], side: 2, opacity: 0.85, transparent: true }
+			);
 			child.material.wireframe = false;
 			child.visible = true;
 
-		}
+		};
 
 		GBX.surfaceOpenings.visible = true;
 
@@ -382,18 +320,13 @@
 			if ( !child.material ) { continue; }
 
 			child.material = new THREE.MeshPhongMaterial( {
-
-				color: 0x000000, side: 2, opacity: 0.5, transparent: true
-
-			} );
-
+				color: 0x000000, side: 2, opacity: 0.5, transparent: true }
+			);
 			child.material.wireframe = false;
 			child.visible = true;
 
-		}
+		};
 
 		document.body.style.backgroundImage = '';
 
 	};
-
-

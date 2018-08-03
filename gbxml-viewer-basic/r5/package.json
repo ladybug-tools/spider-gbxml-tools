@@ -1,0 +1,21 @@
+{
+  "name": "gbxml-viewer-basic",
+  "version": "0.5.2",
+  "description": "View gbXML files in your browser in 3D",
+  "main": "r5/gbxml-viewer-basic.js",
+  "repository": "ladybug-tools/spider-gbxml-tools",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "gbxml",
+    "ladybug-tools",
+    "spider",
+    "three",
+    "three.js",
+    "webgl"
+  ],
+  "author": "Ladybug Tools authors",
+  "license": "MIT",
+  "homepage": "http://www.ladybug.tools/spider-gbxml-tools/"
+}
