@@ -76,7 +76,7 @@
 
 			<details>
 
-				<summary>Settings</summary>
+				<summary>Themes</summary>
 
 				<div id=divBootswatch ></div>
 
@@ -123,7 +123,7 @@
 
 //	location.hash = '../README.md';
 const uriDefaultFile = 'README.md';
-const urlSourceCode = "https://github.com/pushme-pullyou/pushme-pullyou.github.io/tree/master/tootoo-templates/hamburger-css";
+const urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/";
 
 let themeName = localStorage.getItem( 'themeName' ) || 'https://bootswatch.com/_vendor/bootstrap/dist/css/bootstrap.css';
 
@@ -247,45 +247,6 @@ function setTitle( target ) {
 
 
 
-function setTestingExtras( target ) {
-
-	const txt = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?<p>';
-
-	target.innerHTML =
-
-	`<details open >
-
-		<summary>Extras</summary>
-
-		<p><a href="#https://pushme-pullyou.github.io/pages/markdown-help.md" >markdown-help.md</a></p>
-
-		<p><a href="#https://pushme-pullyou.github.io/plugins/iframe-carousel-r1.html" >iframe-carousel-r1.html</a></p>
-
-		<p><a href="#https://pushme-pullyou.github.io/plugins/view-github-issues.html" >view-github-issues.html</a></p>
-
-		<p><a href="#https://pushme-pullyou.github.io/plugins/view-stl.html" >view-stl.html</a></p>
-
-		<p><a href="#https://pushme-pullyou.github.io//utilities/invertocat.png" >invertocat.png</a></p>
-
-		<p><a href="https://bootswatch.com" target=_blank >&#x2750; bootswatch.com</a></p>
-
-	</details>
-
-	<details>
-
-		<summary>Text</summary>
-
-		${ txt }
-
-		<hr>
-
-	</details>
-	<br>`;
-
-}
-
-
-
 function onHashChange() {
 
 	const url = !location.hash ? uriDefaultFile : location.hash.slice( 1 );
@@ -379,7 +340,7 @@ function onDrop( event ) {
 
 	event.preventDefault();
 
-};
+}
 
 
 
@@ -438,7 +399,7 @@ function openFile( files ) {
 
 		}
 
-};
+}
 
 
 

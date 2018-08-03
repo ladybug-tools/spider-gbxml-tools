@@ -2,7 +2,11 @@
 /* globals THREE */
 /* jshint esversion: 6 */
 
+<<<<<<< HEAD
+	var GBX = { release: "5.3"};
+=======
 	var GBX = { release: "5.2"};
+>>>>>>> master
 
 	GBX.gbxml = null;
 	GBX.gbjson = null; // xnl converted to json
@@ -40,6 +44,8 @@
 
 	// loads any xml file - from AJAX, file reader or location hash or wherever
 
+
+
 	GBX.parseFileXML = function( text ) {
 		//console.log( 'text', text );
 
@@ -70,6 +76,16 @@
 
 	};
 
+
+
+
+	GBX.updateScene = function( text ) {
+
+		meshes = GBX.parseFileXML( text );
+		console.log( 'mm', meshes );
+		GBX.scene.add( meshes );
+
+	};
 
 
 	GBX.getStringFromXml = function( xml ){

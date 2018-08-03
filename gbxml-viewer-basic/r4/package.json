@@ -1,8 +1,8 @@
 {
   "name": "gbxml-viewer-basic",
-  "version": "0.4.1",
+  "version": "0.5.2",
   "description": "View gbXML files in your browser in 3D",
-  "main": "r4/gbxml-viewer-basic.js",
+  "main": "r5/gbxml-viewer-basic.js",
   "repository": "ladybug-tools/spider-gbxml-tools",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
