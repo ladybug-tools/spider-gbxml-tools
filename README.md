@@ -22,7 +22,7 @@ Scripts to help you view and manage gbXML files
 
 ***
 
-### [fetch assemble save R1]( https://rawgit.com/ladybug-tools/spider-gbxml-tools/develop/fetch-assemble-save/r1/fetch-assemble-save.html )
+### [fetch assemble save R2]( https://rawgit.com/ladybug-tools/spider-gbxml-tools/develop/fetch-assemble-save/r2/fetch-assemble-save.html )
 
 * Fetch source files from a CDN and assemble into a single HTML file, save to file
 
