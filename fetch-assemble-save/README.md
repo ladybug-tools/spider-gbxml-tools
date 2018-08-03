@@ -17,7 +17,13 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 ## Concept
 
-Fetch source files from a CDN and assemble into a single HTML file, save to file
+Fetch source files from a CDN, assemble these into a single HTML file, save yhe data to a file
+
+* Buttons allow you to select various colections of assemblies
+* Assembled text appears in a textarea element
+* HTML files appear in an Ifreame element
+
+***
 
 ### develop release: [Fetch Assemble Save Read Me]( https://rawgit.com/ladybug-tools/spider-gbxml-tools/develop/fetch-assemble-save/README.md )
 
@@ -44,7 +50,7 @@ Fetch source files from a CDN and assemble into a single HTML file, save to file
 
 ## Change Log
 
-###
+### 2018-08-03 ~ Theo
 
 * First commit
 
