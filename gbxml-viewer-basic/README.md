@@ -1,22 +1,17 @@
 
 <span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page](https://www.ladybug.tools/spider-gbxml-tools/index.html#gbxml-viewer-basic/README.md "View file as a web page." ) </span>
 
-<div><input type=button class = "btn btn-primary" onclick="window.location.href='https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/gbxml-viewer-basic/README.md'";
+<div><input type=button class = "btn btn-secondary btn-sm" onclick="window.location.href='https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/gbxml-viewer-basic/README.md'";
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' ></div>
+
+<br>
 
 # [gbXML Viewer Basic Read Me]( #gbxml-viewer-basic/README.md )
 
 
-<iframe class=iframeReadMe src=https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/r4/gbxml-viewer-basic.html width=100% height=400px >Iframes are not displayed on github.com</iframe>
+<iframe class=iframeReadMe src=https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/r5/gbxml-viewer-basic.html width=100% height=400px >Iframes are not displayed on github.com</iframe>
 
 
-<<<<<<< HEAD
-## Latest stable release: [gbXML Viewer Basic R4]( https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/index.html )
-
-## Latest development release: [gbXML Viewer Basic R5]( https://rawgit.com/ladybug-tools/spider-gbxml-tools/develop/gbxml-viewer-basic/r5/gbxml-viewer-basic.html )
-
-=======
->>>>>>> master
 
 ## Latest stable release: [gbXML Viewer Basic R5]( https://rawgit.com/ladybug-tools/spider-gbxml-tools/develop/gbxml-viewer-basic/r5/gbxml-viewer-basic.html )
 

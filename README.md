@@ -17,9 +17,12 @@ Scripts to help you view and manage gbXML files
 
 ### Full screen: [gbXML Viewer Basic]( https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/index.html )
 
+
 ### [gbXML Viewer Basic Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#gbxml-viewer-basic/README.md )
 
-## [fetch assemble save R1]( https://rawgit.com/ladybug-tools/spider-gbxml-tools/develop/fetch-assemble-save/r1/fetch-assemble-save.html )
+***
+
+### [fetch assemble save R1]( https://rawgit.com/ladybug-tools/spider-gbxml-tools/develop/fetch-assemble-save/r1/fetch-assemble-save.html )
 
 * Fetch source files from a CDN and assemble into a single HTML file, save to file
 
