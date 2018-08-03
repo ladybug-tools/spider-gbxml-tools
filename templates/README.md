@@ -1,35 +1,52 @@
 
-<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( https://pushme-pullyou.github.io/#tootoo-templates/README.md "View file as a web page." ) </span>
+<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( https://www.ladybug.tools/spider-gbxml-tools/#templates/README.md "View file as a web page." ) </span>
 
-<div><input type=button class = 'btn btn-secondary btn-sm' onclick="window.location.href='https://github.com/pushme-pullyou/pushme-pullyou.github.io/blob/master/tootoo-templates/README.md'";
+<div><input type=button class = 'btn btn-secondary btn-sm' onclick="window.location.href='https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/templates/README.md'";
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' ></div>
 
 <br>
 
-# [Template Read Me]( #/README.md )
+# [ Spider gbXML Tools Template Read Me]( #/README.md )
 
 <!--
-<iframe src=https://pushme-pullyou.github.io/tootoo-templates/basic-html.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
+<iframe src=https://www.ladybug.tools/spider-gbxml-tools/#templates/xxxxx.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
 
-## Full Screen: []( https://pushme-pullyou.github.io/index.html )
+## Full Screen: [ZZZZZ]( https://www.ladybug.tools/spider-gbxml-tools/#templates/README.m )
 -->
 
 
 ## Concept
 
+* The files in this folder are templates or demos or 'boilerplate' files that may be used to build gbXML viewer modules.
 
-## To Do / Wish List
+### [README-template.md]( #templates/README-template.md )
+
+* A template for starting your own read me files
+
+### [index.html]( #templates/index.html )
+
+* Goal: drop this anywhere in any folder it will call the top level index.html and add the local read me file path as location hash
+* Works locally and in GitHub Pages
+
+
+## To do / Wish list
 
 
 ## Issues
 
 
+## Links of interest
 
-## Links of Interest
-
+* https://github.com/readmeTips/readmeTips.github.io
 
 
 ## Change Log
+
+### 2018-08-03 ~ Theo
+
+* Fix links
+* Add text
+
 
 ### 2018-08-01 ~ Theo
 
