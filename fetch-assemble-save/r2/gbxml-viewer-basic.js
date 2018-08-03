@@ -77,9 +77,13 @@
 
 	GBX.updateScene = function( text ) {
 
+		scene.remove( meshes )
 		meshes = GBX.parseFileXML( text );
 		console.log( 'mm', meshes );
-		GBX.scene.add( meshes );
+		scene.add( ...meshes );
+
+		zoomObjectBoundingSphere( meshes[ 1 ] );
+		console.log( 'scene', scene );
 
 	};
 
