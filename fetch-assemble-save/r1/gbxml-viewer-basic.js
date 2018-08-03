@@ -79,7 +79,7 @@
 
 		meshes = GBX.parseFileXML( text );
 		console.log( 'mm', meshes );
-		scene.add( meshes );
+		GBX.scene.add( meshes );
 
 	};
 
