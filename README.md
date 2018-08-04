@@ -2,7 +2,7 @@
 
 <span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page](https://www.ladybug.tools/spider-gbxml-tools/index.html#README.md "View file as a web page." ) </span>
 
-<div><input type=button class = "btn btn-primary" onclick="window.location.href='https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-tools/README.md'"
+<div><input type=button class = "btn btn-primary" onclick="window.location.href='https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/README.md'"
 value="You are now in a GitHub web page view - Click this button to view this read me file as source code" ><div>
 
 <br>
@@ -20,9 +20,10 @@ Scripts to help you view and manage gbXML files
 
 ### [gbXML Viewer Basic Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#gbxml-viewer-basic/README.md )
 
+
 ***
 
-### [fetch assemble save R1]( https://rawgit.com/ladybug-tools/spider-gbxml-tools/develop/fetch-assemble-save/r1/fetch-assemble-save.html )
+### [fetch assemble save R1]( https://rawgit.com/ladybug-tools/spider-gbxml-tools/master/fetch-assemble-save/r1/fetch-assemble-save.html )
 
 * Fetch source files from a CDN and assemble into a single HTML file, save to file
 
