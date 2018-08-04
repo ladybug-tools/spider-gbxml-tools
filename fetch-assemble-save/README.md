@@ -39,10 +39,12 @@ Fetch source files from a CDN, assemble these into a single HTML file, save yhe 
 
 ### master release: [Fetch Assemble Save Full Screen]( https://www.ladybug.tools/spider-gbxml-tools/fetch-assemble-save/r1/fetch-assemble-save.html )
 
+
 ***
 
 ## To Do / Wish List
 
+* Investigate and add all the OpenStudio requirements
 * Needs lights
 * Needs some modification to run Three.js releases older than r92
 
