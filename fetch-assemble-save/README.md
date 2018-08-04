@@ -8,26 +8,30 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 # [Fetch Assemble Save Read Me]( #fetch-assemble-save/README.md )
 
-<!--
-<iframe src=https://www.ladybug.tools/spider-gbxml-tools/fetch-assemble-save/r2/fetch-assemble-save.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
 
-## Full Screen: [Fetch Assemble Save]( https://www.ladybug.tools/spider-gbxml-tools/fetch-assemble-save/r2/fetch-assemble-save.html )
--->
+<iframe src=https://rawgit.com/ladybug-tools/spider-gbxml-tools/develop/fetch-assemble-save/r2/fetch-assemble-save.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
+
+## Full Screen: [Fetch Assemble Save R2]( https://rawgit.com/ladybug-tools/spider-gbxml-tools/develop/fetch-assemble-save/r2/fetch-assemble-save.html )
+
 
 
 ## Concept
 
 Fetch source files from a CDN, assemble these into a single HTML file, save yhe data to a file
 
-* Buttons allow you to select various colections of assemblies
+* Buttons allow you to select various collections of assemblies
 * Assembled text appears in a textarea element
-* HTML files appear in an Ifreame element
+* HTML files appear in an Iframe element
 
 ***
 
 ### develop release: [Fetch Assemble Save Read Me]( https://rawgit.com/ladybug-tools/spider-gbxml-tools/develop/fetch-assemble-save/README.md )
 
 ### develop release: [Fetch Assemble Save Full Screen ]( https://rawgit.com/ladybug-tools/spider-gbxml-tools/develop/fetch-assemble-save/r2/fetch-assemble-save.html )
+
+* Runs files loaded locally using xmlhttprequest rather than fetch
+* gbML test file is loaded as expected
+
 
 ***
 
@@ -38,6 +42,9 @@ Fetch source files from a CDN, assemble these into a single HTML file, save yhe 
 ***
 
 ## To Do / Wish List
+
+* Needs lights
+* Needs some modification to run Three.js releases older than r92
 
 
 ## Issues
