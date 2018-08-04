@@ -47,6 +47,9 @@ Fetch source files from a CDN, assemble these into a single HTML file, save yhe 
 * Investigate and add all the OpenStudio requirements
 * Needs lights
 * Needs some modification to run Three.js releases older than r92
+* Add link to source code
+* Add dropdown with links to all Three.js releases
+* Add strip out out multiple tabs and spaces feature
 
 
 ## Issues
