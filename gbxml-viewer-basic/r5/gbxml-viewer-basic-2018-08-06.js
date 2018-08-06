@@ -2,7 +2,7 @@
 /* globals THREE */
 /* jshint esversion: 6 */
 
-	var GBX = { release: "5.5"};
+	var GBX = { release: "5.4"};
 
 	GBX.gbxml = null;
 	GBX.gbjson = null; // xnl converted to json
@@ -77,13 +77,9 @@
 
 	GBX.updateScene = function( text ) {
 
-		scene.remove( meshes );
 		meshes = GBX.parseFileXML( text );
 		console.log( 'mm', meshes );
-		scene.add( ...meshes );
-
-		zoomObjectBoundingSphere( meshes[ 1 ] );
-		console.log( 'scene', scene );
+		scene.add( meshes );
 
 	};
 

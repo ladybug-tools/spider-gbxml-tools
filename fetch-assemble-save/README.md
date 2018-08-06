@@ -9,35 +9,49 @@ Develop branch / [Master branch]( https://www.ladybug.tools/spider-gbxml-tools/ 
 # [Fetch Assemble Save Read Me]( #fetch-assemble-save/README.md )
 
 
-<iframe src=https://rawgit.com/ladybug-tools/spider-gbxml-tools/develop/fetch-assemble-save/r2/fetch-assemble-save.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
-
-## Full Screen: [Fetch Assemble Save R2]( https://rawgit.com/ladybug-tools/spider-gbxml-tools/develop/fetch-assemble-save/r2/fetch-assemble-save.html )
-
+<iframe src=https://rawgit.com/ladybug-tools/spider-gbxml-tools/develop/fetch-assemble-save/r3/fetch-assemble-save.html width=100% height=400px >Iframes are not viewable in GitHub source code views</iframe>
 
 
 ## Concept
 
-Fetch source files from a CDN, assemble these into a single HTML file, save yhe data to a file
+Fetch source files from a CDN, assemble these into a single HTML file, save the data to a file
 
 * Buttons allow you to select various collections of assemblies
+	* Assemble Master branch of Three.js + Trackball + Basic core
+	* Assemble any release from 1 to 95 - not all releases actually run
+	* Assemble Master branch with latest release of gbXML Viewer Basic
+	* Assemble Master branch with latest release of gbXML Viewer Basic on top of latest OpenStudio core HTML file
 * Assembled text appears in a textarea element
 * HTML files appear in an Iframe element
+* Save button to download and save as an HTML file
+* May be adapted to load any combination of HTML and JavaScript files
+* 7 KB / no dependencies
+
+Usage: best to reload page between assemblies. Keep the JavaScript console open to help spot errors.
+
 
 ***
 
-### develop release: [Fetch Assemble Save Read Me]( https://rawgit.com/ladybug-tools/spider-gbxml-tools/develop/fetch-assemble-save/README.md )
+### Full screen: [Fetch Assemble Save R3 ]( https://rawgit.com/ladybug-tools/spider-gbxml-tools/develop/fetch-assemble-save/r3/fetch-assemble-save.html )
 
-### develop release: [Fetch Assemble Save Full Screen ]( https://rawgit.com/ladybug-tools/spider-gbxml-tools/develop/fetch-assemble-save/r2/fetch-assemble-save.html )
+* All files now loaded as external text files
+* Loads any release of Three.js - not fully tested
+* Loads latest release of gbXML Viewer Basic
+* Loads core HTML file extracted from OpenStudio embeddable_gbxml_editor.html
+	* Loads test file but has issues updating the display
+* Adds link to source code on GitHub
 
-* Runs files loaded locally using xmlhttprequest rather than fetch
+
+
+### Full screen: [Fetch Assemble Save R2 ]( https://rawgit.com/ladybug-tools/spider-gbxml-tools/develop/fetch-assemble-save/r2/fetch-assemble-save.html )
+
+* Runs files loaded locally - uses xmlhttprequest rather than fetch
 * gbML test file is loaded as expected
 
 
 ***
 
-### master release: [Fetch Assemble Save Read Me]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/fetch-assemble-save/README.md )
-
-### master release: [Fetch Assemble Save Full Screen]( https://www.ladybug.tools/spider-gbxml-tools/fetch-assemble-save/r1/fetch-assemble-save.html )
+### Full screen: [Fetch Assemble Save R1]( https://www.ladybug.tools/spider-gbxml-tools/fetch-assemble-save/r1/fetch-assemble-save.html )
 
 
 ***

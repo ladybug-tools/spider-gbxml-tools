@@ -1,0 +1,691 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
+<meta name=description content="Open, view gbXML files in 3D in your browser with free, open source entry-level Three.js JavaScript" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-07-16" >
+<title>gbXML Viewer basic R5.2</title>
+<style>
+
+	body { font: 11pt monospace; margin: 0; overflow: hidden; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	#divMenu { margin: 0 20px; max-width: 20rem; position: absolute; }
+
+</style>
+</head>
+<body>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r95/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r95/examples/js/controls/TrackballControls.js" ></script>
+<script>
+// Copyright 2018 Ladybug Tools authors. MIT License
+/* globals THREE */
+/* jshint esversion: 6 */
+
+	"use strict";
+
+	var GBX = { release: "5.2"};
+
+	GBX.gbxml = null;
+	GBX.gbjson = null; // xnl converted to json
+	GBX.surfacesJson = null; // useful subset of GBX.gbjson
+
+	GBX.surfaceMeshes= null; // Three.js Shapes as Meshes created from GBX.surfaceJson
+	GBX.surfaceEdges= null; // Three.js edges helper creare from GBX.surfaceMeshes
+	GBX.surfaceOpenings= null; // Three.js Three.js Shapes as Meshes created created from GBX.surfaceJson with Openings
+
+	GBX.colorsDefault = {
+
+		InteriorWall: 0x008000,
+		ExteriorWall: 0xFFB400,
+		Roof: 0x800000,
+		InteriorFloor: 0x80FFFF,
+		ExposedFloor: 0x40B4FF,
+		Shade: 0xFFCE9D,
+		UndergroundWall: 0xA55200,
+		UndergroundSlab: 0x804000,
+		Ceiling: 0xFF8080,
+		Air: 0xFFFF00,
+		UndergroundCeiling: 0x408080,
+		RaisedFloor: 0x4B417D,
+		SlabOnGrade: 0x804000,
+		FreestandingColumn: 0x808080,
+		EmbeddedColumn: 0x80806E,
+		Undefined: 0x88888888
+
+	};
+
+	GBX.colors = Object.assign( {}, GBX.colorsDefault ); // working copy of default colors
+
+	GBX.surfaceTypes  = Object.keys( GBX.colors );
+
+
+	// loads any xml file - from AJAX, file reader or location hash or wherever
+
+	GBX.parseFileXML = function( text ) {
+		//console.log( 'text', text );
+
+    var _GBX$surfaceMeshes, _GBX$surfaceEdges, _GBX$surfaceOpenings;
+
+		const parser = new window.DOMParser();
+
+		GBX.gbxml = parser.parseFromString( text, 'text/xml' );
+		//console.log( 'GBX.gbxml', GBX.gbxml );
+
+		GBX.gbjson = GBX.getXML2jsobj( GBX.gbxml.documentElement );
+
+		console.log( 'GBX.gbjson', GBX.gbjson );
+
+		GBX.surfacesJson = GBX.gbjson.Campus.Surface;
+
+		GBX.surfaceMeshes = new THREE.Group();
+    GBX.surfaceMeshes.name = "GBX.surfaceMeshes";
+    (_GBX$surfaceMeshes = GBX.surfaceMeshes).add.apply(
+     _GBX$surfaceMeshes,
+      GBX.getSurfaceMeshes()
+    );
+
+		GBX.surfaceEdges = new THREE.Group();
+    GBX.surfaceEdges.name = "GBX.surfaceEdges";
+    (_GBX$surfaceEdges = GBX.surfaceEdges).add.apply(
+     _GBX$surfaceEdges,
+      GBX.getSurfaceEdges()
+    );
+
+		GBX.surfaceOpenings = new THREE.Group();
+    GBX.surfaceOpenings.name = "GBX.surfaceOpenings";
+    (_GBX$surfaceOpenings = GBX.surfaceOpenings).add.apply(
+     _GBX$surfaceOpenings,
+      GBX.getOpenings()
+    );
+
+		return [ GBX.surfaceMeshes, GBX.surfaceEdges, GBX.surfaceOpenings ];
+
+	};
+
+
+
+	GBX.getStringFromXml = function( xml ){
+		// test in console : GBX.getStringFromXml( GBX.gbxml );
+
+		const string = new XMLSerializer().serializeToString( xml );
+		console.log( 'string', string );
+
+		return string
+
+	}
+
+
+
+	// https://www.sitepoint.com/how-to-convert-xml-to-a-javascript-object/
+	// http://blogs.sitepointstatic.com/examples/tech/xml2json/index.html
+	// Theo: I have difficulty understanding how this functions
+
+	GBX.getXML2jsobj = function( node ) {
+
+		var data = {};
+
+		function Add( name, value ) {
+
+			if ( data[ name ] ) {
+
+				if ( data[ name ].constructor !== Array ) {
+
+					data[ name ] = [ data[ name ] ];
+
+				}
+
+				data[ name ][ data[ name ].length ] = value;
+
+			} else {
+
+				data[ name ] = value;
+
+			}
+
+		}
+
+		var child, childNode;
+
+		for ( child = 0; childNode = node.attributes[ child ]; child++ ) {
+
+			Add( childNode.name, childNode.value );
+
+		}
+
+		for ( child = 0; childNode = node.childNodes[ child ]; child++ ) {
+
+			if ( childNode.nodeType === 1 ) {
+
+				if ( childNode.childNodes.length === 1 && childNode.firstChild.nodeType === 3 ) { // text value
+
+					Add( childNode.nodeName, childNode.firstChild.nodeValue );
+
+				} else { // sub-object
+
+					Add( childNode.nodeName, GBX.getXML2jsobj( childNode ) );
+
+				}
+
+			}
+
+		}
+
+		return data;
+
+	};
+
+
+
+	GBX.getSurfaceMeshes = function() {
+
+		const surfaces = GBX.surfacesJson; // gbjson.Campus.Surface;
+		var surfaceMeshes = [];
+
+		for ( var surface of surfaces ) {
+
+			var holes = [];
+			var openings = surface.Opening;
+
+			if ( openings ) {
+
+				openings = Array.isArray( openings ) ? openings : [ openings ];
+
+				for ( var opening of openings ) {
+
+					const polyloop = opening.PlanarGeometry.PolyLoop;
+					const vertices = GBX.getVertices( polyloop );
+					holes.push( vertices );
+
+				}
+
+			}
+
+			const polyloop2 = surface.PlanarGeometry.PolyLoop;
+			const vertices2 = GBX.getVertices( polyloop2 );
+			const color = GBX.colors[ surface.surfaceType ] || GBX.colors.Undefined
+			const material = new THREE.MeshPhongMaterial( { color: color, side: 2, opacity: 0.85, transparent: true } );
+
+			const shape = GBX.get3dShape( vertices2, material, holes );
+			shape.userData.data = surface;
+			shape.castShadow = shape.receiveShadow = true;
+			surfaceMeshes.push( shape );
+
+		}
+
+		return surfaceMeshes;
+
+	};
+
+
+
+	GBX.getSurfaceEdges = function() {
+
+
+		const surfaceEdges = [];
+		const lineMaterial = new THREE.LineBasicMaterial( { color: 0x888888 } );
+
+		for ( var mesh of GBX.surfaceMeshes.children ) {
+
+			mesh.userData.edges = mesh;
+			const edgesGeometry = new THREE.EdgesGeometry( mesh.geometry );
+			const surfaceEdge = new THREE.LineSegments( edgesGeometry, lineMaterial );
+			surfaceEdge.rotation.copy( mesh.rotation );
+			surfaceEdge.position.copy( mesh.position );
+			surfaceEdges.push( surfaceEdge );
+
+		}
+
+		return surfaceEdges;
+
+	};
+
+
+
+	GBX.getOpenings = function() {
+
+		const surfaceOpenings = [];
+		const material = new THREE.MeshBasicMaterial( { color: 0x000000, opacity: 0.5, side: 2, transparent: true } );
+
+		for ( var surfJson of GBX.surfacesJson ) {
+
+			var openings = surfJson.Opening ? surfJson.Opening : [];
+			openings = Array.isArray( openings ) ? openings : [ openings ];
+
+			for ( var opening of openings ) {
+
+				const points = GBX.getVertices( opening.PlanarGeometry.PolyLoop );
+				const shapeMesh = GBX.get3dShape( points, material, [] );
+				shapeMesh.userData.data = opening;
+				surfaceOpenings.push( shapeMesh );
+
+			}
+
+		}
+
+		return surfaceOpenings;
+
+	};
+
+
+
+	GBX.getVertices = function( polyloop ) {
+
+		const points = polyloop.CartesianPoint.map( CartesianPoint => new THREE.Vector3().fromArray( CartesianPoint.Coordinate ) );
+		return points;
+
+	};
+
+
+
+	GBX.get3dShape = function( vertices, material, holes ) {
+
+		// 2018-06-02
+
+		const plane = GBX.getPlane( vertices, 0 );
+
+		const referenceObject = new THREE.Object3D();
+		referenceObject.lookAt( plane.normal ); // copy the rotation of the plane
+		referenceObject.quaternion.conjugate(); // figure out the angle it takes to rotate the vertices so they lie on the XY plane
+		referenceObject.updateMatrixWorld();
+
+		vertices.map( vertex => referenceObject.localToWorld( vertex ) );
+
+		const holeVertices = [];
+
+		for ( var verticesHoles of holes ) {
+
+			verticesHoles.map( vertex => referenceObject.localToWorld( vertex ) );
+
+			const hole = new THREE.Path();
+			hole.setFromPoints( verticesHoles );
+			holeVertices.push( hole );
+
+		}
+
+		const shapeMesh = get2DShape( vertices, material, holeVertices );
+
+		shapeMesh.lookAt( plane.normal );
+		const center = plane.coplanarPoint( new THREE.Vector3() );
+		shapeMesh.position.copy( center );
+
+		return shapeMesh;
+
+		//
+
+			function get2DShape( vertices, material, holes ) {
+
+				const shape = new THREE.Shape( vertices );
+				shape.holes = holes;
+				const geometryShape = new THREE.ShapeGeometry( shape );
+				const shapeMesh = new THREE.Mesh( geometryShape, material );
+				return shapeMesh;
+
+			}
+
+	};
+
+
+
+	GBX.getPlane = function( points, start ) {
+
+		const triangle = new THREE.Triangle();
+		triangle.set( points[ start ], points[ start + 1 ], points[ start + 2 ] );
+		GBX.plane = triangle.getPlane( new THREE.Plane() );
+
+		if ( triangle.getArea() === 0 ) { // looks like points are colinear therefore try next set
+
+			start++;
+			GBX.getPlane( points, start );
+
+		}
+
+		return GBX.plane;
+
+	}
+
+
+	//////////
+
+	GBX.setCardToggleVisibility = function( target, log ) {
+
+		target.innerHTML =
+
+		`<div>
+
+			<button class="btn" onclick="GBX.surfaceMeshes.visible=!GBX.surfaceMeshes.visible;"
+				title="toggle the flat bits" >surfaces</button>
+
+			<button class="btn" onclick="GBX.surfaceEdges.visible=!GBX.surfaceEdges.visible;" title="toggle the side lines" >edges</button>
+
+			<button class="btn" onclick="GBX.surfaceOpenings.visible=!GBX.surfaceOpenings.visible;" title="toggle the windows" >openings</button>
+
+			<button class="btn" onclick="GBX.setAllVisible();"
+			title="toggle the windows" >all</button>
+			|
+			<button class="btn"
+				onclick="GBX.setAllVisible();THR.zoomObjectBoundingSphere(GBX.surfaceEdges);"
+				title="Go to the home view" >reset view</button>
+		</div>`;
+
+	}
+
+
+
+	GBX.setAllVisible = function() {
+
+		GBX.surfaceEdges.visible = true;
+		GBX.surfaceMeshes.visible = true;
+		GBX.surfaceOpenings.visible = true;
+
+		for ( var child of GBX.surfaceMeshes.children ) {
+
+			if ( !child.material ) { continue; }
+
+			child.material = new THREE.MeshPhongMaterial( {
+				color: GBX.colors[ child.userData.data.surfaceType ], side: 2, opacity: 0.85, transparent: true }
+			);
+			child.material.wireframe = false;
+			child.visible = true;
+
+		};
+
+		GBX.surfaceOpenings.visible = true;
+
+		for ( var child of GBX.surfaceOpenings.children ) {
+
+			if ( !child.material ) { continue; }
+
+			child.material = new THREE.MeshPhongMaterial( {
+
+				color: 0x000000, side: 2, opacity: 0.5, transparent: true
+
+			} );
+
+			child.material.wireframe = false;
+			child.visible = true;
+
+		}
+
+		document.body.style.backgroundImage = '';
+
+	};
+
+
+
+</script>
+	<div id = "divMenu" >
+
+		<div id = "divTitle" ></div>
+
+		<p>
+			<button onclick = "controls.autoRotate=!controls.autoRotate;" >rotation</button>
+
+			<button onclick = "zoomObjectBoundingSphere(GBX.surfaceEdges);" >zoomObjectBoundingSphere</button>
+
+		</p>
+
+		<p>
+			<button onclick = "setSceneDispose( [ GBX.surfaceMeshes, GBX.surfaceEdges, GBX.surfaceOpenings, axesHelper ] );" >setSceneDispose</button>
+			<button onclick = "getRenderInfo();" >getRenderInfo</button>
+		</p>
+
+		<p>
+			<button onclick = "GBX.surfaceMeshes.visible=!GBX.surfaceMeshes.visible;" >surfaces</button>
+			<button onclick = "GBX.surfaceEdges.visible=!GBX.surfaceEdges.visible;" >edges</button>
+			<button onclick = "GBX.surfaceOpenings.visible=!GBX.surfaceOpenings.visible;" title="toggle the windows" >openings</button>
+			<button onclick = "GBX.surfaceMeshes.visible=GBX.surfaceEdges.visible=GBX.surfaceOpenings.visible=true;" >all visible</button>
+		</p>
+
+		<div id = "divLog" ></div>
+
+	</div>
+
+<script>
+
+	//const url = 'https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml';
+
+
+	var timeStart;
+
+	var renderer, camera, controls, scene;
+	var lightAmbient, lightDirectional, lightPoint, axesHelper;
+	var geometry, material, mesh;
+
+	//init();
+	//animate();
+
+	function init() {
+
+		const source = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/develop/gbxml-viewer-basic";
+		const title = document.title;
+
+		divTitle.innerHTML =
+			`<h2>
+				<a href="${source}" target="_top" ><img src="https://status.github.com/images/invertocat.png" height=18 ></a>
+				<a href = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/develop" >${title}</a>
+			</h2>
+			<p>
+				${document.head.querySelector( '[name=description]' ).content }
+			</p>`;
+
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( -100, -100, 100 );
+		camera.up.set( 0, 0, 1 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+		scene = new THREE.Scene();
+
+		lightAmbient = new THREE.AmbientLight( 0x444444 );
+		scene.add( lightAmbient );
+
+		lightDirectional = new THREE.DirectionalLight( 0xffffff, 1 );
+		lightDirectional.shadow.mapSize.width = 2048;  // default 512
+		lightDirectional.shadow.mapSize.height = 2048;
+		lightDirectional.castShadow = true;
+		scene.add( lightDirectional );
+
+		lightPoint = new THREE.PointLight( 0xffffff, 0.5 );
+		lightPoint.position = new THREE.Vector3( 0, 0, 1 );
+
+		camera.add( lightPoint );
+		scene.add( camera );
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		window.addEventListener( 'orientationchange', onWindowResize, false );
+
+		//requestGbxmlFile( url );
+
+	}
+
+
+
+	function requestGbxmlFile ( url ) {
+
+		timeStart = Date.now();
+
+		//setSceneDispose( [ GBX.surfaceMeshes, GBX.surfaceEdges, GBX.surfaceOpenings, axesHelper ] );
+
+		const xhr = new XMLHttpRequest();
+		xhr.crossOrigin = 'anonymous';
+		xhr.open( 'GET', url, true );
+		xhr.onerror = function( xhr ) { console.log( 'error:', xhr  ); };
+		xhr.onprogress = onRequestFileProgress;
+		xhr.onload = callbackGbXML;
+		xhr.send( null );
+
+		function onRequestFileProgress( xhr ) {
+
+			const fileAttributes = { name: xhr.target.responseURL.split( '/').pop() };
+
+			divLog.innerHTML =
+			`
+				${fileAttributes.name}<br>
+				bytes loaded: ${xhr.loaded.toLocaleString()} of  ${xhr.total.toLocaleString() }<br>
+			`;
+
+		}
+
+		function callbackGbXML ( xhr ) {
+	      var _scene;
+
+	      var gbxmlResponseXML = xhr.target.responseXML;
+		  //const gbxml = xhr.target.responseXML.documentElement;
+		  var gbxml = xhr.target.response;
+
+			meshes = GBX.parseFileXML( gbxml );
+
+			(_scene = scene).add.apply(_scene, meshes);
+
+
+			zoomObjectBoundingSphere( GBX.surfaceEdges );
+
+	      divLog.innerHTML = "time: " + (Date.now() - timeStart) + " ms<br>";
+
+		}
+
+	}
+
+	function setGbXml ( text ) {
+    var _scene;
+    timeStart = Date.now();
+
+    try {
+      meshes = GBX.parseFileXML( text );
+      (_scene = scene).add.apply(_scene, meshes);
+      zoomObjectBoundingSphere( GBX.surfaceEdges );
+      divLog.innerHTML = "Success: " + (Date.now() - timeStart) + " ms<br><br>";
+      divLog.innerHTML += "Please visit full spider viewer at https://www.ladybug.tools/spider/gbxml-viewer  (note full site is not yet available in embedded viewer) to edit and inspect your file in more detail.<br>"
+    }
+    catch(err) {
+      divLog.innerHTML = "Error: " + err.message + "<br><br>";
+      divLog.innerHTML += "You may still be able to preview and merge this file using OSM translation tools.<br><br>"
+      divLog.innerHTML += "Please visit full spider viewer at https://www.ladybug.tools/spider/gbxml-viewer  (note full site is not yet available in embedded viewer) to edit and inspect your file in more detail.<br>"
+    }
+
+	}
+
+	/////////
+
+	function zoomObjectBoundingSphere ( obj ) {
+
+		const bbox = new THREE.Box3().setFromObject( obj );
+
+		const sphere = bbox.getBoundingSphere( new THREE.Sphere() );
+		const center = sphere.center;
+		const radius = sphere.radius;
+
+		controls.target.copy( center );
+		controls.maxDistance = 5 * radius;
+
+		camera.position.copy( center.clone().add( new THREE.Vector3( 1.0 * radius, - 1.0 * radius, 1.0 * radius ) ) );
+		camera.far = 10 * radius; //2 * camera.position.length();
+		camera.updateProjectionMatrix();
+
+		lightDirectional.position.copy( center.clone().add( new THREE.Vector3( -1.5 * radius, -1.5 * radius, 1.5 * radius ) ) );
+		lightDirectional.shadow.camera.scale.set( 0.2 * radius, 0.2 * radius, 0.01 * radius );
+		lightDirectional.target = obj;
+
+		if ( !axesHelper ) {
+
+			axesHelper = new THREE.AxesHelper( 1 );
+			axesHelper.name = 'axesHelper';
+			scene.add( axesHelper );
+
+		}
+
+		axesHelper.scale.set( radius, radius, radius );
+		axesHelper.position.copy( center );
+
+		obj.userData.center = center;
+		obj.userData.radius = radius;
+
+		//		scene.remove( cameraHelper );
+		//		cameraHelper = new THREE.CameraHelper( lightDirectional.shadow.camera );
+		//		scene.add( cameraHelper );
+
+	};
+
+
+
+  function setSceneDispose(objArray) {
+    var _scene;
+
+		//console.log( 'renderer.info.memory.geometries 1', renderer.info.memory.geometries );
+
+		scene.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh || child instanceof THREE.LineSegments ) {
+
+				child.geometry.dispose();
+				child.material.dispose();
+
+				scene.remove( child );
+			}
+
+		} );
+
+
+    (_scene = scene).remove.apply(_scene, objArray);
+
+		axesHelper = undefined;
+
+		//getRenderInfo();
+
+	}
+
+
+
+	function getRenderInfo() {
+
+		console.log( 'renderer.info.memory.geometries', renderer.info.memory.geometries );
+		console.log( 'renderer.info.render', renderer.info.render );
+
+		divLog.innerHTML +=
+		`
+		geometries: ${ renderer.info.memory.geometries.toLocaleString() }<br>
+		triangles: ${ renderer.info.render.triangles.toLocaleString() } <br>
+		lines: ${ renderer.info.render.lines.toLocaleString() } <br>
+		`;
+
+	}
+
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+		//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+	}
+
+
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		renderer.render( scene, camera );
+		controls.update();
+
+	}
+
+</script>
+</body>
+</html>

@@ -77,7 +77,7 @@
 
 	GBX.updateScene = function( text ) {
 
-		scene.remove( meshes )
+		scene.remove( meshes );
 		meshes = GBX.parseFileXML( text );
 		console.log( 'mm', meshes );
 		scene.add( ...meshes );
