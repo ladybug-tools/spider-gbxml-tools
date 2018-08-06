@@ -32,7 +32,7 @@ Scripts to help you view and manage gbXML files
 
 ## Links of Interest
 
-### NREL Open Studio gbXML Viewer
+### NREL Open Studio
 
 > OpenStudio is a cross-platform (Windows, Mac, and Linux) collection of software tools to support whole building energy modeling using EnergyPlus and advanced daylight analysis using Radiance. OpenStudio is an open source project to facilitate community development, extension, and private sector adoption. OpenStudio includes graphical interfaces along with a Software Development Kit (SDK).
 
@@ -79,37 +79,13 @@ Runnable version
 * <https://twitter.com/gbXML>
 > The gbXML open schema helps facilitate the transfer of building properties stored in 3D building information models (BIM) to engineering analysis tools.
 
-### gbXML Home Page
-
-* <http://www.gbxml.org/>
-
-> gbXML is an industry supported schema for sharing building information between disparate building design software tools.
-
-### gbXML GitHub Presence
-* <https://github.com/GreenBuildingXML>
-	* <https://github.com/GreenBuildingXML/gbXML-Schema>
-	* <https://github.com/GreenBuildingXML/Sample-gbXML-Files>
-
-> Repositories for all things gbXML including the schema, validator source code, test cases, and more...
-
-### gbXML Schema as a document
-
-* <http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html>
-
-> Schema GreenBuildingXML_Ver6.01.xsd / the core definition of gbXML in a format that is easier to read than the source code.
-
-### More gbXML References
-
-* <https://en.wikipedia.org/wiki/Green_Building_XML>
-
-> The Green Building XML schema (gbXML) is an open schema developed to facilitate transfer of building data stored in Building Information Models (BIM) to engineering analysis tools. gbXML is being integrated into a range of software CAD and engineering tools and supported by leading 3D BIM vendors. gbXML is streamlined to transfer building properties to and from engineering analysis tools to reduce the interoperability issues and eliminate plan take-off time.
-
-
-* <https://twitter.com/gbXML>
-> The gbXML open schema helps facilitate the transfer of building properties stored in 3D building information models (BIM) to engineering analysis tools.
-
 
 ## Change Log
+
+
+### 2018-08-06 ~ Theo
+
+* Cleanup read me & index.htmk
 
 
 ### 2018-07-14 ~ Theo
