@@ -10,16 +10,18 @@
 <style>
 /* Copyright 2018 pushMe pullYou authors. MIT License */
 
-	:root { --mnu-width: 20rem; font-size: 1em; }
+	:root { --mnu-width: 20rem; font-size: 0.9em !important; }
 
 	html { height: 100%; margin: 0; }
 
 	body { height: 100%; margin: 0; }
 
+	a { text-decoration: underline !important; }
 	a:hover, a:focus { background-color: yellow; color: #888; }
 	blockquote, pre { background-color:rgba(240, 240, 240, 0.25 ); padding: 1rem }
 	button.theme { border-width: 1px; margin: 0.3rem !important; min-width:3rem; }
 	button:hover, input[ type=button ]:hover { background-color: #ccc; color: white }
+
 	summary { font-weight: bold; }
 
 	#divContainer { height: 100%; margin: 0 0 0 var( --mnu-width ); transition: margin-left .5s; position: relative; }
@@ -68,6 +70,8 @@
 		<div id = "divMenuItems" ></div>
 
 		<h3><a href="#./gbxml-viewer-basic/README.md" >gbXML Viewer Basic</a></h3>
+
+		<h3><a href="#./fetch-assemble-save/README.md" >Fetch Assemble Save</a></h3>
 
 		<p>More Spider gbXML scripts will be forked over to here as time goes on.</p>
 
