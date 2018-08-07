@@ -15,16 +15,20 @@
 Scripts to help you view and manage gbXML files
 
 
-### Full screen: [gbXML Viewer Basic]( https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/index.html )
+***
+
+### Latest release: [gbXML Viewer Basic]( https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/index.html )
 
 
-### [gbXML Viewer Basic Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#gbxml-viewer-basic/README.md )
+#### [gbXML Viewer Basic Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#gbxml-viewer-basic/README.md )
 
+* Open, view gbXML files in 3D in your browser with free, open source entry-level Three.js JavaScript
 
 ***
 
-### Latest release: [Fetch Assemble Save ]( https://www.ladybug.tools/spider-gbxml-tools/develop/fetch-assemble-save/index.html )
+### Latest release: [Fetch Assemble Save ]( https://www.ladybug.tools/spider-gbxml-tools/fetch-assemble-save/index.html )
 
+#### [Fetch Assemble Save Read Me]( https://www.ladybug.tools/#spider-gbxml-tools/README.md )
 
 * Fetch source files from a CDN, assemble these into a single HTML file, save to file
 
@@ -87,7 +91,8 @@ Runnable version
 
 ### 2018-08-06 ~ Theo
 
-* Cleanup read me & index.htmk
+R5
+* Cleanup read me & index.html
 
 
 ### 2018-07-14 ~ Theo
