@@ -32,17 +32,14 @@ value='You are now in a GitHub web page view - Click this button to view this re
 * Able to support a gamut of uses from complex apps on desktops down to viewing files on old phones
 
 
-## Styling / CSS
-
-* To support a broad range of CSS system
-* Ability to apply styles to HTML elements on-the fly- at run-time
 
 
-## Testing / QA Goals
+### Testing / QA Goals
 
 * Read any gbXML file from Revit
 * Default test case files accepted by OpenStudio geometry Viewer
 * Any file accepted by OpenStudio geometry viewer fixes applied by gbXML Viewer
+* All files accepted by FZK Viewer
 
 Coming next
 * Any gbXML file updated by the gbXML Viewer may be taken all the way through to creating an OpenStdio report without error
@@ -50,7 +47,7 @@ Coming next
 * Suggestions welcome
 
 
-## Long Term Support requirements
+### Long Term Support requirements
 
 * Maintain a version that supports Chrome R45
 * Make available via NPM
@@ -58,7 +55,35 @@ Coming next
 * Add test cases
 * Minified versions?
 
+
+### Contributing
+
+* Generally follows practices used at https://github.com/mrdoob/three.js
+* Development based on
+	* Releases
+	* Issues
+	* Projects
+	* Milestones
+
+
+### Coding style
+
+* Easy peasy philosophy
+
+### Styling / CSS
+
+* To support a broad range of CSS systems
+* Ability to apply styles to HTML elements on-the fly- at run-time
+
+
+
+
 ## Change Log
+
+### 2018-08-03 ~ Theo
+
+* Add and edit text
+
 
 ### 2018-08-01 ~ Theo
 
