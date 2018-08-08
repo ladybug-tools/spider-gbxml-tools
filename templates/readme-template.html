@@ -17,7 +17,7 @@
 
 	let path, pathFull;
 
-	const repo = 'pushme-pullyou.github.io'; // rename to repo name
+	const repo = '\spider-gbxml-tools'; // rename to repo name
 
 	if ( protocol === 'file:' ) {
 
@@ -27,7 +27,7 @@
 		path = pathname.slice( sliceStart, pathname.lastIndexOf( '/' )  );
 		console.log( 'path', path );
 
-		pathFull = path.replace( /-/g, '' ).replace( /\w+/g, '..' ).slice( 0 ) + '/index.html#' + path + '/README-template-short.md';
+		pathFull = path.replace( /-/g, '' ).replace( /\w+/g, '..' ).slice( 0 ) + '/index.html#' + path + '/README-template.md';
 
 	} else if ( protocol.includes( 'http' ) ) {
 
@@ -35,7 +35,7 @@
 		console.log( 'hash', hash );
 		path = hash.replace( /-/g, '' ).replace( /\w+/g, '..' );
 
-		pathFull = path + '/index.html#' + hash + '/README-template-short.md';
+		pathFull = path + '/index.html#' + hash + '/README-template.md';
 
 	}
 
