@@ -3,9 +3,7 @@
 <span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page](https://www.ladybug.tools/spider-gbxml-tools/index.html#README.md "View file as a web page." ) </span>
 
 
-<div><input type=button class = "btn btn-secondary btn-sm" onclick="window.location.href='https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-tools/README.md'"
-
-value="You are now in a GitHub web page view - Click this button to view this read me file as source code" ><div>
+<div><input type=button class = "btn btn-secondary btn-sm" onclick="window.location.href='https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-tools/README.md'" value="You are now in a GitHub web page view - Click this button to view this read me file as source code" ><div>
 
 <br>
 
@@ -17,16 +15,20 @@ value="You are now in a GitHub web page view - Click this button to view this re
 Scripts to help you view and manage gbXML files
 
 
-### Full screen: [gbXML Viewer Basic]( https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/index.html )
+***
+
+### Latest release: [gbXML Viewer Basic]( https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/index.html )
 
 
-### [gbXML Viewer Basic Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#gbxml-viewer-basic/README.md )
+#### [gbXML Viewer Basic Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#gbxml-viewer-basic/README.md )
 
+* Open, view gbXML files in 3D in your browser with free, open source entry-level Three.js JavaScript
 
 ***
 
-### Latest release: [Fetch Assemble Save ]( https://www.ladybug.tools/spider-gbxml-tools/develop/fetch-assemble-save/index.html )
+### Latest release: [Fetch Assemble Save ]( https://www.ladybug.tools/spider-gbxml-tools/fetch-assemble-save/index.html )
 
+#### [Fetch Assemble Save Read Me]( https://www.ladybug.tools/#spider-gbxml-tools/README.md )
 
 * Fetch source files from a CDN, assemble these into a single HTML file, save to file
 
@@ -40,17 +42,36 @@ Scripts to help you view and manage gbXML files
 
 > OpenStudio is a cross-platform (Windows, Mac, and Linux) collection of software tools to support whole building energy modeling using EnergyPlus and advanced daylight analysis using Radiance. OpenStudio is an open source project to facilitate community development, extension, and private sector adoption. OpenStudio includes graphical interfaces along with a Software Development Kit (SDK).
 
-Open Studio
+OpenStudio
 * https://www.nrel.gov/
 * https://www.openstudio.net/
 * https://github.com/NREL/OpenStudio
 * https://en.wikipedia.org/wiki/OpenStudio
 
-Open Studio gbXML Viewer source code
+OpenStudio Application Resources
+* Documentation: http://nrel.github.io/OpenStudio-user-documentation/
+	* OpenStudio 1.9.0 Basic Workflow Guide
+		* http://nrel.github.io/OpenStudio-user-documentation/img/pdfs/openstudio_interface_quickstart.pdf
+		* 50 pages
+	* OpenStudio Application Interface Guide
+		* http://nrel.github.io/OpenStudio-user-documentation/reference/openstudio_application_interface/
+
+	* ### http://nrel.github.io/OpenStudio-user-documentation/getting_started/getting_started/#site-facility-and-basic-run
+	* Installation and Introductory Tutorial
+		* http://nrel.github.io/OpenStudio-user-documentation/getting_started/getting_started/#introductory-tutorial
+
+	* http://nrel.github.io/OpenStudio-user-documentation/tutorials/creating_your_model/
+* Forum: https://unmethours.com/questions/
+* https://www.youtube.com/user/NRELOpenStudio
+
+
+Documentation
+
+OpenStudio gbXML Viewer source code
 * https://github.com/NREL/OpenStudio/tree/develop/openstudiocore/src/openstudio_lib/library
 * https://github.com/NREL/OpenStudio/blob/develop/openstudiocore/src/openstudio_lib/library/embeddable_gbxml_editor.html
 
-Runnable version
+Runnable version gbXML Viewer Basic embedded in OpenStudio
 * https://rawgit.com/NREL/OpenStudio/develop/openstudiocore/src/openstudio_lib/library/embeddable_gbxml_editor.html
 
 
@@ -89,7 +110,8 @@ Runnable version
 
 ### 2018-08-06 ~ Theo
 
-* Cleanup read me & index.htmk
+R5
+* Cleanup read me & index.html
 
 
 ### 2018-07-14 ~ Theo
