@@ -23,12 +23,12 @@ https://github.com/GreenBuildingXML/Sample-gbXML-Files/blob/master/gbXML_TRK.xml
 ### Notes on failed runs
 * The usual first reported error is: ```** Severe  ** <root>[BuildingSurface:Detailed][B-00_110-E-F-58] - Missing required property 'construction_name'.```
 * The examples file 'seb.osm' was loaded and completed a successful 'Run simulation. A gbXML files was created using OpenStudio > File menu > Export gbXML. The newly created file was then imported using OpenStudio > File menu > Import gbXML.Th file loaded successfully and was viewable in the OpenStudio Geometry tab. The file did not, however, complete a successful 'Run simulation.. The first error being: ```   ** Severe  ** <root>[Construction][3'0" x 3'0" Double pane  Alum Construction] - Missing required property 'outside_layer'.```
-* Attens were made to load a default OSM library and then merge in the gbXML file, but none of these attempts provided a successful run on files that had previously failed to be imported on their own
+* Attempts were made to load a default OSM library and then merge in the gbXML file, but none of these attempts provided a successful run on files that had previously failed to be imported on their own
 
 ### Related Activity
 
 * 'Aragog' gbXML Viewer R14.14 > Reports tab: now has a card for gbXML 'Construction' elements
-* There wil be investigations as to whether the various viewers should ad the feature of adding Construction elements to gbXL file upon request
+* There wil be investigations as to whether the various viewers should ad the feature of adding Construction elements to gbXL file upon request.
 
 
 
