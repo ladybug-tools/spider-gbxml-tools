@@ -32,6 +32,23 @@ https://github.com/GreenBuildingXML/Sample-gbXML-Files/blob/master/gbXML_TRK.xml
 
 
 
+### gbXML Sample Files with Construction Elements
+
+* Urban_House_MEP.xml > geometry: OK > simulation: ```** Severe  ** <root>[BuildingSurface:Detailed][E-24-U-W-122] - Missing required property 'construction_name'.```
+* gbXMLExport_ASHRAEHQ_Revit2017.xml > geometry OK > simulation: success!
+* gbXMLStandard Office (ASHRAE HQ) 2016.xml
+* gbXMLStandard Office (Core & Shell) 2016.xml
+* gbXMLStandard Single Family Residential 2016.xml
+* gbXMLStandard Test Model 2016.xml
+* gbXMLStandard.xml
+* gbXMLStandardv Retail Big Box.xml
+* gbXML_TRK.xml > geometry OK > simulation: success!
+
+### MREL
+
+* Building 1: ```* Severe  ** <root>[Construction][ASHRAE 189.1-2009 ExtWindow ClimateZone 7-8] - Missing required property 'outside_layer'.```
+
+
 ***
 
 # <center title="hello!" ><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > &#x1f578; </a></center>
