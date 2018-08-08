@@ -38,6 +38,10 @@ Scripts to help you view and manage gbXML files
 
 ## Links of Interest
 
+### [gbXML to OpenStudio Report]( gbxml-to-openstudio-report.md )
+
+***
+
 ### NREL Open Studio
 
 > OpenStudio is a cross-platform (Windows, Mac, and Linux) collection of software tools to support whole building energy modeling using EnergyPlus and advanced daylight analysis using Radiance. OpenStudio is an open source project to facilitate community development, extension, and private sector adoption. OpenStudio includes graphical interfaces along with a Software Development Kit (SDK).
@@ -55,10 +59,10 @@ OpenStudio Application Resources
 		* 50 pages
 	* OpenStudio Application Interface Guide
 		* http://nrel.github.io/OpenStudio-user-documentation/reference/openstudio_application_interface/
-
-	* ### http://nrel.github.io/OpenStudio-user-documentation/getting_started/getting_started/#site-facility-and-basic-run
 	* Installation and Introductory Tutorial
-		* http://nrel.github.io/OpenStudio-user-documentation/getting_started/getting_started/#introductory-tutorial
+		* http://nrel.github.io/OpenStudio-user-documentation/getting_started/getting_started/
+		* Installation and Introductory Tutorial >Site, Facility, and Basic Run
+			*  http://nrel.github.io/OpenStudio-user-documentation/getting_started/getting_started/#site-facility-and-basic-run
 
 	* http://nrel.github.io/OpenStudio-user-documentation/tutorials/creating_your_model/
 * Forum: https://unmethours.com/questions/
@@ -75,20 +79,21 @@ Runnable version gbXML Viewer Basic embedded in OpenStudio
 * https://rawgit.com/NREL/OpenStudio/develop/openstudiocore/src/openstudio_lib/library/embeddable_gbxml_editor.html
 
 
+***
 
 ### gbXML Home Page
 
 * <http://www.gbxml.org/>
 > gbXML is an industry supported schema for sharing building information between disparate building design software tools.
 
-### gbXML GitHub Presence
+#### gbXML GitHub Presence
 * <https://github.com/GreenBuildingXML>
 	* <https://github.com/GreenBuildingXML/gbXML-Schema>
 	* <https://github.com/GreenBuildingXML/Sample-gbXML-Files>
 
 > Repositories for all things gbXML including the schema, validator source code, test cases, and more...
 
-### gbXML Schema as a document
+#### gbXML Schema as a document
 
 * <http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html>
 
