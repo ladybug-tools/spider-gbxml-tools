@@ -28,7 +28,7 @@ Scripts to help you view and manage gbXML files
 
 ### Latest release: [Fetch Assemble Save ]( https://www.ladybug.tools/spider-gbxml-tools/fetch-assemble-save/index.html )
 
-#### [Fetch Assemble Save Read Me]( https://www.ladybug.tools/#spider-gbxml-tools/README.md )
+#### [Fetch Assemble Save Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#fetch-assemble-save/README.md )
 
 * Fetch source files from a CDN, assemble these into a single HTML file, save to file
 
@@ -38,7 +38,7 @@ Scripts to help you view and manage gbXML files
 
 ## Links of Interest
 
-### [gbXML to OpenStudio Report]( gbxml-to-openstudio-report.md )
+### [gbXML to OpenStudio Report]( #gbxml-to-openstudio-report.md )
 
 ***
 

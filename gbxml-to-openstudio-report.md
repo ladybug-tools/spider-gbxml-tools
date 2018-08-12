@@ -6,6 +6,22 @@ This document is intended to a be a summary of lessens learned, test results and
 
 Sections of new text will will be posted to GitHub Issues under a 'lessons-learned' tag. These issues will be cclosed as and when a newer issue is posted. And actions or further investigations arsing from these reports should be opened as new issues
 
+## 2018-08-10 ~ Theo
+
+20:00
+This model loads successfully and completes 'Run simulation' successfully
+* https://github.com/GreenBuildingXML/Sample-gbXML-Files/blob/master/gbXML_TRK.xml
+* Downloaded and ```encoding="UTF-16"``` deleted from first line.
+* The report file that is produced is osm/trk/reports/eplustbl.html
+
+seb.osm completes successfully
+* But I don't know when and how the second pretty report gets built
+
+I looked at a lot of our example models hoping to find a list of construction elements that closely matched the gbXML surface types but did not seem to find a good match.
+
+The next step will be to see if I can construct a section of text that has construction elements that match the 15 standard surfaces types and then populates these with sufficient working attributes such that the text - when inserted in a gbXML file with no construction elements - enables the file to propagate a successful simulation.
+
+
 
 ## 2018-08-08 ~ Theo
 
@@ -35,7 +51,7 @@ https://github.com/GreenBuildingXML/Sample-gbXML-Files/blob/master/gbXML_TRK.xml
 ### gbXML Sample Files with Construction Elements
 
 * Urban_House_MEP.xml > geometry: OK > simulation: ```** Severe  ** <root>[BuildingSurface:Detailed][E-24-U-W-122] - Missing required property 'construction_name'.```
-* gbXMLExport_ASHRAEHQ_Revit2017.xml > geometry OK > simulation: success!
+* gbXMLExport_ASHRAEHQ_Revit2017.xml > geometry OK > simulation: success! << 2018-08-10 ~ cannot reproduce
 * gbXMLStandard Office (ASHRAE HQ) 2016.xml
 * gbXMLStandard Office (Core & Shell) 2016.xml
 * gbXMLStandard Single Family Residential 2016.xml
@@ -44,9 +60,10 @@ https://github.com/GreenBuildingXML/Sample-gbXML-Files/blob/master/gbXML_TRK.xml
 * gbXMLStandardv Retail Big Box.xml
 * gbXML_TRK.xml > geometry OK > simulation: success!
 
-### MREL
+### NREL
 
-* Building 1: ```* Severe  ** <root>[Construction][ASHRAE 189.1-2009 ExtWindow ClimateZone 7-8] - Missing required property 'outside_layer'.```
+* https://rawgit.com/NREL/openstudio-gbxml-validation/master/gbxml_test_suite/tests/output/test_case_6/test_case_6.xml
+	* Building 1: ```* Severe  ** <root>[Construction][ASHRAE 189.1-2009 ExtWindow ClimateZone 7-8] - Missing required property 'outside_layer'.```
 
 
 ***
