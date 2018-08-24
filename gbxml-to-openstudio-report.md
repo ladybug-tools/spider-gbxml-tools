@@ -1,10 +1,66 @@
 # gbXML to OpenStudio Report
 
-The goal of the scripts in this project is to enable you to transfer data from a CAD progran to an analysis program with as few steps of human intervention as possible.
+A goal of the scripts in this project is to enable you to transfer data from a CAD program to an analysis program such as [OpenStudio]( https://www.openstudio.net/ ) with as few steps of human intervention as possible.
+
+The benefits sought include
+* An architect/engineer/designer with little or no energy analysis domain experience may be able to create and view simulations
+* The transfer of data between design and analysis programs is speedy, easy and error-free
+* Customization for organizational or locality needs may be accomplished without reference or updates to CAD or analysis programs
 
 This document is intended to a be a summary of lessens learned, test results and any issues of interest that occur in the pursuance of the above goal.
 
-Sections of new text will will be posted to GitHub Issues under a 'lessons-learned' tag. These issues will be cclosed as and when a newer issue is posted. And actions or further investigations arsing from these reports should be opened as new issues
+Sections of new text will will be posted to GitHub Issues under a 'lessons-learned' tag. These issues will be closed as and when a newer issue is posted. And actions or further investigations arsing from these reports should be opened as new issues
+
+
+## 2018-08-24 ~ Theo
+
+We want a scripts that open gbXMl files and add sufficient data such that an OpenStudio Simulation may be created on the first pass without failure.
+
+As a first step toward achieving this objective, there should be a body of gbXML files that are known to run simulations successfully.
+
+A good place to start might be with the example file included with OpenStudio.
+
+Upon a load of OpenStudio
+* Open: openstudio-2.6.1\Examples\compact_osw\files\seb\files\seb.osm
+
+Upon load of 'seb.osm' file:
+* Note upgrade to new fille format
+* Add EPW and DDY file URLs: OpenStudio > 'Site' tab
+* Click: OpenStudio > 'Run Simulation' tab > 'Run' button
+* Wait for simulation to complete
+
+Upon successful completion of simulation run:
+* Export data to gbXML file: OpenStudio > 'File' menu > 'Export' > 'gbXML'
+* Save file as 'seb.xml' and place it in same folder as 'seb.osm'
+
+Upon file save:
+* Open new project: OpenStudio > 'File' menu > 'New'
+* Import just saved 'seb.xml' file: OpenStudio > 'File' menu > 'Import' > 'gbXML'
+* When prompted to save current project: click 'Discard'
+
+Upon load of gbXML file:
+* Add EPW and DDY file URLs: OpenStudio > 'Site' tab
+* Click: OpenStudio > 'Run Simulation' tab > 'Run' button
+* When prompted to save current project: save 'seb.osm' or 'seb-new.osm'
+* Wait for simulation to complete
+* Note the result that the run failed:
+
+> Starting Simulation.
+> EnergyPlus Starting
+> EnergyPlus, Version 8.9.0-eba93e8e1b, YMD=2018.08.24 11:37
+> **FATAL:Errors occurred on processing input file. Preceding condition(s) cause termination.
+> EnergyPlus Run Time=00hr 00min  0.18sec
+? Program terminated: EnergyPlus Terminated--Error(s) Detected.
+> Failed.
+
+This file details the errors: openstudio-2.6.1/Examples/compact_osw-2018-08-24/files/seb/run/eplusout.err
+
+The question for the moment: What text may be added to 'seb.xml' that will cause the run to complete successfully?
+
+
+
+
+
 
 ## 2018-08-10 ~ Theo
 
