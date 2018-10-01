@@ -11,6 +11,11 @@
 <iframe class=iframeReadMe src=https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/r5/gbxml-viewer-basic.html width=100% height=400px >Iframes are not displayed on github.com</iframe>
 
 
+## Latest stable release: [gbXML Viewer Basic R6]( https://rawgit.com/ladybug-tools/spider-gbxml-tools/develop/gbxml-viewer-basic/r6/gbxml-viewer-basic.html )
+
+* Significantly faster
+
+
 ## Latest stable release: [gbXML Viewer Basic R5]( https://rawgit.com/ladybug-tools/spider-gbxml-tools/develop/gbxml-viewer-basic/r5/gbxml-viewer-basic.html )
 
 
