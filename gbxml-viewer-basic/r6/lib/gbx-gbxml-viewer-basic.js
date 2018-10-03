@@ -40,7 +40,7 @@ GBX.surfaceTypes  = Object.keys( GBX.colors );
 
 // loads any xml file - from AJAX, file reader or location hash or wherever
 
-GBX.parseFileXML = function( text ) {
+GBX.parseFileXML = function( text ) { // called by main HTML file
 	//console.log( 'text', text );
 
 	const parser = new window.DOMParser();
@@ -80,40 +80,26 @@ GBX.parseFileXML = function( text ) {
 
 	GBX.surfaceEdges = new THREE.Group();
 	GBX.surfaceEdges.name = 'GBX.surfaceEdges';
-	//GBX.surfaceEdges.add( ...GBX.getSurfaceEdges() );
+	GBX.surfaceEdges.add( ...GBX.getSurfaceEdges() );
 
 	GBX.surfaceOpenings = new THREE.Group();
 	GBX.surfaceOpenings.name = 'GBX.surfaceOpenings';
-	GBX.surfaceOpenings.add( ...GBX.getOpenings() );
+	//GBX.surfaceOpenings.add( ...GBX.getOpenings() );
 
 	return [ GBX.surfaceMeshes, GBX.surfaceEdges, GBX.surfaceOpenings ];
 	//return [ GBX.surfaceOpenings ];
-};
-
-
-
-
-GBX.updateScene = function( text ) {
-
-	scene.remove( meshes );
-	meshes = GBX.parseFileXML( text );
-	console.log( 'mm', meshes );
-	scene.add( ...meshes );
-
-	zoomObjectBoundingSphere( meshes[ 1 ] );
-	console.log( 'scene', scene );
 
 };
 
 
 
-GBX.getStringFromXml = function( xml ){
+GBX.getStringFromXml = function( xml ){ // used by??
 	// test in console : GBX.getStringFromXml( GBX.gbxml );
 
 	const string = new XMLSerializer().serializeToString( xml );
 	console.log( 'string', string );
 
-	return string
+	return string;
 
 };
 
@@ -218,7 +204,6 @@ GBX.getSurfaceMeshes = function() {
 
 		} else if ( len === 4 && !openings ) {
 
-
 			GBX.count4++;
 			GBX.setQuad( vertices, color );
 
@@ -261,22 +246,6 @@ GBX.setTriangle = function( vertices, color ) {
 
 };
 
-
-
-GBX.getTriangleVertices = function( vertices ) {
-	//console.log( 'vertices', vertices );
-	//console.log( 'color', color );
-
-	const verts = [];
-	for ( let vertex of vertices ) {
-
-		verts.push( vertex.x, vertex.y, vertex.z );
-
-	}
-
-	return verts;
-
-};
 
 
 GBX.setQuad = function( vertices, color ){
@@ -338,7 +307,7 @@ GBX.getSurfaceEdges = function() {
 GBX.getOpenings = function() {
 
 	const surfaceOpenings = [];
-	const material = new THREE.MeshBasicMaterial( { color: 0x000000, opacity: 0.5, side: 2, transparent: true } );
+	const material = new THREE.MeshBasicMaterial( { color: 0xffffff, opacity: 0.5, side: 2, transparent: true } );
 
 	for ( let surfJson of GBX.surfacesJson ) {
 
@@ -351,8 +320,6 @@ GBX.getOpenings = function() {
 			console.log( 'len', vertices.length );
 
 			if ( vertices.length === 4 ) {
-
-
 
 				for ( let vertex of vertices.slice( 0, 3 ) ) {
 
@@ -381,7 +348,6 @@ GBX.getOpenings = function() {
 		}
 
 	}
-
 
 	mesh = GBX.getTrianglesMesh( GBX.openingVertices, GBX.openingColors );
 	surfaceOpenings.push( mesh );
@@ -469,6 +435,8 @@ GBX.getPlane = function( points, start = 0 ) {
 
 
 //////////
+
+// move elsewhere??
 
 GBX.setCardToggleVisibility = function( target, log ) {
 

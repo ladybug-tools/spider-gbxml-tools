@@ -3,7 +3,7 @@
 
 // Copyright 2018 Ladybug Tools authors. MIT License
 
-var THR = { release: ' THR 7.0'};
+var THR = { release: ' THR 2018-10-02'};
 
 
 

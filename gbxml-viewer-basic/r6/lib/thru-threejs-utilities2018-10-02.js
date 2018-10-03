@@ -3,7 +3,7 @@
 // jshint esversion: 6
 
 
-let THRU = { release: "2018-10-02" };
+let THRU = { release: "2018-09-26" };
 
 THRU.radius = 100;
 
@@ -16,23 +16,19 @@ THRU.getSettings = function() {
 	`
 		<p>
 			<button onclick="THR.controls.autoRotate = !THR.controls.autoRotate;" >toggle rotation</button>
-
-			<button onclick=THRU.toggleAxesHelper(); >toggle axes</button>
 		</p>
 
 		<p>
-
-			<button onclick=THRU.toggleSurfaces(); >toggle surfaces</button>
+			<button onclick=THRU.toggleWireframe(); >toggle wireframe</button>
 
 			<button onclick=THRU.toggleEdges(); >toggle edges</button>
 		</p>
 
 
 		<p>
-
-			<button onclick=THRU.toggleWireframe(); >toggle wireframe</button>
-
 			<button onclick=THRU.toggleSurfaceNormals(); title="All Three.js triangles have a normal. See them here." > toggle surface normals </button>
+
+			<button onclick=THRU.toggleAxesHelper(); >toggle axes</button>
 
 		</p>
 
@@ -83,39 +79,19 @@ THRU.getGeometry = function() {
 
 
 
-THRU.toggleAxesHelper = function() {
-
-	if ( !THRU.axesHelper ) {
-
-		THRU.axesHelper = new THREE.AxesHelper( THRU.radius );
-		THR.scene.add( THRU.axesHelper );
-		return;
-
-	 }
-
-	THRU.axesHelper.visible = !THRU.axesHelper.visible;
-
-};
-
-
-
-
-
-
-THRU.toggleSurfaces = function() {
+THRU.toggleWireframe = function() {
 
 	THR.scene.traverse( function ( child ) {
 
 		if ( child instanceof THREE.Mesh ) {
 
-			child.visible = !child.visible;
+			child.material.wireframe = !child.material.wireframe;
 
 		}
 
 	} );
 
 };
-
 
 
 
@@ -126,22 +102,6 @@ THRU.toggleEdges = function() {
 		if ( child instanceof THREE.Line ) {
 
 			child.visible = !child.visible;
-
-		}
-
-	} );
-
-};
-
-
-
-THRU.toggleWireframe = function() {
-
-	THR.scene.traverse( function ( child ) {
-
-		if ( child instanceof THREE.Mesh ) {
-
-			child.material.wireframe = !child.material.wireframe;
 
 		}
 
@@ -206,6 +166,22 @@ THRU.toggleSurfaceNormals = function() {
 	}
 
 	THRU.helperNormalsFaces.visible = !THRU.helperNormalsFaces.visible;
+
+};
+
+
+
+THRU.toggleAxesHelper = function() {
+
+	if ( !THRU.axesHelper ) {
+
+		THRU.axesHelper = new THREE.AxesHelper( THRU.radius );
+		THR.scene.add( THRU.axesHelper );
+		return;
+
+	 }
+
+	THRU.axesHelper.visible = !THRU.axesHelper.visible;
 
 };
 
@@ -281,7 +257,8 @@ THRU.onThreejsSceneLoaded = function() { return THR.scene; };
 
 
 
-THRU.setSceneDispose = function( obj = THR.scene.children ) {
+THRU.setSceneDispose = function( objArray = [] ) {
+
 	//console.log( 'THR.scene', THR.scene );
 
 	THR.scene.traverse( function ( child ) {
@@ -291,9 +268,9 @@ THRU.setSceneDispose = function( obj = THR.scene.children ) {
 			child.geometry.dispose();
 			child.material.dispose();
 
-			//THR.scene.remove( child );
+			THR.scene.remove( child );
 
-		} else if ( child instanceof THREE.LineSegments ) {
+		} else if( child instanceof THREE.LineSegments ) {
 
 			child.geometry.dispose();
 			child.material.dispose();
@@ -302,73 +279,42 @@ THRU.setSceneDispose = function( obj = THR.scene.children ) {
 
 	} );
 
-	if ( Array.isArray( obj ) ) {
 
-		THR.scene.remove( ...obj );
-
-	} else {
-
-		THR.scene.remove( obj );
-
-	}
-
+	THR.scene.remove( ...objArray );
 
 	THR.axesHelper = undefined;
-	THRU.helperNormalsFaces = undefined;
 
-	//divRendererInfo.innerHTML = THRU.getRendererInfo();
+	THRU.getRenderInfo();
 
 };
 
 
 
-THRU.getRendererInfo = function() {
-	//console.log( 'THR.renderer.info', THR.renderer.info );
+THRU.getRenderInfo = function() {
 
+	//console.log( 'renderer.info.memory.geometries', THR.renderer.info.memory.geometries );
+	//console.log( 'renderer.info', THR.renderer.info );
+
+	target = divRendererInfo
 	const htm =
 	`
-		<p>
-			memory:<br>
-			geometries: ${ THR.renderer.info.memory.geometries.toLocaleString() }
-		</p>
-		<p>
-			renderer:<br>
-			triangles: ${ THR.renderer.info.render.triangles.toLocaleString() } <br>
-			lines: ${ THR.renderer.info.render.lines.toLocaleString() } <br>
-		</p>
-		<p>
-			<button onclick=target.innerHTML=THRU.getRendererInfo(); >update info</button>
+	<p>
+		memory:<br>
+		geometries: ${ THR.renderer.info.memory.geometries.toLocaleString() }
+	</p>
+	<p>
+		renderer:<br>
+		triangles: ${ THR.renderer.info.render.triangles.toLocaleString() } <br>
+		lines: ${ THR.renderer.info.render.lines.toLocaleString() } <br>
+	</p>
+	<p>
+		<button onclick=target.innerHTML=THRU.getRenderInfo(); >update info</button>
 
-			<a href="https://threejs.org/docs/#api/en/renderers/WebGLRenderer.info" target="_blank">?</a>
+	</p>
+		`;
 
-			<button onclick=THRU.setStats(); >stats</button>
-
-			<a href="https://github.com/mrdoob/stats.js/" target="_blank">?</a>
-
-		</p>
-
-	`;
-
+	//<button onclick=THRU.setSceneDispose() >dispose geometry not </button>
 	return htm;
-
-};
-
-
-
-THRU.setStats = function() {
-
-	var script=document.createElement('script');
-	script.onload =function(){
-		var stats=new Stats();
-		document.body.appendChild(stats.dom);
-
-		requestAnimationFrame( function loop(){
-			stats.update();
-			requestAnimationFrame(loop);
-		});
-	};
-	script.src='https://rawgit.com/mrdoob/stats.js/master/build/stats.min.js';
-	document.head.appendChild(script);
 
 };
 
@@ -392,7 +338,7 @@ THRU.addSomeLights = function() {
 
 
 
-THRU.getSomeBoxes = function( count = 500, size = 10, material = new THREE.MeshNormalMaterial() ) {
+THRU.getSomeBoxes = function( count = 50, size = 10, material = new THREE.MeshNormalMaterial() ) {
 
 	//const geometry = new THREE.BoxGeometry( size, size, size );
 	const geometry = new THREE.BoxBufferGeometry( size, size, size );
