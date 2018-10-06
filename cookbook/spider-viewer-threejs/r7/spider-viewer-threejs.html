@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
+<meta name=description content="A lightweight core module to help view real-time interactive 3D graphics in your browser using WebGL and the Three.js JavaScript library" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-09-28" >
+<title>Spider Viewer R7 ~ Three.js R97 Test</title>
+<style>
+/* Copyright 2018 Ladybug Tools authors. MIT License */
+
+body, html { font: 11pt monospace; height: 100%; margin: 0; overflow: hidden; }
+
+a { color: crimson; text-decoration: none; }
+a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+#navMenu { background-color: #eee; max-height: 95%; left: 0; margin: 1rem; width: 18rem; overflow: auto;
+	opacity: 0.8; padding: 1rem; position: absolute; resize: both; top: 0; z-index: 10; }
+
+
+</style>
+</head>
+<body>
+<script src = "https://rawgit.com/mrdoob/three.js/r97/build/three.min.js" ></script>
+<script src = "https://rawgit.com/mrdoob/three.js/r97/examples/js/controls/OrbitControls.js" ></script>
+<script src = "../../../lib/r7/thr-threejs.js" ></script>
+
+
+	<main id="container" ></main>
+
+	<nav id = "navMenu" >
+
+		<header>
+
+			<a href="" >spider viewer lib r7 three.js</a>
+
+		</header>
+
+	</nav>
+
+
+<script>
+
+
+init();
+
+
+function init() {
+
+	THR.getThreejs();
+
+	THR.animate();
+
+	// just to show we are alive
+
+	THR.scene.add( new THREE.AxesHelper( 100 ) );
+
+	if ( window.self === window.top ) { // don't rotate if in an iframe
+
+		THR.controls.autoRotate = true;
+
+	}
+	
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
+<meta name=description content="Open, view gbXML files in 3D in your browser with free, open source entry-level Three.js JavaScript" >
+<meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-10-05" >
+<title>Spider gbXML Viewer Basic R7</title>
+<link rel="stylesheet" href="../../lib/r7/style.css">
+</head>
+<body>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r97/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r97/examples/js/controls/OrbitControls.js" ></script>
+<script src = "../../lib/r7/mnu-menu.js" ></script>
+<script src = "../../lib/r7/thr-threejs.js" ></script>
+<script src = "../../lib/r7/thru-threejs-utilities.js"></script>
+<script src = "../../lib/r7/gbx-gbxml-viewer-basic.js" ></script>
+<script src = "../../lib/r7/fil-open-file-gbxml.js" ></script>
+<script src = "../../lib/r7/gal-sample-files-gallery-gbxml.js" ></script>
+
+
+	<main id="container" ></main>
+
+	<nav id = "navMenu" >
+
+		<header>
+
+			<div id = "divHeader" ></div>
+
+		</header>
+
+		<details open >
+
+			<summary>File Open</summary>
+
+			<div id="divFileOpen" class="dragDropArea" ></div>
+
+		</details>
+
+		<details>
+
+			<summary>Spider gbXML Sample files</summary>
+
+			<div id=divSampleFileButtons ></div>
+
+			<div id=divSampleFileItems ></div>
+
+		</details>
+
+		<details open>
+
+			<summary>Settings</summary>
+
+			<div id = "divSettings" ></div>
+
+		</details>
+
+		<details>
+
+			<summary>Renderer Info</a></summary>
+
+			<div id = "divRendererInfo" ></div>
+
+		</details>
+
+		<details >
+
+			<summary>File Info</summary>
+
+			<div id = "divFileInfo" ></div>
+
+		</details>
+
+		<div id = "divLog" ></div>
+
+		<footer>
+
+			<hr>
+
+			<div id = "divFooter" ></div>
+
+		</footer>
+
+	</nav>
+
+	<nav>
+		<button id="butHamburger" onclick=MNU.toggleNavLeft(); title="click to hide this menu"> slide &#9776; </button>
+	</nav>
+
+<script>
+
+const urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/gbxml-viewer-basic/";
+
+const urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml';
+//const urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/coventry-university-of-warwick-small.xml';
+
+
+init();
+
+
+
+function init() {
+
+	divHeader.innerHTML = MNU.getNavHeader(); // not essential
+
+	//divSettings.innerHTML = THRU.getSettings( divSettings );
+	divFileOpen.innerHTML = FIL.getFileOpen(); // if needed: set file info target
+
+	divSampleFileButtons.innerHTML = GAL.setCardSampleGalleries();
+
+	divSettings.innerHTML = THRU.getSettings();
+
+	divFooter.innerHTML = MNU.getNavFooter(); // not essential
+
+
+	THR.getThreejs();
+
+	THR.animate();
+
+	THRU.setHelpers();
+
+	THRU.addSomeLights2();
+
+	if ( !location.hash ) { location.hash = urlDefaultFile; } else { FIL.onHashChange(); }	THR.animate();
+
+	//location.hash = urlDefaultFile;
+
+	divRendererInfo.innerHTML = THRU.getRendererInfo();
+
+}
+
+
+THRU.onThreejsSceneLoaded = function() {
+
+	const htm =
+	`<p>
+		<div>triangles: ${ GBX.count3.toLocaleString() }</div>
+		<div>quads: ${ GBX.count4.toLocaleString() }</div>
+		<div>five+: ${ GBX.count5plus.toLocaleString() }</div>
+		<div>openings: ${ GBX.surfaceOpenings.children.length.toLocaleString() }</div>
+	`;
+
+	divFileInfo.innerHTML += htm;
+
+	divFileInfo.innerHTML += 'time: ' + parseInt( performance.now() - FIL.timeStart, 10 ).toLocaleString() + ' ms<br>';
+
+	divRendererInfo.innerHTML = THRU.getRendererInfo();
+
+	//THRU.zoomObjectBoundingSphere( GBX.surfaceEdges );
+
+};
+
+</script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="Gather and view multiple Radiance RAD files in real-time 3D in your browser using the Three.js JavaScript library" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-09-26" >
+<title>Spider Rad Viewer R7 Section Cut </title>
+<link rel="stylesheet" href="../../../lib/r7/style.css">
+</head>
+<body>
+<script src = "https://rawgit.com/mrdoob/three.js/r96/build/three.min.js" ></script>
+<script src = "https://rawgit.com/mrdoob/three.js/r96/examples/js/controls/OrbitControls.js" ></script>
+<script src = "../../../lib/r7/mnu-menu.js" ></script>
+<script src = "../../../lib/r7/fil-open-file-gbxml.js" ></script>
+<script src = "../../../lib/r7/thr-threejs.js" ></script>
+<script src = "../../../lib/r7/thru-threejs-utilities.js" ></script>
+<script src = "../../../lib/r7/gbx-gbxml-viewer-basic.js" ></script>
+<script src = "../../../lib/r7/cut-section-cut.js"></script>
+
+	<main id="container" ></main>
+
+	<nav id = "navMenu" >
+
+		<header>
+
+			<div id = "divHeader" ></div>
+
+		</header>
+
+		<details open >
+
+			<summary>File Open</summary>
+
+			<div id="divFileOpen" class="dragDropArea" ></div>
+
+		</details>
+
+		<details open >
+
+			<summary>Section Cut</summary>
+
+			<div id=divSectionCut ></div>
+
+		</details>
+
+		<details>
+
+			<summary>Settings</summary>
+
+			<div id = "divSettings" ></div>
+
+		</details>
+
+		<details >
+
+			<summary>File Info</summary>
+
+			<div id = "divFileInfo" ></div>
+
+		</details>
+
+		<div id = "divLog" ></div>
+
+		<footer>
+
+			<hr>
+
+			<div id = "divFooter" ></div>
+
+		</footer>
+
+	</nav>
+
+
+<script>
+
+const urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/rad-viewer-basic/";
+
+
+const urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml';
+//const urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/coventry-university-of-warwick-small.xml';
+
+
+init();
+
+
+function init() {
+
+	divHeader.innerHTML = MNU.getNavHeader();
+
+	divFileOpen.innerHTML = FIL.getFileOpen();
+
+	divSettings.innerHTML = THRU.getSettings();
+
+	divSectionCut.innerHTML = CUT.getDetSectionViews();
+
+	divFooter.innerHTML = MNU.getNavFooter(); // not essential
+
+	THR.getThreejs();
+
+	THRU.toggleAxesHelper();
+
+	if ( !location.hash ) { location.hash = urlDefaultFile; } else { FIL.onHashChange(); }
+
+	//location.hash = urlDefaultFile;
+
+	THR.animate();
+
+}
+
+
+</script>
+</body>
+</html>

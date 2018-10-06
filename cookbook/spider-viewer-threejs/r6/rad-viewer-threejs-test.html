@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="A lightweight core module to help view real-time interactive 3D graphics in your browser using WebGL and the Three.js JavaScript library" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-09-26" >
+<title>Spider Rad Viewer R6 ~ Three Test</title>
+<style>
+	/* Copyright 2018 pushMe pullYou authors. MIT License */
+
+	body { font: 11pt monospace; margin: 0; overflow: hidden; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	input[ type = range ] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 100%; }
+	input[ type = range ]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }
+	input[ type = range ]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }
+
+	#divMenu { margin: 0 20px; max-width: 15rem; position: absolute; }
+
+</style>
+</head>
+<body>
+<script src = "https://rawgit.com/mrdoob/three.js/r96/build/three.min.js" ></script>
+<script src = "https://rawgit.com/mrdoob/three.js/r96/examples/js/controls/OrbitControls.js" ></script>
+<script src="../../../lib/r6/thr-threejs.js"></script>
+
+	<div id = "divMenu" >
+
+		<div id = "divTitle" ></div>
+
+	</div>
+
+<script>
+
+
+const urlSourceCode = "https://github.com/ladybug-tools/spider-rad-viewer/tree/master/cookbook/rad-viewer-three-test";
+
+
+init();
+
+
+
+function init() {
+
+	divTitle.innerHTML = getTitle();
+
+	THR.getThreejs();
+
+	THR.animate();
+
+	// just to show we are alive
+	THR.axesHelper = new THREE.AxesHelper( 100 );
+	THR.scene.add( THR.axesHelper );
+
+	THR.controls.autoRotate = true;
+
+}
+
+
+
+function getTitle() {
+
+	//document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+
+	const htm =
+
+	`<h2>
+		<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
+			<img src=https://status.github.com/images/invertocat.png height=18 >
+		</a>
+		<a href="" title="Click to reload this page" >${ document.title }</a>
+	</h2>
+
+	<p>
+		${ document.head.querySelector( "[ name=description ]" ).content }
+	</p>`;
+
+	return htm;
+
+}
+
+
+</script>
+</body>
+</html>
