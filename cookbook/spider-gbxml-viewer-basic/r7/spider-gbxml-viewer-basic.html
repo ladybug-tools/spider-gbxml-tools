@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8" >
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
-<meta name=description content="Very basic script to view Radiance RAD files in interactive 3D in your browser using the Three.js JavaScript library" >
-<meta name=keywords content="Radiance,Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-10-03" >
-<title>Spider Rad Viewer R7 Basic</title>
+<meta name=description content="Open, view gbXML files in 3D in your browser with free, open source entry-level Three.js JavaScript" >
+<meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-10-05" >
+<title>Spider gbXML Viewer Basic R7.2xx</title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 </head>
 <body>
@@ -15,8 +15,9 @@
 <script src = "../../../lib/r7/mnu-menu.js" ></script>
 <script src = "../../../lib/r7/thr-threejs.js" ></script>
 <script src = "../../../lib/r7/thru-threejs-utilities.js"></script>
-<script src = "../../../lib/r7/gbx-gbxml-viewer-basic.js" ></script>
+<script src = "./gbx-gbxml-loader.js" ></script>
 <script src = "../../../lib/r7/fil-open-file-gbxml.js" ></script>
+<script src = "../../../lib/r7/gal-sample-files-gallery-gbxml.js" ></script>
 
 	<main id="container" ></main>
 
@@ -36,6 +37,16 @@
 
 		</details>
 
+		<details>
+
+			<summary>Spider gbXML Sample files</summary>
+
+			<div id=divSampleFileButtons ></div>
+
+			<div id=divSampleFileItems ></div>
+
+		</details>
+
 		<details open>
 
 			<summary>Settings</summary>
@@ -44,7 +55,7 @@
 
 		</details>
 
-		<details>
+		<details ontoggle=divRendererInfo.innerHTML=THRU.getRendererInfo(); >
 
 			<summary>Renderer Info</a></summary>
 
@@ -72,6 +83,9 @@
 
 	</nav>
 
+	<nav>
+		<button id="butHamburger" onclick=MNU.toggleNavLeft(); title="click to hide this menu"> slide &#9776; </button>
+	</nav>
 
 <script>
 
@@ -92,29 +106,48 @@ function init() {
 	//divSettings.innerHTML = THRU.getSettings( divSettings );
 	divFileOpen.innerHTML = FIL.getFileOpen(); // if needed: set file info target
 
-	divSettings.innerHTML = THRU.getSettings(); // not essential
+	divSampleFileButtons.innerHTML = GAL.setCardSampleGalleries();
+
+	divSettings.innerHTML = THRU.getSettings();
 
 	divFooter.innerHTML = MNU.getNavFooter(); // not essential
 
 
 	THR.getThreejs();
 
-	THRU.toggleAxesHelper();
-
-	THRU.addSomeLights2();
+	THR.animate();
 
 	THRU.setHelpers();
+
+	THRU.addSomeLights2();
 
 
 	if ( !location.hash ) { location.hash = urlDefaultFile; } else { FIL.onHashChange(); }	THR.animate();
 
 	//location.hash = urlDefaultFile;
 
-	THR.animate();
+}
+
+
+THRU.onThreejsSceneLoaded = function() {
+
+	const htm =
+	`<p>
+		<div>triangles: ${ GBX.count3.toLocaleString() }</div>
+		<div>quads: ${ GBX.count4.toLocaleString() }</div>
+		<div>five+: ${ GBX.count5plus.toLocaleString() }</div>
+		<div>openings: ${ GBX.surfaceOpenings.children.length.toLocaleString() }</div>
+	`;
+
+	divFileInfo.innerHTML += htm;
+
+	divFileInfo.innerHTML += 'time: ' + parseInt( performance.now() - FIL.timeStart, 10 ).toLocaleString() + ' ms<br>';
 
 	divRendererInfo.innerHTML = THRU.getRendererInfo();
 
-}
+	//THRU.zoomObjectBoundingSphere( GBX.surfaceEdges );
+
+};
 
 </script>
 </body>

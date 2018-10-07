@@ -37,10 +37,10 @@ GBX.colors = Object.assign( {}, GBX.colorsDefault ); // working copy of default 
 
 GBX.surfaceTypes  = Object.keys( GBX.colors );
 
-const referenceObject = new THREE.Object3D();
-const triangle = new THREE.Triangle();
-const plane = new THREE.Plane();
+GBX.referenceObject = new THREE.Object3D();
+GBX.triangle = new THREE.Triangle(); // used by GBX.getPlane
 
+const v = ( x, y, z ) => new THREE.Vector3( x, y, z );
 // loads any xml file - from AJAX, file reader or location hash or wherever
 
 GBX.parseFileXML = function( text ) { // called by main HTML file
@@ -79,7 +79,7 @@ GBX.parseFileXML = function( text ) { // called by main HTML file
 
 	GBX.surfaceMeshes = new THREE.Group();
 	GBX.surfaceMeshes.name = 'GBX.surfaceMeshes';
-	GBX.surfaceMeshes.add( ...GBX.getSurfaceMeshes() );
+	GBX.getSurfaceMeshes();
 
 	GBX.surfaceEdges = new THREE.Group();
 	GBX.surfaceEdges.name = 'GBX.surfaceEdges';
@@ -173,6 +173,7 @@ GBX.getSurfaceMeshes = function() {
 	const surfaces = GBX.surfacesJson; // gbjson.Campus.Surface;
 	const surfaceMeshes = [];
 
+	nots = 0;
 	for ( let surface of surfaces ) {
 
 		const holes = [];
@@ -195,7 +196,7 @@ GBX.getSurfaceMeshes = function() {
 		const polyloop = surface.PlanarGeometry.PolyLoop;
 		const vertices = GBX.getVertices( polyloop );
 
-		len = vertices.length;
+		const len = vertices.length;
 		const col = GBX.colors[ surface.surfaceType ] || GBX.colors.Undefined;
 		const color = new THREE.Color( col );
 
@@ -212,24 +213,66 @@ GBX.getSurfaceMeshes = function() {
 
 		} else {
 
-			GBX.count5plus ++
+			GBX.count5plus ++;
 
-			const material = new GBX.materialType( { color: col, side: 2, opacity: 0.85, transparent: true } );
+			const plane = GBX.getPlane( vertices );
 
-			const shape = GBX.get3dShape( vertices, material, holes );
-			shape.userData.data = surface;
-			shape.castShadow = shape.receiveShadow = true;
-			surfaceMeshes.push( shape );
+			if ( Math.abs( plane.normal.z ) === 1 && plane.normal.x === 0 && plane.normal.y === 0 ) {
+
+				//console.log( 'nor', Math.abs( plane.normal.z ) === 1 );
+
+				const hh = holes.length > 1 ? [ holes ] : [];
+
+				const triangles = THREE.ShapeUtils.triangulateShape( vertices, hh );
+
+				const verts = [];
+
+				let allpoints = vertices.slice( 0 );
+				allpoints = allpoints.concat( holes );
+				//console.log( 'all', allpoints );
+
+				for ( let triangle of triangles ) {
+
+					console.log( 'triangle', triangle );
+					for ( var j = 0; j < 3; j++ ) {
+
+						const vertex = allpoints[ triangle[ j ] ];
+
+						//console.log( 'vv', vertex  );
+
+						verts.push( vertex );
+
+					}
+
+				}
+
+				//console.log( 'vertices', verts );
+
+				geometry = new THREE.BufferGeometry();
+				geometry.setFromPoints( verts );
+				geometry.computeVertexNormals();
+
+				const material = new GBX.materialType( { color: col, side: 2, opacity: 0.85, transparent: true } );
+				mesh = new THREE.Mesh( geometry, material );
+				GBX.surfaceMeshes.add( mesh );
+
+			} else {
+
+				nots ++
+
+			}
+
 
 		}
 
 	}
 
-	const triangles = GBX.getTrianglesMesh( GBX.triangleVertices, GBX.triangleColors );
+	console.log( 'nots', nots );
 
-	surfaceMeshes.push( triangles );
-	surfaceMeshes.castShadow = surfaceMeshes.receiveShadow = true;
-	return surfaceMeshes;
+	//const triangles = GBX.getTrianglesMesh( GBX.triangleVertices, GBX.triangleColors );
+	//surfaceMeshes.push( triangles );
+	//surfaceMeshes.castShadow = surfaceMeshes.receiveShadow = true;
+	//return surfaceMeshes;
 
 };
 
@@ -240,12 +283,14 @@ GBX.setTriangle = function( vertices, color ) {
 	//console.log( 'vertices', vertices );
 	//console.log( 'color', color );
 
-	for ( let vertex of vertices ) {
+	const geometry = new THREE.BufferGeometry();
+	geometry.setFromPoints( vertices );
+	geometry.computeVertexNormals();
+	material = new GBX.materialType( { color: color, side: 2, opacity: 0.85, transparent: true } );
+	const mesh = new THREE.Mesh( geometry, material );
+	//console.log( 'mesh', mesh );
 
-		GBX.triangleVertices.push( vertex.x, vertex.y, vertex.z );
-		GBX.triangleColors.push( color.r, color.g, color.b );
-
-	}
+	GBX.surfaceMeshes.add( mesh );
 
 };
 
@@ -253,10 +298,8 @@ GBX.setTriangle = function( vertices, color ) {
 
 GBX.setQuad = function( vertices, color ){
 
-	GBX.setTriangle( vertices.slice( 0, 3 ), color );
-
-	const vertices2 = [ vertices[ 3 ], vertices[ 2 ], vertices[ 0 ] ];
-	GBX.setTriangle( vertices2, color );
+	const vv = vertices.slice( 0, 3 ).concat( [ vertices[ 3 ], vertices[ 2 ], vertices[ 0 ] ] );
+	GBX.setTriangle( vv, color );
 
 };
 
@@ -381,17 +424,15 @@ GBX.get3dShape = function( vertices, material, holes = [] ) {
 
 	const plane = GBX.getPlane( vertices );
 
-	referenceObject.lookAt( plane.normal ); // copy the rotation of the plane
-	referenceObject.quaternion.conjugate(); // figure out the angle it takes to rotate the vertices so they lie on the XY plane
-	referenceObject.updateMatrixWorld();
-
-	vertices.map( vertex => referenceObject.localToWorld( vertex ) );
+	GBX.referenceObject.lookAt( plane.normal ) // copy the rotation of the plane
+	GBX.referenceObject.quaternion.conjugate(); // figure out the angle it takes to rotate the vertices so they lie on the XY plane
+	GBX.referenceObject.updateMatrixWorld();
 
 	const holeVertices = [];
 
 	for ( let verticesHoles of holes ) {
 
-		verticesHoles.map( vertex => referenceObject.localToWorld( vertex ) );
+		verticesHoles.map( vertex => GBX.referenceObject.localToWorld( vertex ) );
 
 		const hole = new THREE.Path();
 		hole.setFromPoints( verticesHoles );
@@ -399,29 +440,50 @@ GBX.get3dShape = function( vertices, material, holes = [] ) {
 
 	}
 
-	const shapeMesh = get2DShape( vertices, material, holeVertices, holes );
+	const vertices2 = vertices.slice();
 
-	shapeMesh.lookAt( plane.normal );
-	const center = plane.coplanarPoint( new THREE.Vector3() );
-	shapeMesh.position.copy( center );
+	vertices2.map( vertex => GBX.referenceObject.localToWorld( vertex ) );
 
-	return shapeMesh;
+	const shapeMesh = get2DShape( vertices, vertices2, material, holeVertices, holes );
+
+	//shapeMesh.lookAt( plane.normal );
+	//const center = plane.coplanarPoint( new THREE.Vector3() );
+	//shapeMesh.position.copy( center );
+
+	//return shapeMesh;
 
 	//
 
-		function get2DShape( vertices, material, holes = [], h2 ) {
+		function get2DShape( vertices, vertices2, material, holes = [], h2 ) {
 
-			const shape = new THREE.Shape( vertices );
-			shape.holes = holes;
+			//const shape = new THREE.Shape( vertices );
+			//shape.holes = holes;
 
-			/*
+			const triangles = THREE.ShapeUtils.triangulateShape( vertices, h2 );
+			//console.log( 'tri', triangles );
 
-			triangles = THREE.ShapeUtils.triangulateShape( vertices, h2 );
-			*/
+			for ( var i = 0; i < triangles.length; i++ ) {
 
-			const geometryShape = new THREE.ShapeBufferGeometry( shape );
-			const shapeMesh = new THREE.Mesh( geometryShape, material );
-			return shapeMesh;
+					const tri = triangles[ i ];
+
+					//console.log( 'tri', tri );
+
+					for ( var j = 0; j < tri.length; j++ ) {
+
+						const vertex = vertices[ j ];
+
+						//console.log( 'vv', vertex  );
+
+						GBX.triangleVertices.push( vertex.x, vertex.y, vertex.z );
+						GBX.triangleColors.push( 1, 0.8, 0.8 );
+
+					}
+
+			}
+
+			//const geometryShape = new THREE.ShapeBufferGeometry( shape );
+			//const shapeMesh = new THREE.Mesh( geometryShape, material );
+			//return shapeMesh;
 
 		}
 
@@ -431,18 +493,18 @@ GBX.get3dShape = function( vertices, material, holes = [] ) {
 
 GBX.getPlane = function( points, start = 0 ) {
 
-	triangle.set( points[ start ], points[ start + 1 ], points[ start + 2 ] );
+	GBX.triangle.set( points[ start ], points[ start + 1 ], points[ start + 2 ] );
 
-	if ( triangle.getArea() === 0 ) { // looks like points are colinear therefore try next set
+	if ( GBX.triangle.getArea() === 0 ) { // looks like points are colinear therefore try next set
 
 		GBX.getPlane( points, ++start );
 
 	}
 
 
-	return triangle.getPlane( plane );
+	return GBX.triangle.getPlane( new THREE.Plane() );
 
-}
+};
 
 
 //////////
