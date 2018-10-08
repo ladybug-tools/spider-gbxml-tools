@@ -254,23 +254,25 @@ GBX.setQuad = function( vertices, color ){
 
 	const verticesRemix = vertices.slice( 0, 3 ).concat( [ vertices[ 3 ], vertices[ 2 ], vertices[ 0 ] ] );
 	GBX.setTriangle( verticesRemix, color );
+	// or how about a PlaneBufferGeometry??
 
 };
 
 
 
 GBX.setPolygon = function( vertices, color, holes = [] ) {
-	//console.log( 'holes', holes );
+	//console.log( { holes } );
 
 	//assume vertices are coplanar but at an arbitrary rotation and position in space
 	const plane = GBX.getPlane( vertices );
 
+	// rotate vertices to lie on XY plane
 	GBX.referenceObject.lookAt( plane.normal ); // copy the rotation of the plane
 	GBX.referenceObject.quaternion.conjugate(); // figure out the angle it takes to rotate the vertices so they lie on the XY plane
 	GBX.referenceObject.updateMatrixWorld();
 
 	const verticesFlat = vertices.map( vertex => GBX.referenceObject.localToWorld( vertex ) );
-	//console.log( 'verticesFlat', verticesFlat );
+	//console.log( { verticesFlat } );
 
 	for ( let verticesHoles of holes ) {
 
@@ -278,8 +280,9 @@ GBX.setPolygon = function( vertices, color, holes = [] ) {
 
 	}
 
+	// vertices must be coplanar with the XY plane for Earcut.js to work
 	const triangles = THREE.ShapeUtils.triangulateShape( verticesFlat, holes );
-	//console.log( 'triangles', triangles );
+	//console.log( { triangles } );
 
 	const verticesAll = vertices.slice( 0 ).concat( ...holes );
 	//console.log( 'verticesAll', verticesAll );
@@ -297,7 +300,7 @@ GBX.setPolygon = function( vertices, color, holes = [] ) {
 		}
 
 	}
-	//console.log( 'verticesTriangles', verticesTriangles );
+	//console.log( { verticesTriangles } );
 
 	const geometry = new THREE.BufferGeometry();
 	geometry.setFromPoints( verticesTriangles );

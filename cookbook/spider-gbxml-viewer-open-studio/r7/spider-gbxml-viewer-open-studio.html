@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="Various utility functions to support viewing real-time interactive 3D graphics in your browser using WebGL and the Three.js JavaScript library" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-10-04" >
+<title>Spider Viewer Lib R7 ~ Three.js Utilities</title>
+<link rel="stylesheet" href = "../../../lib/r7/style.css" >
+</head>
+<body>
+<script src = "https://rawgit.com/mrdoob/three.js/r97/build/three.min.js" ></script>
+<script src = "https://rawgit.com/mrdoob/three.js/r97/examples/js/controls/OrbitControls.js" ></script>
+
+<script src = "../../../lib/r7/thr-threejs.js"></script>
+<script src = "../../../lib/r7/thru-threejs-utilities.js"></script>
+<script src = "../../../lib/r7/gbx-gbxml-loader.js" ></script>
+<script src = "../../../lib/r7/fil-open-file-gbxml.js" ></script>
+
+	<main id="container" ></main>
+
+	<nav id = "navMenu" >
+
+		<details open >
+
+			<summary title = "Update what you see in the display">Settings</summary>
+
+			<div id = "divSettings" ></div>
+
+		</details>
+
+		<details ontoggle=divRendererInfo.innerHTML=THRU.getRendererInfo(); > <!-- not essential -->
+
+			<summary title = "Info on what Three.js is animating" >Renderer Info</summary>
+
+			<div id = "divRendererInfo" ></div>
+
+		</details>
+
+		<details ontoggle=divSceneInfo.innerHTML=THRU.getSceneInfo(); > <!-- not essential -->
+
+			<summary title = "Info on what is in the Three.js scene" >Scene Info</summary>
+
+			<div id = "divSceneInfo" ></div>
+
+		</details>
+
+		<div id = "divFileInfo" ></div>
+
+		<div id = "divLog" ></div>
+
+	</nav>
+
+
+<script>
+
+
+FIL.urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml';
+//FIL.urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/coventry-university-of-warwick-small.xml';
+
+FIL.divFileInfo = divFileInfo;
+
+init();
+
+
+
+function init() {
+
+	divSettings.innerHTML = THRU.getSettings(); // not essential
+
+	THR.getThreejs();
+
+	THRU.setHelpers(); // not essential
+
+	THRU.addSomeLights();
+
+	THR.animate();
+
+	FIL.onHashChange();
+
+}
+
+
+</script>
+</body>
+</html>

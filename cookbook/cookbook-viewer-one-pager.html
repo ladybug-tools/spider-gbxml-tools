@@ -5,8 +5,8 @@
 <meta name = "viewport" content= "width=device-width, initial-scale=1" >
 <meta name = "description" content = "This script: Obtains list of sub-folders from a given folder on GitHub using the GitHub API. Creates an iframe for each sub-folder. Sets index.html of each sub-folder as the source for each iframe." >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
-<meta name = "date" content = "2018-08-30" >
-<title>Spider RAD Viewer Cookbook</title>
+<meta name = "date" content = "2018-10-08" >
+<title>Spider gbXML Tools Cookbook</title>
 <style>
 
 	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
@@ -60,7 +60,7 @@
 <script>
 
 const user = 'ladybug-tools';
-const repo = 'spider-rad-viewer';
+const repo = 'spider-gbxml-tools';
 const folder = 'cookbook';
 
 let folders = [];
@@ -95,7 +95,7 @@ function init() {
 
 
 
-function fetchGitHubApiFolderContents( user = 'ladybug-tools', repo = 'spider-rad-viewer', folder = 'cookbook', target = divFolderContents ) {
+function fetchGitHubApiFolderContents( user = 'ladybug-tools', repo = 'spider-gbxml-tools', folder = 'cookbook', target = divFolderContents ) {
 
 	const url = `https://api.github.com/repos/${ user }/${ repo }/contents/${ folder }/`;
 	//console.log(url );
