@@ -73,7 +73,7 @@ REP.setMenuPanelSurfacesByType = function( target ) {
 			</button>
 
 			<button class=toggle onclick=REP.setSurfaceTypeVisible(this.innerText);
-				style="width:8rem;background-color:#${ color } !important;" >
+				style="width:12rem;background-color:#${ color } !important;" >
 				${ types[ i ] } </button>
 					${ typesCount[ i ] }/${ surfaces.length }
 		<br>`;

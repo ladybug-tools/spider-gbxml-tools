@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8" >
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
-<meta name=description content="Very basic script to view Radiance RAD files in interactive 3D in your browser using the Three.js JavaScript library" >
+<meta name=description content="Very basic script to view gbXML files in interactive 3D in your browser using the Three.js JavaScript library" >
 <meta name=keywords content="Radiance,Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-10-03" >
-<title>Spider Rad Viewer R7 Basic</title>
+<meta name = "date" content = "2018-10-08" >
+<title>Spider Rad Viewer R7 Reports</title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 </head>
 <body>
@@ -15,10 +15,9 @@
 <script src = "../../../lib/r7/mnu-menu.js" ></script>
 <script src = "../../../lib/r7/thr-threejs.js" ></script>
 <script src = "../../../lib/r7/thru-threejs-utilities.js"></script>
-<script src = "../../../lib/r7/gbx-gbxml-viewer-basic.js" ></script>
+<script src = "../../../lib/r7/gbx-gbxml-loader.js" ></script>
 <script src = "../../../lib/r7/fil-open-file-gbxml.js" ></script>
 <script src = "./spider-gbxml-viewer-reports.js" ></script>
-
 
 
 	<main id="container" ></main>
@@ -49,29 +48,31 @@
 
 		</details>
 
-		<details open>
+		<details open >
 
-			<summary>Settings</summary>
+			<summary title = "Update what you see in the display">Settings</summary>
 
 			<div id = "divSettings" ></div>
 
 		</details>
 
-		<details>
+		<details ontoggle=divRendererInfo.innerHTML=THRU.getRendererInfo(); > <!-- not essential -->
 
-			<summary>Renderer Info</a></summary>
+			<summary title = "Info on what Three.js is animating" >Renderer Info</summary>
 
 			<div id = "divRendererInfo" ></div>
 
 		</details>
 
-		<details >
+		<details ontoggle=divSceneInfo.innerHTML=THRU.getSceneInfo(); > <!-- not essential -->
 
-			<summary>File Info</summary>
+			<summary title = "Info on what is in the Three.js scene" >Scene Info</summary>
 
-			<div id = "divFileInfo" ></div>
+			<div id = "divSceneInfo" ></div>
 
 		</details>
+
+		<div id = "divFileInfo" ></div>
 
 		<div id = "divLog" ></div>
 
@@ -88,10 +89,12 @@
 
 <script>
 
-const urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-basic/";
+MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-basic/";
 
-const urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml';
-//const urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/coventry-university-of-warwick-small.xml';
+FIL.urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml';
+//FIL.urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/coventry-university-of-warwick-small.xml';
+
+FIL.divFileInfo = divFileInfo;
 
 
 init();
@@ -112,8 +115,6 @@ function init() {
 	divFooter.innerHTML = MNU.getNavFooter(); // not essential
 
 
-
-
 	THR.getThreejs();
 
 	THRU.toggleAxesHelper();
@@ -123,15 +124,11 @@ function init() {
 	THRU.setHelpers();
 
 
-
-	if ( !location.hash ) { location.hash = urlDefaultFile; } else { FIL.onHashChange(); }	THR.animate();
+	if ( !location.hash ) { location.hash = FIL.urlDefaultFile; } else { FIL.onHashChange(); }	THR.animate();
 
 	//location.hash = urlDefaultFile;
 
 	THR.animate();
-
-	divRendererInfo.innerHTML = THRU.getRendererInfo();
-
 
 }
 
