@@ -5,8 +5,8 @@
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
 <meta name=description content="Open, view gbXML files in 3D in your browser with free, open source entry-level Three.js JavaScript" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-10-05" >
-<title>Spider gbXML Viewer Basic R7.2xx</title>
+<meta name = "date" content = "2018-10-07" >
+<title>Spider gbXML Viewer Basic R7.2</title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 </head>
 <body>
@@ -15,7 +15,7 @@
 <script src = "../../../lib/r7/mnu-menu.js" ></script>
 <script src = "../../../lib/r7/thr-threejs.js" ></script>
 <script src = "../../../lib/r7/thru-threejs-utilities.js"></script>
-<script src = "./gbx-gbxml-loader.js" ></script>
+<script src = "../../../lib/r7/gbx-gbxml-loader.js" ></script>
 <script src = "../../../lib/r7/fil-open-file-gbxml.js" ></script>
 <script src = "../../../lib/r7/gal-sample-files-gallery-gbxml.js" ></script>
 
@@ -129,6 +129,8 @@ function init() {
 }
 
 
+// put in FIL??
+
 THRU.onThreejsSceneLoaded = function() {
 
 	const htm =
@@ -136,7 +138,7 @@ THRU.onThreejsSceneLoaded = function() {
 		<div>triangles: ${ GBX.count3.toLocaleString() }</div>
 		<div>quads: ${ GBX.count4.toLocaleString() }</div>
 		<div>five+: ${ GBX.count5plus.toLocaleString() }</div>
-		<div>openings: ${ GBX.surfaceOpenings.children.length.toLocaleString() }</div>
+		<div>openings: ${ GBX.countOpenings.toLocaleString() }</div>
 	`;
 
 	divFileInfo.innerHTML += htm;
@@ -144,8 +146,6 @@ THRU.onThreejsSceneLoaded = function() {
 	divFileInfo.innerHTML += 'time: ' + parseInt( performance.now() - FIL.timeStart, 10 ).toLocaleString() + ' ms<br>';
 
 	divRendererInfo.innerHTML = THRU.getRendererInfo();
-
-	//THRU.zoomObjectBoundingSphere( GBX.surfaceEdges );
 
 };
 

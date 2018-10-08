@@ -14,18 +14,28 @@
 ## Latest stable release: [gbXML Viewer Basic R7]( https://rawgit.com/ladybug-tools/spider-gbxml-tools/master/gbxml-viewer-basic/r7/spider-gbxml-viewer-basic.html )
 
 * A bit faster still?
+* gbXML loader code dropped from 590 lines to 360 lines
+* Appears to be fixing some rendering errors that occur in previous releases
+* Built on Three.js [Buffer Geometry]( https://threejs.org/docs/#api/en/core/BufferGeometry)
+	* An efficient representation of mesh, line, or point geometry. Includes vertex positions, face indices, normals, colors, UVs, and custom attributes within buffers, reducing the cost of passing all this data to the GPU.
+* Uses Three.js [ShapeUtils.triangulateShape()]( https://threejs.org/docs/#api/en/extras/ShapeUtils )
+	* ShapeUtils.triangulateShape() uses Earcut: An implementation of the [earcut polygon triangulation algorithm]( https://en.wikipedia.org/wiki/Polygon_triangulation#Ear_clipping_method ). The code is a port of [mapbox/earcut]( https://github.com/mapbox/earcut ).
 
-## Latest stable release: [gbXML Viewer Basic R6]( https://rawgit.com/ladybug-tools/spider-gbxml-tools/master/gbxml-viewer-basic/r6/gbxml-viewer-basic.html )
+Future thought: could we put all the triangles in a single mesh and yet still identify and highlight each of the original surfaces?
+
+## [gbXML Viewer Basic R6]( https://rawgit.com/ladybug-tools/spider-gbxml-tools/master/gbxml-viewer-basic/r6/gbxml-viewer-basic.html )
 
 * Significantly faster
 * Adds file open dialog and location.hash functions to open files
 * More complete report of data being loaded
 
 
-## Latest stable release: [gbXML Viewer Basic R5]( https://rawgit.com/ladybug-tools/spider-gbxml-tools/master/gbxml-viewer-basic/r5/gbxml-viewer-basic.html )
+## [gbXML Viewer Basic R5]( https://rawgit.com/ladybug-tools/spider-gbxml-tools/master/gbxml-viewer-basic/r5/gbxml-viewer-basic.html )
 
 
-## Previous release: [gbXML Viewer Basic R4]( https://www.ladybug.tools/spider-gbxml-tools/r4/gbxml-viewer-basic/index.html )
+## [gbXML Viewer Basic R4]( https://www.ladybug.tools/spider-gbxml-tools/r4/gbxml-viewer-basic/index.html )
+
+* Prior releases here: https://www.ladybug.tools/spider/#gbxml-viewer-basic/README.md
 
 ## Concept
 
