@@ -11,7 +11,12 @@
 <iframe class=iframeReadMe src=https://www.ladybug.tools/spider-gbxml-tools/bxml-viewer-basic/ width=100% height=400px >Iframes are not displayed on github.com</iframe>
 
 
-## Latest stable release: [gbXML Viewer Basic R7]( https://rawgit.com/ladybug-tools/spider-gbxml-tools/master/gbxml-viewer-basic/r7/spider-gbxml-viewer-basic.html )
+## Latest stable release: [gbXML Viewer Basic R7]( https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/r7/spider-gbxml-viewer-basic.html )
+
+This release incorporates the first significant changes in many months to the core gbXML loading and parsing algorithms. The nw code is smaller and faster and appears to generate fewer visual errors.
+
+The updates occurred after applying the lessons learned from the more recent Spider RAD Viewer. Both apps are now beginning to share a lot of code.
+
 
 * A bit faster still?
 * gbXML loader code dropped from 590 lines to 360 lines
@@ -20,6 +25,7 @@
 	* An efficient representation of mesh, line, or point geometry. Includes vertex positions, face indices, normals, colors, UVs, and custom attributes within buffers, reducing the cost of passing all this data to the GPU.
 * Uses Three.js [ShapeUtils.triangulateShape()]( https://threejs.org/docs/#api/en/extras/ShapeUtils )
 	* ShapeUtils.triangulateShape() uses Earcut: An implementation of the [earcut polygon triangulation algorithm]( https://en.wikipedia.org/wiki/Polygon_triangulation#Ear_clipping_method ). The code is a port of [mapbox/earcut]( https://github.com/mapbox/earcut ).
+	* Previous releases are based on the more high level Three.js Shape geometry
 
 Future thought: could we put all the triangles in a single mesh and yet still identify and highlight each of the original surfaces?
 
