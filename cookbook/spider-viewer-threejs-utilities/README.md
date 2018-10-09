@@ -18,7 +18,7 @@ _<small>Spider gbXML Viewer Three.js Utilities</small>_
 
 ## Concept
 
-Utility functions that add features to the core Three.js funtions
+Utility functions that add features to the core Three.js functions
 * Zoom extents
 * Draw axes
 * Create settings menu and associated functions
