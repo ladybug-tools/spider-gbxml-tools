@@ -3,4 +3,4 @@
 
 <div style=display:none; ><h1>Cookbook Read Me</h1></div>
 
-<iframe src=https://www.ladybug.tools/spider-gbxml-tools/cookbook/cookbook-viewer-one-pager.html width=100% height=100% style="border-width: 0; box-sizing: border-box;" ></iframe>
+<iframe src=./cookbook/cookbook-viewer-one-pager.html width=100% height=100% style="border-width: 0; box-sizing: border-box;" ></iframe>
