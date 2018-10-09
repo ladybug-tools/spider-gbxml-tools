@@ -28,3 +28,15 @@ summary {font-weight: bold }
 #divPopUp { background-color: #eee; border-radius: 8px; display: block; max-width: 220px; padding: 0 5px 10px 5px;
 	opacity: 0.95; right: 1rem; position: absolute; top: 1rem; z-index: 10; };
 
+
+@media screen and (max-width: 900px) {
+
+	#navMenu { left: -23em }
+
+}
+
+@media screen and (max-width: 600px) {
+
+	#navMenu { left: -23em; }
+
+}

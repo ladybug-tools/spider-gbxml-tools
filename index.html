@@ -4,11 +4,11 @@
 <meta charset="utf-8" >
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
 <meta name=description content="Scripts to help you view and manage gbXML files" >
-<meta name=keywords content="JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-08-02" >
+<meta name=keywords content="gbXML,Three.js,WebGLJavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-10-09" >
 <title>Spider gbXML Tools</title>
 <style>
-/* Copyright 2018 pushMe pullYou authors. MIT License */
+/* Copyright 2018 pushMe pullYou authors. MIT License. hamburger theme basic r1.1 */
 
 	:root { --mnu-width: 20rem; font-size: 0.9em !important; }
 
@@ -16,9 +16,10 @@
 
 	body { height: 100%; margin: 0; }
 
-	a { text-decoration: underline !important; }
+	a:hover { text-decoration: underline !important; }
 	a:hover, a:focus { background-color: yellow; color: #888; }
-	blockquote, pre { background-color:rgba(240, 240, 240, 0.25 ); padding: 1rem }
+
+	blockquote, pre { background-color:rgba(240, 240, 240, 0.25 ); box-sizing: border-box; padding: 1rem }
 	button.theme { border-width: 1px; margin: 0.3rem !important; min-width:3rem; }
 	button:hover, input[ type=button ]:hover { background-color: #ccc; color: white }
 
@@ -27,7 +28,7 @@
 	#divContainer { height: 100%; margin: 0 0 0 var( --mnu-width ); transition: margin-left .5s; position: relative; }
 	#divContents { height: 100%; left: 0; margin: 0 auto; max-width: 50rem; padding: 1rem; right: 0; }
 
-	#divMenu { max-height: 100%; overflow-x: hidden; padding: 1rem; position: fixed; resize: both; top: 0;
+	#navMenu { max-height: 100%; overflow-x: hidden; padding: 1rem; position: fixed; resize: both; top: 0;
 		width: var( --mnu-width ); z-index: 1; transition: left 0.5s; }
 	#hamburger { cursor: pointer; font-size: 2rem; left: calc( var( --mnu-width ) - 4rem );
 		line-height: 2rem; position: fixed; top: 0; transition: left 0.5s; z-index: 10; }
@@ -39,7 +40,7 @@
 
 	body, html { font: 12pt "Trebuchet MS", helvetica, sans-serif; height: 100%; margin: 0; }
 
-	button, input[ type=button ] { background-color: #ddd; border: none; color: var( --mnu-color ); cursor: pointer; padding: 3px 20px; }
+	button, input[ type=button ] { background-color: #ddd; border: none; cursor: pointer; padding: 3px 20px; }
 
 	iframe { border: none; width: 100%; }
 
@@ -47,18 +48,17 @@
 	input[ type = range ]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }
 	input[ type = range ]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }
 
-	td { vertical-align: top; }
 
 */
 
 </style>
-<link id=css rel="stylesheet" href="" type="text/css" >
+<link id=css rel="stylesheet" href="" >
 </head>
 <body>
-<script src=https://rawgit.com/showdownjs/showdown/1.8.6/dist/showdown.min.js ></script>
+<script src=https://cdn.rawgit.com/showdownjs/showdown/1.8.6/dist/showdown.min.js ></script>
 
 
-	<div id = "divMenu" class="jumbotron" >
+	<nav id = "navMenu" class="jumbotron" >
 
 		<div class="">
 			<a class="breadcrumb-item" href = "https://www.ladybug.tools/" target="_top" >Ladybug Tools</a>
@@ -69,11 +69,11 @@
 
 		<div id = "divMenuItems" ></div>
 
-		<h3><a href="#./gbxml-viewer-basic/README.md" >gbXML Viewer Basic</a></h3>
+		<h3><a href="#./gbxml-viewer-basic/README.md" >Spider gbXML Viewer Basic</a></h3>
 
-		<h3><a href="#./cookbook/README.md" >gbXML Viewer Cookbook</a></h3>
+		<h3><a href="#./cookbook/README.md" >Spider gbXML Viewer Cookbook</a></h3>
 
-		<h4>&bull; <a href="#cookbook/cookbook-viewer-one-pager.html" >Cookbook Callery</a><small></small> << nice</small></h4>
+		<h4>&bull; <a href="#cookbook/cookbook-viewer-one-pager.html" >Cookbook Gallery</a><small><< nice</small></h4>
 		<h4>&bull; <a href="#./cookbook/spider-gbxml-viewer-basic/README.md" >SGV Basic</a></h4>
 		<h4>&bull; <a href="#./cookbook/spider-gbxml-viewer-cut-section/README.md" >SGV Section Cut</a></h4>
 		<h4>&bull; <a href="#./cookbook/spider-gbxml-viewer-open-studio/README.md" >SGV Open Studio</a></h4>
@@ -88,6 +88,13 @@
 
 		<div id= "divFooter" >
 
+			<p id=dragDropArea class=dragDropArea >
+
+				Drag & drop files or URLs into this box
+				or <input type = "file" id = "inpFile" class="form-control-file" onchange="openFile(this);" >
+
+			</p>
+
 			<details>
 
 				<summary>Themes</summary>
@@ -98,31 +105,31 @@
 
 			</details>
 
-			<!--
-
 			<details>
 
 				<summary>Footer</summary>
 
-				<div title='Me want too!' ><a href=#../../pages/about-this-cms.md >About this CMS</a></div>
-				<div title='What is this stuff?' ><a href=#../../pages/coding-style.md >Coding style</a></div>
-				<div title='many thanks!' ><a href=#../../pages/credits.md >Credits</a></div>
-				<div><a href=#../../pages/code-of-conduct.md >Code of conduct</a></div>
-				<div><a href=#../../pages/contributing.md >Contributing</a></div>
-				<div><a href=#../../pages/license.md >License</a></div>
-				<div><a href=#../../pages/markdown-help.md >Markdown help</a></div>
-				<div><a title='Need help' href=https://github.com/pushme-pullyou/pushme-pullyou.github.io/issues target=_blank >🗗 GitHub Issues</a></div>
+				<div title='Me want too!' ><a href=#https://pushme-pullyou.github.io/pages/about-this-cms.md >About this CMS</a></div>
+				<div title='What is this stuff?' ><a href=#https://pushme-pullyou.github.io/pages/coding-style.md >Coding style</a></div>
+				<div title='many thanks!' ><a href=#https://pushme-pullyou.github.io/pages/credits.md >Credits</a></div>
+				<div><a href=#https://pushme-pullyou.github.io/pages/code-of-conduct.md >Code of conduct</a></div>
+				<div><a href=#https://pushme-pullyou.github.io/pages/contributing.md >Contributing</a></div>
+				<div><a href=#https://pushme-pullyou.github.io/pages/license.md >License</a></div>
+				<div><a href=#https://pushme-pullyou.github.io/pages/markdown-help.md >Markdown help</a></div>
+				<div><a href=#https://pushme-pullyou.github.io/pages/themes.md >Themes help</a></div>
+
+				<div><a title='Need help' href=https://github.com/ladybug-tools/spider-gbxml-tools/issues target=_blank >🗗 GitHub Issues</a></div>
+
 				<div><a href="javascript:( function(){ var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='https://rawgit.com/mrdoob/stats.js/master/build/stats.min.js';document.head.appendChild(script);})()" title="Mr.doob's Stats.js appear in top left corner" >Show frames/second statistics</a></div>
 				<div><a href="https://api.github.com/rate_limit" title='If menu stops appearing, it is likely due to too many API calls' target=_blank >View GitHub API rate limits</a></div>
 
 			</details>
-			-->
 
 			<h4 onclick="divMenu.scrollTop=0;" style="cursor:pointer;text-align:center;" title="go to top of page" > &#x1f578; </h4>
 
 		</div>
 
-	</div>
+	</nav>
 
 	<div id = "divContainer" >
 
@@ -151,11 +158,14 @@ let yDown = null;
 init();
 
 
+
 function init() {
 
 	updateCss( themeName );
 
 	setTitle( divTitle );
+	dragDropArea.addEventListener( "dragover", function( event ){ event.preventDefault(); }, true );
+	dragDropArea.addEventListener( 'drop', onDrop, false );
 
 	// Swipe events
 	document.addEventListener( 'touchstart', onTouchStart, false );
@@ -228,9 +238,9 @@ function setTheme( target ) {
 
 	});
 
-	divBootswatch.innerHTML = '<p>Themes from <a href="https://bootswatch.com/" target=_blank>Bootswatch</a><br>' + txt1.join( '' );
+	divBootswatch.innerHTML = '<p>Themes for menus from <a href="https://bootswatch.com/" target=_blank>Bootswatch</a><br>' + txt1.join( '' );
 
-	let txt = '<p>Themes from other sources</p>';
+	let txt = '<p>Themes for menus from other sources</p>';
 
 	for ( let theme of themesOthers ) {
 
@@ -372,7 +382,7 @@ function openFile( files ) {
 
 		//console.log( 'reader', reader );
 
-		if ( file.name.endsWith('.md' ) ) {
+		if ( file.name.toLowercase().endsWith('.md' ) ) {
 
 			showdown.setFlavor('github');
 			const converter = new showdown.Converter();
@@ -383,7 +393,7 @@ function openFile( files ) {
 			divContents.innerHTML = html;
 			window.scrollTo( 0, 0 );
 
-		} else if ( /\.(jpe?g|png|ico|svg|gif)$/i.test( file.name)  ) {
+		} else if ( /\.(jpe?g|png|ico|svg|gif)$/i.test( file.name )  ) {
 
 			divContents.innerHTML = `<img src=${ reader.result } >`;
 
