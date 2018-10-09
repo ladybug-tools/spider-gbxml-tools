@@ -18,6 +18,7 @@ _<small>Spider Viewer Three.js Utilities</small>_
 
 ## Concept
 
+Various utility functions to support viewing real-time interactive 3D graphics in your browser using WebGL and the Three.js JavaScript library
 
 ## To Do / Wish List
 
