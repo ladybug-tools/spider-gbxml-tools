@@ -18,6 +18,14 @@ _<small>Spider gbXML Viewer ~ Reports</small>_
 
 ## Concept
 
+From Wikipedia: [XML]( https://en.wikipedia.org/wiki/XML )
+
+> In computing, Extensible Markup Language (XML) is a markup language that defines a set of rules for encoding documents in a format that is both human-readable and machine-readable.
+
+The issue is that gbXML files may be huge and analyzing the data can be tricky.
+
+The purpose of this module is to provide you with any and all useful data embedded in a gbXML file - even very big files with just two or three clicks.
+
 
 ## To Do / Wish List
 
@@ -32,7 +40,7 @@ _<small>Spider gbXML Viewer ~ Reports</small>_
 
 ## Change Log
 
-### XXX
+### 2018-10-08 ~ Theo
 
 * First commit
 

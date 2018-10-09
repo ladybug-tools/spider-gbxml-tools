@@ -18,6 +18,8 @@ _<small>Spider gbXML Viewer Basic</small>_
 
 ## Concept
 
+The cookbook version of the Spider gbXML Viewer script. We use this script as the basis for creating new cookbook scripts.
+
 
 ## To Do / Wish List
 
@@ -32,7 +34,7 @@ _<small>Spider gbXML Viewer Basic</small>_
 
 ## Change Log
 
-### XXX
+#### 2018-10-08 ~ Theo
 
 * First commit
 

@@ -14,7 +14,7 @@ _<small>Spider gbXML Viewer Basic</small>_
 
 ## Concept
 
-Scripts to help you view and manage gbXML files
+Scripts to help you view and manage [gbXML]( http://gbxml.org ) files
 
 
 ***
@@ -25,6 +25,12 @@ Scripts to help you view and manage gbXML files
 #### [gbXML Viewer Basic Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#gbxml-viewer-basic/README.md )
 
 * Open, view gbXML files in 3D in your browser with free, open source entry-level Three.js JavaScript
+
+***
+
+### [gbXML Viewer Cookbook Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#cookbook/README.md )
+
+* A variety of add-on scripts that enhance Spider gbXML Basic
 
 ***
 

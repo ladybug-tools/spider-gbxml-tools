@@ -18,9 +18,11 @@ _<small>Spider gbXML Viewer ~ Section Cut</small>_
 
 ## Concept
 
+* Cut front and back 3D sections through a 3D model along the X, Y and Z axes
 
 ## To Do / Wish List
 
+* Rotate the sections
 
 ## Issues
 
@@ -32,7 +34,7 @@ _<small>Spider gbXML Viewer ~ Section Cut</small>_
 
 ## Change Log
 
-### XXX
+### 2018-10-08 - Theo
 
 * First commit
 

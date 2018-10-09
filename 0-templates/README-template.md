@@ -6,13 +6,13 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 <br>
 
-# [ZZZZZ Read Me]( #xxxxxx/README.md )
+# [Spider gbXML Viewer ZZZZZ Read Me]( #xxxxxx/README.md )
 
 <!--
-<iframe src=https://www.ladybug.tools/spider-gbxml-tools/xxxxxx/xxxxxx.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
-_<small>ZZZZZ</small>_
+<iframe src=https://www.ladybug.tools/spider-gbxml-tools/xxxxxx/index.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
+_<small>Spider gbXML Viewer ZZZZZ</small>_
 
-## Full Screen: [ZZZZZ]( https://www.ladybug.tools/spider-gbxml-tools/xxxxxx/xxxxxx.html )
+## Full Screen: [Spider gbXML Viewer ZZZZZ]( https://www.ladybug.tools/spider-gbxml-tools/xxxxxx/xxxxxx.html )
 -->
 
 
