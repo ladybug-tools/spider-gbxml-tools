@@ -110,6 +110,7 @@ function init() {
 
 	divFooter.innerHTML = MNU.getNavFooter(); // not essential
 
+
 	THR.getThreejs();
 
 	THRU.toggleAxesHelper();
@@ -121,6 +122,8 @@ function init() {
 	//location.hash = urlDefaultFile;
 
 	THR.animate();
+
+	setTimeout( CUT.toggleSectionViewX, 800 );
 
 }
 
