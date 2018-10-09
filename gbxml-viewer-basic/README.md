@@ -5,10 +5,11 @@
 
 <br>
 
-# [gbXML Viewer Basic Read Me]( #gbxml-viewer-basic/README.md )
+# [Spider gbXML Viewer Basic Read Me]( #gbxml-viewer-basic/README.md )
 
 
-<iframe class=iframeReadMe src=https://www.ladybug.tools/spider-gbxml-tools/bxml-viewer-basic/ width=100% height=400px >Iframes are not displayed on github.com</iframe>
+<iframe class=iframeReadMe src=https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/ width=100% height=400px >Iframes are not displayed on github.com</iframe>
+_<small>Spider gbXML Viewer Basic</small>_
 
 
 ## Latest stable release: [gbXML Viewer Basic R7]( https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/r7/spider-gbxml-viewer-basic.html )
