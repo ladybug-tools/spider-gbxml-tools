@@ -7,7 +7,18 @@ REP.getMenuItems = function() {
 
 	const htm  =
 	`
-		<div id=REPdivMenuPanelSurfacesByType >e</div>
+		<details ontoggle=divSurfacesByType.innerHTML=REP.getMenuPanelSurfacesByType() >
+
+			<summary >Surfaces by Type </summary>
+
+			<div id=divSurfacesByType ></div>
+
+			<div>
+				<p><button class=toggle onclick=REP.setExposedToSunVisible(); >Exposed to Sun</button> </p>
+				<p><button class=toggle onclick=GBX.setAllVisible(); >all visible</button></p>
+			</div>
+
+		</details>
 
 		<div id=REPdivMenuPanelOpeningsByType >hh</div>
 
@@ -23,7 +34,7 @@ REP.getMenuItems = function() {
 
 REP.setMenuItems = function() {
 
-	REP.setMenuPanelSurfacesByType( REPdivMenuPanelSurfacesByType );
+	//REP.setMenuPanelSurfacesByType( REPdivMenuPanelSurfacesByType );
 
 	//REP.setMenuPanelOpeningsByType( REPdivMenuPanelOpeningsByType );
 
@@ -33,11 +44,11 @@ REP.setMenuItems = function() {
 
 ///// Types -
 
-REP.setMenuPanelSurfacesByType = function( target ) {
+REP.getMenuPanelSurfacesByType = function( target ) {
 
 	const surfaces = GBX.gbjson.Campus.Surface;
 
-	let txt = '';
+
 	const types = [];
 	const typesCount = [];
 
@@ -59,6 +70,7 @@ REP.setMenuPanelSurfacesByType = function( target ) {
 	}
 
 	// do we want to sort types?
+	let txt = `<p>${ types.length } surface types found</p>`;
 
 	for ( let i = 0; i < types.length; i++ ) {
 
@@ -80,6 +92,7 @@ REP.setMenuPanelSurfacesByType = function( target ) {
 
 	}
 
+	return txt;
 
 	const details =
 
@@ -95,7 +108,7 @@ REP.setMenuPanelSurfacesByType = function( target ) {
 	</details>`;
 
 
-	target.innerHTML = details;
+	//target.innerHTML = details;
 
 	const butts = REPdetSurfaceTypes.getElementsByClassName( "toggleView" );
 
@@ -130,7 +143,7 @@ REP.toggleButtonColor = function( that ) {
 
 		GBX.surfaceMeshes.visible = true;
 
-		const surfaceMesh = GBX.surfaceMeshes.children.find( element => element.userData.data.id === id );
+		const surfaceMesh = GBX.surfaceMeshes.children.find( element => element.userData.gbjson.id === id );
 
 		surfaceMesh.visible = !surfaceMesh.visible;
 
@@ -142,7 +155,7 @@ REP.toggleButtonColor = function( that ) {
 
 		REP.setSurfaceGroupsVisible();
 
-		GBX.surfaceMeshes.children.forEach( element => element.visible = element.userData.data.surfaceType === type? true : false );
+		GBX.surfaceMeshes.children.forEach( element => element.visible = element.userData.gbjson.surfaceType === type? true : false );
 
 		if ( window.CTXdivAttributes ) {
 
@@ -163,51 +176,16 @@ REP.toggleButtonColor = function( that ) {
 
 		}
 
-		const surfaces = GBX.gbjson.Campus.Surface;
+		//const surfaces = GBX.gbjson.Campus.Surface;
 
 		let txt = '';
-		/*
-		// gathers only types that are in use
-		// could be use to highlight the full list
-		const types = [];
-		const typesCount = [];
-
-		for ( let surface of surfaces ) {
-
-			const index = types.indexOf( surface.surfaceType );
-
-			if ( index < 0 ) {
-
-				types.push( surface.surfaceType );
-				typesCount[ types.length - 1 ] = 1;
-
-			} else {
-
-				typesCount[ index ] ++;
-
-			}
-
-		}
-		*/
 
 		//for ( let i = 0; i < types.length; i++ ) {
 		for ( let i = 0; i < GBX.surfaceTypes.length; i++ ) {
 
-			txt +=
-				`<option>${GBX.surfaceTypes[i]}</option>`;
+			txt += `<option>${GBX.surfaceTypes[i]}</option>`;
 
 		}
-
-		//if ( window.CTXdivAttributes ) {
-
-			SELselSurfaceType.innerHTML = txt;
-			SELselSurfaceType.size = GBX.surfaceTypes.length;
-
-		//}
-
-
-		//REP.setButtonStyleClass( CORdivItemsRight );
-		COR.setMenuButtonsClass( CORdivItemsRight );
 
 	};
 
@@ -218,13 +196,13 @@ REP.toggleButtonColor = function( that ) {
 
 		for ( let child of GBX.surfaceMeshes.children ) {
 
-			if ( !child.userData.data ) { continue; }
+			if ( !child.userData.gbjson ) { continue; }
 
-			if ( child.userData.data.surfaceType === button.value && button.style.backgroundColor === REP.colorButtonToggle ) {
+			if ( child.userData.gbjson.surfaceType === button.value && button.style.backgroundColor === REP.colorButtonToggle ) {
 
 				child.visible = false;
 
-			} else if ( child.userData.data.surfaceType === button.value ) {
+			} else if ( child.userData.gbjson.surfaceType === button.value ) {
 
 				child.visible = true;
 

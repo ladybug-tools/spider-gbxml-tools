@@ -6,21 +6,21 @@ value="You are now in a GitHub web page view - Click this button to view this re
 
 <br>
 
-# [Spider RAD Viewer Basic Read Me]( #cookbook/rad-viewer-basic/README.md )
+# [Spider RAD Viewer Basic Cookbook Read Me]( #cookbook/rad-viewer-basic/README.md )
 
 
 <iframe src=https://www.ladybug.tools/spider-rad-viewer/cookbook/rad-viewer-basic/r7/rad-viewer-basic.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
-_<small>Spider RAD Viewer Basic</small>_
+_<small>Spider RAD Viewer Basic Cookbook</small>_
 
 
-## 2018-09-23 - Full Screen: [Spider RAD Viewer R7 Basic]( https://www.ladybug.tools/spider-rad-viewer/cookbook/rad-viewer-basic/r7/rad-viewer-basic.html )
+## 2018-09-23 [Spider RAD Viewer R7 Basic]( https://www.ladybug.tools/spider-rad-viewer/cookbook/rad-viewer-basic/r7/rad-viewer-basic.html )
 
 * External stylesheet
 * All functions in external JavaScript files
 * Handles scenes with and without lights by selecting basic or Phong mesh materials
 
 
-## Full Screen: [Spider RAD Viewer R6 Basic]( https://www.ladybug.tools/spider-rad-viewer/cookbook/rad-viewer-basic/r6/rad-viewer-basic.html )
+## [Spider RAD Viewer R6 Basic]( https://www.ladybug.tools/spider-rad-viewer/cookbook/rad-viewer-basic/r6/rad-viewer-basic.html )
 
 
 ## Concept
