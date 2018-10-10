@@ -127,7 +127,7 @@
 
 			</details>
 
-			<h4 onclick="divMenu.scrollTop=0;" style="cursor:pointer;text-align:center;" title="go to top of page" > &#x1f578; </h4>
+			<h4 onclick="navMenu.scrollTop=0;" style="cursor:pointer;text-align:center;" title="go to top of page" > &#x1f578; </h4>
 
 		</div>
 
@@ -500,18 +500,18 @@ function toggleNav() {
 
 	const width = getComputedStyle(document.documentElement).getPropertyValue( '--mnu-width' ).trim();
 
-	if ( !divMenu.style.width || divMenu.style.width === width ) {
+	if ( !navMenu.style.width || navMenu.style.width === width ) {
 
-		divMenu.style.width = '0';
-		divMenu.style.padding = '0';
+		navMenu.style.width = '0';
+		navMenu.style.padding = '0';
 		hamburger.style.left = '-75px';
 		divContainer.style.marginLeft = '0';
 
 	} else {
 
-		divMenu.style.width = width;
-		//divMenu.style.padding = '30px 10px 0 10px';
-		divMenu.style.padding = '1rem';
+		navMenu.style.width = width;
+		//navMenu.style.padding = '30px 10px 0 10px';
+		navMenu.style.padding = '1rem';
 		hamburger.style.left = 'calc( var( --mnu-width ) - 4rem )';
 		divContainer.style.marginLeft = width;
 
