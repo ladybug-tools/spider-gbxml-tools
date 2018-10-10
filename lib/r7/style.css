@@ -29,6 +29,8 @@ summary {font-weight: bold }
 	max-height: 95%; overflow: auto; resize: both;
 	opacity: 0.95; right: 1rem; position: absolute; top: 1rem; z-index: 10; };
 
+
+/*
 @media screen and (max-width: 900px) {
 
 	#navMenu { left: -23em }
@@ -40,3 +42,5 @@ summary {font-weight: bold }
 	#navMenu { left: -23em; }
 
 }
+
+*/
