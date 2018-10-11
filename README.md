@@ -9,9 +9,12 @@
 
 # [Spider gbXML Tools Read Me]( #README.md )
 
-<iframe class=iframeReadMe src=https://www.ladybug.tools/spider-gbxml-tools/cookbook/spider-gbxml-iframe-carousel/ width=100% height=400px >Iframes are not displayed on github.com</iframe>
-_<small>Spider gbXML Iframe Carousel</small>_
+<iframe class=iframeReadMe src=https://www.ladybug.tools/spider-gbxml-tools/cookbook/spider-gbxml-iframe-carousel/ width=100% height=500px >Iframes are not displayed on github.com</iframe>
+_<small>Spider gbXML Viewer ~ Iframe Carousel: interactive 3D models on any web page</small>_
 
+## Welcome <a href="https://www.rtcevents.com/bilt/eur18/" title="Hi Michal! Hi Ljubljana!" style=color:red; target="_blank">BILT EUR 2018</a> attendees!
+
+<br>
 ## Concept
 
 Scripts to help you view and manage [gbXML]( http://gbxml.org ) files

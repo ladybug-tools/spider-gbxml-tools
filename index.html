@@ -139,7 +139,7 @@
 
 	</div>
 
-	<button id = "hamburger" class = "btn btn-primary" onclick=toggleNav(); > slide &#9776;  </button>
+	<button id = "hamburger" class = "btn btn-primary" onclick=toggleNav(); > slide &#9776; </button>
 
 <script>
 
@@ -229,8 +229,7 @@ function setTheme( target ) {
 	];
 
 
-	const txt1 = themesBootswatch.map( theme => {
-
+		const txt1 = themesBootswatch.map( theme => {
 		const name = Object.keys( theme )[ 0 ];
 		link = name === 'Default' ?
 			'https://bootswatch.com/_vendor/bootstrap/dist/css/bootstrap.css' :
@@ -395,7 +394,7 @@ function openFile( files ) {
 			divContents.innerHTML = html;
 			window.scrollTo( 0, 0 );
 
-		} else if ( /\.(jpe?g|png|ico|svg|gif)$/i.test( file.name )  ) {
+		} else if ( /\.(jpe?g|png|ico|svg|gif)$/i.test( file.name ) ) {
 
 			divContents.innerHTML = `<img src=${ reader.result } >`;
 
