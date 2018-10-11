@@ -2,11 +2,11 @@
 <html lang="en" >
 <head>
 <meta charset="utf-8" >
-<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
-<meta name=description content="View gbXML files in real-time 3D in your browser using the Three.js JavaScript library" >
-<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-10-08" >
-<title>Spider gbXML Viewer R7 Section Cut </title>
+<meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
+<meta name=description content="Cut front and back 3D sections through gbXML models along the X, Y and Z axes" >
+<meta name=keywords content="Spider,Ladybug.tools,gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-10-11" >
+<title>Spider gbXML Viewer R7 Section View </title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 </head>
 <body>
@@ -83,24 +83,28 @@
 
 	</nav>
 
+	<nav>
+		<button id="butHamburger" onclick=MNU.toggleNavLeft(); title="click to hide this menu"> slide &#9776; </button>
+	</nav>
 
 <script>
 
 
-MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/rad-viewer-basic/";
-
+MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-section-view/";
 
 FIL.urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml';
 //FIL.urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/coventry-university-of-warwick-small.xml';
 
 FIL.divFileInfo = divFileInfo;
 
+
 init();
+
 
 
 function init() {
 
-	divHeader.innerHTML = MNU.getNavHeader();
+	divHeader.innerHTML = MNU.getNavHeader(); // not essential
 
 	divFileOpen.innerHTML = FIL.getFileOpen();
 
@@ -113,17 +117,18 @@ function init() {
 
 	THR.getThreejs();
 
-	THRU.toggleAxesHelper();
+	THRU.setHelpers();
 
 	THRU.addSomeLights();
 
-	if ( !location.hash ) { location.hash = FIL.urlDefaultFile; } else { FIL.onHashChange(); }
 
+	if ( !location.hash ) { location.hash = FIL.urlDefaultFile; } else { FIL.onHashChange(); }
 	//location.hash = urlDefaultFile;
 
 	THR.animate();
 
 	setTimeout( CUT.toggleSectionViewX, 800 );
+
 
 }
 

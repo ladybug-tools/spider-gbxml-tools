@@ -26,8 +26,20 @@ The issue is that gbXML files may be huge and analyzing the data can be tricky.
 
 The purpose of this module is to provide you with any and all useful data embedded in a gbXML file - even very big files with just two or three clicks.
 
+### Mission
+
+* View all project textual metadata embedded in gbXML files
+* Create text reports of all data of interest embedded in gbXML files
+* Toggle the visibility of individual and groups of elements
+* Zoom the view to display selected elements or groups of elements
+* Identify patterns in the data,
+* Visualize patterns in the data by displaying tables of results in 3D
+* Surfaces, spaces, zones and openings are view-able as table data and sets of 3D surfaces
+* Each type of element is cataloged according to all of its attributes
 
 ## To Do / Wish List
+
+* Add all the features of AGV R4
 
 
 ## Issues
@@ -40,7 +52,13 @@ The purpose of this module is to provide you with any and all useful data embedd
 
 ## Change Log
 
-### 2018-10-08 ~ Theo
+
+#### 2018-10-11 ~ Theo
+
+* Update read me
+
+
+#### 2018-10-08 ~ Theo
 
 * First commit
 

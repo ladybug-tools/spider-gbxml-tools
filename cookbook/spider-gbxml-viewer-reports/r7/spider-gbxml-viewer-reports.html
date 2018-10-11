@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8" >
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
-<meta name=description content="Very basic script to view gbXML files in interactive 3D in your browser using the Three.js JavaScript library" >
-<meta name=keywords content="Radiance,Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-10-08" >
+<meta name=description content="Toggle the visibility of individual and groups of surfaces in gbXML files >
+<meta name=keywords content="gbXML,Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-10-11" >
 <title>Spider Rad Viewer R7 Reports</title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 </head>
@@ -84,10 +84,13 @@
 
 	</nav>
 
+	<nav>
+		<button id="butHamburger" onclick=MNU.toggleNavLeft(); title="click to hide this menu"> slide &#9776; </button>
+	</nav>
 
 <script>
 
-MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-basic/";
+MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-reports/";
 
 FIL.urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml';
 //FIL.urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/coventry-university-of-warwick-small.xml';
@@ -115,15 +118,12 @@ function init() {
 
 	THR.getThreejs();
 
-	THRU.toggleAxesHelper();
-
-	THRU.addSomeLights2();
-
 	THRU.setHelpers();
 
+	THRU.addSomeLights();
 
-	if ( !location.hash ) { location.hash = FIL.urlDefaultFile; } else { FIL.onHashChange(); }	THR.animate();
 
+	if ( !location.hash ) { location.hash = FIL.urlDefaultFile; } else { FIL.onHashChange(); }
 	//location.hash = urlDefaultFile;
 
 	THR.animate();

@@ -18,6 +18,8 @@ _<small>Spider Viewer Three.js</small>_
 
 ## Concept
 
+A lightweight core module to help view real-time interactive 3D graphics in your browser using WebGL and the Three.js JavaScript library
+
 
 ## To Do / Wish List
 

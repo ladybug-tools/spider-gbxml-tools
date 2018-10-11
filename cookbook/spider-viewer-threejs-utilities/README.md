@@ -20,6 +20,13 @@ _<small>Spider Viewer Three.js Utilities</small>_
 
 Various utility functions to support viewing real-time interactive 3D graphics in your browser using WebGL and the Three.js JavaScript library
 
+Utility functions that add features to the core Three.js functions
+* Zoom extents
+* Draw axes
+* Create settings menu and associated functions
+* Create renderer info menu and associated functions
+
+
 ## To Do / Wish List
 
 
@@ -30,8 +37,20 @@ Various utility functions to support viewing real-time interactive 3D graphics i
 ## Links of Interest
 
 
+## Things you can do using this script
+
+* Click the three bars( 'hamburger menu icon' ) to slide the menu in and out
+* Click the Octocat icon to view or edit the source code on GitHub
+* Click on title to reload
+* Press Control-U/Command-Option-U to view the source code
+* Press Control-Shift-J/Command-Option-J to see if the JavaScript console reports any errors
+
 
 ## Change Log
+
+#### 2018-10-11 ~ Theo
+
+* Update readme
 
 ### 2018-10-08 ~ Theo
 

@@ -18,8 +18,12 @@ _<small>Spider gbXML Viewer Pop-Up</small>_
 
 ## Concept
 
+Click on any surface in a gbXML model to display all its attribute data in a pop-op window
 
 ## To Do / Wish List
+
+* Nicer display of attribute data
+* View outline of entire polygon not just a triangle
 
 
 ## Issues
@@ -32,7 +36,11 @@ _<small>Spider gbXML Viewer Pop-Up</small>_
 
 ## Change Log
 
-### 2018-10-10 ~ Theo
+#### 2018-10-11 ~ Theo
+
+* Update description
+
+#### 2018-10-10 ~ Theo
 
 * First commit
 

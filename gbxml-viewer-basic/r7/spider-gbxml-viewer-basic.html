@@ -4,9 +4,9 @@
 <meta charset="utf-8" >
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
 <meta name=description content="Open, view and examine gbXML files in 3D in your browser with free, open source entry-level Three.js JavaScript" >
-<meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-10-10" >
-<title>Spider gbXML Viewer Basic R7.4</title>
+<meta name=keywords content="gbXML,Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-10-11" >
+<title>Spider gbXML Viewer R7.4 Basic</title>
 <link rel="stylesheet" href="../../lib/r7/style.css">
 </head>
 <body>
@@ -101,12 +101,14 @@
 
 <script>
 
+
 MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/gbxml-viewer-basic/";
 
 FIL.urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml';
 //FIL.urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/coventry-university-of-warwick-small.xml';
 
 FIL.divFileInfo = divFileInfo;
+
 
 init();
 
@@ -128,13 +130,12 @@ function init() {
 
 	THR.getThreejs();
 
-	THR.animate();
-
 	THRU.setHelpers();
 
 	THRU.addSomeLights();
 
-	if ( !location.hash ) { location.hash = FIL.urlDefaultFile; } else { FIL.onHashChange( divFileInfo ); }
+
+	if ( !location.hash ) { location.hash = FIL.urlDefaultFile; } else { FIL.onHashChange(); }
 	//location.hash = urlDefaultFile;
 
 	THR.animate();

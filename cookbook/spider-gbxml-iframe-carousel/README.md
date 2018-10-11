@@ -10,7 +10,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 
 <iframe src=https://www.ladybug.tools/spider-gbxml-tools/cookbook/spider-gbxml-iframe-carousel/index.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
-_<small>Spider gbXML Iframe Carousel</small>_
+_<small>Spider gbXML Iframe Carousel: multiple interactive 3D models in a single space on any web page</small>_
 
 
 ## Full Screen: [Spider gbXML Iframe Carousel]( https://www.ladybug.tools/spider-gbxml-tools/cookbook/spider-gbxml-iframe-carousel/r7/spider-gbxml-iframe-carousel.html )
@@ -18,22 +18,40 @@ _<small>Spider gbXML Iframe Carousel</small>_
 
 ## Concept
 
-web page carousel
+Web page carousel displays multiple interactive 3D models in a single space on any HTML page
+
+#### Mission
+
+* To demonstrate that the viewer loads models in a very timely fashion - that's a darn good viewer
+
 
 ## To Do / Wish List
+
+* Compare with code in Spider RAD Viewer carousel
+* Add titles and links inside the iframe
 
 
 ## Issues
 
-
+* What is best time delay
 
 ## Links of Interest
 
+Use of carousels
+
+* https://www.nngroup.com/articles/designing-effective-carousels/
+* https://conversionxl.com/blog/dont-use-automatic-image-sliders-or-carousels/
 
 
 ## Change Log
 
-### 2018-10-09 ~ Theo
+#### 2018-10-09 ~ Theo
+
+* Update description
+* Add to read me
+
+
+#### 2018-10-09 ~ Theo
 
 * First commit
 
