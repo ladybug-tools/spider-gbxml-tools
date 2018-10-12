@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" >
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
-<meta name=description content="Toggle the visibility of individual and groups of surfaces in gbXML files >
-<meta name=keywords content="gbXML,Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name=description content="Toggle the visibility of individual and groups of surfaces in gbXML files" >
+<meta name=keywords content="gbXML, Spider, Ladybug.tools, Three.js, WebGL, JavaScript, GitHub, FOSS, 3D, STEM" >
 <meta name = "date" content = "2018-10-11" >
 <title>Spider Rad Viewer R7 Reports</title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
@@ -54,7 +54,7 @@
 
 		</details>
 
-		<details ontoggle=divRendererInfo.innerHTML=THRU.getRendererInfo(); > <!-- not essential -->
+		<details ontoggle="divRendererInfo.innerHTML=THRU.getRendererInfo();" > <!-- not essential -->
 
 			<summary title = "Info on what Three.js is animating" >Renderer Info</summary>
 
@@ -62,7 +62,7 @@
 
 		</details>
 
-		<details ontoggle=divSceneInfo.innerHTML=THRU.getSceneInfo(); > <!-- not essential -->
+		<details ontoggle="divSceneInfo.innerHTML=THRU.getSceneInfo();" > <!-- not essential -->
 
 			<summary title = "Info on what is in the Three.js scene" >Scene Info</summary>
 
@@ -106,7 +106,6 @@ function init() {
 
 	divHeader.innerHTML = MNU.getNavHeader(); // not essential
 
-	//divSettings.innerHTML = THRU.getSettings( divSettings );
 	divFileOpen.innerHTML = FIL.getFileOpen(); // if needed: set file info target
 
 	divSettings.innerHTML = THRU.getSettings(); // not essential
