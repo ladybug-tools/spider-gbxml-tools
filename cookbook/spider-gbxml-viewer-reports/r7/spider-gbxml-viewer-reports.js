@@ -5,9 +5,9 @@
 
 const REP = {};
 
-REP.cssText = 'background-color: ' + REP.colorButtonToggle + ' !important; font-style: italic; font-weight: bold';
-
 REP.colorButtonToggle = 'pink';
+REP.cssText = `background-color: ${ REP.colorButtonToggle } !important; font-style: italic; font-weight: bold`;
+
 
 
 
@@ -55,13 +55,13 @@ REP.getMenuItems = function() {
 			<hr>
 
 		</details>
-		
+
 
 		<details ontoggle=REP.setOptions(); >
 
 			<summary>Select Report by Item</summary>
 
-			<p>Very work-in-progress</p>
+			<p>Very work-in-progress. Only Surfaces update.</p>
 
 			<div>
 				<select id=REPselReport onclick=REP.setPanelReportResults();
@@ -210,7 +210,7 @@ REP.setOptions = function(){
 
 	REP.setPanelReportResults();
 
-}
+};
 
 
 
@@ -556,6 +556,7 @@ REP.ZZZsetSurfaceVisibleToggle = function( id ) {
 };
 
 
+
 //////////
 
 REP.setGbjsonAttributes = function( obj, target, title ) {
@@ -580,13 +581,13 @@ REP.setGbjsonAttributes = function( obj, target, title ) {
 
 				keys = Object.keys( construction );
 
-				for ( key of keys ) {
+				for ( let key of keys ) {
 
 					//console.log( key, construction[ key ] );
 
 					if ( key === "LayerId" ) {
 
-						for ( item of Array.from( construction.LayerId ) ) {
+						for ( let item of Array.from( construction.LayerId ) ) {
 
 							//console.log( 'item', item );
 							attributes += `LayerId: ${ item.layerIdRef }<br>`;
