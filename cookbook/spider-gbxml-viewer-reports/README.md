@@ -32,7 +32,7 @@ The purpose of this module is to provide you with any and all useful data embedd
 * Create text reports of all data of interest embedded in gbXML files
 * Toggle the visibility of individual and groups of elements
 * Zoom the view to display selected elements or groups of elements
-* Identify patterns in the data,
+* Identify patterns in the data
 * Visualize patterns in the data by displaying tables of results in 3D
 * Surfaces, spaces, zones and openings are view-able as table data and sets of 3D surfaces
 * Each type of element is cataloged according to all of its attributes
@@ -56,7 +56,8 @@ The purpose of this module is to provide you with any and all useful data embedd
 #### 2018-10-11 ~ Theo
 
 * Update read me
-
+* Surfaces by Type: Add toggles and much more interplay between the buttons
+* CAD Objects by Type: enable multiple select
 
 #### 2018-10-08 ~ Theo
 

@@ -11,15 +11,15 @@ REP.getMenuItems = function() {
 	`
 		<br>
 
-		<details ontoggle=divSurfacesByType.innerHTML=REP.getMenuPanelSurfacesByType();REP.initButtons(); >
+		<details id=detSurfaces ontoggle=divSurfacesByType.innerHTML=REP.getMenuPanelSurfacesByType();REP.initButtons(); >
 
 			<summary >Surfaces by Type </summary>
 
 			<div id=divSurfacesByType ></div>
 
 			<p>
-				<button class=toggle onclick=GBX.setAllVisible(); >all visible</button>
-				<button class=toggle onclick=REP.setExposedToSunVisible(); >Exposed to Sun</button>
+				<button id=butAllVisible class=toggle onclick=REP.toggleAllVisible(this); >all visible</button>
+				<button id=butExposeToSun class=toggle onclick=REP.toggleExposedToSunVisible(this); >Exposed to Sun</button>
 			</p>
 
 		</details>
@@ -31,9 +31,11 @@ REP.getMenuItems = function() {
 
 			<summary >CAD Objects by Type</summary>
 
+			<p>Select one or more types using the shift or control/command keys</p>
+
 			<p>
 				<select id = "REPselCadIdGroups"
-					onchange=REP.setCadObjectTypeVisible(this.value); size=10 >
+					onchange=REP.setCadObjectTypeVisible(this); size=10 multiple >
 				</select>
 			</p>
 
@@ -105,26 +107,27 @@ REP.getMenuPanelSurfacesByType = function( target ) {
 
 REP.initButtons = function() {
 
-	const butts = divSurfacesByType.getElementsByClassName( "toggleView" );
-
-	for ( let butt of butts ) REP.toggleButtonColor( butt );
+	if ( detSurfaces.open === true ) REP.toggleAllVisible( butAllVisible );
 
 };
 
 
 
-REP.toggleButtonColor = function( that ) {
-
+REP.toggleButtonColor = function( button ) {
 
 	const cssText = 'background-color: ' + REP.colorButtonToggle + ' !important; font-style: italic; font-weight: bold';
 
-	if ( that.style.backgroundColor !== REP.colorButtonToggle ) {
+	if ( button.style.backgroundColor !== REP.colorButtonToggle ) {
 
-		that.style.cssText = cssText;
+		button.style.cssText = cssText;
+
+		return true;
 
 	} else {
 
-		that.style.cssText = '';
+		button.style.cssText = '';
+
+		return false;
 
 	}
 
@@ -132,11 +135,49 @@ REP.toggleButtonColor = function( that ) {
 
 
 
-REP.setExposedToSunVisible = function() {
+REP.toggleAllVisible = function( button ) {
+
+	const visible = REP.toggleButtonColor( button );
+	const butts = Array.from( divSurfacesByType.getElementsByClassName( "toggleView" ) );
+
+	butExposeToSun.style.cssText = '';
+
+	if ( visible === true ) {
+
+		GBX.surfaceMeshes.children.forEach( element => element.visible = true );
+
+		butts.forEach( butt => butt.style.cssText = 'background-color: ' + REP.colorButtonToggle + ' !important; font-style: italic; font-weight: bold' );
+
+	} else {
+
+		GBX.surfaceMeshes.children.forEach( element => element.visible = false );
+
+		butts.forEach( butt  => butt.style.cssText = '' );
+
+	}
+
+
+};
+
+
+
+REP.toggleExposedToSunVisible = function( button ) {
+
+	const visible = REP.toggleButtonColor( button );
+
+	butAllVisible.style.cssText = '';
 
 	REP.setSurfaceGroupsVisible();
 
-	GBX.surfaceMeshes.children.forEach( element => element.visible = element.userData.gbjson.exposedToSun === "true" ? true : false );
+	if ( visible === true ) {
+
+		GBX.surfaceMeshes.children.forEach( element => element.visible = element.userData.gbjson.exposedToSun === "true" ? true : false );
+
+	} else {
+
+		GBX.surfaceMeshes.children.forEach( element => element.visible = true );
+
+	}
 
 };
 
@@ -184,9 +225,12 @@ REP.getMenuPanelCadObjectsByType = function( target ) {
 
 
 
-REP.setCadObjectTypeVisible = function( CADObjectGroupId ) {
+REP.setCadObjectTypeVisible = function( CADObjectGroup ) {
 
-	const cadId = CADObjectGroupId.trim();
+	//console.log( 'CADObjectGroup', CADObjectGroup );
+	//cc = CADObjectGroup;
+
+	//const cadId = CADObjectGroupId.value.trim();
 
 	REP.setSurfaceGroupsVisible();
 
@@ -196,23 +240,33 @@ REP.setCadObjectTypeVisible = function( CADObjectGroupId ) {
 
 	}
 
-	for ( let child of GBX.surfaceMeshes.children ) {
 
-		if ( !child.userData.gbjson.CADObjectId || typeof child.userData.gbjson.CADObjectId !== 'string' ) { continue; }
+	for ( option of CADObjectGroup.selectedOptions ) {
 
-		const id = child.userData.gbjson.CADObjectId.replace( /\[(.*?)\]/gi, '' ).trim() ;
+		const cadId = option.value.trim();
+		//console.log( 'cadId', cadId );
 
-		if ( id === cadId ) {
+		for ( let child of GBX.surfaceMeshes.children ) {
 
-			child.visible = true;
+			if ( !child.userData.gbjson.CADObjectId || typeof child.userData.gbjson.CADObjectId !== 'string' ) { continue; }
 
-		} else {
+			const id = child.userData.gbjson.CADObjectId.replace( /\[(.*?)\]/gi, '' ).trim() ;
 
-			child.visible = false;
+			if ( id === cadId ) {
+
+				child.visible = true;
+
+			} else {
+
+				//child.visible = false;
+
+			}
 
 		}
 
 	}
+
+
 
 };
 
@@ -273,10 +327,11 @@ REP.setCadObjectTypeVisible = function( CADObjectGroupId ) {
 	};
 
 
+
 	REP.setSurfaceGroupsVisible = function( meshesVis = true, edgesVis = true, openingsVis = false ) {
 
 		GBX.surfaceMeshes.visible = meshesVis;
 		GBX.surfaceEdges.visible = edgesVis;
 		GBX.surfaceOpenings.visible = openingsVis;
 
-	}
+	};
