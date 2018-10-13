@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
+<meta name=description content="Cookbook version: Open, view and examine gbXML files in 3D in your browser with free, open source entry-level Three.js JavaScript" >
+<meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-10-12" >
+<title>Spider gbXML Viewer R7 Issues</title>
+<link rel="stylesheet" href="../../../lib/r7/style.css">
+</head>
+<body>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r97/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r97/examples/js/controls/OrbitControls.js" ></script>
+<script src = "../../../lib/r7/mnu-menu.js" ></script>
+<script src = "../../../lib/r7/thr-threejs.js" ></script>
+<script src = "../../../lib/r7/thru-threejs-utilities.js"></script>
+<script src = "../../../lib/r7/gbx-gbxml-loader.js" ></script>
+<script src = "../../../lib/r7/fil-open-file-gbxml.js" ></script>
+<!--
+
+	<script src = "../../../lib/r7/pop-up-gbxml.js" ></script>
+
+-->
+<script src = "../../../lib/r7/gal-sample-files-gallery-gbxml.js" ></script>
+
+	<main id="container" ></main>
+
+	<nav id = "navMenu" >
+
+		<header>
+
+			<div id = "divHeader" ></div>
+
+		</header>
+
+		<details open >
+
+			<summary>File Open</summary>
+
+			<div id="divFileOpen" class="dragDropArea" ></div>
+
+		</details>
+
+		<details>
+
+			<summary>Spider gbXML Sample files</summary>
+
+			<div id=divSampleFileButtons ></div>
+
+			<div id=divSampleFileItems ></div>
+
+		</details>
+
+		<details open>
+
+			<summary title = "fix things" >Issues</summary>
+
+			<div id = "divIssues" ></div>
+
+			<div id = "ISSdetPanelMetadataIssues" ></div>
+
+			<div id = "ISSdivInclusions" ></div>
+
+		</details>
+
+
+		<details>
+
+			<summary title = "Update what you see in the display">Settings</summary>
+
+			<div id = "divSettings" ></div>
+
+		</details>
+
+
+		<details ontoggle=divRendererInfo.innerHTML=THRU.getRendererInfo(); > <!-- not essential -->
+
+			<summary title = "Info on what Three.js is animating" >Renderer Info</summary>
+
+			<div id = "divRendererInfo" ></div>
+
+		</details>
+
+		<details ontoggle=divSceneInfo.innerHTML=THRU.getSceneInfo(); > <!-- not essential -->
+
+			<summary title = "Info on what is in the Three.js scene" >Scene Info</summary>
+
+			<div id = "divSceneInfo" ></div>
+
+		</details>
+
+		<div id = "divFileInfo" ></div>
+
+		<div id = "divLog" ></div>
+
+		<footer>
+
+			<hr>
+
+			<div id = "divFooter" ></div>
+
+		</footer>
+
+	</nav>
+
+	<nav>
+		<button id="butHamburger" onclick=MNU.toggleNavLeft(); title="click to hide this menu"> slide &#9776; </button>
+	</nav>
+
+	<div id="divPopUp" >
+
+		<div id="divPopUpData" ></div>
+
+		<div id="divMessage" ></div>
+
+	</div>
+
+<script>
+
+MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-basic-cookbook/";
+
+FIL.urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml';
+//FIL.urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/coventry-university-of-warwick-small.xml';
+
+FIL.divFileInfo = divFileInfo;
+
+const ISS = {};
+ISS.surfaceChanges = {};
+	ISS.errorsFound = {};
+	ISS.inclusions = [];
+
+
+
+
+function init() {
+
+	divHeader.innerHTML = MNU.getNavHeader(); // not essential
+
+	//divSettings.innerHTML = THRU.getSettings( divSettings );
+	divFileOpen.innerHTML = FIL.getFileOpen(); // if needed: set file info target
+
+	divSampleFileButtons.innerHTML = GAL.setCardSampleGalleries();
+
+	divSettings.innerHTML = THRU.getSettings();
+
+	divFooter.innerHTML = MNU.getNavFooter(); // not essential
+
+
+	THR.getThreejs();
+
+	THRU.setHelpers();
+
+	THRU.addSomeLights();
+
+
+	if ( !location.hash ) { location.hash = FIL.urlDefaultFile; } else { FIL.onHashChange(); }
+	//location.hash = urlDefaultFile;
+
+	THR.animate();
+
+	// there will be better ways of doing this
+	setTimeout( function() {
+		ISSdetPanelMetadataIssues.innerHTML = ISS.getPanelMetadataIssues();
+		ISSdivInclusions.innerHTML = ISS.getInclusions();
+
+	}, 600 );
+
+}
+
+
+// https://stackoverflow.com/questions/22521982/check-if-point-inside-a-polygon
+
+ISS.getInclusions = function() {
+
+	let htm;
+
+	//arr =  GBX.surfaceMeshes.children.slice();
+	ISS.inclusions = [];
+
+	if ( ISS.inclusions.length === 0 ) {
+
+		let inclusionCount = 0;
+
+		for ( let surface of GBX.surfaceMeshes.children ) {
+
+			const surface1 = new THREE.Box3().setFromObject ( surface );
+
+			for ( let surfaceTest of GBX.surfaceMeshes.children ) {
+
+				const surface2 = new THREE.Box3().setFromObject ( surfaceTest );
+
+				if ( surface1.containsBox( surface2 ) && surface.uuid != surfaceTest.uuid ) {
+
+					inclusionCount++;
+
+					ISS.inclusions.push ( {s1: surface, s2: surfaceTest } );
+
+				}
+
+			}
+
+		}
+
+		htm = 'inclusions found: ' + ISS.inclusions.length;
+
+		ISS.setSelectedFocus( ISS.inclusions );
+
+		txt = '';
+		/*
+
+		for ( let inclusion of ISS.inclusions ) {
+
+			//const butts1 = ISS.getButtonsSurfaceId( inclusion.s1.userData.data.id );
+			//const butts2 = ISS.getButtonsSurfaceId( inclusion.s2.userData.data.id );
+
+			txt +=
+			`
+			${inclusion.s1.userData.data.Name}<br>
+			${inclusion.s1.userData.data.Name}
+			<hr>`;
+
+		}
+
+*/
+	//console.log( 'inclusion', ISS.inclusions );
+
+	};
+
+	return htm + txt;
+
+};
+
+
+ISS.setSelectedFocus = function( surfaces ) {
+
+//console.log( 'select', select.value );
+
+for ( let child of GBX.surfaceMeshes.children ) {
+
+	child.visible = false;
+
+}
+
+
+for ( let surface of surfaces) {
+
+	//console.log( 'hh', surface);
+
+	for ( let child of GBX.surfaceMeshes.children ) {
+
+		if ( surface.s1.userData.gbjson.id === child.userData.gbjson.id ) { child.visible = true; }
+
+		if ( surface.s2.userData.gbjson.id === child.userData.gbjson.id ) { child.visible = true; child.position.z += 0.5; }
+
+	}
+
+}
+
+};
+
+////////// Metadata
+
+ISS.getPanelMetadataIssues = function( target ) {
+
+	const requirements = [
+		'areaUnit', 'lengthUnit', 'temperatureUnit', 'useSIUnitsForResults', 'version', 'volumeUnit', 'xmlns'
+	];
+
+	let provided = [];
+	ISS.attributesMissing = [];
+
+	for ( let attribute in GBX.gbjson ) {
+
+		//console.log( 'attribute', attribute );
+
+		if ( requirements.includes( attribute) ) {
+
+			provided.push( attribute );
+
+		}
+
+	}
+	//console.log( 'provided', provided );
+
+	for ( let attribute of requirements ) {
+
+		if ( !GBX.gbjson[ attribute ] ) {
+
+			//console.log( 'attribute', must );
+			ISS.attributesMissing.push( attribute );
+
+		}
+
+	}
+	//console.log( 'ISS.attributesMissing', ISS.attributesMissing.join( '<br>' ) );
+
+	target =
+
+	`<details>
+
+		<summary>Metadata &raquo; ${ISS.attributesMissing.length} attributes missing</summary>
+
+		<p>gbXML attributes provided:<br>&bull; ${provided.join( '<br>&bull; ' )}</p>
+
+		<p>gbXML attributes missing:<br>&bull;  ${ISS.attributesMissing.join( '<br>&bull; ' )} </p>
+
+		<p><button onclick=ISS.setPopupMetadataIssues(); >Add missing attributes</button></p>
+
+		<div id=ISSdivMissingMeta ></div>
+
+	</details>`;
+
+	return target;
+
+
+};
+
+
+
+ISS.setPopupMetadataIssues = function() {
+
+	values = {
+
+		'areaUnit': 'SquareMeters',
+		'lengthUnit': 'Meters',
+		'temperatureUnit': 'C',
+		'useSIUnitsForResults': 'true',
+		'version': '0.37',
+		'volumeUnit': 'CubicMeters',
+		'xmlns': 'http://www.gbxml.org/schema'
+	};
+
+	ISSdivMissingMeta.innerHTML =
+	`
+		<div id=divSavHeader ></div>
+		<div id=ISSdivAttributesMissing ></div>
+
+		<p>
+			<button onclick=onchange=ISS.setChangesMetadataIssues(this); >Update the changes</button>
+
+			<button onclick=ISS.surfaceChanges.addAttributesMissing=[];ISS.setChangesMetadataIssues(this); >Clear changes</button>
+		</p>
+
+		<h3>Changes for missing attributes</h3>
+
+		<textArea id=ISStxtAttributesMissing style="height:300px;width:100%;" ></textArea>
+
+		<button onclick=CTX.surfaceChanges.addAttributesMissing=ISS.surfaceChanges.addAttributesMissing; >Save changes</button>
+	`;
+
+	//CORdivMenuRight.style.display = 'block';
+	//window.scrollTo( 0, 0 );
+
+	let txt = '';
+	ISS.surfaceChanges.addAttributesMissing = {};
+
+	for ( let attribute of ISS.attributesMissing ) {
+
+		ISS.surfaceChanges.addAttributesMissing[ attribute ] = values[ attribute ];
+		GBX.gbjson[ attribute ] = values[ attribute ];
+		txt += `<p><input onclick=this.select(); onchange=ISS.setChangesMetadataIssues(this,"${attribute}"); value=${values[attribute]} size=25 > ${attribute} <p>`;
+	}
+
+	ISSdivAttributesMissing.innerHTML = txt;
+	ISStxtAttributesMissing.value = JSON.stringify( ISS.surfaceChanges.addAttributesMissing, null, ' ' );
+
+	};
+
+
+
+	ISS.setChangesMetadataIssues = function( that, attribute ) {
+
+	//console.log( 'that', that );
+
+	if ( attribute ) {
+
+		ISS.surfaceChanges.addAttributesMissing[attribute]=that.value;
+
+		ISStxtAttributesMissing.value = JSON.stringify( ISS.surfaceChanges.addAttributesMissing, null, ' ' );
+
+	} else {
+
+		ISStxtAttributesMissing.value =
+			'There are no missing attributes that still need fixing.\n\n' +
+			'Remember to save your changes to a new file.';
+
+	}
+
+};
+
+
+init();
+
+</script>
+</body>
+</html>

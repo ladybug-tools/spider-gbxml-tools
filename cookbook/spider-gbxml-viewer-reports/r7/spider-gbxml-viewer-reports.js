@@ -65,7 +65,8 @@ REP.getMenuItems = function() {
 
 			<div>
 				<select id=REPselReport onclick=REP.setPanelReportResults();
-				onchange=REP.setPanelReportResults(); size=6 >
+					onchange=REP.setPanelReportResults(); size=6 >
+
 					<option selected >Surface</option>
 					<option>Space</option>
 					<option>Storey</option>
@@ -76,9 +77,9 @@ REP.getMenuItems = function() {
 
 			<div>
 				<select id=REPselReportType size=1;>
-				<option selected>ID</option>
-				<option>Name</option>
-				<option>CAD ID</option>
+					<option selected>ID</option>
+					<option>Name</option>
+					<option>CAD ID</option>
 				</select>
 			</div>
 
@@ -87,7 +88,6 @@ REP.getMenuItems = function() {
 			<div>
 				<select id=REPselReportResults onchange=REP.setSelectedFocus(this); size=10; multiple></select>
 			</div>
-
 
 			<div id=REPdivInteract ></div>
 
