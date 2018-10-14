@@ -15,7 +15,7 @@ REPE.getElementsMenuItems = function() {
 
 		<summary>Select Reports by Elements</summary>
 
-		<p>Very work-in-progress. Only Surfaces update.</p>
+		<p></p>
 
 		<div>
 			<select id=REPselReport onchange=REPE.setPanelReportResults(); size=6 >
@@ -39,6 +39,8 @@ REPE.getElementsMenuItems = function() {
 		</div>
 
 		<div id=REPdivReportTitle ></div>
+
+		Use shift and control/command keys to select multiple items
 
 		<div>
 			<select id=REPselReportResults onchange=REPE.setElementVisible(); size=10; multiple></select>
