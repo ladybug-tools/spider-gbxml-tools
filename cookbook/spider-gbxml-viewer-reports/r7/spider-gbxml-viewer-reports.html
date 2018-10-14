@@ -17,7 +17,13 @@
 <script src = "../../../lib/r7/thru-threejs-utilities.js"></script>
 <script src = "../../../lib/r7/gbx-gbxml-loader.js" ></script>
 <script src = "../../../lib/r7/fil-open-file-gbxml.js" ></script>
-<script src = "./spider-gbxml-viewer-reports.js" ></script>
+<!--
+
+	<script src = "./spider-gbxml-viewer-reports.js" ></script>
+-->
+<script src = "./sgv-reports-types.js" ></script>
+<script src = "./sgv-reports-elements.js" ></script>
+<script src = "./sgv-reports-attributes.js" ></script>
 
 
 	<main id="container" ></main>
@@ -40,9 +46,14 @@
 
 		<details  open >
 
-			<summary>Reports <a href="https://www.ladybug.tools/spider-gbxml-tools/#cookbook/spider-gbxml-viewer-reports/README.md" >?</a></summary>
+			<summary>Interactive 3D Reports <a href="https://www.ladybug.tools/spider-gbxml-tools/#cookbook/spider-gbxml-viewer-reports/README.md" title="View Read Me file in new tab" target="_blank" > ? </a></summary>
 
-			<div id = "divReports" ></div>
+			<div id = "divReportTypes" ></div>
+
+			<div id = "divReportElements" ></div>
+
+			<div id = "divReportAttributes" ></div>
+
 
 		</details>
 
@@ -110,7 +121,12 @@ function init() {
 
 	divSettings.innerHTML = THRU.getSettings(); // not essential
 
-	divReports.innerHTML = REP.getMenuItems();
+	divReportTypes.innerHTML = REPT.getTypesMenuItems();
+
+	divReportElements.innerHTML = REPE.getElementsMenuItems();
+
+	divReportAttributes.innerHTML = REPA.getAttributesMenuItems();
+
 
 	divFooter.innerHTML = MNU.getNavFooter(); // not essential
 

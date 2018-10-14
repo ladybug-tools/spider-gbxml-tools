@@ -39,7 +39,7 @@ The purpose of this module is to provide you with any and all useful data embedd
 
 ## To Do / Wish List
 
-* Add all the features of AGV R4
+* Add all the features of AGV R14
 
 
 ## Issues
@@ -51,6 +51,15 @@ The purpose of this module is to provide you with any and all useful data embedd
 
 
 ## Change Log
+
+#### 2018-10-13 ~ Theo
+
+* Split into three separate JavaScript files
+* Code getting simpler
+* Add more text and rejig menus
+* All reports operating as expected
+* Multiple select working for all elements when using element select item
+
 
 
 #### 2018-10-11 ~ Theo
