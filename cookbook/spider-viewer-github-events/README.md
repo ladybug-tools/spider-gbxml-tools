@@ -20,7 +20,23 @@ _<small>Spider Viewer GitHub Events</small>_
 
 view recent GitHub events for a user or organization
 
+
+Every time an update to a repo, it would be nice if its details are broadcast wherever needed and wanted.
+
+Places where it is nice to see details about updates include:
+
+* The message attached to the commit
+* The read me file associated with the particular script
+* A message or notice available on the home page
+
+A further desired benefit is to help with generating text for blog posts and announcements regarding the project.
+
+This script is a first pass at establishing such a process.
+
+
 ## To Do / Wish List
+
+2018-10-14 ~ Add link to source code
 
 
 ## Issues

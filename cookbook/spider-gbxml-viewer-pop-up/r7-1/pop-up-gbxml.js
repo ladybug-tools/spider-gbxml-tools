@@ -155,7 +155,7 @@ POP.getIntersectedDataHtml = function( intersected, intersects ) {
 	surfaceJson = POP.intersected.userData.gbjson;
 
 	adjSpaces = surfaceJson[ 'AdjacentSpaceId' ];
-	console.log( 'adjSpaces', adjSpaces );
+	//console.log( 'adjSpaces', adjSpaces );
 
 	if ( adjSpaces ) {
 

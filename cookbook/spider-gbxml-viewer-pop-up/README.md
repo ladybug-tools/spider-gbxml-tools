@@ -35,7 +35,7 @@ Click on any surface in a gbXML model to display all its attribute data in a pop
 
 ## To Do / Wish List
 
-* 2018-10-14 ~ Display gbXML mt=eta information
+* 2018-10-14 ~ Display gbXML meta information
 * 2018-10-12 ~ Nicer display of attribute data
 * 2018-10-12 ~ View outline of entire polygon not just a triangle
 	* 2018-03-05 ~ Goal: surface + two adjacent: all visible at once
@@ -48,7 +48,11 @@ See also
 
 * https://github.com/ladybug-tools/spider/tree/master/gbxml-viewer/r14/gv-ctx-context-menu
 
+
+
 ## Issues
+
+* 2018-10-14 ~ Buttons not all reverting to gray when all surfaces are visible
 
 
 
