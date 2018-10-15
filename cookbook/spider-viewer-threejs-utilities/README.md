@@ -48,6 +48,10 @@ Utility functions that add features to the core Three.js functions
 
 ## Change Log
 
+#### 2018-10-15 ~ Theo
+
+* Add improved getSurfaceEdgesGbxml()
+
 #### 2018-10-11 ~ Theo
 
 * Update readme

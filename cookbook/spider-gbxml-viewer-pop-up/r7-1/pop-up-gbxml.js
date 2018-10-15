@@ -1,36 +1,27 @@
-/* global THREE, THR, RAD, divPopUp */
+/* global THREE, THR, THRU, GBX, divPopUpData */
 // jshint esversion: 6
 
 // Copyright 2018 Ladybug Tools authors. MIT License
 
 const POP = {};
-let line;
 
-const particleMaterial = new THREE.SpriteMaterial( { color: 0xff0000 } );
-POP.particle = new THREE.Sprite( particleMaterial );
+
+
 
 POP.getPopUpHtml = function() {
 
 	POP.mouse = new THREE.Vector2();
 	POP.raycaster = new THREE.Raycaster();
-	POP.objects = GBX.surfaceMeshes.children;
+	//POP.objects = GBX.surfaceMeshes.children;
 	POP.intersected = undefined;
 	POP.divTarget = divPopUpData;
 
+	POP.particleMaterial = new THREE.SpriteMaterial( { color: 0xff0000 } );
+	POP.particle = new THREE.Sprite( POP.particleMaterial );
+	POP.line = undefined;
+
 	THR.renderer.domElement.addEventListener( 'mousedown', POP.onDocumentMouseDown, false );
 	THR.renderer.domElement.addEventListener( 'touchstart', POP.onDocumentTouchStart, false ); // for mobile
-
-	var geometry = new THREE.BufferGeometry();
-	geometry.addAttribute( 'position', new THREE.BufferAttribute( new Float32Array( 4 * 3 ), 3 ) );
-
-	var material = new THREE.LineBasicMaterial( { color: 0xffffff, linewidth: 2, transparent: true } );
-
-	line = new THREE.Line( geometry, material );
-	THR.scene.add( line );
-
-	POP.particle.scale.x = POP.particle.scale.y = 0.03 * THRU.radius;
-	POP.particle.visible = false;
-	THR.scene.add( POP.particle );
 
 	const htm =
 	`
@@ -77,6 +68,7 @@ POP.onDocumentTouchStart = function( event ) {
 
 
 POP.onDocumentMouseDown = function( event ) {
+	//console.log( 'event', event );
 
 	event.preventDefault();
 
@@ -85,7 +77,7 @@ POP.onDocumentMouseDown = function( event ) {
 
 	POP.raycaster.setFromCamera( POP.mouse, THR.camera );
 
-	const intersects = POP.raycaster.intersectObjects( POP.objects );
+	const intersects = POP.raycaster.intersectObjects( GBX.surfaceMeshes.children );
 	//console.log( 'intersects', intersects );
 
 	if ( intersects.length > 0 ) {
@@ -103,12 +95,10 @@ POP.onDocumentMouseDown = function( event ) {
 
 	} else {
 
-		intersected = null;
+		POP.intersected = null;
 
 		POP.divTarget.style.display = 'none';
 
-		line.visible = false;
-		POP.particle.visible = false;
 		document.body.style.cursor = 'auto';
 
 	}
@@ -118,32 +108,28 @@ POP.onDocumentMouseDown = function( event ) {
 
 
 POP.getIntersectedVertexBufferGeometry = function( intersected, intersects ) {
-
-	// https://stackoverflow.com/questions/36017079/three-js-get-the-position-of-a-single-face-of-a-tessellated-object
-	//intersected.geometry.colorsNeedUpdate = true;
 	//console.log( '', intersected );
 
+	THR.scene.remove( POP.line, POP.particle );
 
-	var face = intersects[ 0 ].face;
-	//face.color.setHex( 0xcc0000 ); // nope - must update the attributes
+	const vertices = intersected.userData.gbjson.PlanarGeometry.PolyLoop.CartesianPoint
+		.map( point => new THREE.Vector3().fromArray( point.Coordinate  ) );
+	//console.log( 'vertices', vertices );
 
-	var linePosition = line.geometry.attributes.position;
-	meshPosition = intersected.geometry.attributes.position;
+	const geometry = new THREE.Geometry().setFromPoints( vertices )
+	//console.log( 'geometry', geometry );
 
-	// to do: draw line around the edge of the mesh
+	const material = new THREE.LineBasicMaterial( { color: 0xff00ff, linewidth: 2, transparent: true } );
 
-	linePosition.copyAt( 0, meshPosition, face.a );
-	linePosition.copyAt( 1, meshPosition, face.b );
-	linePosition.copyAt( 2, meshPosition, face.c );
-	linePosition.copyAt( 3, meshPosition, face.a );
 
-	intersected.updateMatrix();
+	POP.line = new THREE.LineLoop( geometry, material );
+	THR.scene.add( POP.line );
 
-	line.geometry.applyMatrix( intersected.matrix );
-	line.visible = true;
 
+	POP.particle.scale.x = POP.particle.scale.y = 0.03 * THRU.radius;
 	POP.particle.position.copy( intersects[ 0 ].point );
-	POP.particle.visible = true;
+
+	THR.scene.add( POP.line, POP.particle );
 
 };
 
@@ -152,10 +138,11 @@ POP.getIntersectedVertexBufferGeometry = function( intersected, intersects ) {
 POP.getIntersectedDataHtml = function( intersected, intersects ) {
 	//console.log( 'intersected', intersected );
 
-	surfaceJson = POP.intersected.userData.gbjson;
+	const surfaceJson = POP.intersected.userData.gbjson;
 
-	adjSpaces = surfaceJson[ 'AdjacentSpaceId' ];
+	const adjSpaces = surfaceJson.AdjacentSpaceId; // [ '' ];
 	//console.log( 'adjSpaces', adjSpaces );
+	let adjSpaceButtons, space, storeyButton, zoneButton;
 
 	if ( adjSpaces ) {
 
@@ -188,7 +175,7 @@ POP.getIntersectedDataHtml = function( intersected, intersects ) {
 
 
 
-	navigating =
+	const navigating =
 	`
 		<p>
 			<i>Navigating and identifying are two different things.
@@ -198,7 +185,7 @@ POP.getIntersectedDataHtml = function( intersected, intersects ) {
 		<p><b>Navigating</b></p>
 
 		<p>
-			<button onclick=POP.toggleVisible(); >${ surfaceJson[ 'id' ] }</button>
+			<button onclick=POP.toggleVisible(); >${ surfaceJson.id }</button>
 			${ adjSpaceButtons }
 		</p>
 			${ storeyButton }
@@ -207,10 +194,10 @@ POP.getIntersectedDataHtml = function( intersected, intersects ) {
 		</p>
 	`;
 
-	attributes ='';
-	elements = '';
+	let attributes ='';
+	let elements = '';
 
-	keys = Object.keys( surfaceJson ).sort();
+	const keys = Object.keys( surfaceJson ).sort();
 	//console.log( 'keys', keys );
 
 
@@ -222,7 +209,7 @@ POP.getIntersectedDataHtml = function( intersected, intersects ) {
 			if ( typeof( surfaceJson[ key ] ) === 'object' ) {
 
 				//console.log( '', key);
-				obj = surfaceJson[ key ];
+				const obj = surfaceJson[ key ];
 
 				elements +=
 				`<div>
@@ -356,6 +343,7 @@ POP.toggleStoreyVisible = function( button, storeyId ) {
 
 POP.setZoneVisible = function () {
 
+	/*
 	const spaces = GBX.gbjson.Campus.Building.Space;
 
 	GBX.surfaceMeshes.children.forEach( element => element.visible = false );
@@ -390,6 +378,7 @@ POP.setZoneVisible = function () {
 		}
 
 	}
+	*/
 
 };
 

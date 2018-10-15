@@ -62,6 +62,11 @@ See also
 
 ## Change Log
 
+#### 2018-10-15 ~ Theo
+
+* Fix not displaying on newly opened model
+* Add entire surface highlights not just triangle
+
 #### 2018-10-14 ~ Theo
 
 Pop-Up R7.1
