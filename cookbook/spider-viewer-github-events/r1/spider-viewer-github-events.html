@@ -233,7 +233,8 @@ console.log( 'events', events );
 		if ( commit ) {
 
 //			return 'push <a href=https://github.com/' + event.repo.name + '/commit/' + commit.sha + ' >' + commit.message.slice( 0, 100 ) + '...' + '</a>';
-			return 'push ' + commit.message.slice( 0, 100 ).link( 'https://github.com/' + event.repo.name + '/commit/' + commit.sha ) + '...';
+//			return 'push ' + commit.message.slice( 0, 100 ).link( 'https://github.com/' + event.repo.name + '/commit/' + commit.sha ) + '...';
+			return `push ${ ( 'link to commit' ).link( 'https://github.com/' + event.repo.name + '/commit/' + commit.sha ) }<br><textarea style=height:50px;width:100%; >${ commit.message }</textarea>`;
 
 		}
 

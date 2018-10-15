@@ -21,7 +21,7 @@ _<small>Spider gbXML Viewer Pop-Up</small>_
 Click on any surface in a gbXML model to display all its attribute data in a pop-op window
 
 * Toggle the display of 3D surfaces based on user input
-* Click on any surface in the model
+* Click on any surface in the model to:
 	* View id, name, type CAD object id
 	* View adjacent space parameters
 	* Toggle view of space and story
