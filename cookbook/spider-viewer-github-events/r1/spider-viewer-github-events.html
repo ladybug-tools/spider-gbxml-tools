@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = description content = "view recent GitHub events for a user or organization" >
+<meta name = keywords content = "Ladybug Tools, Spider, JavaScript, GitHub, FOSS, 3D, STEM" >
+<meta name = date content = "2018-10-14" >
+<title>View GitHub Events</title>
+<style id = "foo" >
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
+	a { color: crimson; text-decoration: none; }
+
+</style>
+</head>
+<body>
+<script src = "https://cdn.rawgit.com/showdownjs/showdown/1.8.6/dist/showdown.min.js" ></script>
+
+	<div id = "menu" >
+		<div id = "contents" ></div>
+	</div>
+
+<script>
+
+	//let user = 'theo-armour';
+	let user = 'ladybug-tools'
+	let repo = 'spider-gbxml-tools'
+	let title = 'Spider gbXML Tools';
+
+	let type = {};
+	let dates = [];
+	let repos = [];
+	let eventTypes = [ "CommitCommentEvent","CreateEvent","DeleteEvent","DeploymentEvent","DeploymentStatusEvent","DownloadEvent","FollowEvent","ForkEvent","ForkApplyEvent","GistEvent","GollumEvent","IssueCommentEvent","IssuesEvent","MemberEvent","MembershipEvent","PageBuildEvent","PublicEvent","PullRequestEvent","PullRequestReviewCommentEvent","PushEvent","ReleaseEvent","RepositoryEvent","StatusEvent","TeamAddEvent","WatchEvent" ];
+
+
+	let converter = new showdown.Converter();
+
+	const b = '<br>';
+
+	init();
+
+	function init() {
+
+//		parent.foo.innerHTML += '.issue { background-color: #fff; border: 1px solid; }';
+
+		//urlEvents = 'https://api.github.com/users/' + user + '/events?per_page=100';
+		urlEvents = "https://api.github.com/repos/" + user + "/" + repo + "/events"
+
+		requestFile( urlEvents, callback )
+
+	}
+
+
+
+	function requestFile( url, callback ) {
+
+		let xhr;
+
+		xhr = new XMLHttpRequest();
+		xhr.crossOrigin = 'anonymous';
+		xhr.open( 'GET', url, true );
+		xhr.onerror = function( xhr ) { console.log( 'error:', xhr  ); };
+//		xhr.onprogress = function( xhr ) { console.log( 'bytes loaded:', xhr.loaded  ); }; /// or something
+		xhr.onload = callback;
+		xhr.send( null );
+
+	}
+
+
+	function callback( xhr ) {
+
+		let response;
+
+		response = xhr.target.response;
+
+		events = JSON.parse( xhr.target.response );
+
+console.log( 'events', events );
+
+		if ( events.message ) { // there's been an error...
+
+			contents.innerHTML =
+
+				'<h1>' + events.message + '</h1>' +
+				'<p>See: </p>' +
+				'<p>' + ("https://github.com/settings/tokens").link( "https://github.com/settings/tokens" ) + '</p>' +
+				'<p>' + ('https://developer.github.com/v3/auth/#basic-authentication').link( 'https://github.com/settings/tokens' ) + '</p>' +
+			'';
+
+			return;
+
+		}
+
+		getEventsCondensed( events )
+
+	}
+
+
+
+	function getEventsCondensed( events ) {
+
+		let txt;
+
+		txt =
+
+			'<h2 style=margin-bottom:0; title="" >' + title + ' events</h2>' +
+
+			'<h3 >' + events.length + ' most recent events by date</h3>' +
+
+		'';
+
+		for ( var i = 0; i < events.length; i++ ) {
+
+			event = events[ i ];
+
+			if ( !repos[ event.repo.name ] ) {
+
+				repos[ event.repo.name ] = { "name" : event.repo.name, "stats" : Array(  eventTypes.length ).fill( 0 ) };
+
+			}
+
+			date = event.created_at.slice( 0, 10 );
+
+			if ( !dates.includes( date ) ) {
+
+				dates.push( date );
+
+				txt += '<h4 style=margin-bottom:0; >' + date + '</h4>';
+
+			}
+
+			if ( user.toLowerCase() !== event.actor.login  ) {
+
+				actor = event.actor.login.link( event.actor.url );
+
+			} else {
+
+				actor = 'repo: ' ;
+
+			}
+
+			repo = event.repo.name;
+
+			link = repo.replace ( user + '/', '' ).link( 'https://github.com/' + repo );
+
+
+
+			tt = 'on' + event.type
+//console.log( 'event.type', event.type, tt );
+
+			txt +=
+
+				'#' + ( i + 1 ) + ' time:' + event.created_at.slice( 11, -4 ) + ' user: ' + actor + ' ' + b +
+				'' + type[ ( 'on' + event.type ) ]( event ) + '<br>' +
+
+			b;
+
+			index = eventTypes.indexOf( event.type );
+
+			repos[ repo ].stats[ index ]++;
+
+		}
+
+		contents.innerHTML = txt;
+
+	}
+
+//
+
+	type.onCommitCommentEvent = function( event ) {return 'Commit Comment ' + event.payload.comment.body.link( event.payload.comment.html_url ) };
+
+	type.onCreateEvent = function( event ) { return 'create ' + event.payload.master_branch; };
+
+	type.onDeleteEvent = function( event ) { return 'delete ' + event.payload.ref_type; };
+
+	type.onDeploymentEvent = function( event ) { return 'DeploymentEvent ' + event.payload ; };
+
+	type.onDeploymentStatusEvent = function( event ) { return 'DeploymentStatusEvent ' + event.payload ; };
+
+	type.onDownloadEvent = function( event ) { return 'DownloadEvent ' + event.payload ; };
+
+	type.onFollowEvent = function( event ) { return 'follow ' + event.payload ; };
+
+	type.onForkApplyEvent = function( event ) { return 'ForkApplyEvent ' + event.payload ; };
+
+	type.onForkEvent = function( event ) { return 'fork by ' + event.actor.display_login.link( 'https://github.com/' + event.actor.display_login ); };
+
+	type.onGistEvent = function( event ) { return 'gist ' + event.payload ; };
+
+	type.onGollumEvent = function( event ) { return 'wiki edited'; };
+
+	type.onIssuesEvent = function( event ) {
+
+//		type.issuesEvents = !type.issuesEvents ? 1 : type.issuesEvents + 1;
+
+//		type.issuesEvents = ( type.issuesEvents + 1 ) || 1;
+
+		var body = event.payload.issue.body;
+
+		if ( body.length > 500 ) {
+
+			body = body.slice( 0, 500 ) + '</div>more...';
+
+		}
+
+		return '<small>issue ' + event.payload.issue.title.link( event.payload.issue.html_url ) + '</small>' + b +
+
+			'<div class=issue >' + converter.makeHtml( body ) + '</div>' +
+
+		'';
+
+	};
+
+	type.onIssueCommentEvent = function( event ) { return 'issue comment ' + event.payload.issue.title.link( event.payload.issue.html_url ); };
+
+	type.onMemberEvent = function( event ) { return 'member ' + event.payload.action; };
+
+	type.onMembershipEvent = function( event ) { return 'MembershipEvent ' + event.payload ; };
+
+	type.onPageBuildEvent = function( event ) { return 'PageBuildEvent ' + event.payload ; };
+
+	type.onPublicEvent = function( event ) { return 'PublicEvent ' + event.payload ; };
+
+
+	type.onPushEvent = function( event ) {
+
+//		type.pushEvents = !type.pushEvents ? 1 : type.pushEvents + 1;
+
+//		type.pushEvents = ( type.pushEvents + 1 ) || 1;
+
+		var commit = event.payload.commits[ 0 ] ;
+
+		if ( commit ) {
+
+//			return 'push <a href=https://github.com/' + event.repo.name + '/commit/' + commit.sha + ' >' + commit.message.slice( 0, 100 ) + '...' + '</a>';
+			return 'push ' + commit.message.slice( 0, 100 ).link( 'https://github.com/' + event.repo.name + '/commit/' + commit.sha ) + '...';
+
+		}
+
+	};
+
+	type.onPullRequestEvent = function( event ) {
+
+		return 'pull request ' + event.payload.action + ' ' + event.payload.pull_request.title.link( event.payload.pull_request.html_url );
+
+//			event.payload.pull_request.body.slice( 0, 100 ) + '<br>more...' ;
+
+	};
+
+	type.onPullRequestReviewCommentEvent = function( event ) {
+
+		return 'pull request ' + event.payload.action + ' ' + event.payload.pull_request.title.link( event.payload.pull_request.html_url );
+
+//			event.payload.pull_request.body.slice( 0, 100 ) + '<br>more...' ;
+
+	};
+
+	type.onReleaseEvent = function( event ) { return 'release ' + event.payload.release.name ; };
+
+	type.onRepositoryEvent = function( event ) { return 'RepositoryEvent ' + event.payload ; };
+
+	type.onStatusEvent = function( event ) {return 'StatusEvent ' + event.payload ; };
+
+	type.onTeamAddEvent = function( event ) { return 'TeamAddEvent ' + event.payload ; };
+
+	type.onWatchEvent = function( event ) { return 'watch ' + event.payload.action + ' by ' + event.actor.display_login.link( 'https://github.com/' + event.actor.display_login ); };
+
+
+</script>
+</body>
+</html>
+
