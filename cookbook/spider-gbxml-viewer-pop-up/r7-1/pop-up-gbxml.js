@@ -259,7 +259,7 @@ POP.getIntersectedDataHtml = function( intersected, intersects ) {
 	const htm =
 	`
 		<div>${ navigating }</div>
-		<b>Identifying</b>
+		<b>Identifying according to <a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">gbXML Schema</a></b>
 		${ attributes }
 		<p>${ elements }</p>
 	`;

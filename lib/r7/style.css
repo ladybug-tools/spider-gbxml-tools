@@ -27,7 +27,7 @@ summary {font-weight: bold }
 	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23); }
 
 
-#divPopUp { background-color: #eee; border-radius: 8px; display: block; max-width: 50%; padding: 0 5px 10px 5px;
+#divPopUp { background-color: #eee; border-radius: 8px; display: block; max-width: 25%; padding: 0 5px 10px 5px;
 	max-height: 95%; overflow: auto; resize: both;
 	opacity: 0.95; right: 1rem; position: absolute; top: 1rem; z-index: 10; };
 

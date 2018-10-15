@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8" >
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
-<meta name=description content="Cookbook version: Open, view and examine gbXML files in 3D in your browser with free, open source entry-level Three.js JavaScript" >
+<meta name=description content="Click on any surface in a gbXML model to display all its attribute data in a pop-op window" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-10-12" >
-<title>Spider gbXML Viewer R7 Issues</title>
+<meta name = "date" content = "2018-10-11" >
+<title>Spider gbXML Viewer Basic R7 Pop-Up Info</title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 </head>
 <body>
@@ -16,14 +16,8 @@
 <script src = "../../../lib/r7/thr-threejs.js" ></script>
 <script src = "../../../lib/r7/thru-threejs-utilities.js"></script>
 <script src = "../../../lib/r7/gbx-gbxml-loader.js" ></script>
-<script src = "./issm-issues-metadata.js" ></script>
-<script src = "./issi-issues-inclusions.js" ></script>
 <script src = "../../../lib/r7/fil-open-file-gbxml.js" ></script>
-<!--
-
-	<script src = "../../../lib/r7/pop-up-gbxml.js" ></script>
-
--->
+<script src = "pop-up-gbxml.js" ></script>
 <script src = "../../../lib/r7/gal-sample-files-gallery-gbxml.js" ></script>
 
 	<main id="container" ></main>
@@ -54,29 +48,13 @@
 
 		</details>
 
-		<details open>
-
-			<summary title = "fix things" >Issues</summary>
-
-			<i>Fix problems with the file</i>
-
-			<div id = "divIssues" ></div>
-
-			<div id = "divPanelMetadataIssues" ></div>
-
-			<div id = "divInclusions" ></div>
-
-		</details>
-
-
-		<details>
+		<details open >
 
 			<summary title = "Update what you see in the display">Settings</summary>
 
 			<div id = "divSettings" ></div>
 
 		</details>
-
 
 		<details ontoggle=divRendererInfo.innerHTML=THRU.getRendererInfo(); > <!-- not essential -->
 
@@ -112,6 +90,7 @@
 		<button id="butHamburger" onclick=MNU.toggleNavLeft(); title="click to hide this menu"> slide &#9776; </button>
 	</nav>
 
+
 	<div id="divPopUp" >
 
 		<div id="divPopUpData" ></div>
@@ -122,17 +101,15 @@
 
 <script>
 
-MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-basic-cookbook/";
+MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-pop-up";
 
 FIL.urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml';
 //FIL.urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/coventry-university-of-warwick-small.xml';
 
 FIL.divFileInfo = divFileInfo;
 
-const ISS = {};
-ISS.surfaceChanges = {};
 
-
+init();
 
 
 
@@ -140,14 +117,9 @@ function init() {
 
 	divHeader.innerHTML = MNU.getNavHeader(); // not essential
 
-	//divSettings.innerHTML = THRU.getSettings( divSettings );
 	divFileOpen.innerHTML = FIL.getFileOpen(); // if needed: set file info target
 
 	divSampleFileButtons.innerHTML = GAL.setCardSampleGalleries();
-
-	divPanelMetadataIssues.innerHTML = ISSM.getPanelMetadataIssues();
-
-	divInclusions.innerHTML = ISSI.getMenu();
 
 	divSettings.innerHTML = THRU.getSettings();
 
@@ -166,11 +138,11 @@ function init() {
 
 	THR.animate();
 
+	// there will be better ways of doing this
+	setTimeout(() => { divPopUpData.innerHTML = POP.getPopUpHtml(); }, 600);
 
 }
 
-
-init();
 
 </script>
 </body>
