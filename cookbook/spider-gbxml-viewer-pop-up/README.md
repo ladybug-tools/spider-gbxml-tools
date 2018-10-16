@@ -35,11 +35,13 @@ Click on any surface in a gbXML model to display all its attribute data in a pop
 
 ## To Do / Wish List
 
+* 2018-10-15 ~ PolyLoop display:
+	* Put in a details tag
+	* On toggle display vertex number in 3D model
+* 2018-10-15 ~ Rectangular Geometry: display outline
+* 2018-10-15 ~ Adjacent Space: show attributes
 * 2018-10-14 ~ Display gbXML meta information
-* 2018-10-12 ~ Nicer display of attribute data
-* 2018-10-12 ~ View outline of entire polygon not just a triangle
-	* 2018-03-05 ~ Goal: surface + two adjacent: all visible at once
-* 2018-03-04 ~ Identify adjacent spaces at same time
+* 2018-03-04 ~ Identify two adjacent spaces at same time
 * 2018-01-02 ~ Multiple types of heads-up modules with different agendas
 	* Show space names at cursor locations
 * 2018-01-02 ~ Add in-world placard at cursor location
@@ -66,6 +68,12 @@ See also
 
 * Fix not displaying on newly opened model
 * Add entire surface highlights not just triangle
+
+Getting there / Well underway
+
+* 2018-10-12 ~ Nicer display of attribute data
+* 2018-10-12 ~ View outline of entire polygon not just a triangle
+	* 2018-03-05 ~ Goal: surface + two adjacent: all visible at once
 
 #### 2018-10-14 ~ Theo
 

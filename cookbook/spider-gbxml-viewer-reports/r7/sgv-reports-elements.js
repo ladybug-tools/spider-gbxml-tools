@@ -43,7 +43,7 @@ REPE.getElementsMenuItems = function() {
 		Use shift and control/command keys to select multiple items
 
 		<div>
-			<select id=REPselReportResults onchange=REPE.setElementVisible(); size=10; multiple></select>
+			<select id=REPselReportResults onchange=REPE.setElementVisible(); size=10; style=width:100%; multiple></select>
 		</div>
 
 		<div id=REPdivInteract ></div>
@@ -112,7 +112,7 @@ REPE.setElementPanelSelectSurface = function(){
 	const attribute = REPselReportType.value;
 	const options = surfaces.map( surface => `<option value="${ surface.id }" >${ surface[ attribute ] }</option>` );
 
-	REPdivReportTitle.innerHTML = `<h4>Type: Space - Items: ${ options.length } </h4>`;
+	REPdivReportTitle.innerHTML = `<h4>Type: Surface - Items: ${ options.length } </h4>`;
 
 	REPselReportResults.innerHTML = options.join( ',' );
 
@@ -166,6 +166,8 @@ REPE.setElementPanelSelectZone = function() {
 REPE.setElementVisible = function() {
 	//console.log( 'id', id );
 	//console.log( 'item', item ); // use REPE.item??
+
+	THR.scene.remove( POP.line, POP.particle );  // POP must be loaded
 
 	const element = REPselReport.value;
 

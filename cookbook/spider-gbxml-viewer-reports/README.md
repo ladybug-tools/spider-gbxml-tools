@@ -55,6 +55,10 @@ See also
 
 ## Change Log
 
+### 2018-10-15 ~ Theo
+
+* Add pop-up
+
 #### 2018-10-13 ~ Theo
 
 * Split into three separate JavaScript files

@@ -25,6 +25,7 @@
 <script src = "./sgv-reports-elements.js" ></script>
 <script src = "./sgv-reports-attributes.js" ></script>
 
+<script src = "../../../lib/r7/pop-up-gbxml.js" ></script>
 
 	<main id="container" ></main>
 
@@ -99,6 +100,15 @@
 		<button id="butHamburger" onclick=MNU.toggleNavLeft(); title="click to hide this menu"> slide &#9776; </button>
 	</nav>
 
+
+	<div id="divPopUp" >
+
+			<div id="divPopUpData" ></div>
+
+			<div id="divMessage" ></div>
+
+	</div>
+
 <script>
 
 MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-reports/";
@@ -142,6 +152,10 @@ function init() {
 	//location.hash = urlDefaultFile;
 
 	THR.animate();
+
+	// there will be better ways of doing this
+	setTimeout(() => { divPopUpData.innerHTML = POP.getPopUpHtml(); }, 600);
+
 
 }
 
