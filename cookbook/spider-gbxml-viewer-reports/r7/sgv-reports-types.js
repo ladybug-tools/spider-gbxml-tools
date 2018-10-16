@@ -159,6 +159,8 @@ REPT.toggleAllVisible = function( button ) {
 	const visible = REPT.toggleButtonColor( button );
 	const butts = Array.from( divSurfacesByType.getElementsByClassName( "toggleView" ) );
 
+	THR.scene.remove( POP.line, POP.particle );  // POP must be loaded
+
 	butExposeToSun.style.cssText = '';
 
 	if ( visible === true ) {
@@ -182,6 +184,8 @@ REPT.toggleAllVisible = function( button ) {
 REPT.toggleExposedToSunVisible = function( button ) {
 
 	const visible = REPT.toggleButtonColor( button );
+
+	THR.scene.remove( POP.line, POP.particle );  // POP must be loaded
 
 	butAllVisible.style.cssText = '';
 
@@ -241,6 +245,8 @@ REPT.setSurfaceTypeVisible = function( type ) {
 
 	//REPT.setSurfaceGroupsVisible();
 
+	THR.scene.remove( POP.line, POP.particle );  // POP must be loaded
+
 	GBX.surfaceMeshes.children.forEach( element => element.visible = element.userData.gbjson.surfaceType === type? true : false );
 
 };
@@ -250,6 +256,8 @@ REPT.setSurfaceTypeVisible = function( type ) {
 REPT.setCadObjectTypeVisible = function( CADObjectGroup ) {
 
 	//REPT.setSurfaceGroupsVisible();
+
+	THR.scene.remove( POP.line, POP.particle );  // POP must be loaded
 
 	for ( let child of GBX.surfaceMeshes.children ) {
 
@@ -280,6 +288,8 @@ REPT.setCadObjectTypeVisible = function( CADObjectGroup ) {
 
 
 REPT.setSurfaceTypeInvisible = function( button ) {
+
+	THR.scene.remove( POP.line, POP.particle );  // POP must be loaded
 
 	for ( let child of GBX.surfaceMeshes.children ) {
 
