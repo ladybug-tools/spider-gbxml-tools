@@ -47,6 +47,11 @@ This release incorporates the first significant changes in many months to the co
 
 The updates occurred after applying the lessons learned from the more recent Spider RAD Viewer. Both apps are now beginning to share a lot of code.
 
+#### 2018-10-15 ~ Theo
+
+R7.6
+* Add better edges display for gbXML data
+
 #### 2018-10-10
 
 * Add pop-up information

@@ -142,6 +142,7 @@ POP.getIntersectedDataHtml = function( intersected, intersects ) {
 
 	const adjSpaces = surfaceJson.AdjacentSpaceId; // [ '' ];
 	//console.log( 'adjSpaces', adjSpaces );
+
 	let adjSpaceButtons, space, storeyButton, zoneButton;
 
 	if ( adjSpaces ) {
@@ -174,7 +175,6 @@ POP.getIntersectedDataHtml = function( intersected, intersects ) {
 	}
 
 
-
 	const navigating =
 	`
 		<p>
@@ -189,7 +189,6 @@ POP.getIntersectedDataHtml = function( intersected, intersects ) {
 			${ adjSpaceButtons }
 		</p>
 			${ storeyButton }
-
 			${ zoneButton }
 		</p>
 	`;
@@ -199,7 +198,6 @@ POP.getIntersectedDataHtml = function( intersected, intersects ) {
 
 	const keys = Object.keys( surfaceJson ).sort();
 	//console.log( 'keys', keys );
-
 
 	for ( let key of keys ) {
 		//console.log( 'key', key );
@@ -218,11 +216,37 @@ POP.getIntersectedDataHtml = function( intersected, intersects ) {
 
 				for ( let prop in obj ) {
 
-					elements +=
-					`<div>
-						<span class=attributeTitle >${prop}:</span>
-						<span class=attributeValue >${ obj[ prop ] }</span>
-					</div>`;
+
+
+					if ( prop === 'PolyLoop') {
+
+						points = GBX.getVertices( obj[ prop ] );
+
+						let txt = '', count = 1;
+
+						for ( point of points ) {
+
+							txt += `${ count++ }. x:${ point.x } y:${ point.y } z:${ point.z }<br>`;
+						}
+						//console.log( 'points', JSON.stringify( points ) );
+
+						elements +=
+						`<div>
+							<span class=attributeTitle >${prop}:</span><br>
+							<span class=attributeValue >${ txt }</span>
+
+						</div>`;
+
+					} else {
+
+						elements +=
+						`<div>
+							<span class=attributeTitle >${prop}:</span>
+							<span class=attributeValue >${ obj[ prop ] }</span>
+
+						</div>`;
+
+					}
 
 				}
 
