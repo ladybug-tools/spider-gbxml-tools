@@ -37,9 +37,8 @@ Click on any surface in a gbXML model to display all its attribute data in a pop
 
 * 2018-10-15 ~ PolyLoop display:
 	* Put in a details tag
-	* On toggle display vertex number in 3D model
+	* On toggle display vertex numbers in 3D model
 * 2018-10-15 ~ Rectangular Geometry: display outline
-* 2018-10-15 ~ Adjacent Space: show attributes
 * 2018-10-14 ~ Display gbXML meta information
 * 2018-03-04 ~ Identify two adjacent spaces at same time
 * 2018-01-02 ~ Multiple types of heads-up modules with different agendas
@@ -54,7 +53,10 @@ See also
 
 ## Issues
 
+* 2018-10-17 ~ Errors id one or no spaces
+* 2018-10-17 ~ No Zone info being displayed
 * 2018-10-14 ~ Buttons not all reverting to gray when all surfaces are visible
+
 
 
 
@@ -63,6 +65,16 @@ See also
 
 
 ## Change Log
+
+SGV Pop-Up R7.3
+* Update mnu text
+* Space and storey buttons use names
+* Attributes for surface, space and storey all update when you click respective buttons
+* Attributes for everything display as expected
+
+Well underway
+* 2018-10-15 ~ Adjacent Space: show attributes
+
 
 #### 2018-10-15 ~ Theo
 

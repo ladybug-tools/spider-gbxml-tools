@@ -6,7 +6,7 @@
 <meta name=description content="Click on any surface in a gbXML model to display all its attribute data in a pop-op window" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
 <meta name = "date" content = "2018-10-15" >
-<title>Spider gbXML Viewer Basic R7.2 Pop-Up Info</title>
+<title>Spider gbXML Viewer Basic R7.3 Pop-Up Info</title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 </head>
 <body>
@@ -91,13 +91,11 @@
 	</nav>
 
 
-	<div id="divPopUp" >
+	<nav "navPopUp" >
 
-		<div id="divPopUpData" ></div>
+		<div id="divPopUp" ></div>
 
-		<div id="divMessage" ></div>
-
-	</div>
+	</nav>
 
 <script>
 
@@ -132,14 +130,13 @@ function init() {
 
 	THRU.addSomeLights();
 
+	divPopUp.innerHTML = POP.getPopUpHtml();
 
 	if ( !location.hash ) { location.hash = FIL.urlDefaultFile; } else { FIL.onHashChange(); }
 	//location.hash = urlDefaultFile;
 
 	THR.animate();
 
-	// there will be better ways of doing this
-	setTimeout(() => { divPopUpData.innerHTML = POP.getPopUpHtml(); }, 600);
 
 }
 

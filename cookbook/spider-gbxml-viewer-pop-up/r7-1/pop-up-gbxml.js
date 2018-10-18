@@ -14,7 +14,7 @@ POP.getPopUpHtml = function() {
 	POP.raycaster = new THREE.Raycaster();
 	//POP.objects = GBX.surfaceMeshes.children;
 	POP.intersected = undefined;
-	POP.divTarget = divPopUpData;
+	//POP.divPopupData = divPopUp;
 
 	POP.particleMaterial = new THREE.SpriteMaterial( { color: 0xff0000 } );
 	POP.particle = new THREE.Sprite( POP.particleMaterial );
@@ -27,7 +27,7 @@ POP.getPopUpHtml = function() {
 	`
 		<div id = "divPopUpLog"  ></div>
 
-		<div>
+		<div id = "divPopupData" >
 
 			<p>
 			click on the model amd surface attributes appear here
@@ -41,9 +41,10 @@ POP.getPopUpHtml = function() {
 
 			<p>Press Control-Shift-J|Command-Option-J to see if the JavaScript console reports any errors</p>
 
-			<p style=text-align:right; > <a href="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-pop-up" >SGV Pop-Up R7.1</a></p>
+		</div>
 
-
+		<div>
+			<p style=text-align:right; > <a href="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-pop-up" >SGV Pop-Up R7.3</a></p>
 		</div>
 
 	`;
@@ -87,17 +88,19 @@ POP.onDocumentMouseDown = function( event ) {
 		POP.faceIndex = intersects[ 0 ].faceIndex;
 		//intersected.material.color.setHex( Math.random() * 0xffffff );
 
-		POP.divTarget.style.display = '';
+		divPopupData.style.display = '';
 
 		POP.getIntersectedVertexBufferGeometry( POP.intersected, intersects );
 
-		POP.divTarget.innerHTML = POP.getIntersectedDataHtml( POP.intersected, intersects );
+		divPopupData.innerHTML = POP.getIntersectedDataHtml( POP.intersected, intersects );
 
 	} else {
 
 		POP.intersected = null;
 
-		POP.divTarget.style.display = 'none';
+		divPopupData.style.display = 'none';
+
+		THR.scene.remove( POP.line, POP.particle );
 
 		document.body.style.cursor = 'auto';
 
@@ -125,7 +128,6 @@ POP.getIntersectedVertexBufferGeometry = function( intersected, intersects ) {
 	POP.line = new THREE.LineLoop( geometry, material );
 	THR.scene.add( POP.line );
 
-
 	POP.particle.scale.x = POP.particle.scale.y = 0.03 * THRU.radius;
 	POP.particle.position.copy( intersects[ 0 ].point );
 
@@ -138,32 +140,35 @@ POP.getIntersectedVertexBufferGeometry = function( intersected, intersects ) {
 POP.getIntersectedDataHtml = function( intersected, intersects ) {
 	//console.log( 'intersected', intersected );
 
-	const surfaceJson = POP.intersected.userData.gbjson;
+	surfaceJson = POP.intersected.userData.gbjson;
 
 	const adjSpaces = surfaceJson.AdjacentSpaceId; // [ '' ];
 	//console.log( 'adjSpaces', adjSpaces );
 
-	let adjSpaceButtons, space, storeyButton, zoneButton;
+	//let adjSpaceButtons, space, storeyButton, zoneButton;
 
 	if ( adjSpaces ) {
 
 		if ( Array.isArray( adjSpaces ) ) {
 
+			space0 = GBX.gbjson.Campus.Building.Space.find( item => item.id === adjSpaces[ 0 ].spaceIdRef );
+			space1 = GBX.gbjson.Campus.Building.Space.find( item => item.id === adjSpaces[ 1 ].spaceIdRef );
 			adjSpaceButtons =
 			`
-			<button onclick=POP.toggleSpaceVisible(this,"${ adjSpaces[ 0 ].spaceIdRef }"); >space1 ${ adjSpaces[ 0 ].spaceIdRef }</button>
-			<button onclick=POP.toggleSpaceVisible(this,"${ adjSpaces[ 1 ].spaceIdRef }"); >space2 ${ adjSpaces[ 1 ].spaceIdRef }</button>
+			<button onclick=POP.toggleSpaceVisible(this,"${ adjSpaces[ 0 ].spaceIdRef }"); >space1 ${ space0.Name }</button>
+			<button onclick=POP.toggleSpaceVisible(this,"${ adjSpaces[ 1 ].spaceIdRef }"); >space2 ${ space1.Name }</button>
 			`;
 
-			space = GBX.gbjson.Campus.Building.Space.find( item => item.id === adjSpaces[ 0 ].spaceIdRef );
 
 		} else {
 
-			adjSpaceButtons = `<button onclick=POP.toggleSpaceVisible(this,"${ adjSpaces.spaceIdRef }"); >space ${ adjSpaces.spaceIdRef } </button>`;
-			space = GBX.gbjson.Campus.Building.Space.find( item => item.id === adjSpaces.spaceIdRef );
+			space1 = GBX.gbjson.Campus.Building.Space.find( item => item.id === adjSpaces.spaceIdRef );
+			adjSpaceButtons = `<button onclick=POP.toggleSpaceVisible(this,"${ adjSpaces.spaceIdRef }"); >space1: ${ space1.Name } </button>`;
+
 		}
 
-		storeyButton = `<button onclick=POP.toggleStoreyVisible(this,"${ space.buildingStoreyIdRef }"); >storey ${ space.buildingStoreyIdRef } </button>`;
+		storey = GBX.gbjson.Campus.Building.BuildingStorey.find( item => item.id === space1.buildingStoreyIdRef );
+		storeyButton = ` <button onclick=POP.toggleStoreyVisible(this,"${ space1.buildingStoreyIdRef }"); >storey: ${ storey.Name } </button>`;
 		zoneButton = '';
 
 	} else {
@@ -185,94 +190,34 @@ POP.getIntersectedDataHtml = function( intersected, intersects ) {
 		<p><b>Navigating</b></p>
 
 		<p>
-			<button onclick=POP.toggleVisible(); >${ surfaceJson.id }</button>
+			<button onclick=POP.toggleSurfaceVisible(); >surface: ${ surfaceJson.id }</button>
 			${ adjSpaceButtons }
 		</p>
+		<p>
 			${ storeyButton }
 			${ zoneButton }
 		</p>
 	`;
 
-	let attributes ='';
-	let elements = '';
 
-	const keys = Object.keys( surfaceJson ).sort();
-	//console.log( 'keys', keys );
+	htmSurface = POP.getAttributes( surfaceJson );
+	htmAdjacentSpace = POP.getAdjacentSpace( surfaceJson );
+	htmPlanarGeometry = POP.getPolyLoop( surfaceJson.PlanarGeometry.PolyLoop );
+	htmRectangularGeometry = POP.getAttributes( surfaceJson.RectangularGeometry );
 
-	for ( let key of keys ) {
-		//console.log( 'key', key );
-
-		if ( surfaceJson[ key ] !== null ) {
-
-			if ( typeof( surfaceJson[ key ] ) === 'object' ) {
-
-				//console.log( '', key);
-				const obj = surfaceJson[ key ];
-
-				elements +=
-				`<div>
-					<span class=attributeTitle >${key}:</span>
-				</div>`;
-
-				for ( let prop in obj ) {
-
-
-
-					if ( prop === 'PolyLoop') {
-
-						points = GBX.getVertices( obj[ prop ] );
-
-						let txt = '', count = 1;
-
-						for ( point of points ) {
-
-							txt += `${ count++ }. x:${ point.x } y:${ point.y } z:${ point.z }<br>`;
-						}
-						//console.log( 'points', JSON.stringify( points ) );
-
-						elements +=
-						`<div>
-							<span class=attributeTitle >${prop}:</span><br>
-							<span class=attributeValue >${ txt }</span>
-
-						</div>`;
-
-					} else {
-
-						elements +=
-						`<div>
-							<span class=attributeTitle >${prop}:</span>
-							<span class=attributeValue >${ obj[ prop ] }</span>
-
-						</div>`;
-
-					}
-
-				}
-
-				elements += '<br>';
-
-			} else {
-
-				attributes +=
-				`<div>
-					<span class=attributeTitle >${key}:</span>
-					<span class=attributeValue >${surfaceJson[ key ]}</span>
-				</div>`;
-
-			}
-
-		}
-
-	}
-
+	htmAttributes = POP.getSurfaceAttributes( surfaceJson );
 
 	const htm =
 	`
-		<div>${ navigating }</div>
-		<b>Identifying according to <a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">gbXML Schema</a></b>
-		${ attributes }
-		<p>${ elements }</p>
+		<p>
+			<div>${ navigating }</div>
+			<b>Identifying according to <a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">gbXML Schema</a></b>
+		</p>
+
+		<div id=elementAttributes >
+			${ htmAttributes }
+		</div>
+
 	`;
 
 	return htm;
@@ -280,9 +225,164 @@ POP.getIntersectedDataHtml = function( intersected, intersects ) {
 };
 
 
-POP.toggleVisible = function( id ) {
+
+POP.getSurfaceAttributes = function( surfaceJson ) {
+
+	htmSurface = POP.getAttributes( surfaceJson );
+	htmAdjacentSpace = POP.getAdjacentSpace( surfaceJson );
+	htmPlanarGeometry = POP.getPolyLoop( surfaceJson.PlanarGeometry.PolyLoop );
+	htmRectangularGeometry = POP.getAttributes( surfaceJson.RectangularGeometry );
+
+	htm =
+		`<p>
+			<div><b>Surface Attributes</b></div>
+			${ htmSurface }
+		</p>
+		<p>
+			<div><b>AdjacentSpace</b></div>
+			${ htmAdjacentSpace }
+		</p>
+		<p>
+			<div><b>Planar Geometry</b></div>
+			${ htmPlanarGeometry }
+		</p>
+		<p>
+			<div><b>Rectangular Geometry</b></div>
+			${ htmRectangularGeometry }
+		</p>
+	`;
+
+	return htm;
+
+}
+
+POP.getAdjacentSpace = function( obj ){
+
+	//console.log( 'AdjacentSpaceId', obj.AdjacentSpaceId );
+
+	let htm;
+
+	if ( obj.AdjacentSpaceId === undefined ) {
+
+		htm = 'None';
+
+	} else if ( Array.isArray( obj.AdjacentSpaceId ) ) {
+
+		htm = 'arr'
+
+		//console.log( 'obj.AdjacentSpaceId', obj.AdjacentSpaceId );
+
+		htm =
+		`
+			<div>
+				<span class=attributeTitle >spaceIdRef 1:</span>
+				<span class=attributeValue >${ obj.AdjacentSpaceId[ 0 ].spaceIdRef }</span>
+			</div>
+			<div>
+				<span class=attributeTitle >spaceIdRef 1:</span>
+				<span class=attributeValue >${ obj.AdjacentSpaceId[ 1 ].spaceIdRef }</span>
+			</div>
+		`;
+
+	} else {
+
+		//console.log( 'obj.AdjacentSpaceId', obj.AdjacentSpaceId );
+
+		htm =
+
+		`<div>
+			<span class=attributeTitle >spaceIdRef:</span>
+			<span class=attributeValue >${ obj.AdjacentSpaceId.spaceIdRef }</span>
+		</div>`;
+
+	}
+
+	return htm;
+
+};
+
+
+
+POP.getAttributes = function( obj ) {
+
+	let htm ='';
+
+	const keys = Object.keys( obj );
+	//console.log( 'keys', keys );
+
+	for ( let key of keys ) {
+		//console.log( 'key', key );
+
+		if ( typeof( obj[ key ] ) === 'object' ) {
+			//console.log( 'key', key );
+
+			if ( key === 'CartesianPoint' ) {
+
+				const point = obj[ key ].Coordinate;
+				//console.log(  'point', point  );
+
+				htm +=
+				`
+					<span class=attributeTitle >CartesianPoint:<span>
+					<span class=attributeTitle >x:</span><span class=attributeValue >${ point[ 0 ] }</span>
+					<span class=attributeTitle >y:</span><span class=attributeValue >${ point[ 1 ] }</span>
+					<span class=attributeTitle >z:</span><span class=attributeValue >${ point[ 2 ] }</span><br>
+				`;
+
+			}
+
+		} else {
+
+			htm +=
+			`
+				<div>
+					<span class=attributeTitle >${key}:</span>
+					<span class=attributeValue >${ obj[ key ] }</span>
+				</div>
+			`;
+
+		}
+
+	}
+
+	return htm;
+
+};
+
+
+
+POP.getPolyLoop = function( polyloop ) {
+
+	const points = polyloop.CartesianPoint.map( CartesianPoint => new THREE.Vector3().fromArray( CartesianPoint.Coordinate ) );
+
+	let htm = '', count = 1;
+
+	for ( point of points ) {
+
+		htm +=
+		`
+			${ count++ }.
+			<span class=attributeTitle >x:</span><span class=attributeValue >${ point.x }</span>
+			<span class=attributeTitle >y:</span><span class=attributeValue >${ point.y }</span>
+			<span class=attributeTitle >z:</span><span class=attributeValue >${ point.z }</span><br>
+		`;
+
+	}
+	//console.log( 'points', JSON.stringify( points ) );
+
+	return htm;
+
+};
+
+
+
+
+POP.toggleSurfaceVisible = function( id ) {
 
 	POP.intersected.visible = !POP.intersected.visible;
+
+	surfaceJson = POP.intersected.userData.gbjson;
+	elementAttributes.innerHTML = POP.getSurfaceAttributes( surfaceJson )
 
 };
 
@@ -326,6 +426,19 @@ POP.toggleSpaceVisible = function( button, spaceId ) {
 
 	}
 
+	spaceJson = GBX.gbjson.Campus.Building.Space.find( item => item.id === spaceId );
+	//console.log( 'spaceJson', spaceJson );
+
+	htmSpace = POP.getAttributes( spaceJson );
+
+	htm =
+	`
+		<b>Space Attributes</b>
+		${ htmSpace }
+	`
+
+	elementAttributes.innerHTML = htm;
+
 };
 
 
@@ -360,6 +473,19 @@ POP.toggleStoreyVisible = function( button, storeyId ) {
 		}
 
 	}
+
+	storeyJson = GBX.gbjson.Campus.Building.BuildingStorey.find( item => item.id === storeyId );
+	//console.log( 'spaceJson', spaceJson );
+
+	htmStorey = POP.getAttributes( storeyJson );
+
+	htm =
+	`
+		<b>Storey Attributes</b>
+		${ htmStorey }
+	`
+
+	elementAttributes.innerHTML = htm;
 
 };
 
