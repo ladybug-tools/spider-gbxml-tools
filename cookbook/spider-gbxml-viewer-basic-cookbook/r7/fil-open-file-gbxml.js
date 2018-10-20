@@ -200,12 +200,11 @@ FIL.drop = function( event ) {
 };
 
 
-
 FIL.updateDefaultFilePath = function() {
 
 	location.hash = FILinpFilePath.value;
 
 	const thrFilePath = FILinpFilePath.value;
-	localStorage.setItem( 'thrFilePath', thrFilePath );
+	localStorage.setItem('thrFilePath', thrFilePath );
 
 };

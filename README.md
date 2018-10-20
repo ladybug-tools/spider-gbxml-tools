@@ -90,6 +90,11 @@ Scripts to help you view and manage [gbXML]( http://gbxml.org ) files
 
 ## Change Log
 
+### 2018-10-19 ~ Theo
+
+R7.6
+* Add link to Issues module
+
 ### 2018-10-15 ~ Theo
 
 R7.5 Home page

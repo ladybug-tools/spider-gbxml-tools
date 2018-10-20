@@ -72,6 +72,11 @@ SGV Pop-Up R7.3
 * Attributes for surface, space and storey all update when you click respective buttons
 * Attributes for everything display as expected
 
+R7.3 has been forked to the main lib r7 and is now available via
+
+https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/
+
+
 Well underway
 * 2018-10-15 ~ Adjacent Space: show attributes
 

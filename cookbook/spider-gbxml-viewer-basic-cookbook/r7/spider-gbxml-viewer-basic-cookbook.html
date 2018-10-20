@@ -5,8 +5,8 @@
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
 <meta name=description content="Cookbook version: Open, view and examine gbXML files in 3D in your browser with free, open source entry-level Three.js JavaScript" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-10-11" >
-<title>Spider gbXML Viewer R7.4 Basic cookbook</title>
+<meta name = "date" content = "2018-10-19" >
+<title>Spider gbXML Viewer R7.5 Basic cookbook</title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 </head>
 <body>
@@ -16,7 +16,7 @@
 <script src = "../../../lib/r7/thr-threejs.js" ></script>
 <script src = "../../../lib/r7/thru-threejs-utilities.js"></script>
 <script src = "../../../lib/r7/gbx-gbxml-loader.js" ></script>
-<script src = "../../../lib/r7/fil-open-file-gbxml.js" ></script>
+<script src = "./fil-open-file-gbxml.js" ></script>
 <script src = "../../../lib/r7/pop-up-gbxml.js" ></script>
 <script src = "../../../lib/r7/gal-sample-files-gallery-gbxml.js" ></script>
 
@@ -66,7 +66,7 @@
 		</details>
 
 
-			<details ontoggle=divSceneInfo.innerHTML=THRU.getSceneInfo(); > 
+			<details ontoggle=divSceneInfo.innerHTML=THRU.getSceneInfo(); >
 
 				<summary title = "Info on what is in the Three.js scene" >Scene Info</summary>
 
@@ -119,7 +119,6 @@ function init() {
 
 	divHeader.innerHTML = MNU.getNavHeader(); // not essential
 
-	//divSettings.innerHTML = THRU.getSettings( divSettings );
 	divFileOpen.innerHTML = FIL.getFileOpen(); // if needed: set file info target
 
 	divSampleFileButtons.innerHTML = GAL.setCardSampleGalleries();
@@ -136,6 +135,13 @@ function init() {
 	THRU.addSomeLights();
 
 
+	// loads a default file / great for testing same file many times
+	const thrFilePath = localStorage.getItem( 'thrFilePath' ) || '';
+
+	FILinpFilePath.value = thrFilePath;
+
+	FIL.urlDefaultFile = thrFilePath || FIL.urlDefaultFile;
+
 	if ( !location.hash ) { location.hash = FIL.urlDefaultFile; } else { FIL.onHashChange(); }
 	//location.hash = urlDefaultFile;
 
@@ -143,7 +149,6 @@ function init() {
 
 	// there will be better ways of doing this
 	setTimeout(() => { divPopUpData.innerHTML = POP.getPopUpHtml(); }, 600);
-
 
 }
 

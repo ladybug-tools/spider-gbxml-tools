@@ -1,7 +1,6 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
-/* globals THREE, THR */
+/* globals THREE */
 /* jshint esversion: 6 */
-
 
 var GBX = { release: "2018-10-05"};
 
@@ -41,7 +40,7 @@ GBX.surfaceTypes  = Object.keys( GBX.colors );
 GBX.referenceObject = new THREE.Object3D();
 GBX.triangle = new THREE.Triangle(); // used by GBX.getPlane
 
-
+const v = ( x, y, z ) => new THREE.Vector3( x, y, z );
 // loads any xml file - from AJAX, file reader or location hash or wherever
 
 GBX.parseFileXML = function( text ) { // called by main HTML file
@@ -65,7 +64,10 @@ GBX.parseFileXML = function( text ) { // called by main HTML file
 	GBX.count3 = 0;
 	GBX.count4 = 0;
 	GBX.count5plus = 0;
-	GBX.countOpenings = 0;
+	GBX.count10 = 0;
+	GBX.count11 = 0;
+	GBX.countGeo = 0;
+
 	GBX.gbxml = parser.parseFromString( text, 'text/xml' );
 	//console.log( 'GBX.gbxml', GBX.gbxml );
 
@@ -171,6 +173,7 @@ GBX.getSurfaceMeshes = function() {
 	const surfaces = GBX.surfacesJson; // gbjson.Campus.Surface;
 	//const surfaceMeshes = [];
 
+	nots = 0;
 	for ( let surface of surfaces ) {
 
 		const holes = [];
@@ -185,7 +188,6 @@ GBX.getSurfaceMeshes = function() {
 				const polyloop = opening.PlanarGeometry.PolyLoop;
 				const vertices = GBX.getVertices( polyloop );
 				holes.push( vertices );
-				GBX.countOpenings++;
 
 			}
 
@@ -212,13 +214,64 @@ GBX.getSurfaceMeshes = function() {
 		} else {
 
 			GBX.count5plus ++;
-			GBX.setPolygon( vertices, color, holes );
+
+			const plane = GBX.getPlane( vertices );
+
+			if ( Math.abs( plane.normal.z ) === 1 && plane.normal.x === 0 && plane.normal.y === 0 ) {
+
+				//console.log( 'nor', Math.abs( plane.normal.z ) === 1 );
+
+				const hh = holes.length > 1 ? [ holes ] : [];
+
+				const triangles = THREE.ShapeUtils.triangulateShape( vertices, hh );
+
+				const verts = [];
+
+				let allpoints = vertices.slice( 0 );
+				allpoints = allpoints.concat( holes );
+				//console.log( 'all', allpoints );
+
+				for ( let triangle of triangles ) {
+
+					console.log( 'triangle', triangle );
+					for ( var j = 0; j < 3; j++ ) {
+
+						const vertex = allpoints[ triangle[ j ] ];
+
+						//console.log( 'vv', vertex  );
+
+						verts.push( vertex );
+
+					}
+
+				}
+
+				//console.log( 'vertices', verts );
+
+				geometry = new THREE.BufferGeometry();
+				geometry.setFromPoints( verts );
+				geometry.computeVertexNormals();
+
+				const material = new GBX.materialType( { color: col, side: 2, opacity: 0.85, transparent: true } );
+				mesh = new THREE.Mesh( geometry, material );
+				GBX.surfaceMeshes.add( mesh );
+
+			} else {
+
+				nots ++
+
+			}
+
 
 		}
 
 	}
 
+	console.log( 'nots', nots );
+
 };
+
+
 
 
 
@@ -238,11 +291,8 @@ GBX.setTriangle = function( vertices, color ) {
 	const geometry = new THREE.BufferGeometry();
 	geometry.setFromPoints( vertices );
 	geometry.computeVertexNormals();
-
-	const material = new GBX.materialType( { color: color, side: 2, opacity: 0.85, transparent: true } );
-
+	material = new GBX.materialType( { color: color, side: 2, opacity: 0.85, transparent: true } );
 	const mesh = new THREE.Mesh( geometry, material );
-	mesh.castShadow = mesh.receiveShadow = true;
 
 	GBX.surfaceMeshes.add( mesh );
 
@@ -254,88 +304,11 @@ GBX.setQuad = function( vertices, color ){
 
 	const verticesRemix = vertices.slice( 0, 3 ).concat( [ vertices[ 3 ], vertices[ 2 ], vertices[ 0 ] ] );
 	GBX.setTriangle( verticesRemix, color );
-	// or how about a PlaneBufferGeometry??
 
 };
 
 
 
-GBX.setPolygon = function( vertices, color, holes = [] ) {
-	//console.log( { holes } );
-
-	//assume vertices are coplanar but at an arbitrary rotation and position in space
-	const plane = GBX.getPlane( vertices );
-
-	// rotate vertices to lie on XY plane
-	GBX.referenceObject.lookAt( plane.normal ); // copy the rotation of the plane
-	GBX.referenceObject.quaternion.conjugate(); // figure out the angle it takes to rotate the vertices so they lie on the XY plane
-	GBX.referenceObject.updateMatrixWorld();
-
-	const verticesFlat = vertices.map( vertex => GBX.referenceObject.localToWorld( vertex ) );
-	//console.log( { verticesFlat } );
-
-	for ( let verticesHoles of holes ) {
-
-		verticesHoles.forEach( vertex => GBX.referenceObject.localToWorld( vertex ) );
-
-	}
-
-	// vertices must be coplanar with the XY plane for Earcut.js to work
-	const triangles = THREE.ShapeUtils.triangulateShape( verticesFlat, holes );
-	//console.log( { triangles } );
-
-	const verticesAll = vertices.slice( 0 ).concat( ...holes );
-	//console.log( 'verticesAll', verticesAll );
-
-	const verticesTriangles = [];
-
-	for ( let triangle of triangles ) {
-
-		for ( let j = 0; j < 3; j++ ) {
-
-			const vertex = verticesAll[ triangle[ j ] ];
-
-			verticesTriangles.push( vertex );
-
-		}
-
-	}
-	//console.log( { verticesTriangles } );
-
-	const geometry = new THREE.BufferGeometry();
-	geometry.setFromPoints( verticesTriangles );
-	geometry.computeVertexNormals();
-
-	const material = new GBX.materialType( { color: color, opacity: 0.85, side: 2, transparent: true } );
-
-	const mesh = new THREE.Mesh( geometry, material );
-	mesh.castShadow = mesh.receiveShadow = true;
-	mesh.lookAt( plane.normal );
-
-	GBX.surfaceMeshes.add( mesh );
-
-};
-
-
-
-GBX.getPlane = function( points, start = 0 ) {
-
-	GBX.triangle.set( points[ start ], points[ start + 1 ], points[ start + 2 ] );
-
-	if ( GBX.triangle.getArea() === 0 ) { // looks like points are colinear and do not form a plane therefore try next set of points
-
-		GBX.getPlane( points, ++start );
-
-	}
-
-
-	return GBX.triangle.getPlane( new THREE.Plane() );
-
-};
-
-
-
-//////////
 
 GBX.getSurfaceEdges = function() {
 
@@ -357,5 +330,224 @@ GBX.getSurfaceEdges = function() {
 
 	return surfaceEdges;
 
+
 };
+
+
+
+GBX.getOpenings = function() {
+
+	const surfaceOpenings = [];
+	const material = new THREE.MeshBasicMaterial( { color: 0xffffff, opacity: 0.5, side: 2, transparent: true } );
+
+	for ( let surfJson of GBX.surfacesJson ) {
+
+		let openings = surfJson.Opening || [];
+		openings = Array.isArray( openings ) ? openings : [ openings ];
+
+		for ( let opening of openings ) {
+
+			const vertices = GBX.getVertices( opening.PlanarGeometry.PolyLoop );
+			console.log( 'len', vertices.length );
+
+			if ( vertices.length === 4 ) {
+
+				for ( let vertex of vertices.slice( 0, 3 ) ) {
+
+					GBX.openingVertices.push( vertex.x, vertex.y, vertex.z );
+
+				}
+
+				const vertices2 = [ vertices[ 3 ], vertices[ 2 ], vertices[ 0 ] ];
+
+				for ( let vertex of vertices2 ) {
+
+					GBX.openingVertices.push( vertex.x, vertex.y, vertex.z );
+
+				}
+
+				GBX.openingColors.push( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 );
+
+			} else {
+
+				const shapeMesh = GBX.get3dShape( vertices, material );
+				shapeMesh.userData.data = opening;
+				surfaceOpenings.push( shapeMesh );
+
+			}
+
+		}
+
+	}
+
+	mesh = GBX.getTrianglesMesh( GBX.openingVertices, GBX.openingColors );
+	surfaceOpenings.push( mesh );
+
+	return surfaceOpenings;
+
+};
+
+
+
+
+GBX.get3dShape = function( vertices, material, holes = [] ) {
+
+	// 2018-06-02
+
+	const plane = GBX.getPlane( vertices );
+
+	GBX.referenceObject.lookAt( plane.normal ) // copy the rotation of the plane
+	GBX.referenceObject.quaternion.conjugate(); // figure out the angle it takes to rotate the vertices so they lie on the XY plane
+	GBX.referenceObject.updateMatrixWorld();
+
+	const holeVertices = [];
+
+	for ( let verticesHoles of holes ) {
+
+		verticesHoles.map( vertex => GBX.referenceObject.localToWorld( vertex ) );
+
+		const hole = new THREE.Path();
+		hole.setFromPoints( verticesHoles );
+		holeVertices.push( hole );
+
+	}
+
+	const vertices2 = vertices.slice();
+
+	vertices2.map( vertex => GBX.referenceObject.localToWorld( vertex ) );
+
+	const shapeMesh = get2DShape( vertices, vertices2, material, holeVertices, holes );
+
+	//shapeMesh.lookAt( plane.normal );
+	//const center = plane.coplanarPoint( new THREE.Vector3() );
+	//shapeMesh.position.copy( center );
+
+	//return shapeMesh;
+
+	//
+
+		function get2DShape( vertices, vertices2, material, holes = [], h2 ) {
+
+			//const shape = new THREE.Shape( vertices );
+			//shape.holes = holes;
+
+			const triangles = THREE.ShapeUtils.triangulateShape( vertices, h2 );
+			//console.log( 'tri', triangles );
+
+			for ( var i = 0; i < triangles.length; i++ ) {
+
+					const tri = triangles[ i ];
+
+					//console.log( 'tri', tri );
+
+					for ( var j = 0; j < tri.length; j++ ) {
+
+						const vertex = vertices[ j ];
+
+						//console.log( 'vv', vertex  );
+
+						GBX.triangleVertices.push( vertex.x, vertex.y, vertex.z );
+						GBX.triangleColors.push( 1, 0.8, 0.8 );
+
+					}
+
+			}
+
+			//const geometryShape = new THREE.ShapeBufferGeometry( shape );
+			//const shapeMesh = new THREE.Mesh( geometryShape, material );
+			//return shapeMesh;
+
+		}
+
+};
+
+
+
+GBX.getPlane = function( points, start = 0 ) {
+
+	GBX.triangle.set( points[ start ], points[ start + 1 ], points[ start + 2 ] );
+
+	if ( GBX.triangle.getArea() === 0 ) { // looks like points are colinear therefore try next set
+
+		GBX.getPlane( points, ++start );
+
+	}
+
+
+	return GBX.triangle.getPlane( new THREE.Plane() );
+
+};
+
+
+//////////
+
+// move elsewhere??
+
+GBX.setCardToggleVisibility = function( target, log ) {
+
+	target.innerHTML =
+
+	`<div>
+
+		<button class="btn" onclick="GBX.surfaceMeshes.visible=!GBX.surfaceMeshes.visible;"
+			title="toggle the flat bits" >surfaces</button>
+
+		<button class="btn" onclick="GBX.surfaceEdges.visible=!GBX.surfaceEdges.visible;" title="toggle the side lines" >edges</button>
+
+		<button class="btn" onclick="GBX.surfaceOpenings.visible=!GBX.surfaceOpenings.visible;" title="toggle the windows" >openings</button>
+
+		<button class="btn" onclick="GBX.setAllVisible();"
+		title="toggle the windows" >all</button>
+		|
+		<button class="btn"
+			onclick="GBX.setAllVisible();THR.zoomObjectBoundingSphere(GBX.surfaceEdges);"
+			title="Go to the home view" >reset view</button>
+	</div>`;
+
+};
+
+
+
+GBX.setAllVisible = function() {
+
+	GBX.surfaceEdges.visible = true;
+	GBX.surfaceMeshes.visible = true;
+	GBX.surfaceOpenings.visible = true;
+
+	for ( let child of GBX.surfaceMeshes.children ) {
+
+		if ( !child.material ) { continue; }
+
+		child.material = new GBX.materialType( {
+
+			color: GBX.colors[ child.userData.data.surfaceType ], side: 2, opacity: 0.85, transparent: true
+
+		} );
+
+		child.material.wireframe = false;
+		child.visible = true;
+
+	}
+
+	GBX.surfaceOpenings.visible = true;
+
+	for ( let child of GBX.surfaceOpenings.children ) {
+
+		if ( !child.material ) { continue; }
+
+		child.material = new GBX.materialType( {
+
+			color: 0x000000, side: 2, opacity: 0.5, transparent: true
+
+		} );
+
+		child.material.wireframe = false;
+		child.visible = true;
+
+	}
+
+	document.body.style.backgroundImage = '';
+
+};
+
 

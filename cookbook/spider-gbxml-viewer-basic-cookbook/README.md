@@ -34,6 +34,11 @@ The cookbook version of the Spider gbXML Viewer script. We use this script as th
 
 ## Change Log
 
+#### 2018-10-19 ~ Theo
+
+* Add footer with links to Markdown pages for license, credits etc
+* Add default file capability to file open
+
 #### 2018-10-11 ~ Theo
 
 * Rename to ...basic cookbook

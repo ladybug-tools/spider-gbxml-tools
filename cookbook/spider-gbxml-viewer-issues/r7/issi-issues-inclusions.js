@@ -63,8 +63,6 @@ ISSI.getInclusions = function() {
 	}
 
 
-
-
 	txt = '';
 	/*
 
@@ -113,7 +111,7 @@ function setInclusionsRed() {
 
 	const direction = new THREE.Vector3( 0, 0, 1 );
 
-	//ISSI.inclusions.forEach( child => { child.s1.visible = false; } );
+	ISSI.inclusions.forEach( child => { child.s1.visible = false; } );
 
 	const intersects2 = [];
 
@@ -157,8 +155,8 @@ function setInclusionsRed() {
 
 			} else {
 
-				//surfaces.s1.visible = false;
-				//surfaces.s2.visible = false;
+				surfaces.s1.visible = false;
+				surfaces.s2.visible = false;
 
 			}
 
@@ -178,8 +176,11 @@ function setInclusionsRed() {
 
 	}
 
-	return `<br>intersects2 ${ intersects2.length }`
-}
+	return `<br>intersects2 ${ intersects2.length }`;
+
+};
+
+
 
 ISSI.setDoubleCheck = function() {
 
@@ -220,9 +221,6 @@ ISSI.setDoubleCheck = function() {
 			console.log( 'int', intersects.length );
 
 		}
-
-
-
 
 	}
 

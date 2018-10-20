@@ -134,6 +134,12 @@ function init() {
 
 	THRU.addSomeLights();
 
+	// loads a default file / great for testing same file many times
+	const thrFilePath = localStorage.getItem( 'thrFilePath' ) || '';
+
+	FILinpFilePath.value = thrFilePath;
+
+	FIL.urlDefaultFile = thrFilePath || FIL.urlDefaultFile;
 
 	if ( !location.hash ) { location.hash = FIL.urlDefaultFile; } else { FIL.onHashChange(); }
 	//location.hash = urlDefaultFile;

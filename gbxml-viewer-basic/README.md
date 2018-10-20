@@ -11,6 +11,8 @@
 <iframe class=iframeReadMe src=https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/ width=100% height=400px >Iframes are not displayed on github.com</iframe>
 _<small>Spider gbXML Viewer Basic</small>_
 
+## Latest stable release: [gbXML Viewer Basic]( https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/ )
+
 ## Concept
 
 Spider gbXML Viewer provides a number of scripts that enable you to carry out a variety of tasks relating to selecting, viewing and manipulating gbXML files.
