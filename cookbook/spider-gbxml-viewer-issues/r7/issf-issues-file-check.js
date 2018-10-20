@@ -19,7 +19,6 @@ ISSF.getMenuFileCheck= function( target ) {
 
 			</p>
 		</div>
-		<div id = ISSMdetPanelMetadataIssues ></div>
 
 
 		<div id=ISSFdivFileInfo ></div>

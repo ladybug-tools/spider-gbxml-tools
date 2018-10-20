@@ -10,7 +10,7 @@ ISSI.inclusions = [];
 // https://stackoverflow.com/questions/17223806/how-to-check-if-point-is-in-polygon-in-javascript
 
 
-ISSI.getMenu = function() {
+ISSI.getMenuInclusions = function() {
 
 	let htm =
 	`
@@ -37,7 +37,7 @@ ISSI.getInclusions = function() {
 	//arr =  GBX.surfaceMeshes.children.slice();
 	ISSI.inclusions = [];
 
-	children = GBX.surfaceMeshes.children;
+	let children = GBX.surfaceMeshes.children;
 
 	children2 = children.slice();
 
@@ -63,7 +63,7 @@ ISSI.getInclusions = function() {
 	}
 
 
-	txt = '';
+	let txt = '';
 	/*
 
 	for ( let inclusion of ISSI.inclusions ) {
@@ -83,11 +83,9 @@ ISSI.getInclusions = function() {
 
 
 	ISSI.setSelectedFocus( ISSI.inclusions );
-	txt = setInclusionsRed();
+	//txt = setInclusionsRed();
 
 	htm = `inclusions found: ${ ISSI.inclusions.length }<br>${ txt }`;
-
-
 
 	return htm;
 

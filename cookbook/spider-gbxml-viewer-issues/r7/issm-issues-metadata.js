@@ -5,16 +5,16 @@ ISSM.surfaceChanges = {};
 
 ////////// Metadata
 
-ISSM.getPanelMetadataIssues = function( target ) {
+ISSM.getPanelMetadataIssues = function() {
 
 
-	target =
+	let htm =
 
-	`<details ontoggle="ISSMdetPanelMetadataIssues.innerHTML = ISSM.setMenu();" >
+	`<details ontoggle="ISSMdetPanelMetadataIssues.innerHTML=ISSM.setMenuMetadata();" >
 
 		<summary>Missing gbXML Metadata </summary>
 
-		<div id = ISSMdetPanelMetadataIssues ></div>
+		<div id="ISSMdetPanelMetadataIssues" >ccc</div>
 
 		<p><button onclick=ISSM.setPopupMetadataIssues(); >Add missing attributes</button></p>
 
@@ -22,14 +22,14 @@ ISSM.getPanelMetadataIssues = function( target ) {
 
 	</details>`;
 
-	return target;
+	return htm;
 
 
 };
 
 
 
-ISSM.setMenu = function() {
+ISSM.setMenuMetadata = function() {
 
 	const requirements = [
 		'areaUnit', 'lengthUnit', 'temperatureUnit', 'useSIUnitsForResults', 'version', 'volumeUnit', 'xmlns'
@@ -64,23 +64,27 @@ ISSM.setMenu = function() {
 	//console.log( 'ISSM.attributesMissing', ISSM.attributesMissing.join( '<br>' ) );
 
 
-	htm =
+	let htm =
 
-	`</p>
-	${ISSM.attributesMissing.length} attributes missing
+	`
+		${ISSM.attributesMissing.length} attributes missing
+
 		<p>gbXML attributes provided:<br>&bull; ${provided.join( '<br>&bull; ' )}</p>
 
 		<p>gbXML attributes missing:<br>&bull;  ${ISSM.attributesMissing.join( '<br>&bull; ' )} </p>
 	`;
 
-	return htm;
+	//console.log( 'htm', htm );
 
+	return htm;
 
 };
 
+
+
 ISSM.setPopupMetadataIssues = function() {
 
-	values = {
+	let values = {
 
 		'areaUnit': 'SquareMeters',
 		'lengthUnit': 'Meters',
