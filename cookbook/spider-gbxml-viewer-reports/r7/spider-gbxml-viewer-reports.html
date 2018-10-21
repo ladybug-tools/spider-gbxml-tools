@@ -120,7 +120,7 @@ FIL.divFileInfo = divFileInfo;
 
 
 init();
-
+THR.animate();
 
 
 function init() {
@@ -147,14 +147,17 @@ function init() {
 
 	THRU.addSomeLights();
 
+	divPopUpData.innerHTML = POP.getMenuHtmlPopUp();
+
+	// loads a default file / great for testing same file many times
+	const thrFilePath = localStorage.getItem( 'thrFilePath' ) || '';
+
+	FILinpFilePath.value = thrFilePath;
+
+	FIL.urlDefaultFile = thrFilePath || FIL.urlDefaultFile;
 
 	if ( !location.hash ) { location.hash = FIL.urlDefaultFile; } else { FIL.onHashChange(); }
 	//location.hash = urlDefaultFile;
-
-	THR.animate();
-
-	// there will be better ways of doing this
-	setTimeout(() => { divPopUpData.innerHTML = POP.getPopUpHtml(); }, 600);
 
 
 }

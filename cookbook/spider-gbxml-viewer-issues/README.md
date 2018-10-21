@@ -26,7 +26,11 @@ Open, view, examine, identify errors and fix gbXML files in 3D in your browser w
 
 ## Issues
 
+### Duplicate Coordinates
 
+* 2018-10-21 ~ Theo ~ make sure no double counts
+* 2018-10-21 ~ Theo ~ confirm finding same items a Aragog 12/14
+* 2018-10-21 ~ Theo ~ determine and display faulty adjacent space issues
 
 ## Links of Interest
 

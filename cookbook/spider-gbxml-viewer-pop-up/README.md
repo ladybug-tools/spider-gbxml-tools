@@ -52,6 +52,8 @@ See also
 
 ## Issues
 
+2018-10-21 ~ Michal/Theo ~ CADObjectId: no commas
+
 
 
 ## Links of Interest
@@ -95,6 +97,7 @@ There are several reasons for this
 
 
 #### 2018-10-18 ~ Theo
+
 SGV Pop-Up R7.3
 * Update mnu text
 * Space and storey buttons use names
