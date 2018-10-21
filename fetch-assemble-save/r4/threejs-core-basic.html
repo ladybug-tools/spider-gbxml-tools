@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="Real-time 3D in your browser using the Three.js JavaScript library" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-10-19" >
+<title></title>
+<style>
+
+	body { font: 11pt monospace; margin: 0; overflow: hidden; }
+
+</style>
+</head>
+<body>
+<script src = "https://threejs.org/build/three.min.js" ></script>
+<script src = "https://threejs.org/examples/js/controls/OrbitControls.js" ></script>
+<script>
+
+var meshes;
+var axesHelper, lightDirectional;
+var renderer, camera, controls, scene;
+
+
+//init();
+//animate();
+
+
+
+function init() {
+
+	renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true } );
+	renderer.setPixelRatio( window.devicePixelRatio );
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	document.body.appendChild( renderer.domElement );
+
+	camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
+	camera.position.set( - 100, - 100, 100 );
+	camera.up.set( 0, 0, 1 );
+
+	controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+	scene = new THREE.Scene();
+
+	lightAmbient = new THREE.AmbientLight( 0x888888 );
+	scene.add( lightAmbient );
+
+	lightDirectional = new THREE.DirectionalLight( 0x888888 );
+	scene.add( lightDirectional );
+
+	window.addEventListener( 'resize', onWindowResize, false );
+	window.addEventListener( 'orientationchange', onWindowResize, false );
+	window.addEventListener( 'keyup', () => sceneRotation = 0, false );
+	renderer.domElement.addEventListener( 'click', () => sceneRotation = 0, false );
+
+	axesHelper = new THREE.AxesHelper( 100 );
+	scene.add( axesHelper );
+
+	const geometry = new THREE.BoxGeometry( 50, 50, 50 );
+	const material = new THREE.MeshNormalMaterial();
+	meshes = new THREE.Mesh( geometry, material );
+	scene.add( meshes );
+
+}
+
+
+
+function zoomObjectBoundingSphere ( obj ) {
+
+	const bbox = new THREE.Box3().setFromObject( obj );
+
+	const sphere = bbox.getBoundingSphere( new THREE.Sphere() );
+	const center = sphere.center;
+	const radius = sphere.radius;
+
+	controls.target.copy( center );
+	controls.maxDistance = 5 * radius;
+
+	camera.position.copy( center.clone().add( new THREE.Vector3( 1.0 * radius, - 1.0 * radius, 1.0 * radius ) ) );
+	camera.far = 10 * radius; //2 * camera.position.length();
+	camera.updateProjectionMatrix();
+
+	lightDirectional.position.copy( center.clone().add( new THREE.Vector3( -1.5 * radius, -1.5 * radius, 1.5 * radius ) ) );
+	lightDirectional.shadow.camera.scale.set( 0.2 * radius, 0.2 * radius, 0.01 * radius );
+
+	if ( !axesHelper ) {
+
+		axesHelper = new THREE.AxesHelper( 1 );
+		axesHelper.name = 'axesHelper';
+		scene.add( axesHelper );
+
+	}
+
+	axesHelper.scale.set( radius, radius, radius );
+	axesHelper.position.copy( center);
+
+	lightDirectional.target = axesHelper;
+	GBX.surfaceMeshes.userData.center = center;
+	GBX.surfaceMeshes.userData.radius = radius;
+
+	//scene.remove( cameraHelper );
+	//cameraHelper = new THREE.CameraHelper( lightDirectional.shadow.camera );
+	//scene.add( cameraHelper );
+
+};
+
+
+
+function onWindowResize() {
+
+	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.updateProjectionMatrix();
+
+	renderer.setSize( window.innerWidth, window.innerHeight );
+
+	//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+}
+
+
+
+function animate() {
+
+	requestAnimationFrame( animate );
+	renderer.render( scene, camera );
+	controls.update();
+
+}
+
+</script>
+</body>
+</html>

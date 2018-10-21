@@ -15,7 +15,7 @@ input[ type = range ]::-webkit-slider-thumb { -webkit-appearance: none; backgrou
 
 summary {font-weight: bold }
 
-.attributeTitle {font-size: smaller; font-style: italic }
+.attributeTitle { font-style: italic }
 .attributeValue { color: blue }
 .dragDropArea { border: 1px dashed gray; box-sizing: border-box; padding: 0 0 0 10px; }
 

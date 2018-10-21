@@ -40,10 +40,9 @@ Click on any surface in a gbXML model to display all its attribute data in a pop
 	* On toggle display vertex numbers in 3D model
 * 2018-10-15 ~ Rectangular Geometry: display outline
 * 2018-10-14 ~ Display gbXML meta information
-* 2018-03-04 ~ Identify two adjacent spaces at same time
 * 2018-01-02 ~ Multiple types of heads-up modules with different agendas
-	* Show space names at cursor locations
 * 2018-01-02 ~ Add in-world placard at cursor location
+	* Show space names at cursor locations
 
 See also
 
@@ -53,11 +52,6 @@ See also
 
 ## Issues
 
-* 2018-10-17 ~ Errors id one or no spaces
-* 2018-10-17 ~ No Zone info being displayed
-* 2018-10-14 ~ Buttons not all reverting to gray when all surfaces are visible
-
-
 
 
 ## Links of Interest
@@ -66,6 +60,41 @@ See also
 
 ## Change Log
 
+
+#### 2018-10-20 ~ Theo
+
+SGV Pop-Up R7.4
+* Many fixes relating to buttons user experience
+	* Buttons toggle visibility of elements and change color in more predictable manner
+	* Add toggle surface visible button
+	* Add zoom surface and zoom whatever visible buttons
+* Add design notes details section
+* Add release number var
+
+Mostly fixed or well underway
+
+* 2018-10-17 ~ Errors id one or no spaces
+* 2018-10-17 ~ No Zone info being displayed
+* 2018-10-14 ~ Buttons not all reverting to gray when all surfaces are visible
+
+Very old wish list item
+* 2018-03-04 ~ Identify two adjacent spaces at same time
+
+
+The code in this pop-up-gbxml.js file is far simpler than the code in AGV R14 gv-ctx.js.
+
+There are several reasons for this
+* The mission for this module is simpler:
+	* Toggle visibility
+	* Identify element attributes
+* There is far less code abstraction
+	* https://en.wikipedia.org/wiki/Abstraction_principle_(computer_programming)
+	* basic dictum that aims to reduce duplication of information in a program
+* Almost all code used by this module is in this module
+
+
+
+#### 2018-10-18 ~ Theo
 SGV Pop-Up R7.3
 * Update mnu text
 * Space and storey buttons use names

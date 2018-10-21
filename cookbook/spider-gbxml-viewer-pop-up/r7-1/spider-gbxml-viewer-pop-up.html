@@ -5,8 +5,8 @@
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
 <meta name=description content="Click on any surface in a gbXML model to display all its attribute data in a pop-op window" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-10-15" >
-<title>Spider gbXML Viewer Basic R7.3 Pop-Up Info</title>
+<meta name = "date" content = "2018-10-20" >
+<title>Spider gbXML Viewer Basic R7.4 Pop-Up Info</title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 </head>
 <body>
@@ -76,9 +76,9 @@
 
 		<div id = "divLog" ></div>
 
-		<footer>
+		<hr>
 
-			<hr>
+		<footer>
 
 			<div id = "divFooter" ></div>
 
@@ -104,11 +104,11 @@ MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/ma
 FIL.urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml';
 //FIL.urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/coventry-university-of-warwick-small.xml';
 
-FIL.divFileInfo = divFileInfo;
+FIL.divFileInfo = divFileInfo; // displays file info in menu / not essential
 
 
 init();
-
+THR.animate();
 
 
 function init() {
@@ -130,13 +130,19 @@ function init() {
 
 	THRU.addSomeLights();
 
-	divPopUp.innerHTML = POP.getPopUpHtml();
+
+	divPopUp.innerHTML = POP.getMenuHtmlPopUp(); // load after Three.js init
+
+
+	// loads a default file / great for testing same file many times / move to FIL JavaScript file
+	const thrFilePath = localStorage.getItem( 'thrFilePath' ) || '';
+
+	FILinpFilePath.value = thrFilePath;
+
+	FIL.urlDefaultFile = thrFilePath || FIL.urlDefaultFile;
 
 	if ( !location.hash ) { location.hash = FIL.urlDefaultFile; } else { FIL.onHashChange(); }
 	//location.hash = urlDefaultFile;
-
-	THR.animate();
-
 
 }
 
