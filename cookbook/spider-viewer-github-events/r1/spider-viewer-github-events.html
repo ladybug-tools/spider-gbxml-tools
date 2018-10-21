@@ -11,6 +11,8 @@
 	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
 	a { color: crimson; text-decoration: none; }
 
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
 </style>
 </head>
 <body>
@@ -103,12 +105,16 @@ function getEventsCondensed( events ) {
 	let txt;
 
 	txt =
+	`
+		<h2 style=margin-bottom:0; title="" >
 
-		'<h2 style=margin-bottom:0; title="" >' + title + ' events</h2>' +
+			<a href="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-viewer-github-events" target="_blank"><img src="../../../assets/github-mark.png" height=18 ></a>
+			<a href="" >${ title }</a>
 
-		'<h3 >' + events.length + ' most recent events by date</h3>' +
+		</h2>
 
-	'';
+		<h3 >${ events.length } most recent events by date</h3>
+	`;
 
 	for ( var i = 0; i < events.length; i++ ) {
 
@@ -232,9 +238,10 @@ type.onPushEvent = function( event ) {
 
 	if ( commit ) {
 
+			const ht =  commit.message.length < 100 ? 50 : commit.message.length / 2;
 //			return 'push <a href=https://github.com/' + event.repo.name + '/commit/' + commit.sha + ' >' + commit.message.slice( 0, 100 ) + '...' + '</a>';
 //			return 'push ' + commit.message.slice( 0, 100 ).link( 'https://github.com/' + event.repo.name + '/commit/' + commit.sha ) + '...';
-		return `push ${ ( 'link to commit' ).link( 'https://github.com/' + event.repo.name + '/commit/' + commit.sha ) }<br><textarea style=height:50px;width:90%; >${ commit.message }</textarea>`;
+		return `push ${ ( 'link to commit' ).link( 'https://github.com/' + event.repo.name + '/commit/' + commit.sha ) }<br><textarea style=height:${ ht }px;width:90%; >${ commit.message }</textarea>`;
 
 	}
 

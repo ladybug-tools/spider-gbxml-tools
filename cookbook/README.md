@@ -65,6 +65,12 @@ They follow the Three.js examples: https://threejs.org/examples/
 2018-10-17 ~ @EK-CEL It would be nice to have an application (probably a Spider module) which can split a gbXML file by Levels for a number of partial files. Then I can upload each file and review it. After all partial files are reviewed I can join them together back to a single gbXML file.
 
 
+### One-pager
+
+* 2018-10-20 ~ Theo ~ put into own folder
+* 2018-10-20 ~ Theo ~ add no zoom in iframes
+* 2018-10-20 ~ Theo ~ open read me files in top window
+
 ## Issues
 
 

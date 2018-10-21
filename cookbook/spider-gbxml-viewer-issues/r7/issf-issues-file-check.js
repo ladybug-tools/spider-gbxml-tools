@@ -2,11 +2,11 @@
 
 const ISSF = {}
 
-ISSF.getMenuFileCheck= function( target ) {
+ISSF.getMenuFileCheck= function() {
 
 	const htm =
 
-	`<details open >
+	`<details>
 
 		<summary>File Check</summary>
 

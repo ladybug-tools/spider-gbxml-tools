@@ -1,4 +1,12 @@
-const ISDC = {}
+
+/* global THR, THREE, GBX */
+/* jshint esversion: 6 */
+/* jshint loopfunc:true */
+
+// Copyright 2018 Ladybug Tools authors. MIT License
+
+
+const ISDC = { "release": "SGV Issues R7.1" }
 
 ISDC.getMenuDuplicateCoordinates= function( target ) {
 
@@ -20,22 +28,25 @@ ISDC.getMenuDuplicateCoordinates= function( target ) {
 				toggle all duplicates
 			</button>
 		</p>
-
+		<!--
 		<p>
 			<input placeholder="enter an id" >
 		</p>
+		-->
 
 		<p>
 			<select id=ISDCselDuplicate onchange=divDuplicateAttributes.innerHTML=ISDC.getDuplicateAttributes(); style=width:100%; size=10></select>
 		</p>
 
+		<!--
 		<p>
-			<select>
-				<option>ID</option>
-				<option>Name</option>
-				<option>CAD Object ID</option>
+			<select id=ISDselElementSelect onchange=ISDC.setElementSelect( this ) >
+				<option value="id" >ID</option>
+				<option value="Name" >Name</option>
+				<option value="CADObjectId" >CAD Object ID</option>
 			</select>
 		</p>
+		-->
 
 		<div id=divDuplicateAttributes ></div>
 		<p>
@@ -51,7 +62,6 @@ ISDC.getMenuDuplicateCoordinates= function( target ) {
 	return htm;
 
 };
-
 
 
 
@@ -130,8 +140,6 @@ ISDC.setSurfaceArrayVisibleToggle = function( button, surfaceArray ) {
 
 		//console.log( 'surfaceArray', surfaceArray );
 
-		console.log( 'surfaceArray', surfaceArray[ 0 ] );
-
 		if ( surfaceArray.length ) {
 
 			GBX.surfaceMeshes.children.forEach( element => element.visible = false );
@@ -153,7 +161,8 @@ ISDC.setSurfaceArrayVisibleToggle = function( button, surfaceArray ) {
 
 	} else {
 
-		GBX.setAllVisible();
+		//GBX.setAllVisible();
+		GBX.surfaceMeshes.children.forEach( element => element.visible = true );
 
 		button.style.fontStyle = '';
 		button.style.backgroundColor = '';

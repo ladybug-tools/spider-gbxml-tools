@@ -6,7 +6,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 <br>
 
-# [Spider Viewer GitHub Events Read Me]( #xxxxx/README.md )
+# [Spider Viewer GitHub Events Read Me]( #cookbook/spider-viewer-github-events/README.md )
 
 
 <iframe src=https://www.ladybug.tools/spider-gbxml-tools/cookbook/spider-viewer-github-events/index.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
@@ -36,7 +36,7 @@ This script is a first pass at establishing such a process.
 
 ## To Do / Wish List
 
-2018-10-14 ~ Add link to source code
+* 2018-10-20 ~ Theo ~ Add: interpret text as Markdown to create prettier displays?
 
 
 ## Issues
@@ -49,6 +49,14 @@ This script is a first pass at establishing such a process.
 
 
 ## Change Log
+
+### 2018-10-20 ~ Theo
+
+* Add variable height commit message text areas
+
+Done
+
+* 2018-10-14 ~ Add link to source code
 
 ### 2018-10-14 ~ Theo
 
