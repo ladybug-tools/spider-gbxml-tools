@@ -39,7 +39,6 @@ Click on any surface in a gbXML model to display all its attribute data in a pop
 	* Put in a details tag
 	* On toggle display vertex numbers in 3D model
 * 2018-10-15 ~ Rectangular Geometry: display outline
-* 2018-10-14 ~ Display gbXML meta information
 * 2018-01-02 ~ Multiple types of heads-up modules with different agendas
 * 2018-01-02 ~ Add in-world placard at cursor location
 	* Show space names at cursor locations
@@ -52,7 +51,7 @@ See also
 
 ## Issues
 
-2018-10-21 ~ Michal/Theo ~ CADObjectId: no commas
+
 
 
 
@@ -62,6 +61,20 @@ See also
 
 ## Change Log
 
+#### 2018-10-22 ~ Theo
+
+SGV Pop-Up R7.5
+* Rename current folder
+* Done: 2018-10-21 ~ Michal/Theo ~ CADObjectId: no commas
+* Nothing selected pop-up
+	* Add zoom all button
+	* Add Campus attributes and building attributes
+	* Add tooltips
+* Update current status and other text
+* Switch visibility toggle from eye.png to Unicode character
+
+Done
+* 2018-10-14 ~ Display gbXML meta information
 
 #### 2018-10-20 ~ Theo
 
