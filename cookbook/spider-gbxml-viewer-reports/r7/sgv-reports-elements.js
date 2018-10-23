@@ -1,5 +1,5 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
-/* globals GBX */
+/* globals THR, GBX, POP, REPinpOptionType, REPselReportResults, REPselReport, REPdivReportTitle, REPselReportType */
 /* jshint esversion: 6 */
 
 
@@ -118,7 +118,7 @@ REPE.setPanelReportResults = function() {
 
 
 
-REPE.getArray = function( item ) { return Array.isArray( item ) ? item : [ item ]; }
+REPE.getArray = function( item ) { return Array.isArray( item ) ? item : [ item ]; };
 
 
 
@@ -143,7 +143,7 @@ REPE.setElementPanelSelectSpace = function() {
 	const spaces = REPE.getArray( GBX.gbjson.Campus.Building.Space );
 	const attribute = REPselReportType.value;
 	//console.log( 'space[ attribute ]', space[ attribute ] );
-	
+
 	const options = spaces.map( space => `<option value="${ space.id }" >${ space[ attribute ] }</<option>` );
 
 	REPdivReportTitle.innerHTML = `<h4>Type: Space - Items: ${ options.length } </h4>`;

@@ -1,4 +1,4 @@
-/* global THREE, THR, THRU, GBX, divPopUpData */
+/* global THREE, THR, THRU, GBX, divPopupData */
 // jshint esversion: 6
 
 // Copyright 2018 Ladybug Tools authors. MIT License
@@ -141,7 +141,7 @@ POP.getIntersectedVertexBufferGeometry = function( intersected, intersects ) {
 		.map( point => new THREE.Vector3().fromArray( point.Coordinate  ) );
 	//console.log( 'vertices', vertices );
 
-	const geometry = new THREE.Geometry().setFromPoints( vertices )
+	const geometry = new THREE.Geometry().setFromPoints( vertices );
 	//console.log( 'geometry', geometry );
 
 	const material = new THREE.LineBasicMaterial( { color: 0xff00ff, linewidth: 2, transparent: true } );
@@ -293,7 +293,7 @@ POP.getSurfaceAttributes = function( surfaceJson ) {
 
 	return htm;
 
-}
+};
 
 
 
@@ -399,7 +399,7 @@ POP.getAttributesPolyLoop = function( polyloop ) {
 
 	let htm = '', count = 1;
 
-	for ( point of points ) {
+	for ( let point of points ) {
 
 		htm +=
 		`
@@ -518,7 +518,7 @@ POP.toggleSpaceVisible = function( button, spaceId1, spaceId2 ) {
 	`
 		<b>Space Attributes</b>
 		${ htmSpace }
-	`
+	`;
 
 	POPelementAttributes.innerHTML = htm;
 
@@ -574,7 +574,7 @@ POP.toggleStoreyVisible = function( storeyId ) {
 	`
 		<b>Storey Attributes</b>
 		${ htmStorey }
-	`
+	`;
 
 	POPelementAttributes.innerHTML = htm;
 
@@ -630,7 +630,7 @@ POP.toggleZoneVisible = function ( zoneIdRef ) {
 	`
 		<b>Zone Attributes</b>
 		${ htmZone }
-	`
+	`;
 
 	POPelementAttributes.innerHTML = htm;
 

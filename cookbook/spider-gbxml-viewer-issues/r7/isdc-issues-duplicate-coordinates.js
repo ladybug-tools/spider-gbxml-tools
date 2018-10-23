@@ -50,7 +50,7 @@ ISDC.getMenuDuplicateCoordinates= function( target ) {
 
 		<div id=divDuplicateAttributes ></div>
 		<p>
-			<button onclick=ISDC.setISDCupDuplicateCoordinates(); title="Starting to work!" >
+			<button onclick=alert("coming_soon"); title="Starting to work!" >
 				Fix duplicate surfaces
 			</button>
 		</p>
@@ -204,7 +204,7 @@ ISDC.getDuplicateAttributes = function() {
 
 			if ( typeof obj[ item ] === 'object' ) { continue }
 
-			attributes += `<div><span class=attributeTitle >${ item }</span>: <span class=attribute >${ obj[ item ] }</span></div>`
+			attributes += `<div><span class=attributeTitle >${ item }</span>: <span class=attributeValue >${ obj[ item ] }</span></div>`
 		}
 
 		return attributes;
@@ -222,6 +222,7 @@ ISDC.toggleSurfaceVisible = function( button, id ) {
 	button.style.backgroundColor = button.style.backgroundColor === 'pink' ? '' : 'pink';
 
 };
+
 
 
 ISDC.getAdjacentSpaces = function( surfaceJson ) {

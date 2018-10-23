@@ -5,7 +5,7 @@
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
 <meta name=description content="Open, view, examine, identify errors and fix gbXML files in 3D in your browser with free, open source entry-level Three.js JavaScript" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-10-12" >
+<meta name = "date" content = "2018-10-22" >
 <title>Spider gbXML Viewer R7 Issues</title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 </head>
@@ -21,11 +21,7 @@
 <script src = "./isdc-issues-duplicate-coordinates.js" ></script>
 <script src = "./issi-issues-inclusions.js" ></script>
 <script src = "../../../lib/r7/fil-open-file-gbxml.js" ></script>
-<!--
-
-	<script src = "../../../lib/r7/pop-up-gbxml.js" ></script>
-
--->
+<script src = "../../../lib/r7/pop-up-gbxml.js" ></script>
 <script src = "../../../lib/r7/gal-sample-files-gallery-gbxml.js" ></script>
 
 	<main id="container" ></main>
@@ -56,7 +52,7 @@
 
 		</details>
 
-		<details open>
+		<details open >
 
 			<summary title = "fix things" >Issues</summary>
 
@@ -140,8 +136,8 @@ FIL.divFileInfo = divFileInfo;
 const ISS = {};
 ISS.surfaceChanges = {};
 
-
-
+init();
+THR.animate();
 
 
 function init() {
@@ -172,6 +168,8 @@ function init() {
 
 	THRU.addSomeLights();
 
+	divPopUp.innerHTML = POP.getMenuHtmlPopUp(); // load after Three.js init
+
 	// loads a default file / great for testing same file many times
 	const thrFilePath = localStorage.getItem( 'thrFilePath' ) || '';
 
@@ -183,13 +181,7 @@ function init() {
 	if ( !location.hash ) { location.hash = FIL.urlDefaultFile; } else { FIL.onHashChange(); }
 	//location.hash = urlDefaultFile;
 
-	THR.animate();
-
-
 }
-
-
-init();
 
 </script>
 </body>
