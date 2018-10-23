@@ -50,6 +50,7 @@ See also
 
 ## Issues
 
+2018-10-22 ~ Theo ~ Select Reports by Elements: Search only works for IDs - not for names of CAD IDs
 2018-10-22 ~ Theo ~ Select Reports by Elements: remove extra commas in element select
 
 

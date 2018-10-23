@@ -246,7 +246,6 @@ POP.getIntersectedDataHtml = function( intersected, intersects ) {
 
 			<!--
 
-
 			<p>Toggling focus or visibility and identifying are two different things. As we design, let us try to keep these actions separate.</p>
 
 			<p>If you are in a module, then you should never have to leave the module in order to complete the tasks assigned to that module</p>
@@ -329,7 +328,7 @@ POP.getAttributesHtml = function( obj ) {
 		} else {
 
 			const val = obj[ key ];
-			const value = isNaN( Number( val ) ) &&  val !== 'CADObjectId' ? val : Number( val ).toLocaleString();
+			const value = isNaN( Number( val ) ) || val !== 'CADObjectId' ? val : Number( val ).toLocaleString();
 
 			htm +=
 			`
@@ -360,8 +359,6 @@ POP.getAttributesAdjacentSpace = function( obj ){
 		htm = 'None';
 
 	} else if ( Array.isArray( obj.AdjacentSpaceId ) ) {
-
-		htm = 'arr'
 
 		//console.log( 'obj.AdjacentSpaceId', obj.AdjacentSpaceId );
 
