@@ -224,7 +224,8 @@ POP.getIntersectedDataHtml = function( intersected, intersects ) {
 			${ adjSpaceButtons }
 		</p>
 		<p>
-			${ storeyButton } ${ zoneButton } <button onclick=POP.setVisibleZoom(); title="Zoom whatever is visible" >⌕</button>
+			${ storeyButton } ${ zoneButton }
+			<button onclick=POP.setVisibleZoom(); title="Zoom whatever is visible" >⌕</button>
 		</p>
 
 

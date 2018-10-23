@@ -26,6 +26,7 @@ The issue is that gbXML files may be huge and analyzing the data can be tricky.
 
 The purpose of this module is to provide you with any and all useful data embedded in a gbXML file - even very big files with just two or three clicks.
 
+
 ### Mission
 
 * View all project textual metadata embedded in gbXML files
@@ -39,14 +40,17 @@ The purpose of this module is to provide you with any and all useful data embedd
 
 ## To Do / Wish List
 
+* 2018-10-22 ~ Theo ~ panel Select Reports by Elements: Add limited attributes display
 * Add all the features of AGV R14
 
 See also
 
 * https://www.ladybug.tools/spider/index.html#gbxml-viewer/r14/gv-rep-reports/README.md
 
+
 ## Issues
 
+2018-10-22 ~ Theo ~ Select Reports by Elements: remove extra commas in element select
 
 
 ## Links of Interest
@@ -55,9 +59,20 @@ See also
 
 ## Change Log
 
+### 2018-10-22 ~ Theo
+
+SGV Reports R7.1
+* Panel: Surfaces by Type
+	* Change eye icon from png to unicode character
+	* Continue effort to have button colors toggle correctly
+	* Update tool tips
+* Panel: Select Reports by Elements
+	* Add input box for searching
+
+
 ### 2018-10-15 ~ Theo
 
-* Add pop-up
+* Add link to pop-up
 
 #### 2018-10-13 ~ Theo
 

@@ -9,12 +9,25 @@ REPT.colorButtonToggle = 'pink';
 REPT.cssText = `background-color: ${ REPT.colorButtonToggle } !important; font-style: italic; font-weight: bold`;
 
 
-REPT.getTypesMenuItems = function() {
+REPT.onToggleReports = function(that) {
+	//console.log( 'that', that.children[ 0 ] );
+	
+	that.children[ 0 ].innerHTML =
+	`
+		Interactive 3D Reports
+		 <a href="https://www.ladybug.tools/spider-gbxml-tools/#cookbook/spider-gbxml-viewer-reports/README.md" title="View Reports Read Me file in new tab" target="_blank"> ? </a>
+	`;
+
+}
+
+
+REPT.getTypesMenuItems = function( that ) {
 
 	const htm  =
 	`
 		<br>
 		<i>View surfaces in groups</i>
+
 		<details id=detSurfacesByType ontoggle=divSurfacesByType.innerHTML=REPT.getMenuPanelSurfacesByType();REPT.initButtons(); >
 
 			<summary >Surfaces by Type </summary>
@@ -26,7 +39,9 @@ REPT.getTypesMenuItems = function() {
 				<button id=butExposeToSun class=toggle onclick=REPT.toggleExposedToSunVisible(this); >Exposed to Sun</button>
 			</p>
 
-			<i>What more would we like to know? total area for each type? Other info?</i>
+			<p>
+				<i>Updates of button colors needs more work.<br>See also 'Numbers' panel in AGV R14. Coming here in due course</i>
+			</p>
 
 		</details>
 
@@ -51,11 +66,9 @@ REPT.getTypesMenuItems = function() {
 
 			<div id=divOpenings>Coming soon</div>
 
+			</details>
+
 			<hr>
-
-		</details>
-
-		<hr>
 	`;
 
 	return htm;
@@ -100,12 +113,12 @@ REPT.getMenuPanelSurfacesByType = function( target ) {
 
 		txt +=
 		`
-			<button class=toggleView onclick=REPT.setSurfaceTypeInvisible(this);REPT.toggleButtonColor(this); value=${ types[ i ] } >
-				<img src="./eye.png" height=18>
+			<button class=toggleView onclick=REPT.setSurfaceTypeInvisible(this);REPT.toggleButtonColor(this); value=${ types[ i ] } title="Show/hide ${ types[ i ] } surfaces" >
+			&#x1f441;
 			</button>
 
 			<button onclick=REPT.setSurfaceTypeVisible(this.innerText);
-				style="width:12rem;background-color:#${ color } !important;" >
+				style="width:12rem;background-color:#${ color } !important;" title="Show only ${ types[ i ] } surfaces">
 				${ types[ i ] } </button>
 					${ typesCount[ i ] }/${ surfaces.length }
 		<br>`;
@@ -290,6 +303,10 @@ REPT.setCadObjectTypeVisible = function( CADObjectGroup ) {
 REPT.setSurfaceTypeInvisible = function( button ) {
 
 	THR.scene.remove( POP.line, POP.particle );  // POP must be loaded
+
+	butAllVisible.style.cssText = '';
+
+	butExposeToSun.style.cssText = '';
 
 	for ( let child of GBX.surfaceMeshes.children ) {
 

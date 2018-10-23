@@ -3,7 +3,7 @@
 /* jshint esversion: 6 */
 
 
-const REPE = {};
+const REPE = { "release": "SGV Reports Element by Type R7.1"};
 
 
 REPE.getElementsMenuItems = function() {
@@ -11,6 +11,7 @@ REPE.getElementsMenuItems = function() {
 	const htm  =
 	`
 	<i>View by surface, space, storey, zone or opening</i>
+
 	<details ontoggle=REPE.setOptions(); >
 
 		<summary>Select Reports by Elements</summary>
@@ -42,6 +43,10 @@ REPE.getElementsMenuItems = function() {
 
 		Use shift and control/command keys to select multiple items
 
+		<p>
+			<input id=REPinpOptionType oninput=REPE.setSelectedOptionType(); placeholder="search for a value" >
+		</p>
+
 		<div>
 			<select id=REPselReportResults onchange=REPE.setElementVisible(); size=10; style=width:100%; multiple></select>
 		</div>
@@ -57,6 +62,16 @@ REPE.getElementsMenuItems = function() {
 };
 
 
+REPE.setSelectedOptionType = function() {
+
+	const str = REPinpOptionType.value.toLowerCase();
+
+	REPselReportResults.value = Array.from( REPselReportResults.options ).find( item => item.value.toLowerCase().includes( str ) ).value;
+
+	REPE.setElementVisible();
+
+};
+
 
 REPE.setOptions = function(){
 
@@ -70,6 +85,8 @@ REPE.setPanelReportResults = function() {
 
 	const item = REPselReport.value;
 	//console.log( 'item', item );
+
+	REPinpOptionType.value = '';
 
 	if ( item === 'Surface' ) {
 
@@ -94,7 +111,6 @@ REPE.setPanelReportResults = function() {
 		REPdivReportTitle.innerHTML = 'coming soon';
 		REPselReportResults.innerHTML = '';
 
-
 	}
 
 
@@ -105,6 +121,8 @@ REPE.setPanelReportResults = function() {
 REPE.getArray = function( item ) { return Array.isArray( item ) ? item : [ item ]; }
 
 
+
+//////////
 
 REPE.setElementPanelSelectSurface = function(){
 
@@ -124,11 +142,13 @@ REPE.setElementPanelSelectSpace = function() {
 
 	const spaces = REPE.getArray( GBX.gbjson.Campus.Building.Space );
 	const attribute = REPselReportType.value;
+	//console.log( 'space[ attribute ]', space[ attribute ] );
+	
 	const options = spaces.map( space => `<option value="${ space.id }" >${ space[ attribute ] }</<option>` );
 
 	REPdivReportTitle.innerHTML = `<h4>Type: Space - Items: ${ options.length } </h4>`;
 
-	REPselReportResults.innerHTML = options.join();
+	REPselReportResults.innerHTML = options.join( ',' );
 
 };
 
@@ -138,11 +158,11 @@ REPE.setElementPanelSelectStorey = function() {
 
 	const stories = REPE.getArray( GBX.gbjson.Campus.Building.BuildingStorey );
 	const attribute = REPselReportType.value;
-	const options = stories.map( storey => `<option  value="${ storey.id }">${ storey[ attribute ] }</<option>` );
+	const options = stories.map( storey => `<option value="${ storey.id }">${ storey[ attribute ] }</<option>` );
 
 	REPdivReportTitle.innerHTML = `<h4>Type: Storey - Items: ${ options.length } </h4>`;
 
-	REPselReportResults.innerHTML = options.join();
+	REPselReportResults.innerHTML = options.join( ',' );
 
 };
 
@@ -152,11 +172,11 @@ REPE.setElementPanelSelectZone = function() {
 
 	const zones = Array.isArray( GBX.gbjson.Zone ) ? GBX.gbjson.Zone : [ GBX.gbjson.Zone ];
 	const attribute = REPselReportType.value;
-	const options = zones.map( zone => `<option  value="${ zone.id }" >${ zone[ attribute ] }</<option>` );
+	const options = zones.map( zone => `<option value="${ zone.id }" >${ zone[ attribute ] }</<option>` );
 
 	REPdivReportTitle.innerHTML = `<h4>Type: Zone - Items: ${ options.length } </h4>`;
 
-	REPselReportResults.innerHTML = options.join();
+	REPselReportResults.innerHTML = options.join( ',' );
 
 };
 

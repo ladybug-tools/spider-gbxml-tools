@@ -5,7 +5,7 @@
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
 <meta name=description content="Toggle the visibility of individual and groups of surfaces in gbXML files" >
 <meta name=keywords content="gbXML, Spider, Ladybug.tools, Three.js, WebGL, JavaScript, GitHub, FOSS, 3D, STEM" >
-<meta name = "date" content = "2018-10-11" >
+<meta name = "date" content = "2018-10-22" >
 <title>Spider Rad Viewer R7 Reports</title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 </head>
@@ -17,10 +17,7 @@
 <script src = "../../../lib/r7/thru-threejs-utilities.js"></script>
 <script src = "../../../lib/r7/gbx-gbxml-loader.js" ></script>
 <script src = "../../../lib/r7/fil-open-file-gbxml.js" ></script>
-<!--
 
-	<script src = "./spider-gbxml-viewer-reports.js" ></script>
--->
 <script src = "./sgv-reports-types.js" ></script>
 <script src = "./sgv-reports-elements.js" ></script>
 <script src = "./sgv-reports-attributes.js" ></script>
@@ -45,9 +42,9 @@
 
 		</details>
 
-		<details  open >
+		<details ontoggle=REPT.onToggleReports(this); open >
 
-			<summary>Interactive 3D Reports <a href="https://www.ladybug.tools/spider-gbxml-tools/#cookbook/spider-gbxml-viewer-reports/README.md" title="View Read Me file in new tab" target="_blank" > ? </a></summary>
+			<summary></summary>
 
 			<div id = "divReportTypes" ></div>
 
@@ -58,9 +55,9 @@
 
 		</details>
 
-		<details open >
+		<details>
 
-			<summary title = "Update what you see in the display">Settings</summary>
+			<summary title = "Update what you see in the display" >Settings</summary>
 
 			<div id = "divSettings" ></div>
 
@@ -137,7 +134,6 @@ function init() {
 
 	divReportAttributes.innerHTML = REPA.getAttributesMenuItems();
 
-
 	divFooter.innerHTML = MNU.getNavFooter(); // not essential
 
 
@@ -149,6 +145,7 @@ function init() {
 
 	divPopUpData.innerHTML = POP.getMenuHtmlPopUp();
 
+
 	// loads a default file / great for testing same file many times
 	const thrFilePath = localStorage.getItem( 'thrFilePath' ) || '';
 
@@ -158,7 +155,6 @@ function init() {
 
 	if ( !location.hash ) { location.hash = FIL.urlDefaultFile; } else { FIL.onHashChange(); }
 	//location.hash = urlDefaultFile;
-
 
 }
 
