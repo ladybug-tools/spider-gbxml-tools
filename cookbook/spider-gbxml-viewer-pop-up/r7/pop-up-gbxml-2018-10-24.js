@@ -3,35 +3,9 @@
 
 // Copyright 2018 Ladybug Tools authors. MIT License
 
-const POP = { "release": "R7.6" };
-POP.getArray = thing=> Array.isArray( thing ) ? thing : ( thing ? [ thing ] : [] );
+const POP = { "release": "SGV Pop-Up R7.5" };
 
 
-POP.currentStatus =
-	`
-	<details>
-		<summary>Current status 2018-10-24</summary>
-
-		<p>Identifying elements and attributes according to <a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">gbXML Schema.</a></p>
-
-		<p>Coming next:<br>&bull; display planar geometry vertices in model<br>&bull; display rectangular geometry in model</p>
-
-		<p>For fixing things see <a href="../../spider-gbxml-viewer-issues/index.html" target="_blank">issues module</a> </p>
-		<p>Status: Getting to be stable. Needs more testing. Wishlists items welcome.</p>
-
-		<!--
-		<p>Toggling focus or visibility and identifying are two different things. As we design, let us try to keep these actions separate.</p>
-
-		<p>If you are in a module, then you should never have to leave the module in order to complete the tasks assigned to that module</p>
-
-		<p>What tooltips should appear and where?</p>
-		-->
-
-	</details>
-
-	`;
-
-////////// Inits
 
 POP.getMenuHtmlPopUp = function() {
 
@@ -80,7 +54,6 @@ POP.getMenuHtmlPopUp = function() {
 };
 
 
-////////// Events
 
 POP.onClickZoomAll = function() {
 
@@ -101,37 +74,6 @@ POP.onClickZoomAll = function() {
 };
 
 
-
-
-POP.setAllVisibleZoom = function() {
-
-	meshes = GBX.surfaceMeshes.children.filter( mesh => mesh.visible === true );
-	//console.log( 'meshes', meshes );
-
-	POP.setCameraControls( meshes );
-
-};
-
-
-
-POP.setCameraControls = function( meshes ) {
-
-	const bbox = new THREE.Box3();
-	meshes.forEach( mesh => bbox.expandByObject ( mesh ) );
-
-	const sphere = bbox.getBoundingSphere( new THREE.Sphere() );
-	const center = sphere.center;
-	const radius = sphere.radius;
-	//console.log( 'center * radius', center, radius );
-
-	THR.controls.target.copy( center );
-	THR.camera.position.copy( center.clone().add( new THREE.Vector3( 1.5 * radius, - 1.5 * radius, 1.5 * radius ) ) );
-
-};
-
-
-
-/////
 
 POP.onDocumentTouchStart = function( event ) {
 
@@ -190,48 +132,73 @@ POP.onDocumentMouseDown = function( event ) {
 
 
 
+POP.getIntersectedVertexBufferGeometry = function( intersected, intersects ) {
+	//console.log( '', intersected );
+
+	THR.scene.remove( POP.line, POP.particle );
+
+	const vertices = intersected.userData.gbjson.PlanarGeometry.PolyLoop.CartesianPoint
+		.map( point => new THREE.Vector3().fromArray( point.Coordinate  ) );
+	//console.log( 'vertices', vertices );
+
+	const geometry = new THREE.Geometry().setFromPoints( vertices );
+	//console.log( 'geometry', geometry );
+
+	const material = new THREE.LineBasicMaterial( { color: 0xff00ff, linewidth: 2, transparent: true } );
+
+
+	POP.line = new THREE.LineLoop( geometry, material );
+	THR.scene.add( POP.line );
+
+	POP.particle.scale.x = POP.particle.scale.y = 0.03 * THRU.radius;
+	POP.particle.position.copy( intersects[ 0 ].point );
+
+	THR.scene.add( POP.line, POP.particle );
+
+};
+
+
+
 POP.getIntersectedDataHtml = function( intersected, intersects ) {
 	//console.log( 'intersected', intersected );
 
 	surfaceJson = POP.intersected.userData.gbjson;
 
-	const adjSpaces = surfaceJson.AdjacentSpaceId;
+	const adjSpaces = surfaceJson.AdjacentSpaceId; // [ '' ];
 	//console.log( 'adjSpaces', adjSpaces );
 
-	let space1, space2, adjSpaceButtons, storeyButton, zoneButton;
+	let adjSpaceButtons, space0, space1, storeyButton, zoneButton;
 
-	if ( adjSpaces ) { // also determines if zone and storey
-		// all buttons need IDs so can toggle off and on easily
+	if ( adjSpaces ) {
 
 		if ( Array.isArray( adjSpaces ) ) {
 
-			space1 = GBX.gbjson.Campus.Building.Space.find( space => space.id === adjSpaces[ 0 ].spaceIdRef );
-			space2 = GBX.gbjson.Campus.Building.Space.find( space => space.id === adjSpaces[ 1 ].spaceIdRef );
-
+			space0 = GBX.gbjson.Campus.Building.Space.find( item => item.id === adjSpaces[ 0 ].spaceIdRef );
+			space1 = GBX.gbjson.Campus.Building.Space.find( item => item.id === adjSpaces[ 1 ].spaceIdRef );
 			adjSpaceButtons =
 			`
-				<button id=POPbutAdjacentSpace1 onclick=POP.toggleSpaceVisible(this,"${ space1.id }","${ space1.id }"); title="id: ${ space1.id }" >space 1: ${ space1.Name }</button>
-				<button id=POPbutAdjacentSpace2 onclick=POP.toggleSpaceVisible(this,"${ space2.id }","${ space2.id }"); title="id: ${ space2.id }" >space 2: ${ space2.Name }</button>
+				<button id=POPbutAdjacentSpace1 onclick=POP.toggleSpaceVisible(this,"${ adjSpaces[ 0 ].spaceIdRef }","${ adjSpaces[ 1 ].spaceIdRef }"); title="id: ${ space0.id }" >space 1: ${ space0.Name }</button>
+				<button id=POPbutAdjacentSpace2 onclick=POP.toggleSpaceVisible(this,"${ adjSpaces[ 0 ].spaceIdRef }","${ adjSpaces[ 1 ].spaceIdRef }"); title="id: ${ space1.id }" >space 2: ${ space1.Name }</button>
 			`;
 
 		} else {
 
-			space2 = GBX.gbjson.Campus.Building.Space.find( space => space.id === adjSpaces.spaceIdRef );
-
+			space1 = GBX.gbjson.Campus.Building.Space.find( item => item.id === adjSpaces.spaceIdRef );
 			adjSpaceButtons =
 			`
-				<button id=POPbutAdjacentSpace1 onclick=POP.toggleSpaceVisible(this,"${ space2.id }",""); title="id: ${ space2.id }" >space: ${ space2.Name } </button>
+				<button id=POPbutAdjacentSpace1 onclick=POP.toggleSpaceVisible(this,"${ adjSpaces.spaceIdRef }",""); title="id: ${ space1.id }" >space: ${ space1.Name } </button>
 				</div><div id=POPbutAdjacentSpace2 ></div>
 			`;
 
 		}
 
+		let storey = Array.isArray( GBX.gbjson.Campus.Building.BuildingStorey ) ? GBX.gbjson.Campus.Building.BuildingStorey : [ GBX.gbjson.Campus.Building.BuildingStorey ];
+		storey = storey.find( item => item.id === space1.buildingStoreyIdRef );
+		storeyButton = `<button id=POPbutStoreyVisible onclick=POP.toggleStoreyVisible("${ space1.buildingStoreyIdRef }"); title="id: ${ storey.id }" >storey: ${ storey.Name } </button>`;
 
-		const storey = POP.getArray( GBX.gbjson.Campus.Building.BuildingStorey ).find( storey => storey.id === space2.buildingStoreyIdRef );
-		storeyButton = `<button id=POPbutStoreyVisible onclick=POP.toggleStoreyVisible("${ storey.id }"); title="id: ${ storey.id }" >storey: ${ storey.Name } </button>`;
-
-		const zone = POP.getArray( GBX.gbjson.Zone ).find( zone => zone.id === space2.zoneIdRef  );
-		zoneButton = `<button id=POPbutZoneVisible onclick=POP.toggleZoneVisible("${ zone.id }"); title="id: ${ zone.id }" >zone: ${ zone.Name }</button> &nbsp;`;
+		let zone = Array.isArray( GBX.gbjson.Zone ) ? GBX.gbjson.Zone : [ GBX.gbjson.Zone ];
+		zone = zone.find( item => item.id === space1.zoneIdRef  );
+		zoneButton = `<button id=POPbutZoneVisible onclick=POP.toggleZoneVisible("${ zone.id }"); title="id: ${ space1.zoneIdRef }" >zone: ${ zone.Name }</button> &nbsp;`;
 
 	} else {
 
@@ -253,15 +220,12 @@ POP.getIntersectedDataHtml = function( intersected, intersects ) {
 			<button id=POPbutSurfaceVisible onclick=POP.toggleSurfaceVisible(); title="Show or hide selected surface" > &#x1f441; </button>
 			<button onclick=POP.setSurfaceZoom(); title="Zoom into selected surface" >⌕</button>
 		</p>
-
 		<p>
 			${ adjSpaceButtons }
 		</p>
-
 		<p>
 			${ storeyButton } ${ zoneButton }
-
-			<button onclick=POP.setAllVisibleZoom(); title="Zoom whatever is visible" >⌕</button>
+			<button onclick=POP.setVisibleZoom(); title="Zoom whatever is visible" >⌕</button>
 		</p>
 
 
@@ -271,40 +235,31 @@ POP.getIntersectedDataHtml = function( intersected, intersects ) {
 
 		<hr>
 
-		<div>${ POP.currentStatus }</div>
+		<details>
+			<summary>Current status</summary>
+
+			<p>Identifying elements and attributes according to <a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">gbXML Schema.</a></p>
+
+			<p>Coming next:<br>&bull; display planar geometry vertices in model<br>&bull; display rectangular geometry in model</p>
+
+			<p>Status: Getting to be stable. Needs more testing. Wishlists items welcome.</p>
+
+			<!--
+
+			<p>Toggling focus or visibility and identifying are two different things. As we design, let us try to keep these actions separate.</p>
+
+			<p>If you are in a module, then you should never have to leave the module in order to complete the tasks assigned to that module</p>
+
+			<p>What tooltips should appear and where?</p>
+			-->
+
+		</details>
 
 	`;
 
 	return htm;
 
 };
-
-
-
-POP.getIntersectedVertexBufferGeometry = function( intersected, intersects ) {
-	//console.log( '', intersected );
-
-	THR.scene.remove( POP.line, POP.particle );
-
-	const vertices = intersected.userData.gbjson.PlanarGeometry.PolyLoop.CartesianPoint
-		.map( point => new THREE.Vector3().fromArray( point.Coordinate  ) );
-	//console.log( 'vertices', vertices );
-
-	const geometry = new THREE.Geometry().setFromPoints( vertices );
-	//console.log( 'geometry', geometry );
-
-	const material = new THREE.LineBasicMaterial( { color: 0xff00ff, linewidth: 2, transparent: true } );
-
-	POP.line = new THREE.LineLoop( geometry, material );
-	THR.scene.add( POP.line );
-
-	POP.particle.scale.x = POP.particle.scale.y = 0.03 * THRU.radius;
-	POP.particle.position.copy( intersects[ 0 ].point );
-
-	THR.scene.add( POP.line, POP.particle );
-
-};
-
 
 
 
@@ -319,7 +274,7 @@ POP.getSurfaceAttributes = function( surfaceJson ) {
 
 	htm =
 		`<p>
-			<div><b>Selected Surface Attributes</b></div>
+			<div><b>Surface Attributes</b></div>
 			${ htmSurface }
 		</p>
 		<p>
@@ -373,9 +328,7 @@ POP.getAttributesHtml = function( obj ) {
 		} else {
 
 			const val = obj[ key ];
-
-			let value = isNaN( Number( val ) ) || val !== 'CADObjectId' ? val : Number( val ).toLocaleString();
-			value = key === 'Width' || key === 'Height' ? Number( val ).toLocaleString() : value;
+			const value = isNaN( Number( val ) ) || val !== 'CADObjectId' ? val : Number( val ).toLocaleString();
 
 			htm +=
 			`
@@ -403,7 +356,7 @@ POP.getAttributesAdjacentSpace = function( obj ){
 
 	if ( obj.AdjacentSpaceId === undefined ) {
 
-		htm = 'No adjacent space';
+		htm = 'None';
 
 	} else if ( Array.isArray( obj.AdjacentSpaceId ) ) {
 
@@ -492,7 +445,6 @@ POP.toggleSurfaceFocus = function() {
 	}
 
 	const surfaceJson = POP.intersected.userData.gbjson;
-
 	POPelementAttributes.innerHTML = POP.getSurfaceAttributes( surfaceJson );
 
 };
@@ -520,13 +472,15 @@ POP.toggleSurfaceVisible = function() {
 
 
 
-POP.toggleSpaceVisible = function( button, space1Id, space2Id ) {
+POP.toggleSpaceVisible = function( button, spaceId1, spaceId2 ) {
 
 	const color = button.style.backgroundColor === '' ? 'pink' : '';
 	button.style.backgroundColor = color;
 
-	const visible1 = POPbutAdjacentSpace1.style.backgroundColor !== '' ? true : false;
-	const visible2 = POPbutAdjacentSpace2.style.backgroundColor !== '' ? true : false;
+	const color1 = POPbutAdjacentSpace1.style.backgroundColor;
+	ref1 = color1 === '' ? '' : spaceId1;
+	const color2 = POPbutAdjacentSpace2.style.backgroundColor;
+	ref2 = color2 === '' ? '' : spaceId2;
 
 	POPbutSurfaceFocus.style.backgroundColor = '';
 	POPbutSurfaceVisible.style.backgroundColor = '';
@@ -535,54 +489,34 @@ POP.toggleSpaceVisible = function( button, space1Id, space2Id ) {
 
 	const children =  GBX.surfaceMeshes.children;
 
-	if ( visible1 === false && visible2 === false ) {
+	if ( color1 === '' && color2 === '' ) {
 
 		children.forEach( child => child.visible = true );
 
-	} else if ( visible1 === true && visible2 === false ) {
+	} else {
 
 		children.forEach( child => child.visible = false );
 
-		for ( let child of children )  {
+		for ( let child of children ) {
 
-			const adjacentSpaceId = POP.getArray( child.userData.gbjson.AdjacentSpaceId );
+			let adjacentSpaceId = child.userData.gbjson.AdjacentSpaceId;
 
-			adjacentSpaceId.forEach( item => child.visible = item && item.spaceIdRef === space1Id ? true : child.visible );
-			// if shade then no item
-		}
+			adjacentSpaceId = Array.isArray( adjacentSpaceId ) ? adjacentSpaceId : [ adjacentSpaceId ];
 
-	} else if ( visible1 === false && visible2 === true ) {
-
-		children.forEach( child => child.visible = false );
-
-		for ( let child of children )  {
-
-			const adjacentSpaceId = POP.getArray( child.userData.gbjson.AdjacentSpaceId );
-
-			adjacentSpaceId.forEach( item => child.visible = item && item.spaceIdRef === space2Id ? true : child.visible );
-
-		}
-
-	} else if ( visible1 === true && visible2 === true ) {
-
-		for ( let child of children )  {
-
-			const adjacentSpaceId = POP.getArray( child.userData.gbjson.AdjacentSpaceId );
-
-			adjacentSpaceId.forEach( item => child.visible = item && ( item.spaceIdRef === space1Id || item.spaceIdRef === space2Id )? true : child.visible );
+			adjacentSpaceId.forEach( item => child.visible = item && ( item.spaceIdRef === ref1 || item.spaceIdRef === ref2 ) ? true : false );
 
 		}
 
 	}
 
-	spaceJson = GBX.gbjson.Campus.Building.Space.find( item => item.id === space1Id );
+	spaceJson = GBX.gbjson.Campus.Building.Space.find( item => item.id === spaceId1 );
 	//console.log( 'spaceJson', spaceJson );
 
 	htmSpace = POP.getAttributesHtml( spaceJson );
 
 	const htm =
 	`
-		<b>Select Space Attributes</b>
+		<b>Space Attributes</b>
 		${ htmSpace }
 	`;
 
@@ -704,7 +638,6 @@ POP.toggleZoneVisible = function ( zoneIdRef ) {
 };
 
 
-//////////
 
 POP.setSurfaceZoom = function() {
 	//console.log( 'id', id );
@@ -717,3 +650,28 @@ POP.setSurfaceZoom = function() {
 
 
 
+POP.setVisibleZoom = function() {
+
+	meshes = GBX.surfaceMeshes.children.filter( mesh => mesh.visible === true );
+	//console.log( 'meshes', meshes );
+
+	POP.setCameraControls( meshes );
+
+};
+
+
+
+POP.setCameraControls = function( meshes ) {
+
+	const bbox = new THREE.Box3();
+	meshes.forEach( mesh => bbox.expandByObject ( mesh ) );
+
+	const sphere = bbox.getBoundingSphere( new THREE.Sphere() );
+	const center = sphere.center;
+	const radius = sphere.radius;
+	//console.log( 'center * radius', center, radius );
+
+	THR.controls.target.copy( center );
+	THR.camera.position.copy( center.clone().add( new THREE.Vector3( 1.5 * radius, - 1.5 * radius, 1.5 * radius ) ) );
+
+};

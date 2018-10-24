@@ -5,8 +5,8 @@
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
 <meta name=description content="Click on any surface in a gbXML model to display all its attribute data in a pop-op window" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-10-28" >
-<title>Spider gbXML Viewer Basic R7.5 Pop-Up Info</title>
+<meta name = "date" content = "2018-10-24" >
+<title>Spider gbXML Viewer Basic ~ Pop-Up Info</title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 </head>
 <body>
@@ -113,7 +113,10 @@ THR.animate();
 
 function init() {
 
+	document.title += ` ~ ${ POP.release }`;
+
 	divHeader.innerHTML = MNU.getNavHeader(); // not essential
+
 
 	divFileOpen.innerHTML = FIL.getFileOpen(); // if needed: set file info target
 

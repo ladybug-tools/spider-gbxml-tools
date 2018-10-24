@@ -24,10 +24,11 @@ Click on any surface in a gbXML model to display all its attribute data in a pop
 * Click on any surface in the model to:
 	* View id, name, type CAD object id
 	* View adjacent space parameters
-	* Toggle view of space and story
+	* Toggle view of space and storey
 	* View dimensions and area
 
-### Other names
+
+### Other names used in previous releases
 
 * Heads-Up Display ( HUD)
 * Context menu
@@ -53,13 +54,19 @@ See also
 
 
 
-
-
 ## Links of Interest
 
 
 
 ## Change Log
+
+#### 2018-10-24 ~ Theo
+
+SGV Pop-Up R7.6
+* Fix issues with display of adjacent spaces
+* Add nice POP.getArray function
+* Enhance document titling
+
 
 #### 2018-10-22 ~ Theo
 
@@ -69,7 +76,7 @@ SGV Pop-Up R7.5
 * Nothing selected pop-up
 	* Add zoom all button
 	* Add Campus attributes and building attributes
-	* Add tooltips
+	* Add tool tips
 * Update current status and other text
 * Switch visibility toggle from eye.png to Unicode character
 
