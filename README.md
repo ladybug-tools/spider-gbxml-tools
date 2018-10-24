@@ -24,7 +24,7 @@ Welcome [LinkedIn]( https://www.linkedin.com/feed/update/urn:li:activity:6458956
 
 ## Concept
 
-Scripts to help you view and manage [gbXML]( http://gbxml.org ) files
+Scripts to help you view and manage [gbXML]( http://gbxml.org ) files.
 
 The scripts here are a fork of the scripts at https://www.ladybug.tools/spider/. The intention is to provide a faster, simpler more effective user experience base on a simpler, more modular code base.
 
