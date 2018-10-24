@@ -21,9 +21,8 @@ _<small>Cookbook Viewer One Pager</small>_
 
 ## To Do / Wish List
 
-* 2018-10-21 ~ Theo ~ add interesting data about each file or total number or fun stuff
+* 2018-10-21 ~ Theo ~ add interesting data about each file or fun stuff
 * 2018-10-21 ~ Theo ~ Add buttons to page to control stuff inside iframe
-* 2018-10-20 ~ Theo ~ add no zoom in iframes
 
 ## Issues
 
@@ -42,6 +41,20 @@ _<small>Cookbook Viewer One Pager</small>_
 
 
 ## Change Log
+
+
+### 2018-10-23 ~ Theo
+
+Cookbook Viewer R1.1
+* Disable 3D zoom in iframes with models
+* Ignore selected folders
+* Display number of files found
+* Text and code cleanup
+
+Done
+* 2018-10-21 ~ Theo ~ add total number of files found
+* 2018-10-20 ~ Theo ~ add no zoom in iframes
+
 
 ### 2018-10-21 ~ Theo
 
