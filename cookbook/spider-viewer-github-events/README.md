@@ -50,6 +50,14 @@ This script is a first pass at establishing such a process.
 
 ## Change Log
 
+### 2018-10-23 ~ Theo
+
+Spider Viewer GitHub Events R1.1
+* Fixed some of the links so that they work and open new tab when file is viewed inside the home page script
+
+Code needs a good cleanup
+
+
 ### 2018-10-20 ~ Theo
 
 * Add variable height commit message text areas

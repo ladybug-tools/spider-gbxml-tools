@@ -4,8 +4,8 @@
 <meta charset = "utf-8" >
 <meta name = description content = "view recent GitHub events for a user or organization" >
 <meta name = keywords content = "Ladybug Tools, Spider, JavaScript, GitHub, FOSS, 3D, STEM" >
-<meta name = date content = "2018-10-14" >
-<title>View GitHub Events</title>
+<meta name = date content = "2018-10-23" >
+<title>View GitHub Events R1.1</title>
 <style id = "foo" >
 
 	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
@@ -13,6 +13,7 @@
 
 	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
 
+	.issue { border: 1px gray solid }
 </style>
 </head>
 <body>
@@ -47,7 +48,7 @@ function init() {
 
 
 	//urlEvents = 'https://api.github.com/users/' + user + '/events?per_page=100';
-	urlEvents = "https://api.github.com/repos/" + user + "/" + repo + "/events"
+	const urlEvents = "https://api.github.com/repos/" + user + "/" + repo + "/events"
 
 	requestFile( urlEvents, callback )
 
@@ -114,6 +115,8 @@ function getEventsCondensed( events ) {
 		</h2>
 
 		<h3 >${ events.length } most recent events by date</h3>
+
+		<p><i>not all links working as desired yet...</p>
 	`;
 
 	for ( var i = 0; i < events.length; i++ ) {
@@ -152,13 +155,17 @@ function getEventsCondensed( events ) {
 
 		tt = 'on' + event.type
 		//console.log( 'event.type', event.type, tt );
+		//console.log( 'event.actor.html_url', event.actor );
 
 		txt +=
-
-			'#' + ( i + 1 ) + ' time:' + event.created_at.slice( 11, -4 ) + ' user: ' + actor + ' ' + b +
-			'' + type[ ( 'on' + event.type ) ]( event ) + '<br>' +
-
-		b;
+		`
+			<div>
+				# ${ ( i + 1 ) } time:${ event.created_at.slice( 11, -4 ) }
+				<a href="https://github.com/${ event.actor.login }" target="_blank">actor: ${ event.actor.login }</a>
+			</div>
+			<div>${ type[ ( 'on' + event.type ) ]( event ) }</div>
+			<br>
+		`;
 
 		index = eventTypes.indexOf( event.type );
 
@@ -209,15 +216,28 @@ type.onIssuesEvent = function( event ) {
 
 	}
 
-	return '<small>issue ' + event.payload.issue.title.link( event.payload.issue.html_url ) + '</small>' + b +
+	const htm =
+	`
+		<div>
+			issue <a href="${ event.payload.issue.html_url }" target="_blank">${ event.payload.issue.title }</a></div>
 
-		'<div class=issue >' + converter.makeHtml( body ) + '</div>' +
+		<div class=issue > ${ converter.makeHtml( body ) } </div>
 
-	'';
+	`;
 
+
+	return htm;
 };
 
-type.onIssueCommentEvent = function( event ) { return 'issue comment ' + event.payload.issue.title.link( event.payload.issue.html_url ); };
+type.onIssueCommentEvent = function( event ) {
+
+	const htm =
+	`
+		<div>issue comment <a href="${ event.payload.issue.html_url }" target="_blank">${ event.payload.issue.title }</a></div>
+
+	`
+	return htm;
+};
 
 type.onMemberEvent = function( event ) { return 'member ' + event.payload.action; };
 
@@ -238,10 +258,18 @@ type.onPushEvent = function( event ) {
 
 	if ( commit ) {
 
-			const ht =  commit.message.length < 100 ? 50 : commit.message.length / 2;
+		const height =  commit.message.length < 100 ? 50 : commit.message.length / 2;
+
+		const htm =
+			`push <a href="https://github.com/${ event.repo.name }/commit/#{ commit.sha }" target="_blank">link to commit</a>
+			<br>
+			<textarea style=height:${ height }px;width:90%; >${ commit.message }</textarea>
+		`;
+
 //			return 'push <a href=https://github.com/' + event.repo.name + '/commit/' + commit.sha + ' >' + commit.message.slice( 0, 100 ) + '...' + '</a>';
 //			return 'push ' + commit.message.slice( 0, 100 ).link( 'https://github.com/' + event.repo.name + '/commit/' + commit.sha ) + '...';
-		return `push ${ ( 'link to commit' ).link( 'https://github.com/' + event.repo.name + '/commit/' + commit.sha ) }<br><textarea style=height:${ ht }px;width:90%; >${ commit.message }</textarea>`;
+
+		return htm;
 
 	}
 
