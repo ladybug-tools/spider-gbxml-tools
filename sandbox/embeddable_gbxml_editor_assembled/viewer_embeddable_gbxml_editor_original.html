@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1" >
+<meta name = "description" content = "Basic HTML template" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2018-08-29" >
+<title></title>
+<style>
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+/*	#divMenu { left: 0; margin: 20px; max-width: 300px; position: absolute; top: 0; } */
+
+</style>
+</head>
+<body>
+
+	<div id = "divMenu" >
+
+		<div id = "divTitle" ></div>
+
+
+	</div>
+
+	<iframe id=ifrOriginal src=embeddable_gbxml_editor_original.html width=100% height=500 ></iframe>
+
+	<p>
+
+		<button onclick=initThreejsOriginal() >start original demo</button>
+
+	</p>
+
+
+	<iframe id=ifrOneBox src=embeddable_gbxml_editor_one_box.html width=100% height=500 ></iframe>
+
+	<p>
+
+		<button onclick=initThreejsOneBox() >start one box demo</button>
+
+		<button onclick=ifrOneBox.contentWindow.controls.autoRotate=!ifrOneBox.contentWindow.controls.autoRotate; >rotation</button>
+
+	</p>
+
+	<div id = "divContents" ></div>
+
+
+<script>
+
+const urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml"
+
+const urlSourceCode = "https://github.com/zzzzz/xxxxx.html";
+
+init();
+
+function init() {
+
+	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+
+	divTitle.innerHTML =
+	`
+		<h1>
+			<a href=${ urlSourceCode } target="_top" title = "Source code on GitHub" >
+				<img src="https://status.github.com/images/invertocat.png" height=18 >
+			</a>
+			<a href="" title = "Click to reload this page" >${ document.title }</a>
+		</h1>
+
+		<p>${document.head.querySelector( '[name=description]' ).content }</p>
+	`;
+
+
+	divContents.innerHTML += '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
+
+}
+
+
+
+function initThreejsOriginal() {
+
+	ifrOriginal.contentWindow.init();
+
+	ifrOriginal.contentWindow.animate();
+
+	requestFile( urlDefaultFile, callbackGbxml )
+
+}
+
+
+function initThreejsOneBox() {
+
+	ifrOneBox.contentWindow.init();
+
+	ifrOneBox.contentWindow.animate();
+
+	ifrOneBox.contentWindow.controls.autoRotate = true;
+
+}
+
+
+function requestFile( url, callback ) {
+
+const xhr = new XMLHttpRequest();
+xhr.crossOrigin = 'anonymous';
+xhr.open( 'GET', url, true );
+xhr.onerror = function( xhr ) { console.log( 'error:', xhr  ); };
+//xhr.onprogress = onRequestFileProgress;
+xhr.onload = callback;
+xhr.send( null );
+
+
+	function onRequestFileProgress( xhr ) {
+
+		FIL.name = xhr.target.responseURL.split( '/').pop();
+
+		FIL.timeToLoad = performance.now() - FIL.timeStart;
+
+		FIL.divFileInfo.innerHTML =
+		`
+			<div>${ FIL.name}</div>
+			<div>bytes loaded: ${xhr.loaded.toLocaleString()}</div>
+			<div>time to load: ${ parseInt( FIL.timeToLoad, 10 ).toLocaleString() } ms</div>
+
+		`;
+
+	}
+
+};
+
+
+function callbackGbxml( xhr ) {
+
+const gbxmlResponseXML =  xhr.target.responseXML;
+
+//const gbxml = xhr.target.responseXML.documentElement;
+const gbxml = xhr.target.response;
+
+
+const meshesArray = ifrOriginal.contentWindow.GBX.parseFileXML( gbxml );
+
+ifrOriginal.contentWindow.scene.add( ...meshesArray );
+
+ifrOriginal.contentWindow.zoomObjectBoundingSphere( ifrOriginal.contentWindow.GBX.surfaceMeshes );
+
+/*
+FIL.timeToLoad = performance.now() - FIL.timeStart;
+
+FIL.divFileInfo.innerHTML =
+`
+	<div>${ FIL.name }</div>
+	<div>bytes loaded: ${xhr.loaded.toLocaleString()}</div>
+	<div>time to load: ${ parseInt( FIL.timeToLoad, 10 ).toLocaleString() } ms</div>
+
+`;
+*/
+
+};
+</script>
+</body>
+</html>

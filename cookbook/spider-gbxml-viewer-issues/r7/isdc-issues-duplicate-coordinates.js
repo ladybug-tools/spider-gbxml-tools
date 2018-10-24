@@ -8,6 +8,9 @@
 
 const ISDC = { "release": "SGV Issues R7.1" }
 
+
+
+
 ISDC.getMenuDuplicateCoordinates= function( target ) {
 
 	const htm =
@@ -28,6 +31,7 @@ ISDC.getMenuDuplicateCoordinates= function( target ) {
 				toggle all duplicates
 			</button>
 		</p>
+
 		<!--
 		<p>
 			<input placeholder="enter an id" >
@@ -73,6 +77,9 @@ ISDC.getDuplicateCoordinatesCheck = function() { //R14
 	const surfaceIndexes = [];
 	//ISDC.duplicateCoordinates = [];
 	ISDC.duplicates = [];
+
+	THR.scene.remove( ISDC.line, ISDC.particle );
+	GBX.surfaceMeshes.children.forEach( element => element.visible = true );
 
 	const surfacesJ = GBX.gbjson.Campus.Surface;
 
@@ -176,21 +183,30 @@ ISDC.setSurfaceArrayVisibleToggle = function( button, surfaceArray ) {
 
 ISDC.getDuplicateAttributes = function() {
 
+	GBX.surfaceMeshes.children.forEach( element => element.visible = true );
+
 	surfacesJson = ISDC.duplicates[ ISDCselDuplicate.value ];
 
 	//console.log( 'surfacesJson', surfacesJson );
 
+	const msg = surfacesJson[0].id === surfacesJson[1].id ? `<p style=color:red >Surfaces have duplicate surface IDs</p>` : ``;
 	let htm =
 	`
-		<button onclick=ISDC.toggleSurfaceVisible(this,surfacesJson[0].id); >Surface 1</button>
-		${ ISDC.getAdjacentSpaces( surfacesJson[ 0 ] ) }
+		<button onclick=ISDC.toggleSurfaceFocus(this,surfacesJson[0].id); >Surface 1</button>
+		<button onclick=ISDC.toggleSurfaceVisible(this,surfacesJson[0].id); title="Show or hide selected surface" > &#x1f441; </button>
+		<button onclick=ISDC.setSurfaceZoom(surfacesJson[0].id); title="Zoom into selected surface" >⌕</button>
+		${ ISDC.getAdjacentSpaces( surfacesJson[ 0 ], "a" ) }
 		<br>
 		${ getAttributes( surfacesJson[ 0 ] ) }
 		<br>
-		<button onclick=ISDC.toggleSurfaceVisible(this,surfacesJson[1].id);>Surface 2</button>
-		${ ISDC.getAdjacentSpaces( surfacesJson[ 1 ] ) }
+
+		<button onclick=ISDC.toggleSurfaceFocus(this,surfacesJson[1].id); >Surface 2</button>
+		<button onclick=ISDC.toggleSurfaceVisible(this,surfacesJson[1].id); title="Show or hide selected surface" > &#x1f441; </button>
+		<button onclick=ISDC.setSurfaceZoom(surfacesJson[1].id); title="Zoom into selected surface" >⌕</button>
+		${ ISDC.getAdjacentSpaces( surfacesJson[ 1 ] , "b" ) }
 		<br>
 		${ getAttributes( surfacesJson[ 1 ] ) }
+		${ msg }
 	`;
 
 	return htm;
@@ -215,6 +231,37 @@ ISDC.getDuplicateAttributes = function() {
 
 
 
+ISDC.toggleSurfaceFocus = function( button, surfaceId ) {
+
+	const color = button.style.backgroundColor === '' ? 'pink' : '';
+	button.style.backgroundColor = color;
+
+	//ISDCbutAdjacentSpace1.style.backgroundColor = '';
+	//ISDCbutAdjacentSpace2.style.backgroundColor = '';
+
+
+	if ( color === 'pink' ) {
+
+		GBX.surfaceMeshes.children.forEach( child => child.visible = false );
+
+		const surfaceMesh1 = GBX.surfaceMeshes.children.find( element => element.userData.gbjson.id === surfaceId );
+
+		surfaceMesh1.visible = true;
+
+	} else {
+
+		GBX.surfaceMeshes.children.forEach( child => child.visible = true );
+
+	}
+
+	//const surfaceJson = ISDC.intersected.userData.gbjson;
+	//ISDCelementAttributes.innerHTML = ISDC.getSurfaceAttributes( surfaceJson );
+
+};
+
+
+
+
 ISDC.toggleSurfaceVisible = function( button, id ) {
 
 	const surfaceMesh1 = GBX.surfaceMeshes.children.find( element => element.userData.gbjson.id === id );
@@ -225,24 +272,30 @@ ISDC.toggleSurfaceVisible = function( button, id ) {
 
 
 
-ISDC.getAdjacentSpaces = function( surfaceJson ) {
+ISDC.getAdjacentSpaces = function( surfaceJson, suffix ) {
 
-	console.log( 'surfaceJson', surfaceJson  );
+	//console.log( 'surfaceJson', surfaceJson  );
 
 	if ( !surfaceJson.AdjacentSpaceId ) { return ''; }
 
-	let htm = ''
+	let htm = '';
 
 	if ( Array.isArray( surfaceJson.AdjacentSpaceId ) ) {
 
-		const adj1 = GBX.gbjson.Campus.Building.Space.find( item => item.id = surfaceJson.AdjacentSpaceId[ 0 ].spaceIdRef )
-		const adj2 = GBX.gbjson.Campus.Building.Space.find( item => item.id = surfaceJson.AdjacentSpaceId[ 1 ].spaceIdRef )
+		//console.log( 'surfaceJson.AdjacentSpaceId 0', surfaceJson.AdjacentSpaceId[ 0 ].spaceIdRef );
+		//console.log( 'surfaceJson.AdjacentSpaceId 1', surfaceJson.AdjacentSpaceId[ 1 ].spaceIdRef );
+
+		const adj1 = GBX.gbjson.Campus.Building.Space.find( item => item.id === surfaceJson.AdjacentSpaceId[ 0 ].spaceIdRef )
+		const adj2 = GBX.gbjson.Campus.Building.Space.find( item => item.id === surfaceJson.AdjacentSpaceId[ 1 ].spaceIdRef )
+
+		//console.log( 'adj1', adj1 );
+		//console.log( 'adj2', adj2 );
 
 		htm =
 		`
 			<br>adjacent spaces:
-			<button onclick=ISDC.toggleSpaceVisible(this,"${ adj1.id}"); >${ adj1.Name }</button>
-			<button onclick=ISDC.toggleSpaceVisible(this,"${ adj2.id}"); >${ adj2.Name }</button>
+			<button id=ISDCbutAdjacentSpace1${ suffix } onclick=ISDC.toggleSpaceVisible(this,"${ adj1.id }","${ adj2.id }","ISDCbutAdjacentSpace1${ suffix }"); >${ adj1.Name }</button>
+			<button id=ISDCbutAdjacentSpace2${ suffix } onclick=ISDC.toggleSpaceVisible(this,"${ adj1.id }","${ adj2.id }","ISDCbutAdjacentSpace1${ suffix }" ); >${ adj2.Name }</button>
 		`
 	} else {
 
@@ -250,7 +303,7 @@ ISDC.getAdjacentSpaces = function( surfaceJson ) {
 
 		htm =
 		`
-		<button onclick=ISDC.toggleSpaceVisible(this,"${ adj.id}"); >${ adj.Name }</button>
+		<button id=ISDCbutAdjacentSpace1${ suffix } onclick=ISDC.toggleSpaceVisible(this,"${ adj.id}","","ISDCbutAdjacentSpace1${ suffix }"); >${ adj.Name }</button>
 	`
 
 	}
@@ -261,8 +314,61 @@ ISDC.getAdjacentSpaces = function( surfaceJson ) {
 
 
 
+ISDC.toggleSpaceVisible = function( button, spaceId1, spaceId2, id ) {
+	console.log( 'id', id );
+	const color = button.style.backgroundColor === '' ? 'pink' : '';
+	button.style.backgroundColor = color;
 
-ISDC.toggleSpaceVisible = function( button, spaceId ) {
+	console.log( 'bb', ISDCbutAdjacentSpace1a );
+	const color1=ISDCbutAdjacentSpace1a.style.backgroundColor;
+	ref1 = color1 === '' ? '' : spaceId1;
+	const color2 = ISDCbutAdjacentSpace2a.style.backgroundColor || '';
+	ref2 = color2 === '' ? '' : spaceId2;
+
+/* 	ISDCbutSurfaceFocus.style.backgroundColor = '';
+	ISDCbutSurfaceVisible.style.backgroundColor = '';
+	ISDCbutStoreyVisible.style.backgroundColor = '';
+	ISDCbutZoneVisible.style.backgroundColor = ''; */
+
+	const children =  GBX.surfaceMeshes.children;
+
+	if ( color1 === '' && color2 === '' ) {
+
+		children.forEach( child => child.visible = true );
+
+	} else {
+
+		children.forEach( child => child.visible = false );
+
+		for ( let child of children ) {
+
+			let adjacentSpaceId = child.userData.gbjson.AdjacentSpaceId;
+
+			adjacentSpaceId = Array.isArray( adjacentSpaceId ) ? adjacentSpaceId : [ adjacentSpaceId ];
+
+			adjacentSpaceId.forEach( item => child.visible = item && ( item.spaceIdRef === ref1 || item.spaceIdRef === ref2 ) ? true : false );
+
+		}
+
+	}
+
+	spaceJson = GBX.gbjson.Campus.Building.Space.find( item => item.id === spaceId1 );
+	//console.log( 'spaceJson', spaceJson );
+
+	htmSpace = ISDC.getAttributesHtml( spaceJson );
+
+	const htm =
+	`
+		<b>Space Attributes</b>
+		${ htmSpace }
+	`;
+
+	ISDCelementAttributes.innerHTML = htm;
+
+};
+
+
+ISDC.xxxtoggleSpaceVisible = function( button, spaceId ) {
 
 	const color = button.style.backgroundColor === '' ? 'pink' : '';
 	button.style.backgroundColor = color;
@@ -299,5 +405,16 @@ ISDC.toggleSpaceVisible = function( button, spaceId ) {
 		}
 
 	}
+
+};
+
+
+ISDC.setSurfaceZoom = function( surfaceId ) {
+	//console.log( 'id', id );
+
+	const surfaceMesh = GBX.surfaceMeshes.children.find( element => element.userData.gbjson.id === surfaceId );
+
+
+	ISDC.setCameraControls( [ surfaceMesh ] );
 
 };
