@@ -26,6 +26,10 @@ Welcome [LinkedIn]( https://www.linkedin.com/feed/update/urn:li:activity:6458956
 
 Scripts to help you view and manage [gbXML]( http://gbxml.org ) files
 
+The scripts here are a fork of the scripts at https://www.ladybug.tools/spider/. The intention is to provide a faster, simpler more effective user experience base on a simpler, more modular code base.
+
+The impetus for this code arose from the request by the developers of OpenStudio for a viewer that could embedded in their code. It became quickly evident that the new codebase offered significant advantages over the the previous codebase. And, thus, the majority of ongoing development efforts have been transferred to this project. Previous releases will be supported at least to the extent of fixing bugs that that are reported.
+
 
 ***
 
