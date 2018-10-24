@@ -10,7 +10,7 @@
 # [Spider gbXML Tools Read Me]( #README.md )
 
 <iframe class=iframeReadMe src=https://www.ladybug.tools/spider-gbxml-tools/cookbook/spider-gbxml-iframe-carousel/ width=100% height=500px >Iframes are not displayed on github.com</iframe>
-_<small>Spider gbXML Viewer ~ Iframe Carousel: multiple interactive 3D models in a single space on any web page<</small>_
+_<small>Spider gbXML Viewer ~ Iframe Carousel: display multiple interactive 3D models in a single space on any web page. Zoom turned off.</small>_
 
 
 ## Welcome <a href="https://www.openstudio.net/" title="Hi Dan! Hi NREL!" style=color:red; target="_blank">Open Studio</a> fans!
@@ -35,6 +35,7 @@ Scripts to help you view and manage [gbXML]( http://gbxml.org ) files
 #### [gbXML Viewer Basic Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#gbxml-viewer-basic/README.md )
 
 * Open, view gbXML files in 3D in your browser with free, open source entry-level Three.js JavaScript
+* This script contains the core or basic modules for an entry level viewing experience
 
 ***
 
@@ -43,6 +44,9 @@ Scripts to help you view and manage [gbXML]( http://gbxml.org ) files
 #### [gbXML Viewer Cookbook Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#cookbook/README.md )
 
 * A variety of add-on scripts that enhance Spider gbXML Basic
+* Current capabilities include identifying issues with gbXML files, cutting 3D sections through 3D models and more
+* Eventually all the features of Spider 'Aragog' Viewer R14 will be added as modules here
+
 
 ***
 
@@ -51,21 +55,18 @@ Scripts to help you view and manage [gbXML]( http://gbxml.org ) files
 #### [Fetch Assemble Save Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#fetch-assemble-save/README.md )
 
 * Fetch source files from a CDN, assemble these into a single HTML file, save to file
-
-
+* Build the source code needed to embed the Spider gbXML Viewer in OpenStudio
+* 2018-10-23 ~ Currently very out of date. Fixes coming soon
 
 ***
 
 ## Links of Interest
 
-### [gbXML to OpenStudio Report]( https://www.ladybug.tools/spider-gbxml-tools/#gbxml-to-openstudio-report.md )
+#### [gbXML to OpenStudio Report]( https://www.ladybug.tools/spider-gbxml-tools/#gbxml-to-openstudio-report.md )
 
 ***
 
-
-***
-
-### gbXML Home Page
+#### gbXML Home Page
 
 * <http://www.gbxml.org/>
 > gbXML is an industry supported schema for sharing building information between disparate building design software tools.
@@ -96,30 +97,36 @@ Scripts to help you view and manage [gbXML]( http://gbxml.org ) files
 
 ## Change Log
 
-### 2018-10-19 ~ Theo
+
+### 2018-10-23 ~ Theo
+
+Home page
+* Minor text updates
+
+#### 2018-10-19 ~ Theo
 
 R7.6
 * Add link to Issues module
 
-### 2018-10-15 ~ Theo
+#### 2018-10-15 ~ Theo
 
 R7.5 Home page
 * Many text updates
 * Add full screen icons
 * Fix scrolling issue
 
-### 2018-08-06 ~ Theo
+#### 2018-08-06 ~ Theo
 
 R5
 * Cleanup read me & index.html
 
 
-### 2018-07-14 ~ Theo
+#### 2018-07-14 ~ Theo
 
 * Update text & links
 * Add links of interest
 
-### 2018-07-13 ~ Theo
+#### 2018-07-13 ~ Theo
 
 * First commit
 * Add index.html & read me
