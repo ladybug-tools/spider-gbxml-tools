@@ -45,6 +45,11 @@ Use of carousels
 
 ## Change Log
 
+#### 2018-10-23 ~ Theo
+
+spider-gbxml-iframe-carousel R1.1
+* Zoom in iframe disabled so not to interfere with scrolling the page
+
 #### 2018-10-09 ~ Theo
 
 * Update description
