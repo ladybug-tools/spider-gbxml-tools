@@ -1,7 +1,7 @@
 
 <span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( https://www.ladybug.tools/spider-gbxml-tools/#sandbox/README.md "View file as a web page." ) </span>
 
-<div><input type=button class = "btn btn-secondary btn-sm" onclick="window.location.href='https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/xxxxxx/README.md'";
+<div><input type=button class = "btn btn-secondary btn-sm" onclick="window.location.href='https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/sandbox/README.md'";
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' ></div>
 
 <br>
@@ -9,8 +9,8 @@ value='You are now in a GitHub web page view - Click this button to view this re
 # [Spider gbXML Tools Sandbox Read Me]( #sandbox/README.md )
 
 <!--
-<iframe src=https://www.ladybug.tools/spider-gbxml-tools/xxxxxx/index.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
-_<small>Spider gbXML Viewer ZZZZZ</small>_
+<iframe src=https://www.ladybug.tools/spider-gbxml-tools/sandbox/index.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
+_<small>Spider gbXML Tools Sandbox</small>_
 -->
 
 ## [embeddable_gbxml_editor_assembled Read Me]( #sandbox/embeddable_gbxml_editor_assembled/README.md )

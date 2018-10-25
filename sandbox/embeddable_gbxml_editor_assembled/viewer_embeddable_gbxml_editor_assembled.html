@@ -3,10 +3,10 @@
 <head>
 <meta charset = "utf-8" >
 <meta name = "viewport" content= "width=device-width, initial-scale=1" >
-<meta name = "description" content = "Basic HTML template" >
+<meta name = "description" content = "Demos of HTML files capable of being embedded into OpenStudio" >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
-<meta name = "date" content = "2018-08-29" >
-<title></title>
+<meta name = "date" content = "2018-10-24" >
+<title>Viewer of Sample 'embeddable_gbxml_editor' Files Assembled</title>
 <style>
 
 	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
@@ -26,19 +26,22 @@
 
 		<div id = "divTitle" ></div>
 
-
 	</div>
+
+	<p>The demo files contain all the HTML, CSS and JavaScript
+		in order to be able to load and run correctly when embedded in a build of OpenStudio.
+	Click the buttons below to load the demos here in your browser</p>
 
 	<iframe id=ifrOriginal src=embeddable_gbxml_editor_original.html width=100% height=500 ></iframe>
 
-	<p>
+	<p>Press the button just below to load and run a copy of the Spider gbXML Viewer embedded in OpenStudio 2.7.0 </p>
 
-		<button onclick=initThreejsOriginal() >start original demo</button>
-
-	</p>
+	<p><button onclick=initThreejsOriginal() >start original file demo</button></p>
 
 
-	<iframe id=ifrOneBox src=embeddable_gbxml_editor_one_box.html onload=width=100% height=500 ></iframe>
+	<iframe id=ifrOneBox src=embeddable_gbxml_editor_one_box.html width=100% height=500 ></iframe>
+
+	<p>Press the button below to load a highly stripped down and simplified version of the original file shown above.</p>
 
 	<p>
 
@@ -48,20 +51,20 @@
 
 	</p>
 
-	<div id = "divContents" ></div>
+	<p>Both these files may be used for testing in your browser and both could be modified and embedded in a custom build of OpenStudio</p>
 
 
 <script>
 
 const urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml"
 
-const urlSourceCode = "https://github.com/zzzzz/xxxxx.html";
+const urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/embeddable_gbxml_editor_assembled";
 
 init();
 
 function init() {
 
-	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+	//document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
 
 	divTitle.innerHTML =
 	`
@@ -75,8 +78,6 @@ function init() {
 		<p>${document.head.querySelector( '[name=description]' ).content }</p>
 	`;
 
-
-	divContents.innerHTML += '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
 
 }
 

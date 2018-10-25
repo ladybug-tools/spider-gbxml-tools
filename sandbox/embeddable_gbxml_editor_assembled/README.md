@@ -6,18 +6,27 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 <br>
 
-# [embeddable_gbxml_editor_assembled Read Me]( #sandbox/embeddable_gbxml_editor_assembled/README.md )
+# [Sample 'embeddable_gbxml_editor' Files Assembled Read Me]( #sandbox/embeddable_gbxml_editor_assembled/README.md )
 
 <!--
-<iframe src=https://www.ladybug.tools/spider-gbxml-tools/sandbox/embeddable_gbxml_editor_assembled/index.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
+<iframe src=sandbox/embeddable_gbxml_editor_assembled/viewer_embeddable_gbxml_editor_assembled.html  width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
 _<small>Spider gbXML Tools</small>_
-
-## Full Screen: [Spider gbXML Tools]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/embeddable_gbxml_editor_assembled/sandbox/embeddable_gbxml_editor_assembled.html )
 -->
-
-
 ## Concept
 
+Demos of HTML files capable of being embedded into OpenStudio
+
+In order to test these files with OpenStudio, copy a file into the ```bin``` folder of your OpenStudio installation and rename the file to 'embeddable_gbxml_editor'. Start a new session and the file will appear the next time you invoke the gbXML Viewer from the geometry tab.
+
+
+## Full screen: [Viewer Sample 'embeddable_gbxml_editor' Files Assembled]( sandbox/embeddable_gbxml_editor_assembled/viewer_embeddable_gbxml_editor_assembled.html )
+
+* View the embeddable files in your browser
+* Loads the HTML file into an ```iframe```
+* Buttons initiate the necessary commands to cause the files to run
+
+
+### [Source files on GitHub]( https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/embeddable_gbxml_editor_assembled )
 
 ## To Do / Wish List
 
@@ -25,20 +34,18 @@ _<small>Spider gbXML Tools</small>_
 ## Issues
 
 
-## Things you can do using this script
-
-* Click the three bars( 'hamburger menu icon' ) to slide the menu in and out
-* Click the Octocat icon to view or edit the source code on GitHub
-* Click on title to reload
-* Press Control-U/Command-Option-U to view the source code
-* Press Control-Shift-J/Command-Option-J to see if the JavaScript console reports any errors
-
-
 ## Links of Interest
 
 
 
 ## Change Log
+
+### 2018-10-24 ~
+
+Sandbox/Sample 'embeddable_gbxml_editor' Files Assembled
+* Add links to files
+* Tidy up viewer script
+* Add text and links
 
 ### 2018-10-23 ~ Theo
 
