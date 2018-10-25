@@ -3,7 +3,7 @@
 /* jshint esversion: 6 */
 
 
-const REPT = {};
+const REPT = { "release": "7.1" };
 
 REPT.colorButtonToggle = 'pink';
 REPT.cssText = `background-color: ${ REPT.colorButtonToggle } !important; font-style: italic; font-weight: bold`;
@@ -11,10 +11,10 @@ REPT.cssText = `background-color: ${ REPT.colorButtonToggle } !important; font-s
 
 REPT.onToggleReports = function(that) {
 	//console.log( 'that', that.children[ 0 ] );
-	
+
 	that.children[ 0 ].innerHTML =
 	`
-		Interactive 3D Reports
+		Interactive 3D Reports ${ REPT.release }
 		 <a href="https://www.ladybug.tools/spider-gbxml-tools/#cookbook/spider-gbxml-viewer-reports/README.md" title="View Reports Read Me file in new tab" target="_blank"> ? </a>
 	`;
 
@@ -255,12 +255,17 @@ REPT.getMenuPanelCadObjectsByType = function( target ) {
 //////////
 
 REPT.setSurfaceTypeVisible = function( type ) {
-
-	//REPT.setSurfaceGroupsVisible();
-
+	//console.log( 'type ', type );
+	
 	THR.scene.remove( POP.line, POP.particle );  // POP must be loaded
 
 	GBX.surfaceMeshes.children.forEach( element => element.visible = element.userData.gbjson.surfaceType === type? true : false );
+
+	const butts = Array.from( divSurfacesByType.getElementsByClassName( "toggleView" ) );
+	butts.forEach( butt => butt.style.cssText = '' );
+
+	butt = butts.find( item => item.value === type )
+	butt.style.cssText = REPT.cssText;
 
 };
 

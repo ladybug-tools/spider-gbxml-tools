@@ -48,10 +48,17 @@ See also
 * https://www.ladybug.tools/spider/index.html#gbxml-viewer/r14/gv-rep-reports/README.md
 
 
-## Issues
+## Issues*
 
-2018-10-22 ~ Theo ~ Select Reports by Elements: Search only works for IDs - not for names of CAD IDs
-2018-10-22 ~ Theo ~ Select Reports by Elements: remove extra commas in element select
+All panels
+* 2018-10-24 ~ Theo ~ All panels should reset when a new model is loaded
+
+Surfaces by Type
+* 2018-10-24 ~ Theo ~ 'Exposed to Sun' should update surface type buttons
+
+Select Reports by Elements
+* 2018-10-22 ~ Theo ~ Select Reports by Elements: Search only works for IDs - not for names of CAD IDs
+* 2018-10-22 ~ Theo ~ Select Reports by Elements: remove extra commas in element select
 
 
 ## Links of Interest
@@ -59,6 +66,16 @@ See also
 
 
 ## Change Log
+
+
+### 2018-10-24 ~ Theo
+
+SGV Reports
+* Panel: Surfaces by Type R7.1
+	* Continue working on button color toggles
+	* Add release number
+* Attributes
+	* Add current status panel
 
 ### 2018-10-22 ~ Theo
 
@@ -75,6 +92,7 @@ SGV Reports R7.1
 
 * Add link to pop-up
 
+
 #### 2018-10-13 ~ Theo
 
 * Split into three separate JavaScript files
@@ -84,12 +102,12 @@ SGV Reports R7.1
 * Multiple select working for all elements when using element select item
 
 
-
 #### 2018-10-11 ~ Theo
 
 * Update read me
 * Surfaces by Type: Add toggles and much more interplay between the buttons
 * CAD Objects by Type: enable multiple select
+
 
 #### 2018-10-08 ~ Theo
 

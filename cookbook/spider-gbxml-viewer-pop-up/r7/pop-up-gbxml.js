@@ -208,30 +208,35 @@ POP.getIntersectedDataHtml = function( intersected, intersects ) {
 			space1 = GBX.gbjson.Campus.Building.Space.find( space => space.id === adjSpaces[ 0 ].spaceIdRef );
 			space2 = GBX.gbjson.Campus.Building.Space.find( space => space.id === adjSpaces[ 1 ].spaceIdRef );
 
-			adjSpaceButtons =
+			adjSpaceButtons = space1 ?
 			`
 				<button id=POPbutAdjacentSpace1 onclick=POP.toggleSpaceVisible(this,"${ space1.id }","${ space1.id }"); title="id: ${ space1.id }" >space 1: ${ space1.Name }</button>
 				<button id=POPbutAdjacentSpace2 onclick=POP.toggleSpaceVisible(this,"${ space2.id }","${ space2.id }"); title="id: ${ space2.id }" >space 2: ${ space2.Name }</button>
-			`;
+			`
+			:
+			`<div id=POPbutAdjacentSpace1 ></div><div id=POPbutAdjacentSpace2 ></div>`;
 
 		} else {
 
 			space2 = GBX.gbjson.Campus.Building.Space.find( space => space.id === adjSpaces.spaceIdRef );
 
-			adjSpaceButtons =
+			adjSpaceButtons = space2 ?
 			`
 				<button id=POPbutAdjacentSpace1 onclick=POP.toggleSpaceVisible(this,"${ space2.id }",""); title="id: ${ space2.id }" >space: ${ space2.Name } </button>
 				</div><div id=POPbutAdjacentSpace2 ></div>
-			`;
+			`
+			:
+			`<div id=POPbutAdjacentSpace1 ></div><div id=POPbutAdjacentSpace2 ></div>`;
+
+			;
 
 		}
 
+		const storey = GBX.gbjson.Campus.Building.BuildingStorey ? POP.getArray( GBX.gbjson.Campus.Building.BuildingStorey ).find( storey => storey.id === space2.buildingStoreyIdRef ) : undefined;
+		storeyButton = storey? `<button id=POPbutStoreyVisible onclick=POP.toggleStoreyVisible("${ storey.id }"); title="id: ${ storey.id }" >storey: ${ storey.Name } </button>` : `<div id=POPbutStoreyVisible ></div>`;
 
-		const storey = POP.getArray( GBX.gbjson.Campus.Building.BuildingStorey ).find( storey => storey.id === space2.buildingStoreyIdRef );
-		storeyButton = `<button id=POPbutStoreyVisible onclick=POP.toggleStoreyVisible("${ storey.id }"); title="id: ${ storey.id }" >storey: ${ storey.Name } </button>`;
-
-		const zone = POP.getArray( GBX.gbjson.Zone ).find( zone => zone.id === space2.zoneIdRef  );
-		zoneButton = `<button id=POPbutZoneVisible onclick=POP.toggleZoneVisible("${ zone.id }"); title="id: ${ zone.id }" >zone: ${ zone.Name }</button> &nbsp;`;
+		const zone = GBX.gbjson.Zone ? POP.getArray( GBX.gbjson.Zone ).find( zone => zone.id === space2.zoneIdRef ) : undefined;
+		zoneButton = zone ? `<button id=POPbutZoneVisible onclick=POP.toggleZoneVisible("${ zone.id }"); title="id: ${ zone.id }" >zone: ${ zone.Name }</button> &nbsp;` : `<div id=POPbutZoneVisible ></div>`;
 
 	} else {
 
@@ -362,8 +367,8 @@ POP.getAttributesHtml = function( obj ) {
 
 				htm +=
 				`
-					<span class=attributeTitle >CartesianPoint:</span>
-					<span class=attributeTitle >x:</span> <span class=attributeValue >${ Number( point[ 0 ] ).toLocaleString() }</span>
+					<span class=attributeTitle >CartesianPoint:</span><br>
+					&nbsp; <span class=attributeTitle >x:</span> <span class=attributeValue >${ Number( point[ 0 ] ).toLocaleString() }</span>
 					<span class=attributeTitle >y:</span> <span class=attributeValue >${ Number( point[ 1 ] ).toLocaleString() }</span>
 					<span class=attributeTitle >z:</span> <span class=attributeValue >${ Number( point[ 2 ] ).toLocaleString() }</span><br>
 				`;

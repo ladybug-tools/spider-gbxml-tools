@@ -94,6 +94,11 @@ Future thought: could we put all the triangles in a single mesh and yet still id
 * 2018-06-02 ~ Theo ~ Need a spider name - preferably one without a trademark, perhaps a nice-sounding latin name: https://en.wikipedia.org/wiki/List_of_spider_common_names
 * 2018-06-02 ~ Theo ~ currently surfaces, edges and opening are each their own group of objects. Could nicer things happen if the edges and opening were children of their parent surface??
 
+### Sample Files
+
+* 2018-10-24 ~ Theo ~ Add own folder and test app
+* 2018-10-24 ~ Theo ~ buttons not toggling properly
+
 
 ## Links of Interest
 

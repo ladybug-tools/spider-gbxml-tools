@@ -52,6 +52,7 @@ See also
 
 ## Issues
 
+* 2018-10-24 ~ Theo ~ Zones: not toggling correctly
 
 
 ## Links of Interest

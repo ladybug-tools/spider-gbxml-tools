@@ -5,8 +5,8 @@
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
 <meta name=description content="Toggle the visibility of individual and groups of surfaces in gbXML files" >
 <meta name=keywords content="gbXML, Spider, Ladybug.tools, Three.js, WebGL, JavaScript, GitHub, FOSS, 3D, STEM" >
-<meta name = "date" content = "2018-10-22" >
-<title>Spider Rad Viewer R7 Reports</title>
+<meta name = "date" content = "2018-10-24" >
+<title>Spider gbXML Viewer ~ Reports</title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 </head>
 <body>
@@ -23,6 +23,7 @@
 <script src = "./sgv-reports-attributes.js" ></script>
 
 <script src = "../../../lib/r7/pop-up-gbxml.js" ></script>
+<script src = "../../../lib/r7/gal-sample-files-gallery-gbxml.js" ></script>
 
 	<main id="container" ></main>
 
@@ -42,6 +43,16 @@
 
 		</details>
 
+		<details>
+
+			<summary>Spider gbXML Sample files</summary>
+
+			<div id=divSampleFileButtons ></div>
+
+			<div id=divSampleFileItems ></div>
+
+		</details>
+
 		<details ontoggle=REPT.onToggleReports(this); open >
 
 			<summary></summary>
@@ -51,7 +62,6 @@
 			<div id = "divReportElements" ></div>
 
 			<div id = "divReportAttributes" ></div>
-
 
 		</details>
 
@@ -122,9 +132,13 @@ THR.animate();
 
 function init() {
 
+	document.title += ` ~ ${ REPT.release }`
+
 	divHeader.innerHTML = MNU.getNavHeader(); // not essential
 
 	divFileOpen.innerHTML = FIL.getFileOpen(); // if needed: set file info target
+
+	divSampleFileButtons.innerHTML = GAL.setCardSampleGalleries();
 
 	divSettings.innerHTML = THRU.getSettings(); // not essential
 
