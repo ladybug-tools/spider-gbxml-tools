@@ -48,17 +48,11 @@ See also
 * https://www.ladybug.tools/spider/index.html#gbxml-viewer/r14/gv-rep-reports/README.md
 
 
-## Issues*
+## Issues
 
-All panels
-* 2018-10-24 ~ Theo ~ All panels should reset when a new model is loaded
 
 Surfaces by Type
 * 2018-10-24 ~ Theo ~ 'Exposed to Sun' should update surface type buttons
-
-Select Reports by Elements
-* 2018-10-22 ~ Theo ~ Select Reports by Elements: Search only works for IDs - not for names of CAD IDs
-* 2018-10-22 ~ Theo ~ Select Reports by Elements: remove extra commas in element select
 
 
 ## Links of Interest
@@ -66,6 +60,17 @@ Select Reports by Elements
 
 
 ## Change Log
+
+### 2018-10-25 ~ Theo
+
+Select Reports by Elements
+* 2018-10-25 ~ Theo ~ Add 'View by' id or name updates correctly according to type of element selected
+
+Fixed
+Select Reports by Elements
+* 2018-10-22 ~ Theo ~ Select Reports by Elements: remove extra commas in element select
+* 2018-10-24 ~ Theo ~ All panels should reset when a new model is loaded
+* 2018-10-22 ~ Theo ~ Select Reports by Elements: Search only works for IDs - not for names of CAD IDs
 
 
 ### 2018-10-24 ~ Theo

@@ -3,7 +3,7 @@
 /* jshint esversion: 6 */
 
 
-const REPE = { "release": "R7.1"};
+const REPE = { "release": "SGV Reports Element by Type R7.1"};
 
 
 REPE.getElementsMenuItems = function() {
@@ -12,14 +12,14 @@ REPE.getElementsMenuItems = function() {
 	`
 	<i>View by surface, space, storey, zone or opening</i>
 
-	<details id=REPEdetElements ontoggle=REPE.setOptions(); >
+	<details ontoggle=REPE.setOptions(); >
 
-		<summary>Reports by Elements ${ REPE.release }</summary>
+		<summary>Select Reports by Elements</summary>
 
 		<p></p>
 
 		<div>
-			<select id=REPselReport onchange=REPE.updateOptions(); size=6 >
+			<select id=REPselReport onchange=REPE.setPanelReportResults(); size=6 >
 
 				<option selected >Surface</option>
 				<option>Space</option>
@@ -62,12 +62,11 @@ REPE.getElementsMenuItems = function() {
 };
 
 
-
 REPE.setSelectedOptionType = function() {
 
 	const str = REPinpOptionType.value.toLowerCase();
 
-	REPselReportResults.value = Array.from( REPselReportResults.options ).find( item => item.innerHTML.toLowerCase().includes( str ) ).value;
+	REPselReportResults.value = Array.from( REPselReportResults.options ).find( item => item.value.toLowerCase().includes( str ) ).value;
 
 	REPE.setElementVisible();
 
@@ -76,27 +75,7 @@ REPE.setSelectedOptionType = function() {
 
 REPE.setOptions = function(){
 
-	REPselReport.value = "Surface";
-	REPselReportType.value = "id"
 	REPE.setElementPanelSelectSurface();
-
-};
-
-
-
-REPE.updateOptions = function(){
-
-	if ( REPselReport.value === "Surface" ) {
-
-		REPselReportType.value = "id";
-
-	} else {
-
-		REPselReportType.value = "Name";
-
-	}
-
-	REPE.setPanelReportResults();
 
 };
 
@@ -122,7 +101,6 @@ REPE.setPanelReportResults = function() {
 		REPE.setElementPanelSelectStorey();
 
 	} else if ( item === 'Zone' ) {
-
 
 		REPE.setElementPanelSelectZone();
 
@@ -170,7 +148,7 @@ REPE.setElementPanelSelectSpace = function() {
 
 	REPdivReportTitle.innerHTML = `<h4>Type: Space - Items: ${ options.length } </h4>`;
 
-	REPselReportResults.innerHTML = options.join( '' );
+	REPselReportResults.innerHTML = options.join( ',' );
 
 };
 
@@ -184,7 +162,7 @@ REPE.setElementPanelSelectStorey = function() {
 
 	REPdivReportTitle.innerHTML = `<h4>Type: Storey - Items: ${ options.length } </h4>`;
 
-	REPselReportResults.innerHTML = options.join( '' );
+	REPselReportResults.innerHTML = options.join( ',' );
 
 };
 
@@ -198,7 +176,7 @@ REPE.setElementPanelSelectZone = function() {
 
 	REPdivReportTitle.innerHTML = `<h4>Type: Zone - Items: ${ options.length } </h4>`;
 
-	REPselReportResults.innerHTML = options.join( '' );
+	REPselReportResults.innerHTML = options.join( ',' );
 
 };
 

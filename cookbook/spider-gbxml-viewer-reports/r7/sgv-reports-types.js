@@ -1,5 +1,5 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
-/* globals GBX, detSurfacesByType, divSurfacesByType, butAllVisible, butExposeToSun */
+/* globals GBX, REPTdetSurfacesByType, divSurfacesByType, butAllVisible, butExposeToSun */
 /* jshint esversion: 6 */
 
 
@@ -12,11 +12,6 @@ REPT.cssText = `background-color: ${ REPT.colorButtonToggle } !important; font-s
 REPT.onToggleReports = function(that) {
 	//console.log( 'that', that.children[ 0 ] );
 
-	that.children[ 0 ].innerHTML =
-	`
-		Interactive 3D Reports ${ REPT.release }
-		 <a href="https://www.ladybug.tools/spider-gbxml-tools/#cookbook/spider-gbxml-viewer-reports/README.md" title="View Reports Read Me file in new tab" target="_blank"> ? </a>
-	`;
 
 }
 
@@ -24,11 +19,12 @@ REPT.onToggleReports = function(that) {
 REPT.getTypesMenuItems = function( that ) {
 
 	const htm  =
-	`
-		<br>
-		<i>View surfaces in groups</i>
 
-		<details id=detSurfacesByType ontoggle=divSurfacesByType.innerHTML=REPT.getMenuPanelSurfacesByType();REPT.initButtons(); >
+		`<i>View surfaces in groups ${ REPT.release }
+				<a href="https://www.ladybug.tools/spider-gbxml-tools/#cookbook/spider-gbxml-viewer-reports/README.md" title="View Reports Read Me file in new tab" target="_blank"> ? </a>
+		</i>
+
+		<details id=REPTdetSurfacesByType ontoggle=divSurfacesByType.innerHTML=REPT.getMenuPanelSurfacesByType();REPT.initButtons(); >
 
 			<summary >Surfaces by Type </summary>
 
@@ -133,7 +129,7 @@ REPT.getMenuPanelSurfacesByType = function( target ) {
 
 REPT.initButtons = function() {
 
-	if ( detSurfacesByType.open === true ) {
+	if ( REPTdetSurfacesByType.open === true ) {
 
 		GBX.surfaceMeshes.children.forEach( element => element.visible = true );
 		butAllVisible.style.cssText = REPT.cssText;
@@ -256,7 +252,7 @@ REPT.getMenuPanelCadObjectsByType = function( target ) {
 
 REPT.setSurfaceTypeVisible = function( type ) {
 	//console.log( 'type ', type );
-	
+
 	THR.scene.remove( POP.line, POP.particle );  // POP must be loaded
 
 	GBX.surfaceMeshes.children.forEach( element => element.visible = element.userData.gbjson.surfaceType === type? true : false );

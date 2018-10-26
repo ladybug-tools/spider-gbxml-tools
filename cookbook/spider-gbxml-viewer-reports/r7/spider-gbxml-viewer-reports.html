@@ -35,7 +35,7 @@
 
 		</header>
 
-		<details open>
+		<details id=detFileOpen open >
 
 			<summary>File Open</summary>
 
@@ -43,7 +43,7 @@
 
 		</details>
 
-		<details>
+		<details id=detSampleFiles >
 
 			<summary>Spider gbXML Sample files</summary>
 
@@ -53,9 +53,9 @@
 
 		</details>
 
-		<details ontoggle=REPT.onToggleReports(this); open >
+		<hr>
 
-			<summary></summary>
+		<div id=divReports >
 
 			<div id = "divReportTypes" ></div>
 
@@ -63,7 +63,9 @@
 
 			<div id = "divReportAttributes" ></div>
 
-		</details>
+		</div>
+
+
 
 		<details>
 
@@ -170,6 +172,23 @@ function init() {
 	if ( !location.hash ) { location.hash = FIL.urlDefaultFile; } else { FIL.onHashChange(); }
 	//location.hash = urlDefaultFile;
 
+	//butGallerySampleFiles.addEventListener("click", toggleReports);
+
+	window.addEventListener ( 'hashchange', toggleReportsOff, false );
+
+
+}
+
+function toggleReportsOff() {
+
+	const details = divReports.querySelectorAll( "details" );
+
+	for ( detail of details ) {
+
+		detail.open = false;
+
+	}
+	
 }
 
 </script>

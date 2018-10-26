@@ -7,17 +7,18 @@ const REPA = { "release": "R7.1"};
 
 REPA.currentStatus =
 `
-	<details open>
+	<details open >
 
 		<summary>Current Status 2018-10-24</summary>
 
 		<p>
-			<i>Need reports on more gbXML elements? <br>
+			<i>Need reports on more gbXML elements?
 			<a href="https://github.com/ladybug-tools/spider/issues" >Just shout</a> and they will be made to appear.</i>
 		</p>
 
-		<p>Closing and openings panels resets them. After several panels are open you may have some success with displaying weird but wanted combinations of surfaces. ;-)</p>
-	</details>
+		<p>Closing and openings Report panels resets them to their default values. When several panels are already open you may have some success with displaying weird but wanted combinations of surfaces. ;-)</p>
+
+		</details>
 
 	<hr>
 `;
@@ -29,7 +30,7 @@ REPA.getAttributesMenuItems = function() {
 	const htm =
 
 	`
-		<i>View gbXML project attributes< ${ REPA.release }</i>
+		<i>View gbXML project attributes ${ REPA.release }</i>
 
 		<details onToggle=divCampus.innerHTML=REPA.setGbjsonAttributes(GBX.gbjson.Campus); >
 
@@ -77,7 +78,7 @@ REPA.getAttributesMenuItems = function() {
 
 		<details onToggle=divMore.innerHTML=REPA.getMore() >
 
-			<summary>More</summary>
+			<summary>Search Engine Reports</summary>
 
 			<div id=divMore ></div>
 
@@ -160,7 +161,7 @@ REPA.setGbjsonAttributes = function( obj, target, title ) {
 
 
 
-////////// More
+////////// Search Engine Reports
 
 REPA.getMore = function() {
 
