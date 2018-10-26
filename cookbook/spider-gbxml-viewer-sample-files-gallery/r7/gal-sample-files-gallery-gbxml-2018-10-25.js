@@ -74,20 +74,6 @@ GAL.initGallery = function( button ) {
 
 		GAL.button.style.cssText = 'background-color: pink !important; font-style: italic; font-weight: bold';
 
-		buttons = divSampleFileButtons.querySelectorAll( "button" );
-
-		//console.log( 'bb', buttons );
-
-		for ( let button of buttons ) {
-
-			if( button.id ===  GAL.button.id ) { continue; }
-
-			button.style.backgroundColor = '';
-			button.style.fontStyle = '';
-			button.style.fontWeight = '';
-
-		}
-		
 	} else {
 
 		detGallery.remove();
@@ -189,9 +175,9 @@ GAL.callbackGitHubMenu = function( xhr ) {
 
 			<a href=${ GAL.threeDefaultFile }#${ GAL.urlGitHubPage }${ fileName } title="Link to just this file" >&#x2750;</a>
 
-		</div>`;
+			</div>`;
 
-	}
+		}
 
 	divGallery.innerHTML = txt;
 

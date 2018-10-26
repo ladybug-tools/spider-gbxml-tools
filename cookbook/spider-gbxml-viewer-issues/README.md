@@ -12,13 +12,19 @@ value='You are now in a GitHub web page view - Click this button to view this re
 <iframe src=https://www.ladybug.tools/spider-gbxml-tools/cookbook/spider-gbxml-viewer-issues/index.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
 _<small>Spider gbXML Viewer Issues </small>_
 
-## Full Screen: [Spider gbXML Viewer Issues ]( https://www.ladybug.tools/spider-gbxml-tools/cookbook/spider-gbxml-viewer-issues/cookbookr7/spider-gbxml-viewer-issues.html )
+## Full Screen: [Spider gbXML Viewer Issues ]( https://www.ladybug.tools/spider-gbxml-tools/cookbook/spider-gbxml-viewer-issues/r7/spider-gbxml-viewer-issues.html )
 
 
 
 ## Concept
 
 Open, view, examine, identify errors and fix gbXML files in 3D in your browser with free, open source entry-level Three.js JavaScript
+
+### File Check.js
+
+* Uses file dialog box to open xml file
+* Parses text into an array of lower text lines
+* Carries out simple line[based searches for possible errors
 
 
 ## To Do / Wish List

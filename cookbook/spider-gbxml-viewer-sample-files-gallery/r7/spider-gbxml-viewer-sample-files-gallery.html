@@ -3,28 +3,29 @@
 <head>
 <meta charset="utf-8" >
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
-<meta name=description content="Open, view, examine, identify errors and fix gbXML files in 3D in your browser with free, open source entry-level Three.js JavaScript" >
-<meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-10-22" >
-<title>Spider gbXML Viewer R7 Issues</title>
+<meta name=description content="Obtain links to sample gbXML files via GitHub API and update location hash with selected link" >
+<meta name=keywords content="gbXML,Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-10-26" >
+<title>Spider gbXML Viewer Sample Files Gallery</title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 </head>
 <body>
 <script src = "https://cdn.rawgit.com/mrdoob/three.js/r97/build/three.min.js" ></script>
 <script src = "https://cdn.rawgit.com/mrdoob/three.js/r97/examples/js/controls/OrbitControls.js" ></script>
 <script src = "../../../lib/r7/mnu-menu.js" ></script>
-<script src = "../../../lib/r7/thr-threejs.js" ></script>
-<script src = "../../../lib/r7/thru-threejs-utilities.js"></script>
-<script src = "../../../lib/r7/gbx-gbxml-loader.js" ></script>
 
-<script src = "./issf-issues-file-check.js" ></script>
-<script src = "./issm-issues-metadata.js" ></script>
-<script src = "./isdc-issues-duplicate-coordinates.js" ></script>
-<script src = "./issi-issues-inclusions.js" ></script>
+<!--
 
-<script src = "../../../lib/r7/fil-open-file-gbxml.js" ></script>
-<script src = "../../../lib/r7/pop-up-gbxml.js" ></script>
-<script src = "../../../lib/r7/gal-sample-files-gallery-gbxml.js" ></script>
+	<script src = "../../../lib/r7/thr-threejs.js" ></script>
+	<script src = "../../../lib/r7/thru-threejs-utilities.js"></script>
+	<script src = "../../../lib/r7/gbx-gbxml-loader.js" ></script>
+	<script src = "../../../lib/r7/fil-open-file-gbxml.js" ></script>
+	<script src = "../../../lib/r7/pop-up-gbxml.js" ></script>
+
+-->
+
+<script src = "./gal-sample-files-gallery-gbxml.js" ></script>
+
 
 	<main id="container" ></main>
 
@@ -35,14 +36,16 @@
 			<div id = "divHeader" ></div>
 
 		</header>
+<!--
 
-		<details open >
+	<details open >
 
-			<summary>File Open</summary>
+		<summary>File Open</summary>
 
-			<div id="divFileOpen" class="dragDropArea" ></div>
+		<div id="divFileOpen" class="dragDropArea" ></div>
 
-		</details>
+	</details>
+-->
 
 		<details>
 
@@ -54,34 +57,6 @@
 
 		</details>
 
-		<hr>
-
-		<details open >
-
-			<summary title = "fix things" >Issues</summary>
-
-			<p>
-				<i>
-					Find matters of interest in gbXML files
-					<a href="https://www.ladybug.tools/spider-gbxml-tools/#./cookbook/spider-gbxml-viewer-issues/README.md" target="_blank">?</a>
-				</i>
-			</p>
-
-			<div id = "divIssues" ></div>
-
-			<div id = "divFileCheck" ></div>
-
-			<div id = "divPanelMetadataIssues" ></div>
-
-			<div id = "divDuplicateCoordinates" ></div>
-
-			<div id = "divInclusions" ></div>
-
-			<hr>
-
-		</details>
-
-
 		<details>
 
 			<summary title = "Update what you see in the display">Settings</summary>
@@ -89,7 +64,6 @@
 			<div id = "divSettings" ></div>
 
 		</details>
-
 
 		<details ontoggle=divRendererInfo.innerHTML=THRU.getRendererInfo(); > <!-- not essential -->
 
@@ -135,18 +109,17 @@
 
 <script>
 
-MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/cookbook/spider-gbxml-viewer-issues/README.md";
 
-FIL.urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml';
+MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/gbxml-viewer-basic/";
+
+//FIL.urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml';
 //FIL.urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/coventry-university-of-warwick-small.xml';
 
-FIL.divFileInfo = divFileInfo;
+//FIL.divFileInfo = divFileInfo;
 
-const ISS = {};
-ISS.surfaceChanges = {};
 
 init();
-THR.animate();
+//THR.animate();
 
 
 function init() {
@@ -154,22 +127,16 @@ function init() {
 	divHeader.innerHTML = MNU.getNavHeader(); // not essential
 
 	//divSettings.innerHTML = THRU.getSettings( divSettings );
-	divFileOpen.innerHTML = FIL.getFileOpen(); // if needed: set file info target
+	//divFileOpen.innerHTML = FIL.getFileOpen(); // if needed: set file info target
 
 	divSampleFileButtons.innerHTML = GAL.setCardSampleGalleries();
 
-	divFileCheck.innerHTML = ISSF.getMenuFileCheck();
-
-	divPanelMetadataIssues.innerHTML = ISSM.getPanelMetadataIssues();
-
-	divDuplicateCoordinates.innerHTML = ISDC.getMenuDuplicateCoordinates();
-
-	divInclusions.innerHTML = ISSI.getMenuInclusions();
-
-	divSettings.innerHTML = THRU.getSettings();
+	//divSettings.innerHTML = THRU.getSettings();
 
 	divFooter.innerHTML = MNU.getNavFooter(); // not essential
 
+
+	/*
 
 	THR.getThreejs();
 
@@ -177,7 +144,7 @@ function init() {
 
 	THRU.addSomeLights();
 
-	divPopUp.innerHTML = POP.getMenuHtmlPopUp(); // load after Three.js init
+	divPopUpData.innerHTML = POP.getMenuHtmlPopUp();
 
 	// loads a default file / great for testing same file many times
 	const thrFilePath = localStorage.getItem( 'thrFilePath' ) || '';
@@ -186,9 +153,21 @@ function init() {
 
 	FIL.urlDefaultFile = thrFilePath || FIL.urlDefaultFile;
 
-
 	if ( !location.hash ) { location.hash = FIL.urlDefaultFile; } else { FIL.onHashChange(); }
 	//location.hash = urlDefaultFile;
+	*/
+
+	window.addEventListener ( 'hashchange', onHashChange, false );
+
+	container.style.cssText = "left: calc( var( --mnu-width ) + 8rem ); position: absolute; top: 10rem;"
+}
+
+
+function onHashChange() {
+
+	console.log( '', location.hash );
+
+	container.innerHTML = location.hash.link( location.hash.slice( 1 ) );
 
 }
 

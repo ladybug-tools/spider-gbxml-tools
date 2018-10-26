@@ -1,5 +1,5 @@
 
-const ISSM = {};
+const ISSM = { "release": "R7.1" };
 
 ISSM.surfaceChanges = {};
 
@@ -12,13 +12,22 @@ ISSM.getPanelMetadataIssues = function() {
 
 	`<details ontoggle="ISSMdetPanelMetadataIssues.innerHTML=ISSM.setMenuMetadata();" >
 
-		<summary>Missing gbXML Metadata </summary>
+		<summary>Missing gbXML Metadata</summary>
 
-		<div id="ISSMdetPanelMetadataIssues" >ccc</div>
+		<p>
+			<i>
+				Identify missing but required gbXML attributes.
+				Issues Metadata ${ ISSM.release }
+			</i>
+		</p>
+
+		<div id="ISSMdetPanelMetadataIssues" ></div>
 
 		<p><button onclick=ISSM.setPopupMetadataIssues(); >Add missing attributes</button></p>
 
 		<div id=ISSMdivMissingMeta ></div>
+
+		<hr>
 
 	</details>`;
 
@@ -110,7 +119,10 @@ ISSM.setPopupMetadataIssues = function() {
 
 		<textArea id=ISSMtxtAttributesMissing style="height:300px;width:100%;" ></textArea>
 
-		<button onclick=ISSM.surfaceChanges.addAttributesMissing=ISSM.surfaceChanges.addAttributesMissing; >Save changes</button>
+		<p>
+			<button onclick=alert( "coming as soon as someone needs this" ) >Save changes</button>
+		</p>
+
 	`;
 
 	//CORdivMenuRight.style.display = 'block';

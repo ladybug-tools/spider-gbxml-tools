@@ -1,8 +1,6 @@
-// Copyright 2018 Ladybug Tools authors. MIT License
-/* globals */
-/* jshint esversion: 6 */
 
-const ISSF = { "release": "R7.1" };
+
+const ISSF = {}
 
 ISSF.getMenuFileCheck= function() {
 
@@ -12,29 +10,18 @@ ISSF.getMenuFileCheck= function() {
 
 		<summary>File Check</summary>
 
-		<p>
-			<i>
-				Identify  problems with the XML file.
-				File Check ${ ISSF.release }.
-			</i>
-		</p>
-
 		<div id="divFileCheckOpen" class="dragDropArea" >
 
 			<p id=pFileOpen>
 
 				Open gbXML files:
-				<input type=file id=inpOpenFile onchange=ISSF.inpOpenFiles(this); accept=".xml" >
+				<input type=file id=inpOpenFile onchange=ISSF.inpOpenFiles(this); multiple accept=".xml" >
 
 			</p>
-
 		</div>
 
-		<br>
 
 		<div id=ISSFdivFileInfo ></div>
-
-		<hr>
 
 	</details>`;
 
@@ -72,7 +59,6 @@ ISSF.inpOpenFiles = function( files ) {
 
 		//ISSF.parseFile( reader.result );
 
-		ISSF.timeStart2 = performance.now();
 		ISSFdivFileInfo.innerHTML += ISSF.getGeneralCheck( reader.result );
 
 	};
@@ -100,19 +86,11 @@ ISSF.getGeneralCheck = function( text ) {
 
 	let htm = '';
 
-	ISSF.lines = ( text.split( /\r\n|\n/ ) ).map( line => line.toLowerCase() );
+	const lines = text.split(/\r\n|\n/);
 
-	//console.log( 'ISSF.lines', ISSF.lines );
+	for ( i = 0; i< lines.length; i++ ) {
 
-	if ( ISSF.lines[ 0 ].includes( 'utf-16' ) ) {
-
-		htm += `line 0: ${ ISSF.lines[ 0 ] }\n`;
-
-	}
-
-	for ( i = 0; i < ISSF.lines.length; i++ ) {
-
-		line = ISSF.lines[ i ];
+		line = lines[ i ].toLowerCase();
 
 		if ( line.includes( '<area>0</area>') ) {
 
@@ -148,7 +126,7 @@ ISSF.getGeneralCheck = function( text ) {
 			<h3>General Check</h3>
 			<p>All lines checked appear to contain valid XML data.</p>
 			<p>No empty text strings or values equaling zero found.</p>
-			<p>Lines checked: ${ ISSF.lines.length.toLocaleString()}</p>
+			<p>Lines checked: ${lines.length.toLocaleString()}</p>
 			<div id=ISSdivCheckText ></div>
 		`;
 
@@ -157,12 +135,13 @@ ISSF.getGeneralCheck = function( text ) {
 		htm =
 		`
 			<h3>General Check</h3>
-			<p>Lines checked: ${ ISSF.lines.length.toLocaleString()}</p>
-			<p>Time to read: ${ ( performance.now() - ISSF.timeStart2 ).toLocaleString() } ms</p>
-			<div id=ISSdivCheckText ><textarea style=height:200px;width:100%>${ htm }</textarea></div>
+			<p>Lines checked: ${lines.length.toLocaleString()}</p>
+			<div id=ISSdivCheckText ></div>
 		`;
 
 	}
+
+	console.log( 'ISSFml', performance.now() - ISSF.timeStart );
 
 	return htm;
 
