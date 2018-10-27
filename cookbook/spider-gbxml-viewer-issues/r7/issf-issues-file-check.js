@@ -204,7 +204,9 @@ ISSF.getXML2jsobj = function( node ) {
 
 		if ( arr ) {
 
-			if ( !Array.isArray( arr ) ) { arr = [ arr ]; }
+			//if ( !Array.isArray( arr ) ) { arr = [ arr ]; }
+
+			arr = Array.isArray( arr ) ? arr : [ arr ];
 
 			arr[ arr.length ] = value;
 

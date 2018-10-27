@@ -19,8 +19,11 @@
 
 <script src = "./issf-issues-file-check.js" ></script>
 <script src = "./issm-issues-metadata.js" ></script>
+<script src = "./isasi-adjacent-space-invalid.js" ></script>
 <script src = "./isdc-issues-duplicate-coordinates.js" ></script>
+<script src = "./isdr-issues-duplicate-rectangular-geometry.js" ></script>
 <script src = "./issi-issues-inclusions.js" ></script>
+<script src = "./iss-template.js" ></script>
 
 <script src = "../../../lib/r7/fil-open-file-gbxml.js" ></script>
 <script src = "../../../lib/r7/pop-up-gbxml.js" ></script>
@@ -73,9 +76,15 @@
 
 			<div id = "divPanelMetadataIssues" ></div>
 
+			<div id = "divAdjacentSpaceInvalid" ></div>
+
 			<div id = "divDuplicateCoordinates" ></div>
 
+			<div id = "divDuplicateRectangularGeometry" ></div>
+
 			<div id = "divInclusions" ></div>
+
+			<div id = "divTemplate" ></div>
 
 			<hr>
 
@@ -142,8 +151,6 @@ FIL.urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/bristo
 
 FIL.divFileInfo = divFileInfo;
 
-const ISS = {};
-ISS.surfaceChanges = {};
 
 init();
 THR.animate();
@@ -162,9 +169,15 @@ function init() {
 
 	divPanelMetadataIssues.innerHTML = ISSM.getPanelMetadataIssues();
 
+	divAdjacentSpaceInvalid.innerHTML = ISASI.getMenuAdjacentSpaceInvalid();
+
 	divDuplicateCoordinates.innerHTML = ISDC.getMenuDuplicateCoordinates();
 
+	divDuplicateRectangularGeometry.innerHTML = ISDR.getMenuDuplicateRectangularGeometry();
+
 	divInclusions.innerHTML = ISSI.getMenuInclusions();
+
+	divTemplate.innerHTML = ISS.getMenuTemplate();
 
 	divSettings.innerHTML = THRU.getSettings();
 

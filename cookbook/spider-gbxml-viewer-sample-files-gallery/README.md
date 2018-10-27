@@ -23,11 +23,11 @@ _<small>Spider gbXML Viewer Sample Files Gallery</small>_
 
 * Uses the GitHub API to obtain up to date listings of file names in a directory
 * Display list of file names as links to source
-* Clicking links displays updates location hash in the address bar
-	* The source
-	* View the file in this gallery window
-	* View the file full screen in its own window
-		* Link may be use to embed file in other app or HTML pages
+	* Click Octocat icon to  go to the source on GitHub
+	* Click the text link to update the location hash
+		* Used by other modules as an event to load new files etc
+	* Click the external link icon on right to view the file full screen in its own window
+* Link may be use to embed file in other app or HTML pages
 
 
 ## Wish list
@@ -46,7 +46,7 @@ _<small>Spider gbXML Viewer Sample Files Gallery</small>_
 ## Things you can do using this script
 
 * Click the three bars( 'hamburger menu icon' ) to slide the menu in and out
-* Click the Octocat icon to view or edit the source code on GitHub
+* Click the Octocat icon at left to view or edit the source code on GitHub
 * Click on title to reload
 * Press Control-U/Command-Option-U to view the source code
 * Press Control-Shift-J/Command-Option-J to see if the JavaScript console reports any errors

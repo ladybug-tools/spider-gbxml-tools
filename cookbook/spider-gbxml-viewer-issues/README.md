@@ -38,6 +38,7 @@ Open, view, examine, identify errors and fix gbXML files in 3D in your browser w
 * 2018-10-21 ~ Theo ~ confirm finding same items a Aragog 12/14
 * 2018-10-21 ~ Theo ~ determine and display faulty adjacent space issues
 
+
 ## Links of Interest
 
 See also
@@ -46,6 +47,19 @@ See also
 
 
 ## Change Log
+
+
+### 2018-10-27 ~ Theo
+
+* Add Adjacent Space Invalid pane
+* Add Template panel
+
+### 2018-10-26 ~ Theo
+
+Issues R7.0
+* Add Duplicate Rectangular Geometry panel
+* Generally add text and status panel
+
 
 ### 2018-10-19 ~ Theo
 

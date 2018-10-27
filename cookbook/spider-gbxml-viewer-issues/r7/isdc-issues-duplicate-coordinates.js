@@ -78,7 +78,8 @@ ISDC.getDuplicateCoordinatesCheck = function() { //R14
 	//ISDC.duplicateCoordinates = [];
 	ISDC.duplicates = [];
 
-	THR.scene.remove( ISDC.line, ISDC.particle );
+	THR.scene.remove( POP.line, POP.particle );
+
 	GBX.surfaceMeshes.children.forEach( element => element.visible = true );
 
 	const surfacesJ = GBX.gbjson.Campus.Surface;
@@ -141,7 +142,9 @@ ISDC.getDuplicateCoordinatesCheck = function() { //R14
 
 
 
-ISDC.setSurfaceArrayVisibleToggle = function( button, surfaceArray ) {
+ISDC.setSurfaceArrayVisibleToggle = function( button, surfaceArray = [] ) {
+
+	THR.scene.remove( POP.line, POP.particle );
 
 	if ( button.style.fontStyle !== 'italic' ) {
 
@@ -149,11 +152,15 @@ ISDC.setSurfaceArrayVisibleToggle = function( button, surfaceArray ) {
 
 		if ( surfaceArray.length ) {
 
-			GBX.surfaceMeshes.children.forEach( element => element.visible = false );
+			GBX.surfaceMeshes.children.forEach( mesh => mesh.visible = false );
+
+			//surfaceMeshes = GBX.surfaceMeshes.children.filter( element => surfaceArray.find( item => item[ 0 ].id === element.userData.gbjson.id ) );
+			//console.log( 'surfaceMeshes', surfaceMeshes );
+			//surfaceMeshes.forEach( mesh => { mesh.visible === true; console.log( '', mesh.visible ); } );
 
 			for ( let surface of surfaceArray ) {
 
-				console.log( '', surface  );
+				//console.log( '', surface  );
 				const surfaceMesh = GBX.surfaceMeshes.children.find( element => element.userData.gbjson.id === surface[ 0 ].id );
 				surfaceMesh.visible = true;
 				const surfaceMesh1 = GBX.surfaceMeshes.children.find( element => element.userData.gbjson.id === surface[ 1 ].id );
@@ -233,6 +240,7 @@ ISDC.getDuplicateAttributes = function() {
 
 ISDC.toggleSurfaceFocus = function( button, surfaceId ) {
 
+	THR.scene.remove( POP.line, POP.particle );
 	const color = button.style.backgroundColor === '' ? 'pink' : '';
 	button.style.backgroundColor = color;
 
@@ -264,6 +272,8 @@ ISDC.toggleSurfaceFocus = function( button, surfaceId ) {
 
 ISDC.toggleSurfaceVisible = function( button, id ) {
 
+	THR.scene.remove( POP.line, POP.particle );
+
 	const surfaceMesh1 = GBX.surfaceMeshes.children.find( element => element.userData.gbjson.id === id );
 	surfaceMesh1.visible = !surfaceMesh1.visible;
 	button.style.backgroundColor = button.style.backgroundColor === 'pink' ? '' : 'pink';
@@ -275,6 +285,8 @@ ISDC.toggleSurfaceVisible = function( button, id ) {
 ISDC.getAdjacentSpaces = function( surfaceJson, suffix ) {
 
 	//console.log( 'surfaceJson', surfaceJson  );
+
+	THR.scene.remove( POP.line, POP.particle );
 
 	if ( !surfaceJson.AdjacentSpaceId ) { return ''; }
 
