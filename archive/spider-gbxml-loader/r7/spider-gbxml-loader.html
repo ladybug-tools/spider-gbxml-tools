@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
+<meta name=description content="Open and examine gbXML files in your browser with free, open source JavaScript" >
+<meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-10-27" >
+<title>Spider gbXML Viewer R7.0 gbXML Loader</title>
+<link rel="stylesheet" href="../../../lib/r7/style.css">
+</head>
+<body>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r97/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r97/examples/js/controls/OrbitControls.js" ></script>
+<script src = "../../../lib/r7/mnu-menu.js" ></script>
+
+	<main id="container" ></main>
+
+	<nav id = "navMenu" >
+
+		<header>
+
+			<div id = "divHeader" ></div>
+
+		</header>
+
+		<details open >
+
+			<summary>File Open</summary>
+
+			<p>
+				<i>
+					Identify issues with an XML file.
+				</i>
+			</p>
+
+			<div id="divFileCheckOpen" class="dragDropArea" >
+
+				<p id=pFileOpen>
+
+					Open gbXML files:
+					<input type=file id=inpOpenFile onchange=inpOpenFiles(this); accept=".xml" >
+
+				</p>
+
+			</div>
+
+			<br>
+
+			<div id = "divFileInfo" ></div>
+
+
+		</details>
+
+		<div id = "divGeneralCheck" ></div>
+
+		<footer>
+
+			<hr>
+
+			<div id = "divFooter" ></div>
+
+		</footer>
+
+	</nav>
+
+	<nav>
+		<button id="butHamburger" onclick=MNU.toggleNavLeft(); title="click to hide this menu"> slide &#9776; </button>
+	</nav>
+
+
+<script>
+
+MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-basic-cookbook/";
+
+
+init();
+
+
+function init() {
+
+	divHeader.innerHTML = MNU.getNavHeader(); // not essential
+
+	//divSampleFileButtons.innerHTML = GAL.setCardSampleGalleries();
+
+	divFooter.innerHTML = MNU.getNavFooter(); // not essential
+
+
+}
+
+
+
+function inpOpenFiles( files ) {
+
+	//console.log( 'file', files.files[ 0 ] );
+
+	timeStart = performance.now();
+
+	fileAttributes = files.files[ 0 ];
+
+	const reader = new FileReader();
+
+	reader.onprogress = onRequestFileProgress;
+
+	reader.onload = function( event ) {
+
+		divFileInfo.innerHTML =
+		`
+			<div>${ fileAttributes.name }</div>
+			<div>bytes loaded: ${event.loaded.toLocaleString()}</div>
+			<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
+		`;
+
+		divGeneralCheck.innerHTML = getGeneralCheck( reader.result );
+
+	};
+
+	reader.readAsText( files.files[ 0 ] );
+
+
+	function onRequestFileProgress( event ) {
+
+		timeToLoad = performance.now() - timeStart;
+
+		divFileInfo.innerHTML =
+		`
+			<div>${ fileAttributes.name }</div>
+			<div>bytes loaded: ${event.loaded.toLocaleString()}</div>
+			<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
+		`;
+
+	}
+
+};
+
+
+
+function getGeneralCheck ( text ) {
+
+	let spaces = 0;
+	let surfaces = 0;
+	let zones = 0;
+
+	let issuesUTF = '';
+	let issuesArea = '';
+	let issuesVolume = '';
+	let issuesEmptyStrings = '';
+
+	let htm;
+
+	lines = ( text.split( /\n/ ) ).map( line => line.trim().toLowerCase() );
+	//console.log( 'lines', lines );
+
+	if ( lines[ 0 ].includes( 'utf-16' ) ) {
+
+		issuesUTF += `UTF-16 issue:\nline 0: ${ lines[ 0 ] }\n\n`;
+
+	}
+
+
+	for ( let line of lines ) {
+
+	lines.forEach( line => {
+
+		spaces += line.startsWith( '<space ' ) ? 1 : 0;
+		surfaces += line.startsWith( '<surface ' ) ? 1 : 0;
+		zones += line.startsWith( '<zone ' ) ? 1 : 0;
+
+	} );
+
+		/*
+
+		if ( line.startsWith( '\<space ' ) ) {
+
+			spaces ++;
+
+		} else if ( line.startsWith( '\<surface ' ) ) {
+
+			surfaces ++;
+
+		} else if ( line.startsWith( '\<zone ' ) ) {
+
+			zones ++;
+
+		} else if ( line.includes( '""' ) ) {
+
+			issuesEmptyStrings += `Empty string at line ${i}: ${line}\n`;
+
+		} else if ( line.includes( '<area>0</area>') ) {
+
+			issuesArea += `line ${i}: ${line}\n`;
+
+		} else if ( line.includes( '<volume>0</volume>') ) {
+
+			issuesVolume += `line ${i}: ${line}\n`;
+
+		}
+		*/
+
+	}
+
+
+	errorsFound =
+		( issuesUTF || 'No UTF issues found\n\n' ) +
+		//( issuesArea || 'No area issues found\n\n' ) +
+		//( issuesVolume || 'No volume issues found\n\n') +
+		//( issuesEmptyStrings || 'No empty strings\n\n' ) +
+		`Spaces: ${ spaces.toLocaleString()  }\n\n` +
+		`Surfaces: ${ surfaces.toLocaleString() }\n\n` +
+		`Zones: ${ zones.toLocaleString() }\n\n`
+
+	;
+
+
+	htm =
+	`
+		<h3>General Check</h3>
+		<p>Lines checked: ${ lines.length.toLocaleString()}</p>
+		<p>Time to read: ${ ( performance.now() - timeStart ).toLocaleString() } ms</p>
+		<div id=ISSdivCheckText ><textarea style=height:200px;width:100%>${ errorsFound }</textarea></div>
+	`;
+
+	return htm;
+
+}
+
+</script>
+</body>
+</html>

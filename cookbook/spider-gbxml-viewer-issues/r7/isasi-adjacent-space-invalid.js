@@ -103,17 +103,9 @@ ISASI.setAdjacentSpaceInvalidToggle = function( button, surfaceArray = [] ) {
 
 			GBX.surfaceMeshes.children.forEach( element => element.visible = false );
 
-			//surfaceMeshes = GBX.surfaceMeshes.children.filter( element => surfaceArray.find( item => item.id === element.userData.gbjson.id ) );
+			surfaceMeshes = GBX.surfaceMeshes.children.filter( element => surfaceArray.find( item => item.id === element.userData.gbjson.id ) );
 			//console.log( 'surfaceMeshes', surfaceMeshes );
-			//surfaceMeshes.forEach( mesh => mesh.visible === true );
-
-			for ( let surface of surfaceArray ) {
-
-				//console.log( '', surface  );
-				const surfaceMesh = GBX.surfaceMeshes.children.find( element => element.userData.gbjson.id === surface.id );
-				surfaceMesh.visible = true;
-
-			}
+			surfaceMeshes.forEach( mesh => mesh.visible = true );
 
 		} else {
 

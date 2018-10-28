@@ -23,6 +23,7 @@
 <script src = "./isdc-issues-duplicate-coordinates.js" ></script>
 <script src = "./isdr-issues-duplicate-rectangular-geometry.js" ></script>
 <script src = "./issi-issues-inclusions.js" ></script>
+<script src = "./ispip-point-in-polygon.js" ></script>
 <script src = "./iss-template.js" ></script>
 
 <script src = "../../../lib/r7/fil-open-file-gbxml.js" ></script>
@@ -59,7 +60,7 @@
 
 		<hr>
 
-		<details open >
+		<details id=detIssues open >
 
 			<summary title = "fix things" >Issues</summary>
 
@@ -83,6 +84,8 @@
 			<div id = "divDuplicateRectangularGeometry" ></div>
 
 			<div id = "divInclusions" ></div>
+
+			<div id = "divPointInPolygon" ></div>
 
 			<div id = "divTemplate" ></div>
 
@@ -177,6 +180,8 @@ function init() {
 
 	divInclusions.innerHTML = ISSI.getMenuInclusions();
 
+	divPointInPolygon.innerHTML = ISPIP.getMenuPointInPolygon();
+
 	divTemplate.innerHTML = ISS.getMenuTemplate();
 
 	divSettings.innerHTML = THRU.getSettings();
@@ -202,6 +207,20 @@ function init() {
 
 	if ( !location.hash ) { location.hash = FIL.urlDefaultFile; } else { FIL.onHashChange(); }
 	//location.hash = urlDefaultFile;
+
+	window.addEventListener ( 'hashchange', togglePanelOff, false );
+
+}
+
+function togglePanelOff() {
+
+	const details = detIssues.querySelectorAll( "details" );
+
+	for ( detail of details ) {
+
+		detail.open = false;
+
+	}
 
 }
 

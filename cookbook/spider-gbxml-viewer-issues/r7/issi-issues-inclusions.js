@@ -34,13 +34,11 @@ ISSI.getInclusions = function() {
 
 	let htm;
 
-	//arr =  GBX.surfaceMeshes.children.slice();
 	ISSI.inclusions = [];
 
 	let children = GBX.surfaceMeshes.children;
 
 	children2 = children.slice();
-
 
 	for ( let surface of children ) {
 
@@ -115,7 +113,7 @@ function setInclusionsRed() {
 
 	for ( let surfaces of ISSI.inclusions ) {
 
-		verticesS2 = GBX.getVertices( surfaces.s2.userData.gbjson.PlanarGeometry.PolyLoop );
+		verticesS2 = ISSI.getVertices( surfaces.s2.userData.gbjson.PlanarGeometry.PolyLoop );
 
 		for ( let vertex of verticesS2 ) {
 
@@ -186,10 +184,10 @@ ISSI.setDoubleCheck = function() {
 
 	var raycaster = new THREE.Raycaster();
 
-	for( surfaces of ISSI.inclusions ) {
+	for ( surfaces of ISSI.inclusions ) {
 
 		//const vertices = new THREE.Geometry().fromBufferGeometry( surfaces.s1.geometry ).vertices ;
-		verticesS1 = GBX.getVertices( surfaces.s1.userData.gbjson.PlanarGeometry.PolyLoop );
+		verticesS1 = ISSI.getVertices( surfaces.s1.userData.gbjson.PlanarGeometry.PolyLoop );
 		//console.log( 'verticesS1', verticesS1 );
 
 		const center = surfaces.s2.geometry.boundingSphere.center;

@@ -54,7 +54,7 @@ ISS.setTemplateToggle = function( button, surfaceArray = [] ) {
 
 	THR.scene.remove( POP.line, POP.particle );
 
-	surfaceArray = [ GBX.gbjson.Campus.Surface[ 88 ],GBX.gbjson.Campus.Surface[ 1 ]  ]
+	surfaceArray = GBX.gbjson.Campus.Surface.slice( 0, 100 );
 
 	if ( button.style.fontStyle !== 'italic' ) {
 
@@ -64,11 +64,9 @@ ISS.setTemplateToggle = function( button, surfaceArray = [] ) {
 
 			GBX.surfaceMeshes.children.forEach( element => element.visible = false );
 
-			//surfaceMeshes = GBX.surfaceMeshes.children.filter( element => surfaceArray.find( item => item.id === element.userData.gbjson.id ) );
+			surfaceMeshes = GBX.surfaceMeshes.children.filter( element => surfaceArray.find( item => item.id === element.userData.gbjson.id ) );
 			//console.log( 'surfaceMeshes', surfaceMeshes );
-			//surfaceMeshes.forEach( mesh => mesh.visible === true );
-
-
+			surfaceMeshes.forEach( mesh => mesh.visible = true );
 
 		} else {
 
@@ -81,7 +79,6 @@ ISS.setTemplateToggle = function( button, surfaceArray = [] ) {
 
 	} else {
 
-		//GBX.setAllVisible();
 		GBX.surfaceMeshes.children.forEach( element => element.visible = true );
 
 		button.style.fontStyle = '';

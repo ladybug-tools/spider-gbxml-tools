@@ -13,6 +13,35 @@ value='You are now in a GitHub web page view - Click this button to view this re
 _<small>Spider gbXML Tools Sandbox</small>_
 -->
 
+* Files at an early stage
+* Experiments that may or my not go anywhere
+
+***
+
+
+## [Spider gbXML Hacker Read Me]( #sandbox/spider-gbxml-hacker/README.md )
+
+Open and examine gbXML files in your browser with free, open source JavaScript
+
+The script is a work in progress for of opening very large gbXML files,
+
+It is currently being tested on a gbXML file ( private and not sharable ) of 698,000,000 bytes and:
+
+* Lines of text: 8,746,903
+* Spaces: 5,550
+* Surfaces: 70,774
+* Zones: 2,618
+
+The file breaks the Chrome browser on Windows 10, the FireFox browser on Windows 10 and OpenStudio on Windows 10
+
+### Full Screen: [Spider gbXML Hacker R1.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-hacker/sandbox/spider-gbxml-hacker.html )
+
+With Chrome browser on Windows 10/Core i7/Nvidia GPU  reads the file and displays limited text data for the file in under 15 seconds. No attempts are made to display data in 3D
+
+
+***
+
+
 ## [Sample 'embeddable_gbxml_editor' Files Assembled Read Me]( #sandbox/embeddable_gbxml_editor_assembled/README.md )
 
 Files for [OpenStudio]( https://www.openstudio.net/ ). See also OpenStudio tutorial: Import gbXML
@@ -32,6 +61,7 @@ Contents include:
 * A hacked stripped-down version of the original file
 * An HTML web page that allows you to load anf view these scripts in an ```iframe```
 
+***
 
 ## [Sample 'embeddable_gbxml_editor' Demos Read Me]( #sandbox/embeddable_gbxml_editor_demos/README.md )
 

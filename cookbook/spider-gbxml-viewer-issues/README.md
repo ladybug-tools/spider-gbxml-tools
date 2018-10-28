@@ -51,7 +51,10 @@ See also
 
 ### 2018-10-27 ~ Theo
 
-* Add Adjacent Space Invalid pane
+Issues R7.0
+* Add Point In Polygon panel
+	* Check if the coordinates of one surface are inside the coordinates of another surface
+* Add Adjacent Space Invalid panel
 * Add Template panel
 
 ### 2018-10-26 ~ Theo
