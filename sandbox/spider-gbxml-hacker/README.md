@@ -27,7 +27,7 @@ It is currently being tested on a gbXML file ( private and not sharable ) of 698
 * Surfaces: 70,774
 * Zones: 2,618
 
-The file breaks the Chrome browser on Windows 10, the FireFox browser on Windows 10 and OpenStudio on Windows 10
+The file breaks the Chrome browser on Windows 10, the FireFox browser on Windows 10 and OpenStudio on Windows 10.
 
 ## Full Screen: [Spider gbXML Hacker R1.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-hacker/r1/spider-gbxml-hacker.html )
 
