@@ -2,7 +2,7 @@
 /* globals THREE, THR, GBX, POP, detPointInPolygon, ISPIPselPip, ISPIPdivPointInPolygonLog */
 /* jshint esversion: 6 */
 
-const ISPIP = { "release": "R7.1" };
+const ISPIP = { "release": "R7.2" };
 
 ISPIP.getMenuPointInPolygon = function() {
 
@@ -14,32 +14,40 @@ ISPIP.getMenuPointInPolygon = function() {
 
 		<p>
 			<i>
-				Check if the coordinates of one surface are inside the coordinates of another surface.
+				Check if coordinates of one surface are inside coordinates of another surface.
 				ISPIP ${ ISPIP.release }.
 			</i>
 		</p>
 
 		<p>
-			<button onclick=ISPIP.toggleSurfacesByAngles(this,["0","180"]); > toggle horizontal surfaces </button>
-		</p>
+			Show/hide surfaces:<br>
+			<button onclick=ISPIP.toggleSurfacesByAngles(this,["0","180"]); > horizontal </button>
 
-		<p>
-			<button onclick=ISPIP.toggleSurfacesByAngles(this,"90"); > toggle vertical surfaces </button>
-		</P
+			<button onclick=ISPIP.toggleSurfacesByAngles(this,"90"); > vertical </button>
 
-		<p>
-			<button onclick=ISPIP.toggleSurfacesByAngles(this); > toggle angled surfaces </button>
+			<button onclick=ISPIP.toggleSurfacesByAngles(this); > angled </button>
 		</P
 
 		<p>
 			<button onclick=ISPIP.setPointInPolygonToggle(this); > Point in polygon toggle </button>
 		</p>
 
+
 		<p>
 			<select id=ISPIPselPip onclick=ISPIP.togglePip(); size=10 style=width:100%; ></select>
 		</p>
 
+		<p>
+			yellow=polygon w/ vertex inside<br>
+			magenta=polygon w/ the vertex<br>
+			<button onclick=ISPIP.vertexZoom(); >⌕</button>
+		</p>
+
+		<p></p>
 		<div id=ISPIPdivPointInPolygonLog ></div>
+
+		<div id=ISPIPdivPointInPolygonLogTilts ></div>
+
 
 		<details>
 
@@ -88,7 +96,7 @@ ISPIP.getPointInPolygonCheck = function() {
 
 	} );
 
-	ISPIPdivPointInPolygonLog.innerHTML = `<p>tilt angles: ${ ISPIP.anglesTilt.map( item => Number( item ).toLocaleString() ).join( ', ' ) } </p>`;
+	ISPIPdivPointInPolygonLogTilts.innerHTML = `<p>tilt angles: ${ ISPIP.anglesTilt.map( item => Number( item ).toLocaleString() ).join( ', ' ) } </p>`;
 
 };
 
@@ -316,7 +324,7 @@ ISPIP.setSelectPip = function() {
 		color = color === 'lightgray' ? '' : 'lightgray';
 		options +=
 		`
-			<option style=background-color:${ color } >pip ${ count++ }</option>
+			<option style=background-color:${ color } >point in polygon ${ count++ }</option>
 
 		`;
 	}
@@ -337,25 +345,43 @@ ISPIP.togglePip = function( select ) {
 
 	console.log( '', ISPIP.pips[ index ] );
 
-	ISPIP.drawLine( ISPIP.pips[ index ][ 0 ], 'yellow' );
-	ISPIP.drawLine( ISPIP.pips[ index ][ 1 ], 'magenta' );
+	polyVertices = ISPIP.pips[ index ][ 0 ];
+	polyOtherVertices = ISPIP.pips[ index ][ 1 ];
+	polyVerticesTxt = polyVertices.map( vertex =>
+	`x:<span class=attributeValue>${ vertex.x }</span>
+	 y:<span class=attributeValue>${vertex.y }</span>` ).join( '<br>'
+	);
+	ISPIP.drawLine( polyVertices, 'yellow' );
+
+	ISPIP.drawLine( polyOtherVertices, 'magenta' );
 
 
-	const vertex = ISPIP.pips[ index ][ 2 ];
+	ISPIP.vertex = ISPIP.pips[ index ][ 2 ];
 	const  geometry = new THREE.Geometry();
-	geometry.vertices = [ vertex, new THREE.Vector3( vertex.x, vertex.y, vertex.z + 1 ) ];
+	geometry.vertices = [ ISPIP.vertex, new THREE.Vector3( ISPIP.vertex.x, ISPIP.vertex.y, ISPIP.vertex.z + 1 ) ];
 	const material = new THREE.LineBasicMaterial( { color: 0x888888 } );
 	const line = new THREE.Line( geometry, material );
 	ISPIP.helpers.add( line );
 
 	THR.scene.add( ISPIP.helpers );
+
+
+	const htm =
+
+	`
+		vertex<br>
+		x:${ ISPIP.vertex.x } y:${ ISPIP.vertex.y } z:${ ISPIP.vertex.z }<br>
+		polygon yellow<br>
+		${ polyVerticesTxt }
+	`;
+
+
+	ISPIPdivPointInPolygonLog.innerHTML = htm;
 };
 
 
 
 ISPIP.getSprite = function() {
-
-
 
 	const spriteMaterial = new THREE.SpriteMaterial( { color: 0xff0000 } );
 	const scale = 0.1;
@@ -384,6 +410,7 @@ ISPIP.drawLine = function( vertices, color ) {
 };
 
 
+
 ISPIP.cleanUpScene = function() {
 
 	THR.scene.remove( POP.line, POP.particle );
@@ -398,3 +425,21 @@ ISPIP.cleanUpScene = function() {
 	detPointInPolygon.querySelectorAll( "button" ).forEach( button => 	button.style.cssText = "" );
 
 };
+
+
+ISPIP.vertexZoom = function() {
+
+	console.log( '', ISPIP.vertex	);
+	const vertex = ISPIP.vertex;
+
+	var radius = 3;
+	//THR.controls.reset();
+	THR.controls.target.copy( vertex ); // needed because model may be far from origin
+	//THR.controls.maxDistance = 5 * radius;
+
+	THR.camera.position.copy( vertex.clone().add( new THREE.Vector3( radius, radius, radius ) ) );
+	THR.camera.near = 0.01;
+	//THR.camera.far = 10 * radius;
+	THR.camera.updateProjectionMatrix();
+
+}

@@ -18,13 +18,14 @@ _<small>Spider gbXML Viewer Pop-Up</small>_
 
 ## Concept
 
-Click on any surface in a gbXML model to display all its attribute data in a pop-op window
+Click on any surface in a gbXML model to display all its attribute data in a pop-up window
 
 * Toggle the display of 3D surfaces based on user input
-* Click on any surface in the model to:
-	* View id, name, type CAD object id
+* Buttons to show/hide, zoom and view coordinates of selected surface
+* Buttons to show/hide of space, storey and zone
+* Click on any surface in the model to display its attributes:
+	* View id, name, type, CAD object id
 	* View adjacent space parameters
-	* Toggle view of space and storey
 	* View dimensions and area
 
 
@@ -36,11 +37,13 @@ Click on any surface in a gbXML model to display all its attribute data in a pop
 
 ## To Do / Wish List
 
-* 2018-10-15 ~ PolyLoop display:
-	* Put in a details tag
-	* On toggle display vertex numbers in 3D model
+* 2018-10-15 ~ Planar Geometry:
+	* Put in a details tag??
 * 2018-10-15 ~ Rectangular Geometry: display outline
 * 2018-01-02 ~ Multiple types of heads-up modules with different agendas
+* 2018-10-29 ~ Display construction data
+
+Here or in Settings module?
 * 2018-01-02 ~ Add in-world placard at cursor location
 	* Show space names at cursor locations
 
@@ -52,14 +55,26 @@ See also
 
 ## Issues
 
-* 2018-10-24 ~ Theo ~ Zones: not toggling correctly
-
 
 ## Links of Interest
 
 
 
 ## Change Log
+
+
+#### 2018-10-24 ~ Theo
+
+SGV Pop-Up R7.7
+* Clicked position sprites are sized according to a scale of the camera to target distance
+* Visibility panel: Add button to display vertex numbers
+
+Done
+* 2018-10-15 ~ PolyLoop display:
+	* On toggle display vertex numbers in 3D model
+
+Generally
+The code is far, far simpler than it is in Aragog. The data feels much easier to read. The worklow is getting to be faster and simpler
 
 #### 2018-10-24 ~ Theo
 

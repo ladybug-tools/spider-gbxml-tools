@@ -3,22 +3,20 @@
 
 // Copyright 2018 Ladybug Tools authors. MIT License
 
-const POP = { "release": "R7.7" };
+const POP = { "release": "R7.6" };
 POP.getArray = thing=> Array.isArray( thing ) ? thing : ( thing ? [ thing ] : [] );
 
 
 POP.currentStatus =
 	`
 	<details>
-
-		<summary>Current status 2018-10-29</summary>
+		<summary>Current status 2018-10-24</summary>
 
 		<p>Identifying elements and attributes according to <a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">gbXML Schema.</a></p>
 
-		<p>Coming next:<br>&bull; display rectangular geometry in model</p>
+		<p>Coming next:<br>&bull; display planar geometry vertices in model<br>&bull; display rectangular geometry in model</p>
 
 		<p>For fixing things see <a href="../../spider-gbxml-viewer-issues/index.html" target="_blank">issues module</a> </p>
-
 		<p>Status: Getting to be stable. Needs more testing. Wishlists items welcome.</p>
 
 		<!--
@@ -54,7 +52,7 @@ POP.getMenuHtmlPopUp = function() {
 		<div id = "divPopupData" >
 
 			<p>
-			click on the model and surface attributes appear here
+			click on the model amd surface attributes appear here
 			</p>
 
 			<p>Axes Red/Green/Blue = X/Y/Z directions</p>
@@ -228,9 +226,9 @@ POP.getIntersectedDataHtml = function( intersected, intersects ) {
 				</div><div id=POPbutAdjacentSpace2 ></div>
 			`
 			:
-			`
-				<div id=POPbutAdjacentSpace1 ></div><div id=POPbutAdjacentSpace2 ></div>
-			`;
+			`<div id=POPbutAdjacentSpace1 ></div><div id=POPbutAdjacentSpace2 ></div>`;
+
+			;
 
 		}
 
@@ -256,10 +254,9 @@ POP.getIntersectedDataHtml = function( intersected, intersects ) {
 		<p><b>Visibility</b> - show/hide elements</p>
 
 		<p>
-			<button id=POPbutSurfaceFocus onclick=POP.toggleSurfaceFocus(); title="${ surfaceJson.CADObjectId }" > surface: ${ surfaceJson.id } </button>
+			<button id=POPbutSurfaceFocus onclick=POP.toggleSurfaceFocus(); title="${ surfaceJson.CADObjectId }" >surface: ${ surfaceJson.id }</button>
 			<button id=POPbutSurfaceVisible onclick=POP.toggleSurfaceVisible(); title="Show or hide selected surface" > &#x1f441; </button>
-			<button onclick=POP.setSurfaceZoom(); title="Zoom into selected surface" > ⌕ </button>
-			<button onclick=POP.toggleVertexPlacards(); title="Display vertex numbers" > # </button>
+			<button onclick=POP.setSurfaceZoom(); title="Zoom into selected surface" >⌕</button>
 		</p>
 
 		<p>
@@ -306,9 +303,7 @@ POP.getIntersectedVertexBufferGeometry = function( intersected, intersects ) {
 	POP.line = new THREE.LineLoop( geometry, material );
 	THR.scene.add( POP.line );
 
-	const distance = THR.camera.position.distanceTo( THR.controls.target );
-
-	POP.particle.scale.x = POP.particle.scale.y = 0.01 * distance;
+	POP.particle.scale.x = POP.particle.scale.y = 0.03 * THRU.radius;
 	POP.particle.position.copy( intersects[ 0 ].point );
 
 	THR.scene.add( POP.line, POP.particle );
@@ -458,9 +453,9 @@ POP.getAttributesPolyLoop = function( polyloop ) {
 
 	for ( let point of points ) {
 
-		htm += // put in table or flex??
+		htm +=
 		`
-			#${ count++ }.
+			${ count++ }.
 			<span class=attributeTitle >x:</span><span class=attributeValue >${ Number( point.x ).toLocaleString() }</span>
 			<span class=attributeTitle >y:</span><span class=attributeValue >${ Number( point.y ).toLocaleString() }</span>
 			<span class=attributeTitle >z:</span><span class=attributeValue >${ Number( point.z ).toLocaleString() }</span><br>
@@ -525,26 +520,6 @@ POP.toggleSurfaceVisible = function() {
 
 	const surfaceJson = POP.intersected.userData.gbjson;
 	POPelementAttributes.innerHTML = POP.getSurfaceAttributes( surfaceJson );
-
-};
-
-
-
-POP.toggleVertexPlacards = function() {
-
-	const vertices = POP.intersected.userData.gbjson.PlanarGeometry.PolyLoop.CartesianPoint
-	.map( point => new THREE.Vector3().fromArray( point.Coordinate.map( point => Number( point ) )  ) );
-
-	console.log( 'vvv', vertices );
-
-	const distance = THR.camera.position.distanceTo( THR.controls.target );
-	const scale = 0.01;
-	placards = vertices.map( ( vertex, index ) =>
-		THRU.drawPlacard( '#' + ( 1 + index ), 0.0003 * distance, 0x00ff00, vertex.x + scale * distance, vertex.y + scale * distance, vertex.z + scale * distance )
-	);
-
-	console.log( '', placards );
-	POP.line.add( ...placards )
 
 };
 
