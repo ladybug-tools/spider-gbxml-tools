@@ -15,7 +15,13 @@ _<small>Spider gbXML Viewer Cookbook</small>_
 ## Full Screen: [Spider gbXML Viewer Cookbook]( https://www.ladybug.tools/spider-gbxml-tools/cookbook/cookbook.html )
 -->
 
-## [Cookbook Gallery]( #cookbook/cookbook-viewer-one-pager.html )
+<br>
+
+## [Cookbook Gallery]( #cookbook/cookbook-viewer-one-pager/index.html )
+
+* Skim through all the projects in the Cookbook by scrolling down a single page gallery
+
+<br>
 
 ## Concept
 
