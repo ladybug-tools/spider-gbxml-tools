@@ -29,7 +29,8 @@ ISPIP.getMenuPointInPolygon = function() {
 		</P
 
 		<p>
-			<button onclick=ISPIP.setPointInPolygonToggle(this); > Point in polygon toggle </button>
+			<button onclick=ISPIP.setPointInPolygonToggle(this); > Point in polygon toggle </button><br>
+			Click to display surfaces found
 		</p>
 
 
@@ -73,6 +74,8 @@ ISPIP.getMenuPointInPolygon = function() {
 ISPIP.getPointInPolygonCheck = function() {
 
 	ISPIP.cleanUpScene();
+
+	navMenu.scrollTop = detPointInPolygon.offsetTop;
 
 	ISPIP.anglesTilt = [];
 	ISPIP.anglesTiltSurfaces = [];
@@ -161,6 +164,7 @@ ISPIP.setPointInPolygonToggle = function( button ) {
 
 		let vertices = 0;
 		let insides = 0;
+		let near = 0;
 		ISPIP.pips = [];
 
 		for ( let angle of angles ) {
@@ -177,6 +181,7 @@ ISPIP.setPointInPolygonToggle = function( button ) {
 				polygons.push( ISPIP.getVertices( surfaceJson.PlanarGeometry.PolyLoop ) );
 
 			}
+
 			//console.log( 'polygons ', polygons );
 
 			for ( let polygon of polygons ) {
@@ -193,23 +198,71 @@ ISPIP.setPointInPolygonToggle = function( button ) {
 
 						if ( inside ) {
 
-							const same = ISPIP.checkBorders( vertexOther, polygon );
+							let onBorder = polygon.some( vertex => vertexOther.x === vertex.x && vertexOther.y === vertex.y );
 
-							if ( same === false ) {
+							if ( onBorder === false ) {
 
-								//console.log( 'p&v', polygon, vertexOther );
+								polygon.push( polygon[ 0 ] );
 
-								const sprite = ISPIP.getSprite();
-								sprite.position.copy( vertexOther );
+								//ISPIP.drawLine( polygon, 0x0ff00 );
 
-								ISPIP.pips.push( [ polygon, polygonOther, vertexOther ] );
+								let line;
+								const pointClose = polygon.slice( 0, -1 ).some( ( vertex, index ) => {
 
-								//ISPIP.drawLine( polygonOther, 'magenta' );
-								//ISPIP.drawLine( polygon, 'yellow' );
+									line = new THREE.Line3( vertex, polygon[ index + 1 ] );
+
+									point = line.closestPointToPoint( vertexOther, false, new THREE.Vector3() );
+									distance = vertexOther.distanceTo( point );
+									near += distance < 0.5 && distance > 0.02
+
+									//return distance < 0.001 ? true : false ;
+
+									return distance < 0.3 && distance > 0.02 ? true : false ;
+
+								} );
+
+
+								if ( pointClose === false ) {
+
+									//ISPIP.drawLine( [ line.start, line.end ], 0xff00ff );
+
+
+									//console.log( 'pp', pointClose );
+									const sprite = ISPIP.getSprite();
+									sprite.position.copy( vertexOther );
+
+									//ISPIP.pips.push( [ polygon, polygonOther, vertexOther ] );
+
+									//ISPIP.drawLine( polygonOther, 'magenta' );
+									ISPIP.drawLine( polygon, 'yellow' );
+
+								}
+
 
 								insides ++;
 
 							}
+
+
+
+
+							//const obj = ISPIP.checkBorders( vertexOther, polygon );
+
+							//if ( obj.same === false ) {
+
+								//console.log( 'obj', obj );
+								//console.log( 'p&v', polygon, vertexOther );
+
+								//const sprite = ISPIP.getSprite();
+								//sprite.position.copy( vertexOther );
+
+								//ISPIP.pips.push( [ polygon, polygonOther, vertexOther, obj.closestPoint ] );
+
+								//ISPIP.drawLine( polygonOther, 'magenta' );
+								//ISPIP.drawLine( polygon, 'yellow' );
+
+
+							//}
 
 						}
 
@@ -223,7 +276,7 @@ ISPIP.setPointInPolygonToggle = function( button ) {
 
 		}
 
-		console.log( 'vertices', vertices, insides );
+		console.log( 'vertices', vertices, insides, near );
 
 		ISPIP.setSelectPip();
 
@@ -281,33 +334,47 @@ ISPIP.pointInPolygon = function( pt, vs ) {
 
 ISPIP.checkBorders = function( vertexOther, polygon ) {
 
-	let same = false;
+	THR.camera.near = 0.001;
+	//THR.camera.far = 10 * radius;
+	THR.camera.updateProjectionMatrix();
 
-	for ( let vertex of polygon ) {
+	let closestPoint = undefined;
 
-		if ( vertexOther.x === vertex.x && vertexOther.y === vertex.y ) { same = true; } // we already checked z
+	let onBorder = polygon.some( vertex => vertexOther.x === vertex.x && vertexOther.y === vertex.y );
 
-	}
-
- 	if ( same === true ) { return same; }
+ 	if ( onBorder === true ) { return { onBorder, closestPoint }; }
 
 	for ( let i = 0; i < polygon.length - 1; i++ ) {
 
 		const line = new THREE.Line3( polygon[ i ], polygon[ i + 1 ] );
 
 		const point = line.closestPointToPoint( vertexOther, false, new THREE.Vector3() );
+		//console.log( 'p', point,  );
+		closestPoint = point;
 
 		if ( vertexOther.distanceTo( point ) < 0.01 ) {
 
-			//console.log( 'point', vertexOther.distanceTo( point ) );
+			//const sprite = ISPIP.getSprite();
+			//sprite.position.copy( point );
 
-			same = true;
+			line2 = ISPIP.drawLine( [vertexOther, point ], 0x000000 );
+			THR.scene.add( line2 )
+
+			onBorder = true;
+
+
+		} else {
+
+			console.log( 'closestPoint', vertexOther.distanceTo( point ) );
+
+			return { onBorder, closestPoint };
+
 
 		}
 
 	}
 
-	return same;
+	return { same, closestPoint };
 
 };
 
@@ -347,10 +414,14 @@ ISPIP.togglePip = function( select ) {
 
 	polyVertices = ISPIP.pips[ index ][ 0 ];
 	polyOtherVertices = ISPIP.pips[ index ][ 1 ];
+
 	polyVerticesTxt = polyVertices.map( vertex =>
-	`x:<span class=attributeValue>${ vertex.x }</span>
-	 y:<span class=attributeValue>${vertex.y }</span>` ).join( '<br>'
-	);
+		`
+			x:<span class=attributeValue>${ vertex.x }</span>
+			y:<span class=attributeValue>${vertex.y }</span>
+		`
+	).join( '<br>' );
+
 	ISPIP.drawLine( polyVertices, 'yellow' );
 
 	ISPIP.drawLine( polyOtherVertices, 'magenta' );
@@ -363,11 +434,22 @@ ISPIP.togglePip = function( select ) {
 	const line = new THREE.Line( geometry, material );
 	ISPIP.helpers.add( line );
 
+	if ( ISPIP.pips[ index ][ 3 ] ) {
+
+		ISPIP.vertex2 = ISPIP.pips[ index ][ 3 ];
+		geometry2 = new THREE.Geometry();
+		geometry2.vertices = [ ISPIP.vertex2, new THREE.Vector3( ISPIP.vertex2.x, ISPIP.vertex2.y, ISPIP.vertex2.z + 0.5 ) ];
+		material2 = new THREE.LineBasicMaterial( { color: 0x00ff00 } );
+		line2 = new THREE.Line( geometry2, material2 );
+		ISPIP.helpers.add( line2 );
+
+	}
+
 	THR.scene.add( ISPIP.helpers );
 
 
-	const htm =
 
+	const htm =
 	`
 		vertex<br>
 		x:${ ISPIP.vertex.x } y:${ ISPIP.vertex.y } z:${ ISPIP.vertex.z }<br>
@@ -375,8 +457,8 @@ ISPIP.togglePip = function( select ) {
 		${ polyVerticesTxt }
 	`;
 
-
 	ISPIPdivPointInPolygonLog.innerHTML = htm;
+
 };
 
 
@@ -399,6 +481,7 @@ ISPIP.getSprite = function() {
 ISPIP.drawLine = function( vertices, color ) {
 
 	const  geometry = new THREE.Geometry();
+	vertices.push( vertices[ 0 ] );
 	geometry.vertices = vertices;
 
 	const material = new THREE.LineBasicMaterial( { color: color } );
@@ -429,7 +512,7 @@ ISPIP.cleanUpScene = function() {
 
 ISPIP.vertexZoom = function() {
 
-	console.log( '', ISPIP.vertex	);
+	console.log( '', ISPIP.vertex );
 	const vertex = ISPIP.vertex;
 
 	var radius = 3;
@@ -438,7 +521,7 @@ ISPIP.vertexZoom = function() {
 	//THR.controls.maxDistance = 5 * radius;
 
 	THR.camera.position.copy( vertex.clone().add( new THREE.Vector3( radius, radius, radius ) ) );
-	THR.camera.near = 0.01;
+	THR.camera.near = 0.001;
 	//THR.camera.far = 10 * radius;
 	THR.camera.updateProjectionMatrix();
 

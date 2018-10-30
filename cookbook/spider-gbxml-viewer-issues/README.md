@@ -21,15 +21,49 @@ _<small>Spider gbXML Viewer Issues </small>_
 
 Open, view, examine, identify errors and fix gbXML files in 3D in your browser with free, open source entry-level Three.js JavaScript
 
+* Currently still at a very early, experimental stage
+	* If you need full issue checking use 'Aragog'
+
+
 ### File Check.js
 
 * Uses file dialog box to open xml file
 * Parses text into an array of lower text lines
-* Carries out simple line[based searches for possible errors
+* Carries out simple line-based searches for possible errors
 
+### Missing gbXML Metadata
+
+* Identify missing but required gbXML attributes. Issues Metadata R7.1
+
+### Adjacent Space Invalid
+
+* Surfaces with invalid adjacent spaces.
+
+### Find Duplicate Coordinates
+
+* Two surfaces with the same coordinates
+
+
+### Duplicate Rectangular Geometry
+
+* Identify surfaces with identical rectangular geometry File Check
+
+### Inclusions
+
+* Overlapping bounding boxes
+
+
+### Point inside Polygon
+
+* Yes
 
 ## To Do / Wish List
 
+### Point in Polygon
+
+Things to try
+* Two surfaces have identical coordinates, but one surface has fewer coordinates than the other
+* Two surfaces have overlapping bounding boxes, but have different surface types or other differences
 
 ## Issues
 
@@ -50,6 +84,11 @@ See also
 ## Change Log
 
 
+### 2018-10-29 ~ Theo
+
+Issues ISPIP R7.2
+* More work on point in polygon
+* Sadly, the algorithm only seems to identify valid surfaces
 
 ### 2018-10-28 ~ Theo
 
