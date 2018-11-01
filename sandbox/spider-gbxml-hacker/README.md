@@ -63,17 +63,17 @@ See if we can parse and display in 3D files of this size
 
 ### 2018-11-01 ~ Theo
 
-I've just been working on a file similar to the 'hacker' file included here. what I am discovering is that it is much faster to load a file as a text file then it is to load it as an XML file and then convert it to JSON
+I've just been working on a file similar to the 'hacker' file included here. What I am discovering is that it is much faster to load a file as a text file then it is to load it as an XML file and then convert it to JSON
 
 I've been experimenting with the Warwick University file. This file is just over 20 megabytes in size. Even with this size, it takes the browser less than a couple of seconds to load the data as a text file.
 
-Once loaded and when using the browser built-in XML parser and the xml2obj routine that we have been using, it takes about 8 seconds to do the parsing of the enture file.
+Once loaded and when using the browser built-in XML parser and the xml2obj routine that we have been using, it takes about 8 seconds to do the parsing of the entire file.
 
 On the other hand, reading the text and converting it into an array of lines and then doing some simple parsing, takes only a couple of seconds. Therefore, even if the more complicated parsing takes double the time, overall processing would still be half the time of using the XML parser system.
 
 Using the simple array parsing method would provide a significant secondary benefit. Under the current system, the script must wait until all the XML/JSON parsing is completed before display of the 3D surfaces commences. but if we treat the file as an array, we could start displaying the 3D surfaces almost immediately once the file is loaded. This would create a much more pleasant user experience. Instead of viewing a blank screen for a number of seconds, you would see each surfaces display as soon as it read.
 
-if this process could be made to work, it might represent a huge leap forward with the development of gbXML viewers.
+If this process could be made to work, it might represent a huge leap forward with the development of gbXML viewers.
 
 It will take a number of revisions of scripts in order to see if this process does work as currently imagined. Development will continue, but only as a secondary effort in parallel with the main development work of the primary current Spider gbXML Viewer.
 
