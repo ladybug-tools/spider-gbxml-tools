@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="HTML and CSS for a basic menu system" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-10-30" >
+<title>Spider Viewer gbXML Loader R7</title>
+<link rel="stylesheet" href = "../../../lib/r7/style.css" >
+</head>
+<body>
+<script src = "https://rawgit.com/mrdoob/three.js/r97/build/three.min.js" ></script>
+<script src = "https://rawgit.com/mrdoob/three.js/r97/examples/js/controls/OrbitControls.js" ></script>
+<script src = "../../../lib/r7/mnu-menu.js" ></script>
+<script src = "../../../lib/r7/thr-threejs.js"></script>
+
+<script src = "./gbx-gbxml-loader.js" ></script>
+
+
+	<main id="container" ></main>
+
+	<nav id = "navMenu" >
+
+		<header>
+
+			<div id = "divHeader" ></div>
+
+		</header>
+
+		<p><button onclick >update things</button></p>
+
+		<div id = "divLog" >
+		</div>
+
+		<div id=divFileInfo ></div>
+
+		<footer>
+
+			<hr>
+
+			<div id = "divFooter" ></div>
+
+		</footer>
+
+	</nav>
+
+
+<script>
+
+let timeStart
+
+const urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-viewer-threejs-utilities";
+
+//const urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml';
+const urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/coventry-university-of-warwick-small.xml';
+
+init();
+
+
+
+function init() {
+
+	divHeader.innerHTML = MNU.getNavHeader(); // not essential
+
+	divFooter.innerHTML = MNU.getNavFooter(); // not essential
+
+
+	THR.getThreejs();
+
+	THR.animate();
+	
+	THR.renderer.domElement.onload = function() { console.log( '', 23 ); }
+
+	timeStart = performance.now();
+
+	requestFile( urlDefaultFile, callbackGbXML )
+
+}
+
+
+
+
+
+function requestFile( url, callback ) {
+
+	timeToLoad = performance.now() - timeStart;
+
+	const xhr = new XMLHttpRequest();
+	xhr.crossOrigin = 'anonymous';
+	xhr.open( 'GET', url, true );
+	xhr.onerror = function( xhr ) { console.log( 'error:', xhr  ); };
+	xhr.onprogress = onRequestFileProgress;
+	xhr.onload = callback;
+	xhr.send( null );
+
+
+		function onRequestFileProgress( xhr ) {
+
+			name = xhr.target.responseURL.split( '/').pop();
+
+			timeToLoad = performance.now() - timeStart;
+
+			divFileInfo.innerHTML =
+			`
+				<div>${ name}</div>
+				<div>bytes loaded: ${xhr.loaded.toLocaleString()}</div>
+				<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
+
+			`;
+
+		}
+
+};
+
+
+
+function callbackGbXML( xhr ) {
+
+	const gbxmlResponseXML =  xhr.target.responseXML;
+
+	//const gbxml = xhr.target.responseXML.documentElement;
+	const gbxml = xhr.target.response;
+
+	const meshesArray = GBX.parseFileXML( gbxml );
+
+	THR.scene.add( ...meshesArray );
+
+	//THRU.zoomObjectBoundingSphere( GBX.surfaceMeshes );
+
+	divFileInfo.innerHTML =
+	`
+		<div>${ name }</div>
+		<div>bytes loaded: ${xhr.loaded.toLocaleString()}</div>
+		<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
+		<div>items: ${ meshesArray.length } </div>
+
+	`;
+
+
+};
+
+
+</script>
+</body>
+</html>
