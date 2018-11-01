@@ -18,7 +18,9 @@ _<small>Spider Viewer gbXML Loader</small>_
 
 ## Concept
 
-* load and parse gbXML files
+* Load and parse gbXML files
+* Script to help with testing
+* Performs nothing useful for end-user
 
 
 ## To Do / Wish List
