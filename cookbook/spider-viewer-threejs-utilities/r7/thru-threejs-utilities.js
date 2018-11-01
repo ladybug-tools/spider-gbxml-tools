@@ -1,12 +1,14 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
-/* global THREE, THR, rngOpacity, outOpacity */
+/* global THREE, THR, GBX, rngOpacity, outOpacity */
 // jshint esversion: 6
 
 
-let THRU = { release: "2018-10-08" };
+
+let THRU = { "release": "R7.1" };
 
 THRU.radius = 1;
 
+var GBX = GBX || {};
 
 THRU.setHelpers = function( radius = 50 ) {
 
@@ -20,6 +22,10 @@ THRU.setHelpers = function( radius = 50 ) {
 	if ( window.self === window.top ) { // don't rotate if in an iframe
 
 		THR.controls.autoRotate = true;
+
+	} else {
+
+		THR.controls.enableZoom = false;
 
 	}
 
@@ -46,6 +52,24 @@ THRU.getGeometry = function() {
 };
 
 
+THRU.getCurrentStatus = function() {
+
+	const htm =
+	`
+		<details>
+
+			<summary>2018-10-31 ~ Current Status ${ THRU.release }</summary>
+
+			<p>Three.js Utilities: all this is a bit idiosyncratic / a random collection of stuff</p>
+
+		</details>
+	`;
+
+	return htm;
+
+};
+
+
 
 ////////// Settings
 
@@ -64,7 +88,6 @@ THRU.getSettings = function() {
 		</p>
 
 		<p>
-
 			<button onclick=THRU.toggleSurfaces(); >toggle surfaces</button>
 
 			<button onclick=THRU.toggleEdges(); >toggle edges</button>
@@ -72,19 +95,24 @@ THRU.getSettings = function() {
 
 
 		<p>
-
 			<button onclick=THRU.toggleWireframe(); >toggle wireframe</button>
 
 			<button onclick=THRU.toggleSurfaceNormals(); title="All Three.js triangles have a normal. See them here." > toggle surface normals </button>
-
 		</p>
 
-		<div title="opacity: 0 to 100%" >opacity
+		<p title="opacity: 0 to 100%" >opacity
 			<output id=outOpacity class=floatRight >85%</output><br>
-			<input type="range" id="rngOpacity" min=0 max=100 step=1 value=85 oninput=THRU.updateOpacity(); >
-		</div>
 
-		<p><button onclick=THRU.zoomObjectBoundingSphere(GBX.surfaceMeshes);>zoom all</button></p>
+			<input type="range" id="rngOpacity" min=0 max=100 step=1 value=85 oninput=THRU.updateOpacity(); >
+		</p>
+
+		<p>
+			<button onclick=THRU.zoomObjectBoundingSphere(GBX.surfaceMeshes);>zoom all</button>
+
+			<button accesskey="z" onclick=THR.controls.screenSpacePanning=!THR.controls.screenSpacePanning; title="Access key + B: Up/down curser kes to forward/backward or up/down" >toggle cursor keys</button>
+		</p>
+
+		<div>  </div>
 
 	`;
 
@@ -128,10 +156,9 @@ THRU.toggleSurfaces = function() {
 
 
 
-
 THRU.toggleEdges = function() {
 
-	if ( !GBX.surfaceEdges.length > 0 ) {
+	if ( GBX.surfaceEdges && GBX.surfaceEdges.length === 0 ) {
 
 		GBX.surfaceEdges= new THREE.Group();
 		GBX.surfaceEdges.name = 'GBX.surfaceEdges';
@@ -257,7 +284,7 @@ THRU.zoomObjectBoundingSphere = function( obj = THR.scene ) {
 	//console.log( 'obj', obj );
 
 	const bbox = new THREE.Box3().setFromObject( obj );
-	//console.log( 'bbox', bbox );
+	console.log( 'bbox', bbox );
 
 	if ( bbox.isEmpty() === true ) { return; }
 
@@ -375,13 +402,20 @@ THRU.setStats = function() {
 
 THRU.getSceneInfo = function() {
 
-	const htm =
-	`<p>
+	let htm
+
+	htm = GBX.count3 ?
+
+		`<p>
 		<div>triangles: ${ GBX.count3.toLocaleString() }</div>
 		<div>quads: ${ GBX.count4.toLocaleString() }</div>
 		<div>five+: ${ GBX.count5plus.toLocaleString() }</div>
 		<div>openings: ${ GBX.countOpenings.toLocaleString() }</div>
-	</p>`;
+		</p>`
+	:
+	`
+		To be added
+	`;
 
 	return htm;
 
@@ -517,21 +551,21 @@ THRU.drawPlacard = function( text = 'abc', scale = 0.05, color = Math.floor( Mat
 	// add update
 	// 2016-02-27 ~ https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/placards
 
-	var placard = new THREE.Object3D();
-	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+	const placard = new THREE.Object3D();
+	const v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
 
-	var texture = canvasMultilineText( text, { backgroundColor: color }   );
-	var spriteMaterial = new THREE.SpriteMaterial( { map: texture, opacity: 0.9, transparent: true } );
-	var sprite = new THREE.Sprite( spriteMaterial );
+	const texture = canvasMultilineText( text, { backgroundColor: color }   );
+	const spriteMaterial = new THREE.SpriteMaterial( { map: texture, opacity: 0.9, transparent: true } );
+	const sprite = new THREE.Sprite( spriteMaterial );
 	sprite.position.set( x, y, z ) ;
 	sprite.scale.set( scale * texture.image.width, scale * texture.image.height );
 
-	var geometry = new THREE.Geometry();
-	geometry.vertices = [ v( 0, 0, 0 ),  v( x, y, z ) ];
-	var material = new THREE.LineBasicMaterial( { color: 0xaaaaaa } );
-	var line = new THREE.Line( geometry, material );
-
+	//const geometry = new THREE.Geometry();
+	//geometry.vertices = [ v( 0, 0, 0 ),  v( x, y, z ) ];
+	//const material = new THREE.LineBasicMaterial( { color: 0xaaaaaa } );
+	//const line = new THREE.Line( geometry, material );
 	//placard.add( sprite, line );
+
 	placard.add( sprite );
 	return placard;
 
@@ -540,17 +574,17 @@ THRU.drawPlacard = function( text = 'abc', scale = 0.05, color = Math.floor( Mat
 
 		parameters = parameters || {} ;
 
-		var canvas = document.createElement( 'canvas' );
-		var context = canvas.getContext( '2d' );
-		var width = parameters.width ? parameters.width : 0;
-		var font = parameters.font ? parameters.font : '48px monospace';
-		var color = parameters.backgroundColor ? parameters.backgroundColor : 120 ;
+		const canvas = document.createElement( 'canvas' );
+		const context = canvas.getContext( '2d' );
+		let width = parameters.width ? parameters.width : 0;
+		const font = parameters.font ? parameters.font : '48px monospace';
+		const color = parameters.backgroundColor ? parameters.backgroundColor : 120 ;
 
 		if ( typeof textArray === 'string' ) textArray = [ textArray ];
 
 		context.font = font;
 
-		for ( var i = 0; i < textArray.length; i++) {
+		for ( let i = 0; i < textArray.length; i++) {
 
 			width = context.measureText( textArray[ i ] ).width > width ? context.measureText( textArray[ i ] ).width : width;
 
@@ -575,7 +609,7 @@ THRU.drawPlacard = function( text = 'abc', scale = 0.05, color = Math.floor( Mat
 
 		}
 
-		var texture = new THREE.Texture( canvas );
+		const texture = new THREE.Texture( canvas );
 		texture.minFilter = texture.magFilter = THREE.NearestFilter;
 		texture.needsUpdate = true;
 

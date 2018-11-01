@@ -21,6 +21,7 @@ ISPIP.getMenuPointInPolygon = function() {
 
 		<p>
 			Show/hide surfaces:<br>
+			
 			<button onclick=ISPIP.toggleSurfacesByAngles(this,["0","180"]); > horizontal </button>
 
 			<button onclick=ISPIP.toggleSurfacesByAngles(this,"90"); > vertical </button>

@@ -37,6 +37,11 @@ Click on any surface in a gbXML model to display all its attribute data in a pop
 
 ## To Do / Wish List
 
+* 2018-10-30 ~ Add Expose to sun button
+* 2018-10-30 ~ Add angle tilt buttons
+* 2018-10-30 ~ Add surface, edges,opening buttons
+* 2018-10-30 ~ Add story and zone select
+* 2018-10-30 ~ Add surface type select
 * 2018-10-15 ~ Planar Geometry:
 	* Put in a details tag??
 * 2018-10-15 ~ Rectangular Geometry: display outline
@@ -61,6 +66,12 @@ See also
 
 
 ## Change Log
+
+
+#### 2018-10-30 ~ Theo
+
+Pop-Up R7.7
+* Minor cleanup
 
 
 #### 2018-10-24 ~ Theo

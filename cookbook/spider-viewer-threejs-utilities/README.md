@@ -48,6 +48,18 @@ Utility functions that add features to the core Three.js functions
 
 ## Change Log
 
+
+#### 2018-10-31 ~ Theo
+
+* fix window.top not zooming
+* Add 'toggle cursor keys' button
+	* Access key + B: Up/down curser kes to forward/backward or up/down
+* Update menu
+
+#### 2018-10-30 ~ Theo
+
+* Add current status details
+
 #### 2018-10-15 ~ Theo
 
 * Add improved getSurfaceEdgesGbxml()

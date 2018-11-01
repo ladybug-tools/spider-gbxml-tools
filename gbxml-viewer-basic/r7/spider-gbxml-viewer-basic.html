@@ -118,7 +118,6 @@ function init() {
 
 	divHeader.innerHTML = MNU.getNavHeader(); // not essential
 
-	//divSettings.innerHTML = THRU.getSettings( divSettings );
 	divFileOpen.innerHTML = FIL.getFileOpen(); // if needed: set file info target
 
 	divSampleFileButtons.innerHTML = GAL.setCardSampleGalleries();
@@ -145,7 +144,6 @@ function init() {
 
 	if ( !location.hash ) { location.hash = FIL.urlDefaultFile; } else { FIL.onHashChange(); }
 	//location.hash = urlDefaultFile;
-
 
 }
 

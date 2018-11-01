@@ -64,6 +64,8 @@ Open, view, examine, identify errors and fix gbXML files in 3D in your browser w
 Things to try
 * Two surfaces have identical coordinates, but one surface has fewer coordinates than the other
 * Two surfaces have overlapping bounding boxes, but have different surface types or other differences
+	* 2018-10-30 ~ Not finding different surface types
+	
 
 ## Issues
 
@@ -82,6 +84,12 @@ See also
 
 
 ## Change Log
+
+
+### 2018-10-30 ~ Theo
+
+Issues ISIN R7.1
+* A tiny bit of progress
 
 
 ### 2018-10-29 ~ Theo

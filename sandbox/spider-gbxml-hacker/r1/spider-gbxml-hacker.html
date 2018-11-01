@@ -51,6 +51,10 @@
 
 		</details>
 
+		<p>
+			<button onclick=getRegex(); >get regex</button>
+		</p>
+
 		<div id = "divGeneralCheck" ></div>
 
 		<footer>
@@ -72,6 +76,8 @@
 
 MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-basic-cookbook/";
 
+let lines;
+let text;
 
 init();
 
@@ -110,7 +116,8 @@ function inpOpenFiles( files ) {
 			<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
 		`;
 
-		divGeneralCheck.innerHTML = getGeneralCheck( reader.result );
+		text = reader.result
+		//divGeneralCheck.innerHTML = getGeneralCheck( reader.result );
 
 	};
 
@@ -134,7 +141,17 @@ function inpOpenFiles( files ) {
 
 
 
-function getGeneralCheck ( text ) {
+function getRegex() {
+
+	text = text.replace( /\r\n|\n/g, '' )
+
+	points = text.match( /\<Cart.*Coordinate\>/ig );
+
+	console.log( 'points', points );
+}
+
+
+function getGeneralCheck ( txt ) {
 
 	let spaces = 0;
 	let surfaces = 0;
@@ -146,6 +163,9 @@ function getGeneralCheck ( text ) {
 	let issuesEmptyStrings = '';
 
 	let htm;
+
+	text = txt;
+	//console.log( 'text', text );
 
 	lines = ( text.split( /\r\n|\n/ ) ).map( line => line.trim().toLowerCase() );
 	//console.log( 'lines', lines );
@@ -165,9 +185,7 @@ function getGeneralCheck ( text ) {
  	} );
 
 
-
 	/*
-
 	if ( line.startsWith( '\<space ' ) ) {
 
 		spaces ++;
@@ -213,7 +231,11 @@ function getGeneralCheck ( text ) {
 		<h3>General Check</h3>
 		<p>Lines checked: ${ lines.length.toLocaleString()}</p>
 		<p>Time to read: ${ ( performance.now() - timeStart ).toLocaleString() } ms</p>
-		<div id=ISSdivCheckText ><textarea style=height:200px;width:100%>${ errorsFound }</textarea></div>
+		<div id=ISSdivCheckText >
+			<textarea style=height:200px;width:100%>
+				${ errorsFound }
+			</textarea>
+		</div>
 	`;
 
 	return htm;

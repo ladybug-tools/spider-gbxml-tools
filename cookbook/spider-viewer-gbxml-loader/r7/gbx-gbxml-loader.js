@@ -70,7 +70,7 @@ GBX.parseFileXML = function( text ) { // called by main HTML file
 	//console.log( 'GBX.gbxml', GBX.gbxml );
 
 	GBX.gbjson = GBX.getXML2jsobj( GBX.gbxml.documentElement );
-	//console.log( 'GBX.gbjson', GBX.gbjson );
+	console.log( 'GBX.gbjson', GBX.gbjson );
 
 	GBX.surfacesJson = GBX.gbjson.Campus.Surface; // useful subset
 

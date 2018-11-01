@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="HTML and CSS for a basic menu system" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-10-30" >
+<title>Spider Viewer gbXML Loader R7</title>
+<link rel="stylesheet" href = "../../../lib/r7/style.css" >
+</head>
+<body>
+<script src = "https://rawgit.com/mrdoob/three.js/r97/build/three.min.js" ></script>
+<script src = "https://rawgit.com/mrdoob/three.js/r97/examples/js/controls/OrbitControls.js" ></script>
+<script src = "../../../lib/r7/mnu-menu.js" ></script>
+<script src = "../../../lib/r7/thr-threejs.js"></script>
+
+<script src = "./gbx-gbxml-loader.js" ></script>
+
+
+
+	<main id="container" ></main>
+
+	<nav id = "navMenu" >
+
+		<header>
+
+			<div id = "divHeader" ></div>
+
+		</header>
+
+		<p><button onclick >update things</button></p>
+
+		<div id = "divLog" >
+			lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?
+		</div>
+
+		<footer>
+
+			<hr>
+
+			<div id = "divFooter" ></div>
+
+		</footer>
+
+	</nav>
+
+
+<script>
+
+
+const urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-viewer-threejs-utilities";
+
+
+init();
+
+
+
+function init() {
+
+	divHeader.innerHTML = MNU.getNavHeader(); // not essential
+
+	divFooter.innerHTML = MNU.getNavFooter(); // not essential
+
+	THR.getThreejs();
+
+	THR.animate();
+
+}
+
+
+
+</script>
+</body>
+</html>

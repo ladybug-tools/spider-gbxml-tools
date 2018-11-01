@@ -5,7 +5,7 @@
 <meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
 <meta name=description content="Various utility functions to support viewing real-time interactive 3D graphics in your browser using WebGL and the Three.js JavaScript library" >
 <meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-10-26" >
+<meta name = "date" content = "2018-10-30" >
 <title>Spider Viewer Lib R7 ~ Three.js Utilities</title>
 <link rel="stylesheet" href = "../../../lib/r7/style.css" >
 </head>
@@ -45,7 +45,17 @@
 
 		</details>
 
+		<details ontoggle=divSceneInfo.innerHTML=THRU.getSceneInfo(); > <!-- not essential -->
+
+			<summary title = "Info on what is in the Three.js scene" >Scene Info</summary>
+
+			<div id = "divSceneInfo" ></div>
+
+		</details>
+
 		<div id = "divLog" ></div>
+
+		<div id="divCurrentStatus" ></div>
 
 		<footer>
 
@@ -61,7 +71,7 @@
 <script>
 
 
-const urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/";
+const urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-viewer-threejs-utilities";
 
 
 init();
@@ -91,6 +101,8 @@ function init() {
 	THR.animate();
 
 	divRendererInfo.innerHTML = THRU.getRendererInfo();
+
+	divCurrentStatus.innerHTML = THRU.getCurrentStatus();
 
 }
 

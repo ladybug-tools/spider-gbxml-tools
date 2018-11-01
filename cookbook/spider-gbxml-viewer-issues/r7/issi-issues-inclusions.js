@@ -1,22 +1,39 @@
 
 
-const ISSI = {};
+const ISIN = { "release": "R7.1" };
 
-ISSI.errorsFound = {};
-ISSI.inclusions = [];
+ISIN.errorsFound = {};
+ISIN.inclusions = [];
+
+ISIN.cssText = "background-color: pink; font-style: italic; font-weight: bold;";
+
 
 // https://stackoverflow.com/questions/22521982/check-if-point-inside-a-polygon
 // https://github.com/substack/point-in-polygon
 // https://stackoverflow.com/questions/17223806/how-to-check-if-point-is-in-polygon-in-javascript
 
 
-ISSI.getMenuInclusions = function() {
+ISIN.getMenuInclusions = function() {
 
 	let htm =
 	`
-		<details ontoggle=divInclusionsFound.innerHTML+=ISSI.getInclusions(); >
+		<details id=ISINdetInclusions ontoggle=ISIN.getInclusionsInit(); >
 
 			<summary>Inclusions</summary>
+
+			<p>
+				Show/hide surfaces:<br>
+
+				<button onclick=ISIN.toggleSurfacesByAngles(this,["0","180"]); > horizontal </button>
+
+				<button onclick=ISIN.toggleSurfacesByAngles(this,"90"); > vertical </button>
+
+				<button onclick=ISIN.toggleSurfacesByAngles(this);> angled </button>
+			</p>
+
+			<div id=ISINdivAnglesTilt ></div>
+
+			<p><button onclick=divInclusionsFound.innerHTML=ISIN.getInclusions(this,["0","180"]); >find inclusions horizontal</button> </p>
 
 			<div id=divInclusionsFound ></div>
 
@@ -30,67 +47,203 @@ ISSI.getMenuInclusions = function() {
 
 
 
-ISSI.getInclusions = function() {
+ISIN.getInclusionsInit = function() {
+
+	//ISIN.cleanUpScene();
+
+	navMenu.scrollTop = ISINdetInclusions.offsetTop;
+
+	ISIN.anglesTilt = [];
+	ISIN.anglesTiltSurfaces = [];
+
+	GBX.gbjson.Campus.Surface.forEach( surface => {
+
+		const tilt = surface.RectangularGeometry.Tilt;
+
+		if ( ISIN.anglesTilt.includes( tilt ) === false ) {
+
+			ISIN.anglesTilt.push( tilt );
+			ISIN.anglesTiltSurfaces.push( [ surface ] );
+
+		} else {
+
+			const index = ISIN.anglesTilt.indexOf( tilt );
+			ISIN.anglesTiltSurfaces[ index ].push( surface );
+
+		}
+
+	} );
+
+	const anglesHtml = ISIN.anglesTilt.map( item => Number( item ).toLocaleString() ).join( ', ' );
+
+	ISINdivAnglesTilt.innerHTML =
+	`
+		<details>
+
+		<summary>tilt angles</summary>
+
+		<p>${ anglesHtml }</p>
+
+		</details>
+	`;
+
+};
+
+
+
+ISIN.toggleSurfacesByAngles = function( button, angles = [] ) {
+
+	//console.log( 'anglesTilt', anglesTilt, anglesTiltSurfaces );
+
+	ISIN.cleanUpScene();
+
+	angles = Array.isArray( angles ) ? angles : [ angles ];
+
+	angles = angles.length === 0 ? ISIN.anglesTilt.filter( angle => ["0", "90", "180"].includes( angle ) === false ) : angles;
+
+	//console.log( 'angles', angles );
+
+	let count = 0;
+
+	if ( button.style.fontStyle !== 'italic' ) {
+
+		GBX.surfaceMeshes.children.forEach( element => element.visible = false );
+
+		for ( let angle of angles ) {
+
+			let index = ISIN.anglesTilt.indexOf( angle );
+			let surfaceMeshes = GBX.surfaceMeshes.children.filter( element => ISIN.anglesTiltSurfaces[ index ].find( item => item.id === element.userData.gbjson.id ) );
+			surfaceMeshes.forEach( mesh => mesh.visible = true );
+
+			count += surfaceMeshes.length;
+
+		}
+
+		detPointInPolygon.querySelectorAll( "button" ).forEach( button => 	button.style.cssText = "" );
+
+		button.style.cssText = ISIN.cssText;
+
+		button.title = `surfaces count: ${ count }`;
+
+
+	} else {
+
+		GBX.surfaceMeshes.children.forEach( element => element.visible = true );
+
+		button.style.cssText = "";
+
+	}
+
+};
+
+
+
+ISIN.getInclusions = function( button, angles = [] ) {
 
 	let htm;
+	ISIN.inclusions = [];
 
-	ISSI.inclusions = [];
+	ISIN.timeStart = performance.now();
 
-	let children = GBX.surfaceMeshes.children;
+	angles = Array.isArray( angles ) ? angles : [ angles ];
 
-	children2 = children.slice();
+	angles = angles.length === 0 ? ISIN.anglesTilt.filter( angle => ["0", "90", "180"].includes( angle ) === false ) : angles;
 
-	for ( let surface of children ) {
+	for ( let angle of angles ) {
 
-		const box1 = new THREE.Box3().setFromObject ( surface );
+		let index = ISIN.anglesTilt.indexOf( angle );
 
-		for ( let surfaceTest of children2 ) {
+		let surfaceMeshes = GBX.surfaceMeshes.children.filter( element => ISIN.anglesTiltSurfaces[ index ].find( item => item.id === element.userData.gbjson.id ) );
+		//console.log( 'surfaceMeshes', surfaceMeshes );
 
-			const box2 = new THREE.Box3().setFromObject ( surfaceTest );
 
-			if ( box1.containsBox( box2 ) && surface.uuid != surfaceTest.uuid ) {
+		//let children = GBX.surfaceMeshes.children;
 
-				children2.pop();
+		surfaceMeshes2 = surfaceMeshes.slice();
 
-				ISSI.inclusions.push ( {s1: surface, s2: surfaceTest } );
+		for ( let surface of surfaceMeshes ) {
+
+			const box1 = new THREE.Box3().setFromObject ( surface );
+
+			for ( let surfaceTest of surfaceMeshes2 ) {
+
+				const box2 = new THREE.Box3().setFromObject ( surfaceTest );
+
+				if ( box1.containsBox( box2 )
+					&& surface.uuid !== surfaceTest.uuid
+					//&& surface.userData.gbjson.surfaceType !== surfaceTest.userData.gbjson.surfaceType
+				) {
+
+					//surfaceMeshes2.pop();
+
+					ISIN.inclusions.push ( {s1: surface, s2: surfaceTest } );
+
+				}
 
 			}
 
 		}
-
 	}
 
-
 	let txt = '';
-	/*
 
-	for ( let inclusion of ISSI.inclusions ) {
 
-		//const butts1 = ISSI.getButtonsSurfaceId( inclusion.s1.userData.data.id );
-		//const butts2 = ISSI.getButtonsSurfaceId( inclusion.s2.userData.data.id );
+	for ( let inclusion of ISIN.inclusions ) {
+
+		//const butts1 = ISIN.getButtonsSurfaceId( inclusion.s1.userData.data.id );
+		//const butts2 = ISIN.getButtonsSurfaceId( inclusion.s2.userData.data.id );
 
 		txt +=
 		`
-		${inclusion.s1.userData.data.Name}<br>
-		${inclusion.s1.userData.data.Name}
+		<button onclick=ISIN.setIntersected(${inclusion.s1}); title="${inclusion.s1.userData.gbjson.surfaceType }" >${inclusion.s1.userData.gbjson.Name}</button><br>
+		${inclusion.s2.userData.gbjson.Name} ${inclusion.s2.userData.gbjson.surfaceType }
 		<hr>`;
 
 	}
 
-	*/
+	const arr = ISIN.inclusions.map( ( inclusion, index ) => {
+
+		return `
+		<button onclick=ISIN.setIntersected(${index},"s1"); title="${inclusion.s1.userData.gbjson.surfaceType }" >${inclusion.s1.userData.gbjson.Name}</button><br>
+		<button onclick=ISIN.setIntersected(${index},"s2"); title="${inclusion.s2.userData.gbjson.surfaceType }" >${inclusion.s2.userData.gbjson.Name}</button>
+		<hr>`;
+
+	} );
 
 
-	ISSI.setSelectedFocus( ISSI.inclusions );
+
+	//ISIN.setSelectedFocus( ISIN.inclusions );
 	//txt = setInclusionsRed();
 
-	htm = `inclusions found: ${ ISSI.inclusions.length }<br>${ txt }`;
+	htm =
+	`<p>
+		inclusions found: ${ ISIN.inclusions.length }<br>
+		${ arr.join( '' ) }<br>
+		time: ${ ( performance.now() - ISIN.timeStart ).toLocaleString() }ms
+	`;
 
 	return htm;
 
 };
 
 
-ISSI.getVertices = function( polyloop ) {
+
+ISIN.setIntersected = function( index, element ){
+
+	POP.intersected = ISIN.inclusions[ index ][ element ];
+	console.log( 'POP.intersected', POP.intersected );
+	divPopupData.innerHTML = POP.getIntersectedDataHtml();
+
+	//POP.intersects = POP.intersects ? POP.intersects : ( ['23'] ).
+	//POP.intersects[ 0 ].point.copy( POP.intersected.position )
+	POP.getIntersectedVertexBufferGeometry( POP.intersected.position );
+
+	POP.toggleSurfaceFocus();
+};
+
+
+
+ISIN.getVertices = function( polyloop ) {
 
 	const points = polyloop.CartesianPoint.map( CartesianPoint => new THREE.Vector3().fromArray( CartesianPoint.Coordinate ) );
 	return points;
@@ -107,13 +260,13 @@ function setInclusionsRed() {
 
 	const direction = new THREE.Vector3( 0, 0, 1 );
 
-	ISSI.inclusions.forEach( child => { child.s1.visible = false; } );
+	ISIN.inclusions.forEach( child => { child.s1.visible = false; } );
 
 	const intersects2 = [];
 
-	for ( let surfaces of ISSI.inclusions ) {
+	for ( let surfaces of ISIN.inclusions ) {
 
-		verticesS2 = ISSI.getVertices( surfaces.s2.userData.gbjson.PlanarGeometry.PolyLoop );
+		verticesS2 = ISIN.getVertices( surfaces.s2.userData.gbjson.PlanarGeometry.PolyLoop );
 
 		for ( let vertex of verticesS2 ) {
 
@@ -160,7 +313,7 @@ function setInclusionsRed() {
 
 	}
 
-	for ( let surfaces of ISSI.inclusions ) {
+	for ( let surfaces of ISIN.inclusions ) {
 
 		if ( surfaces.s2.material.color.r !== 1 ) {
 
@@ -178,16 +331,16 @@ function setInclusionsRed() {
 
 
 
-ISSI.setDoubleCheck = function() {
+ISIN.setDoubleCheck = function() {
 
 	THR.scene.updateMatrixWorld();
 
 	var raycaster = new THREE.Raycaster();
 
-	for ( surfaces of ISSI.inclusions ) {
+	for ( surfaces of ISIN.inclusions ) {
 
 		//const vertices = new THREE.Geometry().fromBufferGeometry( surfaces.s1.geometry ).vertices ;
-		verticesS1 = ISSI.getVertices( surfaces.s1.userData.gbjson.PlanarGeometry.PolyLoop );
+		verticesS1 = ISIN.getVertices( surfaces.s1.userData.gbjson.PlanarGeometry.PolyLoop );
 		//console.log( 'verticesS1', verticesS1 );
 
 		const center = surfaces.s2.geometry.boundingSphere.center;
@@ -224,7 +377,7 @@ ISSI.setDoubleCheck = function() {
 
 
 
-ISSI.setSelectedFocus = function( surfaces ) {
+ISIN.setSelectedFocus = function( surfaces ) {
 
 	//console.log( 'select', select.value );
 
@@ -260,5 +413,21 @@ ISSI.setSelectedFocus = function( surfaces ) {
 		}
 
 	}
+
+};
+
+
+ISIN.cleanUpScene = function() {
+
+	THR.scene.remove( POP.line, POP.particle );
+	//THR.scene.remove( ISPIP.helpers );
+
+	//ISPIP.helpers = new THREE.Group();
+
+	//THR.scene.add( ISPIP.helpers );
+
+	GBX.surfaceMeshes.children.forEach( element => element.visible = true );
+
+	ISINdetInclusions.querySelectorAll( "button" ).forEach( button => 	button.style.cssText = "" );
 
 };

@@ -5,8 +5,8 @@
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
 <meta name=description content="Cookbook version: Open, view and examine gbXML files in 3D in your browser with free, open source entry-level Three.js JavaScript" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-10-19" >
-<title>Spider gbXML Viewer R7.5 Basic cookbook</title>
+<meta name = "date" content = "2018-10-31" >
+<title>Spider gbXML Viewer R7.8 Basic cookbook</title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 </head>
 <body>
@@ -16,7 +16,7 @@
 <script src = "../../../lib/r7/thr-threejs.js" ></script>
 <script src = "../../../lib/r7/thru-threejs-utilities.js"></script>
 <script src = "../../../lib/r7/gbx-gbxml-loader.js" ></script>
-<script src = "./fil-open-file-gbxml.js" ></script>
+<script src = "../../../lib/r7/fil-open-file-gbxml.js" ></script>
 <script src = "../../../lib/r7/pop-up-gbxml.js" ></script>
 <script src = "../../../lib/r7/gal-sample-files-gallery-gbxml.js" ></script>
 
@@ -48,7 +48,7 @@
 
 		</details>
 
-		<details open >
+		<details>
 
 			<summary title = "Update what you see in the display">Settings</summary>
 
@@ -56,8 +56,7 @@
 
 		</details>
 
-		<!--
-		<details ontoggle=divRendererInfo.innerHTML=THRU.getRendererInfo(); >
+		<details ontoggle=divRendererInfo.innerHTML=THRU.getRendererInfo(); > <!-- not essential -->
 
 			<summary title = "Info on what Three.js is animating" >Renderer Info</summary>
 
@@ -65,15 +64,13 @@
 
 		</details>
 
+		<details ontoggle=divSceneInfo.innerHTML=THRU.getSceneInfo(); > <!-- not essential -->
 
-			<details ontoggle=divSceneInfo.innerHTML=THRU.getSceneInfo(); >
+			<summary title = "Info on what is in the Three.js scene" >Scene Info</summary>
 
-				<summary title = "Info on what is in the Three.js scene" >Scene Info</summary>
+			<div id = "divSceneInfo" ></div>
 
-				<div id = "divSceneInfo" ></div>
-
-			</details>
-		-->
+		</details>
 
 		<div id = "divFileInfo" ></div>
 
@@ -102,6 +99,7 @@
 	</div>
 
 <script>
+
 
 MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-basic-cookbook/";
 
