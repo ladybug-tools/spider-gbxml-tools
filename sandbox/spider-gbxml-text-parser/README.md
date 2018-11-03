@@ -30,8 +30,49 @@ It is currently being tested on a gbXML file ( private and not sharable ) of 698
 The file breaks the Chrome browser on Windows 10, the FireFox browser on Windows 10 and OpenStudio on Windows 10.
 
 
+## Full Screen: [Spider gbXML Text Parser R5.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-hacker/r5/spider-gbxml-text-parser.html )
+
+### 2018-11-03 ~ Theo
+
+* Draw polygonal  surfaces with any number of vertices
+* Displays some statistics
+* Adds load file from disk
+* Adds load sample files
+
+Largest model loaded so far
+* bytes loaded: 698,701,430
+* time to load: 9,119 ms
+* time to parse: 8,244 ms
+* spaces: 5,550
+* surfaces: 70,774
+* coordinates: 1,342,749
+* On fast machine loads in under a minute. Reloads under 45 seconds
+
+Notes
+* Reload faster than first load
+* Model not fully loaded until model centers on screen
+* Surface types displayed: Roof, ExteriorWall, ExposedFloor, Air & Shade
+
+## Full Screen: [Spider gbXML Text Parser R4.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-hacker/r4/spider-gbxml-text-parser.html )
+
+### 2018-11-02 ~ Theo
+* Creates and displays meshes in Three.js
+* Only handles triangles and quads
+
+## Full Screen: [Spider gbXML Text Parser R3.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-hacker/r3/spider-gbxml-text-parser.html )
+
+Spider gbXML Text Parser R3.0
+* Name change
+* Adds standalone JavaScript file
 
 ## Full Screen: [Spider gbXML Hacker R2.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-hacker/r2/spider-gbxml-hacker.html )
+
+### 2018-11-02 ~ Theo
+Hacker R2.0
+
+Wow!
+
+Reading 1,342,749 coordinates in the 666 MB file in 6 seconds. Sickx!
 
 
 ## Full Screen: [Spider gbXML Hacker R1.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-hacker/r1/spider-gbxml-hacker.html )
@@ -50,6 +91,7 @@ See if we can parse and display in 3D files of this size
 
 ## Issues
 
+* File not loading: annapolis-md-single-family-residential-2016.xml
 
 ## Things you can do using this script
 
@@ -65,23 +107,6 @@ See if we can parse and display in 3D files of this size
 
 
 ## Change Log
-
-### 2018-11-02 ~ Theo
-
-Spider gbXML Text Parser R4.0
-* Creates and displays meshes in Three.js
-* Only handles triangles and quads
-
-
-Spider gbXML Text Parser R3.0
-* Name change
-* Adds standalone JavaScript file
-
-Hacker R2.0
-
-Wow!
-
-Reading 1,342,749 coordinates in the 666 MB file in 6 seconds. Sickx!
 
 
 ### 2018-11-01 ~ Theo

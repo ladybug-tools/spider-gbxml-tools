@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8" >
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
-<meta name=description content="Open and examine gbXML files in your browser with free, open source JavaScript" >
+<meta name=description content="Open and examine very large gbXML files in your browser with free, open source JavaScript" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-11-02" >
-<title>Spider gbXML Text Parser R4.0 </title>
+<meta name = "date" content = "2018-11-03" >
+<title>Spider gbXML Text Parser R5.0 </title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 </head>
 <body>
@@ -15,6 +15,7 @@
 <script src = "../../../lib/r7/mnu-menu.js" ></script>
 <script src = "../../../lib/r7/thr-threejs.js" ></script>
 <script src = "../../../lib/r7/thru-threejs-utilities.js"></script>
+<script src = "../../../lib/r7/gal-sample-files-gallery-gbxml.js" ></script>
 
 <script src = "./gbx-text-parser.js" ></script>
 
@@ -32,12 +33,6 @@
 
 			<summary>File Open</summary>
 
-			<p>
-				<i>
-					Identify issues with an XML file.
-				</i>
-			</p>
-
 			<div id="divFileCheckOpen" class="dragDropArea" >
 
 				<p id=pFileOpen>
@@ -48,16 +43,38 @@
 				</p>
 
 			</div>
+		</details>
 
-			<br>
+		<details>
+
+			<summary>Spider gbXML Sample files</summary>
+
+			<div id=divSampleFileButtons ></div>
+
+			<div id=divSampleFileItems ></div>
+
+		</details>
+
+		<details open>
+
+			<summary>File info</summary>
+
 
 			<div id = "divFileInfo" ></div>
 
 			<div id = "divGbxmlInfo" ></div>
 
+			<hr>
+
+
+			<p>Reload faster than first load.</p>
+
+			<p>Model not fully loaded until model centers on screen.</p>
+
+			<p>Surface types displayed: Roof, ExteriorWall, ExposedFloor, Air & Shade.</p>
+
 		</details>
 
-		<div id = "divGeneralCheck" ></div>
 
 		<footer>
 
@@ -93,7 +110,7 @@ function init() {
 
 	divHeader.innerHTML = MNU.getNavHeader(); // not essential
 
-	//divSampleFileButtons.innerHTML = GAL.setCardSampleGalleries();
+	divSampleFileButtons.innerHTML = GAL.setCardSampleGalleries();
 
 	divFooter.innerHTML = MNU.getNavFooter(); // not essential
 
@@ -103,11 +120,37 @@ function init() {
 
 	THRU.addSomeLights();
 
-	requestFile( urlDefaultFile, callbackGbXML );
+	//requestFile( urlDefaultFile, callbackGbXML );
+
+
+	window.addEventListener ( 'hashchange', onHashChange, false );
+
+
+	if ( !location.hash ) { location.hash = urlDefaultFile; } else { onHashChange(); }
+	//location.hash = urlDefaultFile;
 
 }
 
 
+function onHashChange() {
+
+	timeStart = performance.now();
+
+	const url = !location.hash ? urlDefaultFile : location.hash.slice( 1 );
+
+	if ( url.toLowerCase().endsWith( '.xml' ) ) {
+
+		THRU.setSceneDispose( [ GBX.surfaceMeshes ] );
+
+		requestFile( url, callbackGbXML );
+
+	} else {
+
+		console.log( 'oops', url );
+
+	}
+
+};
 
 function requestFile( url, callback ) {
 
@@ -124,13 +167,13 @@ function requestFile( url, callback ) {
 
 		function onRequestFileProgress( xhr ) {
 
-			const name = xhr.target.responseURL.split( '/').pop();
+			GBX.name = xhr.target.responseURL.split( '/').pop();
 
 			const timeToLoad = performance.now() - timeStart;
 
 			divFileInfo.innerHTML =
 			`
-				<div>${ name }</div>
+				<div>${ GBX.name }</div>
 				<div>bytes loaded: ${xhr.loaded.toLocaleString()}</div>
 				<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
 
@@ -150,6 +193,7 @@ function callbackGbXML( xhr ) {
 
 	divFileInfo.innerHTML =
 	`
+		<div>${ GBX.name }</div>
 		<div>bytes loaded: ${xhr.loaded.toLocaleString()}</div>
 		<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
 
@@ -159,14 +203,13 @@ function callbackGbXML( xhr ) {
 
 
 
-
 function inpOpenFiles( files ) {
 
 	//console.log( 'file', files.files[ 0 ] );
 
 	timeStart = performance.now();
 
-	fileAttributes = files.files[ 0 ];
+	const fileAttributes = files.files[ 0 ];
 
 	const reader = new FileReader();
 
@@ -187,7 +230,6 @@ function inpOpenFiles( files ) {
 			<div>bytes loaded: ${event.loaded.toLocaleString()}</div>
 			<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
 		`;
-
 
 	};
 
