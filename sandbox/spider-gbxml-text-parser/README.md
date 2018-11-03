@@ -1,16 +1,16 @@
 
-<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( https://www.ladybug.tools/spider-gbxml-tools/#sandbox/spider-gbxml-hacker/README.md "View file as a web page." ) </span>
+<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( https://www.ladybug.tools/spider-gbxml-tools/#sandbox/spider-gbxml-text-parser/README.md "View file as a web page." ) </span>
 
-<div><input type=button class = "btn btn-secondary btn-sm" onclick="window.location.href='https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/sandbox/spider-gbxml-hacker/README.md'";
+<div><input type=button class = "btn btn-secondary btn-sm" onclick="window.location.href='https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/sandbox/spider-gbxml-text-parser/README.md'";
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' ></div>
 
 <br>
 
-# [Spider gbXML Hacker Read Me]( #sandbox/spider-gbxml-hacker/README.md )
+# [Spider gbXML Text Parser Read Me]( #sandbox/spider-gbxml-text-parser/README.md )
 
 
-<iframe src=https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-hacker/index.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
-_<small>Spider gbXML Hacker</small>_
+<iframe src=https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/index.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
+_<small>Spider gbXML Text Parser</small>_
 
 
 
@@ -30,7 +30,7 @@ It is currently being tested on a gbXML file ( private and not sharable ) of 698
 The file breaks the Chrome browser on Windows 10, the FireFox browser on Windows 10 and OpenStudio on Windows 10.
 
 
-## Full Screen: [Spider gbXML Text Parser R5.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-hacker/r5/spider-gbxml-text-parser.html )
+## Full Screen: [Spider gbXML Text Parser R5.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r5/spider-gbxml-text-parser.html )
 
 ### 2018-11-03 ~ Theo
 
@@ -53,29 +53,28 @@ Notes
 * Model not fully loaded until model centers on screen
 * Surface types displayed: Roof, ExteriorWall, ExposedFloor, Air & Shade
 
-## Full Screen: [Spider gbXML Text Parser R4.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-hacker/r4/spider-gbxml-text-parser.html )
+## Full Screen: [Spider gbXML Text Parser R4.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r4/spider-gbxml-text-parser.html )
 
 ### 2018-11-02 ~ Theo
 * Creates and displays meshes in Three.js
 * Only handles triangles and quads
 
-## Full Screen: [Spider gbXML Text Parser R3.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-hacker/r3/spider-gbxml-text-parser.html )
+## Full Screen: [Spider gbXML Text Parser R3.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r3/spider-gbxml-text-parser.html )
 
-Spider gbXML Text Parser R3.0
 * Name change
 * Adds standalone JavaScript file
 
-## Full Screen: [Spider gbXML Hacker R2.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-hacker/r2/spider-gbxml-hacker.html )
+## Full Screen: [Spider gbXML Hacker R2.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r2/spider-gbxml-text-parser.html )
 
 ### 2018-11-02 ~ Theo
-Hacker R2.0
+text-parser R2.0
 
 Wow!
 
 Reading 1,342,749 coordinates in the 666 MB file in 6 seconds. Sickx!
 
 
-## Full Screen: [Spider gbXML Hacker R1.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-hacker/r1/spider-gbxml-hacker.html )
+## Full Screen: [Spider gbXML Hacker R1.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r1/spider-gbxml-text-parser.html )
 
 With Chrome browser on Windows 10/Core i7/Nvidia GPU  reads the file and displays limited text data for the file in under 15 seconds. No attempts are made to display data in 3D
 
@@ -111,7 +110,7 @@ See if we can parse and display in 3D files of this size
 
 ### 2018-11-01 ~ Theo
 
-I've just been working on a file similar to the 'hacker' file included here. What I am discovering is that it is much faster to load a file as a text file then it is to load it as an XML file and then convert it to JSON
+I've just been working on a file similar to the 'text-parser' file included here. What I am discovering is that it is much faster to load a file as a text file then it is to load it as an XML file and then convert it to JSON
 
 I've been experimenting with the Warwick University file. This file is just over 20 megabytes in size. Even with this size, it takes the browser less than a couple of seconds to load the data as a text file.
 
