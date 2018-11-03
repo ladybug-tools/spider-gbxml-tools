@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
+<meta name=description content="Open and examine gbXML files in your browser with free, open source JavaScript" >
+<meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-11-02" >
+<title>Spider gbXML Hacker R2.0 </title>
+<link rel="stylesheet" href="../../../lib/r7/style.css">
+</head>
+<body>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r97/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r97/examples/js/controls/OrbitControls.js" ></script>
+<script src = "../../../lib/r7/mnu-menu.js" ></script>
+
+	<main id="container" ></main>
+
+	<nav id = "navMenu" >
+
+		<header>
+
+			<div id = "divHeader" ></div>
+
+		</header>
+
+		<details open >
+
+			<summary>File Open</summary>
+
+			<p>
+				<i>
+					Identify issues with an XML file.
+				</i>
+			</p>
+
+			<div id="divFileCheckOpen" class="dragDropArea" >
+
+				<p id=pFileOpen>
+
+					Open gbXML files:
+					<input type=file id=inpOpenFile onchange=inpOpenFiles(this); accept=".xml" >
+
+				</p>
+
+			</div>
+
+			<br>
+
+			<div id = "divFileInfo" ></div>
+
+			<div id = "divGbxmlInfo" ></div>
+
+		</details>
+
+		<p>
+			<button onclick=getRegex(); >get regex</button>
+		</p>
+
+		<div id = "divGeneralCheck" ></div>
+
+		<footer>
+
+			<hr>
+
+			<div id = "divFooter" ></div>
+
+		</footer>
+
+	</nav>
+
+	<nav>
+		<button id="butHamburger" onclick=MNU.toggleNavLeft(); title="click to hide this menu"> slide &#9776; </button>
+	</nav>
+
+
+<script>
+
+MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-basic-cookbook/";
+
+//const urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml';
+const urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/coventry-university-of-warwick-small.xml';
+
+let timeStart;
+let lines;
+let text;
+
+init();
+
+
+
+function init() {
+
+	divHeader.innerHTML = MNU.getNavHeader(); // not essential
+
+	//divSampleFileButtons.innerHTML = GAL.setCardSampleGalleries();
+
+	divFooter.innerHTML = MNU.getNavFooter(); // not essential
+
+	timeStart = performance.now();
+
+	requestFile( urlDefaultFile, callbackGbXML )
+
+}
+
+
+function requestFile( url, callback ) {
+
+timeStart = performance.now();
+
+const xhr = new XMLHttpRequest();
+xhr.crossOrigin = 'anonymous';
+xhr.open( 'GET', url, true );
+xhr.onerror = function( xhr ) { console.log( 'error:', xhr  ); };
+xhr.onprogress = onRequestFileProgress;
+xhr.onload = callback;
+xhr.send( null );
+
+
+	function onRequestFileProgress( xhr ) {
+
+		const name = xhr.target.responseURL.split( '/').pop();
+
+		timeToLoad = performance.now() - timeStart;
+
+		divFileInfo.innerHTML =
+		`
+			<div>${ name}</div>
+			<div>bytes loaded: ${xhr.loaded.toLocaleString()}</div>
+			<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
+
+		`;
+
+	}
+
+};
+
+
+
+function callbackGbXML( xhr ) {
+
+	parseFile( xhr.target.response );
+
+	const timeToLoad = performance.now() - timeStart;
+
+	divFileInfo.innerHTML =
+	`
+		<div>${ name }</div>
+		<div>bytes loaded: ${xhr.loaded.toLocaleString()}</div>
+		<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
+
+	`;
+
+};
+
+
+
+
+function inpOpenFiles( files ) {
+
+	//console.log( 'file', files.files[ 0 ] );
+
+	timeStart = performance.now();
+
+	fileAttributes = files.files[ 0 ];
+
+	const reader = new FileReader();
+
+	reader.onprogress = onRequestFileProgress;
+
+	reader.onload = function( event ) {
+
+		divFileInfo.innerHTML =
+		`
+			<div>${ fileAttributes.name }</div>
+			<div>bytes loaded: ${event.loaded.toLocaleString()}</div>
+			<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
+		`;
+
+		text = reader.result
+		//divGeneralCheck.innerHTML = getGeneralCheck( reader.result );
+
+		parseFile( text )
+
+	};
+
+	reader.readAsText( files.files[ 0 ] );
+
+
+	function onRequestFileProgress( event ) {
+
+		const timeToLoad = performance.now() - timeStart;
+
+		divFileInfo.innerHTML =
+		`
+			<div>${ fileAttributes.name }</div>
+			<div>bytes loaded: ${event.loaded.toLocaleString()}</div>
+			<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
+		`;
+
+	}
+
+}
+
+
+
+function parseFile( gbxml )  {
+
+	const text = gbxml.replace( /\r\n|\n/g, '' );
+
+	const re = /<Surface(.*?)<\/surface>/gi;
+	const surfaces = text.match( re );
+	//console.log( 'surfaces', surfaces );
+
+	const vertices = surfaces.map( surface => getVertices( surface ) );
+
+	const count = vertices.reduce( ( count, val, index ) => count + vertices[ index ].length, 0 );
+
+	const timeToLoad = performance.now() - timeStart;
+
+	divGbxmlInfo.innerHTML =
+	`
+		<hr>
+		<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
+		<div>surfaces: ${ surfaces.length.toLocaleString() } </div>
+		<div>vertex arrays: ${ vertices.length.toLocaleString() } </div>
+		<div>vertex count: ${ count.toLocaleString() } </div>
+	`;
+
+
+};
+
+
+
+function getVertices( surface ) {
+
+	const re = /<coordinate(.*?)<\/coordinate>/gi;
+	const coordinatesText = surface.match( re );
+	const coordinates = coordinatesText.map( coordinate => coordinate.replace(/<\/?coordinate>/gi, '' ) )
+		.map( txt => Number( txt ) );
+
+	return coordinates
+
+}
+
+
+
+</script>
+</body>
+</html>
