@@ -86,6 +86,7 @@ With Chrome browser on Windows 10/Core i7/Nvidia GPU  reads the file and display
 ## To Do / Wish List
 
 See if we can parse and display in 3D files of this size
+* 2018-11-04 - Michal: Add ability to read gbXML from .zip files
 
 
 ## Issues
