@@ -25,7 +25,8 @@ _<small>Spider Viewer gbXML Loader</small>_
 
 ## To Do / Wish List
 
-
+* 2018-11-03 ~ Theo ~ Be able to load files without having to load Three.js
+* 2018-11-03 ~ Theo ~ Add load files via location hash??
 
 
 ## Issues

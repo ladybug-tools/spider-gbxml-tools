@@ -2,7 +2,7 @@
 /* globals THR, GBX, POP, ISASIfound */
 /* jshint esversion: 6 */
 
-const ISASI = { "release": "R7.0" };
+const ISASI = { "release": "R7.1" };
 
 
 ISASI.getMenuAdjacentSpaceInvalid = function() {
@@ -11,11 +11,11 @@ ISASI.getMenuAdjacentSpaceInvalid = function() {
 
 	`<details ontoggle=ISASI.getAdjacentSpaceInvalidCheck(); >
 
-		<summary>Adjacent Space Invalid <span id=ISASIfound ></span></summary>
+		<summary>Adjacent Space Invalid</summary>
 
 		<p>
 			<i>
-				Surfaces with invalid adjacent spaces.
+				Surfaces with invalid adjacent spaces. <span id=ISASIfound ></span>
 				ISASI ${ ISASI.release }.
 			</i>
 		</p>
@@ -28,9 +28,9 @@ ISASI.getMenuAdjacentSpaceInvalid = function() {
 
 		<details>
 
-			<summary>ISASI Status 2018-10-27</summary>
+			<summary>ISASI Status 2018-11-03</summary>
 
-			<p>First pass at bringing this code over from 'Aragog' R14.<p>
+			<p>Should we list errors here? or is on screen good enough?<p>
 
 			<p>To do: How to fix the issues and save the changes</p>
 
@@ -62,7 +62,7 @@ ISASI.getAdjacentSpaceInvalidCheck = function() {
 			//console.log( 'shade surface', surface );
 			ISASI.adjacentSpaceInvalid.push( surface );
 
-		} else if ( twoSpaces.includes( surface.surfaceType ) && surface.AdjacentSpaceId.length !== 2 ) {
+		} else if ( twoSpaces.includes( surface.surfaceType ) && ( Array.isArray( surface.AdjacentSpaceId ) === false || surface.AdjacentSpaceId.length !== 2 ) ) {
 
 			//console.log( 'two space', surface );
 			ISASI.adjacentSpaceInvalid.push( surface );
@@ -81,7 +81,7 @@ ISASI.getAdjacentSpaceInvalidCheck = function() {
 
 	}
 
-	ISASIfound.innerHTML = `- ${ ISASI.adjacentSpaceInvalid.length } found`;
+	ISASIfound.innerHTML = `${ ISASI.adjacentSpaceInvalid.length } found`;
 
 	//console.log( 'ISASI.adjacentSpaceInvalid',  ISASI.adjacentSpaceInvalid );
 

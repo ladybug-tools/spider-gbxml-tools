@@ -34,7 +34,7 @@ The file breaks the Chrome browser on Windows 10, the FireFox browser on Windows
 
 ### 2018-11-03 ~ Theo
 
-* Draw polygonal  surfaces with any number of vertices
+* Draw polygonal surfaces with any number of vertices
 * Displays some statistics
 * Adds load file from disk
 * Adds load sample files

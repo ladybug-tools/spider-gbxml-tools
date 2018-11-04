@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
+<meta name=description content="Open, view and examine files in 3D in your browser with free, open source entry-level Three.js JavaScript" >
+<meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-10-31" >
+<title>Spider gbXML Viewer R7.8 Basic cookbook</title>
+<link rel="stylesheet" href="../../../lib/r7/style.css">
+</head>
+<body>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r97/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r97/examples/js/controls/OrbitControls.js" ></script>
+<script src = "../../../lib/r7/mnu-menu.js" ></script>
+<script src = "../../../lib/r7/thr-threejs.js" ></script>
+<script src = "../../../lib/r7/thru-threejs-utilities.js"></script>
+<script src = "../../../lib/r7/gbx-gbxml-loader.js" ></script>
+<script src = "./fil-open-file-gbxml.js" ></script>
+<!--
+
+	<script src = "../../../lib/r7/pop-up-gbxml.js" ></script>
+	<script src = "../../../lib/r7/gal-sample-files-gallery-gbxml.js" ></script>
+
+-->
+
+	<main id="container" ></main>
+
+	<nav id = "navMenu" >
+
+		<header>
+
+			<div id = "divHeader" ></div>
+
+		</header>
+
+		<details open >
+
+			<summary>File Open</summary>
+
+			<div id="divFileOpen" class="dragDropArea" ></div>
+
+		</details>
+
+		<!--
+
+
+			<details>
+
+				<summary>Spider gbXML Sample files</summary>
+
+				<div id=divSampleFileButtons ></div>
+
+				<div id=divSampleFileItems ></div>
+
+			</details>
+
+			<details>
+
+				<summary title = "Update what you see in the display">Settings</summary>
+
+				<div id = "divSettings" ></div>
+
+			</details>
+		-->
+
+		<details ontoggle=divRendererInfo.innerHTML=THRU.getRendererInfo(); > <!-- not essential -->
+
+			<summary title = "Info on what Three.js is animating" >Renderer Info</summary>
+
+			<div id = "divRendererInfo" ></div>
+
+		</details>
+
+		<details ontoggle=divSceneInfo.innerHTML=THRU.getSceneInfo(); > <!-- not essential -->
+
+			<summary title = "Info on what is in the Three.js scene" >Scene Info</summary>
+
+			<div id = "divSceneInfo" ></div>
+
+		</details>
+
+		<div id = "divFileInfo" ></div>
+
+		<div id = "divLog" ></div>
+
+		<footer>
+
+			<hr>
+
+			<div id = "divFooter" ></div>
+
+		</footer>
+
+	</nav>
+
+	<nav>
+		<button id="butHamburger" onclick=MNU.toggleNavLeft(); title="click to hide this menu"> slide &#9776; </button>
+	</nav>
+
+	<div id="divPopUp" >
+
+		<div id="divPopUpData" ></div>
+
+		<div id="divMessage" ></div>
+
+	</div>
+
+<script>
+
+
+MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-basic-cookbook/";
+
+FIL.urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml';
+//FIL.urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/coventry-university-of-warwick-small.xml';
+
+FIL.divFileInfo = divFileInfo;
+
+
+init();
+THR.animate();
+
+
+function init() {
+
+	divHeader.innerHTML = MNU.getNavHeader(); // not essential
+
+	divFileOpen.innerHTML = FIL.getFileOpen(); // if needed: set file info target
+
+	//divSampleFileButtons.innerHTML = GAL.setCardSampleGalleries();
+
+	//divSettings.innerHTML = THRU.getSettings();
+
+	divFooter.innerHTML = MNU.getNavFooter(); // not essential
+
+
+	THR.getThreejs();
+
+	THRU.setHelpers();
+
+	THRU.addSomeLights();
+
+	//divPopUpData.innerHTML = POP.getMenuHtmlPopUp();
+
+	// loads a default file / great for testing same file many times
+	const thrFilePath = localStorage.getItem( 'thrFilePath' ) || '';
+
+	FILinpFilePath.value = thrFilePath;
+
+	FIL.urlDefaultFile = thrFilePath || FIL.urlDefaultFile;
+
+	if ( !location.hash ) { location.hash = FIL.urlDefaultFile; } else { FIL.onHashChange(); }
+	//location.hash = urlDefaultFile;
+
+}
+
+
+</script>
+</body>
+</html>

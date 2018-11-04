@@ -65,7 +65,7 @@ Things to try
 * Two surfaces have identical coordinates, but one surface has fewer coordinates than the other
 * Two surfaces have overlapping bounding boxes, but have different surface types or other differences
 	* 2018-10-30 ~ Not finding different surface types
-	
+
 
 ## Issues
 
@@ -85,6 +85,8 @@ See also
 
 ## Change Log
 
+Issues Adjacent Space Invalid ISASI R7.1
+* Fix if adajacent two spaces is not an array
 
 ### 2018-10-30 ~ Theo
 
