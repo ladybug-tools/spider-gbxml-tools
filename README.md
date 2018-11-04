@@ -54,7 +54,13 @@ The impetus for this code arose from the request by the developers of OpenStudio
 
 ***
 
-### Latest release: [Fetch Assemble Save ]( https://www.ladybug.tools/spider-gbxml-tools/fetch-assemble-save/index.html )
+
+### [gbXML Viewer Sandbox Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#sandbox/README.md )
+
+
+
+
+#### Latest release: [Fetch Assemble Save ]( https://www.ladybug.tools/spider-gbxml-tools/fetch-assemble-save/index.html )
 
 #### [Fetch Assemble Save Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#fetch-assemble-save/README.md )
 
