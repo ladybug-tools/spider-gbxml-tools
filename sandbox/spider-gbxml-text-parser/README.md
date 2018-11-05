@@ -103,6 +103,8 @@ Does almost nothing. You must use 'Choose File' and developer console to see any
 
 ## Issues
 
+
+* 2018-11-04 ~ Theo: if 'exposedToSun' not set for any surfaces then nothing displays on load
 * File not loading: annapolis-md-single-family-residential-2016.xml
 
 ## Things you can do using this script
