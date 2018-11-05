@@ -5,9 +5,14 @@
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
 <meta name=description content="Open and examine very large gbXML files in your browser with free, open source JavaScript" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-11-03" >
-<title>Spider gbXML Text Parser R5.0 </title>
+<meta name = "date" content = "2018-11-04" >
+<title>Spider gbXML Text Parser R6.0 </title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
+<style>
+
+	.butReport { width: 15rem; }
+
+</style>
 </head>
 <body>
 <script src = "https://cdn.rawgit.com/mrdoob/three.js/r97/build/three.min.js" ></script>
@@ -43,6 +48,7 @@
 				</p>
 
 			</div>
+
 		</details>
 
 		<details>
@@ -59,19 +65,41 @@
 
 			<summary>File info</summary>
 
-
 			<div id = "divFileInfo" ></div>
+
+			<hr>
+
+		</details>
+
+		<details id=detStats ontoggle=divGbxmlInfo.innerHTML=GBX.getStats(); >
+
+			<summary>Statistics</summary>
 
 			<div id = "divGbxmlInfo" ></div>
 
 			<hr>
 
+		</details>
 
-			<p>Reload faster than first load.</p>
+		<details id=detReports ontoggle=divReports.innerHTML=GBX.getReports(); >
+
+			<summary>Reports</summary>
+
+			<div id = "divReports" ></div>
+
+			<hr>
+
+		</details>
+
+		<details open >
+
+			<summary>2018-11-04 ~ Current Status</summary>
+
+			<p>Reloads are faster than first load. Best not to load two big files one after another. Load default file in-between.</p>
 
 			<p>Model not fully loaded until model centers on screen.</p>
 
-			<p>Surface types displayed: Roof, ExteriorWall, ExposedFloor, Air & Shade.</p>
+			<p>Default on load: show 'exposedToSun' </p>
 
 		</details>
 
@@ -120,11 +148,8 @@ function init() {
 
 	THRU.addSomeLights();
 
-	//requestFile( urlDefaultFile, callbackGbXML );
-
 
 	window.addEventListener ( 'hashchange', onHashChange, false );
-
 
 	if ( !location.hash ) { location.hash = urlDefaultFile; } else { onHashChange(); }
 	//location.hash = urlDefaultFile;
@@ -152,6 +177,8 @@ function onHashChange() {
 
 };
 
+
+
 function requestFile( url, callback ) {
 
 	timeStart = performance.now();
@@ -176,7 +203,6 @@ function requestFile( url, callback ) {
 				<div>${ GBX.name }</div>
 				<div>bytes loaded: ${xhr.loaded.toLocaleString()}</div>
 				<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
-
 			`;
 
 		}
@@ -187,7 +213,7 @@ function requestFile( url, callback ) {
 
 function callbackGbXML( xhr ) {
 
-	parseFile( xhr.target.response );
+	GBX.parseFile( xhr.target.response );
 
 	const timeToLoad = performance.now() - timeStart;
 
@@ -196,15 +222,16 @@ function callbackGbXML( xhr ) {
 		<div>${ GBX.name }</div>
 		<div>bytes loaded: ${xhr.loaded.toLocaleString()}</div>
 		<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
-
 	`;
 
-};
+	detReports.open = true;
+	detStats.open = true;
+
+}
 
 
 
 function inpOpenFiles( files ) {
-
 	//console.log( 'file', files.files[ 0 ] );
 
 	timeStart = performance.now();
@@ -217,10 +244,10 @@ function inpOpenFiles( files ) {
 
 	reader.onload = function( event ) {
 
-		text = reader.result
+		const text = reader.result
 		//divGeneralCheck.innerHTML = getGeneralCheck( reader.result );
 
-		parseFile( text );
+		GBX.parseFile( text );
 
 		const timeToLoad = performance.now() - timeStart;
 
