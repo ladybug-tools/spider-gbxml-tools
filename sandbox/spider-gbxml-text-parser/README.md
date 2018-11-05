@@ -97,7 +97,7 @@ Does almost nothing. You must use 'Choose File' and developer console to see any
 
 ## To Do / Wish List
 
-See if we can parse and display in 3D files of this size
+
 * 2018-11-04 - Michal: Add ability to read gbXML from .zip files
 
 

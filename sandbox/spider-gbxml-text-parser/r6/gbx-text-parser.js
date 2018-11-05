@@ -147,6 +147,9 @@ GBX.toggleExteriorSurfaces = function() {
 	);
 	//console.log( 'exteriors', exteriors );
 
+	detReports.open = true;
+	detStats.open = true;
+
 	GBX.sendSurfacesToThreeJs( exteriors );
 
 

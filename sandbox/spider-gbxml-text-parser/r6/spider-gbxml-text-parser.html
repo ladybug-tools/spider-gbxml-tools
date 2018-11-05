@@ -183,6 +183,9 @@ function requestFile( url, callback ) {
 
 	timeStart = performance.now();
 
+	detReports.open = false;
+	detStats.open = false;
+
 	const xhr = new XMLHttpRequest();
 	xhr.crossOrigin = 'anonymous';
 	xhr.open( 'GET', url, true );
@@ -242,12 +245,18 @@ function inpOpenFiles( files ) {
 
 	reader.onprogress = onRequestFileProgress;
 
+	detReports.open = false;
+	detStats.open = false;
+
 	reader.onload = function( event ) {
 
 		const text = reader.result
 		//divGeneralCheck.innerHTML = getGeneralCheck( reader.result );
 
 		GBX.parseFile( text );
+
+		detReports.open = true;
+		detStats.open = true;
 
 		const timeToLoad = performance.now() - timeStart;
 
