@@ -28,6 +28,20 @@ It is currently being tested on a gbXML file ( private and not sharable ) of 698
 * Zones: 2,618
 
 The file breaks the Chrome browser on Windows 10, the FireFox browser on Windows 10 and OpenStudio on Windows 10.
+*
+## Full Screen: [Spider gbXML Text Parser R7.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r6/spider-gbxml-text-parser.html )
+
+### 2018-11-05 ~ Theo
+
+* Adds ability to open and decompress XNL date from ZIP files
+	* Current version only decodes UTF-8 files. UTF-16: TBD.
+	* So does not yet directly read files exported by Revit
+	* Currently only reads the first file it finds in the ZIP
+	* Thank you JSzip
+* Adds rudimentary display of surface type colors
+
+
+
 
 ## Full Screen: [Spider gbXML Text Parser R6.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r6/spider-gbxml-text-parser.html )
 

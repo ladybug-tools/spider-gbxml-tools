@@ -5,8 +5,8 @@
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
 <meta name=description content="Open and examine very large gbXML files in your browser with free, open source JavaScript" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-11-04" >
-<title>Spider gbXML Text Parser R6.0 </title>
+<meta name = "date" content = "2018-11-05" >
+<title>Spider gbXML Text Parser R7.0 </title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 <style>
 
@@ -15,6 +15,7 @@
 </style>
 </head>
 <body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js ></script>
 <script src = "https://cdn.rawgit.com/mrdoob/three.js/r97/build/three.min.js" ></script>
 <script src = "https://cdn.rawgit.com/mrdoob/three.js/r97/examples/js/controls/OrbitControls.js" ></script>
 <script src = "../../../lib/r7/mnu-menu.js" ></script>
@@ -36,18 +37,38 @@
 
 		<details open >
 
-			<summary>File Open</summary>
+			<summary>gbXML File Open</summary>
 
 			<div id="divFileCheckOpen" class="dragDropArea" >
 
 				<p id=pFileOpen>
 
 					Open gbXML files:
-					<input type=file id=inpOpenFile onchange=inpOpenFiles(this); accept=".xml" >
+					<input type=file id=inpOpenFile onchange=inpOpenFileXml(this); accept=".xml" >
 
 				</p>
 
 			</div>
+
+		</details>
+
+		<details open >
+
+			<summary>ZIP File Open</summary>
+
+			<p>
+				Open zip files:
+				<input type=file onchange=inpOpenFileZip(this); accept="application/zip" >
+			</p>
+
+			<p>Experimental feature. Not yet reading UTF16/double byte files (Revit: we are looking at you) </p>
+
+			<p>
+				Files to download and test:
+				<a href="https://www.ladybug.tools/spider/gbxml-sample-files/zip/UK_London_RoyalArsenalWoolwich.zip" target="_blank">Royal Arsenal</a>
+				<a href="https://www.ladybug.tools/spider/gbxml-sample-files/zip/LondonOffice_ver01.zip" target="_blank">London Office</a>
+				<a href="https://www.ladybug.tools/spider/gbxml-sample-files/zip/aim0013 (27).zip" target="_blank">Warwick University</a>
+			</p>
 
 		</details>
 
@@ -99,7 +120,7 @@
 
 			<p>Model not fully loaded until model centers on screen.</p>
 
-			<p>Default on load: show 'exposedToSun' </p>
+			<p>Default onload shows: Roof, ExteriorWall, ExposedFloor, Air and Shade </p>
 
 		</details>
 
@@ -147,7 +168,6 @@ function init() {
 	THRU.setHelpers();
 
 	THRU.addSomeLights();
-
 
 	window.addEventListener ( 'hashchange', onHashChange, false );
 
@@ -216,33 +236,26 @@ function requestFile( url, callback ) {
 
 function callbackGbXML( xhr ) {
 
-	try {
+	const len = GBX.parseFile( xhr.target.response );
+	//console.log( 'len', len );
 
+	detReports.open = true;
+	detStats.open = true;
 
-		const len = GBX.parseFile( xhr.target.response );
-		console.log( 'len', len );
+	const timeToLoad = performance.now() - timeStart;
 
-		detReports.open = true;
-		detStats.open = true;
-
-		const timeToLoad = performance.now() - timeStart;
-
-		divFileInfo.innerHTML =
-		`
-			<div>${ GBX.name }</div>
-			<div>bytes loaded: ${xhr.loaded.toLocaleString()}</div>
-			<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
-		`;
-
-	} catch (e) {
-
-		console.log( '', e  );; // pass exception object to error handler
-
-	}
+	divFileInfo.innerHTML =
+	`
+		<div>${ GBX.name }</div>
+		<div>bytes loaded: ${xhr.loaded.toLocaleString()}</div>
+		<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
+	`;
 
 }
 
-function inpOpenFiles( files ) {
+
+
+function inpOpenFileXml( files ) {
 	//console.log( 'file', files.files[ 0 ] );
 
 	timeStart = performance.now();
@@ -262,7 +275,7 @@ function inpOpenFiles( files ) {
 		//divGeneralCheck.innerHTML = getGeneralCheck( reader.result );
 
 		len = GBX.parseFile( text );
-		console.log( 'len', len );
+		//console.log( 'len', len );
 
 		detReports.open = true;
 		detStats.open = true;
@@ -272,7 +285,7 @@ function inpOpenFiles( files ) {
 		divFileInfo.innerHTML =
 		`
 			<div>${ fileAttributes.name }</div>
-			<div>bytes loaded: ${event.loaded.toLocaleString()}</div>
+			<div>bytes loaded: ${ event.loaded.toLocaleString()}</div>
 			<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
 		`;
 
@@ -293,6 +306,77 @@ function inpOpenFiles( files ) {
 		`;
 
 	}
+
+}
+
+
+
+function inpOpenFileZip( files ) {
+
+	console.log( 'files', files.files[0] );
+	timeStart = performance.now();
+	detReports.open = false;
+	detStats.open = false;
+
+	zip = new JSZip();
+
+	names = [];
+
+	zip.loadAsync( files.files[0] )
+
+	.then( function( zip ) {
+
+		zip.forEach( function ( relativePath, zipEntry ) {
+
+			names.push( zipEntry.name );
+
+			divFileInfo.innerHTML += '<p>file name: ' + zipEntry.name + '</p>';
+			//console.log( 'file name: ', zipEntry.name );
+
+		});
+
+		//console.log( 'zip', zip );
+
+		return zip;
+
+	} )
+
+
+	.then( function( data ) {
+
+		text = data.files[ names[ 0 ] ].async( "string" );
+		//console.log( 'data', data  );
+
+		divFileInfo.innerHTML =
+		`
+			<p>We have not learned how to stream the read and decompress process yet.</p>
+			<p>So nothing will happen for a few seconds</p>
+		`
+		return text;
+
+	}, ( err ) =>  divFileInfo.innerHTML += err.message )
+
+	.then( function( fileData ) {;
+
+		len = GBX.parseFile( fileData );
+		//console.log( 'len', len );
+
+		const timeToLoad = performance.now() - timeStart;
+
+		divFileInfo.innerHTML =
+		`
+		<div>${ names[ 0 ] }</div>
+		<div>bytes loaded: ${ fileData.length.toLocaleString()}</div>
+		<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
+		`;
+
+		detReports.open = true;
+		detStats.open = true;
+
+		//GBX.fileData = fileData;
+
+	} );
+
 
 }
 
