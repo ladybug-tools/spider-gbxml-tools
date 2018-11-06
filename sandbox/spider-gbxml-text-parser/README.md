@@ -29,7 +29,7 @@ It is currently being tested on a gbXML file ( private and not sharable ) of 698
 
 The file breaks the Chrome browser on Windows 10, the FireFox browser on Windows 10 and OpenStudio on Windows 10.
 *
-## Full Screen: [Spider gbXML Text Parser R7.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r6/spider-gbxml-text-parser.html )
+## Full Screen: [Spider gbXML Text Parser R7.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r7/spider-gbxml-text-parser.html )
 
 ### 2018-11-05 ~ Theo
 
@@ -40,6 +40,8 @@ The file breaks the Chrome browser on Windows 10, the FireFox browser on Windows
 	* Thank you JSzip
 * Adds rudimentary display of surface type colors
 
+Underway
+* 2018-11-04 - Michal: Add ability to read gbXML from .zip files
 
 
 
@@ -111,8 +113,6 @@ Does almost nothing. You must use 'Choose File' and developer console to see any
 
 ## To Do / Wish List
 
-
-* 2018-11-04 - Michal: Add ability to read gbXML from .zip files
 
 
 ## Issues
