@@ -28,7 +28,22 @@ It is currently being tested on a gbXML file ( private and not sharable ) of 698
 * Zones: 2,618
 
 The file breaks the Chrome browser on Windows 10, the FireFox browser on Windows 10 and OpenStudio on Windows 10.
-*
+
+***
+
+## Full Screen: [Spider gbXML Text Parser R8.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r8/spider-gbxml-text-parser.html )
+
+### 2018-11-06 ~ Theo
+
+* Loads Revit UTF-16 ZIP files up to just over a megabyte in size. Loads much larger UTF-8 ZIP files
+* Reports menu shows only surface types in use with buttons of surface type colors
+	* Note: many issues with the bahavior and color of buttons
+
+## Full Screen: [Spider gbXML Text Parser R8.0 'Evgeny' ]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r8/spider-gbxml-text-parser-evgeny.html )
+
+* A first pass at building a menu to support a workflow siggest bt Evgeny in a private email
+
+
 ## Full Screen: [Spider gbXML Text Parser R7.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r7/spider-gbxml-text-parser.html )
 
 ### 2018-11-05 ~ Theo
