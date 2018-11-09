@@ -5,17 +5,12 @@
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
 <meta name=description content="Open and examine very large gbXML files in your browser with free, open source JavaScript" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-11-07" >
+<meta name = "date" content = "2018-11-06" >
 <title>Spider gbXML Text Parser R8.0 </title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 <style>
 
-	button, input[type=button] { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;
-		 padding: 2px 5px; min-width: 11rem; }
-	button:hover { background: #ccc; color: #fff }
-
-	.active { border-color: black; font-style: italic; font-weight: bold; margin-left: 1rem; box-shadow: 2px 2px red; }
-
+	.butReport { width: 15rem; }
 
 </style>
 </head>
@@ -29,7 +24,6 @@
 <script src = "../../../lib/r7/gal-sample-files-gallery-gbxml.js" ></script>
 
 <script src = "./gbx-text-parser.js" ></script>
-<script src = "./rep-reports.js" ></script>
 
 	<main id="container" ></main>
 
@@ -40,16 +34,6 @@
 			<div id = "divHeader" ></div>
 
 		</header>
-
-		<details>
-
-			<summary>Spider gbXML Sample files</summary>
-
-			<div id=divSampleFileButtons ></div>
-
-			<div id=divSampleFileItems ></div>
-
-		</details>
 
 		<details open >
 
@@ -88,6 +72,16 @@
 
 		</details>
 
+		<details>
+
+			<summary>Spider gbXML Sample files</summary>
+
+			<div id=divSampleFileButtons ></div>
+
+			<div id=divSampleFileItems ></div>
+
+		</details>
+
 		<details open>
 
 			<summary>File info</summary>
@@ -98,7 +92,7 @@
 
 		</details>
 
-		<details id=detStats ontoggle=divGbxmlInfo.innerHTML=REP.getStats();REP.toggleExteriorSurfaces(); >
+		<details id=detStats ontoggle=divGbxmlInfo.innerHTML=GBX.getStats(); >
 
 			<summary>Statistics</summary>
 
@@ -108,19 +102,17 @@
 
 		</details>
 
-		<details id=detReports ontoggle=divReports.innerHTML=REP.getReports(); >
+		<details id=detReports ontoggle=divReports.innerHTML=GBX.getReports(); >
 
 			<summary>Reports</summary>
 
 			<div id = "divReports" ></div>
 
-			<div id="divReportsLog" ></div>
-
 			<hr>
 
 		</details>
 
-		<details>
+		<details open >
 
 			<summary>2018-11-04 ~ Current Status</summary>
 
@@ -185,7 +177,6 @@ function init() {
 }
 
 
-
 function onHashChange() {
 
 	timeStart = performance.now();
@@ -239,7 +230,7 @@ function requestFile( url, callback ) {
 
 		}
 
-}
+};
 
 
 
@@ -248,8 +239,8 @@ function callbackGbXML( xhr ) {
 	const len = GBX.parseFile( xhr.target.response );
 	//console.log( 'len', len );
 
+	detReports.open = true;
 	detStats.open = true;
-	//detReports.open = true;
 
 	const timeToLoad = performance.now() - timeStart;
 
@@ -259,6 +250,8 @@ function callbackGbXML( xhr ) {
 		<div>bytes loaded: ${xhr.loaded.toLocaleString()}</div>
 		<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
 	`;
+
+	GBX.toggleExteriorSurfaces( divReports );
 
 }
 
@@ -286,8 +279,8 @@ function inpOpenFileXml( files ) {
 		len = GBX.parseFile( text );
 		//console.log( 'len', len );
 
+		detReports.open = true;
 		detStats.open = true;
-		//detReports.open = true;
 
 		const timeToLoad = performance.now() - timeStart;
 
@@ -314,6 +307,8 @@ function inpOpenFileXml( files ) {
 			<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
 		`;
 
+		GBX.toggleExteriorSurfaces( divReports );
+
 	}
 
 }
@@ -321,10 +316,9 @@ function inpOpenFileXml( files ) {
 
 
 function inpOpenFileZip( files ) {
-	//console.log( 'files', files.files[0] );
 
+	console.log( 'files', files.files[0] );
 	timeStart = performance.now();
-
 	detReports.open = false;
 	detStats.open = false;
 
@@ -353,49 +347,32 @@ function inpOpenFileZip( files ) {
 
 	.then( function( data ) {
 
+		text = data.files[ names[ 0 ] ].async( "string", function updateCallback( metadata ) {
+			divFileInfo.innerHTML = `progression: ${ metadata.percent.toFixed(2) }%` } );
 		//console.log( 'data', data  );
 
-		const arrTemp = data.files[ names[ 0 ] ].async( "uint8array", metadata =>
-			divFileInfo.innerHTML = `progression: ${ metadata.percent.toFixed(2) }%`
-		);
-
-		return arrTemp;
+		return text;
 
 	}, ( err ) =>  divFileInfo.innerHTML += err.message )
 
-	.then( function( uint8array ) {
+	.then( function( string ) {;
 
-		//console.log( 'uint8array', uint8array );
+		//str = string
+		//console.log( 'string', string );
 
-		let txt = '';
+		txt = '';
 
-		if ( uint8array[ 0 ] !== 255 ||  uint8array[ 0 ] === 239 || uint8array[ 0 ] === 60 ) {
+		if ( string.includes( "gbXML") ) {
 
-			txt = new TextDecoder( "utf-8" ).decode( uint8array );
-			//console.log( 'txt', txt );
+			txt = string;
 
 		} else {
 
-			//console.log( 'uint8array', uint8array );
-
-			let arr = new Uint8Array( uint8array.length / 2 );
-			index = 0;
-
-			for ( let i = 0; i < uint8array.length; i++ ) {
-
-				if ( i % 2 === 0 ) {
-
-					arr[ index++ ] = uint8array[ i ];
-
-				}
-
-			}
-			//console.log( 'arr', arr );
-
-			txt = new TextDecoder( "utf-8" ).decode( arr );
+			for ( let i = 1; i < string.length; i++ ) { txt += string[ i++ ]; }
 
 		}
 
+		console.log( 'txt', txt );
 		len = GBX.parseFile( txt );
 		//console.log( 'len', len );
 
@@ -403,15 +380,18 @@ function inpOpenFileZip( files ) {
 
 		divFileInfo.innerHTML =
 		`
-			<div>${ names[ 0 ] }</div>
-			<div>bytes loaded: ${ txt.length.toLocaleString()}</div>
-			<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
+		<div>${ names[ 0 ] }</div>
+		<div>bytes loaded: ${ txt.length.toLocaleString()}</div>
+		<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
 		`;
 
+		detReports.open = true;
 		detStats.open = true;
-		//detReports.open = true;
+
+		GBX.toggleExteriorSurfaces( divReports );
 
 	} );
+
 
 }
 

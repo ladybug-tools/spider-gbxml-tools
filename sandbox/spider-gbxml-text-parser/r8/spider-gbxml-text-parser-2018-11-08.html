@@ -68,7 +68,7 @@
 
 		</details>
 
-		<details open >
+		<details >
 
 			<summary>ZIP File Open</summary>
 
@@ -88,7 +88,7 @@
 
 		</details>
 
-		<details open>
+		<details>
 
 			<summary>File info</summary>
 
@@ -108,7 +108,7 @@
 
 		</details>
 
-		<details id=detReports ontoggle=divReports.innerHTML=REP.getReports(); >
+		<details id=detReports ontoggle=divReports.innerHTML=REP.getReports();REP.toggleExteriorSurfaces(); >
 
 			<summary>Reports</summary>
 
@@ -275,8 +275,8 @@ function inpOpenFileXml( files ) {
 
 	reader.onprogress = onRequestFileProgress;
 
-	detReports.open = false;
 	detStats.open = false;
+	detReports.open = false;
 
 	reader.onload = function( event ) {
 
@@ -321,10 +321,10 @@ function inpOpenFileXml( files ) {
 
 
 function inpOpenFileZip( files ) {
-	//console.log( 'files', files.files[0] );
 
+	console.log( 'files', files.files[0] );
 	timeStart = performance.now();
-
+	
 	detReports.open = false;
 	detStats.open = false;
 
@@ -355,47 +355,32 @@ function inpOpenFileZip( files ) {
 
 		//console.log( 'data', data  );
 
-		const arrTemp = data.files[ names[ 0 ] ].async( "uint8array", metadata =>
+		text = data.files[ names[ 0 ] ].async( "string", metadata =>
 			divFileInfo.innerHTML = `progression: ${ metadata.percent.toFixed(2) }%`
 		);
 
-		return arrTemp;
+		return text;
 
 	}, ( err ) =>  divFileInfo.innerHTML += err.message )
 
-	.then( function( uint8array ) {
+	.then( function( string ) {;
 
-		//console.log( 'uint8array', uint8array );
+		//str = string
+		//console.log( 'string', string );
 
-		let txt = '';
+		txt = '';
 
-		if ( uint8array[ 0 ] !== 255 ||  uint8array[ 0 ] === 239 || uint8array[ 0 ] === 60 ) {
+		if ( string.includes( "gbXML") ) {
 
-			txt = new TextDecoder( "utf-8" ).decode( uint8array );
-			//console.log( 'txt', txt );
+			txt = string;
 
 		} else {
 
-			//console.log( 'uint8array', uint8array );
-
-			let arr = new Uint8Array( uint8array.length / 2 );
-			index = 0;
-
-			for ( let i = 0; i < uint8array.length; i++ ) {
-
-				if ( i % 2 === 0 ) {
-
-					arr[ index++ ] = uint8array[ i ];
-
-				}
-
-			}
-			//console.log( 'arr', arr );
-
-			txt = new TextDecoder( "utf-8" ).decode( arr );
+			for ( let i = 1; i < string.length; i++ ) { txt += string[ i++ ]; }
 
 		}
 
+		console.log( 'txt', txt );
 		len = GBX.parseFile( txt );
 		//console.log( 'len', len );
 
@@ -403,9 +388,9 @@ function inpOpenFileZip( files ) {
 
 		divFileInfo.innerHTML =
 		`
-			<div>${ names[ 0 ] }</div>
-			<div>bytes loaded: ${ txt.length.toLocaleString()}</div>
-			<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
+		<div>${ names[ 0 ] }</div>
+		<div>bytes loaded: ${ txt.length.toLocaleString()}</div>
+		<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
 		`;
 
 		detStats.open = true;

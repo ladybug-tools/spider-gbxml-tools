@@ -1,6 +1,6 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
 // jshint esversion: 6
-/* globals THREE, THR, THRU, timeStart, divReports */
+/* globals THREE, THR, THRU */
 
 var GBX = GBX || {};
 
@@ -57,139 +57,12 @@ GBX.parseFile = function( gbxml )  {
 
 
 
-GBX.getStats = function() {
-
-	const reSpaces = /<Space(.*?)<\/Space>/gi;
-	GBX.spaces = GBX.text.match( reSpaces );
-	//console.log( 'spaces', spaces );
-
-	const reStoreys = /<BuildingStorey(.*?)<\/BuildingStorey>/gi;
-	GBX.storeys = GBX.text.match( reStoreys );
-	//console.log( 'GBX.storeys', GBX.storeys );
-
-	const reZones = /<Zone(.*?)<\/Zone>/gi;
-	GBX.zones = GBX.text.match( reZones );
-	//console.log( 'GBX.zones', GBX.zones );
-
-	const verticesCount = GBX.surfaces.map( surfaces => GBX.getVertices( surfaces ) );
-	//console.log( 'vertices', vertices );
-
-	const count = verticesCount.reduce( ( count, val, index ) => count + verticesCount[ index ].length, 0 );
-
-	const timeToLoad = performance.now() - GBX.timeStart;
-
-	const htm =
-	`
-			<div>time to parse: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
-			<div>spaces: ${ GBX.spaces.length.toLocaleString() } </div>
-			<div>storeys: ${ GBX.storeys.length.toLocaleString() } </div>
-			<div>zones: ${ GBX.zones.length.toLocaleString() } </div>
-			<div>surfaces: ${ GBX.surfaces.length.toLocaleString() } </div>
-			<div>coordinates: ${ count.toLocaleString() } </div>
-	`;
-
-	return htm;
-
-};
-
-
-
-GBX.getReports = function() {
-
-	const types = GBX.surfaceTypes.filter( type => GBX.surfaces.find( surface => surface.includes( type ) ) );
-
-	let colors =  types.map( type => GBX.colorsDefault[ type ].toString( 16 ) );
-	colors = colors.map( color => color.length > 4 ? color : '00' + color ); // otherwise greens no show
-	//console.log( 'col', colors );
-
-	buttonSurfaceTypes = types.map( ( type, index ) =>
-		`<button selected=true class=butReport onclick=GBX.setSurfacesFiltered("${ type }",divReports,this);
-			style="background-color:#${ colors[ index] };" > ${ type } </button>`
-	);
-
-	const htm =
-	`
-		<p>Show by surface type ${ buttonSurfaceTypes.join( '<br>' ) }</p>
-
-		<p>
-			<button id=butExterior onclick=GBX.toggleExteriorSurfaces(this);
-				style= "background-color: pink; font-style: bold; "; >exterior surfaces</button>
-			<button id=butExposed onclick=GBX.setSurfacesFiltered('exposedToSun="true"',divReports,this); >exposed to sun</button>
-		</p>
-
-		<p>
-			<button onclick=GBX.setSurfacesFiltered(["Tilt&gt;0","Tilt&gt;180"],divReports,this); >horizontal</button>
-
-			<button onclick=GBX.setSurfacesFiltered("Tilt&gt;90",divReports,this); >vertical</button>
-		</p>
-
-	`;
-
-	return htm;
-
-};
-
-
-
-GBX.setSurfacesFiltered = function( filters, target, button) {
-
-	const buttons = target.querySelectorAll( "button" );
-	buttons.forEach( button => button.style.cssText = '' );
-
-	if ( button ) button.style.cssText = "background-color: pink; font-style: bold; ";
-
-	filters = Array.isArray( filters ) ? filters : [ filters ];
-	//console.log( 'filters', filters );
-
-	GBX.surfacesFiltered = [];
-
-	filters.map( filter => {
-
-		GBX.surfacesFiltered.push( ...GBX.surfaces.filter( surface => surface.includes( `${ filter }` ) ) );
-
-	} );
-	//console.log( 'GBX.surfacesFiltered',  GBX.surfacesFiltered );
-
-
-	GBX.sendSurfacesToThreeJs( GBX.surfacesFiltered );
-
-};
-
-
-
-GBX.toggleExteriorSurfaces = function( target, button ) {
-
-	buttons = Array.from( target.querySelectorAll( "button" ) );
-	buttons.forEach( button => button.style.cssText = '' );
-	//console.log( 'buttons', buttons );
-
-	if ( button ) {
-
-		button.style.cssText = "background-color: pink; font-style: bold; ";
-
-	}
-
-	GBX.surfacesFiltered = GBX.surfaces.filter(
-		surface => surface.includes( '"Roof"' ) ||
-		surface.includes( '"ExteriorWall"' ) ||
-		surface.includes( '"ExposedFloor"' ) ||
-		surface.includes( '"Air"' ) ||
-		surface.includes( '"Shade"' )
-	);
-	//console.log( 'GBX.surfacesFiltered', GBX.surfacesFiltered );
-
-
-	GBX.sendSurfacesToThreeJs( GBX.surfacesFiltered );
-
-
-};
-
-
-
 //////////
 
 GBX.sendSurfacesToThreeJs = function( surfaces ) {
 	//console.log( 'surfaces', surfaces );
+
+	if ( !surfaces.length ) { return "no surfaces"; }
 
 	THR.scene.remove( GBX.surfaceMeshes );
 	THRU.setSceneDispose( GBX.surfaceMeshes );
@@ -207,11 +80,14 @@ GBX.sendSurfacesToThreeJs = function( surfaces ) {
 	const vertices = polyLoops.map( polyLoops => GBX.getVertices( polyLoops ) );
 	//console.log( 'vertices', vertices );
 
-	vertices.forEach( ( arr, index ) => GBX.getSurfaceMeshes( arr, index ) );
+	const meshes = vertices.map( ( arr, index ) => GBX.getSurfaceMesh( arr, index ) )
+	GBX.surfaceMeshes.add( ...meshes );
 
 	THR.scene.add( GBX.surfaceMeshes );
 
 	THRU.zoomObjectBoundingSphere( GBX.surfaceMeshes );
+
+	return surfaces.length + ' surfaces';
 
 };
 
@@ -242,28 +118,44 @@ GBX.getVertices = function( surface ) {
 
 
 
-GBX.getSurfaceMeshes = function( arr, index ) {
+GBX.getSurfaceMesh = function( arr, index ) {
 	//console.log( 'array', arr, index );
+
+	const string = GBX.surfacesFiltered[ index ].match( 'surfaceType="(.*?)"')[ 1 ];
+	const color = new THREE.Color( GBX.colorsDefault[ string ] );
+	//console.log( 'color', color );
 
 	const v = ( arr ) => new THREE.Vector3().fromArray( arr );
 
 	let vertices, mesh;
 
-	if ( arr.length === 6 ) {
+	if ( arr.length < 6 ) {
+
+		console.log( 'mesh', mesh );
+		return;
+
+	} else if ( arr.length === 6 ) {
 
 		// draw a line?
 
 		vertices = [ v( arr.slice( 0, 3 ) ), v( arr.slice( 3, 6 ) ) ];
 
-		mesh = GBX.BufferGeometry( vertices, index );
+		//mesh = GBX.BufferGeometry( vertices, color );
+
+		geometry = new THREE.Geometry();
+		geometry.vertices = vertices;
+		material = new THREE.LineBasicMaterial( { color: 0x000000 } );
+		//mesh = new THREE.Line( geometry, material );
 
 		console.log( 'mesh', mesh );
+
+		return;
 
 	} else if ( arr.length === 9 ) {
 
 		vertices = [ v( arr.slice( 0, 3 ) ), v( arr.slice( 3, 6 ) ), v( arr.slice( 6 ) ) ];
 
-		mesh = GBX.BufferGeometry( vertices, index );
+		mesh = GBX.BufferGeometry( vertices, color );
 
 	} else if ( arr.length === 12 ) {
 
@@ -274,7 +166,7 @@ GBX.getSurfaceMeshes = function( arr, index ) {
 
 		];
 
-		mesh = GBX.BufferGeometry( vertices, index );
+		mesh = GBX.BufferGeometry( vertices, color );
 
 	} else {
 
@@ -286,11 +178,13 @@ GBX.getSurfaceMeshes = function( arr, index ) {
 
 		}
 
-		mesh = GBX.setPolygon( vertices, index );
+		mesh = GBX.setPolygon( vertices, color );
 
 	}
 
-	GBX.surfaceMeshes.add( mesh );
+	//GBX.surfaceMeshes.add( mesh );
+
+	return mesh;
 
 	//console.log( 'GBX.surfaceMeshes', GBX.surfaceMeshes );
 
@@ -298,18 +192,8 @@ GBX.getSurfaceMeshes = function( arr, index ) {
 
 
 
-GBX.BufferGeometry = function( vertices, index ) {
-	//console.log( 'vertices', vertices );
-
-	//color = GBX.surfacesFiltered[ index ].match( /surfaceType="(.*)" / );
-
-	//str1 = GBX.surfacesFiltered[ index ].slice( 22 );
-	//str2 = str1.slice( 0, str1.indexOf( '"' ) );
-
-	str2 = GBX.surfacesFiltered[ index ].match( 'surfaceType="(.*?)"')[  1 ];
-	const color = new THREE.Color( GBX.colorsDefault[ str2 ] );
-
-	//console.log( 'color', color );
+GBX.BufferGeometry = function( vertices, color ) {
+	//console.log( 'vertices', vertices, color );
 
 	const geometry = new THREE.BufferGeometry();
 	geometry.setFromPoints( vertices );
@@ -325,7 +209,7 @@ GBX.BufferGeometry = function( vertices, index ) {
 
 
 
-GBX.setPolygon = function( vertices, index, holes = [] ) {
+GBX.setPolygon = function( vertices, color, holes = [] ) {
 	//console.log( { vertices } );
 
 	//assume vertices are coplanar but at an arbitrary rotation and position in space
@@ -339,7 +223,7 @@ GBX.setPolygon = function( vertices, index, holes = [] ) {
 	const verticesFlat = vertices.map( vertex => GBX.referenceObject.localToWorld( vertex ) );
 	//console.log( { verticesFlat } );
 
-/* 	for ( let verticesHoles of holes ) {
+	/*for ( let verticesHoles of holes ) {
 
 		verticesHoles.forEach( vertex => GBX.referenceObject.localToWorld( vertex ) );
 
@@ -373,15 +257,9 @@ GBX.setPolygon = function( vertices, index, holes = [] ) {
 	geometry.setFromPoints( verticesTriangles );
 	geometry.computeVertexNormals();
 
-	str1 = GBX.surfacesFiltered[ index ].slice( 22 );
-	str2 = str1.slice( 0, str1.indexOf( '"' ) );
-	const color = new THREE.Color( GBX.colorsDefault[ str2 ] );
-
 	const material = new GBX.materialType( { color: color, opacity: 0.85, side: 2, transparent: true } );
 
 	const mesh = new THREE.Mesh( geometry, material );
-
-
 	mesh.lookAt( plane.normal );
 
 	return mesh;

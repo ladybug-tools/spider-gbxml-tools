@@ -33,15 +33,26 @@ The file breaks the Chrome browser on Windows 10, the FireFox browser on Windows
 
 ## Full Screen: [Spider gbXML Text Parser R8.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r8/spider-gbxml-text-parser.html )
 
+## Full Screen: [Spider gbXML Text Parser R8.0 'Evgeny' ]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r8/spider-gbxml-text-parser-evgeny.html )
+
+### 2018-11-07 ~ Theo
+
+* Buttons working better
+* Add indications to button states
+* Loads large ZIP with either UTF-8 or UTF-16
+
+
 ### 2018-11-06 ~ Theo
 
 * Loads Revit UTF-16 ZIP files up to just over a megabyte in size. Loads much larger UTF-8 ZIP files
 * Reports menu shows only surface types in use with buttons of surface type colors
-	* Note: many issues with the bahavior and color of buttons
+	* Note: many issues with the behavior and color of buttons
+	
+'Evgeny' edition
+* A first pass at building a menu to support a workflow suggested by Evgeny in a private email
 
-## Full Screen: [Spider gbXML Text Parser R8.0 'Evgeny' ]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r8/spider-gbxml-text-parser-evgeny.html )
-
-* A first pass at building a menu to support a workflow siggest bt Evgeny in a private email
+Fixed
+* 2018-11-04 ~ Theo: if 'exposedToSun' not set for any surfaces then nothing displays on load
 
 
 ## Full Screen: [Spider gbXML Text Parser R7.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r7/spider-gbxml-text-parser.html )
@@ -57,7 +68,6 @@ The file breaks the Chrome browser on Windows 10, the FireFox browser on Windows
 
 Underway
 * 2018-11-04 - Michal: Add ability to read gbXML from .zip files
-
 
 
 ## Full Screen: [Spider gbXML Text Parser R6.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r6/spider-gbxml-text-parser.html )
@@ -128,12 +138,12 @@ Does almost nothing. You must use 'Choose File' and developer console to see any
 
 ## To Do / Wish List
 
+* 2018-11-08 ~ Theo ~ faster redraws when pushing visibility buttons
 
 
 ## Issues
 
-
-* 2018-11-04 ~ Theo: if 'exposedToSun' not set for any surfaces then nothing displays on load
+* 2018-11-08 ~ Theo ~ Some shades also showing as roof / and other places when surfaces not showing up as expectd
 * File not loading: annapolis-md-single-family-residential-2016.xml
 
 ## Things you can do using this script
