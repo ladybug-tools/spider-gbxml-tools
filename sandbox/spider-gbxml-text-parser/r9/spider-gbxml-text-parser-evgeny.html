@@ -6,13 +6,13 @@
 <meta name=description content="Open and examine very large gbXML files in your browser with free, open source JavaScript" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
 <meta name = "date" content = "2018-11-07" >
-<title>Spider gbXML Text Parser R8.1 </title>
+<title>Spider gbXML Text Parser R8.0 'Evgeny'</title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 <style>
 
 	button, input[type=button] { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;
-		 padding: 2px 5px; min-width: 11rem; }
-	button:hover { background: #ccc; color: #fff }
+		 padding: 2px 5px; min-width: 13rem; }
+	button:hover { background: #ccc; color: #000 }
 
 	.active { border-color: black; font-style: italic; font-weight: bold; margin-left: 1rem; box-shadow: 2px 2px red; }
 
@@ -21,16 +21,15 @@
 </head>
 <body>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js ></script>
-<script src = "https://cdn.rawgit.com/mrdoob/three.js/r98/build/three.min.js" ></script>
-<script src = "https://cdn.rawgit.com/mrdoob/three.js/r98/examples/js/controls/OrbitControls.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r97/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r97/examples/js/controls/OrbitControls.js" ></script>
 <script src = "../../../lib/r7/mnu-menu.js" ></script>
 <script src = "../../../lib/r7/thr-threejs.js" ></script>
 <script src = "../../../lib/r7/thru-threejs-utilities.js"></script>
 <script src = "../../../lib/r7/gal-sample-files-gallery-gbxml.js" ></script>
 
 <script src = "./gbx-text-parser.js" ></script>
-<script src = "./rep-reports.js" ></script>
-<script src = "./pop-up-text-parser.js" ></script>
+<script src = "./rep-evgeny.js" ></script>
 
 	<main id="container" ></main>
 
@@ -99,7 +98,7 @@
 
 		</details>
 
-		<details id=detStats ontoggle=divGbxmlInfo.innerHTML=REP.getStats(); >
+		<details id=detStats ontoggle=divGbxmlInfo.innerHTML=EVG.getStats();EVG.toggleExteriorSurfaces(); >
 
 			<summary>Statistics</summary>
 
@@ -109,9 +108,9 @@
 
 		</details>
 
-		<details id=detReports ontoggle=divReports.innerHTML=REP.getReports(); >
+		<details id=detReports ontoggle=divReports.innerHTML=EVG.getReports(); >
 
-			<summary>Reports</summary>
+			<summary>Evgeny Workflow</summary>
 
 			<div id = "divReports" ></div>
 
@@ -149,14 +148,6 @@
 	</nav>
 
 
-	<div id="divPopUp" >
-
-		<div id="divPopUpData" ></div>
-
-		<div id="divMessage" ></div>
-
-	</div>
-
 <script>
 
 MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-text-parser";
@@ -186,10 +177,7 @@ function init() {
 
 	THRU.addSomeLights();
 
-	divPopUpData.innerHTML = POP.getMenuHtmlPopUp();
-
 	window.addEventListener ( 'hashchange', onHashChange, false );
-
 
 	if ( !location.hash ) { location.hash = urlDefaultFile; } else { onHashChange(); }
 	//location.hash = urlDefaultFile;
@@ -258,9 +246,10 @@ function requestFile( url, callback ) {
 function callbackGbXML( xhr ) {
 
 	const len = GBX.parseFile( xhr.target.response );
-	console.log( 'len', len );
+	//console.log( 'len', len );
 
-	onParseFile();
+	detStats.open = true;
+	//detReports.open = true;
 
 	const timeToLoad = performance.now() - timeStart;
 
@@ -270,7 +259,6 @@ function callbackGbXML( xhr ) {
 		<div>bytes loaded: ${xhr.loaded.toLocaleString()}</div>
 		<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
 	`;
-
 
 }
 
@@ -298,7 +286,8 @@ function inpOpenFileXml( files ) {
 		len = GBX.parseFile( text );
 		//console.log( 'len', len );
 
-		onParseFile();
+		detStats.open = true;
+		//detReports.open = true;
 
 		const timeToLoad = performance.now() - timeStart;
 
@@ -410,8 +399,6 @@ function inpOpenFileZip( files ) {
 		len = GBX.parseFile( txt );
 		//console.log( 'len', len );
 
-		onParseFile();
-
 		const timeToLoad = performance.now() - timeStart;
 
 		divFileInfo.innerHTML =
@@ -421,25 +408,12 @@ function inpOpenFileZip( files ) {
 			<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
 		`;
 
+		detStats.open = true;
+		//detReports.open = true;
+
 	} );
 
 }
-
-
-
-function onParseFile() {
-
-	THR.scene.remove( GBX.boundingBox );
-	GBX.boundingBox = undefined;
-
-	REP.toggleExteriorSurfaces();
-
-	detStats.open = true;
-	detReports.open = true;
-
-
-}
-
 
 
 </script>

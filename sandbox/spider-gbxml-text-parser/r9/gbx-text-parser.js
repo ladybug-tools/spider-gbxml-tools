@@ -51,6 +51,14 @@ GBX.parseFile = function( gbxml )  {
 
 	//GBX.setSurfacesFiltered( 'exposedToSun="true"' );
 
+	GBX.surfaces = GBX.surfaces.map( ( surface, index ) => `indexGbx="${ index }"` + surface );
+
+	//GBX.surfaceMeshes = new THREE.Group();
+	//GBX.surfaceMeshes.name = 'GBX.surfaceMeshes';
+
+
+	GBX.surfaceMeshesTry = GBX.getSurfaceMeshes( GBX.surfaces );
+
 	return GBX.surfaces.length;
 
 };
@@ -96,16 +104,14 @@ GBX.sendSurfacesToThreeJs = function( surfaces ) {
 	GBX.surfaceMeshes = new THREE.Group();
 	GBX.surfaceMeshes.name = 'GBX.surfaceMeshes';
 
-	const polyLoops = surfaces.map( surface => GBX.getPolyLoops( surface ) ).map( polyLoop => polyLoop[ 0 ] );
-	//console.log( 'polyLoops', polyLoops );
+	const meshes = surfaces.map ( surface => {
+		index = surface.match( 'indexGbx="(.*?)"' )[ 1 ];
+		//console.log( 'ind', index );
+		return GBX.surfaceMeshesTry[ index ];
+	} );
 
-	const vertices = polyLoops.map( polyLoops => GBX.getVertices( polyLoops ) );
-	//console.log( 'vertices', vertices );
-
-	const meshes = vertices.map( ( arr, index ) => GBX.getSurfaceMesh( arr, index ) );
-
+	//console.log( 'meshes', meshes );
 	GBX.surfaceMeshes.add( ...meshes );
-
 
 	THR.scene.add( GBX.surfaceMeshes );
 
@@ -122,6 +128,33 @@ GBX.sendSurfacesToThreeJs = function( surfaces ) {
 	//GBX.boundingBox = new THREE.computeBoundingBox();
 
 	return surfaces.length + ' surfaces';
+
+};
+
+
+
+
+GBX.getSurfaceMeshes = function( surfaces ) {
+
+	const meshes = surfaces.map( ( surface ) => {
+
+		const polyLoops = GBX.getPolyLoops( surface );
+		//console.log( 'polyLoops', polyLoops );
+
+		const vertices = GBX.getVertices( polyLoops[ 0 ] );
+		//console.log( 'vertices', vertices );
+
+		index = surface.match( 'indexGbx="(.*?)"' )[ 1 ];
+
+		const mesh = GBX.getSurfaceMesh( vertices, index );
+		mesh.castShadow = mesh.receiveShadow = true;
+		mesh.userData.index = index;
+
+		return mesh;
+
+	} );
+
+	return meshes;
 
 };
 
@@ -153,9 +186,9 @@ GBX.getVertices = function( surface ) {
 
 
 GBX.getSurfaceMesh = function( arr, index ) {
-	//console.log( 'array', arr, index );
+	//console.log( 'array', arr, 'index', index );
 
-	const string = GBX.surfacesFiltered[ index ].match( 'surfaceType="(.*?)"')[ 1 ];
+	const string = GBX.surfaces[ index ].match( 'surfaceType="(.*?)"')[ 1 ];
 	const color = new THREE.Color( GBX.colorsDefault[ string ] );
 	//console.log( 'color', color );
 
@@ -216,13 +249,7 @@ GBX.getSurfaceMesh = function( arr, index ) {
 
 	}
 
-	//GBX.surfaceMeshes.add( mesh );
-
-	mesh.castShadow = mesh.receiveShadow = true;
-
 	return mesh;
-
-	//console.log( 'GBX.surfaceMeshes', GBX.surfaceMeshes );
 
 };
 

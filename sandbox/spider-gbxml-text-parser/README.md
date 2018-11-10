@@ -33,6 +33,19 @@ The file breaks the Chrome browser on Windows 10, the FireFox browser on Windows
 
 ## Full Screen: [Spider gbXML Text Parser R8.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r8/spider-gbxml-text-parser.html )
 
+#### 2018-11-09 ~ Theo
+
+* gbx-text-parser: Three.js surfaces
+	* Add Phong material if lights
+	* Add cast and receive shadows
+	* Add dispose of geometry on load new model
+* Base file:
+	* Refactor loading process
+
+
+
+## Full Screen: [Spider gbXML Text Parser R8.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r8/spider-gbxml-text-parser.html )
+
 ## Full Screen: [Spider gbXML Text Parser R8.0 'Evgeny' ]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r8/spider-gbxml-text-parser-evgeny.html )
 
 ### 2018-11-07 ~ Theo
@@ -47,7 +60,7 @@ The file breaks the Chrome browser on Windows 10, the FireFox browser on Windows
 * Loads Revit UTF-16 ZIP files up to just over a megabyte in size. Loads much larger UTF-8 ZIP files
 * Reports menu shows only surface types in use with buttons of surface type colors
 	* Note: many issues with the behavior and color of buttons
-	
+
 'Evgeny' edition
 * A first pass at building a menu to support a workflow suggested by Evgeny in a private email
 
