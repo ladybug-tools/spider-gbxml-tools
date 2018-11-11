@@ -37,14 +37,46 @@ GBX.triangle = new THREE.Triangle(); // used by GBX.getPlane
 GBX.parseFile = function( gbxml )  {
 	//console.log( 'gbxml', gbxml );
 
-	THR.scene.remove( GBX.boundingBox );
-	GBX.boundingBox = undefined;
+	GBX.materialType = THR.scene.getObjectByName( 'lightAmbient') ? THREE.MeshPhongMaterial : THREE.MeshBasicMaterial;
+	//GBX.materialType = THREE.MeshBasicMaterial;
 
-	if ( GBX.surfaceGroup ) {
+	GBX.text = gbxml.replace( /\r\n|\n/g, '' );
+	//console.log( 'GBX.text', GBX.text );
 
-		THR.scene.remove( GBX.surfaceGroup );
+	GBX.timeStart = performance.now();
 
-		GBX.surfaceGroup.traverse( function ( child ) {
+	const reSurface = /<Surface(.*?)<\/surface>/gi;
+	GBX.surfaces = GBX.text.match( reSurface );
+	//console.log( 'GBX.surfaces', GBX.surfaces );
+
+	//GBX.setSurfacesFiltered( 'exposedToSun="true"' );
+
+	GBX.surfaces = GBX.surfaces.map( ( surface, index ) => `indexGbx="${ index }"` + surface );
+
+	//GBX.surfaceMeshes = new THREE.Group();
+	//GBX.surfaceMeshes.name = 'GBX.surfaceMeshes';
+
+
+	GBX.surfaceMeshesTry = GBX.getSurfaceMeshes( GBX.surfaces );
+
+	return GBX.surfaces.length;
+
+};
+
+
+
+//////////
+
+GBX.sendSurfacesToThreeJs = function( surfaces ) {
+	//console.log( 'surfaces', surfaces );
+
+	if ( !surfaces.length ) { return "no surfaces"; }
+
+	if ( GBX.surfaceMeshes ) {
+
+		THR.scene.remove( GBX.surfaceMeshes );
+
+		GBX.surfaceMeshes.traverse( function ( child ) {
 
 			if ( child instanceof THREE.Mesh ) {
 
@@ -65,55 +97,27 @@ GBX.parseFile = function( gbxml )  {
 	}
 
 
-	GBX.surfaceGroup = new THREE.Group();
-	GBX.surfaceGroup.name = 'GBX.surfaceGroup';
-	THR.scene.add( GBX.surfaceGroup );
+	//THRU.setSceneDispose( GBX.surfaceMeshes );
+	//THRU.setHelpers();
+	//THRU.addSomeLights();
 
-	GBX.materialType = THR.scene.getObjectByName( 'lightAmbient') ? THREE.MeshPhongMaterial : THREE.MeshBasicMaterial;
-	//GBX.materialType = THREE.MeshBasicMaterial;
+	GBX.surfaceMeshes = new THREE.Group();
+	GBX.surfaceMeshes.name = 'GBX.surfaceMeshes';
 
-	GBX.text = gbxml.replace( /\r\n|\n/g, '' );
-	//console.log( 'GBX.text', GBX.text );
-
-	GBX.timeStart = performance.now();
-
-	const reSurface = /<Surface(.*?)<\/surface>/gi;
-	GBX.surfaces = GBX.text.match( reSurface );
-	//console.log( 'GBX.surfaces', GBX.surfaces );
-
-	GBX.surfacesIndexed= GBX.surfaces.map( ( surface, index ) => `indexGbx="${ index }"` + surface );
-
-	const meshes = GBX.getSurfaceMeshes( GBX.surfacesIndexed );
-
-	GBX.surfaceGroup.add( ...meshes );
-
-	return GBX.surfaces.length;
-
-};
-
-
-
-//////////
-
-GBX.sendSurfacesToThreeJs = function( surfaces ) {
-	//console.log( 'surfaces', surfaces );
-
-	if ( !surfaces.length ) { return "no surfaces"; }
-
-	GBX.surfaceGroup.children.forEach( ( surface, index ) => {
-		surface.visible = false;
+	const meshes = surfaces.map ( surface => {
+		index = surface.match( 'indexGbx="(.*?)"' )[ 1 ];
+		//console.log( 'ind', index );
+		return GBX.surfaceMeshesTry[ index ];
 	} );
 
-	surfaces.map ( surface => {
+	//console.log( 'meshes', meshes );
+	GBX.surfaceMeshes.add( ...meshes );
 
-		const index = surface.match( 'indexGbx="(.*?)"' )[ 1 ];
-		GBX.surfaceGroup.children[ index ].visible = true;
-
-	} );
+	THR.scene.add( GBX.surfaceMeshes );
 
 	if ( !GBX.boundingBox ) {
 
-		const bbox = new THREE.Box3().setFromObject( GBX.surfaceGroup );
+		const bbox = new THREE.Box3().setFromObject( GBX.surfaceMeshes );
 		GBX.boundingBox = new THREE.Box3Helper( bbox, 0xffff00 );
 		THR.scene.add( GBX.boundingBox );
 
@@ -121,9 +125,12 @@ GBX.sendSurfacesToThreeJs = function( surfaces ) {
 
 	THRU.zoomObjectBoundingSphere( GBX.boundingBox );
 
-	return surfaces.length.toLocaleString() + ' surfaces';
+	//GBX.boundingBox = new THREE.computeBoundingBox();
+
+	return surfaces.length + ' surfaces';
 
 };
+
 
 
 
@@ -137,7 +144,7 @@ GBX.getSurfaceMeshes = function( surfaces ) {
 		const vertices = GBX.getVertices( polyLoops[ 0 ] );
 		//console.log( 'vertices', vertices );
 
-		const index = surface.match( 'indexGbx="(.*?)"' )[ 1 ];
+		index = surface.match( 'indexGbx="(.*?)"' )[ 1 ];
 
 		const mesh = GBX.getSurfaceMesh( vertices, index );
 		mesh.castShadow = mesh.receiveShadow = true;
@@ -194,17 +201,17 @@ GBX.getSurfaceMesh = function( arr, index ) {
 		console.log( 'mesh', mesh );
 		return;
 
-	} else if ( arr.length < 9 ) {
+	} else if ( arr.length === 6 ) {
 
 		// draw a line?
 
 		vertices = [ v( arr.slice( 0, 3 ) ), v( arr.slice( 3, 6 ) ) ];
 
-		//mesh = GBX.getBufferGeometry( vertices, color );
+		//mesh = GBX.BufferGeometry( vertices, color );
 
-		//const geometry = new THREE.Geometry();
-		//geometry.vertices = vertices;
-		//const material = new THREE.LineBasicMaterial( { color: 0x000000 } );
+		geometry = new THREE.Geometry();
+		geometry.vertices = vertices;
+		material = new THREE.LineBasicMaterial( { color: 0x000000 } );
 		//mesh = new THREE.Line( geometry, material );
 
 		console.log( 'mesh', mesh );
@@ -215,7 +222,7 @@ GBX.getSurfaceMesh = function( arr, index ) {
 
 		vertices = [ v( arr.slice( 0, 3 ) ), v( arr.slice( 3, 6 ) ), v( arr.slice( 6 ) ) ];
 
-		mesh = GBX.getBufferGeometry( vertices, color );
+		mesh = GBX.BufferGeometry( vertices, color );
 
 	} else if ( arr.length === 12 ) {
 
@@ -226,7 +233,7 @@ GBX.getSurfaceMesh = function( arr, index ) {
 
 		];
 
-		mesh = GBX.getBufferGeometry( vertices, color );
+		mesh = GBX.BufferGeometry( vertices, color );
 
 	} else {
 
@@ -248,7 +255,7 @@ GBX.getSurfaceMesh = function( arr, index ) {
 
 
 
-GBX.getBufferGeometry = function( vertices, color ) {
+GBX.BufferGeometry = function( vertices, color ) {
 	//console.log( 'vertices', vertices, color );
 
 	const geometry = new THREE.BufferGeometry();
@@ -279,17 +286,15 @@ GBX.setPolygon = function( vertices, color, holes = [] ) {
 	const verticesFlat = vertices.map( vertex => GBX.referenceObject.localToWorld( vertex ) );
 	//console.log( { verticesFlat } );
 
-	/*
-	for ( let verticesHoles of holes ) {
+	/*for ( let verticesHoles of holes ) {
 
 		verticesHoles.forEach( vertex => GBX.referenceObject.localToWorld( vertex ) );
 
-	}
+	} */
 
-	holes.forEach( verticesHoles => verticesHoles.forEach( vertex => GBX.referenceObject.localToWorld( vertex ) ) );
-	*/
+	//holes.forEach( verticesHoles => verticesHoles.forEach( vertex => GBX.referenceObject.localToWorld( vertex ) ) );
 
-	// vertices must be coplanar with the XY plane for Earcut.js to triangulate a set of points
+	// vertices must be coplanar with the XY plane for Earcut.js to work
 	const triangles = THREE.ShapeUtils.triangulateShape( verticesFlat, holes );
 	//console.log( { triangles } );
 
@@ -328,12 +333,11 @@ GBX.setPolygon = function( vertices, color, holes = [] ) {
 
 GBX.getPlane = function( points, start = 0 ) {
 
-	console.log( 'points', points, start );
 	GBX.triangle.set( points[ start ], points[ start + 1 ], points[ start + 2 ] );
 
-	if ( GBX.triangle.getArea() === 0 && ( ++start < points.length - 2 ) ) { // looks like points are colinear and do not form a plane therefore try next set of points
+	if ( GBX.triangle.getArea() === 0 ) { // looks like points are colinear and do not form a plane therefore try next set of points
 
-		GBX.getPlane( points, start );
+		GBX.getPlane( points, ++start );
 
 	}
 

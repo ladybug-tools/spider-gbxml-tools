@@ -3,17 +3,23 @@
 
 // Copyright 2018 Ladybug Tools authors. MIT License
 
-var POP = { "release": "R7.8" };
+var POP = { "release": "R9.0" };
 POP.getArray = item => Array.isArray( item ) ? item : ( item ? [ item ] : [] );
 
 
 POP.currentStatus =
 	`
-	<details>
+	<details open>
 
-		<summary>Current status 2018-10-29</summary>
+		<summary>Current status 2018-11-10</summary>
 
 		<p>Identifying elements and attributes according to <a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">gbXML Schema.</a></p>
+
+		<p>
+			First pass at getting things going in text parser code base.
+			There appear to be issues in identifying the correct storey for surfaces.
+		</p>
+		<!--
 
 		<p>Coming next:<br>&bull; display rectangular geometry in model</p>
 
@@ -21,7 +27,6 @@ POP.currentStatus =
 
 		<p>Status: Getting to be stable. Needs more testing. Wishlists items welcome.</p>
 
-		<!--
 		<p>Toggling focus or visibility and identifying are two different things. As we design, let us try to keep these actions separate.</p>
 
 		<p>If you are in a module, then you should never have to leave the module in order to complete the tasks assigned to that module</p>
@@ -88,7 +93,7 @@ POP.getMenuHtmlPopUp = function() {
 
 POP.onClickZoomAll = function() {
 
-	GBX.surfaceMeshes.children.forEach( child => child.visible = true );
+	GBX.surfaceGroup.children.forEach( child => child.visible = true );
 
 	THRU.zoomObjectBoundingSphere( GBX.boundingBox );
 /*
@@ -108,7 +113,7 @@ POP.onClickZoomAll = function() {
 
 POP.setAllVisibleZoom = function() {
 
-	const meshes = GBX.surfaceMeshes.children.filter( mesh => mesh.visible === true );
+	const meshes = GBX.surfaceGroup.children.filter( mesh => mesh.visible === true );
 	//console.log( 'meshes', meshes );
 
 	POP.setCameraControls( meshes );
@@ -159,7 +164,7 @@ POP.onDocumentMouseDown = function( event ) {
 
 	POP.raycaster.setFromCamera( POP.mouse, THR.camera );
 
-	POP.intersects = POP.raycaster.intersectObjects( GBX.surfaceMeshes.children );
+	POP.intersects = POP.raycaster.intersectObjects( GBX.surfaceGroup.children );
 	//console.log( 'POP.intersects', POP.intersects );
 
 	if ( POP.intersects.length > 0 ) {
@@ -195,6 +200,17 @@ POP.onDocumentMouseDown = function( event ) {
 
 POP.getIntersectedDataHtml = function() {
 	console.log( 'POP.intersected', POP.intersected );
+
+	const index = POP.intersected.userData.index;
+
+	let surface = GBX.surfacesIndexed[ index ];
+
+	let id = surface.match( 'id="(.*?)"')[ 1 ];
+	//console.log( 'surface', id );
+
+	let cadId = surface.match( '<CADObjectId>(.*?)</CADObjectId>  ');
+
+	cadId = cadId ? cadId[ 1 ] : '';
 
 	/*
 	const surfaceJson = POP.intersected.userData.gbjson;
@@ -252,20 +268,21 @@ POP.getIntersectedDataHtml = function() {
 
 	*/
 
-	//const htmAttributes = POP.getSurfaceAttributes( surfaceJson );
+	const htmAttributes = POP.getSurfaceAttributes( surface );
 
 	const htm =
 	`
 		<p><b>Visibility</b> - show/hide elements</p>
-	` +
-/*
 		<p>
-			<button id=POPbutSurfaceFocus onclick=POP.toggleSurfaceFocus(); title="${ surfaceJson.CADObjectId }" > surface: ${ surfaceJson.id } </button>
+			<button id=POPbutSurfaceFocus onclick=POP.toggleSurfaceFocus(); title="${ cadId }" > surface: ${ id } </button>
 			<button id=POPbutSurfaceVisible onclick=POP.toggleSurfaceVisible(); title="Show or hide selected surface" > &#x1f441; </button>
 			<button onclick=POP.setSurfaceZoom(); title="Zoom into selected surface" > ⌕ </button>
-			<button onclick=POP.toggleVertexPlacards(); title="Display vertex numbers" > # </button>
-		</p>
 
+		</p>
+` +
+
+// <button onclick=POP.toggleVertexPlacards(); title="Display vertex numbers" > # </button>
+/*
 		<p>
 			${ adjSpaceButtons }
 		</p>
@@ -276,12 +293,12 @@ POP.getIntersectedDataHtml = function() {
 			<button onclick=POP.setAllVisibleZoom(); title="Zoom whatever is visible" >⌕</button>
 		</p>
 
+*/
 
-		<div id=POPelementAttributes >
+		`<div id=POPelementAttributes >
 			${ htmAttributes }
 		</div>
-*/
-	`	<hr>
+		<hr>
 
 		<div>${ POP.currentStatus }</div>
 
@@ -324,21 +341,24 @@ POP.getIntersectedVertexBufferGeometry = function( point ) {
 
 
 
-
 //////////
 
-POP.getSurfaceAttributes = function( surfaceJson ) {
+POP.getSurfaceAttributes = function( surface ) {
 
-	htmSurface = POP.getAttributesHtml( surfaceJson );
-	htmAdjacentSpace = POP.getAttributesAdjacentSpace( surfaceJson );
-	htmPlanarGeometry = POP.getAttributesPolyLoop( surfaceJson.PlanarGeometry.PolyLoop );
-	htmRectangularGeometry = POP.getAttributesHtml( surfaceJson.RectangularGeometry );
+	const htmSurface = POP.getAttributesHtml( surface );
+	const htmAdjacentSpace = ""; //POP.getAttributesAdjacentSpace( surfaceJson );
+	const htmPlanarGeometry = ""; //POP.getAttributesPolyLoop( surfaceJson.PlanarGeometry.PolyLoop );
+	const htmRectangularGeometry = ""; //POP.getAttributesHtml( surfaceJson.RectangularGeometry );
 
-	htm =
-		`<p>
+	const htm =
+		`
+		<small>Text will be formatted more nicely in next release</small>
+		<p>
 			<div><b>Selected Surface Attributes</b></div>
 			${ htmSurface }
 		</p>
+		`
+/*
 		<p>
 			<div><b>AdjacentSpace</b></div>
 			${ htmAdjacentSpace }
@@ -352,6 +372,7 @@ POP.getSurfaceAttributes = function( surfaceJson ) {
 			${ htmRectangularGeometry }
 		</p>
 	`;
+*/
 
 	return htm;
 
@@ -359,22 +380,42 @@ POP.getSurfaceAttributes = function( surfaceJson ) {
 
 
 
-POP.getAttributesHtml = function( obj ) {
+POP.getAttributesHtml = function( text ) {
+	//console.log( 'text', text );
 
 	let htm ='';
+	const txt = text.slice( text.indexOf( '"<' ) + 1 );
+	//console.log( '', txt  );
+	const parser = new DOMParser();
 
-	const keys = Object.keys( obj );
+	const obj = parser.parseFromString( txt, "application/xml");
+	//console.log( 'obj', obj );
+
+	const element = obj.getElementsByTagName( 'Surface' )[ 0 ];
+
+	for ( let attribute of element.attributes ) {
+
+		htm += `${ attribute.name }: ${ attribute.value }<br>`;
+	}
+
+	const nodes = obj.getElementsByTagName( 'Surface' )[ 0 ].childNodes;
+
+	//const keys = Object.keys( nodes );
 	//console.log( 'keys', keys );
 
-	for ( let key of keys ) {
-		//console.log( 'key', key );
+	for ( let node of nodes ) {
+		//console.log( 'node', node);
 
-		if ( typeof( obj[ key ] ) === 'object' ) {
-			//console.log( 'key', key );
+		if ( node.nodeType !== 3 ) {
+			//console.log( 'node', node.nodeName, node );
+			//no = node;
 
-			if ( key === 'CartesianPoint' ) {
+			htm += `${ node.nodeName }: ${ node.innerHTML }<br>`;
 
-				const point = obj[ key ].Coordinate;
+			/*
+			if ( node === 'CartesianPoint' ) {
+
+				const point = nodes[ key ].Coordinate;
 				//console.log(  'point', point  );
 
 				htm +=
@@ -386,21 +427,7 @@ POP.getAttributesHtml = function( obj ) {
 				`;
 
 			}
-
-		} else {
-
-			const val = obj[ key ];
-
-			let value = isNaN( Number( val ) ) || val !== 'CADObjectId' ? val : Number( val ).toLocaleString();
-			value = key === 'Width' || key === 'Height' ? Number( val ).toLocaleString() : value;
-
-			htm +=
-			`
-				<div>
-					<span class="attributeTitle" >${key}:</span>
-					<span class="attributeValue" >${ value }</span>
-				</div>
-			`;
+			*/
 
 		}
 
@@ -489,28 +516,28 @@ POP.toggleSurfaceFocus = function() {
 	const color = POPbutSurfaceFocus.style.backgroundColor === '' ? 'pink' : '';
 	POPbutSurfaceFocus.style.backgroundColor = color;
 
-	POPbutSurfaceVisible.style.backgroundColor = '';
+/* 	POPbutSurfaceVisible.style.backgroundColor = '';
 	POPbutStoreyVisible.style.backgroundColor = '';
 	POPbutZoneVisible.style.backgroundColor = '';
 
 	POPbutAdjacentSpace1.style.backgroundColor = '';
 	POPbutAdjacentSpace2.style.backgroundColor = '';
-
+ */
 	if ( color === 'pink' ) {
 
-		GBX.surfaceMeshes.children.forEach( child => child.visible = false );
+		GBX.surfaceGroup.children.forEach( child => child.visible = false );
 
 		POP.intersected.visible = true;
 
 	} else {
 
-		GBX.surfaceMeshes.children.forEach( child => child.visible = true );
+		GBX.surfaceGroup.children.forEach( child => child.visible = true );
 
 	}
 
-	const surfaceJson = POP.intersected.userData.gbjson;
+	//const surfaceJson = POP.intersected.userData.gbjson;
 
-	POPelementAttributes.innerHTML = POP.getSurfaceAttributes( surfaceJson );
+	//POPelementAttributes.innerHTML = POP.getSurfaceAttributes( surfaceJson );
 
 };
 
@@ -523,15 +550,17 @@ POP.toggleSurfaceVisible = function() {
 	const color = POPbutSurfaceVisible.style.backgroundColor === '' ? 'pink' : '';
 	POPbutSurfaceVisible.style.backgroundColor = color;
 
+	/*
 	POPbutSurfaceFocus.style.backgroundColor = '';
 	POPbutStoreyVisible.style.backgroundColor = '';
 	POPbutZoneVisible.style.backgroundColor = '';
 
 	POPbutAdjacentSpace1.style.backgroundColor = '';
 	POPbutAdjacentSpace2.style.backgroundColor = '';
+	*/
 
-	const surfaceJson = POP.intersected.userData.gbjson;
-	POPelementAttributes.innerHTML = POP.getSurfaceAttributes( surfaceJson );
+	//const surfaceJson = POP.intersected.userData.gbjson;
+	//POPelementAttributes.innerHTML = POP.getSurfaceAttributes( POP.intersected );
 
 };
 
@@ -546,12 +575,12 @@ POP.toggleVertexPlacards = function() {
 
 	const distance = THR.camera.position.distanceTo( THR.controls.target );
 	const scale = 0.01;
-	placards = vertices.map( ( vertex, index ) =>
+	const placards = vertices.map( ( vertex, index ) =>
 		THRU.drawPlacard( '#' + ( 1 + index ), 0.0003 * distance, 0x00ff00, vertex.x + scale * distance, vertex.y + scale * distance, vertex.z + scale * distance )
 	);
 
 	console.log( '', placards );
-	POP.line.add( ...placards )
+	POP.line.add( ...placards );
 
 };
 
@@ -567,10 +596,12 @@ POP.toggleSpaceVisible = function( button, space1Id, space2Id ) {
 
 	POPbutSurfaceFocus.style.backgroundColor = '';
 	POPbutSurfaceVisible.style.backgroundColor = '';
+	/*
 	POPbutStoreyVisible.style.backgroundColor = '';
 	POPbutZoneVisible.style.backgroundColor = '';
+	*/
 
-	const children =  GBX.surfaceMeshes.children;
+	const children =  GBX.surfaceGroup.children;
 
 	if ( visible1 === false && visible2 === false ) {
 
@@ -612,10 +643,10 @@ POP.toggleSpaceVisible = function( button, space1Id, space2Id ) {
 
 	}
 
-	spaceJson = GBX.gbjson.Campus.Building.Space.find( item => item.id === space1Id );
+	const spaceJson = GBX.gbjson.Campus.Building.Space.find( item => item.id === space1Id );
 	//console.log( 'spaceJson', spaceJson );
 
-	htmSpace = POP.getAttributesHtml( spaceJson );
+	const htmSpace = POP.getAttributesHtml( spaceJson );
 
 	const htm =
 	`
@@ -641,7 +672,7 @@ POP.toggleStoreyVisible = function( storeyId ) {
 	POPbutAdjacentSpace1.style.backgroundColor = '';
 	POPbutAdjacentSpace2.style.backgroundColor = '';
 
-	const children =  GBX.surfaceMeshes.children;
+	const children =  GBX.surfaceGroup.children;
 
 	if ( color === '' ) {
 
@@ -651,9 +682,9 @@ POP.toggleStoreyVisible = function( storeyId ) {
 
 		const spaces = GBX.gbjson.Campus.Building.Space;
 
-		GBX.surfaceMeshes.children.forEach( element => element.visible = false );
+		GBX.surfaceGroup.children.forEach( element => element.visible = false );
 
-		for ( let child of GBX.surfaceMeshes.children ) {
+		for ( let child of GBX.surfaceGroup.children ) {
 
 			const adjacentSpaceId = child.userData.gbjson.AdjacentSpaceId;
 
@@ -701,10 +732,10 @@ POP.toggleZoneVisible = function ( zoneIdRef ) {
 
 		const spaces = GBX.gbjson.Campus.Building.Space;
 
-		GBX.surfaceMeshes.children.forEach( element => element.visible = false );
+		GBX.surfaceGroup.children.forEach( element => element.visible = false );
 
 
-		for ( let child of GBX.surfaceMeshes.children ) {
+		for ( let child of GBX.surfaceGroup.children ) {
 
 			const adjacentSpaceId = child.userData.gbjson.AdjacentSpaceId;
 			//console.log( 'adjacentSpaceId', adjacentSpaceId );
@@ -719,7 +750,7 @@ POP.toggleZoneVisible = function ( zoneIdRef ) {
 
 	} else {
 
-		GBX.surfaceMeshes.children.forEach( element => element.visible = true );
+		GBX.surfaceGroup.children.forEach( element => element.visible = true );
 
 	}
 
@@ -727,7 +758,7 @@ POP.toggleZoneVisible = function ( zoneIdRef ) {
 	zoneJson = zoneJson.find( item => item.id === zoneIdRef );
 	//console.log( 'zoneJson', zoneJson );
 
-	htmZone = POP.getAttributesHtml( zoneJson );
+	const htmZone = POP.getAttributesHtml( zoneJson );
 
 	const htm =
 	`

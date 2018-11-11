@@ -91,13 +91,13 @@ EVG.selStoreys = function() {
 	//console.log( 'spacesInStoreyIds', spacesInStoreyIds );
 
 	const surfacesVisibleBySpace = spacesInStoreyIds.flatMap( spaceId =>
-		GBX.surfaces.filter( surface => surface.includes( spaceId ) )
+		GBX.surfacesIndexed.filter( surface => surface.includes( spaceId ) )
 	).sort();
 	//console.log( 'surfacesVisibleBySpace', surfacesVisibleBySpace );
-	surfacesVisibleBySpaceTxt = surfacesVisibleBySpace.map( surface => surface.match( '<Name>(.*?)</Name>')[ 1 ] );
+
+	//surfacesVisibleBySpaceTxt = surfacesVisibleBySpace.map( surface => surface.match( '<Name>(.*?)</Name>')[ 1 ] );
 	//console.log( 'surfacesVisibleBySpaceTxt', surfacesVisibleBySpaceTxt.sort() );
 
-	//button.classList.toggle( "active" );
 
 	const current = document.getElementsByClassName( "active" );
 
@@ -177,7 +177,7 @@ EVG.setSurfacesFiltered = function( filters, target, button) {
 
 	filters.map( filter => {
 
-		GBX.surfacesFiltered.push( ...GBX.surfaces.filter( surface => surface.includes( `${ filter }` ) ) );
+		GBX.surfacesFiltered.push( ...GBX.surfacesIndexed.filter( surface => surface.includes( `${ filter }` ) ) );
 
 	} );
 	//console.log( 'GBX.surfacesFiltered',  GBX.surfacesFiltered );
@@ -206,11 +206,11 @@ EVG.setSurfaceTypesVisible = function ( typesArray ) {
 
 	GBX.surfacesFiltered = typesArray.flatMap( filter =>
 
-		GBX.surfaces.filter( surface => surface.includes( `${ filter }` ) )
+		GBX.surfacesIndexed.filter( surface => surface.includes( `${ filter }` ) )
 
 	);
 	//console.log( 'GBX.surfacesFiltered',  GBX.surfacesFiltered );
 
 	divReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( GBX.surfacesFiltered );
 
-}
+};

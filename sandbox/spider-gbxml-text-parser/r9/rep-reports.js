@@ -99,7 +99,7 @@ REP.setSurfaceTypesVisible = function ( typesArray ) {
 
 	GBX.surfacesFiltered = typesArray.flatMap( filter =>
 
-		GBX.surfaces.filter( surface => surface.includes( `${ filter }` ) )
+		GBX.surfacesIndexed.filter( surface => surface.includes( `${ filter }` ) )
 
 	);
 	//console.log( 'GBX.surfacesFiltered',  GBX.surfacesFiltered );
@@ -136,20 +136,10 @@ REP.setSurfacesFiltered = function( filters, button) {
 
 	filters = Array.isArray( filters ) ? filters : [ filters ];
 	//console.log( 'filters', filters );
-/*
-	GBX.surfacesFiltered = [];
-
-	filters.map( filter => {
-
-		GBX.surfacesFiltered.push( ...GBX.surfaces.filter( surface => surface.includes( `${ filter }` ) ) );
-
-	} );
-	//console.log( 'GBX.surfacesFiltered',  GBX.surfacesFiltered );
-*/
 
 	GBX.surfacesFiltered = filters.flatMap( filter =>
 
-		GBX.surfaces.filter( surface => surface.includes( `${ filter }` ) )
+		GBX.surfacesIndexed.filter( surface => surface.includes( `${ filter }` ) )
 
 	);
 

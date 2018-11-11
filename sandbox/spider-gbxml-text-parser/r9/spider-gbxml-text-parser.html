@@ -10,8 +10,9 @@
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 <style>
 
-	button, input[type=button] { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;
+	#navMenu button, #navMenu input[type=button] { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;
 		 padding: 2px 5px; min-width: 11rem; }
+
 	button:hover { background: #ccc; color: #fff }
 
 	.active { border-color: black; font-style: italic; font-weight: bold; margin-left: 1rem; box-shadow: 2px 2px red; }
@@ -78,7 +79,7 @@
 				<input type=file onchange=inpOpenFileZip(this); accept="application/zip" >
 			</p>
 
-			<p>Experimental feature. Not yet reading UTF16/double byte files (Revit: we are looking at you) </p>
+			<p>Experimental feature.</p>
 
 			<p>
 				Files to download and test:
@@ -109,7 +110,7 @@
 
 		</details>
 
-		<details id=detReports ontoggle=divReports.innerHTML=REP.getReports(); >
+		<details id=detReports ontoggle=divReports.innerHTML=REP.getReports();butExterior.click(); >
 
 			<summary>Reports</summary>
 
@@ -123,13 +124,19 @@
 
 		<details>
 
-			<summary>2018-11-04 ~ Current Status</summary>
+			<summary>2018-11-10 ~ Current Status</summary>
 
-			<p>Reloads are faster than first load. Best not to load two big files one after another. Load default file in-between.</p>
+			<!--
+
+				<p>Reloads are faster than first load. Best not to load two big files one after another. Load default file in-between.</p>
+
+			-->
 
 			<p>Model not fully loaded until model centers on screen.</p>
 
 			<p>Default onload shows: Roof, ExteriorWall, ExposedFloor, Air and Shade </p>
+
+			<p>After loading a very large model: it's best to reload the web page. And, be patient, it may take a very long time to clear the data from memory</p>
 
 		</details>
 
@@ -170,6 +177,7 @@ let text;
 
 init();
 THR.animate();
+
 
 
 function init() {
@@ -257,9 +265,8 @@ function requestFile( url, callback ) {
 function callbackGbXML( xhr ) {
 
 	const len = GBX.parseFile( xhr.target.response );
-	console.log( 'len', len );
+	//console.log( 'len', len );
 
-	onParseFile();
 
 	const timeToLoad = performance.now() - timeStart;
 
@@ -270,6 +277,7 @@ function callbackGbXML( xhr ) {
 		<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
 	`;
 
+	onParseFile();
 
 }
 
@@ -291,7 +299,7 @@ function inpOpenFileXml( files ) {
 
 	reader.onload = function( event ) {
 
-		const text = reader.result
+		const text = reader.result;
 		//divGeneralCheck.innerHTML = getGeneralCheck( reader.result );
 
 		len = GBX.parseFile( text );
@@ -428,13 +436,11 @@ function inpOpenFileZip( files ) {
 
 function onParseFile() {
 
-	THR.scene.remove( GBX.boundingBox );
-	GBX.boundingBox = undefined;
-
-	REP.toggleExteriorSurfaces();
-
 	detStats.open = true;
-	detReports.open = true;
+	detReports.open = true; // see click on toggle
+
+	//REP.toggleExteriorSurfaces();
+
 
 
 }

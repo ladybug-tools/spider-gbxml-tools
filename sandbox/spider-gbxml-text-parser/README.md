@@ -18,7 +18,9 @@ _<small>Spider gbXML Text Parser</small>_
 
 Open and examine very large gbXML files in your browser with free, open source JavaScript
 
-The script is a work in progress for of opening very large gbXML files,
+***
+
+The Spider gbXML Text Parser script is a work in progress for of opening very large gbXML files,
 
 It is currently being tested on a gbXML file ( private and not sharable ) of 698,000,000 bytes and:
 
@@ -27,11 +29,59 @@ It is currently being tested on a gbXML file ( private and not sharable ) of 698
 * Surfaces: 70,774
 * Zones: 2,618
 
-The file breaks the Chrome browser on Windows 10, the FireFox browser on Windows 10 and OpenStudio on Windows 10.
+The file breaks the Chrome browser on Windows 10, the FireFox browser on Windows 10 and OpenStudio on Windows 10. Opens in FZK Viewer but with very slow performance.
+
+But Spider gbXML Text Parser loads and updates the file quite well - in your browser.
+
+### Features
+
+File loader
+* Load very large ( greater than 700 megabytes ) gbXML at a reasonable speed
+* Read files in either UTF-8 or UTF-16 format
+* Open remote files via a URL or local files via the file dialog box
+* Open and automatically extract UTF-8 and UTF-6 files contained in ZIP compressed folders using file dialog box
+
+gbXML Text Parser
+* Files size: 8 kb
+* Reads and operates on file as if an ordinary text file
+* Very simple operations
+* Provides feedback and statistics of loading
+* Currently not parsing openings - makes loading much faster
+
+Reports
+* Buttons toggle surface type display
+* Buttons provide horizonTL, vertical, exterior and exposeToSun toggles
+
+'Evgeny' Workflow
+* Select visible storey from select box
+* Actual workflow is a work-in-progress
+
+Pop-up Text Parser
+* First pass / Just beginning to work
+* Response time OK even with large files
+* Issues in identifying the correct storey for surfaces.
+
 
 ***
 
-## Full Screen: [Spider gbXML Text Parser R8.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r8/spider-gbxml-text-parser.html )
+## Full Screen: [Spider gbXML Text Parser R9.0]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r9/spider-gbxml-text-parser.html )
+
+## Full Screen: [Spider gbXML Text Parser R9.0 'Evgeny' ]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r9/spider-gbxml-text-parser-evgeny.html )
+
+
+#### 2018-11-10 ~ Theo
+* Pop-up menu:
+	* beginning to work
+	* Appears to be reasonably fast enough
+* gbx-text-parser:
+	* Load refactor mostly complete and working quite well
+	* Fix issue when getPlane runs our of points. Thanks to Evgeny fot the heads-up and demo file
+* reports & 'Evgeny' workflow
+	* Updated to work with parser
+
+***
+
+## Full Screen: [Spider gbXML Text Parser R8.1]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r8/spider-gbxml-text-parser.html )
 
 #### 2018-11-09 ~ Theo
 
