@@ -1,29 +1,30 @@
 /* global THREE, THR, THRU, GBX, divPopupData */
 // jshint esversion: 6
 
-// Copyright 2018 Ladybug Tools authors. MIT License
+// Copyright 2018 Ladybug Tools authors. MIT License.
 
-var POP = { "release": "R9.0" };
-POP.getArray = item => Array.isArray( item ) ? item : ( item ? [ item ] : [] );
+var POP = { "release": "R9.1", "date": "2018-11-11" };
 
+POP.urlSource = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-pop-up"
 
 POP.currentStatus =
-	`
-	<details open>
+	`<details>
 
-		<summary>Current status 2018-11-10</summary>
+		<summary>Pop-Up menu current status ${ POP.date }</summary>
 
-		<p>Identifying elements and attributes according to <a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">gbXML Schema.</a></p>
-
+		<p>
+			Elements and attributes identified according to <a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">gbXML Schema.</a>
+		</p>
 		<p>
 			First pass at getting things going in text parser code base.
 			There appear to be issues in identifying the correct storey for surfaces.
 		</p>
+		<p>
+			For wish list and fixing things see <a href="../../spider-gbxml-viewer-issues/index.html" target="_blank">issues module</a>
+		</p>
+
 		<!--
-
 		<p>Coming next:<br>&bull; display rectangular geometry in model</p>
-
-		<p>For fixing things see <a href="../../spider-gbxml-viewer-issues/index.html" target="_blank">issues module</a> </p>
 
 		<p>Status: Getting to be stable. Needs more testing. Wishlists items welcome.</p>
 
@@ -34,15 +35,13 @@ POP.currentStatus =
 		<p>What tooltips should appear and where?</p>
 		-->
 
-	</details>
-
-	`;
+	</details>`;
 
 
 
-////////// Inits
+	////////// Inits
 
-POP.getMenuHtmlPopUp = function() {
+POP.getMenuHtmlPopUp = function() { // call from home page
 
 	POP.mouse = new THREE.Vector2();
 	POP.raycaster = new THREE.Raycaster();
@@ -52,6 +51,8 @@ POP.getMenuHtmlPopUp = function() {
 	POP.particle = new THREE.Sprite( POP.particleMaterial );
 	POP.line = undefined;
 
+	POP.getArray = item => Array.isArray( item ) ? item : ( item ? [ item ] : [] );
+
 	THR.renderer.domElement.addEventListener( 'mousedown', POP.onDocumentMouseDown, false );
 	THR.renderer.domElement.addEventListener( 'touchstart', POP.onDocumentTouchStart, false ); // for mobile
 
@@ -59,24 +60,32 @@ POP.getMenuHtmlPopUp = function() {
 	const htm =
 	`
 		<div id = "divPopupData" >
-
+			<h3>Pop-Up menu</h3>
 			<p>
-			click on the model and surface attributes appear here
+				Click on the model and surface attributes appear here.
+			</p>
+			<p>
+				Press spacebar: to stop model rotating
+			</p>
+			<p>
+				Use one|two|three fingers to rotate|zoom|pan display in 3D.
+				Or left|scroll|right with your pointing device.
+			</p>
+			<p>
+				Press Control-Shift-J|Command-Option-J to see if the JavaScript console reports any errors
+			</p>
+			<p>
+				Axes: Red/Green/Blue = X/Y/Z directions
 			</p>
 
-			<p>Axes Red/Green/Blue = X/Y/Z directions</p>
-
-			<p>Spacebar: click to stop spinning</p>
-
-			<p>Use one|two|three fingers to rotate|zoom|pan display in 3D. Or left|scroll|right with your pointing device</p>
-
-			<p>Press Control-Shift-J|Command-Option-J to see if the JavaScript console reports any errors</p>
+			${ POP.currentStatus }
 
 		</div>
 
-		<div>
+
+		<div id=POPfooter >
 			<p style=text-align:right; >
-				<a href="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-pop-up" title="View the read me file for the pop-up module" >${ POP.release }</a>
+				<a href= title="View the read me file for the pop-up module" >${ POP.release }</a>
 				<br>
 				<button onclick=POP.onClickZoomAll(); title="Show entire campus & display attributes" >zoom all +</button>
 			</p>
@@ -203,14 +212,61 @@ POP.getIntersectedDataHtml = function() {
 
 	const index = POP.intersected.userData.index;
 
-	let surface = GBX.surfacesIndexed[ index ];
+	let surfaceIndexed = GBX.surfacesIndexed[ index ];
 
-	let id = surface.match( 'id="(.*?)"')[ 1 ];
+	const surfaceText = surfaceIndexed.slice( surfaceIndexed.indexOf( '"<' ) + 1 );
+	//console.log( 'text', text  );
+
+	const parser = new DOMParser();
+	surfaceXml = parser.parseFromString( surfaceText, "application/xml").documentElement;
+	//console.log( 'surfaceXml', surfaceXml.attributes );
+
+	const id = surfaceXml.attributes.id.value;
 	//console.log( 'surface', id );
 
-	let cadId = surface.match( '<CADObjectId>(.*?)</CADObjectId>  ');
+	const cadId = surfaceXml.attributes.CADObjectId ? surfaceXml.attributes.CADObjectId.value : '';
 
-	cadId = cadId ? cadId[ 1 ] : '';
+	POP.drawBorder( surfaceXml );
+
+	const htmAttributes = POP.getSurfaceAttributes( surfaceXml );
+
+
+	//let txt = ''
+
+	if ( POP.adjacentSpaceId.length === 0 ) {
+
+		adjSpaceButtons = "";
+
+
+	} else if ( POP.adjacentSpaceId.length === 1 ) {
+
+		spaceId = POP.adjacentSpaceId[ 0 ];
+		space = GBX.spaces.find( item => item.includes( ` id="${ spaceId }"` ) );
+
+		spaceXml = parser.parseFromString( space, "application/xml").documentElement;
+
+		//console.log( 'space ', space );
+		text = POP.getAttributesHtml( spaceXml );
+		console.log( 'text', text );
+
+
+		adjSpaceButtons =
+		`
+			<button id=POPbutAdjacentSpace1 onclick=POP.toggleSpaceVisible(this,"${ POP.adjacentSpaceId[ 0 ] }",""); title="id: ${ POP.adjacentSpaceId[ 0 ] }" >space: ${ POP.adjacentSpaceId[ 0 ] } </button>
+			</div><div id=POPbutAdjacentSpace2 ></div>
+			${ text }
+		`;
+
+	} else if ( POP.adjacentSpaceId.length === 2 ) {
+
+		adjSpaceButtons =
+		`
+			<button>${ POP.adjacentSpaceId[ 0 ] }</button>
+
+			<button>${ POP.adjacentSpaceId[ 1 ] }</button>
+		`;
+	}
+
 
 	/*
 	const surfaceJson = POP.intersected.userData.gbjson;
@@ -268,7 +324,7 @@ POP.getIntersectedDataHtml = function() {
 
 	*/
 
-	const htmAttributes = POP.getSurfaceAttributes( surface );
+
 
 	const htm =
 	`
@@ -279,18 +335,20 @@ POP.getIntersectedDataHtml = function() {
 			<button onclick=POP.setSurfaceZoom(); title="Zoom into selected surface" > ⌕ </button>
 
 		</p>
-` +
 
-// <button onclick=POP.toggleVertexPlacards(); title="Display vertex numbers" > # </button>
-/*
 		<p>
-			${ adjSpaceButtons }
+		${ adjSpaceButtons }
+
+		<button onclick=POP.setAllVisibleZoom(); title="Zoom whatever is visible" >⌕</button>
 		</p>
+		` +
+
+		/*
+		<button onclick=POP.toggleVertexPlacards(); title="Display vertex numbers" > # </button>
+
 
 		<p>
 			${ storeyButton } ${ zoneButton }
-
-			<button onclick=POP.setAllVisibleZoom(); title="Zoom whatever is visible" >⌕</button>
 		</p>
 
 */
@@ -299,8 +357,6 @@ POP.getIntersectedDataHtml = function() {
 			${ htmAttributes }
 		</div>
 		<hr>
-
-		<div>${ POP.currentStatus }</div>
 
 	`;
 
@@ -313,23 +369,8 @@ POP.getIntersectedDataHtml = function() {
 POP.getIntersectedVertexBufferGeometry = function( point ) {
 	//console.log( '', intersected );
 
-	THR.scene.remove( POP.line, POP.particle );
+	THR.scene.remove( POP.particle );
 
-	/*
-	const vertices = POP.intersected.userData.gbjson.PlanarGeometry.PolyLoop.CartesianPoint
-		.map( point => new THREE.Vector3().fromArray( point.Coordinate  ) );
-	//console.log( 'vertices', vertices );
-
-	const geometry = new THREE.Geometry().setFromPoints( vertices );
-	//console.log( 'geometry', geometry );
-
-
-	const material = new THREE.LineBasicMaterial( { color: 0xff00ff, linewidth: 2, transparent: true } );
-
-	POP.line = new THREE.LineLoop( geometry, material );
-	THR.scene.add( POP.line );
-
-	*/
 	const distance = THR.camera.position.distanceTo( THR.controls.target );
 
 	POP.particle.scale.x = POP.particle.scale.y = 0.01 * distance;
@@ -341,38 +382,78 @@ POP.getIntersectedVertexBufferGeometry = function( point ) {
 
 
 
+POP.drawBorder = function( surfaceXml ) {
+
+	THR.scene.remove( POP.line );
+
+	const planar = surfaceXml.getElementsByTagName( 'PlanarGeometry' )[ 0 ];
+
+	const points = Array.from( planar.getElementsByTagName( 'CartesianPoint' ) );
+
+	//console.log( 'points', points );
+
+	vertices = points.map( point => {
+
+		//console.log( 'vert', point );
+
+		const coor = Array.from( point.children );
+
+		const pt = new THREE.Vector3( Number( coor[ 0 ].innerHTML ), Number( coor[ 1 ].innerHTML ), Number( coor[ 2 ].innerHTML ) )
+
+		return pt;
+
+	} );
+
+
+	const geometry = new THREE.Geometry().setFromPoints( vertices );
+	//console.log( 'geometry', geometry );
+
+	const material = new THREE.LineBasicMaterial( { color: 0xff00ff, linewidth: 2, transparent: true } );
+
+	POP.line = new THREE.LineLoop( geometry, material );
+	THR.scene.add( POP.line );
+
+
+
+};
 //////////
 
-POP.getSurfaceAttributes = function( surface ) {
+POP.getSurfaceAttributes = function( surfaceXml ) {
+	//console.log( 'surfaceXml', surfaceXml );
+	s = surfaceXml
 
-	const htmSurface = POP.getAttributesHtml( surface );
-	const htmAdjacentSpace = ""; //POP.getAttributesAdjacentSpace( surfaceJson );
-	const htmPlanarGeometry = ""; //POP.getAttributesPolyLoop( surfaceJson.PlanarGeometry.PolyLoop );
-	const htmRectangularGeometry = ""; //POP.getAttributesHtml( surfaceJson.RectangularGeometry );
+	const htmSurface = POP.getAttributesHtml( surfaceXml );
+	const htmAdjacentSpace = POP.getAttributesAdjacentSpace( surfaceXml );
+	const htmPlanarGeometry = POP.getAttributesPlanarGeometry( surfaceXml );
+
+	const rect = surfaceXml.getElementsByTagName( "RectangularGeometry" )[ 0 ];
+	//console.log( '', rect );
+	const htmRectangularGeometry = POP.getAttributesHtml( rect );
 
 	const htm =
-		`
+	`
 		<small>Text will be formatted more nicely in next release</small>
 		<p>
 			<div><b>Selected Surface Attributes</b></div>
 			${ htmSurface }
 		</p>
-		`
-/*
-		<p>
-			<div><b>AdjacentSpace</b></div>
-			${ htmAdjacentSpace }
-		</p>
-		<p>
-			<div><b>Planar Geometry</b></div>
+
+		<details>
+			<summary> AdjacentSpace</summary>
+
+			<p> ${ htmAdjacentSpace }
+		</details>
+
+		<details>
+			<summary> Planar Geometry </summary>
 			${ htmPlanarGeometry }
-		</p>
-		<p>
-			<div><b>Rectangular Geometry</b></div>
-			${ htmRectangularGeometry }
-		</p>
+		</details>
+
+		<details>
+			<summary> Rectangular Geometry </summary>
+			<div>${ htmRectangularGeometry } </div>
+		</details>
 	`;
-*/
 
 	return htm;
 
@@ -380,54 +461,47 @@ POP.getSurfaceAttributes = function( surface ) {
 
 
 
-POP.getAttributesHtml = function( text ) {
-	//console.log( 'text', text );
+POP.getAttributesHtml = function( surfaceXml ) {
+	//console.log( 'data', data );
 
 	let htm ='';
-	const txt = text.slice( text.indexOf( '"<' ) + 1 );
-	//console.log( '', txt  );
-	const parser = new DOMParser();
+	for ( let attribute of surfaceXml.attributes ) {
 
-	const obj = parser.parseFromString( txt, "application/xml");
-	//console.log( 'obj', obj );
-
-	const element = obj.getElementsByTagName( 'Surface' )[ 0 ];
-
-	for ( let attribute of element.attributes ) {
-
-		htm += `${ attribute.name }: ${ attribute.value }<br>`;
+		htm +=
+		`<div>
+			<span class=attributeTitle >${ attribute.name }</span>:
+			<span class=attributeValue >${ attribute.value }</span>
+		</div>`;
 	}
 
-	const nodes = obj.getElementsByTagName( 'Surface' )[ 0 ].childNodes;
-
-	//const keys = Object.keys( nodes );
-	//console.log( 'keys', keys );
+	const nodes = surfaceXml.childNodes;
+	const numbers = ['Azimuth', 'Height', 'Tilt', 'Width' ];
 
 	for ( let node of nodes ) {
 		//console.log( 'node', node);
 
-		if ( node.nodeType !== 3 ) {
+		if ( node.nodeName !== "#text" ) {
 			//console.log( 'node', node.nodeName, node );
-			//no = node;
 
-			htm += `${ node.nodeName }: ${ node.innerHTML }<br>`;
+			if ( node.childElementCount > 0 ) {
+				//console.log( 'node', node );
 
-			/*
-			if ( node === 'CartesianPoint' ) {
+			} else if ( node.innerHTML ) {
+				//console.log( 'node', node );
 
-				const point = nodes[ key ].Coordinate;
-				//console.log(  'point', point  );
-
+				const value = numbers.includes( node.nodeName ) ? Number( node.innerHTML ).toLocaleString() : node.innerHTML;
 				htm +=
-				`
-					<span class=attributeTitle >CartesianPoint:</span><br>
-					&nbsp; <span class=attributeTitle >x:</span> <span class=attributeValue >${ Number( point[ 0 ] ).toLocaleString() }</span>
-					<span class=attributeTitle >y:</span> <span class=attributeValue >${ Number( point[ 1 ] ).toLocaleString() }</span>
-					<span class=attributeTitle >z:</span> <span class=attributeValue >${ Number( point[ 2 ] ).toLocaleString() }</span><br>
-				`;
+
+				`<div>
+					<span class=attributeTitle >${ node.nodeName }</span>:
+					<span class=attributeValue >${ value }</span>
+				</div>`;
 
 			}
-			*/
+
+		} else {
+
+			//console.log( 'node', node );
 
 		}
 
@@ -439,29 +513,37 @@ POP.getAttributesHtml = function( text ) {
 
 
 
-POP.getAttributesAdjacentSpace = function( obj ){
+POP.getAttributesAdjacentSpace = function( surfaceXml ){
 
-	//console.log( 'AdjacentSpaceId', obj.AdjacentSpaceId );
+	adjacentSpaceId = surfaceXml.getElementsByTagName( "AdjacentSpaceId" );
+	//console.log( 'adjacentSpaceId', adjacentSpaceId );
+	//a = adjacentSpaceId
 
 	let htm;
 
-	if ( obj.AdjacentSpaceId === undefined ) {
+	if ( adjacentSpaceId.length === 0 ) {
+
+		POP.adjacentSpaceId = [];
 
 		htm = 'No adjacent space';
 
-	} else if ( Array.isArray( obj.AdjacentSpaceId ) ) {
+	} else if ( adjacentSpaceId.length === 2 ) {
 
 		//console.log( 'obj.AdjacentSpaceId', obj.AdjacentSpaceId );
 
+		space1 = adjacentSpaceId[ 0 ].getAttribute( "spaceIdRef" );
+		space2= adjacentSpaceId[ 1 ].getAttribute( "spaceIdRef" );
+
+		POP.adjacentSpaceId = [ space1, space2 ];
 		htm =
 		`
 			<div>
 				<span class=attributeTitle >spaceIdRef 1:</span>
-				<span class=attributeValue >${ obj.AdjacentSpaceId[ 0 ].spaceIdRef }</span>
+				<span class=attributeValue >${ space1 }</span>
 			</div>
 			<div>
-				<span class=attributeTitle >spaceIdRef 1:</span>
-				<span class=attributeValue >${ obj.AdjacentSpaceId[ 1 ].spaceIdRef }</span>
+				<span class=attributeTitle >spaceIdRef 2:</span>
+				<span class=attributeValue >${ space2 }</span>
 			</div>
 		`;
 
@@ -469,12 +551,42 @@ POP.getAttributesAdjacentSpace = function( obj ){
 
 		//console.log( 'obj.AdjacentSpaceId', obj.AdjacentSpaceId );
 
+		space1 = adjacentSpaceId[ 0 ].getAttribute( "spaceIdRef" );
+
+		POP.adjacentSpaceId = [ space1 ];
+
 		htm =
 
 		`<div>
 			<span class=attributeTitle >spaceIdRef:</span>
-			<span class=attributeValue >${ obj.AdjacentSpaceId.spaceIdRef }</span>
+			<span class=attributeValue >${ space1 }</span>
 		</div>`;
+
+	}
+
+	return htm;
+
+};
+
+
+POP.getAttributesPlanarGeometry = function( surfaceXml ) {
+
+	const plane = surfaceXml.getElementsByTagName( 'PlanarGeometry' );
+
+	const points = plane[ 0 ].getElementsByTagName( 'Coordinate' );
+	//console.log( 'points', points );
+
+	let htm = '';
+	for ( let i = 0; i < points.length; ) {
+
+		htm +=
+		`
+			<div><span class=attributeTitle >CartesianPoint:</span></div>
+			&nbsp;
+			<span class=attributeTitle >x:</span> <span class=attributeValue >${ Number( points[ i++ ].innerHTML ).toLocaleString() }</span>
+			<span class=attributeTitle >y:</span> <span class=attributeValue >${ Number( points[ i++ ].innerHTML ).toLocaleString() }</span>
+			<span class=attributeTitle >z:</span> <span class=attributeValue >${ Number( points[ i++ ].innerHTML ).toLocaleString() }</span><br>
+		`;
 
 	}
 

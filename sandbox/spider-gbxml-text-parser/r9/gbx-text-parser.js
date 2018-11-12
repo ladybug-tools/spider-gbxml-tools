@@ -327,8 +327,8 @@ GBX.setPolygon = function( vertices, color, holes = [] ) {
 
 
 GBX.getPlane = function( points, start = 0 ) {
+	//console.log( 'points', points, start );
 
-	console.log( 'points', points, start );
 	GBX.triangle.set( points[ start ], points[ start + 1 ], points[ start + 2 ] );
 
 	if ( GBX.triangle.getArea() === 0 && ( ++start < points.length - 2 ) ) { // looks like points are colinear and do not form a plane therefore try next set of points
