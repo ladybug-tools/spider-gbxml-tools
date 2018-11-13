@@ -5,13 +5,13 @@
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
 <meta name=description content="Open and examine very large gbXML files in your browser with free, open source JavaScript" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-11-11" >
-<title>Spider gbXML Text Parser R9.1 </title>
+<meta name = "date" content = "2018-11-12" >
+<title>Spider gbXML Text Parser R9.2 </title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 <style>
 
 	#navMenu button, #navMenu input[type=button] { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;
-		 padding: 2px 5px; min-width: 11rem; }
+		 padding: 2px 5px; min-width: 12rem; }
 
 	button:hover { background: #ccc; color: #fff }
 
@@ -42,6 +42,24 @@
 			<div id = "divHeader" ></div>
 
 		</header>
+
+		<details>
+
+			<summary>2018-11-10 ~ Current Status</summary>
+
+			<!--
+
+				<p>Reloads are faster than first load. Best not to load two big files one after another. Load default file in-between.</p>
+
+			-->
+
+			<p>Model not fully loaded until model centers on screen.</p>
+
+			<p>Default onload shows: Roof, ExteriorWall, ExposedFloor, Air and Shade </p>
+
+			<p>After loading a very large model: it's best to reload the web page. And, be patient, it may take a very long time to clear the data from memory.</p>
+
+		</details>
 
 		<details>
 
@@ -110,35 +128,21 @@
 
 		</details>
 
-		<details id=detReports ontoggle=divReports.innerHTML=REP.getReports();butExterior.click(); >
+		<details id=detReports ontoggle=initReports(); >
 
 			<summary>Reports</summary>
 
 			<div id = "divReports" ></div>
 
+			<div id = "divReportByFilters" ></div>
+
 			<div id="divReportsLog" ></div>
 
-			<hr>
+			<div id="divReportCurrentStatus" ></div>
 
 		</details>
 
-		<details>
 
-			<summary>2018-11-10 ~ Current Status</summary>
-
-			<!--
-
-				<p>Reloads are faster than first load. Best not to load two big files one after another. Load default file in-between.</p>
-
-			-->
-
-			<p>Model not fully loaded until model centers on screen.</p>
-
-			<p>Default onload shows: Roof, ExteriorWall, ExposedFloor, Air and Shade </p>
-
-			<p>After loading a very large model: it's best to reload the web page. And, be patient, it may take a very long time to clear the data from memory</p>
-
-		</details>
 
 
 		<footer>
@@ -202,6 +206,20 @@ function init() {
 	//location.hash = urlDefaultFile;
 
 }
+
+
+
+function initReports() {
+
+	divReports.innerHTML=REP.getReports();
+
+	divReportByFilters.innerHTML=REP.getReportByFilters();
+
+	divReportCurrentStatus.innerHTML = REP.getReportCurrentStatus();
+
+	butExterior.click();
+
+};
 
 
 
@@ -440,8 +458,6 @@ function onParseFile() {
 	detReports.open = true; // see click on toggle
 
 	//REP.toggleExteriorSurfaces();
-
-
 
 }
 

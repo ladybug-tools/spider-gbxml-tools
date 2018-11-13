@@ -6,7 +6,7 @@
 <meta name=description content="Open and examine very large gbXML files in your browser with free, open source JavaScript" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
 <meta name = "date" content = "2018-11-09" >
-<title>Spider gbXML Text Parser R9.0 'Evgeny'</title>
+<title>Spider gbXML Text Parser R9.1 'Evgeny'</title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 <style>
 
@@ -30,7 +30,8 @@
 <script src = "../../../lib/r7/gal-sample-files-gallery-gbxml.js" ></script>
 
 <script src = "./gbx-text-parser.js" ></script>
-<script src = "./rep-evgeny.js" ></script>
+<script src = "./rep-reports.js" ></script>
+<script src = "./repl-view-by-level.js" ></script>
 <script src = "./pop-up-text-parser.js" ></script>
 
 	<main id="container" ></main>
@@ -42,6 +43,24 @@
 			<div id = "divHeader" ></div>
 
 		</header>
+
+		<details>
+
+			<summary>2018-11-12 ~ Current Status</summary>
+
+			<!--
+
+				<p>Reloads are faster than first load. Best not to load two big files one after another. Load default file in-between.</p>
+
+			-->
+
+			<p>Model not fully loaded until model centers on screen.</p>
+
+			<p>Default onload shows: Roof, ExteriorWall, ExposedFloor, Air and Shade </p>
+
+			<p>After loading a very large model: it's best to reload the web page. And, be patient, it may take a very long time to clear the data from memory</p>
+
+		</details>
 
 		<details>
 
@@ -100,7 +119,7 @@
 
 		</details>
 
-		<details id=detStats ontoggle=divGbxmlInfo.innerHTML=EVG.getStats(); >
+		<details id=detStats ontoggle=divGbxmlInfo.innerHTML=REP.getStats(); >
 
 			<summary>Statistics</summary>
 
@@ -110,36 +129,19 @@
 
 		</details>
 
-		<details id=detReports ontoggle=divReports.innerHTML=EVG.getReports();EVG.toggleExteriorSurfaces(); >
+		<details id=detReports ontoggle=initReports(); >
 
 			<summary>Evgeny Workflow</summary>
 
 			<div id = "divReports" ></div>
 
+			<div id = "divReportByLevels" ></div>
+
 			<div id="divReportsLog" ></div>
 
-			<hr>
+			<div id="divReportCurrentStatus" ></div>
 
 		</details>
-
-		<details>
-
-			<summary>2018-11-10 ~ Current Status</summary>
-
-			<!--
-
-				<p>Reloads are faster than first load. Best not to load two big files one after another. Load default file in-between.</p>
-
-			-->
-
-			<p>Model not fully loaded until model centers on screen.</p>
-
-			<p>Default onload shows: Roof, ExteriorWall, ExposedFloor, Air and Shade </p>
-
-			<p>After loading a very large model: it's best to reload the web page. And, be patient, it may take a very long time to clear the data from memory</p>
-
-		</details>
-
 
 		<footer>
 
@@ -200,6 +202,20 @@ function init() {
 
 	if ( !location.hash ) { location.hash = urlDefaultFile; } else { onHashChange(); }
 	//location.hash = urlDefaultFile;
+
+}
+
+
+
+function initReports() {
+
+	divReports.innerHTML = REP.getReports();
+
+	divReportByLevels.innerHTML = REPL.getReportByLevels();
+
+	divReportCurrentStatus.innerHTML = REPL.getReportCurrentStatus();
+
+	REP.toggleExteriorSurfaces();
 
 }
 
@@ -346,7 +362,7 @@ function inpOpenFileZip( files ) {
 	detReports.open = false;
 	detStats.open = false;
 
-	zip = new JSZip();
+	const zip = new JSZip();
 
 	names = [];
 
@@ -362,7 +378,6 @@ function inpOpenFileZip( files ) {
 			//console.log( 'file name: ', zipEntry.name );
 
 		});
-
 		//console.log( 'zip', zip );
 
 		return zip;
@@ -370,7 +385,6 @@ function inpOpenFileZip( files ) {
 	} )
 
 	.then( function( data ) {
-
 		//console.log( 'data', data  );
 
 		const arrTemp = data.files[ names[ 0 ] ].async( "uint8array", metadata =>
@@ -382,7 +396,6 @@ function inpOpenFileZip( files ) {
 	}, ( err ) =>  divFileInfo.innerHTML += err.message )
 
 	.then( function( uint8array ) {
-
 		//console.log( 'uint8array', uint8array );
 
 		let txt = '';
@@ -444,8 +457,6 @@ function onParseFile() {
 
 
 }
-
-
 
 </script>
 </body>

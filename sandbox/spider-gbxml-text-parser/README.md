@@ -64,11 +64,21 @@ Pop-up Text Parser
 
 ***
 
-## Full Screen: [Spider gbXML Text Parser R9.1]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r9/spider-gbxml-text-parser.html )
+## Full Screen: [Spider gbXML Text Parser R9.2]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r9/spider-gbxml-text-parser.html )
 
-## Full Screen: [Spider gbXML Text Parser R9.0 'Evgeny' ]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r9/spider-gbxml-text-parser-evgeny.html )
+## Full Screen: [Spider gbXML Text Parser R9.1 'Evgeny' ]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r9/spider-gbxml-text-parser-evgeny.html )
+
+
 
 #### 2018-11-12 ~ Theo
+
+Pop-Up
+* Now displays spaces, storeys and zones and their attributes more correctly
+
+'Evgeny'
+* Levels now display the correct surfaces
+
+#### 2018-11-11 ~ Theo
 
 * Many improvements
 
