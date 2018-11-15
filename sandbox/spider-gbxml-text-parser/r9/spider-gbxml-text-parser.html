@@ -5,8 +5,8 @@
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
 <meta name=description content="Open and examine very large gbXML files in your browser with free, open source JavaScript" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-11-12" >
-<title>Spider gbXML Text Parser R9.2 </title>
+<meta name = "date" content = "2018-11-14" >
+<title>Spider gbXML Text Parser R9.3 </title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 <style>
 
@@ -15,7 +15,8 @@
 
 	button:hover { background: #ccc; color: #fff }
 
-	.active { border-color: black; font-style: italic; font-weight: bold; margin-left: 1rem; box-shadow: 2px 2px red; }
+	#navMenu button.active { border-color: black; font-style: italic; font-weight: bold; margin-left: 1rem;
+	 box-shadow: 2px 2px re#888; }
 
 
 </style>
@@ -31,6 +32,7 @@
 
 <script src = "./gbx-text-parser.js" ></script>
 <script src = "./rep-reports.js" ></script>
+<script src = "./set-settings.js" ></script>
 <script src = "./pop-up-text-parser.js" ></script>
 
 	<main id="container" ></main>
@@ -45,7 +47,7 @@
 
 		<details>
 
-			<summary>2018-11-10 ~ Current Status</summary>
+			<summary>2018-11-14 ~ Current Status</summary>
 
 			<!--
 
@@ -128,22 +130,26 @@
 
 		</details>
 
-		<details id=detReports ontoggle=initReports(); >
+		<details id=detReports ontoggle=divReports.innerHTML=REP.getReportsMenu(); >
 
-			<summary>Reports</summary>
+			<summary> Reports </summary>
 
 			<div id = "divReports" ></div>
 
-			<div id = "divReportByFilters" ></div>
-
-			<div id="divReportsLog" ></div>
-
-			<div id="divReportCurrentStatus" ></div>
+			<div id = "divReportsLog" ></div>
 
 		</details>
 
 
+		<details id=detSettings ontoggle=divSettings.innerHTML=SET.getSettingsMenu(); >
 
+			<summary> Settings </summary>
+
+			<div id = "divSettings" ></div>
+
+			<div id = "divSettingsLog" ></div>
+
+		</details>
 
 		<footer>
 
@@ -209,20 +215,6 @@ function init() {
 
 
 
-function initReports() {
-
-	divReports.innerHTML=REP.getReports();
-
-	divReportByFilters.innerHTML=REP.getReportByFilters();
-
-	divReportCurrentStatus.innerHTML = REP.getReportCurrentStatus();
-
-	butExterior.click();
-
-};
-
-
-
 function onHashChange() {
 
 	timeStart = performance.now();
@@ -249,7 +241,7 @@ function requestFile( url, callback ) {
 
 	timeStart = performance.now();
 
-	detReports.open = false;
+	//detReports.open = false;
 	detStats.open = false;
 
 	const xhr = new XMLHttpRequest();
@@ -285,7 +277,6 @@ function callbackGbXML( xhr ) {
 	const len = GBX.parseFile( xhr.target.response );
 	//console.log( 'len', len );
 
-
 	const timeToLoad = performance.now() - timeStart;
 
 	divFileInfo.innerHTML =
@@ -312,7 +303,7 @@ function inpOpenFileXml( files ) {
 
 	reader.onprogress = onRequestFileProgress;
 
-	detReports.open = false;
+	//detReports.open = false;
 	detStats.open = false;
 
 	reader.onload = function( event ) {
@@ -361,10 +352,10 @@ function inpOpenFileZip( files ) {
 
 	timeStart = performance.now();
 
-	detReports.open = false;
+	//detReports.open = false;
 	detStats.open = false;
 
-	zip = new JSZip();
+	const zip = new JSZip();
 
 	names = [];
 
@@ -380,7 +371,6 @@ function inpOpenFileZip( files ) {
 			//console.log( 'file name: ', zipEntry.name );
 
 		});
-
 		//console.log( 'zip', zip );
 
 		return zip;
@@ -388,7 +378,6 @@ function inpOpenFileZip( files ) {
 	} )
 
 	.then( function( data ) {
-
 		//console.log( 'data', data  );
 
 		const arrTemp = data.files[ names[ 0 ] ].async( "uint8array", metadata =>
@@ -400,7 +389,6 @@ function inpOpenFileZip( files ) {
 	}, ( err ) =>  divFileInfo.innerHTML += err.message )
 
 	.then( function( uint8array ) {
-
 		//console.log( 'uint8array', uint8array );
 
 		let txt = '';
@@ -455,13 +443,12 @@ function inpOpenFileZip( files ) {
 function onParseFile() {
 
 	detStats.open = true;
-	detReports.open = true; // see click on toggle
+	//detReports.open = true; // see click on toggle
 
-	//REP.toggleExteriorSurfaces();
+	REP.toggleExteriorSurfaces();
 
+	//GBX.sendSurfacesToThreeJs( GBX.surfacesIndexed );
 }
-
-
 
 </script>
 </body>

@@ -3,7 +3,7 @@
 /* globals THREE, THR, THRU, timeStart, divReports */
 
 
-const REPL = {"release": "R9.2", "date": "2018-11-12" };
+const REPL = {"release": "R9.3", "date": "2018-11-14" };
 
 
 REPL.getReportByLevels = function() {
@@ -14,7 +14,9 @@ REPL.getReportByLevels = function() {
 
 	const htm =
 	`
-		<p><select id=selStorey onClick=REPL.selStoreys(); multiple size=${ size } style=min-width:15rem; > ${ optionsStorey } </select></p>
+		<p>
+			<div>Show/hide by storey</div>
+			<select id=selStorey onClick=REPL.selStoreys(); multiple size=${ size } style=min-width:15rem; > ${ optionsStorey } </select></p>
 	`;
 
 	return htm;
@@ -92,11 +94,15 @@ REPL.selStoreys = function() {
 REPL.getStoreys = function() {
 	//console.log( 'GBX.storeys', GBX.storeys );
 
-	const storeyNames = GBX.storeys.map( storey => storey.match( '<Name>(.*?)</Name>' )[ 1 ] );
+	var storeyNames = GBX.storeys.map( storey => storey.match( '<Name>(.*?)</Name>' )[ 1 ] );
 	//console.log( 'storeyNames', storeyNames);
 
-	const storeyIds = GBX.storeys.map( storey => storey.match( 'id="(.*?)">')[ 1 ] );
+	var storeyIds = GBX.storeys.map( storey => storey.match( 'id="(.*?)">')[ 1 ] );
 	//console.log( 'storeyIds', storeyIds );
+
+	// how to destructure or creae object so  can sort these two arrays?
+
+	//console.log( 'storeyNames', storeyNames );
 
 	const options = storeyNames.map( ( name, index ) => `<option value=${ storeyIds[ index ] }>${ name }</option>` );
 

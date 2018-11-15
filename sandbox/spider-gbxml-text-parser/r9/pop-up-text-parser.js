@@ -3,7 +3,7 @@
 
 // Copyright 2018 Ladybug Tools authors. MIT License.
 
-var POP = { "release": "R9.3", "date": "2018-11-13" };
+var POP = { "release": "R9.4", "date": "2018-11-14" };
 
 POP.urlSource = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-pop-up"
 
@@ -18,13 +18,19 @@ POP.currentStatus =
 		<p>
 			Beginning to operate as expected. Zone attributes not yet being displayed.
 		</p>
+
+
 		<p>
-			For wish list and fixing things see <a href="../../spider-gbxml-viewer-issues/index.html" target="_blank">issues module</a>
+			wish-list<br>
+			&bull; 2018-11-14 ~ display zone, storey and zone geometries on demand - not just surfaces geometry
+			&bull; 2018-11-13 ~ buttons should be in same place between clicks
+		</p>
+
+		<p>
+			To add to wish list and get things fixed see <a href="../../spider-gbxml-viewer-issues/index.html" target="_blank">issues module</a>
 		</p>
 
 		<!--
-		<p>Coming next:<br>&bull; display rectangular geometry in model</p>
-
 		<p>Status: Getting to be stable. Needs more testing. Wishlists items welcome.</p>
 
 		<p>Toggling focus or visibility and identifying are two different things. As we design, let us try to keep these actions separate.</p>
@@ -60,6 +66,7 @@ POP.getMenuHtmlPopUp = function() { // call from home page
 	const htm =
 	`
 		<div id = "divPopupData" >
+
 			<h3>Pop-Up menu</h3>
 			<p>
 				Click on the model and surface attributes appear here.
@@ -107,17 +114,26 @@ POP.onClickZoomAll = function() {
 	GBX.surfaceGroup.children.forEach( child => child.visible = true );
 
 	THRU.zoomObjectBoundingSphere( GBX.boundingBox );
-/*
+
+	time = performance.now();
+
+	campusXml = POP.parser.parseFromString( GBX.text, "application/xml").documentElement;
+	POP.campusXml = campusXml;
+	//console.log( 'surfaceXml', surfaceXml.attributes );
+
+	buildingXml = campusXml.getElementsByTagName( 'Building' )[ 0 ];
+
 	divPopupData.innerHTML=
 	`
 		<b>Campus Attributes</b>
-		<div>${ POP.getAttributesHtml( GBX.gbjson.Campus) }</div>
+		<div>${ POP.getAttributesHtml( campusXml ) }</div>
 		<br>
 		<b>Building Attributes</b>
-		<div>${ POP.getAttributesHtml(GBX.gbjson.Campus.Building) }</div>
+		<div>${ POP.getAttributesHtml( buildingXml ) }</div>
 
 	`;
- */
+
+	console.log( '', performance.now() - time );
 };
 
 
@@ -239,9 +255,9 @@ POP.getIntersectedDataHtml = function() {
 
 	const adjSpaceButtons = POP.getAdjSpaceButtons();
 
-	const storeyButton = POP.storeyId ? `<button id=POPbutStoreyVisible onclick=POP.toggleStoreyVisible(this,"${ POP.storeyId }"); title="id: ${ POP.storeyId }" >storey: ${ POP.storeyName}</button>` : `<div id=POPbutStoreyVisible ></div>`;
+	const storeyButton = POP.storeyId ? `<button id=POPbutStoreyVisible onclick=POPelementAttributes.innerHTML=POP.toggleStoreyVisible(this,"${ POP.storeyId }"); title="id: ${ POP.storeyId }" >storey: ${ POP.storeyName}</button>` : `<div id=POPbutStoreyVisible ></div>`;
 
-	const zoneButton = POP.zoneId ? `<button id=POPbutZoneVisible onclick=POP.toggleZoneVisible("${ POP.zoneId }"); title="id: ${ POP.zoneId }" >zone: ${ POP.zoneName }</button> &nbsp;` : `<div id=POPbutZoneVisible ></div>`;
+	const zoneButton = POP.zoneId ? `<button id=POPbutZoneVisible onclick=POPelementAttributes.innerHTML=POP.getToggleZoneVisible(this,"${ POP.zoneId }"); title="id: ${ POP.zoneId }" >zone: ${ POP.zoneName }</button> &nbsp;` : `<div id=POPbutZoneVisible ></div>`;
 
 	const htm =
 	`
@@ -358,6 +374,60 @@ POP.getAdjSpaceButtons = function() {
 
 //////////
 
+POP.getAttributesHtml = function( obj ) {
+	//console.log( 'obj', obj );
+
+	let htm ='';
+
+	for ( let attribute of obj.attributes ) {
+
+		htm +=
+		`<div>
+			<span class=attributeTitle >${ attribute.name }</span>:
+			<span class=attributeValue >${ attribute.value }</span>
+		</div>`;
+	}
+
+	const nodes = obj.childNodes;
+	const numbers = ['Azimuth', 'Height', 'Tilt', 'Width' ];
+
+	for ( let node of nodes ) {
+		//console.log( 'node', node);
+
+		if ( node.nodeName !== "#text" ) {
+			//console.log( 'node', node.nodeName, node );
+
+			if ( node.childElementCount > 0 ) {
+				//console.log( 'node', node );
+
+			} else if ( node.innerHTML ) {
+				//console.log( 'node', node );
+
+				const value = numbers.includes( node.nodeName ) ? Number( node.innerHTML ).toLocaleString() : node.innerHTML;
+
+				htm +=
+
+				`<div>
+					<span class=attributeTitle >${ node.nodeName }</span>:
+					<span class=attributeValue >${ value }</span>
+				</div>`;
+
+			}
+
+		} else {
+
+			//console.log( 'node', node );
+
+		}
+
+	}
+
+	return htm;
+
+};
+
+
+
 POP.getSurfaceAttributes = function( surfaceXml ) {
 	//console.log( 'surfaceXml', surfaceXml );
 	//s = surfaceXml;
@@ -398,57 +468,6 @@ POP.getSurfaceAttributes = function( surfaceXml ) {
 };
 
 
-
-POP.getAttributesHtml = function( obj ) {
-	//console.log( 'obj', obj );
-
-	let htm ='';
-
-	for ( let attribute of obj.attributes ) {
-
-		htm +=
-		`<div>
-			<span class=attributeTitle >${ attribute.name }</span>:
-			<span class=attributeValue >${ attribute.value }</span>
-		</div>`;
-	}
-
-	const nodes = obj.childNodes;
-	const numbers = ['Azimuth', 'Height', 'Tilt', 'Width' ];
-
-	for ( let node of nodes ) {
-		//console.log( 'node', node);
-
-		if ( node.nodeName !== "#text" ) {
-			//console.log( 'node', node.nodeName, node );
-
-			if ( node.childElementCount > 0 ) {
-				//console.log( 'node', node );
-
-			} else if ( node.innerHTML ) {
-				//console.log( 'node', node );
-
-				const value = numbers.includes( node.nodeName ) ? Number( node.innerHTML ).toLocaleString() : node.innerHTML;
-				htm +=
-
-				`<div>
-					<span class=attributeTitle >${ node.nodeName }</span>:
-					<span class=attributeValue >${ value }</span>
-				</div>`;
-
-			}
-
-		} else {
-
-			//console.log( 'node', node );
-
-		}
-
-	}
-
-	return htm;
-
-};
 
 
 
@@ -566,32 +585,6 @@ POP.getAttributesPlanarGeometry = function( surfaceXml ) {
 	return htm;
 
 };
-
-
-
-POP.getAttributesPolyLoop = function( polyloop ) {
-
-	const points = polyloop.CartesianPoint.map( CartesianPoint => new THREE.Vector3().fromArray( CartesianPoint.Coordinate ) );
-
-	let htm = '', count = 1;
-
-	for ( let point of points ) {
-
-		htm += // put in table or flex??
-		`
-			#${ count++ }.
-			<span class=attributeTitle >x:</span><span class=attributeValue >${ Number( point.x ).toLocaleString() }</span>
-			<span class=attributeTitle >y:</span><span class=attributeValue >${ Number( point.y ).toLocaleString() }</span>
-			<span class=attributeTitle >z:</span><span class=attributeValue >${ Number( point.z ).toLocaleString() }</span><br>
-		`;
-
-	}
-	//console.log( 'points', JSON.stringify( points ) );
-
-	return htm;
-
-};
-
 
 
 //////////
@@ -805,76 +798,99 @@ POP.toggleStoreyVisible = function( button, storeyId ) {
 
 	const htm =
 	`
-		<b>Storey Attributes</b>
+		<b>Selected Storey Attributes</b>
 		${ htmStorey }
 	`;
 
-	POPelementAttributes.innerHTML = htm;
+	return htm;
 
 };
 
 
 
-POP.toggleZoneVisible = function ( zoneIdRef ) {
 
-	const color = POPbutZoneVisible.style.backgroundColor === '' ? 'pink' : '';
-	POPbutZoneVisible.style.backgroundColor = color;
+POP.getToggleZoneVisible = function ( button, zoneIdRef ) {
 
-	POPbutStoreyVisible.style.backgroundColor = '';
-	POPbutSurfaceFocus.style.backgroundColor = '';
-	POPbutSurfaceVisible.style.backgroundColor = '';
+	button.classList.toggle( "active" );
 
-	POPbutAdjacentSpace1.style.backgroundColor = '';
-	POPbutAdjacentSpace2.style.backgroundColor = '';
+	const focus = button.classList.contains( "active" );
 
-	if ( color === 'pink' ) {
+	const children =  GBX.surfaceGroup.children;
 
-		const spaces = GBX.gbjson.Campus.Building.Space;
+	if ( focus === true ) {
 
-		GBX.surfaceGroup.children.forEach( element => element.visible = false );
+		children.forEach( element => element.visible = false );
+
+		const spaces = GBX.spaces;
+
+		//const spaceIdRef = POP.adjacentSpaceId.length === 1 ? POP.adjacentSpaceId[ 0 ] : POP.adjacentSpaceId[ 1 ];
+
+		const spaceIdsInZone = [];
+
+		for ( space of spaces ) {
+
+			spaceZoneId = space.match( `zoneIdRef="(.*?)"` )[ 1 ];
+
+			if ( spaceZoneId === zoneIdRef ) {
+
+				spaceId = space.match( ` id="(.*?)"` )[ 1 ];
+				//console.log( 'spaceId', spaceId );
+
+				spaceIdsInZone.push( spaceId );
+
+			}
+
+		}
+		//console.log( 'spaceIdsInStory', spaceIdsInStory );
 
 
-		for ( let child of GBX.surfaceGroup.children ) {
+		for ( let child of children ) {
 
-			const adjacentSpaceId = child.userData.gbjson.AdjacentSpaceId;
-			//console.log( 'adjacentSpaceId', adjacentSpaceId );
+			const id = child.userData.index;
+			const surface = GBX.surfaces[ id ];
+			const spacesArr = surface.match( / zoneIdRef="(.*?)"/g );
 
-			if ( !adjacentSpaceId ) { continue; }
+			if ( !spacesArr ) { break; }
 
-			const spaceIdRef = Array.isArray( adjacentSpaceId ) ? adjacentSpaceId[ 1 ].spaceIdRef : adjacentSpaceId.spaceIdRef;
+			spacesIdsArr = spacesArr.map( space => space.match( `="(.*?)"` )[ 1 ] );
 
-			spaces.forEach( element => child.visible = element.id === spaceIdRef && element.zoneIdRef === zoneIdRef ? true : child.visible );
+			//console.log( 'spacesIdsArr', spacesIdsArr );
+
+			for ( spaceId of spaceIdsInZone ) {
+
+				child.visible = spacesIdsArr.includes( spaceId ) ? true : child.visible;
+
+			}
 
 		}
 
 	} else {
 
-		GBX.surfaceGroup.children.forEach( element => element.visible = true );
-
+		children.forEach( child => child.visible = true );
 	}
 
-	let zoneJson = Array.isArray( GBX.gbjson.Zone ) ? GBX.gbjson.Zone : [ GBX.gbjson.Zone ];
-	zoneJson = zoneJson.find( item => item.id === zoneIdRef );
-	//console.log( 'zoneJson', zoneJson );
+	const zoneTxt = GBX.zones.find( item => item.includes( ` id="${ zoneIdRef }"` ) );
 
-	const htmZone = POP.getAttributesHtml( zoneJson );
+	const zoneXml = POP.parser.parseFromString( zoneTxt, "application/xml").documentElement;
+	//console.log( 'spaceXml ', spaceXml );
+
+	const htmZone = POP.getAttributesHtml( zoneXml );
 
 	const htm =
 	`
-		<b>Zone Attributes</b>
+		<b>Selected Zone Attributes</b>
 		${ htmZone }
 	`;
 
-	POPelementAttributes.innerHTML = htm;
-
+	return htm;
 
 };
+
 
 
 //////////
 
 POP.setSurfaceZoom = function() {
-	//console.log( 'id', id );
 
 	const surfaceMesh = POP.intersected;
 

@@ -32,12 +32,14 @@ summary {font-weight: bold }
 	opacity: 0.95; right: 1rem; position: absolute; top: 1rem; z-index: 10; };
 
 
-/*
+
 @media screen and (max-width: 900px) {
 
 	#navMenu { left: -23em }
 
 }
+
+/*
 
 @media screen and (max-width: 600px) {
 

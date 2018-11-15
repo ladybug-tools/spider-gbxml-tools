@@ -68,11 +68,16 @@ Pop-up Text Parser
 
 ## Full Screen: [Spider gbXML Text Parser R9.1 'Evgeny' ]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r9/spider-gbxml-text-parser-evgeny.html )
 
+#### 2018-11-14 ~ Theo
+
+Pop-Up R9.4
+* Update current status
+* Zoom all displays Campus data
 
 
 #### 2018-11-12 ~ Theo
 
-Pop-Up
+Pop-Up R9.3
 * Now displays spaces, storeys and zones and their attributes more correctly
 
 'Evgeny'
@@ -236,6 +241,11 @@ Does almost nothing. You must use 'Choose File' and developer console to see any
 
 
 ## Change Log
+
+
+### 2018-11-14 ~ Theo
+
+I'm finding that converting text to xml is fast. May be good to do a conversion on load and just use xml all the time instead of parsing xml frm text on demand. Will need to test.
 
 
 ### 2018-11-01 ~ Theo

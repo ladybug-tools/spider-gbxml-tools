@@ -95,16 +95,16 @@ GBX.parseFile = function( gbxml )  {
 
 //////////
 
-GBX.sendSurfacesToThreeJs = function( surfaces ) {
-	//console.log( 'surfaces', surfaces );
+GBX.sendSurfacesToThreeJs = function( surfacesText ) {
+	//console.log( 'surfacesText', surfacesText );
 
-	if ( !surfaces.length ) { return "no surfaces"; }
+	if ( !surfacesText.length ) { return "no surfaces"; }
 
 	GBX.surfaceGroup.children.forEach( ( surface, index ) => {
 		surface.visible = false;
 	} );
 
-	surfaces.map ( surface => {
+	surfacesText.forEach( surface => {
 
 		const index = surface.match( 'indexGbx="(.*?)"' )[ 1 ];
 		GBX.surfaceGroup.children[ index ].visible = true;
@@ -121,7 +121,7 @@ GBX.sendSurfacesToThreeJs = function( surfaces ) {
 
 	THRU.zoomObjectBoundingSphere( GBX.boundingBox );
 
-	return surfaces.length.toLocaleString() + ' surfaces';
+	return surfacesText.length.toLocaleString() + ' surfaces';
 
 };
 
@@ -338,6 +338,31 @@ GBX.getPlane = function( points, start = 0 ) {
 	}
 
 	return GBX.triangle.getPlane( new THREE.Plane() );
+
+};
+
+
+
+GBX.getSurfaceEdges = function() {
+
+	console.log( '', 23 );
+	const surfaceEdges = [];
+	const lineMaterial = new THREE.LineBasicMaterial( { color: 0x888888 } );
+
+	for ( let mesh of GBX.surfaceGroup.children ) {
+
+		mesh.userData.edges = mesh;
+		const edgesGeometry = new THREE.EdgesGeometry( mesh.geometry );
+		const surfaceEdge = new THREE.LineSegments( edgesGeometry, lineMaterial );
+		surfaceEdge.rotation.copy( mesh.rotation );
+		surfaceEdge.position.copy( mesh.position );
+		surfaceEdges.push( surfaceEdge );
+
+	}
+
+	THR.scene.add( ...surfaceEdges );
+
+	return surfaceEdges;
 
 };
 

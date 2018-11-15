@@ -3,7 +3,7 @@
 /* globals THREE, THR, THRU, timeStart, divReports */
 
 
-const REP = { "release": "R9.2", "date": "2018-11-12" };
+const REP = { "release": "R9.3", "date": "2018-11-14" };
 
 
 
@@ -45,7 +45,7 @@ REP.getStats = function() {
 
 
 
-REP.getReports = function() {
+REP.getReportsMenu = function() {
 
 	const types = GBX.surfaceTypes.filter( type => GBX.surfaces.find( surface => surface.includes( type ) ) );
 
@@ -53,20 +53,29 @@ REP.getReports = function() {
 	colors = colors.map( color => color.length > 4 ? color : '00' + color ); // otherwise greens no show
 	//console.log( 'col', colors );
 
+	/// class=butSurfaceType
 	const buttonSurfaceTypes = types.map( ( type, index ) =>
-		`<button class=butSurfaceType onclick=REP.toggleSurfaceFiltered(this); style="background-color:#${ colors[ index ] };" > ${ type } </button>`
+		`<button  onclick=REP.toggleSurfaceFiltered(this); style="background-color:#${ colors[ index ] };" > ${ type } </button>`
 	);
 
 	const htm =
 	`
-		<div id=REPdivSurfaceType >Show by surface type
+		<div id=REPdivSurfaceType >
+			Show by surface type
 			${ buttonSurfaceTypes.join( '<br>' ) }
 		</div>
+
+		<div id = "divReportCurrentStatus" > ${ REP.getReportCurrentStatus() } </div>
+
+		<div id = "divReportByFilters" > ${ REP.getReportByFilters() } </div>
+
+
 	`;
 
 	return htm;
 
 };
+
 
 
 
@@ -97,14 +106,13 @@ REP.getReportByFilters = function() {
 	`
 		<div id=REPdivReportByFilters >
 
-				<p>
-					<button id=butExterior onclick=REP.toggleExteriorSurfaces(this);
-						style= "background-color: pink; font-style: bold; "; >exterior surfaces</button>
+			<p>
+				<button id=butExterior onclick=REP.toggleExteriorSurfaces(this); >exterior surfaces</button>
 
-					<button id=butExposed onclick=REP.setSurfacesFiltered(this,'exposedToSun="true"'); >exposed to sun</button>
-				</p>
+				<button id=butExposed onclick=REP.setSurfacesFiltered(this,'exposedToSun="true"'); >exposed to sun</button>
+			</p>
 
-				<p>
+			<p>
 				<button onclick=REP.setSurfaceTypesVisible(["Ceiling","InteriorFloor","SlabOnGrade","UndergroundSlab"],this); >horizontal</button>
 
 				<button onclick=REP.setSurfaceTypesVisible(["ExteriorWall","InteriorWall","UndergroundWall"],this); >vertical</button>
@@ -135,12 +143,28 @@ REP.toggleSurfaceFiltered = function( button ) {
 
 
 REP.setSurfaceTypesVisible = function ( typesArray ) {
+	//console.log( 'typesArray', typesArray );
 
 	GBX.surfacesFiltered = typesArray.flatMap( filter =>
 
 		GBX.surfacesIndexed.filter( surface => surface.includes( `"${ filter }"` ) )
 
 	);
+
+	/*
+	children = GBX.surfacesFiltered.map( surfaceText => {
+
+		const index = surfaceText.match( 'indexGbx="(.*?)"' )[ 1 ];
+
+		return GBX.surfaceGroup.children[ index ];
+
+	} );
+
+	GBX.surfaceGroupFiltered = new THREE.Group();
+	GBX.surfaceGroupFiltered.add( ...children );
+	*/
+
+
 	//console.log( 'GBX.surfacesFiltered',  GBX.surfacesFiltered );
 
 	divReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( GBX.surfacesFiltered );
@@ -151,11 +175,11 @@ REP.setSurfaceTypesVisible = function ( typesArray ) {
 
 REP.setSurfacesFiltered = function( button, filters ) {
 
-	buttons = REPdivReportByFilters.querySelectorAll( "button" );
+	//buttons = REPdivReportByFilters.querySelectorAll( "button" );
 
-	Array.from( buttons ).forEach( button => button.classList.remove( "active" ) );
+	//Array.from( buttons ).forEach( button => button.classList.remove( "active" ) );
 
-	button.classList.toggle( "active" );
+	//button.classList.toggle( "active" );
 
 	//Array.from( buttons ).forEach( button => filters.includes( button.innerText ) ?
 	//	button.classList.add( "active" ) : button.classList.remove( "active" ));
@@ -179,10 +203,10 @@ REP.setSurfacesFiltered = function( button, filters ) {
 REP.toggleExteriorSurfaces = function() {
 
 	const filters = [ "Roof", "ExteriorWall", "ExposedFloor", "Air", "Shade" ];
-	const buttons = divReports.querySelectorAll( "button" );
-	Array.from( buttons ).forEach( button => filters.includes( button.innerText ) ?
-		button.classList.add( "active" ) : button.classList.remove( "active" )
-	);
+	//const buttons = divReports.querySelectorAll( "button" );
+	//Array.from( buttons ).forEach( button => filters.includes( button.innerText ) ?
+	//	button.classList.add( "active" ) : button.classList.remove( "active" )
+	//);
 
 	REP.setSurfaceTypesVisible( filters );
 
