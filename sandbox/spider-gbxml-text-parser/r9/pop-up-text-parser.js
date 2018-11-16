@@ -3,7 +3,7 @@
 
 // Copyright 2018 Ladybug Tools authors. MIT License.
 
-var POP = { "release": "R9.4", "date": "2018-11-14" };
+var POP = { "release": "R9.5", "date": "2018-11-15" };
 
 POP.urlSource = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-pop-up"
 
@@ -16,16 +16,15 @@ POP.currentStatus =
 			Elements and attributes identified according to <a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">gbXML Schema.</a>
 		</p>
 		<p>
-			Beginning to operate as expected. Zone attributes not yet being displayed.
+			Beginning to operate as expected.
 		</p>
-
-
 		<p>
 			wish-list<br>
-			&bull; 2018-11-14 ~ display zone, storey and zone geometries on demand - not just surfaces geometry
+			&bull; Better memory of recently applied filters / prevent reloading entire model unless absolutely required
 			&bull; 2018-11-13 ~ buttons should be in same place between clicks
 		</p>
 
+		<p>What buttons should be addd or dropped here? What tooltips should appear and where?</p>
 		<p>
 			To add to wish list and get things fixed see <a href="../../spider-gbxml-viewer-issues/index.html" target="_blank">issues module</a>
 		</p>
@@ -37,7 +36,6 @@ POP.currentStatus =
 
 		<p>If you are in a module, then you should never have to leave the module in order to complete the tasks assigned to that module</p>
 
-		<p>What tooltips should appear and where?</p>
 		-->
 
 	</details>`;
@@ -96,7 +94,8 @@ POP.getMenuHtmlPopUp = function() { // call from home page
 				<a href= title="View the read me file for the pop-up module" >${ POP.release }</a>
 				<br>
 				<button onclick=POP.onClickZoomAll(); title="Show entire campus & display attributes" >zoom all +</button>
-			</p>
+				<button onclick=SET.toggleOpenings(); >toggle openings</button>
+				</p>
 
 		</div>
 

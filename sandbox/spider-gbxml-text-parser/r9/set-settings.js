@@ -3,11 +3,9 @@
 /* globals THREE, THR, THRU, timeStart, divSettingss */
 
 
-const SET = {"release": "R9.0", "date": "2018-11-14" };
+const SET = {"release": "R9.1", "date": "2018-11-15" };
 
 SET.getSettingsMenu = function() {
-
-	GBX.surfaceEdges = [];
 
 	const htm =
 	`
@@ -23,7 +21,7 @@ SET.getSettingsMenu = function() {
 		<p>
 			<button onclick=THRU.toggleSurfaces(); >toggle surfaces</button>
 
-			<button onclick=SET.toggleEdges(); >toggle edges</button>
+			<button onclick=SET.toggleOpenings(); >toggle openings</button>
 
 			<button onclick=SET.toggleEdgesThreejs(); >toggle edges three.js</button>
 		</p>
@@ -58,22 +56,24 @@ SET.getSettingsMenu = function() {
 
 
 
-SET.toggleEdges = function() {
+SET.toggleOpenings = function() {
 	//console.log( '', 22 );
 
-	if ( GBX.surfaceEdges && GBX.surfaceEdges.length === 0 ) {
+	if ( GBX.surfaceOpenings && GBX.surfaceOpenings.length === 0 ) {
 
-		GBX.surfaceEdges= new THREE.Group();
-		GBX.surfaceEdges.name = 'GBX.surfaceEdges';
-		GBX.surfaceEdges = GBX.getSurfaceEdges();
+		GBX.surfaceOpenings= new THREE.Group();
+		GBX.surfaceOpenings.name = 'GBX.surfaceOpenings';
+		surfaceOpenings = GBX.getSurfaceOpenings();
 
-		THR.scene.add( ...GBX.surfaceEdges );
+		GBX.surfaceOpenings.add( ...surfaceOpenings );
+
+		THR.scene.add( GBX.surfaceOpenings );
 
 		return;
 
 	}
 
-	THR.scene.traverse( function ( child ) {
+	GBX.surfaceOpenings.traverse( function ( child ) {
 
 		if ( child instanceof THREE.Line ) {
 
@@ -88,22 +88,23 @@ SET.toggleEdges = function() {
 
 SET.toggleEdgesThreejs = function() {
 
-	//console.log( '', 22 );
+	if ( GBX.surfaceEdgesThreejs && GBX.surfaceEdgesThreejs.length === 0 ) {
 
-	if ( GBX.surfaceEdges && GBX.surfaceEdges.length === 0 ) {
+		GBX.surfaceEdgesThreejs = new THREE.Group();
+		GBX.surfaceEdgesThreejs.name = 'GBX.surfaceEdgesThreejs';
+		const surfaceEdgesThreejs = GBX.getSurfaceEdgesThreejs();
+		//console.log( 'surfaceEdgesThreejs', surfaceEdgesThreejs );
 
-		GBX.surfaceEdges = new THREE.Group();
-		GBX.surfaceEdges.name = 'GBX.surfaceEdges';
-		GBX.surfaceEdges = GBX.getSurfaceEdgesThreejs();
+		GBX.surfaceEdgesThreejs.add( ...surfaceEdgesThreejs );
 
-		THR.scene.add( ...GBX.surfaceEdges );
+		THR.scene.add( GBX.surfaceEdgesThreejs );
 
 		return;
 
 	}
 
 
-	THR.scene.traverse( function ( child ) {
+	GBX.surfaceEdgesThreejs.traverse( function ( child ) {
 
 		if ( child instanceof THREE.Line ) {
 

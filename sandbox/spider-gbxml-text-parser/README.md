@@ -68,6 +68,22 @@ Pop-up Text Parser
 
 ## Full Screen: [Spider gbXML Text Parser R9.1 'Evgeny' ]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r9/spider-gbxml-text-parser-evgeny.html )
 
+
+#### 2018-11-15 ~
+
+Home page
+* Add onProgress function
+Style.css
+* Improve functionality on mobile devices
+Settings and Pop-Up
+* Add toggle openings button
+gbx text parser
+* Update edges
+* Add openings
+
+Done
+* 2018-11-14 ~ display zone, storey and zone geometries on demand - not just surfaces geometry
+
 #### 2018-11-14 ~ Theo
 
 Pop-Up R9.4
@@ -242,6 +258,10 @@ Does almost nothing. You must use 'Choose File' and developer console to see any
 
 ## Change Log
 
+
+### 2018-11-15 ~ Theo
+
+Se previou day comments. Converting text files over 3 MB compressed crashes the browser while the conversion to xml is taking place.
 
 ### 2018-11-14 ~ Theo
 

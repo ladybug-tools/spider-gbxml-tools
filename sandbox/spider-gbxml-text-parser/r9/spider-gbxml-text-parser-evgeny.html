@@ -5,8 +5,8 @@
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
 <meta name=description content="Open and examine very large gbXML files in your browser with free, open source JavaScript" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-11-14" >
-<title>Spider gbXML Text Parser R9.3 'Evgeny'</title>
+<meta name = "date" content = "2018-11-15" >
+<title>Spider gbXML Text Parser R9.4 'Evgeny'</title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 <style>
 
@@ -33,6 +33,7 @@
 <script src = "./gbx-text-parser.js" ></script>
 <script src = "./rep-reports.js" ></script>
 <script src = "./repl-view-by-level.js" ></script>
+<script src = "./set-settings.js" ></script>
 <script src = "./pop-up-text-parser.js" ></script>
 
 	<main id="container" ></main>
@@ -47,19 +48,17 @@
 
 		<details>
 
-			<summary>2018-11-14 ~ Current Status</summary>
+			<summary>2018-11-15 ~ Current Status</summary>
+
+			<p>Model not fully loaded until model centers on screen and starts rotating.</p>
+
+			<p>Default onload shows: Roof, ExteriorWall, ExposedFloor, Air and Shade. May be having issues on large files</p>
+
+			<p>After loading a very large model: it's best to reload the web page before loading the next model. And, be patient, it may take a very long time to clear the data from memory.</p>
 
 			<!--
-
-				<p>Reloads are faster than first load. Best not to load two big files one after another. Load default file in-between.</p>
-
+			<p>Reloads are faster than first load. Best not to load two big files one after another. Load default file in-between.</p>
 			-->
-
-			<p>Model not fully loaded until model centers on screen.</p>
-
-			<p>Default onload shows: Roof, ExteriorWall, ExposedFloor, Air and Shade </p>
-
-			<p>After loading a very large model: it's best to reload the web page. And, be patient, it may take a very long time to clear the data from memory.</p>
 
 		</details>
 
@@ -139,6 +138,17 @@
 			<div id = "divReportByLevels" ></div>
 
 			<div id = "divReportsLog" ></div>
+
+		</details>
+
+
+		<details id=detSettings ontoggle=divSettings.innerHTML=SET.getSettingsMenu(); >
+
+			<summary> Settings </summary>
+
+			<div id = "divSettings" ></div>
+
+			<div id = "divSettingsLog" ></div>
 
 		</details>
 
@@ -232,8 +242,9 @@ function requestFile( url, callback ) {
 
 	timeStart = performance.now();
 
-	//detReports.open = false;
 	detStats.open = false;
+	detReports.open = false;
+	detSettings.open = false;
 
 	const xhr = new XMLHttpRequest();
 	xhr.crossOrigin = 'anonymous';
@@ -250,12 +261,7 @@ function requestFile( url, callback ) {
 
 			const timeToLoad = performance.now() - timeStart;
 
-			divFileInfo.innerHTML =
-			`
-				<div>${ GBX.name }</div>
-				<div>bytes loaded: ${xhr.loaded.toLocaleString()}</div>
-				<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
-			`;
+			onProgress( GBX.name, xhr.loaded, timeToLoad );
 
 		}
 
@@ -268,17 +274,11 @@ function callbackGbXML( xhr ) {
 	const len = GBX.parseFile( xhr.target.response );
 	//console.log( 'len', len );
 
-
 	const timeToLoad = performance.now() - timeStart;
 
-	divFileInfo.innerHTML =
-	`
-		<div>${ GBX.name }</div>
-		<div>bytes loaded: ${xhr.loaded.toLocaleString()}</div>
-		<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
-	`;
-
 	onParseFile();
+
+	onProgress( GBX.name, xhr.loaded, timeToLoad );
 
 }
 
@@ -295,27 +295,23 @@ function inpOpenFileXml( files ) {
 
 	reader.onprogress = onRequestFileProgress;
 
-	//detReports.open = false;
 	detStats.open = false;
+	detReports.open = false;
+	detSettings.open = false;
 
 	reader.onload = function( event ) {
 
 		const text = reader.result;
 		//divGeneralCheck.innerHTML = getGeneralCheck( reader.result );
 
-		len = GBX.parseFile( text );
+		const len = GBX.parseFile( text );
 		//console.log( 'len', len );
 
 		onParseFile();
 
 		const timeToLoad = performance.now() - timeStart;
 
-		divFileInfo.innerHTML =
-		`
-			<div>${ fileAttributes.name }</div>
-			<div>bytes loaded: ${ event.loaded.toLocaleString()}</div>
-			<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
-		`;
+		onProgress( fileAttributes.name, event.loaded, timeToLoad );
 
 	};
 
@@ -326,12 +322,7 @@ function inpOpenFileXml( files ) {
 
 		const timeToLoad = performance.now() - timeStart;
 
-		divFileInfo.innerHTML =
-		`
-			<div>${ fileAttributes.name }</div>
-			<div>bytes loaded: ${event.loaded.toLocaleString()}</div>
-			<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
-		`;
+		onProgress( fileAttributes.name, event.loaded, timeToLoad );
 
 	}
 
@@ -342,10 +333,11 @@ function inpOpenFileXml( files ) {
 function inpOpenFileZip( files ) {
 	//console.log( 'files', files.files[0] );
 
-	timeStart = performance.now();
+	const timeStart = performance.now();
 
-	//detReports.open = false;
 	detStats.open = false;
+	detReports.open = false;
+	detSettings.open = false;
 
 	const zip = new JSZip();
 
@@ -391,7 +383,6 @@ function inpOpenFileZip( files ) {
 			//console.log( 'txt', txt );
 
 		} else {
-
 			//console.log( 'uint8array', uint8array );
 
 			let arr = new Uint8Array( uint8array.length / 2 );
@@ -412,19 +403,14 @@ function inpOpenFileZip( files ) {
 
 		}
 
-		len = GBX.parseFile( txt );
+		const len = GBX.parseFile( txt );
 		//console.log( 'len', len );
-
-		onParseFile();
 
 		const timeToLoad = performance.now() - timeStart;
 
-		divFileInfo.innerHTML =
-		`
-			<div>${ names[ 0 ] }</div>
-			<div>bytes loaded: ${ txt.length.toLocaleString()}</div>
-			<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
-		`;
+		onParseFile();
+
+		onProgress( names[ 0 ], txt.length, timeToLoad );
 
 	} );
 
@@ -440,6 +426,20 @@ function onParseFile() {
 	REP.toggleExteriorSurfaces();
 
 	//GBX.sendSurfacesToThreeJs( GBX.surfacesIndexed );
+
+}
+
+
+
+function onProgress( name, size, time ) {
+
+	divFileInfo.innerHTML =
+	`
+		<div>${ name }</div>
+		<div>bytes loaded: ${ Number( size ).toLocaleString()}</div>
+		<div>time to load: ${ Number( time ).toLocaleString() } ms</div>
+	`;
+
 }
 
 </script>

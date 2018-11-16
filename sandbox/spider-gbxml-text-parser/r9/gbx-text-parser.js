@@ -37,8 +37,9 @@ GBX.triangle = new THREE.Triangle(); // used by GBX.getPlane
 GBX.parseFile = function( gbxml )  {
 	//console.log( 'gbxml', gbxml );
 
-	THR.scene.remove( GBX.surfaceEdges );
-	GBX.surfaceEdges = undefined;
+	THR.scene.remove( GBX.surfaceOpenings, GBX.surfaceEdgesThreejs );
+	GBX.surfaceEdgesThreejs = [];
+	GBX.surfaceOpenings = [];
 
 	THR.scene.remove( GBX.boundingBox );
 	GBX.boundingBox = undefined;
@@ -203,13 +204,6 @@ GBX.getSurfaceMesh = function( arr, index ) {
 
 		vertices = [ v( arr.slice( 0, 3 ) ), v( arr.slice( 3, 6 ) ) ];
 
-		//mesh = GBX.getBufferGeometry( vertices, color );
-
-		//const geometry = new THREE.Geometry();
-		//geometry.vertices = vertices;
-		//const material = new THREE.LineBasicMaterial( { color: 0x000000 } );
-		//mesh = new THREE.Line( geometry, material );
-
 		console.log( 'mesh', mesh );
 
 		return;
@@ -348,7 +342,6 @@ GBX.getPlane = function( points, start = 0 ) {
 
 GBX.getSurfaceEdgesThreejs = function() {
 
-	//console.log( '', 23 );
 	const surfaceEdges = [];
 	const lineMaterial = new THREE.LineBasicMaterial( { color: 0x888888 } );
 
@@ -363,6 +356,7 @@ GBX.getSurfaceEdgesThreejs = function() {
 
 	}
 
+	//console.log( 'surfaceEdges', surfaceEdges );
 	//THR.scene.add( ...surfaceEdges );
 
 	return surfaceEdges;
@@ -371,13 +365,12 @@ GBX.getSurfaceEdgesThreejs = function() {
 
 
 
-
-GBX.getSurfaceEdges = function() {
+GBX.getSurfaceOpenings = function() {
 
 	const v = ( arr ) => new THREE.Vector3().fromArray( arr );
 
 	const material = new THREE.LineBasicMaterial( { color: 0x444444, linewidth: 2, transparent: true } );
-	const surfaceEdges = [];
+	const surfaceOpenings = [];
 
 	for ( let surfaceText of GBX.surfaces ) {
 
@@ -414,16 +407,16 @@ GBX.getSurfaceEdges = function() {
 				//console.log( 'geometry', geometry );
 
 				const line = new THREE.LineLoop( geometry, material );
-				surfaceEdges.push( line );
+				surfaceOpenings.push( line );
 
 			}
 		}
 
 	}
 
-	//THR.scene.add( surfaceEdges );
+	//THR.scene.add( surfaceOpenings );
 
-	return surfaceEdges;
+	return surfaceOpenings;
 
 };
 

@@ -5,8 +5,8 @@
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
 <meta name=description content="Open and examine very large gbXML files in your browser with free, open source JavaScript" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-11-14" >
-<title>Spider gbXML Text Parser R9.3 </title>
+<meta name = "date" content = "2018-11-15" >
+<title>Spider gbXML Text Parser R9.5 </title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 <style>
 
@@ -47,19 +47,17 @@
 
 		<details>
 
-			<summary>2018-11-14 ~ Current Status</summary>
+			<summary>2018-11-15 ~ Current Status</summary>
+
+			<p>Model not fully loaded until model centers on screen and starts rotating.</p>
+
+			<p>Default onload shows: Roof, ExteriorWall, ExposedFloor, Air and Shade. May be having issues on large files</p>
+
+			<p>After loading a very large model: it's best to reload the web page before loading the next model. And, be patient, it may take a very long time to clear the data from memory.</p>
 
 			<!--
-
-				<p>Reloads are faster than first load. Best not to load two big files one after another. Load default file in-between.</p>
-
+			<p>Reloads are faster than first load. Best not to load two big files one after another. Load default file in-between.</p>
 			-->
-
-			<p>Model not fully loaded until model centers on screen.</p>
-
-			<p>Default onload shows: Roof, ExteriorWall, ExposedFloor, Air and Shade </p>
-
-			<p>After loading a very large model: it's best to reload the web page. And, be patient, it may take a very long time to clear the data from memory.</p>
 
 		</details>
 
@@ -241,8 +239,9 @@ function requestFile( url, callback ) {
 
 	timeStart = performance.now();
 
-	//detReports.open = false;
 	detStats.open = false;
+	detReports.open = false;
+	detSettings.open = false;
 
 	const xhr = new XMLHttpRequest();
 	xhr.crossOrigin = 'anonymous';
@@ -261,13 +260,6 @@ function requestFile( url, callback ) {
 
 			onProgress( GBX.name, xhr.loaded, timeToLoad );
 
-/* 			divFileInfo.innerHTML =
-			`
-				<div>${ GBX.name }</div>
-				<div>bytes loaded: ${xhr.loaded.toLocaleString()}</div>
-				<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
-			`; */
-
 		}
 
 }
@@ -281,14 +273,8 @@ function callbackGbXML( xhr ) {
 
 	const timeToLoad = performance.now() - timeStart;
 
-/* 	divFileInfo.innerHTML =
-	`
-		<div>${ GBX.name }</div>
-		<div>bytes loaded: ${xhr.loaded.toLocaleString()}</div>
-		<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
-	`; */
-
 	onParseFile();
+
 	onProgress( GBX.name, xhr.loaded, timeToLoad );
 
 }
@@ -306,8 +292,9 @@ function inpOpenFileXml( files ) {
 
 	reader.onprogress = onRequestFileProgress;
 
-	//detReports.open = false;
 	detStats.open = false;
+	detReports.open = false;
+	detSettings.open = false;
 
 	reader.onload = function( event ) {
 
@@ -345,8 +332,9 @@ function inpOpenFileZip( files ) {
 
 	const timeStart = performance.now();
 
-	//detReports.open = false;
 	detStats.open = false;
+	detReports.open = false;
+	detSettings.open = false;
 
 	const zip = new JSZip();
 
@@ -435,7 +423,6 @@ function onParseFile() {
 	REP.toggleExteriorSurfaces();
 
 	//GBX.sendSurfacesToThreeJs( GBX.surfacesIndexed );
-
 
 }
 
