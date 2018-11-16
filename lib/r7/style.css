@@ -33,18 +33,18 @@ summary {font-weight: bold }
 
 
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 900px; ) {
 
-	#navMenu { left: -23em }
-
-}
-
-/*
-
-@media screen and (max-width: 600px) {
-
-	#navMenu { left: -23em; }
+	#navMenu, #butHamburger { left: -23rem; }
 
 }
 
-*/
+
+
+@media screen and ( max-width: 600px ) {
+
+	#navMenu { left: calc( -2rem - var( --mnu-width ) ); }
+	#butHamburger { left: 10px; }
+
+}
+

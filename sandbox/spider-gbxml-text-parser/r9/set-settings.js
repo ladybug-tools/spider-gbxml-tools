@@ -5,9 +5,9 @@
 
 const SET = {"release": "R9.0", "date": "2018-11-14" };
 
-GBX.surfaceEdges = [];
 SET.getSettingsMenu = function() {
 
+	GBX.surfaceEdges = [];
 
 	const htm =
 	`
@@ -24,6 +24,8 @@ SET.getSettingsMenu = function() {
 			<button onclick=THRU.toggleSurfaces(); >toggle surfaces</button>
 
 			<button onclick=SET.toggleEdges(); >toggle edges</button>
+
+			<button onclick=SET.toggleEdgesThreejs(); >toggle edges three.js</button>
 		</p>
 
 
@@ -33,7 +35,8 @@ SET.getSettingsMenu = function() {
 			<button onclick=THRU.toggleSurfaceNormals(); title="All Three.js triangles have a normal. See them here." > toggle surface normals </button>
 		</p>
 
-		<p title="opacity: 0 to 100%" >opacity
+		<p title="opacity: 0 to 100%" >
+			opacity
 			<output id=outOpacity class=floatRight >85%</output><br>
 
 			<input type="range" id="rngOpacity" min=0 max=100 step=1 value=85 oninput=THRU.updateOpacity(); >
@@ -54,8 +57,8 @@ SET.getSettingsMenu = function() {
 };
 
 
-SET.toggleEdges = function() {
 
+SET.toggleEdges = function() {
 	//console.log( '', 22 );
 
 	if ( GBX.surfaceEdges && GBX.surfaceEdges.length === 0 ) {
@@ -64,7 +67,36 @@ SET.toggleEdges = function() {
 		GBX.surfaceEdges.name = 'GBX.surfaceEdges';
 		GBX.surfaceEdges = GBX.getSurfaceEdges();
 
-		THR.scene.add( GBX.surfaceEdges );
+		THR.scene.add( ...GBX.surfaceEdges );
+
+		return;
+
+	}
+
+	THR.scene.traverse( function ( child ) {
+
+		if ( child instanceof THREE.Line ) {
+
+			child.visible = !child.visible;
+
+		}
+
+	} );
+
+};
+
+
+SET.toggleEdgesThreejs = function() {
+
+	//console.log( '', 22 );
+
+	if ( GBX.surfaceEdges && GBX.surfaceEdges.length === 0 ) {
+
+		GBX.surfaceEdges = new THREE.Group();
+		GBX.surfaceEdges.name = 'GBX.surfaceEdges';
+		GBX.surfaceEdges = GBX.getSurfaceEdgesThreejs();
+
+		THR.scene.add( ...GBX.surfaceEdges );
 
 		return;
 
@@ -86,27 +118,3 @@ SET.toggleEdges = function() {
 
 
 
-GBX.getSurfaceEdgesGbxml = function() {
-
-	const material = new THREE.LineBasicMaterial( { color: 0x888888, linewidth: 2, transparent: true } );
-	const lines = [];
-
-	for ( let surfaceJson of GBX.surfaces ) {
-
-		const vertices = surfaceJson.PlanarGeometry.PolyLoop.CartesianPoint
-			.map( point => new THREE.Vector3().fromArray( point.Coordinate  ) );
-		//console.log( 'vertices', vertices );
-
-		const geometry = new THREE.Geometry().setFromPoints( vertices )
-		//console.log( 'geometry', geometry );
-
-		const line = new THREE.LineLoop( geometry, material );
-		lines.push( line );
-
-	}
-
-	THR.scene.add( ...lines );
-
-	return lines;
-
-};

@@ -259,12 +259,14 @@ function requestFile( url, callback ) {
 
 			const timeToLoad = performance.now() - timeStart;
 
-			divFileInfo.innerHTML =
+			onProgress( GBX.name, xhr.loaded, timeToLoad );
+
+/* 			divFileInfo.innerHTML =
 			`
 				<div>${ GBX.name }</div>
 				<div>bytes loaded: ${xhr.loaded.toLocaleString()}</div>
 				<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
-			`;
+			`; */
 
 		}
 
@@ -279,14 +281,15 @@ function callbackGbXML( xhr ) {
 
 	const timeToLoad = performance.now() - timeStart;
 
-	divFileInfo.innerHTML =
+/* 	divFileInfo.innerHTML =
 	`
 		<div>${ GBX.name }</div>
 		<div>bytes loaded: ${xhr.loaded.toLocaleString()}</div>
 		<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
-	`;
+	`; */
 
 	onParseFile();
+	onProgress( GBX.name, xhr.loaded, timeToLoad );
 
 }
 
@@ -311,19 +314,14 @@ function inpOpenFileXml( files ) {
 		const text = reader.result;
 		//divGeneralCheck.innerHTML = getGeneralCheck( reader.result );
 
-		len = GBX.parseFile( text );
+		const len = GBX.parseFile( text );
 		//console.log( 'len', len );
 
 		onParseFile();
 
 		const timeToLoad = performance.now() - timeStart;
 
-		divFileInfo.innerHTML =
-		`
-			<div>${ fileAttributes.name }</div>
-			<div>bytes loaded: ${ event.loaded.toLocaleString()}</div>
-			<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
-		`;
+		onProgress( fileAttributes.name, event.loaded, timeToLoad );
 
 	};
 
@@ -334,12 +332,7 @@ function inpOpenFileXml( files ) {
 
 		const timeToLoad = performance.now() - timeStart;
 
-		divFileInfo.innerHTML =
-		`
-			<div>${ fileAttributes.name }</div>
-			<div>bytes loaded: ${event.loaded.toLocaleString()}</div>
-			<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
-		`;
+		onProgress( fileAttributes.name, event.loaded, timeToLoad );
 
 	}
 
@@ -350,7 +343,7 @@ function inpOpenFileXml( files ) {
 function inpOpenFileZip( files ) {
 	//console.log( 'files', files.files[0] );
 
-	timeStart = performance.now();
+	const timeStart = performance.now();
 
 	//detReports.open = false;
 	detStats.open = false;
@@ -399,7 +392,6 @@ function inpOpenFileZip( files ) {
 			//console.log( 'txt', txt );
 
 		} else {
-
 			//console.log( 'uint8array', uint8array );
 
 			let arr = new Uint8Array( uint8array.length / 2 );
@@ -420,19 +412,14 @@ function inpOpenFileZip( files ) {
 
 		}
 
-		len = GBX.parseFile( txt );
+		const len = GBX.parseFile( txt );
 		//console.log( 'len', len );
-
-		onParseFile();
 
 		const timeToLoad = performance.now() - timeStart;
 
-		divFileInfo.innerHTML =
-		`
-			<div>${ names[ 0 ] }</div>
-			<div>bytes loaded: ${ txt.length.toLocaleString()}</div>
-			<div>time to load: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
-		`;
+		onParseFile();
+
+		onProgress( names[ 0 ], txt.length, timeToLoad );
 
 	} );
 
@@ -448,6 +435,21 @@ function onParseFile() {
 	REP.toggleExteriorSurfaces();
 
 	//GBX.sendSurfacesToThreeJs( GBX.surfacesIndexed );
+
+
+}
+
+
+
+function onProgress( name, size, time ) {
+
+	divFileInfo.innerHTML =
+	`
+		<div>${ name }</div>
+		<div>bytes loaded: ${ Number( size ).toLocaleString()}</div>
+		<div>time to load: ${ Number( time ).toLocaleString() } ms</div>
+	`;
+
 }
 
 </script>

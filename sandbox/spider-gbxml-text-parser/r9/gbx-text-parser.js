@@ -37,6 +37,9 @@ GBX.triangle = new THREE.Triangle(); // used by GBX.getPlane
 GBX.parseFile = function( gbxml )  {
 	//console.log( 'gbxml', gbxml );
 
+	THR.scene.remove( GBX.surfaceEdges );
+	GBX.surfaceEdges = undefined;
+
 	THR.scene.remove( GBX.boundingBox );
 	GBX.boundingBox = undefined;
 
@@ -343,9 +346,9 @@ GBX.getPlane = function( points, start = 0 ) {
 
 
 
-GBX.getSurfaceEdges = function() {
+GBX.getSurfaceEdgesThreejs = function() {
 
-	console.log( '', 23 );
+	//console.log( '', 23 );
 	const surfaceEdges = [];
 	const lineMaterial = new THREE.LineBasicMaterial( { color: 0x888888 } );
 
@@ -360,10 +363,92 @@ GBX.getSurfaceEdges = function() {
 
 	}
 
-	THR.scene.add( ...surfaceEdges );
+	//THR.scene.add( ...surfaceEdges );
 
 	return surfaceEdges;
 
 };
 
 
+
+
+GBX.getSurfaceEdges = function() {
+
+	const v = ( arr ) => new THREE.Vector3().fromArray( arr );
+
+	const material = new THREE.LineBasicMaterial( { color: 0x444444, linewidth: 2, transparent: true } );
+	const surfaceEdges = [];
+
+	for ( let surfaceText of GBX.surfaces ) {
+
+		const reSurface = /<Opening(.*?)<\/Opening>/g;
+		openings = surfaceText.match( reSurface );
+
+		//console.log( 'o', openings );
+
+		if ( !openings ) { continue; }
+
+		for ( let opening of openings ) {
+
+			polyloops = GBX.getPolyLoops( opening );
+
+			//console.log( 'bb', polyloops );
+
+			for ( let polyloop of polyloops ) {
+
+				coordinates = GBX.getVertices( polyloop );
+
+				//console.log( 'coordinates', coordinates );
+
+				vertices = [];
+
+				for ( let i = 0; i < ( coordinates.length / 3 ); i ++ ) {
+
+					vertices.push( v( coordinates.slice( 3 * i, 3 * i + 3 ) ) );
+
+				}
+
+				//console.log( 'vertices', vertices );
+
+				const geometry = new THREE.Geometry().setFromPoints( vertices )
+				//console.log( 'geometry', geometry );
+
+				const line = new THREE.LineLoop( geometry, material );
+				surfaceEdges.push( line );
+
+			}
+		}
+
+	}
+
+	//THR.scene.add( surfaceEdges );
+
+	return surfaceEdges;
+
+};
+
+
+
+GBX.xxxgetSurfaceEdges = function( surfaces ) {
+
+	const meshes = surfaces.map( ( surface ) => {
+
+		const polyLoops = GBX.getPolyLoops( surface );
+		//console.log( 'polyLoops', polyLoops );
+
+		const vertices = GBX.getVertices( polyLoops[ 0 ] );
+		//console.log( 'vertices', vertices );
+
+		const index = surface.match( 'indexGbx="(.*?)"' )[ 1 ];
+
+		const mesh = GBX.getSurfaceMesh( vertices, index );
+		mesh.castShadow = mesh.receiveShadow = true;
+		mesh.userData.index = index;
+
+		return mesh;
+
+	} );
+
+	return meshes;
+
+};
