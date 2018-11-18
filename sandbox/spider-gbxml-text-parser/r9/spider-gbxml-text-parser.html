@@ -5,8 +5,8 @@
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
 <meta name=description content="Open and examine very large gbXML files in your browser with free, open source JavaScript" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-11-15" >
-<title>Spider gbXML Text Parser R9.5 </title>
+<meta name = "date" content = "2018-11-17" >
+<title>Spider gbXML Text Parser R9.6 </title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 <style>
 
@@ -18,6 +18,7 @@
 	#navMenu button.active { border-color: black; font-style: italic; font-weight: bold; margin-left: 1rem;
 	 box-shadow: 2px 2px re#888; }
 
+	.divMenuTitle { background-color: #ccc; color: #888; text-align: center}
 
 </style>
 </head>
@@ -25,14 +26,18 @@
 <script src=https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js ></script>
 <script src = "https://cdn.rawgit.com/mrdoob/three.js/r98/build/three.min.js" ></script>
 <script src = "https://cdn.rawgit.com/mrdoob/three.js/r98/examples/js/controls/OrbitControls.js" ></script>
+<script src = "./fil-open-file.js" ></script>
+
 <script src = "../../../lib/r7/mnu-menu.js" ></script>
 <script src = "../../../lib/r7/thr-threejs.js" ></script>
 <script src = "../../../lib/r7/thru-threejs-utilities.js"></script>
 <script src = "../../../lib/r7/gal-sample-files-gallery-gbxml.js" ></script>
 
 <script src = "./gbx-text-parser.js" ></script>
-<script src = "./rep-reports.js" ></script>
+<script src = "./vwsrf-view-surface-types.js" ></script>
+<script src = "./repl-view-by-level.js" ></script>
 <script src = "./set-settings.js" ></script>
+<script src = "./cut-section-cut.js"></script>
 <script src = "./pop-up-text-parser.js" ></script>
 
 	<main id="container" ></main>
@@ -45,9 +50,10 @@
 
 		</header>
 
+
 		<details>
 
-			<summary>2018-11-15 ~ Current Status</summary>
+			<summary>2018-11-17 ~ Current Status</summary>
 
 			<p>Model not fully loaded until model centers on screen and starts rotating.</p>
 
@@ -56,14 +62,16 @@
 			<p>After loading a very large model: it's best to reload the web page before loading the next model. And, be patient, it may take a very long time to clear the data from memory.</p>
 
 			<!--
-			<p>Reloads are faster than first load. Best not to load two big files one after another. Load default file in-between.</p>
+				<p>Reloads are faster than first load. Best not to load two big files one after another. Load default file in-between.</p>
 			-->
 
 		</details>
 
+		<p class=divMenuTitle >File Menu </p>
+
 		<details>
 
-			<summary>Spider gbXML Sample files</summary>
+			<summary>Open gbXML sample files</summary>
 
 			<div id=divSampleFileButtons ></div>
 
@@ -73,14 +81,14 @@
 
 		<details open >
 
-			<summary>gbXML File Open</summary>
+			<summary>Open gbXML file</summary>
 
 			<div id="divFileCheckOpen" class="dragDropArea" >
 
 				<p id=pFileOpen>
 
 					Open gbXML files:
-					<input type=file id=inpOpenFile onchange=inpOpenFileXml(this); accept=".xml" >
+					<input type=file id=inpOpenFile onchange=FIL.inpOpenFileXml(this); accept=".xml" >
 
 				</p>
 
@@ -90,49 +98,65 @@
 
 		<details open >
 
-			<summary>ZIP File Open</summary>
+			<summary>Open ZIP file</summary>
 
 			<p>
-				Open zip files:
-				<input type=file onchange=inpOpenFileZip(this); accept="application/zip" >
+				<input type=file onchange=FIL.inpOpenFileZip(this); accept="application/zip" >
 			</p>
 
 			<p>Experimental feature.</p>
 
 			<p>
 				Files to download and test:
-				<a href="https://www.ladybug.tools/spider/gbxml-sample-files/zip/UK_London_RoyalArsenalWoolwich.zip" target="_blank">Royal Arsenal</a>
-				<a href="https://www.ladybug.tools/spider/gbxml-sample-files/zip/LondonOffice_ver01.zip" target="_blank">London Office</a>
+				<a href="https://www.ladybug.tools/spider/gbxml-sample-files/zip/UK_London_RoyalArsenalWoolwich.zip" target="_blank">Royal Arsenal</a> /
+				<a href="https://www.ladybug.tools/spider/gbxml-sample-files/zip/LondonOffice_ver01.zip" target="_blank">London Office</a> /
 				<a href="https://www.ladybug.tools/spider/gbxml-sample-files/zip/aim0013 (27).zip" target="_blank">Warwick University</a>
 			</p>
 
 		</details>
 
-		<details open>
 
-			<summary>File info</summary>
+		<details>
 
-			<div id = "divFileInfo" ></div>
+			<summary>Save file as</summary>
 
-			<hr>
+			<div id = "divSaveFile" >
+
+				<p>
+					<button onclick=FIL.butSaveFile(); >Save File</button>
+				</p>
+
+			</div>
 
 		</details>
 
-		<details id=detStats ontoggle=divGbxmlInfo.innerHTML=REP.getStats(); >
+		<hr>
+
+		<details open>
+
+			<summary>File information</summary>
+
+			<div id = "divFileInfo" ></div>
+
+		</details>
+
+		<details id=detStats ontoggle=divGbxmlInfo.innerHTML=VWSRF.getStats(); >
 
 			<summary>Statistics</summary>
 
 			<div id = "divGbxmlInfo" ></div>
 
-			<hr>
-
 		</details>
 
-		<details id=detReports ontoggle=divReports.innerHTML=REP.getReportsMenu(); >
+		<p class=divMenuTitle >View Menu </p>
 
-			<summary> Reports </summary>
+		<details id=detReports ontoggle=VWSRF.onToggle(); >
+
+			<summary>Show/hide by surface type</summary>
 
 			<div id = "divReports" ></div>
+
+			<div id = "divReportByLevels" ></div>
 
 			<div id = "divReportsLog" ></div>
 
@@ -141,7 +165,7 @@
 
 		<details id=detSettings ontoggle=divSettings.innerHTML=SET.getSettingsMenu(); >
 
-			<summary> Settings </summary>
+			<summary>Scene display settings</summary>
 
 			<div id = "divSettings" ></div>
 
@@ -149,9 +173,17 @@
 
 		</details>
 
-		<footer>
+		<details ontoggle=divSectionCut.innerHTML=CUT.getDetSectionViews(); >
 
-			<hr>
+				<summary>Scene cut sections</summary>
+
+				<div id=divSectionCut ></div>
+
+			</details>
+
+		<p class=divMenuTitle >Help Menu </p>
+
+		<footer>
 
 			<div id = "divFooter" ></div>
 
@@ -179,9 +211,7 @@ MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/ma
 const urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml';
 //const urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/coventry-university-of-warwick-small.xml';
 
-let timeStart, name;
-let lines;
-let text;
+
 
 init();
 THR.animate();
@@ -204,240 +234,14 @@ function init() {
 
 	divPopUpData.innerHTML = POP.getMenuHtmlPopUp();
 
-	window.addEventListener ( 'hashchange', onHashChange, false );
+	window.addEventListener ( 'hashchange', FIL.onHashChange, false );
 
-	if ( !location.hash ) { location.hash = urlDefaultFile; } else { onHashChange(); }
+	if ( !location.hash ) { location.hash = urlDefaultFile; } else { FIL.onHashChange(); }
 	//location.hash = urlDefaultFile;
 
 }
 
 
-
-function onHashChange() {
-
-	timeStart = performance.now();
-
-	const url = !location.hash ? urlDefaultFile : location.hash.slice( 1 );
-
-	if ( url.toLowerCase().endsWith( '.xml' ) ) {
-
-		THRU.setSceneDispose( [ GBX.surfaceMeshes ] );
-
-		requestFile( url, callbackGbXML );
-
-	} else {
-
-		console.log( 'oops', url );
-
-	}
-
-};
-
-
-
-function requestFile( url, callback ) {
-
-	timeStart = performance.now();
-
-	detStats.open = false;
-	detReports.open = false;
-	detSettings.open = false;
-
-	const xhr = new XMLHttpRequest();
-	xhr.crossOrigin = 'anonymous';
-	xhr.open( 'GET', url, true );
-	xhr.onerror = function( xhr ) { console.log( 'error:', xhr  ); };
-	xhr.onprogress = onRequestFileProgress;
-	xhr.onload = callback;
-	xhr.send( null );
-
-
-		function onRequestFileProgress( xhr ) {
-
-			GBX.name = xhr.target.responseURL.split( '/').pop();
-
-			const timeToLoad = performance.now() - timeStart;
-
-			onProgress( GBX.name, xhr.loaded, timeToLoad );
-
-		}
-
-}
-
-
-
-function callbackGbXML( xhr ) {
-
-	const len = GBX.parseFile( xhr.target.response );
-	//console.log( 'len', len );
-
-	const timeToLoad = performance.now() - timeStart;
-
-	onParseFile();
-
-	onProgress( GBX.name, xhr.loaded, timeToLoad );
-
-}
-
-
-
-function inpOpenFileXml( files ) {
-	//console.log( 'file', files.files[ 0 ] );
-
-	timeStart = performance.now();
-
-	const fileAttributes = files.files[ 0 ];
-
-	const reader = new FileReader();
-
-	reader.onprogress = onRequestFileProgress;
-
-	detStats.open = false;
-	detReports.open = false;
-	detSettings.open = false;
-
-	reader.onload = function( event ) {
-
-		const text = reader.result;
-		//divGeneralCheck.innerHTML = getGeneralCheck( reader.result );
-
-		const len = GBX.parseFile( text );
-		//console.log( 'len', len );
-
-		onParseFile();
-
-		const timeToLoad = performance.now() - timeStart;
-
-		onProgress( fileAttributes.name, event.loaded, timeToLoad );
-
-	};
-
-	reader.readAsText( files.files[ 0 ] );
-
-
-	function onRequestFileProgress( event ) {
-
-		const timeToLoad = performance.now() - timeStart;
-
-		onProgress( fileAttributes.name, event.loaded, timeToLoad );
-
-	}
-
-}
-
-
-
-function inpOpenFileZip( files ) {
-	//console.log( 'files', files.files[0] );
-
-	const timeStart = performance.now();
-
-	detStats.open = false;
-	detReports.open = false;
-	detSettings.open = false;
-
-	const zip = new JSZip();
-
-	names = [];
-
-	zip.loadAsync( files.files[0] )
-
-	.then( function( zip ) {
-
-		zip.forEach( function ( relativePath, zipEntry ) {
-
-			names.push( zipEntry.name );
-
-			divFileInfo.innerHTML += '<p>file name: ' + zipEntry.name + '</p>';
-			//console.log( 'file name: ', zipEntry.name );
-
-		});
-		//console.log( 'zip', zip );
-
-		return zip;
-
-	} )
-
-	.then( function( data ) {
-		//console.log( 'data', data  );
-
-		const arrTemp = data.files[ names[ 0 ] ].async( "uint8array", metadata =>
-			divFileInfo.innerHTML = `progression: ${ metadata.percent.toFixed(2) }%`
-		);
-
-		return arrTemp;
-
-	}, ( err ) =>  divFileInfo.innerHTML += err.message )
-
-	.then( function( uint8array ) {
-		//console.log( 'uint8array', uint8array );
-
-		let txt = '';
-
-		if ( uint8array[ 0 ] !== 255 ||  uint8array[ 0 ] === 239 || uint8array[ 0 ] === 60 ) {
-
-			txt = new TextDecoder( "utf-8" ).decode( uint8array );
-			//console.log( 'txt', txt );
-
-		} else {
-			//console.log( 'uint8array', uint8array );
-
-			let arr = new Uint8Array( uint8array.length / 2 );
-			index = 0;
-
-			for ( let i = 0; i < uint8array.length; i++ ) {
-
-				if ( i % 2 === 0 ) {
-
-					arr[ index++ ] = uint8array[ i ];
-
-				}
-
-			}
-			//console.log( 'arr', arr );
-
-			txt = new TextDecoder( "utf-8" ).decode( arr );
-
-		}
-
-		const len = GBX.parseFile( txt );
-		//console.log( 'len', len );
-
-		const timeToLoad = performance.now() - timeStart;
-
-		onParseFile();
-
-		onProgress( names[ 0 ], txt.length, timeToLoad );
-
-	} );
-
-}
-
-
-
-function onParseFile() {
-
-	detStats.open = true;
-	//detReports.open = true; // see click on toggle
-
-	REP.toggleExteriorSurfaces();
-
-	//GBX.sendSurfacesToThreeJs( GBX.surfacesIndexed );
-
-}
-
-
-
-function onProgress( name, size, time ) {
-
-	divFileInfo.innerHTML =
-	`
-		<div>${ name }</div>
-		<div>bytes loaded: ${ Number( size ).toLocaleString()}</div>
-		<div>time to load: ${ Number( time ).toLocaleString() } ms</div>
-	`;
-
-}
 
 </script>
 </body>

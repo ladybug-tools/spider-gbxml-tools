@@ -102,7 +102,7 @@ GBX.parseFile = function( gbxml )  {
 GBX.sendSurfacesToThreeJs = function( surfacesText ) {
 	//console.log( 'surfacesText', surfacesText );
 
-	if ( !surfacesText.length ) { return "no surfaces"; }
+	if ( !surfacesText.length ) { return "<span class='highlight' >No surfaces would be visible</spab>"; }
 
 	GBX.surfaceGroup.children.forEach( ( surface, index ) => {
 		surface.visible = false;
@@ -125,7 +125,7 @@ GBX.sendSurfacesToThreeJs = function( surfacesText ) {
 
 	THRU.zoomObjectBoundingSphere( GBX.boundingBox );
 
-	return surfacesText.length.toLocaleString() + ' surfaces';
+	return surfacesText.length.toLocaleString() + ' surfaces visible';
 
 };
 

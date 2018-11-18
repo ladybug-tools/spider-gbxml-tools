@@ -18,6 +18,7 @@ summary {font-weight: bold }
 .attributeTitle { font-style: italic }
 .attributeValue { color: blue }
 .dragDropArea { border: 1px dashed gray; box-sizing: border-box; padding: 0 0 0 10px; }
+.highlight {background-color: lightgreen }
 
 #navMenu { background-color: #eee; max-height: 95%; left: 0; margin: 1rem; overflow: auto; padding: 1rem;
 	position: absolute; resize: both; top: 0; transition: left 0.5s; width: var( --mnu-width ); z-index: 10; }

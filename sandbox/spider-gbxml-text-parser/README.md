@@ -12,7 +12,10 @@ value='You are now in a GitHub web page view - Click this button to view this re
 <iframe src=https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/index.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
 _<small>Spider gbXML Text Parser</small>_
 
+## Full Screen: [Spider gbXML Text Parser R9.6]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r9/spider-gbxml-text-parser.html )
 
+
+***
 
 ## Concept
 
@@ -35,41 +38,60 @@ But Spider gbXML Text Parser loads and updates the file quite well - in your bro
 
 ### Features
 
-File loader
+Open File loader
 * Load very large ( greater than 700 megabytes ) gbXML at a reasonable speed
 * Read files in either UTF-8 or UTF-16 format
 * Open remote files via a URL or local files via the file dialog box
 * Open and automatically extract UTF-8 and UTF-6 files contained in ZIP compressed folders using file dialog box
+* Save file to disk
 
 gbXML Text Parser
 * Files size: 8 kb
 * Reads and operates on file as if an ordinary text file
 * Very simple operations
 * Provides feedback and statistics of loading
-* Currently not parsing openings - makes loading much faster
+* Currently not parsing openings at load time - makes loading much faster
 
 Reports
 * Buttons toggle surface type display
-* Buttons provide horizonTL, vertical, exterior and exposeToSun toggles
+* Buttons provide horizontal, vertical, exterior and exposeToSun toggles
 
-'Evgeny' Workflow
+Level-by-level 'Evgeny' Workflow
 * Select visible storey from select box
 * Actual workflow is a work-in-progress
 
 Pop-up Text Parser
-* First pass / Just beginning to work
 * Response time OK even with large files
-* Issues in identifying the correct storey for surfaces.
+* Show/hide surface, spaces, storey, zone and entire model
+* Display attributes for each type of element
+* Zoom all and toggle openings
+
 
 
 ***
 
-## Full Screen: [Spider gbXML Text Parser R9.2]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r9/spider-gbxml-text-parser.html )
 
-## Full Screen: [Spider gbXML Text Parser R9.1 'Evgeny' ]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r9/spider-gbxml-text-parser-evgeny.html )
+## Change Log
+
+#### 2018-11-17 ~ Theo
+
+R9.6
+* Add menu titles and rename menu items
+* Add 'Save files as...'
+	* File needs better tidying before save
+* Add 'Scene cut sections'
+
+vwsrf-view-surface-types.js
+* File renamed
+* Many fixes
+
+cut-section-cut.js
+* File added
+* Update by toggling class
+* Some issues fixed
 
 
-#### 2018-11-15 ~
+#### 2018-11-15 ~ Theo
 
 Home page
 * Add onProgress function

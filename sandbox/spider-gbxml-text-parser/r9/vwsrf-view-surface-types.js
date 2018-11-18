@@ -3,11 +3,11 @@
 /* globals THREE, THR, THRU, timeStart, divReports */
 
 
-const REP = { "release": "R9.3", "date": "2018-11-14" };
+const VWSRF = { "release": "R9.4", "date": "2018-11-17" };
 
+VWSRF.filtersDefault = [ "Roof", "ExteriorWall", "ExposedFloor", "Air", "Shade" ];
 
-
-REP.getStats = function() {
+VWSRF.getStats = function() {
 
 	const reSpaces = /<Space(.*?)<\/Space>/gi;
 	GBX.spaces = GBX.text.match( reSpaces );
@@ -44,8 +44,22 @@ REP.getStats = function() {
 };
 
 
+VWSRF.onToggle = function() {
 
-REP.getReportsMenu = function() {
+	if ( divReports.innerHTML === '' ) {
+
+	divReports.innerHTML = VWSRF.getReportsMenu();
+
+	divReportByLevels.innerHTML=REPL.getReportByLevels();
+
+	VWSRF.setSurfacesActiveByDefaults();
+
+	}
+
+
+}
+
+VWSRF.getReportsMenu = function() {
 
 	const types = GBX.surfaceTypes.filter( type => GBX.surfaces.find( surface => surface.includes( type ) ) );
 
@@ -55,7 +69,7 @@ REP.getReportsMenu = function() {
 
 	/// class=butSurfaceType
 	const buttonSurfaceTypes = types.map( ( type, index ) =>
-		`<button  onclick=REP.toggleSurfaceFiltered(this); style="background-color:#${ colors[ index ] };" > ${ type } </button>`
+		`<button  onclick=VWSRF.toggleSurfaceFiltered(this); style="background-color:#${ colors[ index ] };" > ${ type } </button>`
 	);
 
 	const htm =
@@ -65,10 +79,9 @@ REP.getReportsMenu = function() {
 			${ buttonSurfaceTypes.join( '<br>' ) }
 		</div>
 
-		<div id = "divReportCurrentStatus" > ${ REP.getReportCurrentStatus() } </div>
+		<div id = "divReportCurrentStatus" > ${ VWSRF.getReportCurrentStatus() } </div>
 
-		<div id = "divReportByFilters" > ${ REP.getReportByFilters() } </div>
-
+		<div id = "divReportByFilters" > ${ VWSRF.getReportByFilters() } </div>
 
 	`;
 
@@ -79,13 +92,13 @@ REP.getReportsMenu = function() {
 
 
 
-REP.getReportCurrentStatus = function() {
+VWSRF.getReportCurrentStatus = function() {
 
 	const htm =
 	`
 		<details>
 
-			<summary>${ REP.date } ~ Reports ${ REP.release }</summary>
+			<summary>${ VWSRF.date } ~ Reports ${ VWSRF.release }</summary>
 
 			<p>Making good progress. All buttons working as expected.</p>
 
@@ -100,22 +113,22 @@ REP.getReportCurrentStatus = function() {
 
 
 
-REP.getReportByFilters = function() {
+VWSRF.getReportByFilters = function() {
 
 	const htm =
 	`
 		<div id=REPdivReportByFilters >
 
 			<p>
-				<button id=butExterior onclick=REP.toggleExteriorSurfaces(this); >exterior surfaces</button>
+				<button id=butExterior onclick=VWSRF.setSurfacesActiveByDefaults(this); >exterior surfaces</button>
 
-				<button id=butExposed onclick=REP.setSurfacesFiltered(this,'exposedToSun="true"'); >exposed to sun</button>
+				<button id=butExposed onclick=VWSRF.setSurfacesFiltered(this,'exposedToSun="true"'); >exposed to sun</button>
 			</p>
 
 			<p>
-				<button onclick=REP.setSurfaceTypesVisible(["Ceiling","InteriorFloor","SlabOnGrade","UndergroundSlab"],this); >horizontal</button>
+				<button onclick=VWSRF.setSurfaceTypesVisible(["Ceiling","InteriorFloor","SlabOnGrade","UndergroundSlab"],this); >horizontal</button>
 
-				<button onclick=REP.setSurfaceTypesVisible(["ExteriorWall","InteriorWall","UndergroundWall"],this); >vertical</button>
+				<button onclick=VWSRF.setSurfaceTypesVisible(["ExteriorWall","InteriorWall","UndergroundWall"],this); >vertical</button>
 			</p>
 
 		</div>
@@ -128,7 +141,7 @@ REP.getReportByFilters = function() {
 
 
 
-REP.toggleSurfaceFiltered = function( button ) {
+VWSRF.toggleSurfaceFiltered = function( button ) {
 
 	button.classList.toggle( "active" );
 
@@ -136,13 +149,13 @@ REP.toggleSurfaceFiltered = function( button ) {
 
 	const filterArray = Array.from( buttonsActive ).map ( button => button.innerText );
 
-	REP.setSurfaceTypesVisible ( filterArray );
+	VWSRF.setSurfaceTypesVisible ( filterArray );
 
 };
 
 
 
-REP.setSurfaceTypesVisible = function ( typesArray ) {
+VWSRF.setSurfaceTypesVisible = function ( typesArray ) {
 	//console.log( 'typesArray', typesArray );
 
 	GBX.surfacesFiltered = typesArray.flatMap( filter =>
@@ -151,39 +164,13 @@ REP.setSurfaceTypesVisible = function ( typesArray ) {
 
 	);
 
-	/*
-	children = GBX.surfacesFiltered.map( surfaceText => {
-
-		const index = surfaceText.match( 'indexGbx="(.*?)"' )[ 1 ];
-
-		return GBX.surfaceGroup.children[ index ];
-
-	} );
-
-	GBX.surfaceGroupFiltered = new THREE.Group();
-	GBX.surfaceGroupFiltered.add( ...children );
-	*/
-
-
-	//console.log( 'GBX.surfacesFiltered',  GBX.surfacesFiltered );
-
 	divReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( GBX.surfacesFiltered );
 
 };
 
 
 
-REP.setSurfacesFiltered = function( button, filters ) {
-
-	//buttons = REPdivReportByFilters.querySelectorAll( "button" );
-
-	//Array.from( buttons ).forEach( button => button.classList.remove( "active" ) );
-
-	//button.classList.toggle( "active" );
-
-	//Array.from( buttons ).forEach( button => filters.includes( button.innerText ) ?
-	//	button.classList.add( "active" ) : button.classList.remove( "active" ));
-
+VWSRF.setSurfacesFiltered = function( button, filters ) {
 
 	filters = Array.isArray( filters ) ? filters : [ filters ];
 	console.log( 'filters', filters );
@@ -200,17 +187,17 @@ REP.setSurfacesFiltered = function( button, filters ) {
 
 
 
-REP.toggleExteriorSurfaces = function() {
+VWSRF.setSurfacesActiveByDefaults = function() {
 
-	const filters = [ "Roof", "ExteriorWall", "ExposedFloor", "Air", "Shade" ];
-	//const buttons = divReports.querySelectorAll( "button" );
-	//Array.from( buttons ).forEach( button => filters.includes( button.innerText ) ?
-	//	button.classList.add( "active" ) : button.classList.remove( "active" )
-	//);
+	if ( REPdivSurfaceType ) {
 
-	REP.setSurfaceTypesVisible( filters );
+		const buttons = REPdivSurfaceType.querySelectorAll( "button" );
+		buttons.forEach( button => VWSRF.filtersDefault.includes( button.innerText ) ?
+			button.classList.add( "active" ) : button.classList.remove( "active" )
+		);
+
+	}
+
+	VWSRF.setSurfaceTypesVisible( VWSRF.filtersDefault );
 
 };
-
-
-

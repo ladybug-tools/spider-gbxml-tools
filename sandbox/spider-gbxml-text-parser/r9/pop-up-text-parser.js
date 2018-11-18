@@ -588,7 +588,7 @@ POP.getAttributesPlanarGeometry = function( surfaceXml ) {
 
 //////////
 
-REP.setOneButtonActive = function( button ) {
+POP.setOneButtonActive = function( button ) {
 
 	buttons = POPdivShowHide.querySelectorAll( "button" );
 
@@ -604,7 +604,7 @@ POP.toggleSurfaceFocus = function( button ) {
 
 	button.classList.toggle( "active" );
 
-	//REP.setOneButtonActive( button );
+	//POP.setOneButtonActive( button );
 
 	focus = button.classList.contains( "active" );
 
