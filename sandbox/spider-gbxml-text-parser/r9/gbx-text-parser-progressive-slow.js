@@ -2,15 +2,16 @@
 // jshint esversion: 6
 /* globals THREE, THR, THRU */
 
+
+let step;
+let count;
+let misses = 0;
+let deltaLimit = 30;
+
+let lastTimestamp = performance.now();
+
+
 var GBX = GBX || {};
-
-
-step = 1000;
-count = 0;
-max = 5000;
-misses = 0;
-deltaLimit = 20;
-lastTimestamp = performance.now();
 
 GBX.colorsDefault = {
 
@@ -95,14 +96,69 @@ GBX.parseFile = function( gbxml )  {
 
 	GBX.surfacesIndexed= GBX.surfaces.map( ( surface, index ) => `indexGbx="${ index }"` + surface );
 
-	const meshes = GBX.getSurfaceMeshes( GBX.surfacesIndexed );
+	step = 50;
+	count = 0;
+	max = GBX.surfacesIndexed.length;
 
-	GBX.surfaceGroup.add( ...meshes );
+	lastTimestamp = performance.now();
+
+	THR.controls.autoRotate = false;
+
+	addMeshes( performance.now() );
 
 	return GBX.surfaces.length;
 
 };
 
+
+function addMeshes( timestamp ) {
+
+	if ( count < max ) {
+
+		const delta = timestamp - lastTimestamp;
+		lastTimestamp = timestamp;
+
+		if ( delta < deltaLimit ) {
+
+			//drawMultipleMeshes( step );
+
+			const meshes = GBX.getSurfaceMeshes( GBX.surfacesIndexed.slice( count, count + step ) );
+
+			GBX.surfaceGroup.add( ...meshes );
+
+			count += step;
+
+		} else {
+
+			misses ++;
+
+			if ( misses > 3 ) {
+
+				deltaLimit ++;
+
+				misses = 0
+
+			}
+
+		}
+
+		divLog2.innerHTML =
+		`
+			<hr>
+			count: ${ count }<br>
+			misses: ${ misses }<br>
+			delta: ${ delta }<br>
+			elapsed: ${ ( performance.now() - GBX.timeStart ).toLocaleString() }
+		`
+		requestAnimationFrame( addMeshes );
+
+	} else {
+
+		THR.controls.autoRotate = false;
+
+	}
+
+}
 
 
 //////////
@@ -110,30 +166,20 @@ GBX.parseFile = function( gbxml )  {
 GBX.sendSurfacesToThreeJs = function( surfacesText ) {
 	//console.log( 'surfacesText', surfacesText );
 
-	if ( !surfacesText.length ) { return "<span class='highlight' >No surfaces would be visible</span>"; }
+	if ( !surfacesText.length ) { return "<span class='highlight' >No surfaces would be visible</spab>"; }
 
 	GBX.surfaceGroup.children.forEach( ( surface, index ) => {
 
-		surface.visible = false;
+		//surface.visible = false;
 
 	} );
 
-	timeStart = performance.now();
+	surfacesText.forEach( surface => {
 
-	THR.controls.autoRotate = false;
+		//const index = surface.match( 'indexGbx="(.*?)"' )[ 1 ];
+		//GBX.surfaceGroup.children[ index ].visible = true;
 
-	GBX.surfacesTmp = surfacesText;
-
-	step = 1000;
-	count = 0;
-	max = 5000;
-	misses = 0;
-	deltaLimit = 20;
-	lastTimestamp = performance.now();
-
-	GBX.addMeshes( performance.now() )
-
-	//console.log( 'ttt', ( performance.now() - timeStart) );
+	} );
 
 	if ( !GBX.boundingBox ) {
 
@@ -151,64 +197,11 @@ GBX.sendSurfacesToThreeJs = function( surfacesText ) {
 
 
 
- GBX.addMeshes = function( timestamp ) {
-
-	if ( count < GBX.surfacesTmp.length ) {
-		//console.log( 'count', count );
-
-		const delta = timestamp - lastTimestamp;
-		lastTimestamp = timestamp;
-
-		if ( delta < deltaLimit ) {
-
-			GBX.surfacesTmp.slice( count, count + step ).forEach( surface => {
-
-				const index = surface.match( 'indexGbx="(.*?)"' )[ 1 ];
-				GBX.surfaceGroup.children[ index ].visible = true;
-
-			} );
-
-			count += step;
-
-		} else {
-
-			if ( misses > 3 ) {
-
-				deltaLimit += 20;
-				misses = 0;
-
-			}
-
-			misses ++;
-
-		}
-
-/* 		divLog2.innerHTML =
-		`
-			<hr>
-			count: ${ count }<br>
-			misses: ${ misses }<br>
-			delta: ${ delta.toLocaleString() }<br>
-			deltaLimit: ${ deltaLimit }<br>
-			elapsed: ${ ( performance.now() - timeStart ).toLocaleString() }
-		`; */
-
-		requestAnimationFrame( GBX.addMeshes );
-
-	} else {
-
-		THR.controls.autoRotate = true;
-
-	}
-
-}
-
-
-
 GBX.getSurfaceMeshes = function( surfaces ) {
 
 	const meshes = surfaces.map( ( surface ) => {
 
+		
 		const polyLoops = GBX.getPolyLoops( surface );
 		//console.log( 'polyLoops', polyLoops );
 

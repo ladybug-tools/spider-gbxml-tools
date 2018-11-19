@@ -73,6 +73,14 @@ Pop-up Text Parser
 
 ## Change Log
 
+#### 2018-11-18 ~ Theo
+
+R9.7
+* Adds progressive update of display
+
+This update is kind of a big thing. Seeing things appear is much more fun than staring at a blank screen - even when the progressive loading may slow things down a bit
+
+
 #### 2018-11-17 ~ Theo
 
 R9.6

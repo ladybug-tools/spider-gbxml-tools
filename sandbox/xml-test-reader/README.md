@@ -8,12 +8,12 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 # [XML Test Reader Read Me]( #sandbox/xml-test-reader/README.md )
 
-<!--
+
 <iframe src=https://www.ladybug.tools/spider-gbxml-tools/sandbox/xml-test-reader/index.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
 _<small>XML Test Reader</small>_
 
-## Full Screen: [XML Test Reader]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/xml-test-reader/sandbox/xml-test-reader.html )
--->
+## Full Screen: [XML Test Reader]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/xml-test-reader/r1/xml-test-reader.html )
+
 
 
 ## Concept
@@ -22,10 +22,10 @@ Read text files and parse into XML
 
 Very fast and very clean.
 
-But crashes with files somewhere over 3 MB compressed
+But crashes with Evegeny's 698 MB file somewhere over 3 MB compressed
 
 ;-(
-	
+
 
 ## To Do / Wish List
 

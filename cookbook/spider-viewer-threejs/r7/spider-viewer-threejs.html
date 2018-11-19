@@ -6,7 +6,7 @@
 <meta name=description content="A lightweight core module to help view real-time interactive 3D graphics in your browser using WebGL and the Three.js JavaScript library" >
 <meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
 <meta name = "date" content = "2018-09-28" >
-<title>Spider Viewer R7 ~ Three.js R97 Test</title>
+<title>Spider Viewer R97 ~ Three.js R98 Test</title>
 <style>
 /* Copyright 2018 Ladybug Tools authors. MIT License */
 
@@ -22,9 +22,9 @@ a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: under
 </style>
 </head>
 <body>
-<script src = "https://rawgit.com/mrdoob/three.js/r97/build/three.min.js" ></script>
-<script src = "https://rawgit.com/mrdoob/three.js/r97/examples/js/controls/OrbitControls.js" ></script>
-<script src = "../../../lib/r7/thr-threejs.js" ></script>
+<script src = "https://rawgit.com/mrdoob/three.js/r98/build/three.min.js" ></script>
+<script src = "https://rawgit.com/mrdoob/three.js/r98/examples/js/controls/OrbitControls.js" ></script>
+<script src = "./thr-threejs.js" ></script>
 
 
 	<main id="container" ></main>
@@ -37,11 +37,17 @@ a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: under
 
 		</header>
 
+		<div id="divLog" ></div>
+
 	</nav>
 
 
 <script>
 
+let delta;
+let timestamp;
+let lastTimestamp;
+let misses = 0;
 
 init();
 
@@ -50,7 +56,7 @@ function init() {
 
 	THR.getThreejs();
 
-	THR.animate();
+	animateTest();
 
 	// just to show we are alive
 
@@ -61,7 +67,36 @@ function init() {
 		THR.controls.autoRotate = true;
 
 	}
-	
+
+}
+
+
+function animateTest( timestamp ) {
+
+	requestAnimationFrame( animateTest );
+	THR.renderer.render( THR.scene, THR.camera );
+	THR.controls.update();
+
+	delta = timestamp - lastTimestamp;
+
+	if ( delta < 70 ) {
+
+		THR.controls.autoRotate = true;
+
+	} else {
+
+		THR.controls.autoRotate = false;
+		misses ++;
+	}
+
+	divLog.innerHTML =
+	`
+		delta: ${ delta.toLocaleString() }<br>
+		misses: ${ misses }
+	`;
+
+	lastTimestamp = timestamp;
+
 }
 
 </script>

@@ -92,6 +92,8 @@ FIL.inpOpenFileXml = function( files ) {
 
 	reader.onload = function( event ) {
 
+		detStats.open = true;
+
 		const text = reader.result;
 		//divGeneralCheck.innerHTML = getGeneralCheck( reader.result );
 
@@ -166,6 +168,7 @@ FIL.inpOpenFileZip = function( files ) {
 	.then( ( uint8array ) => {
 		//console.log( 'uint8array', uint8array );
 
+		divGbxmlInfo.innerHTML = 'Decoding text';
 		let txt = '';
 
 		if ( uint8array[ 0 ] !== 255 ||  uint8array[ 0 ] === 239 || uint8array[ 0 ] === 60 ) {
@@ -243,7 +246,6 @@ info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
 	'Iteration system wide engenders economies of scale, cross-media technology, presentation action items and life cycle replication.' +
 	'</textarea>' +
 '</div>';
-
 */
 
 FIL.butSaveFile = function() {

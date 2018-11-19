@@ -99,10 +99,12 @@ FIL.callbackGbXML = function( xhr ) {
 	//const gbxml = xhr.target.responseXML.documentElement;
 	const string = xhr.target.response;
 
+	var parser = new DOMParser();
 
-	FIL.onParseString( string );
+	xml = parser.parseFromString( string, "application/xml" );
 
-	surfaces = [];
+	surfaces = xml.getElementsByTagName( "Surface" );
+
 
 	//const meshesArray = GBX.parseFileXML( gbxml );
 
@@ -144,11 +146,20 @@ FIL.inpOpenFiles = function( files ) {
 
 	reader.onload = function( event ) {
 
+		//meshesArray = GBX.parseFileXML( reader.result );
+		//console.log( 'fil meshes', meshesArray );
+
+		//THR.scene.add( ...meshesArray );
+
+		//THRU.zoomObjectBoundingSphere( GBX.surfaceMeshes );
+
 		const string = reader.result;
 
-		FIL.onParseString( string );
+		var parser = new DOMParser();
 
-		surfaces = [];
+		xml = parser.parseFromString( string, "application/xml" );
+
+		surfaces = xml.getElementsByTagName( "Surface" );
 
 		FIL.timeToLoad = performance.now() - FIL.timeStart;
 
@@ -156,7 +167,6 @@ FIL.inpOpenFiles = function( files ) {
 		`
 			<div>${ FIL.fileAttributes.name }</div>
 			<div>bytes loaded: ${event.loaded.toLocaleString()}</div>
-			<div>surfaces: ${ surfaces.length.toLocaleString()}</div>
 			<div>time to load: ${ parseInt( FIL.timeToLoad, 10 ).toLocaleString() } ms</div>
 
 		`;
@@ -182,31 +192,6 @@ FIL.inpOpenFiles = function( files ) {
 };
 
 // add getFileInfo()...
-
-
-FIL.onParseString = function( string ) {
-	console.log( 'string', string.length.toLocaleString() );
-
-	const parser = new DOMParser();
-
-	const lines = string.split(/\r\n|\n/).map( line => line.trim() );
-	console.log( 'lines', lines.length.toLocaleString() );
-
-	const text = lines.join( '' );
-	console.log( 'text', text.length.toLocaleString()  );
-
-	//setTimeout( function() {
-
-		xml = parser.parseFromString( text, "text/xml" ); // "application/xml"
-
-		//surfaces = xml.getElementsByTagName( "Surface" );
-
-		//return surfaces;
-
-	//}, 500 )
-
-
-}
 
 
 

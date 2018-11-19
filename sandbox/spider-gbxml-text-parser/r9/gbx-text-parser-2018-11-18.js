@@ -4,14 +4,6 @@
 
 var GBX = GBX || {};
 
-
-step = 1000;
-count = 0;
-max = 5000;
-misses = 0;
-deltaLimit = 20;
-lastTimestamp = performance.now();
-
 GBX.colorsDefault = {
 
 	InteriorWall: 0x008000,
@@ -110,7 +102,7 @@ GBX.parseFile = function( gbxml )  {
 GBX.sendSurfacesToThreeJs = function( surfacesText ) {
 	//console.log( 'surfacesText', surfacesText );
 
-	if ( !surfacesText.length ) { return "<span class='highlight' >No surfaces would be visible</span>"; }
+	if ( !surfacesText.length ) { return "<span class='highlight' >No surfaces would be visible</spab>"; }
 
 	GBX.surfaceGroup.children.forEach( ( surface, index ) => {
 
@@ -118,22 +110,12 @@ GBX.sendSurfacesToThreeJs = function( surfacesText ) {
 
 	} );
 
-	timeStart = performance.now();
+	surfacesText.forEach( surface => {
 
-	THR.controls.autoRotate = false;
+		const index = surface.match( 'indexGbx="(.*?)"' )[ 1 ];
+		GBX.surfaceGroup.children[ index ].visible = true;
 
-	GBX.surfacesTmp = surfacesText;
-
-	step = 1000;
-	count = 0;
-	max = 5000;
-	misses = 0;
-	deltaLimit = 20;
-	lastTimestamp = performance.now();
-
-	GBX.addMeshes( performance.now() )
-
-	//console.log( 'ttt', ( performance.now() - timeStart) );
+	} );
 
 	if ( !GBX.boundingBox ) {
 
@@ -148,60 +130,6 @@ GBX.sendSurfacesToThreeJs = function( surfacesText ) {
 	return surfacesText.length.toLocaleString() + ' surfaces visible';
 
 };
-
-
-
- GBX.addMeshes = function( timestamp ) {
-
-	if ( count < GBX.surfacesTmp.length ) {
-		//console.log( 'count', count );
-
-		const delta = timestamp - lastTimestamp;
-		lastTimestamp = timestamp;
-
-		if ( delta < deltaLimit ) {
-
-			GBX.surfacesTmp.slice( count, count + step ).forEach( surface => {
-
-				const index = surface.match( 'indexGbx="(.*?)"' )[ 1 ];
-				GBX.surfaceGroup.children[ index ].visible = true;
-
-			} );
-
-			count += step;
-
-		} else {
-
-			if ( misses > 3 ) {
-
-				deltaLimit += 20;
-				misses = 0;
-
-			}
-
-			misses ++;
-
-		}
-
-/* 		divLog2.innerHTML =
-		`
-			<hr>
-			count: ${ count }<br>
-			misses: ${ misses }<br>
-			delta: ${ delta.toLocaleString() }<br>
-			deltaLimit: ${ deltaLimit }<br>
-			elapsed: ${ ( performance.now() - timeStart ).toLocaleString() }
-		`; */
-
-		requestAnimationFrame( GBX.addMeshes );
-
-	} else {
-
-		THR.controls.autoRotate = true;
-
-	}
-
-}
 
 
 
