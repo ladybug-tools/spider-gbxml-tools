@@ -38,7 +38,6 @@
 
 <script src = "./gbx-text-parser.js" ></script>
 
-<script src = "./iss-issues-core.js" ></script>
 <script src = "./issf-issues-file-check.js" ></script>
 <script src = "./issm-issues-metadata.js" ></script>
 <script src = "./isasi-adjacent-space-invalid.js" ></script>
@@ -166,7 +165,7 @@
 		</details>
 
 
-		<details ontoggle=ISS.onToggleIssues(); >
+		<details ontoggle=onToggleIssues(); >
 
 				<summary class=divMenuTitle >Edit Menu </summary>
 
@@ -303,6 +302,26 @@ function init() {
 
 }
 
+
+function onToggleIssues() {
+
+	divFileCheck.innerHTML=ISSF.getMenuFileCheck();
+
+	divPanelMetadataIssues.innerHTML = ISSM.getPanelMetadataIssues();
+
+	divAdjacentSpaceInvalid.innerHTML = ISASI.getMenuAdjacentSpaceInvalid();
+
+	divDuplicateCoordinates.innerHTML = ISDC.getMenuDuplicateCoordinates();
+
+	/*
+	divDuplicateRectangularGeometry.innerHTML = ISDR.getMenuDuplicateRectangularGeometry();
+
+	divInclusions.innerHTML = ISIN.getMenuInclusions();
+
+	divPointInPolygon.innerHTML = ISPIP.getMenuPointInPolygon();
+
+	divTemplate.innerHTML = ISS.getMenuTemplate(); */
+}
 
 
 </script>

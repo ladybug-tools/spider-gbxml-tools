@@ -2,12 +2,45 @@
 /* globals */
 /* jshint esversion: 6 */
 
-const ISSF = { "release": "R9.0", "date": "2018-11-19" };
+const ISFC = { "release": "R9.1", "date": "2018-11-20" };
 
 
+ISFC.currentStatus =
+`
+<aside>
 
+	<details>
+		<summary>ISFC ${ ISFC.release} status ${ ISFC.date }</summary>
 
-ISSF.getMenuFileCheck= function() {
+		<p>This module is still at an early stage of development.</p>
+
+		<p>
+			As and when the project gets access to more modules with errors,
+			this module will be enhanced to identify and fix errors found.
+		</p>
+
+		<p>
+			Current checks include:
+			<ul>
+				<li>File size</li>
+				<li>Time to load</li>
+				<li>UTF-1</li>
+				<li>Area or volume = 0</li>
+				<li>Attributes with empty strings ( "" )</li>
+				<li>Parse file into JSON</li>
+				<li>Time elapsed to parse</li>
+				<li>Number of lines in file</li>
+			</ul>
+		</p>
+
+	</details>
+
+</aside>
+
+<hr>
+`;
+
+ISFC.getMenuFileCheck= function() {
 
 	const htm =
 
@@ -17,8 +50,9 @@ ISSF.getMenuFileCheck= function() {
 
 		<p>
 			<i>
-				Identify  problems with the XML file.
-				File Check ${ ISSF.release }.
+				Identify  problems with XML files.
+				This module does not parse or display models. It simply locates technical errors in files.
+				File Check ${ ISFC.release }.
 			</i>
 		</p>
 
@@ -27,17 +61,18 @@ ISSF.getMenuFileCheck= function() {
 			<p id=pFileOpen>
 
 				Open gbXML files:
-				<input type=file id=inpOpenFile onchange=ISSF.inpOpenFiles(this); accept=".xml" >
+				<input type=file id=inpOpenFile onchange=ISFC.inpOpenFiles(this); accept=".xml" >
 
 			</p>
+
 
 		</div>
 
 		<br>
 
-		<div id=ISSFdivFileInfo ></div>
+		<div id=ISFCdivFileInfo ></div>
 
-		<hr>
+		<div>${ ISFC.currentStatus }</div>
 
 	</details>`;
 
@@ -47,15 +82,15 @@ ISSF.getMenuFileCheck= function() {
 
 
 
-ISSF.inpOpenFiles = function( files ) {
+ISFC.inpOpenFiles = function( files ) {
 
 	//console.log( 'file', files.files[ 0 ] );
 
-	ISSF.timeStart = performance.now();
+	ISFC.timeStart = performance.now();
 
 	THRU.setSceneDispose( [ GBX.surfaceMeshes, GBX.surfaceEdges, GBX.surfaceOpenings, GBX.helperNormalsFaces ] );
 
-	ISSF.fileAttributes = files.files[ 0 ];
+	ISFC.fileAttributes = files.files[ 0 ];
 
 	const reader = new FileReader();
 
@@ -63,34 +98,41 @@ ISSF.inpOpenFiles = function( files ) {
 
 	reader.onload = function( event ) {
 
-		ISSF.timeToLoad = performance.now() - ISSF.timeStart;
+		ISFC.timeToLoad = performance.now() - ISFC.timeStart;
 
-		ISSFdivFileInfo.innerHTML =
+		ISFC.data = reader.result;
+
+		ISFCdivFileInfo.innerHTML =
 		`
-			<div>${ ISSF.fileAttributes.name }</div>
+			<div>${ ISFC.fileAttributes.name }</div>
 			<div>bytes loaded: ${event.loaded.toLocaleString()}</div>
-			<div>time to load: ${ parseInt( ISSF.timeToLoad, 10 ).toLocaleString() } ms</div>
+			<div>time to load: ${ parseInt( ISFC.timeToLoad, 10 ).toLocaleString() } ms</div>
 
+			<p>
+				<button onclick=ISFC.parseFile(); >Parse file to JSON></button><br>
+				May take a while...
+			</p>
 		`;
 
-		//ISSF.parseFile( reader.result );
 
-		ISSF.timeStart2 = performance.now();
-		ISSFdivFileInfo.innerHTML += ISSF.getGeneralCheck( reader.result );
+
+		ISFC.timeStart2 = performance.now();
+		ISFCdivFileInfo.innerHTML += ISFC.getGeneralCheck( reader.result );
 
 	};
 
 	reader.readAsText( files.files[ 0 ] );
 
+
 		function onRequestFileProgress( event ) {
 
-			ISSF.timeToLoad = performance.now() - ISSF.timeStart;
+			ISFC.timeToLoad = performance.now() - ISFC.timeStart;
 
-			ISSFdivFileInfo.innerHTML =
+			ISFCdivFileInfo.innerHTML =
 			`
-				<div>${ ISSF.fileAttributes.name }</div>
+				<div>${ ISFC.fileAttributes.name }</div>
 				<div>bytes loaded: ${event.loaded.toLocaleString()}</div>
-				<div>time to load: ${ parseInt( ISSF.timeToLoad, 10 ).toLocaleString() } ms</div>
+				<div>time elapsed: ${ parseInt( ISFC.timeToLoad, 10 ).toLocaleString() } ms</div>
 			`;
 
 		}
@@ -99,23 +141,23 @@ ISSF.inpOpenFiles = function( files ) {
 
 
 
-ISSF.getGeneralCheck = function( text ) {
+ISFC.getGeneralCheck = function( text ) {
 
 	let htm = '';
 
-	ISSF.lines = ( text.split( /\r\n|\n/ ) ).map( line => line.toLowerCase() );
+	ISFC.lines = ( text.split( /\r\n|\n/ ) ).map( line => line.toLowerCase() );
 
-	//console.log( 'ISSF.lines', ISSF.lines );
+	//console.log( 'ISFC.lines', ISFC.lines );
 
-	if ( ISSF.lines[ 0 ].includes( 'utf-16' ) ) {
+	if ( ISFC.lines[ 0 ].includes( 'utf-16' ) ) {
 
-		htm += `line 0: ${ ISSF.lines[ 0 ] }\n`;
+		htm += `line 0: ${ ISFC.lines[ 0 ] }\n`;
 
 	}
 
-	for ( i = 0; i < ISSF.lines.length; i++ ) {
+	for ( i = 0; i < ISFC.lines.length; i++ ) {
 
-		line = ISSF.lines[ i ];
+		line = ISFC.lines[ i ];
 
 		if ( line.includes( '<area>0</area>') ) {
 
@@ -138,9 +180,9 @@ ISSF.getGeneralCheck = function( text ) {
 
 	}
 
-	if ( ISSF.errorsFound ) {
+	if ( ISFC.errorsFound ) {
 
-		htm += JSON.stringify( ISSF.errorsFound, null, ' ' );
+		htm += JSON.stringify( ISFC.errorsFound, null, ' ' );
 
 	}
 
@@ -151,7 +193,7 @@ ISSF.getGeneralCheck = function( text ) {
 			<h3>General Check</h3>
 			<p>All lines checked appear to contain valid XML data.</p>
 			<p>No empty text strings or values equaling zero found.</p>
-			<p>Lines checked: ${ ISSF.lines.length.toLocaleString()}</p>
+			<p>Lines checked: ${ ISFC.lines.length.toLocaleString()}</p>
 			<div id=ISSdivCheckText ></div>
 		`;
 
@@ -160,9 +202,10 @@ ISSF.getGeneralCheck = function( text ) {
 		htm =
 		`
 			<h3>General Check</h3>
-			<p>Lines checked: ${ ISSF.lines.length.toLocaleString()}</p>
-			<p>Time to read: ${ ( performance.now() - ISSF.timeStart2 ).toLocaleString() } ms</p>
+			<p>Lines checked: ${ ISFC.lines.length.toLocaleString()}</p>
+			<p>Time to read: ${ ( performance.now() - ISFC.timeStart2 ).toLocaleString() } ms</p>
 			<div id=ISSdivCheckText ><textarea style=height:200px;width:100%>${ htm }</textarea></div>
+
 		`;
 
 	}
@@ -173,20 +216,26 @@ ISSF.getGeneralCheck = function( text ) {
 
 
 
-ISSF.parseFile = function( text ) {
-
+ISFC.parseFile = function() {
 
 	//lines = text.split(/\r\n|\n/);
 	//console.log( 'lines', lines.length );
 
+	const timeStart = performance.now();
 	const parser = new window.DOMParser();
-	ISSF.gbxml = parser.parseFromString( text, 'text/xml' );
-	ISSF.gbjson = ISSF.getXML2jsobj( ISSF.gbxml.documentElement );
-	//console.log( 'ISSF.gbjson', ISSF.gbjson );
+	ISFC.gbxml = parser.parseFromString( ISFC.data, 'text/xml' );
+	console.log( 'ISFC.gbxml', ISFC.gbxml );
+	ISFC.gbjson = ISFC.getXML2jsobj( ISFC.gbxml.documentElement );
+	console.log( 'ISFC.gbjson', ISFC.gbjson );
 
-	//meshesArray = ISSF.parseFileXML( text );
+	//meshesArray = ISFC.parseFileXML( text );
 
-	console.log( 'ISSFml', performance.now() - ISSF.timeStart );
+	ISFCdivFileInfo.innerHTML +=
+	`
+		gbJSON time to parse ${ ( performance.now() - timeStart ).toLocaleString() }<br>
+
+		campus id: ${ ISFC.gbjson.Campus.id }
+	`;
 
 };
 
@@ -197,7 +246,7 @@ ISSF.parseFile = function( text ) {
 // Theo: I have difficulty understanding how this function actually functions
 
 
-ISSF.getXML2jsobj = function( node ) {
+ISFC.xxxgetXML2jsobj = function( node ) {
 
 	let data = {};
 
@@ -239,7 +288,7 @@ ISSF.getXML2jsobj = function( node ) {
 
 			} else { // sub-object
 
-				Add( childNode.nodeName, ISSF.getXML2jsobj( childNode ) );
+				Add( childNode.nodeName, ISFC.getXML2jsobj( childNode ) );
 
 			}
 
@@ -253,7 +302,11 @@ ISSF.getXML2jsobj = function( node ) {
 
 
 
-ISSF.cccgetXML2jsobj = function( node ) {
+
+
+//////////
+
+ISFC.getXML2jsobj = function( node ) {
 
 	let data = {};
 
@@ -298,7 +351,7 @@ ISSF.cccgetXML2jsobj = function( node ) {
 
 			} else { // sub-object
 
-				Add( childNode.nodeName, ISSF.getXML2jsobj( childNode ) );
+				Add( childNode.nodeName, ISFC.getXML2jsobj( childNode ) );
 
 			}
 
