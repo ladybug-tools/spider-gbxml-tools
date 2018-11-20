@@ -73,6 +73,18 @@ Pop-up Text Parser
 
 ## Change Log
 
+#### 2018-11-19 ~ Theo
+
+R9.8
+* Continues effort to refactor menus so they are easier to understand
+	* Reorganizing in traditional way: file, edit, view, help etc
+	* But in vertical alignment so code works on computer and phone
+* Add Edit menu
+	* Start of process to carry over modules from previous releases
+	* Four modules brought over but all mostly works-in-progress / not fully usable
+* Add 'Save file as' capability
+
+
 #### 2018-11-18 ~ Theo
 
 R9.7

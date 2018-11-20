@@ -5,20 +5,23 @@
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
 <meta name=description content="Open and examine very large gbXML files in your browser with free, open source JavaScript" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-11-17" >
-<title>Spider gbXML Text Parser R9.7 </title>
+<meta name = "date" content = "2018-11-19" >
+<title>Spider gbXML Text Parser R9.8 </title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 <style>
+
+	aside { border: 1px solid lightgray; margin-top:15px; padding: 2px; }
+	button:hover { background: #ccc; color: #fff }
+
 
 	#navMenu button, #navMenu input[type=button] { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;
 		 padding: 2px 5px; min-width: 12rem; }
 
-	button:hover { background: #ccc; color: #fff }
 
 	#navMenu button.active { border-color: black; font-style: italic; font-weight: bold; margin-left: 1rem;
 	 box-shadow: 2px 2px re#888; }
 
-	.divMenuTitle { background-color: #ccc; color: #888; text-align: center}
+	.divMenuTitle { background-color: #ccc; color: #888; margin: 10px 0; text-align: center; }
 
 </style>
 </head>
@@ -28,12 +31,18 @@
 <script src = "https://cdn.rawgit.com/mrdoob/three.js/r98/examples/js/controls/OrbitControls.js" ></script>
 <script src = "./fil-open-file.js" ></script>
 
-<script src = "../../../lib/r7/mnu-menu.js" ></script>
+<script src = "./mnu-menu.js" ></script>
 <script src = "../../../lib/r7/thr-threejs.js" ></script>
 <script src = "../../../lib/r7/thru-threejs-utilities.js"></script>
 <script src = "../../../lib/r7/gal-sample-files-gallery-gbxml.js" ></script>
 
 <script src = "./gbx-text-parser.js" ></script>
+
+<script src = "./issf-issues-file-check.js" ></script>
+<script src = "./issm-issues-metadata.js" ></script>
+<script src = "./isasi-adjacent-space-invalid.js" ></script>
+<script src = "./isdc-issues-duplicate-coordinates.js" ></script>
+
 <script src = "./vwsrf-view-surface-types.js" ></script>
 <script src = "./repl-view-by-level.js" ></script>
 <script src = "./set-settings.js" ></script>
@@ -53,13 +62,17 @@
 
 		<details>
 
-			<summary>2018-11-18 ~ Current Status</summary>
+			<summary>2018-11-19 ~ Current Status</summary>
 
 			<p>Model not fully loaded until model centers on screen and starts rotating.</p>
 
 			<p>Default onload shows: Roof, ExteriorWall, ExposedFloor, Air and Shade. May be having issues on large files</p>
 
-			<p>After loading a very large model: it's best to reload the web page before loading the next model. And, be patient, it may take a very long time to clear the data from memory.</p>
+			<p>
+				After loading a very large model:
+				<span class=highlight >it's best to reload web page before loading next model.</span>
+				And, be patient, it may take a very long time to clear large files from memory.
+			</p>
 
 			<!--
 				<p>Reloads are faster than first load. Best not to load two big files one after another. Load default file in-between.</p>
@@ -69,113 +82,139 @@
 
 		<div id=divLog2 ></div>
 
-		<p class=divMenuTitle >File Menu </p>
-
-		<details>
-
-			<summary>Open gbXML sample files</summary>
-
-			<div id=divSampleFileButtons ></div>
-
-			<div id=divSampleFileItems ></div>
-
-		</details>
-
 		<details open >
 
-			<summary>Open gbXML file</summary>
+			<summary class=divMenuTitle >File Menu </summary>
 
-			<div id="divFileCheckOpen" class="dragDropArea" >
+			<details>
 
-				<p id=pFileOpen>
+				<summary>Open gbXML sample files</summary>
 
-					Open gbXML files:
-					<input type=file id=inpOpenFile onchange=FIL.inpOpenFileXml(this); accept=".xml" >
+				<div id=divSampleFileButtons ></div>
 
-				</p>
+				<div id=divSampleFileItems ></div>
 
-			</div>
+			</details>
 
-		</details>
+			<details open >
 
-		<details open >
+				<summary>Open gbXML file</summary>
 
-			<summary>Open ZIP file</summary>
+				<div id="divFileCheckOpen" class="dragDropArea" >
 
-			<p>
-				<input type=file onchange=FIL.inpOpenFileZip(this); accept="application/zip" >
-			</p>
+					<p id=pFileOpen>
 
-			<p>Experimental feature.</p>
+						Open gbXML files:
+						<input type=file id=inpOpenFile onchange=FIL.inpOpenFileXml(this); accept=".xml" >
 
-			<p>
-				Files to download and test:
-				<a href="https://www.ladybug.tools/spider/gbxml-sample-files/zip/UK_London_RoyalArsenalWoolwich.zip" target="_blank">Royal Arsenal</a> /
-				<a href="https://www.ladybug.tools/spider/gbxml-sample-files/zip/LondonOffice_ver01.zip" target="_blank">London Office</a> /
-				<a href="https://www.ladybug.tools/spider/gbxml-sample-files/zip/aim0013 (27).zip" target="_blank">Warwick University</a>
-			</p>
+					</p>
 
-		</details>
+				</div>
 
+			</details>
 
-		<details>
+			<details open >
 
-			<summary>Save file as</summary>
-
-			<div id = "divSaveFile" >
+				<summary>Open ZIP file</summary>
 
 				<p>
-					<button onclick=FIL.butSaveFile(); >Save File</button>
+					<input type=file onchange=FIL.inpOpenFileZip(this); accept="application/zip" >
 				</p>
 
-			</div>
+				<p>Experimental feature.</p>
+
+				<p>
+					Files to download and test:
+					<a href="https://www.ladybug.tools/spider/gbxml-sample-files/zip/UK_London_RoyalArsenalWoolwich.zip" target="_blank">Royal Arsenal</a> /
+					<a href="https://www.ladybug.tools/spider/gbxml-sample-files/zip/LondonOffice_ver01.zip" target="_blank">London Office</a> /
+					<a href="https://www.ladybug.tools/spider/gbxml-sample-files/zip/aim0013 (27).zip" target="_blank">Warwick University</a>
+				</p>
+
+			</details>
+
+
+			<details>
+
+				<summary>Save file as</summary>
+
+				<div id = "divSaveFile" >
+
+					<p>
+						<button onclick=FIL.butSaveFile(); >Save file as XML</button>
+					</p>
+					<p>
+						<button onclick=alert("coming-soon"); >Save file as XML in ZIP</button>
+					</p>
+
+				</div>
+
+			</details>
+
+			<aside>
+
+				<details open>
+
+					<summary>File information</summary>
+
+					<div id = "divFileInfo" ></div>
+
+				</details>
+
+			</aside>
 
 		</details>
 
-		<hr>
 
-		<details open>
+		<details ontoggle=onToggleIssues(); >
 
-			<summary>File information</summary>
+				<summary class=divMenuTitle >Edit Menu </summary>
 
-			<div id = "divFileInfo" ></div>
+				<div id = "divFileCheck" ></div>
 
-		</details>
+				<div id = "divPanelMetadataIssues" ></div>
 
-		<details id=detStats ontoggle=divGbxmlInfo.innerHTML=VWSRF.getStats(); >
+				<div id = "divAdjacentSpaceInvalid" ></div>
 
-			<summary>Statistics</summary>
+				<div id = "divDuplicateCoordinates" ></div>
 
-			<div id = "divGbxmlInfo" ></div>
+				<div id = "divDuplicateRectangularGeometry" ></div>
 
-		</details>
+				<div id = "divInclusions" ></div>
 
-		<p class=divMenuTitle >View Menu </p>
+				<div id = "divPointInPolygon" ></div>
 
-		<details id=detReports ontoggle=VWSRF.onToggle(); >
-
-			<summary>Show/hide by surface type</summary>
-
-			<div id = "divReports" ></div>
-
-			<div id = "divReportByLevels" ></div>
-
-			<div id = "divReportsLog" ></div>
+				<div id = "divTemplate" ></div>
 
 		</details>
 
+		<details>
 
-		<details id=detSettings ontoggle=divSettings.innerHTML=SET.getSettingsMenu(); >
+			<summary class=divMenuTitle >View Menu </summary>
 
-			<summary>Scene display settings</summary>
+			<details id=detReports ontoggle=VWSRF.onToggle(); >
 
-			<div id = "divSettings" ></div>
+				<summary>Show/hide by surface type</summary>
 
-			<div id = "divSettingsLog" ></div>
+				<div id = "divReports" ></div>
 
-		</details>
+				<div id = "divReportByLevels" ></div>
 
-		<details ontoggle=divSectionCut.innerHTML=CUT.getDetSectionViews(); >
+				<div id = "divReportsLog" ></div>
+
+			</details>
+
+
+			<details id=detSettings ontoggle=divSettings.innerHTML=SET.getSettingsMenu(); >
+
+				<summary>Scene display settings</summary>
+
+				<div id = "divSettings" ></div>
+
+				<div id = "divSettingsLog" ></div>
+
+			</details>
+
+			<details ontoggle=divSectionCut.innerHTML=CUT.getDetSectionViews(); >
 
 				<summary>Scene cut sections</summary>
 
@@ -183,7 +222,27 @@
 
 			</details>
 
-		<p class=divMenuTitle >Help Menu </p>
+			<aside>
+
+				<details id=detStats ontoggle=divGbxmlInfo.innerHTML=VWSRF.getStats(); >
+
+					<summary>gbXML file statistics</summary>
+
+					<div id = "divGbxmlInfo" ></div>
+
+				</details>
+
+			</aside>
+
+		</details>
+
+		<details ontoggle=divMenuHelp.innerHTML=MNU.getNavHelp(); >
+
+			<summary class=divMenuTitle >Help Menu </summary>
+
+			<div id=divMenuHelp ></div>
+
+		</details>
 
 		<footer>
 
@@ -243,6 +302,26 @@ function init() {
 
 }
 
+
+function onToggleIssues() {
+
+	divFileCheck.innerHTML=ISSF.getMenuFileCheck();
+
+	divPanelMetadataIssues.innerHTML = ISSM.getPanelMetadataIssues();
+
+	divAdjacentSpaceInvalid.innerHTML = ISASI.getMenuAdjacentSpaceInvalid();
+
+	divDuplicateCoordinates.innerHTML = ISDC.getMenuDuplicateCoordinates();
+
+	/*
+	divDuplicateRectangularGeometry.innerHTML = ISDR.getMenuDuplicateRectangularGeometry();
+
+	divInclusions.innerHTML = ISIN.getMenuInclusions();
+
+	divPointInPolygon.innerHTML = ISPIP.getMenuPointInPolygon();
+
+	divTemplate.innerHTML = ISS.getMenuTemplate(); */
+}
 
 
 </script>
