@@ -2,7 +2,7 @@
 /* globals */
 /* jshint esversion: 6 */
 
-const ISFC = { "release": "R9.1", "date": "2018-11-20" };
+const ISFC = { "release": "R9.2", "date": "2018-11-21" };
 
 
 ISFC.currentStatus =
@@ -12,7 +12,7 @@ ISFC.currentStatus =
 	<details>
 		<summary>ISFC ${ ISFC.release} status ${ ISFC.date }</summary>
 
-		<p>This module is still at an early stage of development.</p>
+		<p>This module is ready for light testing, but is still at an early stage of development</p>
 
 		<p>
 			As and when the project gets access to more modules with errors,
@@ -27,11 +27,15 @@ ISFC.currentStatus =
 				<li>UTF-1</li>
 				<li>Area or volume = 0</li>
 				<li>Attributes with empty strings ( "" )</li>
+				<!--
 				<li>Parse file into JSON</li>
 				<li>Time elapsed to parse</li>
 				<li>Number of lines in file</li>
+				-->
 			</ul>
 		</p>
+
+		<p>Whatever validations you might need could be added here...</p>
 
 	</details>
 
@@ -51,7 +55,7 @@ ISFC.getMenuFileCheck= function() {
 		<p>
 			<i>
 				Identify  problems with XML files.
-				This module does not parse or display models. It simply locates technical errors in files.
+				This module does not display or fix models. It simply locates technical errors in files.
 				File Check ${ ISFC.release }.
 			</i>
 		</p>
@@ -108,10 +112,13 @@ ISFC.inpOpenFiles = function( files ) {
 			<div>bytes loaded: ${event.loaded.toLocaleString()}</div>
 			<div>time to load: ${ parseInt( ISFC.timeToLoad, 10 ).toLocaleString() } ms</div>
 
+			<!-- has issues / check with original parser -->
+			<!--
 			<p>
-				<button onclick=ISFC.parseFile(); >Parse file to JSON></button><br>
-				May take a while...
+				<button onclick=ISFC.parseFile(); >Parse file to JSON</button><br>
+				With large files, may take a while...
 			</p>
+			-->
 		`;
 
 
@@ -232,9 +239,11 @@ ISFC.parseFile = function() {
 
 	ISFCdivFileInfo.innerHTML +=
 	`
-		gbJSON time to parse ${ ( performance.now() - timeStart ).toLocaleString() }<br>
+		<h3>JSON Parse</h3>
 
-		campus id: ${ ISFC.gbjson.Campus.id }
+		<div>gbJSON time to parse ${ ( performance.now() - timeStart ).toLocaleString() }</div>
+		<div>Campus id: ${ ISFC.gbjson.Campus.id }</div>
+
 	`;
 
 };
@@ -312,12 +321,10 @@ ISFC.getXML2jsobj = function( node ) {
 
 	function Add( name, value ) {
 
-
-
 		if ( data[ name ] ) {
 
-			//if ( data[ name ].constructor !== Array ) {
-			if( Array.isArray( data[ name ] === false ) ) {
+			if ( data[ name ].constructor !== Array ) {
+			//if( Array.isArray( data[ name ] === false ) ) {
 
 				data[ name ] = [ data[ name ] ];
 

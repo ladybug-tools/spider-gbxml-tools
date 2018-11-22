@@ -2,51 +2,33 @@
 /* globals THR, GBX, POP, ISASIfound */
 /* jshint esversion: 6 */
 
-const ISASI = { "release": "R7.1" };
+const ISASI = { "release": "R9.2", "date": "2018-11-21" };
 
 
-ISASI.getMenuAdjacentSpaceInvalid = function() {
+ISASI.currentStatus =
+`
+<aside>
 
-	const htm =
+	<details>
+		<summary>ISASI ${ ISFC.release} status ${ ISFC.date }</summary>
 
-	`<details ontoggle=ISASI.getAdjacentSpaceInvalidCheck(); >
+		<p>This module is ready for light testing, but is still at an early stage of development.</p>
 
-		<summary>Adjacent Space Invalid</summary>
+		<p>Should we list errors here? or is on screen good enough?<p>
 
-		<p>
-			<i>
-				Surfaces with invalid adjacent spaces. <span id=ISASIfound ></span>
-				ISASI ${ ISASI.release }.
-			</i>
-		</p>
+		<p>To do: How to fix the issues and save the changes</p>
 
-		<p>
-			<button onclick=ISASI.setAdjacentSpaceInvalidToggle(this); > AdjacentSpaceInvalid toggle </button>
-		</p>
+		<p>Whatever further checks you might need could be added here...</p>
 
-		<p>Click toggle button to show invalid surfaces. Then click surface on screen to view its details.</p>
+	</details>
 
-		<details>
+</aside>
 
-			<summary>ISASI Status 2018-11-03</summary>
-
-			<p>Should we list errors here? or is on screen good enough?<p>
-
-			<p>To do: How to fix the issues and save the changes</p>
-
-		</details>
-
-		<hr>
-
-	</details>`;
-
-	return htm;
-
-};
+<hr>
+`;
 
 
-
-ISASI.getAdjacentSpaceInvalidCheck = function() {
+ISASI.setAdjacentSpaceInvalidCheck = function() {
 
 	ISASI.adjacentSpaceInvalid = [];
 
@@ -71,7 +53,7 @@ ISASI.getAdjacentSpaceInvalidCheck = function() {
 			( spaceIdRef.length === 2 && spaceIdRef[ 0 ] === spaceIdRef[ 1 ] ) ) ) {
 
 //  || surface.AdjacentSpaceId.length !== 2
-			console.log( 'two space', spaceIdRef  );
+			//console.log( 'two space', spaceIdRef  );
 			ISASI.adjacentSpaceInvalid.push( surfaceIndex );
 
 /*
@@ -89,11 +71,47 @@ ISASI.getAdjacentSpaceInvalidCheck = function() {
 
 	}
 
-	ISASIfound.innerHTML = `${ ISASI.adjacentSpaceInvalid.length } found`;
+	//ISASIfound.innerHTML = `${ ISASI.adjacentSpaceInvalid.length } found`;
 
 	//console.log( 'ISASI.adjacentSpaceInvalid',  ISASI.adjacentSpaceInvalid );
 
 };
+
+
+
+ISASI.getMenuAdjacentSpaceInvalid = function() {
+
+	ISASI.setAdjacentSpaceInvalidCheck();
+
+	const htm =
+
+	`<details ontoggle=ISASI.setAdjacentSpaceInvalidCheck(); >
+
+		<summary>Adjacent Space Invalid: ${ ISASI.adjacentSpaceInvalid.length } found</summary>
+
+		<p>
+			<i>
+				Surfaces with invalid adjacent spaces. <span id=ISASIfound ></span>
+			</i>
+		</p>
+
+		<p>
+			<button onclick=ISASI.setAdjacentSpaceInvalidToggle(this); > AdjacentSpaceInvalid toggle </button>
+		</p>
+
+		<p>Click toggle button to show invalid surfaces. Then click surface on screen to view its details.</p>
+
+		<div>${ ISASI.currentStatus }</div>
+
+	</details>`;
+
+	return htm;
+
+};
+
+
+
+
 
 
 
@@ -105,7 +123,7 @@ ISASI.setAdjacentSpaceInvalidToggle = function( button ) {
 
 	if ( button.style.fontStyle !== 'italic' ) {
 
-		//console.log( 'surfaceArray', surfaceArray );
+		console.log( 'surfaceArray', surfaceArray );
 
 		if ( surfaceArray.length ) {
 
@@ -114,8 +132,10 @@ ISASI.setAdjacentSpaceInvalidToggle = function( button ) {
 			//surfaceMeshes = GBX.surfaceGroup.children.filter( element => surfaceArray.find( item => item === element.userData.index );
 			//console.log( 'surfaceMeshes', surfaceMeshes );
 			surfaceArray.forEach( index => {
-				console.log( 'vv', index, GBX.surfaceGroup.children[ Number( index ) ] );
-				GBX.surfaceGroup.children[ Number( index ) ].visible = true;
+
+				console.log( 'surface', index, GBX.surfaceGroup.children[ Number( index ) ] );
+				console.log( 'surface', index, GBX.surfacesIndexed[ index ] );
+				GBX.surfaceGroup.children[ index ].visible = true;
 
 			} );
 

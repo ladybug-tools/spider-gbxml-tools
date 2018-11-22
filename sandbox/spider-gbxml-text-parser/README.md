@@ -73,6 +73,16 @@ Pop-up Text Parser
 
 ## Change Log
 
+#### 2018-11-21 ~ Theo
+
+R9.8
+* Edit Menu
+	* All the following **beginning** to work / but still slow to open menu with large buildings
+	* File Check
+	* Missing gbXML Metadata
+	* Adjacent Space Invalid
+	* Duplicate Coordinates
+
 #### 2018-11-19 ~ Theo
 
 R9.8

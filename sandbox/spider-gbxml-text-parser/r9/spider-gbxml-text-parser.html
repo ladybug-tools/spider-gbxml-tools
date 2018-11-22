@@ -5,8 +5,8 @@
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
 <meta name=description content="Open and examine very large gbXML files in your browser with free, open source JavaScript" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-11-19" >
-<title>Spider gbXML Text Parser R9.8 </title>
+<meta name = "date" content = "2018-11-21" >
+<title>Spider gbXML Text Parser R9.9 </title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 <style>
 
@@ -40,7 +40,7 @@
 
 <script src = "./iss-issues-core.js" ></script>
 <script src = "./issf-issues-file-check.js" ></script>
-<script src = "./issm-issues-metadata.js" ></script>
+<script src = "./ismet-issues-metadata.js" ></script>
 <script src = "./isasi-adjacent-space-invalid.js" ></script>
 <script src = "./isdc-issues-duplicate-coordinates.js" ></script>
 
@@ -166,7 +166,7 @@
 		</details>
 
 
-		<details ontoggle=ISS.onToggleIssues(); >
+		<details id=detMenuEdit ontoggle=ISS.onToggleIssues(); >
 
 				<summary class=divMenuTitle >Edit Menu </summary>
 
@@ -188,7 +188,7 @@
 
 		</details>
 
-		<details>
+		<details id=detMenuView >
 
 			<summary class=divMenuTitle >View Menu </summary>
 
@@ -237,7 +237,7 @@
 
 		</details>
 
-		<details ontoggle=divMenuHelp.innerHTML=MNU.getNavHelp(); >
+		<details id=detMenuHelp ontoggle=divMenuHelp.innerHTML=MNU.getNavHelp(); >
 
 			<summary class=divMenuTitle >Help Menu </summary>
 
@@ -302,8 +302,6 @@ function init() {
 	//location.hash = urlDefaultFile;
 
 }
-
-
 
 </script>
 </body>

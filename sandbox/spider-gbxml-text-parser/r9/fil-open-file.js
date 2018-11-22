@@ -37,6 +37,10 @@ FIL.requestFile = function( url, callback ) {
 	detReports.open = false;
 	detSettings.open = false;
 
+	detMenuEdit.open = false
+	detMenuView.open = false;
+	detMenuHelp.open = false;
+
 	const xhr = new XMLHttpRequest();
 	xhr.crossOrigin = 'anonymous';
 	xhr.open( 'GET', url, true );
@@ -86,9 +90,11 @@ FIL.inpOpenFileXml = function( files ) {
 
 	reader.onprogress = onRequestFileProgress;
 
+	detMenuEdit.open=false
 	detStats.open = false;
 	detReports.open = false;
-	detSettings.open = false;
+	detMenuView.open = false;
+	detMenuHelp.open = false;
 
 	reader.onload = function( event ) {
 

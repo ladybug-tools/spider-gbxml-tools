@@ -1,13 +1,16 @@
+// Copyright 2018 Ladybug Tools authors. MIT License
+/* globals */
+/* jshint esversion: 6 */
 
 
-const ISS = {};
+const ISS = { "release": "R9.0", "date": "2018-11-21" };
 
 
 ISS.onToggleIssues = function() {
 
 	divFileCheck.innerHTML=ISFC.getMenuFileCheck();
 
-	divPanelMetadataIssues.innerHTML = ISSM.getPanelMetadataIssues();
+	divPanelMetadataIssues.innerHTML = ISMET.getMenuMetadataIssues();
 
 	divAdjacentSpaceInvalid.innerHTML = ISASI.getMenuAdjacentSpaceInvalid();
 
@@ -21,5 +24,6 @@ ISS.onToggleIssues = function() {
 	divPointInPolygon.innerHTML = ISPIP.getMenuPointInPolygon();
 
 	divTemplate.innerHTML = ISS.getMenuTemplate(); */
+	
 }
 

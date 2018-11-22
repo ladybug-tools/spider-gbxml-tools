@@ -1,29 +1,87 @@
+// Copyright 2018 Ladybug Tools authors. MIT License
 
 /* global THR, THREE, GBX */
 /* jshint esversion: 6 */
 /* jshint loopfunc:true */
 
-// Copyright 2018 Ladybug Tools authors. MIT License
 
 
-const ISDC = { "release": "SGV Issues R7.1" }
+const ISDC = { "release": "R9.1", "date": "2018-11-21"  }
 
+
+
+ISDC.currentStatus =
+`
+<aside>
+
+	<details>
+		<summary>ISDC ${ ISDC.release} status ${ ISDC.date }</summary>
+
+		<p>This module is ready for light testing, but is still at an early stage of development.</p>
+
+		<p>Whatever further checks you might need could be added here...</p>
+
+	</details>
+
+</aside>
+
+<hr>
+`;
+
+
+
+ISDC.getDuplicateCoordinatesCheck = function() {
+
+	ISDC.duplicates = [];
+
+	const surfaces = GBX.surfaces;
+
+	// https://stackoverflow.com/questions/840781/get-all-non-unique-values-i-e-duplicate-more-than-one-occurrence-in-an-array
+
+	for ( let i = 0; i < surfaces.length; i++ ) {
+
+		const surface1 = surfaces[ i ];
+
+		const plane1 = surface1.match( /<PlanarGeometry>(.*?)<\/PlanarGeometry>/ )[ 1 ];
+
+		for ( let j = 0; j < surfaces.length; j++ ) {
+
+			const surface2 = surfaces[ j ];
+
+			plane2 = surface2.match( /<PlanarGeometry>(.*?)<\/PlanarGeometry>/ )[ 1 ];
+
+			if ( i !== j && plane1 === plane2 ) {
+
+				//console.log( 'surface', plane1 );
+
+				ISDC.duplicates.push( i );
+
+			}
+
+		}
+
+	}
+
+	//console.log( 'duplicates', ISDC.duplicates );
+
+};
 
 
 
 ISDC.getMenuDuplicateCoordinates= function( target ) {
 
+	ISDC.getDuplicateCoordinatesCheck();
+
+
 	const htm =
 
 	`<details ontoggle=ISDC.getDuplicateCoordinatesCheck(); >
 
-		<summary>Find Duplicate Coordinates</summary>
+		<summary>Duplicate Coordinates: ${ ISDC.duplicates.length / 2 } found</summary>
 
-		<p><small>
-			Two surfaces with the same coordinates
-		</small></p>
-
-		<p id=divDuplicatesFound >Duplicate Coordinates</p>
+		<p>
+			Two surfaces with the same vertices
+		</p>
 
 		<p>
 			<button id=butDuplicateCoordinates
@@ -59,7 +117,7 @@ ISDC.getMenuDuplicateCoordinates= function( target ) {
 			</button>
 		</p>
 
-		<hr>
+		<div${ ISDC.currentStatus }</div>
 
 	</details>`;
 
@@ -71,7 +129,7 @@ ISDC.getMenuDuplicateCoordinates= function( target ) {
 
 ////////// Duplicate Coordinates
 
-ISDC.getDuplicateCoordinatesCheck = function() { //R14
+ISDC.xxxgetDuplicateCoordinatesCheck = function() { //R14
 
 	const surfacePolyLoops = [];
 	const surfaceIndexes = [];
@@ -87,14 +145,17 @@ ISDC.getDuplicateCoordinatesCheck = function() { //R14
 	//let spaceId;
 
 	// https://stackoverflow.com/questions/840781/get-all-non-unique-values-i-e-duplicate-more-than-one-occurrence-in-an-array
-	
-	for ( let i = 0; i <  surfaces.length; i++ ) {
+
+	for ( let i = 0; i < surfaces.length; i++ ) {
 
 		const surface = surfaces[ i ];
 
 		planar = surface.match( /<PlanarGeometry>(.*?)<\/PlanarGeometry>/ )[ 1 ];
 
 		console.log( 'surface', planar );
+
+		ISDC.duplicates.push( i );
+
 
 		/*
 		const points = JSON.stringify( surface.PlanarGeometry.PolyLoop.CartesianPoint );
@@ -155,7 +216,7 @@ ISDC.getDuplicateCoordinatesCheck = function() { //R14
 
 ISDC.setSurfaceArrayVisibleToggle = function( button, surfaceArray = [] ) {
 
-	THR.scene.remove( POP.line, POP.particle );
+	//THR.scene.remove( POP.line, POP.particle );
 
 	if ( button.style.fontStyle !== 'italic' ) {
 
@@ -163,19 +224,15 @@ ISDC.setSurfaceArrayVisibleToggle = function( button, surfaceArray = [] ) {
 
 		if ( surfaceArray.length ) {
 
-			GBX.surfaceMeshes.children.forEach( mesh => mesh.visible = false );
-
-			//surfaceMeshes = GBX.surfaceMeshes.children.filter( element => surfaceArray.find( item => item[ 0 ].id === element.userData.gbjson.id ) );
-			//console.log( 'surfaceMeshes', surfaceMeshes );
-			//surfaceMeshes.forEach( mesh => { mesh.visible === true; console.log( '', mesh.visible ); } );
+			GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
 
 			for ( let surface of surfaceArray ) {
 
-				//console.log( '', surface  );
-				const surfaceMesh = GBX.surfaceMeshes.children.find( element => element.userData.gbjson.id === surface[ 0 ].id );
+				const surfaceMesh = GBX.surfaceGroup.children.find( element => Number( element.userData.index ) === surface );
+
+				//console.log( 'surfaceMesh', surfaceMesh  );
+
 				surfaceMesh.visible = true;
-				const surfaceMesh1 = GBX.surfaceMeshes.children.find( element => element.userData.gbjson.id === surface[ 1 ].id );
-				surfaceMesh1.visible = true;
 
 			}
 
@@ -187,7 +244,7 @@ ISDC.setSurfaceArrayVisibleToggle = function( button, surfaceArray = [] ) {
 	} else {
 
 		//GBX.setAllVisible();
-		GBX.surfaceMeshes.children.forEach( element => element.visible = true );
+		GBX.surfaceGroup.children.forEach( element => element.visible = true );
 
 		button.style.fontStyle = '';
 		button.style.backgroundColor = '';
@@ -257,7 +314,6 @@ ISDC.toggleSurfaceFocus = function( button, surfaceId ) {
 
 	//ISDCbutAdjacentSpace1.style.backgroundColor = '';
 	//ISDCbutAdjacentSpace2.style.backgroundColor = '';
-
 
 	if ( color === 'pink' ) {
 
