@@ -1,15 +1,13 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
 // jshint esversion: 6
-/* globals THREE, THR, THRU */
+/* globals THREE, THR, THRU, GBX, VWSRF, JSZip, urlDefaultFile, timeStart, detMenuView, detStats, divLog2 */
 
 
-const FIL = { "release": "R9.0", "date": "2018-11-17" };
+const FIL = { "release": "R9.1", "date": "2018-11-26" };
 
 
 
 FIL.onHashChange = function() {
-
-	//FIL.timeStart = performance.now();
 
 	const url = !location.hash ? urlDefaultFile : location.hash.slice( 1 );
 
@@ -31,15 +29,7 @@ FIL.onHashChange = function() {
 
 FIL.requestFile = function( url, callback ) {
 
-	FIL.timeStart = performance.now();
-
-	detStats.open = false;
-	detReports.open = false;
-	detSettings.open = false;
-
-	detMenuEdit.open = false
-	detMenuView.open = false;
-	detMenuHelp.open = false;
+	FIL.onOpenFile();
 
 	const xhr = new XMLHttpRequest();
 	xhr.crossOrigin = 'anonymous';
@@ -60,7 +50,7 @@ FIL.requestFile = function( url, callback ) {
 
 		}
 
-}
+};
 
 
 
@@ -69,46 +59,42 @@ FIL.callbackGbXML = function( xhr ) {
 	const len = GBX.parseFile( xhr.target.response );
 	//console.log( 'len', len );
 
-	const timeToLoad = performance.now() - FIL.timeStart;
-
 	FIL.onParseFile();
+
+	const timeToLoad = performance.now() - FIL.timeStart;
 
 	FIL.onProgress( GBX.name, xhr.loaded, timeToLoad );
 
-}
+	detMenuView.open = true;
+
+};
 
 
 
 FIL.inpOpenFileXml = function( files ) {
 	//console.log( 'file', files.files[ 0 ] );
 
-	const timeStart = performance.now();
-
 	const fileAttributes = files.files[ 0 ];
 
 	const reader = new FileReader();
 
-	reader.onprogress = onRequestFileProgress;
+	FIL.onOpenFile();
 
-	detMenuEdit.open=false
-	detStats.open = false;
-	detReports.open = false;
-	detMenuView.open = false;
-	detMenuHelp.open = false;
+	reader.onprogress = onRequestFileProgress;
 
 	reader.onload = function( event ) {
 
 		detStats.open = true;
 
-		const text = reader.result;
+		//const text = reader.result;
 		//divGeneralCheck.innerHTML = getGeneralCheck( reader.result );
 
-		const len = GBX.parseFile( text );
+		const len = GBX.parseFile( reader.result );
 		//console.log( 'len', len );
 
 		FIL.onParseFile();
 
-		const timeToLoad = performance.now() - timeStart;
+		const timeToLoad = performance.now() - FIL.timeStart;
 
 		FIL.onProgress( fileAttributes.name, event.loaded, timeToLoad );
 
@@ -119,28 +105,24 @@ FIL.inpOpenFileXml = function( files ) {
 
 	function onRequestFileProgress( event ) {
 
-		const timeToLoad = performance.now() - timeStart;
+		const timeToLoad = performance.now() - FIL.timeStart;
 
 		FIL.onProgress( fileAttributes.name, event.loaded, timeToLoad );
 
 	}
 
-}
+};
 
 
 
 FIL.inpOpenFileZip = function( files ) {
 	//console.log( 'files', files.files[0] );
 
-	const timeStart = performance.now();
-
-	detStats.open = false;
-	detReports.open = false;
-	detSettings.open = false;
-
 	const zip = new JSZip();
 
 	const names = [];
+
+	FIL.onOpenFile();
 
 	zip.loadAsync( files.files[0] )
 
@@ -186,7 +168,7 @@ FIL.inpOpenFileZip = function( files ) {
 			//console.log( 'uint8array', uint8array );
 
 			let arr = new Uint8Array( uint8array.length / 2 );
-			index = 0;
+			let index = 0;
 
 			for ( let i = 0; i < uint8array.length; i++ ) {
 
@@ -206,7 +188,7 @@ FIL.inpOpenFileZip = function( files ) {
 		const len = GBX.parseFile( txt );
 		//console.log( 'len', len );
 
-		const timeToLoad = performance.now() - timeStart;
+		const timeToLoad = performance.now() - FIL.timeStart;
 
 		FIL.onParseFile();
 
@@ -214,18 +196,45 @@ FIL.inpOpenFileZip = function( files ) {
 
 	} );
 
-}
+};
+
+
+
+FIL.onOpenFile = function() {
+
+	FIL.timeStart = performance.now();
+
+	detStats.open = false;
+	detReports.open = false;
+	detSettings.open = false;
+
+	detMenuEdit.open = false;
+	detMenuView.open = false;
+	detMenuHelp.open = false;
+
+	divLog2.innerHTML =
+	`
+		<hr>
+		<b>Text parser statistics</b><br>
+		<p>Render statistics will appear here.</p>
+		<p>On very large files it may take some time before rendering begins.</p>
+		<p>Surface types to be displayed on load: ${ VWSRF.filtersDefault.join( ', ' ) }</p>
+	`;
+
+};
 
 
 
 FIL.onParseFile = function() {
 
 	detStats.open = true;
+	detMenuView.open = true;
+
 	//detReports.open = true; // see click on toggle
 
 	VWSRF.setSurfaceTypesVisible( VWSRF.filtersDefault );
 
-}
+};
 
 
 
@@ -238,7 +247,7 @@ FIL.onProgress = function( name, size, time ) {
 		<div>time to load: ${ Number( time ).toLocaleString() } ms</div>
 	`;
 
-}
+};
 
 
 
@@ -263,8 +272,8 @@ FIL.butSaveFile = function() {
 	a.href = window.URL.createObjectURL( blob );
 	a.download = 'hello-world.xml';
 	a.click();
-//		delete a;
+	//delete a;
 	a = null;
 
-}
+};
 

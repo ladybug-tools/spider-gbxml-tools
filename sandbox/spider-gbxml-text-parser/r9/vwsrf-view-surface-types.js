@@ -1,9 +1,9 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
 // jshint esversion: 6
-/* globals THREE, THR, THRU, timeStart, divReports */
+/* globals THREE, THR, THRU, REPL, divReports */
 
 
-const VWSRF = { "release": "R9.4", "date": "2018-11-17" };
+const VWSRF = { "release": "R9.5", "date": "2018-11-26" };
 
 VWSRF.filtersDefault = [ "Roof", "ExteriorWall", "ExposedFloor", "Air", "Shade" ];
 
@@ -11,7 +11,7 @@ VWSRF.getStats = function() {
 
 	const reSpaces = /<Space(.*?)<\/Space>/gi;
 	GBX.spaces = GBX.text.match( reSpaces );
-	//console.log( 'spaces', spaces );
+	//console.log( 'spaces', GBX.spaces );
 
 	const reStoreys = /<BuildingStorey(.*?)<\/BuildingStorey>/gi;
 	GBX.storeys = GBX.text.match( reStoreys );
@@ -57,7 +57,9 @@ VWSRF.onToggle = function() {
 	}
 
 
-}
+};
+
+
 
 VWSRF.getReportsMenu = function() {
 

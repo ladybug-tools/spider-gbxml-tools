@@ -1,16 +1,16 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
 // jshint esversion: 6
-/* globals THREE, THR, THRU, timeStart, divLog2 */
+/* globals THREE, THR, THRU */
 
-var GBX = GBX || { "release": "R9.1", "date": "2018-11-26" };
+var GBX = GBX || {};
 
 
-let step = 1000;
-let count = 0;
-let max = 5000;
-let misses = 0;
-let deltaLimit = 20;
-let lastTimestamp = performance.now();
+step = 1000;
+count = 0;
+max = 5000;
+misses = 0;
+deltaLimit = 20;
+lastTimestamp = performance.now();
 
 GBX.colorsDefault = {
 
@@ -101,7 +101,6 @@ GBX.parseFile = function( gbxml )  {
 
 	return GBX.surfaces.length;
 
-
 };
 
 
@@ -119,7 +118,7 @@ GBX.sendSurfacesToThreeJs = function( surfacesText ) {
 
 	} );
 
-	//const timeStart = performance.now();
+	timeStart = performance.now();
 
 	THR.controls.autoRotate = false;
 
@@ -132,7 +131,7 @@ GBX.sendSurfacesToThreeJs = function( surfacesText ) {
 	deltaLimit = 20;
 	lastTimestamp = performance.now();
 
-	GBX.addMeshes( performance.now() );
+	GBX.addMeshes( performance.now() )
 
 	//console.log( 'ttt', ( performance.now() - timeStart) );
 
@@ -154,13 +153,14 @@ GBX.sendSurfacesToThreeJs = function( surfacesText ) {
 
  GBX.addMeshes = function( timestamp ) {
 
-	if ( count < GBX.surfacesTmp.length ) {
-		//console.log( 'count', count );
+	// const delta = timestamp - lastTimestamp;
 
-		const delta = timestamp - lastTimestamp;
+	if ( ( timestamp - lastTimestamp ) < deltaLimit ) {
+
 		lastTimestamp = timestamp;
 
-		if ( delta < deltaLimit ) {
+		if ( count < GBX.surfacesTmp.length ) {
+			//console.log( 'count', count );
 
 			GBX.surfacesTmp.slice( count, count + step ).forEach( surface => {
 
@@ -170,8 +170,6 @@ GBX.sendSurfacesToThreeJs = function( surfacesText ) {
 			} );
 
 			count += step;
-
-			count = count > GBX.surfacesTmp.length ? GBX.surfacesTmp.length : count;
 
 		} else {
 
@@ -186,18 +184,16 @@ GBX.sendSurfacesToThreeJs = function( surfacesText ) {
 
 		}
 
-
- 		divLog2.innerHTML =
+/* 		divLog2.innerHTML =
 		`
 			<hr>
-			<b>Text parser statistics:</b><br>
-			surfaces rendered: ${ count.toLocaleString() } of ${ GBX.surfacesTmp.length.toLocaleString() } <br>
-			time to render: ${ delta.toLocaleString() } ms<br>
-			took too long: ${ misses }<br>
-			time allocated frame: ${ deltaLimit } ms<br>
-			total time elapsed: ${ ( performance.now() - FIL.timeStart ).toLocaleString() } ms
+			count: ${ count }<br>
+			misses: ${ misses }<br>
+			delta: ${ delta.toLocaleString() }<br>
+			deltaLimit: ${ deltaLimit }<br>
+			elapsed: ${ ( performance.now() - timeStart ).toLocaleString() }
 		`;
-
+*/
 
 		requestAnimationFrame( GBX.addMeshes );
 
@@ -207,7 +203,7 @@ GBX.sendSurfacesToThreeJs = function( surfacesText ) {
 
 	}
 
-};
+}
 
 
 
@@ -224,6 +220,7 @@ GBX.getSurfaceMeshes = function( surfaces ) {
 		const index = surface.match( 'indexGbx="(.*?)"' )[ 1 ];
 
 		const mesh = GBX.getSurfaceMesh( vertices, index );
+		//mesh.visible = false;
 		mesh.castShadow = mesh.receiveShadow = true;
 		mesh.userData.index = index;
 
@@ -455,7 +452,7 @@ GBX.getSurfaceOpenings = function() {
 	for ( let surfaceText of GBX.surfaces ) {
 
 		const reSurface = /<Opening(.*?)<\/Opening>/g;
-		const openings = surfaceText.match( reSurface );
+		openings = surfaceText.match( reSurface );
 
 		//console.log( 'o', openings );
 
@@ -463,17 +460,17 @@ GBX.getSurfaceOpenings = function() {
 
 		for ( let opening of openings ) {
 
-			const polyloops = GBX.getPolyLoops( opening );
+			polyloops = GBX.getPolyLoops( opening );
 
 			//console.log( 'bb', polyloops );
 
 			for ( let polyloop of polyloops ) {
 
-				const coordinates = GBX.getVertices( polyloop );
+				coordinates = GBX.getVertices( polyloop );
 
 				//console.log( 'coordinates', coordinates );
 
-				const vertices = [];
+				vertices = [];
 
 				for ( let i = 0; i < ( coordinates.length / 3 ); i ++ ) {
 
@@ -483,7 +480,7 @@ GBX.getSurfaceOpenings = function() {
 
 				//console.log( 'vertices', vertices );
 
-				const geometry = new THREE.Geometry().setFromPoints( vertices );
+				const geometry = new THREE.Geometry().setFromPoints( vertices )
 				//console.log( 'geometry', geometry );
 
 				const line = new THREE.LineLoop( geometry, material );

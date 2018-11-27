@@ -12,7 +12,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 <iframe src=https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/index.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
 _<small>Spider gbXML Text Parser</small>_
 
-## Full Screen: [Spider gbXML Text Parser R9.6]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r9/spider-gbxml-text-parser.html )
+## Full Screen: [Spider gbXML Text Parser R9.9]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r9/spider-gbxml-text-parser.html )
 
 
 ***
@@ -72,6 +72,23 @@ Pop-up Text Parser
 
 
 ## Change Log
+
+
+#### 2018-11-26 ~ Theo
+
+R9.9
+* FIL Open File
+	* Better reporting of stats while opening files
+	* Add FIL.onOpenFile()
+	* Run through jsHint and cleanup
+	* Add release numbering
+* GBX text parser
+	* Add release numbering
+	* Run through jsHint and cleanup
+	* Refactor 'Text parser statistics' panel
+* vwsrf-view-surface types.js
+	* Run through jsHint and cleanup
+
 
 #### 2018-11-21 ~ Theo
 
