@@ -73,6 +73,13 @@ Pop-up Text Parser
 
 ## Change Log
 
+### 2018-11-29 ~ Theo
+
+R9.11
+* ismet-issues-metadata.js
+	* updte button: 'Add changes to data in memory'
+	* Click 'Save file as' button in File menu to save changes to a local file
+
 
 #### 2018-11-26 ~ Theo
 

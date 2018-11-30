@@ -2,13 +2,8 @@
 /* globals */
 /* jshint esversion: 6 */
 
-const ISMET = { "release": "R9.2", "data": "2018-11-21" };
+const ISMET = { "release": "R9.3", "data": "2018-11-29" };
 
-ISMET.surfaceChanges = {};
-
-ISMET.vvvrequirements = [
-	'areaUnit', 'lengthUnit', 'temperatureUnit', 'useSIUnitsForResults', 'version', 'volumeUnit', 'xmlns'
-];
 
 ISMET.metadataValues = {
 
@@ -50,21 +45,19 @@ ISMET.currentStatus =
 
 ISMET.setMetadataIssues = function() {
 
-	ISMET.provided = [];
+	ISMET.attributesProvided = [];
 	ISMET.attributesMissing = [];
 
-	//for ( let attribute of ISMET.requirements ) {
 	for ( let attribute of Object.keys( ISMET.metadataValues ) ){
-
 		//console.log( 'attribute', attribute );
 
 		if ( GBX.text.includes( attribute) ) {
 
-			ISMET.provided.push( attribute );
+			ISMET.attributesProvided.push( attribute );
 
-		} else { //if ( GBX.text.includes( attribute ) === false ) {
-
+		} else {
 			//console.log( 'attribute', attribute );
+
 			ISMET.attributesMissing.push( attribute );
 
 		}
@@ -114,7 +107,7 @@ ISMET.setMenuMetadata = function() {
 			<p>${ ISMET.attributesMissing.length } attributes missing</p>
 
 			<p>Checked:<br>
-			${ ISMET.provided.map( ( item, index ) => `${ 1 + index }. ${ item }` ).join( '<br>' ) }</p>
+			${ ISMET.attributesProvided.map( ( item, index ) => `${ 1 + index }. ${ item }` ).join( '<br>' ) }</p>
 		`;
 
 	} else {
@@ -124,13 +117,13 @@ ISMET.setMenuMetadata = function() {
 			${ISMET.attributesMissing.length} attributes missing
 
 			<p>gbXML attributes provided:<br>
-				${ ISMET.provided.map( ( item, index ) => `${ 1 + index }. ${ item }` ).join( '<br>' )}</p>
+				${ ISMET.attributesProvided.map( ( item, index ) => `${ 1 + index }. ${ item }` ).join( '<br>' )}</p>
 
 			<p>gbXML attributes missing:<br>
 				${ISMET.attributesMissing.map( ( item, index ) => `${ 1 + index }. ${ item }` ).join( '<br>' )} </p>
 
 			<p>
-				<button onclick=ISMET.setPopupMetadataIssues(); >Add missing attributes</button>
+				<button onclick=ISMET.setDivMetadataIssues(); >Add missing attributes</button>
 			</p>
 
 			<div id=ISMETdivMissingMeta ></div>
@@ -145,33 +138,30 @@ ISMET.setMenuMetadata = function() {
 
 
 
-ISMET.setPopupMetadataIssues = function() {
+ISMET.setDivMetadataIssues = function() {
 
 	let attributesMissing = '';
 
 	for ( let attribute of ISMET.attributesMissing ) {
 
-		//GBX.gbjson[ attribute ] = values[ attribute ];
 		attributesMissing +=
-
-		`<p>
-			${ attribute }:
-			<input onclick=this.select(); onchange=ISMET.setChangesMetadataIssues(); value=${ISMET.metadataValues[attribute]} size=25 >
-		<p>`;
+		`
+			<p>
+				${ attribute }:
+				<input onclick=this.select(); onchange=ISMET.setChangesMetadataIssues(); value=${ISMET.metadataValues[attribute]} size=25 >
+			<p>
+		`;
 
 	}
 
 	ISMETdivMissingMeta.innerHTML =
 
 	`
-		<div id=divSavHeader ></div>
-
 		<div id=ISMETdivInputs >${ attributesMissing }</div>
 
 		<p>
-			<button onclick=ISMET.setPopupMetadataIssues(); >Reset changes</button>
+			<button onclick=ISMET.setDivMetadataIssues(); >Reset changes</button>
 		</p>
-
 
 		<p>
 			<button onclick=onchange=ISMETtxtAttributesMissing.value=ISMET.setChangesMetadataIssues(); >Update the changes in gbXML file </button>
@@ -182,29 +172,44 @@ ISMET.setPopupMetadataIssues = function() {
 		<textArea id=ISMETtxtAttributesMissing style="height:100px;width:100%;" ></textArea>
 
 		<p>
-			<button onclick="alert('coming as soon as someone needs this')" >Save changes</button>
+			<button onclick=ISMET.addChangesToData(); >Add changes to data in memory</button>
 		</p>
 
+		<p>
+			Click 'Save file as' button in File menu to save changes to a file.
+		</p>
 	`;
 
-
 	ISMETtxtAttributesMissing.value = ISMET.setChangesMetadataIssues();
+
 };
 
 
 
 ISMET.setChangesMetadataIssues = function() {
 
-	inputs = ISMETdivInputs.querySelectorAll( "input" );
+	const inputs = ISMETdivInputs.querySelectorAll( "input" );
 
-	metadataNew = ISMET.attributesMissing.map( ( attribute, index ) => {
-
+	const metadataNew = ISMET.attributesMissing.map( ( attribute, index ) => {
 		//console.log( 'att', attribute );
 
 		return `${ attribute }="${ inputs[ index ].value }" `;
 
 	} );
 
-	return metadataNew.join( '' );
+	ISMET.metadataNew = metadataNew.join( '' );
+
+	return ISMET.metadataNew;
 
 };
+
+
+ISMET.addChangesToData = function() {
+
+	//console.log( '', ISMET.metadataNew );
+
+	GBX.text = GBX.text.replace ( '<gbXML ', '<gbXML ' + ISMET.metadataNew );
+
+	detMenuEdit.open = false;
+
+}
