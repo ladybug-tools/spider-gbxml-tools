@@ -82,7 +82,7 @@ R9:12
 	* Supports inter-session default file
 	* Add current status details DIV
 * isdc-issues-duplicate-coordinates.js
-	* Add display ids of duplicate surfaces as opention in a select element
+	* Add display ids of duplicate surfaces as options in a select element
 	* Select an option to set focus to selected surface and update pop-up dialog
 	* Add 'delete selected surface' button
 
@@ -91,7 +91,7 @@ R9:12
 
 R9.11
 * ismet-issues-metadata.js
-	* updte button: 'Add changes to data in memory'
+	* update button: 'Add changes to data in memory'
 	* Click 'Save file as' button in File menu to save changes to a local file
 
 

@@ -3,12 +3,12 @@
 /* jshint esversion: 6 */
 
 
-const ISS = { "release": "R9.0", "date": "2018-11-21" };
+const ISS = { "release": "R9.1", "date": "2018-11-30" };
 
 
 ISS.onToggleIssues = function() {
 
-	divFileCheck.innerHTML=ISFC.getMenuFileCheck();
+	divFileCheck.innerHTML = ISFC.getMenuFileCheck();
 
 	divPanelMetadataIssues.innerHTML = ISMET.getMenuMetadataIssues();
 
@@ -23,7 +23,8 @@ ISS.onToggleIssues = function() {
 
 	divPointInPolygon.innerHTML = ISPIP.getMenuPointInPolygon();
 
-	divTemplate.innerHTML = ISS.getMenuTemplate(); */
-	
+	divTemplate.innerHTML = ISS.getMenuTemplate();
+	*/
+
 }
 
