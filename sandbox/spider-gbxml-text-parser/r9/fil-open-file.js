@@ -62,7 +62,7 @@ FIL.getFileOpen = function() {  // called from main HTML file
 
 FIL.onHashChange = function() {
 
-	const url = !location.hash ? urlDefaultFile : location.hash.slice( 1 );
+	const url = !location.hash ? FIL.urlDefaultFile : location.hash.slice( 1 );
 
 	if ( url.toLowerCase().endsWith( '.xml' ) ) {
 
