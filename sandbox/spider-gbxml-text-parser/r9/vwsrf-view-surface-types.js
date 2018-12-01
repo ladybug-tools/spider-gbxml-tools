@@ -149,7 +149,7 @@ VWSRF.toggleSurfaceFiltered = function( button ) {
 
 	const buttonsActive = REPdivSurfaceType.getElementsByClassName( "active" ); // collection
 
-	const filterArray = Array.from( buttonsActive ).map ( button => button.innerText );
+	const filterArray = Array.from( buttonsActive ).map( button => button.innerText );
 
 	VWSRF.setSurfaceTypesVisible ( filterArray );
 

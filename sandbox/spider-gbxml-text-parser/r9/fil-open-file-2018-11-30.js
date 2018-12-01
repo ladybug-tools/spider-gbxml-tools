@@ -1,62 +1,9 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
 // jshint esversion: 6
-/* globals THREE, THR, THRU, GBX, VWSRF, JSZip, urlDefaultFile, detMenuView, detStats, divLog2 */
+/* globals THREE, THR, THRU, GBX, VWSRF, JSZip, urlDefaultFile, timeStart, detMenuView, detStats, divLog2 */
 
 
-const FIL = { "release": "R9.2", "date": "2018-11-30" };
-
-FIL.currentStatus =
-	`
-		<hr>
-
-		<details>
-
-			<summary>File menu status ${ FIL.date }</summary>
-
-			<p>Generally working well and open for testing</p>
-
-			<p>
-				To do:
-				<ul>
-					<li>Combine open gbXML and open zip into single UI element</li>
-					<li>Add save as zip file</li>
-				</ul>
-			</p>
-
-		</details>
-	`;
-
-
-FIL.getFileOpen = function() {  // called from main HTML file
-
-	FIL.timeStart = performance.now();
-
-	window.addEventListener ( 'hashchange', FIL.onHashChange, false );
-
-	FILdivFileOpen.addEventListener( "dragover", function( event ){ event.preventDefault(); }, true );
-	FILdivFileOpen.addEventListener( 'drop', FIL.drop, false );
-
-	FILdivCurrentStatus.innerHTML = FIL.currentStatus;
-
-	const htm =
-	`
-		<p id=pFileOpen >
-
-			<input type=file id=inpOpenFile onchange=FIL.inpOpenFileXml(this); multiple accept=".xml" >
-			or drag & drop files here
-			or enter a default file path &nbsp;<a href=#../assets/file-open.md title="Learn how to speed up your testing" >?</a>
-			<!--
-				try this: 	https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml
-			-->
-			<input id=FILinpFilePath onchange=FIL.updateDefaultFilePath(); style=width:95%; title='paste a file path or URL here then press Enter' >
-
-		</p>
-	`;
-
-	return htm;
-
-};
-
+const FIL = { "release": "R9.1", "date": "2018-11-26" };
 
 
 
@@ -302,40 +249,6 @@ FIL.onProgress = function( name, size, time ) {
 
 };
 
-
-
-////////// handle drag and drop events
-
-FIL.drop = function( event ) {
-
-	const dropUrl = event.dataTransfer.getData( 'URL' );
-	//console.log( 'dropUrl', dropUrl );
-	//console.log( 'event', event );
-
-	if ( dropUrl ) {
-
-		location.hash = dropUrl;
-
-	} else {
-
-		FIL.inpOpenFiles( event.dataTransfer );
-
-	}
-
-	event.preventDefault();
-
-};
-
-
-
-FIL.updateDefaultFilePath = function() {
-
-	location.hash = FILinpFilePath.value;
-
-	const thrFilePath = FILinpFilePath.value;
-	localStorage.setItem( 'thrFilePath', thrFilePath );
-
-};
 
 
 

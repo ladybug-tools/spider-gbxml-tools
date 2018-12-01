@@ -5,8 +5,8 @@
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
 <meta name=description content="Open and examine very large gbXML files in your browser with free, open source JavaScript" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-11-30" >
-<title>Spider gbXML Text Parser R9.12 </title>
+<meta name = "date" content = "2018-11-29" >
+<title>Spider gbXML Text Parser R9.11 </title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 <style>
 
@@ -99,7 +99,16 @@
 
 				<summary>Open gbXML file</summary>
 
-				<div id="FILdivFileOpen" class="dragDropArea" ></div>
+				<div id="divFileCheckOpen" class="dragDropArea" >
+
+					<p id=pFileOpen>
+
+						Open gbXML files:
+						<input type=file id=inpOpenFile onchange=FIL.inpOpenFileXml(this); accept=".xml" >
+
+					</p>
+
+				</div>
 
 			</details>
 
@@ -146,11 +155,9 @@
 
 					<summary>File information</summary>
 
-					<div id=divFileInfo ></div>
+					<div id = "divFileInfo" ></div>
 
 					<div id=divLog2 ></div>
-
-					<div id=FILdivCurrentStatus ></div>
 
 				</details>
 
@@ -277,8 +284,6 @@ function init() {
 
 	divHeader.innerHTML = MNU.getNavHeader(); // not essential
 
-	FILdivFileOpen.innerHTML = FIL.getFileOpen();
-
 	divSampleFileButtons.innerHTML = GAL.setCardSampleGalleries();
 
 	divFooter.innerHTML = MNU.getNavFooter(); // not essential
@@ -291,14 +296,9 @@ function init() {
 
 	divPopUpData.innerHTML = POP.getMenuHtmlPopUp();
 
-	// loads a default file / great for testing same file many times
-	const thrFilePath = localStorage.getItem( 'thrFilePath' ) || '';
+	window.addEventListener ( 'hashchange', FIL.onHashChange, false );
 
-	FILinpFilePath.value = thrFilePath;
-
-	FIL.urlDefaultFile = thrFilePath || FIL.urlDefaultFile;
-
-	if ( !location.hash ) { location.hash = FIL.urlDefaultFile; } else { FIL.onHashChange(); }
+	if ( !location.hash ) { location.hash = urlDefaultFile; } else { FIL.onHashChange(); }
 	//location.hash = urlDefaultFile;
 
 }

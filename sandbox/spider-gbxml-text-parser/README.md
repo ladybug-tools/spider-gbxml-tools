@@ -73,6 +73,20 @@ Pop-up Text Parser
 
 ## Change Log
 
+### 2018-11-30 ~ Theo
+
+R9:12
+* fil-open-file.js
+	* Add full-featured open file DIV
+	* Supports drag and drop
+	* Supports inter-session default file
+	* Add current status details DIV
+isdc-issues-duplicate-coordinates.js
+	* Add display ids of duplicate surfaces as opention in a select element
+	* Select an option to set focus to selected surface and update pop-up dialog
+	* Add 'delete selected surface' button
+
+
 ### 2018-11-29 ~ Theo
 
 R9.11
