@@ -73,6 +73,16 @@ Pop-up Text Parser
 
 ## Change Log
 
+### 2018-12-01 ~ Theo
+
+SGTP R9.13
+* Rename several issues files and update spider-gbxml-text-parser.html
+* isduc-issues-duplicate-coordinates.js
+	* Add toggle active to show/hide button
+* isduc-issues-duplicate-coordinates.js
+	* New module - mostly there but needs editing functionality
+
+
 ### 2018-11-30 ~ Theo
 
 R9:12

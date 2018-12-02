@@ -5,7 +5,6 @@
 /* jshint loopfunc:true */
 
 
-
 const ISDC = { "release": "R9.2", "date": "2018-11-30"  }
 
 
@@ -89,7 +88,7 @@ ISDC.getMenuDuplicateCoordinates= function( target ) {
 		`;
 	}
 
-	ISDC.optDublicates = htmOptions;
+	ISDC.optDuplicates = htmOptions;
 
 	const htm =
 
@@ -103,14 +102,14 @@ ISDC.getMenuDuplicateCoordinates= function( target ) {
 
 		<p>
 			<button id=butDuplicateCoordinates
-				onclick=ISDC.setSurfaceArrayVisibleToggle(butDuplicateCoordinates,ISDC.duplicates); >
-				toggle all duplicates
+				onclick=ISDC.setSurfaceArrayShowHide(butDuplicateCoordinates,ISDC.duplicates); >
+				show/hide all duplicates
 			</button>
 		</p>
 
 		<p>
 			<select id=ISDCselDuplicate onchange=ISDC.selectedSurfaceFocus(); style=width:100%; size=10>
-			${ ISDC.optDublicates }
+			${ ISDC.optDuplicates }
 			</select>
 		</p>
 
@@ -130,6 +129,36 @@ ISDC.getMenuDuplicateCoordinates= function( target ) {
 
 };
 
+
+ISDC.setSurfaceArrayShowHide = function() {
+
+	butDuplicateCoordinates.classList.toggle( "active" );
+
+	if ( butDuplicateCoordinates.classList.contains( 'active' ) ) {
+
+		if ( ISDC.duplicates.length ) {
+
+			GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
+
+			for ( let surface of ISDC.duplicates ) {
+
+				const surfaceMesh = GBX.surfaceGroup.children.find( element => Number( element.userData.index ) === surface );
+
+				//console.log( 'surfaceMesh', surfaceMesh  );
+
+				surfaceMesh.visible = true;
+
+			}
+
+		}
+
+	} else {
+
+		GBX.surfaceGroup.children.forEach( element => element.visible = true );
+
+	}
+
+};
 
 ISDC.selectedSurfaceFocus = function() {
 

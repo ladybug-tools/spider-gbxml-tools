@@ -14,6 +14,8 @@ ISS.onToggleIssues = function() {
 
 	divAdjacentSpaceInvalid.innerHTML = ISASI.getMenuAdjacentSpaceInvalid();
 
+	divSurfaceTypeInvalid.innerHTML = ISSTI.getDivSurfaceTypeInvalid();
+
 	divDuplicateCoordinates.innerHTML = ISDC.getMenuDuplicateCoordinates();
 
 	/*
