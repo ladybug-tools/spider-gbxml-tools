@@ -32,24 +32,34 @@ ISSTI.getSurfaceTypeInvalidCheck = function() {
 
 	const surfaces = GBX.surfaces;
 
-	// refactor to a reduce??
 	for ( let i = 0; i < surfaces.length; i++ ) {
 
 		const surface = surfaces[ i ];
 
-		const surfaceType = surface.match( /surfaceType="(.*?)"/)[ 1 ];
+		surfaceType = surface.match( /surfaceType="(.*?)"/)[ 1 ];
 
-		surfaceTypeInvalid = GBX.surfaces.find( element => GBX.surfaceTypes.indexOf( surfaceType ) < 0 );
+		surfaceTypeInvalid = GBX.surfaces.filter( element => GBX.surfaceTypes.indexOf( surfaceType ) < 0 );
 		//console.log( 'surfaceTypeInvalid', surfaceTypeInvalid );
 
-		if ( surfaceTypeInvalid ) {
+		if ( surfaceTypeInvalid.length > 0 ) {
 
 			ISSTI.SurfaceTypeInvalid.push( i );
 
 		}
 
 	}
-	//console.log( 'ISSTI.SurfaceTypeInvalid', ISSTI.SurfaceTypeInvalid );
+
+	//console.log( 'duplicates', ISDC.duplicates );
+
+};
+
+
+
+
+
+ISSTI.getDivSurfaceTypeInvalid = function() {
+
+	ISSTI.getSurfaceTypeInvalidCheck();
 
 	let color;
 	let htmOptions = '';
@@ -69,45 +79,38 @@ ISSTI.getSurfaceTypeInvalidCheck = function() {
 		`;
 	}
 
-	ISTIselSurfaceTypeInvalid.innerHTML = htmOptions;
-	ISCORspnCount.innerHTML = `: ${ ISSTI.SurfaceTypeInvalid.length } found`;
-
-};
-
-
-
-ISSTI.getDivSurfaceTypeInvalid = function() {
+	ISSTI.optSurfaceTypeInvalid = htmOptions;
 
 	const htm =
 	`
-		<details ontoggle=ISSTI.getSurfaceTypeInvalidCheck(); >
+		<details>
 
-			<summary>Surface Type Invalid<span id=ISCORspnCount ></span> </summary>
-
-			<p>
-				Surfaces with an invalid surface type assignment.
-			</p>
+			<summary>Surface Type Invalid: ${ ISSTI.SurfaceTypeInvalid.length } found</summary>
 
 			<p>
-				<button id=butSurfaceTypeInvalidShowHide
-					onclick=ISSTI.setSurfaceTypeInvalidShowHide(); >
-					show/hide invalid surface types
-				</button>
-			</p>
+			Surfaces with an invalid surface type assignment.
+		</p>
 
-			<p>
-				<select id=ISTIselSurfaceTypeInvalid onchange=ISSTI.selectedSurfaceFocus(); style=width:100%; size=10>
+		<p>
+			<button id=butSurfaceTypeInvalidShowHide
+				onclick=ISSTI.setSurfaceTypeInvalidShowHide(); >
+				show/hide invalid surface types
+			</button>
+		</p>
 
-				</select>
-			</p>
+		<p>
+			<select id=ISTIselSurfaceTypeInvalid onchange=ISSTI.selectedSurfaceFocus(); style=width:100%; size=10>
+			${ ISSTI.optSurfaceTypeInvalid }
+			</select>
+		</p>
 
 
-			<div id=divDuplicateAttributes ></div>
-			<p>
-				<button onclick=ISSTI.selectedSurfaceEdit(); title="will work soon!" >
-					edit selected surface type
-				</button>
-			</p>
+		<div id=divDuplicateAttributes ></div>
+		<p>
+			<button onclick=ISSTI.selectedSurfaceEdit(); title="will work soon!" >
+				edit selected surface type
+			</button>
+		</p>
 
 			<div${ ISSTI.currentStatus }</div>
 

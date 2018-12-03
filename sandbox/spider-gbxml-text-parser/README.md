@@ -73,6 +73,22 @@ Pop-up Text Parser
 
 ## Change Log
 
+### 2018-12-02 ~ Theo
+
+SGTP R9.13
+* Refactor Edit menu code
+	* Remove: Menu on toggle run of all checks
+	* Add: button to run all checks at once
+	* Many files have minor updates:
+		* spider-gbxml-text-parser.html
+		* isfic-issues-file-check.js
+		* ismet-issues-metadata.js
+		* issti-issues-surface-type-invalid.js
+		* isduc-issues-duplicate-coordinates.js
+		* isasi-issues-adjacent-space-invalid.js
+Add istmp-issues-template.js
+
+
 ### 2018-12-01 ~ Theo
 
 SGTP R9.13

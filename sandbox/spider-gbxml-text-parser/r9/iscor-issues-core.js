@@ -3,20 +3,63 @@
 /* jshint esversion: 6 */
 
 
-const ISS = { "release": "R9.1", "date": "2018-11-30" };
+const ISCOR = { "release": "R9.2", "date": "2018-12-02" };
 
 
-ISS.onToggleIssues = function() {
+ISCOR.getMenuIssues = function() {
 
-	divFileCheck.innerHTML = ISFC.getMenuFileCheck();
+	htm =
+	`
+		<p>
+			<button onclick=ISCOR.onClickAllIssues(); title="May take a while to calculate and open menu on large files" >
+				Check all issues in single pass
+			</button>
+			<br>
+			Running all the checks may take a considerable amount of time om large gbXML files.
+		</p>
 
-	divPanelMetadataIssues.innerHTML = ISMET.getMenuMetadataIssues();
+		${ ISFC.getMenuFileCheck() }
 
-	divAdjacentSpaceInvalid.innerHTML = ISASI.getMenuAdjacentSpaceInvalid();
+		${ ISMET.getMenuMetadataIssues() }
 
-	divSurfaceTypeInvalid.innerHTML = ISSTI.getDivSurfaceTypeInvalid();
+		${ ISSTI.getDivSurfaceTypeInvalid() }
 
-	divDuplicateCoordinates.innerHTML = ISDC.getMenuDuplicateCoordinates();
+		${ ISDC.getMenuDuplicateCoordinates() }
+
+		${ ISASI.getMenuAdjacentSpaceInvalid() }
+
+		<div id = "divDuplicateRectangularGeometry" ></div>
+
+		<div id = "divInclusions" ></div>
+
+		<div id = "divPointInPolygon" ></div>
+
+		${ ISTMP.getMenuTemplate() }
+
+		<hr>
+
+	`;
+
+	return htm;
+
+};
+
+
+
+ISCOR.onClickAllIssues = function() {
+
+	//divFileCheck.innerHTML = ISFC.getMenuFileCheck();
+
+	ISMETdetPanelMetadataIssues.innerHTML=ISMET.setMenuMetadata();
+
+	ISSTI.getSurfaceTypeInvalidCheck();
+
+	ISDC.getDuplicateCoordinatesCheck();
+
+	ISASI.setAdjacentSpaceInvalidCheck();
+
+
+	//ISTMP.getMenuTemplate();
 
 	/*
 	divDuplicateRectangularGeometry.innerHTML = ISDR.getMenuDuplicateRectangularGeometry();
@@ -25,7 +68,6 @@ ISS.onToggleIssues = function() {
 
 	divPointInPolygon.innerHTML = ISPIP.getMenuPointInPolygon();
 
-	divTemplate.innerHTML = ISS.getMenuTemplate();
 	*/
 
 }

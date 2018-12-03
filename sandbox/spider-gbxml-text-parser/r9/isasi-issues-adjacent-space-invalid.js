@@ -2,7 +2,7 @@
 /* globals THR, GBX, POP, ISASIfound */
 /* jshint esversion: 6 */
 
-const ISASI = { "release": "R9.2", "date": "2018-11-21" };
+const ISASI = { "release": "R9.3", "date": "2018-12-02" };
 
 
 ISASI.currentStatus =
@@ -10,11 +10,12 @@ ISASI.currentStatus =
 <aside>
 
 	<details>
+
 		<summary>ISASI ${ ISFC.release} status ${ ISFC.date }</summary>
 
 		<p>This module is ready for light testing, but is still at an early stage of development.</p>
 
-		<p>Should we list errors here? or is on screen good enough?<p>
+		<p>Should we list errors here? Or is on screen good enough?<p>
 
 		<p>To do: How to fix the issues and save the changes</p>
 
@@ -71,7 +72,7 @@ ISASI.setAdjacentSpaceInvalidCheck = function() {
 
 	}
 
-	//ISASIfound.innerHTML = `${ ISASI.adjacentSpaceInvalid.length } found`;
+	ISASIspnCount.innerHTML = `: ${ ISASI.adjacentSpaceInvalid.length } found`;
 
 	//console.log( 'ISASI.adjacentSpaceInvalid',  ISASI.adjacentSpaceInvalid );
 
@@ -81,13 +82,13 @@ ISASI.setAdjacentSpaceInvalidCheck = function() {
 
 ISASI.getMenuAdjacentSpaceInvalid = function() {
 
-	ISASI.setAdjacentSpaceInvalidCheck();
+	//ISASI.setAdjacentSpaceInvalidCheck();
 
 	const htm =
 
 	`<details ontoggle=ISASI.setAdjacentSpaceInvalidCheck(); >
 
-		<summary>Adjacent Space Invalid: ${ ISASI.adjacentSpaceInvalid.length } found</summary>
+		<summary>Adjacent Space Invalid<span id="ISASIspnCount" ></span></summary>
 
 		<p>
 			<i>
@@ -108,10 +109,6 @@ ISASI.getMenuAdjacentSpaceInvalid = function() {
 	return htm;
 
 };
-
-
-
-
 
 
 

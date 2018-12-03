@@ -5,7 +5,7 @@
 /* jshint loopfunc:true */
 
 
-const ISDC = { "release": "R9.2", "date": "2018-11-30"  }
+const ISDC = { "release": "R9.3", "date": "2018-12-02"  }
 
 
 
@@ -61,15 +61,6 @@ ISDC.getDuplicateCoordinatesCheck = function() {
 	}
 
 	//console.log( 'duplicates', ISDC.duplicates );
-
-};
-
-
-
-ISDC.getMenuDuplicateCoordinates= function( target ) {
-
-	ISDC.getDuplicateCoordinatesCheck();
-
 	let color;
 	let htmOptions = '';
 	let count = 0;
@@ -88,13 +79,19 @@ ISDC.getMenuDuplicateCoordinates= function( target ) {
 		`;
 	}
 
-	ISDC.optDuplicates = htmOptions;
+	ISDCselDuplicate.innerHTML = htmOptions;
+	ISDCspnCount.innerHTML = `: ${ ISDC.duplicates.length / 2 } found`;
+};
+
+
+
+ISDC.getMenuDuplicateCoordinates= function( target ) {
 
 	const htm =
 
 	`<details ontoggle=ISDC.getDuplicateCoordinatesCheck(); >
 
-		<summary>Duplicate Coordinates: ${ ISDC.duplicates.length / 2 } found</summary>
+		<summary>Duplicate Coordinates<span id="ISDCspnCount" ></span></summary>
 
 		<p>
 			Two surfaces with the identical vertices
@@ -109,7 +106,6 @@ ISDC.getMenuDuplicateCoordinates= function( target ) {
 
 		<p>
 			<select id=ISDCselDuplicate onchange=ISDC.selectedSurfaceFocus(); style=width:100%; size=10>
-			${ ISDC.optDuplicates }
 			</select>
 		</p>
 

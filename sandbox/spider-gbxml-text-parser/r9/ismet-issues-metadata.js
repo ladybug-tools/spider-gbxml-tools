@@ -2,7 +2,7 @@
 /* globals */
 /* jshint esversion: 6 */
 
-const ISMET = { "release": "R9.3", "data": "2018-11-29" };
+const ISMET = { "release": "R9.4", "data": "2018-12-02" };
 
 
 ISMET.metadataValues = {
@@ -19,27 +19,27 @@ ISMET.metadataValues = {
 
 
 ISMET.currentStatus =
-`
-<aside>
+	`
+		<aside>
 
-	<details>
-		<summary>ISMET ${ ISFC.release} status ${ ISFC.date }</summary>
+			<details>
+				<summary>ISMET ${ ISFC.release} status ${ ISFC.date }</summary>
 
-		<p>This module is ready for light testing, but is still at an early stage of development.</p>
+				<p>This module is ready for light testing, but is still at an early stage of development.</p>
 
-		<p>
-			As and when the project gets access to more modules with other metadata errors,
-			this module will be enhanced to identify and fix any more errors found.
-		</p>
+				<p>
+					As and when the project gets access to more modules with other metadata errors,
+					this module will be enhanced to identify and fix any more errors found.
+				</p>
 
-		<p>Whatever further checks you might need could be added here...</p>
+				<p>Whatever further checks you might need could be added here...</p>
 
-	</details>
+			</details>
 
-</aside>
+		</aside>
 
-<hr>
-`;
+		<hr>
+	`;
 
 
 
@@ -64,19 +64,19 @@ ISMET.setMetadataIssues = function() {
 
 	}
 
-}
+	ISMETspnCount.innerHTML = `: ${ ISMET.attributesMissing.length } found`;
+
+};
 
 
 
 ISMET.getMenuMetadataIssues = function() {
 
-	ISMET.setMetadataIssues();
+	const htm =
 
-	let htm =
+	`<details ontoggle="ISMETdetPanelMetadataIssues.innerHTML=ISMET.setMenuMetadata();"	>
 
-	`<details ontoggle="ISMETdetPanelMetadataIssues.innerHTML=ISMET.setMenuMetadata();" >
-
-		<summary>Missing gbXML Metadata: ${ ISMET.attributesMissing.length } found</summary>
+		<summary>Missing gbXML Metadata<span id="ISMETspnCount" ></span></summary>
 
 		<p>
 			<i>
@@ -97,6 +97,8 @@ ISMET.getMenuMetadataIssues = function() {
 
 
 ISMET.setMenuMetadata = function() {
+
+	ISMET.setMetadataIssues();
 
 	let htm;
 

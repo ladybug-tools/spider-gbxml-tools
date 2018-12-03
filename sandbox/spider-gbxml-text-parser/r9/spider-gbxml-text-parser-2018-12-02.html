@@ -5,8 +5,8 @@
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
 <meta name=description content="Open and examine very large gbXML files in your browser with free, open source JavaScript" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-12-02" >
-<title>Spider gbXML Text Parser R9.14 </title>
+<meta name = "date" content = "2018-12-01" >
+<title>Spider gbXML Text Parser R9.13 </title>
 <link rel="stylesheet" href="../../../lib/r7/style.css">
 <style>
 
@@ -41,10 +41,9 @@
 <script src = "./iscor-issues-core.js" ></script>
 <script src = "./isfic-issues-file-check.js" ></script>
 <script src = "./ismet-issues-metadata.js" ></script>
-<script src = "./issti-issues-surface-type-invalid.js" ></script>
 <script src = "./isduc-issues-duplicate-coordinates.js" ></script>
+<script src = "./issti-issues-surface-type-invalid.js" ></script>
 <script src = "./isasi-issues-adjacent-space-invalid.js" ></script>
-<script src = "./istmp-issues-template.js" ></script>
 
 <script src = "./vwsrf-view-surface-types.js" ></script>
 <script src = "./repl-view-by-level.js" ></script>
@@ -65,7 +64,7 @@
 
 		<details>
 
-			<summary><span id="spnStatus" ></span> ~ Current Status</summary>
+			<summary>2018-12-01 ~ Current Status</summary>
 
 			<p>Model not fully loaded until model centers on screen and starts rotating.</p>
 
@@ -161,7 +160,7 @@
 		</details>
 
 
-		<details id=detMenuEdit  >
+		<details id=detMenuEdit ontoggle=ISS.onToggleIssues(); title="May take a while to calculate and open menu on large files" >
 
 				<div id = "divMenuNote" ></div>
 
@@ -169,8 +168,25 @@
 
 				<div id = "ISCORdivMenuIssues" ></div>
 
-		</details>
+				<div id = "divFileCheck" ></div>
 
+				<div id = "divPanelMetadataIssues" ></div>
+
+				<div id = "divDuplicateCoordinates" ></div>
+
+				<div id = "divSurfaceTypeInvalid" ></div>
+
+				<div id = "divAdjacentSpaceInvalid" ></div>
+
+				<div id = "divDuplicateRectangularGeometry" ></div>
+
+				<div id = "divInclusions" ></div>
+
+				<div id = "divPointInPolygon" ></div>
+
+				<div id = "divTemplate" ></div>
+
+		</details>
 
 		<details id=detMenuView >
 
@@ -267,8 +283,6 @@ THR.animate();
 function init() {
 
 	divHeader.innerHTML = MNU.getNavHeader(); // not essential
-
-	spnStatus.innerHTML = document.head.querySelector( '[ name=date ]' ).content;
 
 	divSampleFileButtons.innerHTML = GAL.setCardSampleGalleries();
 

@@ -2,7 +2,7 @@
 /* globals */
 /* jshint esversion: 6 */
 
-const ISFC = { "release": "R9.2", "date": "2018-11-21" };
+const ISFC = { "release": "R9.3", "date": "2018-12-02" };
 
 
 ISFC.currentStatus =
@@ -37,6 +37,8 @@ ISFC.currentStatus =
 
 		<p>Whatever validations you might need could be added here...</p>
 
+		<p>Should this module be more appropriately located in the File menu?</p>
+
 	</details>
 
 </aside>
@@ -68,7 +70,6 @@ ISFC.getMenuFileCheck= function() {
 				<input type=file id=inpOpenFile onchange=ISFC.inpOpenFiles(this); accept=".xml" >
 
 			</p>
-
 
 		</div>
 
