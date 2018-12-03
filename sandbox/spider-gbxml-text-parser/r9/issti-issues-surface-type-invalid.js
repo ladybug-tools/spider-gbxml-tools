@@ -28,6 +28,8 @@ ISSTI.currentStatus =
 
 ISSTI.getSurfaceTypeInvalidCheck = function() {
 
+	if ( ISSTIdetSurfaceTypeInvalid.open === false ) { return; }
+
 	ISSTI.SurfaceTypeInvalid = [];
 
 	const surfaces = GBX.surfaces;
@@ -80,7 +82,7 @@ ISSTI.getDivSurfaceTypeInvalid = function() {
 
 	const htm =
 	`
-		<details ontoggle=ISSTI.getSurfaceTypeInvalidCheck(); >
+		<details id="ISSTIdetSurfaceTypeInvalid" ontoggle=ISSTI.getSurfaceTypeInvalidCheck(); >
 
 			<summary>Surface Type Invalid<span id=ISCORspnCount ></span> </summary>
 

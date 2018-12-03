@@ -29,7 +29,7 @@ ISTMP.getMenuTemplate = function( target ) {
 
 	const htm =
 
-	`<details ontoggle=ISTMP.getTemplateCheck(); >
+	`<details id="ISTMPdetTemplate" ontoggle=ISTMP.getTemplateCheck(); >
 
 		<summary>Template<span id="ISTMPspnCount" ></span></summary>
 
@@ -38,7 +38,7 @@ ISTMP.getMenuTemplate = function( target ) {
 		</p>
 
 		<p>
-			<button id=butDuplicateCoordinates
+			<button id=butTemplate
 				onclick=ISTMP.setSurfaceArrayShowHide(butDuplicateCoordinates,ISTMP.duplicates); >
 				template
 			</button>
@@ -69,7 +69,7 @@ ISTMP.getMenuTemplate = function( target ) {
 ISTMP.getTemplateCheck = function() {
 
 
-
+	console.log( 'ISTMPdetTemplate.open', ISTMPdetTemplate.open );
 
 
 };

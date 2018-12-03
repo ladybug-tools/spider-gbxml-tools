@@ -30,6 +30,8 @@ ISDC.currentStatus =
 
 ISDC.getDuplicateCoordinatesCheck = function() {
 
+	if ( ISDCdetDuplicateCoordinates.open === false ) { return; }
+
 	ISDC.duplicates = [];
 
 	const surfaces = GBX.surfaces;
@@ -89,7 +91,7 @@ ISDC.getMenuDuplicateCoordinates= function( target ) {
 
 	const htm =
 
-	`<details ontoggle=ISDC.getDuplicateCoordinatesCheck(); >
+	`<details id="ISDCdetDuplicateCoordinates" ontoggle=ISDC.getDuplicateCoordinatesCheck(); >
 
 		<summary>Duplicate Coordinates<span id="ISDCspnCount" ></span></summary>
 
@@ -98,8 +100,7 @@ ISDC.getMenuDuplicateCoordinates= function( target ) {
 		</p>
 
 		<p>
-			<button id=butDuplicateCoordinates
-				onclick=ISDC.setSurfaceArrayShowHide(butDuplicateCoordinates,ISDC.duplicates); >
+			<button id=butDuplicateCoordinates onclick=ISDC.setSurfaceArrayShowHide(); >
 				show/hide all duplicates
 			</button>
 		</p>

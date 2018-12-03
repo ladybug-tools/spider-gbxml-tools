@@ -86,8 +86,8 @@ SGTP R9.13
 		* issti-issues-surface-type-invalid.js
 		* isduc-issues-duplicate-coordinates.js
 		* isasi-issues-adjacent-space-invalid.js
-Add istmp-issues-template.js
-
+* Add istmp-issues-template.js
+* Only run Edit menu issues checks when menus toggle open / do not run on toggle close
 
 ### 2018-12-01 ~ Theo
 

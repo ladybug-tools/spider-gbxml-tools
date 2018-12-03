@@ -31,6 +31,8 @@ ISASI.currentStatus =
 
 ISASI.setAdjacentSpaceInvalidCheck = function() {
 
+	if ( ISASIdetAdjacentSpaceInvalid.open === false ) { return; }
+
 	ISASI.adjacentSpaceInvalid = [];
 
 	const twoSpaces = ['Air', 'InteriorWall', 'InteriorFloor', 'Ceiling' ];
@@ -86,7 +88,7 @@ ISASI.getMenuAdjacentSpaceInvalid = function() {
 
 	const htm =
 
-	`<details ontoggle=ISASI.setAdjacentSpaceInvalidCheck(); >
+	`<details id="ISASIdetAdjacentSpaceInvalid" ontoggle=ISASI.setAdjacentSpaceInvalidCheck(); >
 
 		<summary>Adjacent Space Invalid<span id="ISASIspnCount" ></span></summary>
 
