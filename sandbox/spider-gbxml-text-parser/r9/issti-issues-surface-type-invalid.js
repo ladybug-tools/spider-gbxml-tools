@@ -4,7 +4,7 @@
 /* jshint loopfunc:true */
 
 
-const ISSTI = { "release": "R9.1", "date": "2018-12-02" };
+const ISSTI = { "release": "R9.2", "date": "2018-12-05" };
 
 
 ISSTI.currentStatus =
@@ -15,8 +15,18 @@ ISSTI.currentStatus =
 
 			<summary>ISSTI ${ ISSTI.release} status ${ ISSTI.date }</summary>
 
-			<p>This module is brand new.</p>
+			<p>This module is new but is ready for light testing.</p>
 
+			<p>2018-12-05 ~ Adds ability to select new surface type from list of buttons.</p>
+
+			<p>
+				To do:<br>
+				<ul>
+					<li>Edit multiple selected surfaces in select box with single button click</li>
+				</ul>
+			</p>
+
+			<p>Most likely this type of error is quite rare. It occurs when a CAP user types in a non-valid surface type.</p>
 		</details>
 
 	</aside>
@@ -67,7 +77,7 @@ ISSTI.getSurfaceTypeInvalidCheck = function() {
 
 		htmOptions +=
 		`
-		<option style=background-color:${ color } value=${ surfaceIndex } >${ id }</option>
+			<option style=background-color:${ color } value=${ surfaceIndex } >${ id }</option>
 		`;
 	}
 
@@ -79,6 +89,11 @@ ISSTI.getSurfaceTypeInvalidCheck = function() {
 
 
 ISSTI.getDivSurfaceTypeInvalid = function() {
+
+	ISSTI.buttonsSurfaceType = GBX.surfaceTypes.reduce(
+		( arr, item ) => arr + `<button onclick=ISSTI.setSurfaceType("${item}"); >${ item }</button><br>`,
+		''
+	);
 
 	const htm =
 	`
@@ -98,17 +113,22 @@ ISSTI.getDivSurfaceTypeInvalid = function() {
 			</p>
 
 			<p>
-				<select id=ISTIselSurfaceTypeInvalid onchange=ISSTI.selectedSurfaceFocus(); style=width:100%; size=10>
-
-				</select>
+				Select a surface:<br>
+				<select id=ISTIselSurfaceTypeInvalid onchange=ISSTI.selectedSurfaceFocus(); style=width:100%; size=10 ></select>
 			</p>
 
-
-			<div id=divDuplicateAttributes ></div>
+			<!--
 			<p>
+
 				<button onclick=ISSTI.selectedSurfaceEdit(); title="will work soon!" >
 					edit selected surface type
 				</button>
+			</p>
+			-->
+
+			<p>
+			Select new type for surface:<br>
+				${ ISSTI.buttonsSurfaceType }
 			</p>
 
 			<div${ ISSTI.currentStatus }</div>
@@ -169,18 +189,25 @@ ISSTI.selectedSurfaceFocus = function() {
 
 
 
-ISSTI.selectedSurfaceEdit = function() {
-	//console.log( 'val', that.value );
+ISSTI.setSurfaceType = function( type ) {
+	//console.log( 'type', type );
 
-	surfaceText = GBX.surfaces[ ISTIselSurfaceTypeInvalid.value ];
+	let surfaceTextCurrent = GBX.surfaces[ ISTIselSurfaceTypeInvalid.value ];
+	//console.log( 'surfaceTextCurrent', surfaceTextCurrent );
 
-	//text = GBX.text.replace( surfaceText, '' );
+	surfaceTextNew = surfaceTextCurrent.replace( /surfaceType="(.*)" /, `surfaceType="${ type }" ` );
+	//console.log( 'surfaceTextNew', surfaceTextNew );
 
-	//len = GBX.parseFile( text );
+	surfaceText =  GBX.text.replace( surfaceTextCurrent, surfaceTextNew )
+	//console.log( 'surfaceText', surfaceText );
 
-	//console.log( '', len );
+	const len = GBX.parseFile( surfaceText );
 
-	alert( 'Coming soon!' );
+	console.log( '', len );
+	ISTIselSurfaceTypeInvalid.selectedOptions[ 0 ].innerHTML += " - updated"
+	console.log( 'selec',  );
+	ISTIselSurfaceTypeInvalid.selectedOptions
+	detMenuEdit.open = false;
 
 };
 

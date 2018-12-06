@@ -2,7 +2,7 @@
 /* globals THR, GBX, POP, ISASIfound */
 /* jshint esversion: 6 */
 
-const ISASI = { "release": "R9.3", "date": "2018-12-02" };
+const ISASI = { "release": "R9.4", "date": "2018-12-05" };
 
 
 ISASI.currentStatus =
@@ -13,11 +13,12 @@ ISASI.currentStatus =
 
 		<summary>ISASI ${ ISFC.release} status ${ ISFC.date }</summary>
 
-		<p>This module is ready for light testing, but is still at an early stage of development.</p>
+		<p>This module is ready for light testing, but is still a work in progress.</p>
 
-		<p>Should we list errors here? Or is on screen good enough?<p>
+		<p>2018-12-05 ~ Adds select box to locate surfaces with issues</p>
 
-		<p>To do: How to fix the issues and save the changes</p>
+		<p>To do: How to fix the issues and save the changes?
+			May be best to split into three modules: for no/one/two adjacent space(s)</p>
 
 		<p>Whatever further checks you might need could be added here...</p>
 
@@ -45,7 +46,6 @@ ISASI.setAdjacentSpaceInvalidCheck = function() {
 
 		surfaceIndex = surface.match( /indexGbx="(.*?)"/ )[ 1 ];
 		surfaceType = surface.match ( /surfaceType="(.*?)"/ )[ 1 ];
-		//adjacentSpaces = surface.match( /AdjacentSpaceId/gi );
 		spaceIdRef = surface.match( /spaceIdRef="(.*?)"/g );
 
 		if ( surfaceType === 'Shade' && surface.includes( 'AdjacentSpaceId' ) === true ) {
@@ -55,12 +55,12 @@ ISASI.setAdjacentSpaceInvalidCheck = function() {
 		} else if ( twoSpaces.includes( surfaceType ) && ( spaceIdRef.length !== 2 ||
 			( spaceIdRef.length === 2 && spaceIdRef[ 0 ] === spaceIdRef[ 1 ] ) ) ) {
 
-//  || surface.AdjacentSpaceId.length !== 2
 			//console.log( 'two space', spaceIdRef  );
 			ISASI.adjacentSpaceInvalid.push( surfaceIndex );
 
 /*
-		} else if ( oneSpace.includes( surface.surfaceType ) && ( !surface.AdjacentSpaceId || surface.AdjacentSpaceId.length ) ) {
+		} else if ( oneSpace.includes( surface.surfaceType )
+			&& ( !surface.AdjacentSpaceId || surface.AdjacentSpaceId.length ) ) {
 
 			//console.log( 'one space', surface );
 			ISASI.adjacentSpaceInvalid.push( surface );
@@ -73,6 +73,26 @@ ISASI.setAdjacentSpaceInvalidCheck = function() {
 		}
 
 	}
+
+	let color;
+	let htmOptions = '';
+	let count = 0;
+
+	for ( surfaceIndex of ISASI.adjacentSpaceInvalid) {
+
+		color = color === 'pink' ? '' : 'pink';
+
+		const surfaceText = GBX.surfaces[ surfaceIndex ];
+
+		const id = surfaceText.match( 'id="(.*?)"' )[ 1 ];
+
+		htmOptions +=
+		`
+			<option style=background-color:${ color } value=${ surfaceIndex } >${ id }</option>
+		`;
+	}
+
+	ISASIselSurfaceAdjacentSpaceInvalid.innerHTML = htmOptions;
 
 	ISASIspnCount.innerHTML = `: ${ ISASI.adjacentSpaceInvalid.length } found`;
 
@@ -99,10 +119,16 @@ ISASI.getMenuAdjacentSpaceInvalid = function() {
 		</p>
 
 		<p>
-			<button onclick=ISASI.setAdjacentSpaceInvalidToggle(this); > AdjacentSpaceInvalid toggle </button>
+			<button onclick=ISASI.setAdjacentSpaceInvalidToggle(this); >
+				Show/hide surfaces with invalid adjacent space</button>
 		</p>
 
-		<p>Click toggle button to show invalid surfaces. Then click surface on screen to view its details.</p>
+		<p>Click toggle button to show invalid surfaces. Then click surfaces on screen to view details.</p>
+
+		<p>
+		Select a surface:<br>
+			<select id=ISASIselSurfaceAdjacentSpaceInvalid onchange=ISASI.selectedSurfaceFocus(); style=width:100%; size=10 ></select>
+		</p>
 
 		<div>${ ISASI.currentStatus }</div>
 
@@ -156,5 +182,16 @@ ISASI.setAdjacentSpaceInvalidToggle = function( button ) {
 		button.style.backgroundColor = '';
 
 	}
+
+};
+
+
+ISASI.selectedSurfaceFocus = function() {
+
+	POP.intersected = GBX.surfaceGroup.children[ ISASIselSurfaceAdjacentSpaceInvalid.value ];
+
+	POP.getIntersectedDataHtml();
+
+	divPopupData.innerHTML = POP.getIntersectedDataHtml();
 
 };

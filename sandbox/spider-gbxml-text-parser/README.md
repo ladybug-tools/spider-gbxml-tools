@@ -73,6 +73,18 @@ Pop-up Text Parser
 
 ## Change Log
 
+### 2018-12-05 ~ Theo
+
+SGTP R9.15
+* istmp-issues-template.js
+	*  ~ Add more template functions
+* issti-issues-surface-type-invalid.js
+	*  Adds ability to select new surface type from list of buttons.
+* iscod-issues-cad-object-id.js
+	* New module - nearly ready for testing
+
+The new way of building issues module is shorter and simpler than before and should make creating new modules faster and and easier.
+
 ### 2018-12-02 ~ Theo
 
 SGTP R9.13
