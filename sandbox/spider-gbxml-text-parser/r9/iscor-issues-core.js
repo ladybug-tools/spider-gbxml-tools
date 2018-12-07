@@ -3,9 +3,11 @@
 /* jshint esversion: 6 */
 
 
-const ISCOR = { "release": "R9.2", "date": "2018-12-02" };
+const ISCOR = { "release": "R9.3", "date": "2018-12-06" };
 
 ISCOR.runAll = false;
+
+
 
 ISCOR.getMenuIssues = function() {
 
@@ -17,9 +19,10 @@ ISCOR.getMenuIssues = function() {
 			</button>
 			<br>
 			Running all the checks may take a considerable amount of time om large gbXML files.
-
-			2018-12-05: mostly broken / must run tests one by one.
 		</p>
+
+		<p>2018-12-06 ~ Mostly working</p>
+
 
 		${ ISFC.getMenuFileCheck() }
 
@@ -30,6 +33,8 @@ ISCOR.getMenuIssues = function() {
 		${ ISDC.getMenuDuplicateCoordinates() }
 
 		${ ISASI.getMenuAdjacentSpaceInvalid() }
+
+		${ ISASD.getMenuAdjacentSpaceDuplicate() }
 
 		${ ISCOD.getMenuCadObjectId() }
 
@@ -54,9 +59,8 @@ ISCOR.getMenuIssues = function() {
 ISCOR.onClickAllIssues = function() {
 
 	ISCOR.runAll = true;
-	//divFileCheck.innerHTML = ISFC.getMenuFileCheck();
 
-	ISMETdetPanelMetadataIssues.innerHTML=ISMET.setMenuMetadata();
+	ISMET.getMetadataIssuesCheck();
 
 	ISSTI.getSurfaceTypeInvalidCheck();
 
@@ -64,10 +68,9 @@ ISCOR.onClickAllIssues = function() {
 
 	ISASI.setAdjacentSpaceInvalidCheck();
 
-	ISCODspnCount.innerHTML = `: ${ ISCOD.getCadObjectIdCheck() } found`;
+	ISCOD.getCadObjectIdCheck();
 
-
-	//ISTMP.getMenuTemplate();
+	ISTMP.getTemplateCheck();
 
 	/*
 	divDuplicateRectangularGeometry.innerHTML = ISDR.getMenuDuplicateRectangularGeometry();
@@ -79,5 +82,6 @@ ISCOR.onClickAllIssues = function() {
 	*/
 
 	ISCOR.runAll = false;
-}
+
+};
 

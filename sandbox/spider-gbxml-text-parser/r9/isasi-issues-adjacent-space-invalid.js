@@ -2,7 +2,7 @@
 /* globals THR, GBX, POP, ISASIfound */
 /* jshint esversion: 6 */
 
-const ISASI = { "release": "R9.4", "date": "2018-12-05" };
+const ISASI = { "release": "R9.5", "date": "2018-12-06" };
 
 
 ISASI.currentStatus =
@@ -11,11 +11,14 @@ ISASI.currentStatus =
 
 	<details>
 
-		<summary>ISASI ${ ISFC.release} status ${ ISFC.date }</summary>
+		<summary>ISASI ${ ISASI.release} status ${ ISASI.date }</summary>
 
 		<p>This module is ready for light testing, but is still a work in progress.</p>
 
-		<p>2018-12-05 ~ Adds select box to locate surfaces with issues</p>
+		<p>
+			2018-12-06 ~ Adds ability to run in 'check all issues'.<br>
+			2018-12-05 ~ Adds select box to locate surfaces with issues
+		</p>
 
 		<p>To do: How to fix the issues and save the changes?
 			May be best to split into three modules: for no/one/two adjacent space(s)</p>
@@ -32,7 +35,7 @@ ISASI.currentStatus =
 
 ISASI.setAdjacentSpaceInvalidCheck = function() {
 
-	if ( ISASIdetAdjacentSpaceInvalid.open === false ) { return; }
+	if ( ISASIdetAdjacentSpaceInvalid.open === false && ISCOR.runAll === false ) { return; }
 
 	ISASI.adjacentSpaceInvalid = [];
 
@@ -76,9 +79,8 @@ ISASI.setAdjacentSpaceInvalidCheck = function() {
 
 	let color;
 	let htmOptions = '';
-	let count = 0;
 
-	for ( surfaceIndex of ISASI.adjacentSpaceInvalid) {
+	for ( let surfaceIndex of ISASI.adjacentSpaceInvalid) {
 
 		color = color === 'pink' ? '' : 'pink';
 
@@ -98,6 +100,8 @@ ISASI.setAdjacentSpaceInvalidCheck = function() {
 
 	//console.log( 'ISASI.adjacentSpaceInvalid',  ISASI.adjacentSpaceInvalid );
 
+	return ISASI.adjacentSpaceInvalid.length;
+
 };
 
 
@@ -112,6 +116,10 @@ ISASI.getMenuAdjacentSpaceInvalid = function() {
 
 		<summary>Adjacent Space Invalid<span id="ISASIspnCount" ></span></summary>
 
+		<p>
+			To be deprecated.<br>
+			Being replaced by multiple shorter and simpler modules dedicated to identifing and fixing very specific issues.
+			'Adjacent Space Duplicate/ is the first of these modules.</p>
 		<p>
 			<i>
 				Surfaces with invalid adjacent spaces. <span id=ISASIfound ></span>

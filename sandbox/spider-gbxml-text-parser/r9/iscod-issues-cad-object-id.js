@@ -1,9 +1,9 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
-/* globals */
+/* globals GBX, POP, ISCOR, divPopupData */
 /* jshint esversion: 6 */
 
 
-const ISCOD = { "release": "R9.0", "date": "2018-12-05" };
+const ISCOD = { "release": "R9.1", "date": "2018-12-06" };
 
 
 ISCOD.currentStatus =
@@ -14,7 +14,19 @@ ISCOD.currentStatus =
 
 				<summary>ISCOD ${ ISCOD.release} status ${ ISCOD.date }</summary>
 
-				<p>This new module is almost ready for light testing. CAD object IDs not yet being actually added to selected surface</p>
+				<p>This new module is almost ready for light testing.</p>
+
+				<p>
+					2018-12-06 ~ Adds ability to run in 'check all issues'.<br>
+					2018-12-06 ~ Adds ability to select new CAD object type from list of buttons.
+				</p>
+
+				<p>
+					To do:<br>
+					<ul>
+						<li>Edit multiple selected surfaces in select box with single button click</li>
+					</ul>
+				</p>
 
 			</details>
 
@@ -71,9 +83,8 @@ ISCOD.getCadObjectIdCheck = function() {
 
 	let color;
 	let htmOptions = '';
-	let count = 0;
 
-	for ( surfaceIndex of ISCOD.invalidCadObjectId ) {
+	for ( let surfaceIndex of ISCOD.invalidCadObjectId ) {
 
 		color = color === 'pink' ? '' : 'pink';
 
@@ -82,9 +93,8 @@ ISCOD.getCadObjectIdCheck = function() {
 		const id = surfaceText.match( 'id="(.*?)"' )[ 1 ];
 
 		htmOptions +=
-		`
-			<option style=background-color:${ color } value=${ surfaceIndex } >${ id }</option>
-		`;
+			`<option style=background-color:${ color } value=${ surfaceIndex } >${ id }</option>`;
+
 	}
 
 
@@ -118,20 +128,13 @@ ISCOD.getMenuCadObjectId = function( target ) {
 		</p>
 
 		<p>
+			First select a surface here:
 			<select id=ISCODselCadObjectId onchange=ISCOD.selectedSurfaceFocus(ISCODselCadObjectId); style=width:100%; size=10>
 			</select>
 		</p>
 
-		<!--
 		<p>
-			<button onclick=ISCOD.selectedSurfaceDelete(); title="Starting to work!" >
-				CadObjectId
-			</button>
-		</p>
-		-->
-
-		<p>
-			Select new  CAD Object type for surface:<br>
+			Second select new CAD Object type for selected surface:<br>
 			<div id="ISCODdivCADTypes" ></div>
 		</p>
 
@@ -145,7 +148,6 @@ ISCOD.getMenuCadObjectId = function( target ) {
 
 
 
-
 ISCOD.setSurfaceArrayShowHide = function( button, surfaceArray ) {
 	//console.log( 'surfaceArray', surfaceArray );
 
@@ -153,22 +155,11 @@ ISCOD.setSurfaceArrayShowHide = function( button, surfaceArray ) {
 
 	button.classList.toggle( "active" );
 
-	if ( button.classList.contains( 'active' ) ) {
+	if ( button.classList.contains( 'active' ) && surfaceArray.length ) {
 
-		if ( surfaceArray.length ) {
+		GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
 
-			GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
-
-			for ( let surfaceId of surfaceArray ) {
-
-				const surfaceMesh = GBX.surfaceGroup.children[ surfaceId ];
-				//console.log( 'surfaceMesh', surfaceMesh  );
-
-				surfaceMesh.visible = true;
-
-			}
-
-		}
+		surfaceArray.forEach( surfaceId => GBX.surfaceGroup.children[ surfaceId ].visible = true );
 
 	} else {
 
@@ -193,27 +184,24 @@ ISCOD.selectedSurfaceFocus = function( select ) {
 
 
 ISCOD.setCadObjectType = function( type ) {
-	console.log( 'type', type );
+	//console.log( 'type', type );
 
-	/*
-	let surfaceTextCurrent = GBX.surfaces[ ISCODselSurfaceTypeInvalid.value ];
+	const surfaceTextCurrent = GBX.surfaces[ ISCODselCadObjectId.value ];
 	//console.log( 'surfaceTextCurrent', surfaceTextCurrent );
 
-	surfaceTextNew = surfaceTextCurrent.replace( /surfaceType="(.*)" /, `surfaceType="${ type }" ` );
+	const surfaceTextNew = surfaceTextCurrent.replace( /<\/Surface>/,
+		`<CADObjectId>${ type }<\CADObjectId></Surface>` );
 	//console.log( 'surfaceTextNew', surfaceTextNew );
 
-	surfaceText =  GBX.text.replace( surfaceTextCurrent, surfaceTextNew )
+	const surfaceText =  GBX.text.replace( surfaceTextCurrent, surfaceTextNew )
 	//console.log( 'surfaceText', surfaceText );
 
 	const len = GBX.parseFile( surfaceText );
-
 	console.log( '', len );
-	ISCODselSurfaceTypeInvalid.selectedOptions[ 0 ].innerHTML += " - updated"
-	console.log( 'selec',  );
-	ISCODselSurfaceTypeInvalid.selectedOptions
-	detMenuEdit.open = false;
-	*/
 
+	ISCODselCadObjectId.selectedOptions[ 0 ].innerHTML += " - add: ${ type }"
+
+	detMenuEdit.open = false;
 
 };
 

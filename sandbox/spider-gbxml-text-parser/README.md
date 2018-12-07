@@ -73,6 +73,30 @@ Pop-up Text Parser
 
 ## Change Log
 
+### 2018-12-06 ~ Theo
+
+SGTP R9.16
+
+* spider-gbxml-text-parser.html
+	* Update link to Three.js R99 - all seems OK
+* isasi-issues-adjacent-space-invalid.js
+	* Adds ability to run in 'check all issues'. Add depracation notice
+* iscod-issues-cad-object-id.js
+	* Pass through jsHint
+	* Adds ability to run in 'check all issues'
+	* Adds ability to select new CAD object type from list of buttons.
+* iscor-issues-core.js
+	* 'check all issues' actualy works
+* isduc-issues-duplicate-coordinates.js
+	* New module
+* ismet-issues-metadata.js
+	* Adds ability to run in 'check all issues'
+* issti-issues-surface-type-invalid.js
+	* Adds ability to run in 'check all issues'
+* istmp-issues-template.js
+	* Adds ability to run in 'check all issues'. Simplified code a bit. Passed through jsHint
+
+
 ### 2018-12-05 ~ Theo
 
 SGTP R9.15

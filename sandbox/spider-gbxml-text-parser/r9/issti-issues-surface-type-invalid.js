@@ -4,7 +4,7 @@
 /* jshint loopfunc:true */
 
 
-const ISSTI = { "release": "R9.2", "date": "2018-12-05" };
+const ISSTI = { "release": "R9.3", "date": "2018-12-06" };
 
 
 ISSTI.currentStatus =
@@ -17,7 +17,10 @@ ISSTI.currentStatus =
 
 			<p>This module is new but is ready for light testing.</p>
 
-			<p>2018-12-05 ~ Adds ability to select new surface type from list of buttons.</p>
+			<p>
+				2018-12-06 ~ Adds ability to run in 'check all issues'.<br>
+				2018-12-05 ~ Adds ability to select new surface type from list of buttons.
+			</p>
 
 			<p>
 				To do:<br>
@@ -38,7 +41,7 @@ ISSTI.currentStatus =
 
 ISSTI.getSurfaceTypeInvalidCheck = function() {
 
-	if ( ISSTIdetSurfaceTypeInvalid.open === false ) { return; }
+	if ( ISSTIdetSurfaceTypeInvalid.open === false && ISCOR.runAll === false ) { return; }
 
 	ISSTI.SurfaceTypeInvalid = [];
 
@@ -65,9 +68,8 @@ ISSTI.getSurfaceTypeInvalidCheck = function() {
 
 	let color;
 	let htmOptions = '';
-	let count = 0;
 
-	for ( surfaceIndex of ISSTI.SurfaceTypeInvalid ) {
+	for ( let surfaceIndex of ISSTI.SurfaceTypeInvalid ) {
 
 		color = color === 'pink' ? '' : 'pink';
 
@@ -82,7 +84,9 @@ ISSTI.getSurfaceTypeInvalidCheck = function() {
 	}
 
 	ISTIselSurfaceTypeInvalid.innerHTML = htmOptions;
-	ISCORspnCount.innerHTML = `: ${ ISSTI.SurfaceTypeInvalid.length } found`;
+	ISSTIspnCount.innerHTML = `: ${ ISSTI.SurfaceTypeInvalid.length } found`;
+
+	return ISSTI.SurfaceTypeInvalid.length;
 
 };
 
@@ -99,7 +103,7 @@ ISSTI.getDivSurfaceTypeInvalid = function() {
 	`
 		<details id="ISSTIdetSurfaceTypeInvalid" ontoggle=ISSTI.getSurfaceTypeInvalidCheck(); >
 
-			<summary>Surface Type Invalid<span id=ISCORspnCount ></span> </summary>
+			<summary>Surface Type Invalid<span id=ISSTIspnCount ></span> </summary>
 
 			<p>
 				Surfaces with an invalid surface type assignment.

@@ -43,7 +43,7 @@ ISMET.currentStatus =
 
 
 
-ISMET.setMetadataIssues = function() {
+ISMET.getMetadataIssuesCheck = function() {
 
 	ISMET.attributesProvided = [];
 	ISMET.attributesMissing = [];
@@ -64,7 +64,11 @@ ISMET.setMetadataIssues = function() {
 
 	}
 
+	ISMETdivMetadataIssues.innerHTML = ISMET.setMenuMetadata();
+
 	ISMETspnCount.innerHTML = `: ${ ISMET.attributesMissing.length } found`;
+
+	return ISMET.attributesMissing.length;
 
 };
 
@@ -74,7 +78,7 @@ ISMET.getMenuMetadataIssues = function() {
 
 	const htm =
 
-	`<details ontoggle="ISMETdetPanelMetadataIssues.innerHTML=ISMET.setMenuMetadata();"	>
+	`<details id=ISMETdetMetadataIssues ontoggle=ISMET.getMetadataIssuesCheck();	>
 
 		<summary>Missing gbXML Metadata<span id="ISMETspnCount" ></span></summary>
 
@@ -84,7 +88,7 @@ ISMET.getMenuMetadataIssues = function() {
 			</i>
 		</p>
 
-		<div id="ISMETdetPanelMetadataIssues" ></div>
+		<div id="ISMETdivMetadataIssues" ></div>
 
 		<div>${ ISMET.currentStatus }</div>
 
@@ -98,7 +102,7 @@ ISMET.getMenuMetadataIssues = function() {
 
 ISMET.setMenuMetadata = function() {
 
-	ISMET.setMetadataIssues();
+	//ISMET.getMetadataIssuesCheck();
 
 	let htm;
 

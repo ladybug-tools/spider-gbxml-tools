@@ -5,7 +5,7 @@
 /* jshint loopfunc:true */
 
 
-const ISDC = { "release": "R9.3", "date": "2018-12-02"  }
+const ISDC = { "release": "R9.4", "date": "2018-12-05"  }
 
 
 
@@ -17,7 +17,14 @@ ISDC.currentStatus =
 
 			<summary>ISDC ${ ISDC.release} status ${ ISDC.date }</summary>
 
-			<p>This module is ready for light testing.</p>
+			<p>
+				This module is ready for light testing.
+				Very slow on large files.
+				Much can be done to speed things up here.</p>
+
+			<p>
+				2018-12-06 ~ Adds ability to run in 'check all issues'.<br>
+			</p>
 
 		</details>
 
@@ -30,7 +37,7 @@ ISDC.currentStatus =
 
 ISDC.getDuplicateCoordinatesCheck = function() {
 
-	if ( ISDCdetDuplicateCoordinates.open === false ) { return; }
+	if ( ISDCdetDuplicateCoordinates.open === false && ISCOR.runAll === false ) { return; }
 
 	ISDC.duplicates = [];
 
@@ -83,6 +90,9 @@ ISDC.getDuplicateCoordinatesCheck = function() {
 
 	ISDCselDuplicate.innerHTML = htmOptions;
 	ISDCspnCount.innerHTML = `: ${ ISDC.duplicates.length / 2 } found`;
+
+	return ISDC.duplicates.length / 2;
+
 };
 
 

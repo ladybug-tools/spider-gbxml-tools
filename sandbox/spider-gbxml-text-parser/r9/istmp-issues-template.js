@@ -1,5 +1,5 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
-/* globals */
+/* globals GBX, POP, ISCOR, divPopupData */
 /* jshint esversion: 6 */
 
 
@@ -16,7 +16,10 @@ ISTMP.currentStatus =
 
 				<p>This module is ready for light testing.</p>
 
-				<p>2018-12-05 ~ Add more functions</p>
+				<p>
+					2018-12-06 ~ Adds ability to run in 'check all issues'. Simplified code a bit. passed through jsHint<br>
+					2018-12-05 ~ Add more functions
+				</p>
 
 			</details>
 
@@ -30,7 +33,7 @@ ISTMP.currentStatus =
 ISTMP.getTemplateCheck = function() {
 	//console.log( 'ISTMPdetTemplate.open', ISTMPdetTemplate.open );
 
-	if ( ISTMPdetTemplate.open === false ) { return; }
+	if ( ISTMPdetTemplate.open === false && ISCOR.runAll === false ) { return; }
 
 	ISTMP.invalidTemplate = [];
 
@@ -56,9 +59,8 @@ ISTMP.getTemplateCheck = function() {
 
 	let color;
 	let htmOptions = '';
-	let count = 0;
 
-	for ( surfaceIndex of ISTMP.invalidTemplate ) {
+	for ( let surfaceIndex of ISTMP.invalidTemplate ) {
 
 		color = color === 'pink' ? '' : 'pink';
 
@@ -67,13 +69,13 @@ ISTMP.getTemplateCheck = function() {
 		const id = surfaceText.match( 'id="(.*?)"' )[ 1 ];
 
 		htmOptions +=
-		`
-			<option style=background-color:${ color } value=${ surfaceIndex } >${ id }</option>
-		`;
+			`<option style=background-color:${ color } value=${ surfaceIndex } >${ id }</option>`;
 	}
 
 	ISTMPselTemplate.innerHTML = htmOptions;
 	ISTMPspnCount.innerHTML = `: ${ ISTMP.invalidTemplate.length } found`;
+
+	return ISTMP.invalidTemplate.length;
 
 };
 
@@ -102,8 +104,6 @@ ISTMP.getMenuTemplate = function() {
 			</select>
 		</p>
 
-
-		<div id=divDuplicateAttributes ></div>
 		<p>
 			<button onclick=ISTMP.selectedSurfaceDelete(); title="Starting to work!" >
 				template
@@ -121,28 +121,17 @@ ISTMP.getMenuTemplate = function() {
 
 
 ISTMP.setTemplateShowHide = function( button, surfaceArray ) {
-	console.log( 'surfaceArray', surfaceArray );
+	//console.log( 'surfaceArray', surfaceArray );
 
 	//THR.scene.remove( POP.line, POP.particle );
 
 	button.classList.toggle( "active" );
 
-	if ( button.classList.contains( 'active' ) ) {
+	if ( button.classList.contains( 'active' ) && surfaceArray.length ) {
 
-		if ( surfaceArray.length ) {
+		GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
 
-			GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
-
-			for ( let surfaceId of surfaceArray ) {
-
-				const surfaceMesh = GBX.surfaceGroup.children[ surfaceId ];
-				//console.log( 'surfaceMesh', surfaceMesh  );
-
-				surfaceMesh.visible = true;
-
-			}
-
-		}
+		surfaceArray.forEach( surfaceId => GBX.surfaceGroup.children[ surfaceId ].visible = true );
 
 	} else {
 
