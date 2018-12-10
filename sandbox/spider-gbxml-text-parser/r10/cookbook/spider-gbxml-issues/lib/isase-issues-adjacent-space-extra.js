@@ -53,7 +53,7 @@ ISASE.getAdjacentSpaceExtraCheck = function() {
 
 			ISASE.invalidAdjacentSpaceExtra.push( i );
 
-		} else if ( oneSpace.includes( surfaceType ) && adjacentSpaceArr.length > 1 ) {
+		} else if ( oneSpace.includes( surfaceType ) && adjacentSpaceArr && adjacentSpaceArr.length > 1 ) {
 
 			spaces = adjacentSpaceArr.map( item => item.match( /spaceIdRef="(.*?)"/ )[ 1 ] );
 			console.log( 'spaces', spaces );

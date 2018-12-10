@@ -55,7 +55,7 @@ ISASI.setAdjacentSpaceInvalidCheck = function() {
 			//console.log( 'shade surface', surface );
 			ISASI.adjacentSpaceInvalid.push( surfaceIndex );
 
-		} else if ( twoSpaces.includes( surfaceType ) && ( spaceIdRef.length !== 2 ||
+		} else if ( twoSpaces.includes( surfaceType ) && spaceIdRef && ( spaceIdRef.length !== 2 ||
 			( spaceIdRef.length === 2 && spaceIdRef[ 0 ] === spaceIdRef[ 1 ] ) ) ) {
 
 			//console.log( 'two space', spaceIdRef  );
