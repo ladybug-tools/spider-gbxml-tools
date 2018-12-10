@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
+<meta name=description content="A lightweight core module to help view real-time interactive 3D graphics in your browser using WebGL and the Three.js JavaScript library" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name="date" content="2018-12-06" >
+<title>Spider Viewer ~ Three.js R99 Test</title>
+<style>
+/* Copyright 2018 Ladybug Tools authors. MIT License */
+
+body, html { font: 11pt monospace; height: 100%; margin: 0; overflow: hidden; }
+
+a { color: crimson; text-decoration: none; }
+a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+#navMenu { background-color: #eee; max-height: 95%; left: 0; margin: 1rem; width: 20rem; overflow: auto;
+	opacity: 0.8; padding: 1rem; position: absolute; resize: both; top: 0; z-index: 10; }
+
+
+</style>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/three@0.99.0/build/three.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.99.0/examples/js/controls/OrbitControls.js" ></script>
+<script src="../lib/thr-threejs.js" ></script>
+
+
+	<main id="container" ></main>
+
+	<nav id = "navMenu" >
+
+		<header>
+
+			<a href="" ><script> document.write( document.title )</script></a>
+
+		</header>
+
+		<div id="divLog" ></div>
+
+	</nav>
+
+
+<script>
+
+let delta;
+let timestamp;
+let lastTimestamp;
+let misses = 0;
+
+init();
+
+
+function init() {
+
+	THR.getThreejs();
+
+	animateTest();
+
+	// just to show we are alive
+
+	THR.scene.add( new THREE.AxesHelper( 100 ) );
+
+	if ( window.self === window.top ) { // don't rotate if in an iframe
+
+		THR.controls.autoRotate = true;
+
+	}
+
+}
+
+
+function animateTest( timestamp ) {
+
+	requestAnimationFrame( animateTest );
+	THR.renderer.render( THR.scene, THR.camera );
+	THR.controls.update();
+
+	delta = timestamp - lastTimestamp;
+
+	if ( delta < 70 ) {
+
+		THR.controls.autoRotate = true;
+
+	} else {
+
+		THR.controls.autoRotate = false;
+		misses ++;
+	}
+
+	divLog.innerHTML =
+	`
+		delta: ${ delta.toLocaleString() }<br>
+		misses: ${ misses }
+	`;
+
+	lastTimestamp = timestamp;
+
+}
+
+</script>
+</body>
+</html>

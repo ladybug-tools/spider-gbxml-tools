@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
+<meta name=description content="Cookbook code for testing Spider gbXML issues modules" >
+<meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-12-09" >
+<title>Spider gbXML Edit 10.1 </title>
+<link rel="stylesheet" href="../../../lib/style.css">
+<style>
+
+	aside { border: 1px solid lightgray; margin-top:15px; padding: 2px; }
+	button:hover { background: #ccc; color: #fff }
+
+
+	#navMenu button, #navMenu input[type=button] { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;
+		 padding: 2px 5px; min-width: 13.5rem; }
+
+
+	#navMenu button.active { border-color: black; font-style: italic; font-weight: bold; margin-left: 1rem;
+	 box-shadow: 2px 2px re#888; }
+
+	.divMenuTitle { background-color: #ccc; color: #888; margin: 10px 0; text-align: center; }
+
+</style>
+</head>
+<body>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r99/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r99/examples/js/controls/OrbitControls.js" ></script>
+<script src = "../../../lib/fil-open-file.js" ></script>
+
+<script src = "../../../lib/mnu-menu.js" ></script>
+<script src = "../../../lib/thr-threejs.js" ></script>
+<script src = "../../../lib/thru-threejs-utilities.js"></script>
+<script src = "../../../lib/gal-sample-files-gallery-gbxml.js" ></script>
+
+<script src = "../../../lib/gbx-text-parser.js" ></script>
+
+<script src = "../lib/iscor-issues-core.js" ></script>
+<script src = "../lib/isfic-issues-file-check.js" ></script>
+<script src = "../lib/ismet-issues-metadata.js" ></script>
+<script src = "../lib/issti-issues-surface-type-invalid.js" ></script>
+<script src = "../lib/isduc-issues-duplicate-coordinates.js" ></script>
+<script src = "../lib/isasi-issues-adjacent-space-invalid.js" ></script>
+<script src = "../lib/isase-issues-adjacent-space-extra.js" ></script>
+<script src = "../lib/isasd-issues-adjacent-space-duplicate.js" ></script>
+<script src = "../lib/iscod-issues-cad-object-id.js" ></script>
+<script src = "../lib/istmp-issues-template.js" ></script>
+
+<script src = "../../../lib/vwsrf-view-surface-types.js" ></script>
+<script src = "../../../lib/repl-view-by-level.js" ></script>
+<script src = "../../../lib/set-settings.js" ></script>
+<script src = "../../../lib/cut-section-cut.js"></script>
+<script src = "../../../lib/pop-up-text-parser.js" ></script>
+
+	<main id="container" ></main>
+
+	<nav id = "navMenu" >
+
+		<header>
+
+			<div id = "divHeader" ></div>
+
+		</header>
+
+
+		<details>
+
+			<summary><span id="spnStatus" ></span> ~ Current Status</summary>
+
+			<p>Model not fully loaded until model centers on screen and starts rotating.</p>
+
+			<p>Default onload shows: Roof, ExteriorWall, ExposedFloor, Air and Shade. May be having issues on large files</p>
+
+			<p>
+				After loading a very large model:
+				<span class=highlight >it's best to reload web page before loading next model.</span>
+				And, be patient, it may take a very long time to clear large files from memory.
+			</p>
+
+			<!--
+				<p>Reloads are faster than first load. Best not to load two big files one after another. Load default file in-between.</p>
+			-->
+
+		</details>
+
+		<details open >
+
+			<summary class=divMenuTitle >File Menu </summary>
+
+			<details>
+
+				<summary>Open gbXML sample files</summary>
+
+				<div id=divSampleFileButtons ></div>
+
+				<div id=divSampleFileItems ></div>
+
+			</details>
+
+			<details open >
+
+				<summary>Open gbXML file</summary>
+
+				<div id="FILdivFileOpen" class="dragDropArea" ></div>
+
+			</details>
+
+			<details open >
+
+				<summary>Open ZIP file</summary>
+
+				<p>
+					<input type=file onchange=FIL.inpOpenFileZip(this); accept="application/zip" >
+				</p>
+				<p>
+					Experimental feature.
+				</p>
+				<p>
+					Files to download and test:
+					<a href="https://www.ladybug.tools/spider/gbxml-sample-files/zip/UK_London_RoyalArsenalWoolwich.zip" target="_blank">Royal Arsenal</a> /
+					<a href="https://www.ladybug.tools/spider/gbxml-sample-files/zip/LondonOffice_ver01.zip" target="_blank">London Office</a> /
+					<a href="https://www.ladybug.tools/spider/gbxml-sample-files/zip/aim0013 (27).zip" target="_blank">Warwick University</a>
+				</p>
+
+			</details>
+
+
+			<details>
+
+				<summary>Save file as</summary>
+
+				<div id = "divSaveFile" >
+
+					<p>
+						<button onclick=FIL.butSaveFile(); >Save file as XML</button>
+					</p>
+					<p>
+						<button onclick=alert("coming-soon"); >Save file as XML in ZIP</button>
+					</p>
+
+				</div>
+
+			</details>
+
+			<aside>
+
+				<details open>
+
+					<summary>File information</summary>
+
+					<div id=divFileInfo ></div>
+
+					<div id=divLog2 ></div>
+
+					<div id=FILdivCurrentStatus ></div>
+
+				</details>
+
+			</aside>
+
+		</details>
+
+
+		<details id=detMenuEdit open >
+
+				<div id = "divMenuNote" ></div>
+
+				<summary class=divMenuTitle >Edit Menu </summary>
+
+				<div id = "ISCORdivMenuIssues" ></div>
+
+		</details>
+
+
+		<details id=detMenuView >
+
+			<summary class=divMenuTitle >View Menu </summary>
+
+			<details id=detReports ontoggle=VWSRF.onToggle(); >
+
+				<summary>Show/hide by surface type</summary>
+
+				<div id = "divReports" ></div>
+
+				<div id = "divReportByLevels" ></div>
+
+				<div id = "divReportsLog" ></div>
+
+			</details>
+
+
+			<details id=detSettings ontoggle=divSettings.innerHTML=SET.getSettingsMenu(); >
+
+				<summary>Scene display settings</summary>
+
+				<div id = "divSettings" ></div>
+
+				<div id = "divSettingsLog" ></div>
+
+			</details>
+
+			<details ontoggle=divSectionCut.innerHTML=CUT.getDetSectionViews(); >
+
+				<summary>Scene cut sections</summary>
+
+				<div id=divSectionCut ></div>
+
+			</details>
+
+			<aside>
+
+				<details id=detStats ontoggle=divGbxmlInfo.innerHTML=VWSRF.getStats(); >
+
+					<summary>gbXML file statistics</summary>
+
+					<div id = "divGbxmlInfo" ></div>
+
+				</details>
+
+			</aside>
+
+		</details>
+
+		<details id=detMenuHelp ontoggle=divMenuHelp.innerHTML=MNU.getNavHelp(); >
+
+			<summary class=divMenuTitle >Help Menu </summary>
+
+			<div id=divMenuHelp ></div>
+
+		</details>
+
+		<footer>
+
+			<div id = "divFooter" ></div>
+
+		</footer>
+
+	</nav>
+
+	<nav>
+		<button id="butHamburger" onclick=MNU.toggleNavLeft(); title="click to hide this menu"> slide &#9776; </button>
+	</nav>
+
+
+	<div id="divPopUp" >
+
+		<div id="divPopUpData" ></div>
+
+		<div id="divMessage" ></div>
+
+	</div>
+
+<script>
+
+MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-text-parser";
+
+const urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml';
+//const urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/coventry-university-of-warwick-small.xml';
+
+
+
+init();
+THR.animate();
+
+
+
+function init() {
+
+	divHeader.innerHTML = MNU.getNavHeader(); // not essential
+
+	spnStatus.innerHTML = document.head.querySelector( '[ name=date ]' ).content;
+
+	divSampleFileButtons.innerHTML = GAL.setCardSampleGalleries();
+
+	FILdivFileOpen.innerHTML = FIL.getFileOpen();
+
+	ISCORdivMenuIssues.innerHTML = ISCOR.getMenuIssues();
+
+	divFooter.innerHTML = MNU.getNavFooter(); // not essential
+
+	THR.getThreejs();
+
+	THRU.setHelpers();
+
+	THRU.addSomeLights();
+
+	divPopUpData.innerHTML = POP.getMenuHtmlPopUp();
+
+	// loads a default file / great for testing same file many times
+	const thrFilePath = localStorage.getItem( 'thrFilePath' ) || '';
+
+	FILinpFilePath.value = thrFilePath;
+
+	FIL.urlDefaultFile = thrFilePath || urlDefaultFile;
+
+	if ( !location.hash ) { location.hash = FIL.urlDefaultFile; } else { FIL.onHashChange(); }
+	//location.hash = urlDefaultFile;
+
+}
+
+</script>
+</body>
+</html>

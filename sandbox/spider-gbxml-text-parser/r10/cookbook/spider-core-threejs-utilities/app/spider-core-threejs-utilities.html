@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="Various utility functions to support viewing real-time interactive 3D graphics in your browser using WebGL and the Three.js JavaScript library" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-12-06" >
+<title>Spider Viewer ~ Three.js Utilities</title>
+
+<style>
+
+body { font-family: monospace; margin: 0; overflow: hidden; }
+#navMenu { background-color: #eee; max-height: 95%; left: 0; margin: 1rem; width: 20rem; overflow: auto;
+	opacity: 0.8; padding: 1rem; position: absolute; resize: both; top: 0; z-index: 10; }
+
+
+</style>
+</head>
+<body>
+	<script src="https://cdn.jsdelivr.net/npm/three@0.99.0/build/three.min.js" ></script>
+	<script src="https://cdn.jsdelivr.net/npm/three@0.99.0/examples/js/controls/OrbitControls.js" ></script>
+<script src = "../../../lib/thr-threejs.js"></script>
+
+<script src = "../lib/thru-threejs-utilities.js"></script>
+
+	<main id="container" ></main>
+
+	<nav id = "navMenu" >
+
+		<header>
+
+			<a href="" ><script> document.write( document.title )</script></a>
+
+		</header>
+
+		<p><button onclick=THR.scene.remove(THRU.cubes);THRU.cubes=THRU.getSomeBoxes();THR.scene.add(THRU.cubes); >update cubes</button></p>
+
+		<details open >
+
+			<summary>Settings</summary>
+
+			<div id = "divSettings" ></div>
+
+		</details>
+
+		<details open >
+
+			<summary>Renderer Info</summary>
+
+			<div id = "divRendererInfo" ></div>
+
+		</details>
+
+		<details ontoggle=divSceneInfo.innerHTML=THRU.getSceneInfo(); > <!-- not essential -->
+
+			<summary title = "Info on what is in the Three.js scene" >Scene Info</summary>
+
+			<div id = "divSceneInfo" ></div>
+
+		</details>
+
+		<div id = "divLog" ></div>
+
+		<div id="divCurrentStatus" ></div>
+
+		<footer>
+
+			<hr>
+
+			<div id = "divFooter" ></div>
+
+		</footer>
+
+	</nav>
+
+
+<script>
+
+
+const urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-viewer-threejs-utilities";
+
+
+init();
+
+
+
+function init() {
+
+	//divHeader.innerHTML = MNU.getNavHeader(); // not essential
+
+	//divSettings.innerHTML = THRU.getSettings( divSettings );
+	divSettings.innerHTML = THRU.getSettings();
+
+	//divFooter.innerHTML = MNU.getNavFooter(); // not essential
+
+	THR.getThreejs();
+
+	THRU.setHelpers( 50 );
+
+	const mesh = THRU.getGeometry();
+
+	THRU.addSomeLights2();
+
+	THRU.cubes = THRU.getSomeBoxes( 50, 10, new THREE.MeshStandardMaterial( { color: 'red' }));
+	THR.scene.add( mesh, THRU.cubes );
+
+	THR.animate();
+
+	divRendererInfo.innerHTML = THRU.getRendererInfo();
+
+	divCurrentStatus.innerHTML = THRU.getCurrentStatus();
+
+}
+
+
+
+</script>
+</body>
+</html>

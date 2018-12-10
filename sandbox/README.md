@@ -113,6 +113,8 @@ To load an updated HTML file after a file has been imported
 
 * http://nrel.github.io/OpenStudio-user-documentation/
 
+
+
 ## Change Log
 
 ### 2018-10-24 ~ Theo

@@ -12,7 +12,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 <iframe src=https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/index.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
 _<small>Spider gbXML Text Parser</small>_
 
-## Full Screen: [Spider gbXML Text Parser R9.9]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r9/spider-gbxml-text-parser.html )
+## Full Screen: [Spider gbXML Text Parser]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/index.html )
 
 
 ***
@@ -72,6 +72,12 @@ Pop-up Text Parser
 
 
 ## Change Log
+
+### 2018-12-09 ~ Theo
+
+SGTP R10.1
+* Many updates
+* Start of organizing files so modules have dev folders
 
 ### 2018-12-06 ~ Theo
 

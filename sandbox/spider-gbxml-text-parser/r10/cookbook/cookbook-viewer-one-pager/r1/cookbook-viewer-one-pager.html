@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1" >
+<meta name = "description" content = "This script: 1.obtains list of sub-folders from a given folder on GitHub using the GitHub API. 2. creates an iframe for each sub-folder. 3. fets index.html of each sub-folder as the source for each iframe." >
+<meta name = "keywords" content = "Ladybug Tools, Spider, JavaScript, GitHub, FOSS" >
+<meta name = "date" content = "2018-10-23" >
+<title>Spider gbXML Tools Cookbook R1.1</title>
+<style>
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+
+	iframe { border: 1px solid gray; box-sizing: border-box; height: 600px; width: 100%;  }
+
+	div.ifr { border: 0px solid gray; box-sizing: border-box; height:700px; padding: 0px; width: 100%; }
+
+	footer { clear: both; }
+
+
+/*	#divMenu { left: 0; margin: 20px; max-width: 300px; position: absolute; top: 0; } */
+
+</style>
+</head>
+<body>
+
+	<nav id = "navMenu" >
+
+		<div id = "divTitle" ></div>
+
+		<p>Below are views of all the scripts currently available in this cookbook - of course, all viewable in interactive 3D.</p>
+
+		<p>Zoom capability is turned off in for the files with 3D models so as not to interfere with up and down scrolling of the page. You may, however, rotate and pan models in each view.</p>
+
+		<div id=divLog ></div>
+	</nav>
+
+	<div id = "divContents" ></div>
+
+	<div id = "divFolderContents" ></div>
+
+
+	<footer>
+
+		<div id=divFooter></div>
+
+		<hr>
+
+		<h1>
+			<center title="hello!" ><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > &#x1f578; </a></center>
+		</h1>
+
+	</footer>
+
+
+<script>
+
+const user = 'ladybug-tools';
+const repo = 'spider-gbxml-tools';
+const folder = 'cookbook';
+
+let folders = [];
+let iframeContainers = [];
+let iframesActive = [];
+const iframesActiveLimit = 3;
+
+let count = 0;
+
+const iconGitHubMark = '<img src = "https://status.github.com/images/invertocat.png" height=14 style=vertical-align:middle>';
+
+const urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/";
+
+init();
+animate();
+
+function init() {
+
+	divTitle.innerHTML =
+	`
+		<h1>
+			<a href=${ urlSourceCode } target="_top" title = "Source code on GitHub" >
+				<img src="https://status.github.com/images/invertocat.png" height=18 >
+			</a>
+			<a href="" title = "Click to reload this page" >${ document.title }</a>
+		</h1>
+	`;
+
+	divFooter.innerHTML = `<p>BTW: ${document.head.querySelector( '[name=description]' ).content }</p>`;
+
+	fetchGitHubApiFolderContents();
+	//fetchGitHubApiFolderContents( user, repo, folder );
+
+}
+
+
+
+function fetchGitHubApiFolderContents( user = 'ladybug-tools', repo = 'spider-gbxml-tools', folder = 'cookbook', target = divFolderContents ) {
+
+	const url = `https://api.github.com/repos/${ user }/${ repo }/contents/${ folder }/`;
+	//console.log(url );
+
+	const request = new Request( url );
+
+	fetch( request )
+		.then( response => response.json() )
+		.then( json => callbackGitHubApiFolderContent( json, user, repo, target ) );
+
+}
+
+
+function callbackGitHubApiFolderContent( results, user, repo, target ) {
+	console.log( 'results', results );
+	//console.log( {user}, {repo} );
+
+	//const urlBase = `https://${ user }.github.io/${ repo }/${ folder }`;
+	const urlBase = '../..';
+	let txt = '';
+
+	const foldersToIgnore = [ 'cookbook-viewer-one-pager', 'spider-viewer-github-events' ];
+
+	divLog.innerHTML =
+	`
+		<h4>${ results.length - foldersToIgnore.length } projects found</h4>
+	`
+
+	for ( let result of results ) {
+
+		if ( result.type !== 'dir' ) { continue; }
+		if ( foldersToIgnore.includes( result.name ) ) { continue; }
+
+		urlFolder = urlBase + `/${ result.name }/index.html`;
+
+		result.urlFolder = urlFolder;
+
+		folders.push( result );
+
+		txt += `<div class=ifr id=${ count++ } ></div>`;
+
+	}
+
+	target.innerHTML = txt;
+
+	iframeContainers = document.getElementsByClassName( 'ifr' ); // all possible iframe locations
+
+}
+
+
+
+function onLoadIfame( iframe ) {
+
+	if ( iframe.contentWindow.THR ) {
+
+		iframe.contentWindow.THR.controls.enableZoom = false;
+
+	}
+
+	//console.log( 'iframe', iframe.contentWindow.controls );
+
+}
+
+
+function updateIframe( activeContainer ) {
+
+	const iframes = document.getElementsByTagName( 'iframe' ); //  iframes locations currently in use
+
+	if ( iframes.length > iframesActiveLimit ) {
+
+		var frameTooMany = iframesActive.shift();
+		frameTooMany.innerHTML = '';
+
+	}
+
+	if ( activeContainer.innerHTML === '' ) {
+
+		const id = activeContainer.id;
+		//console.log( 'id', id );
+
+		activeContainer.innerHTML =
+		`
+			<iframe src="${ folders[ id ].urlFolder }" scrolling="no" onload="onLoadIfame(this);" ></iframe>
+
+			<h3>
+				<a href = "../../../index.html#${ folders[ id ].path }/README.md" target=_top >Read Me</a>
+
+				/ full screen: <a href = "${ folders[ id ].urlFolder }" target="_blank" >${folders[ id ].name}</a>
+			</h3>
+		`;
+
+		//console.log( '', folders[id] );
+		iframesActive.push( activeContainer );
+
+	}
+
+}
+
+
+function animate() {
+
+	requestAnimationFrame( animate );
+
+	for ( iframeContainer of iframeContainers ) {
+
+		const rect = iframeContainer.getBoundingClientRect();
+
+		if ( rect.bottom < 0 || rect.top > window.innerHeight ) { continue; }
+
+		updateIframe( iframeContainer );
+
+	}
+
+}
+
+</script>
+</body>
+</html>
