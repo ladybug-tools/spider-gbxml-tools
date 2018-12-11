@@ -76,6 +76,13 @@ Pop-up Text Parser
 
 ### 2018-12-10 ~ Theo
 
+SGTP R10.3
+* See cookbook/template
+* See cookbook/spider-gbxml-gallery-sample-files
+
+
+### 2018-12-10 ~ Theo
+
 SGTP R10.2
 * See cookbook/issues
 

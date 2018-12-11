@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8" >
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
-<meta name=description content="Open and examine very large gbXML files in your browser with free, open source JavaScript" >
+<meta name=description content="Template for building Spider gbXML modules" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
 <meta name = "date" content = "2018-12-11" >
-<title>Spider gbXML Text Parser R10.3 </title>
-<link rel="stylesheet" href="../lib/style.css">
+<title>Spider gbXML Template</title>
+<link rel="stylesheet" href="../../../lib/style.css">
 <style>
 
 	aside { border: 1px solid lightgray; margin-top:15px; padding: 2px; }
@@ -26,34 +26,41 @@
 </style>
 </head>
 <body>
+<!--
 <script src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
 <script src = "https://cdn.rawgit.com/mrdoob/three.js/r99/build/three.min.js" ></script>
 <script src = "https://cdn.rawgit.com/mrdoob/three.js/r99/examples/js/controls/OrbitControls.js" ></script>
-<script src = "../lib/fil-open-file.js" ></script>
+<script src = "../../../lib/fil-open-file.js" ></script>
 
-<script src = "../lib/mnu-menu.js" ></script>
-<script src = "../lib/thr-threejs.js" ></script>
-<script src = "../lib/thru-threejs-utilities.js"></script>
-<script src = "../lib/gal-sample-files-gallery-gbxml.js" ></script>
 
-<script src = "../lib/gbx-text-parser.js" ></script>
+<script src = "../../../lib/thr-threejs.js" ></script>
+<script src = "../../../lib/thru-threejs-utilities.js"></script>
+<script src = "../../../lib/gal-sample-files-gallery-gbxml.js" ></script>
 
-<script src = "../lib/iscor-issues-core.js" ></script>
-<script src = "../lib/isfic-issues-file-check.js" ></script>
-<script src = "../lib/ismet-issues-metadata.js" ></script>
-<script src = "../lib/issti-issues-surface-type-invalid.js" ></script>
-<script src = "../lib/isduc-issues-duplicate-coordinates.js" ></script>
-<script src = "../lib/isasi-issues-adjacent-space-invalid.js" ></script>
-<script src = "../lib/isase-issues-adjacent-space-extra.js" ></script>
-<script src = "../lib/isasd-issues-adjacent-space-duplicate.js" ></script>
-<script src = "../lib/iscod-issues-cad-object-id.js" ></script>
-<script src = "../lib/istmp-issues-template.js" ></script>
+<script src = "../../../lib/gbx-text-parser.js" ></script>
 
-<script src = "../lib/vwsrf-view-surface-types.js" ></script>
-<script src = "../lib/repl-view-by-level.js" ></script>
-<script src = "../lib/set-settings.js" ></script>
-<script src = "../lib/cut-section-cut.js"></script>
-<script src = "../lib/pop-up-text-parser.js" ></script>
+<script src = "../../../lib/iscor-issues-core.js" ></script>
+<script src = "../../../lib/isfic-issues-file-check.js" ></script>
+<script src = "../../../lib/ismet-issues-metadata.js" ></script>
+<script src = "../../../lib/issti-issues-surface-type-invalid.js" ></script>
+<script src = "../../../lib/isduc-issues-duplicate-coordinates.js" ></script>
+<script src = "../../../lib/isasi-issues-adjacent-space-invalid.js" ></script>
+<script src = "../../../lib/isase-issues-adjacent-space-extra.js" ></script>
+<script src = "../../../lib/isasd-issues-adjacent-space-duplicate.js" ></script>
+<script src = "../../../lib/iscod-issues-cad-object-id.js" ></script>
+
+<script src = "../../../lib/vwsrf-view-surface-types.js" ></script>
+<script src = "../../../lib/repl-view-by-level.js" ></script>
+<script src = "../../../lib/set-settings.js" ></script>
+<script src = "../../../lib/cut-section-cut.js"></script>
+<script src = "../../../lib/pop-up-text-parser.js" ></script>
+-->
+
+<script src = "../../../lib/mnu-menu.js" ></script>
+
+<script src = "../lib/tmp-template.js" ></script>
+
+
 
 	<main id="container" ></main>
 
@@ -65,34 +72,22 @@
 
 		</header>
 
+		<details open >
 
-		<details>
+			<summary class=divMenuTitle ><span id="spnStatus" >Menu item</summary>
 
-			<summary><span id="spnStatus" ></span> ~ Current Status</summary>
-
-			<p>Model not fully loaded until model centers on screen and starts rotating.</p>
-
-			<p>Default onload shows: Roof, ExteriorWall, ExposedFloor, Air and Shade. May be having issues on large files</p>
-
-			<p>
-				After loading a very large model:
-				<span class=highlight >it's best to reload web page before loading next model.</span>
-				And, be patient, it may take a very long time to clear large files from memory.
-			</p>
-
-			<!--
-				<p>Reloads are faster than first load. Best not to load two big files one after another. Load default file in-between.</p>
-			-->
+				<div id=TMPdivTemplate ></div>
 
 		</details>
 
+		<!--
 		<details open >
 
 			<summary class=divMenuTitle >File Menu </summary>
 
 			<details>
 
-				<summary>Open gbXML sample file</summary>
+				<summary>Open gbXML sample files</summary>
 
 				<div id=divSampleFileButtons ></div>
 
@@ -224,6 +219,9 @@
 
 		</details>
 
+		-->
+
+		
 		<details id=detMenuHelp ontoggle=divMenuHelp.innerHTML=MNU.getNavHelp(); >
 
 			<summary class=divMenuTitle >Help Menu </summary>
@@ -245,6 +243,7 @@
 	</nav>
 
 
+	<!--
 	<div id="divPopUp" >
 
 		<div id="divPopUpData" ></div>
@@ -252,6 +251,7 @@
 		<div id="divMessage" ></div>
 
 	</div>
+	-->
 
 <script>
 
@@ -263,7 +263,7 @@ const urlDefaultFile = 'https://www.ladybug.tools/spider/gbxml-sample-files/bris
 
 
 init();
-THR.animate();
+//THR.animate();
 
 
 
@@ -271,15 +271,19 @@ function init() {
 
 	divHeader.innerHTML = MNU.getNavHeader(); // not essential
 
+	TMPdivTemplate.innerHTML = TMP.getDivMenuTemplate();
+
+	divFooter.innerHTML = MNU.getNavFooter(); // not essential
+
+/*
 	spnStatus.innerHTML = document.head.querySelector( '[ name=date ]' ).content;
 
-	divSampleFileButtons.innerHTML = GAL.getMenuSampleGalleries();
+	divSampleFileButtons.innerHTML = GAL.setCardSampleGalleries();
 
 	FILdivFileOpen.innerHTML = FIL.getFileOpen();
 
 	ISCORdivMenuIssues.innerHTML = ISCOR.getMenuIssues();
 
-	divFooter.innerHTML = MNU.getNavFooter(); // not essential
 
 	THR.getThreejs();
 
@@ -298,6 +302,7 @@ function init() {
 
 	if ( !location.hash ) { location.hash = FIL.urlDefaultFile; } else { FIL.onHashChange(); }
 	//location.hash = urlDefaultFile;
+*/
 
 }
 
