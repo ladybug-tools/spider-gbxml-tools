@@ -39,11 +39,12 @@ But Spider gbXML Text Parser loads and updates the file quite well - in your bro
 ### Features
 
 Open File loader
-* Load very large ( greater than 700 megabytes ) gbXML at a reasonable speed
+* Load very large gbXML files ( greater than 700 megabytes ) at a reasonable speed
 * Read files in either UTF-8 or UTF-16 format
+* Display geometry progressively as file loads - visual feedback for very large files
 * Open remote files via a URL or local files via the file dialog box
 * Open and automatically extract UTF-8 and UTF-6 files contained in ZIP compressed folders using file dialog box
-* Save file to disk
+* Save edited file to disk
 
 gbXML Text Parser
 * Files size: 8 kb

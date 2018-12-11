@@ -19,7 +19,7 @@ _<small>Spider gbXML Tools Sandbox</small>_
 ***
 
 
-## [Spider gbXML Text Parser Read Me]( #sandbox/spider-gbxml-text-hacker/README.md )
+## [Spider gbXML Text Parser Read Me]( #sandbox/spider-gbxml-text-parser/README.md )
 
 Open and examine gbXML files in your browser with free, open source JavaScript
 
@@ -37,6 +37,10 @@ The file breaks the Chrome browser on Windows 10, the FireFox browser on Windows
 ### Full Screen latest release: [Spider gbXML Test Parser]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/index.html )
 
 With Chrome browser on Windows 10/Core i7/Nvidia GPU  reads the file and displays limited text data for the file in under 15 seconds. 3D data appears in under a minute
+
+***
+
+## [Spider gbXML Text Parser / R10 /Cookbook Read Me]( #sandbox/spider-gbxml-text-parser/r10/cookbook/README.md )
 
 
 ***

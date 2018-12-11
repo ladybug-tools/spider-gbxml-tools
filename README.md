@@ -57,7 +57,21 @@ The impetus for this code arose from the request by the developers of OpenStudio
 
 ### [gbXML Viewer Sandbox Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#sandbox/README.md )
 
+* Files at an early stage of development
 
+#### Latest release: [Spider gbXML Text Parser]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/ )
+
+#### [Spider gbXML Text Parser Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#sandbox/spider-gbxml-text-parser/README.md )
+
+Many features
+* Load very large gbXML files ( greater than 700 megabytes ) at a reasonable speed
+* Read files in either UTF-8 or UTF-16 format
+* Display geometry progressively as file loads - visual feedback for very large files
+* Open remote files via a URL or local files via the file dialog box
+* Open and automatically extract UTF-8 and UTF-6 files contained in ZIP compressed folders using file dialog box
+* Save edited file to disk
+
+And much more
 
 
 #### Latest release: [Fetch Assemble Save ]( https://www.ladybug.tools/spider-gbxml-tools/fetch-assemble-save/index.html )
