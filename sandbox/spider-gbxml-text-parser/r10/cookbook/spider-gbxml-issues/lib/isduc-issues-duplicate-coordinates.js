@@ -44,6 +44,7 @@ ISDC.getDuplicateCoordinatesCheck = function() {
 	const surfaces = GBX.surfaces;
 
 	// https://stackoverflow.com/questions/840781/get-all-non-unique-values-i-e-duplicate-more-than-one-occurrence-in-an-array
+	// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce#Remove_duplicate_items_in_array
 
 	for ( let i = 0; i < surfaces.length; i++ ) {
 
@@ -89,7 +90,7 @@ ISDC.getDuplicateCoordinatesCheck = function() {
 	}
 
 	ISDCselDuplicate.innerHTML = htmOptions;
-	ISDCspnCount.innerHTML = `: ${ ISDC.duplicates.length / 2 } found`;
+	ISDCspnCount.innerHTML = `: ${ ( ISDC.duplicates.length / 2 ).toLocaleString() } found`;
 
 	return ISDC.duplicates.length / 2;
 
@@ -166,6 +167,8 @@ ISDC.setSurfaceArrayShowHide = function() {
 	}
 
 };
+
+
 
 ISDC.selectedSurfaceFocus = function() {
 

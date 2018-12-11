@@ -1,19 +1,19 @@
 
-<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( https://www.ladybug.tools/spider-gbxml-tools/#cookbook/spider-gbxml-viewer-issues/README.md "View file as a web page." ) </span>
+<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( https://www.ladybug.tools/spider-gbxml-tools/#sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-issues/README.md "View file as a web page." ) </span>
 
-<div><input type=button class = 'btn btn-secondary btn-sm' onclick="window.location.href='https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/cookbook/spider-gbxml-viewer-issues/README.md'";
+<div><input type=button class = 'btn btn-secondary btn-sm' onclick="window.location.href='https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-issues/README.md'";
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' ></div>
 
 <br>
 
-# [Spider gbXML Viewer Issues Read Me]( #cookbook/spider-gbxml-viewer-issues/README.md )
+# [Spider gbXML Viewer Issues Read Me]( #sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-issues/README.md )
 
 
 
-<iframe src=https://www.ladybug.tools/spider-gbxml-tools/cookbook/spider-gbxml-viewer-issues/index.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
+<iframe src=https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-issues/index.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
 _<small>Spider gbXML Viewer Issues </small>_
 
-## Full Screen: [Spider gbXML Viewer Issues ]( https://www.ladybug.tools/spider-gbxml-tools/cookbook/spider-gbxml-viewer-issues/r7/spider-gbxml-viewer-issues.html )
+## Full Screen: [Spider gbXML Viewer Issues ]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-issues/r7/spider-gbxml-viewer-issues.html )
 
 
 
@@ -22,7 +22,7 @@ _<small>Spider gbXML Viewer Issues </small>_
 Open, view, examine, identify errors and fix gbXML files in 3D in your browser with free, open source entry-level Three.js JavaScript
 
 * Currently still at a very early, experimental stage
-	* If you need full issue checking use 'Aragog'
+* If you need full issue checking use 'Aragog'
 
 
 ### File Check.js
@@ -33,11 +33,27 @@ Open, view, examine, identify errors and fix gbXML files in 3D in your browser w
 
 ### Missing gbXML Metadata
 
-* Identify missing but required gbXML attributes. Issues Metadata R7.1
+* Identify missing but required gbXML attributes.
+
+### Surface Type Invalid
+
+* Surfaces with an invalid surface type assignment
+* Probably a fairly rare occurrence
+
+### Find Duplicate Coordinates
+
+* Two surfaces with the same coordinates
+
 
 ### Adjacent Space Invalid
 
 * Surfaces with invalid adjacent spaces.
+
+To be deprecated.
+
+Being replaced by multiple shorter and simpler modules dedicated to identifing and fixing very specific issues.
+
+
 
 
 ### Adjacent Space Extra
@@ -48,9 +64,13 @@ Surfaces with an invalid adjacent space:
 
 ### Adjacent Space Duplicate
 
-### Find Duplicate Coordinates
+* Surfaces of type that take two adjacent spaces such as InteriorWall with two adjacent spaces that are identical
 
-* Two surfaces with the same coordinates
+
+### CAD Object ID Missing
+
+* Surface without a CAD object ID
+
 
 <!--
 ### Duplicate Rectangular Geometry
@@ -65,8 +85,6 @@ Surfaces with an invalid adjacent space:
 ### Point inside Polygon
 
 * Yes
-
--->
 
 
 ## To Do / Wish List
@@ -86,6 +104,15 @@ Things to try
 * 2018-10-21 ~ Theo ~ make sure no double counts
 * 2018-10-21 ~ Theo ~ confirm finding same items a Aragog 12/14
 * 2018-10-21 ~ Theo ~ determine and display faulty adjacent space issues
+-->
+
+
+## To Do / Wish List
+
+
+## Issues
+
+
 
 
 ## Links of Interest
@@ -97,6 +124,28 @@ See also
 
 ## Change Log
 
+
+### 2018-12-10 ~ Theo
+
+Spider gbXML Text Parser R10.2
+* Spider gbXML Viewer Issues Read me
+	* Fix links
+	* Edit text
+* iscor-issues-core.js
+	* Add current status details element
+	* Update list of modules to run
+* issti-issues-surface-type-invalid.js
+	* Update current status / add link
+	* Code refactor /cleanup / minor bug fixes
+* isasi-issues-adjacent-space-invalid.js
+	* Deprecate
+* isase-issues-adjacent-space-extra.js
+	* Update current status / add link
+	* Code refactor /cleanup / minor bug fixes
+* isasd-issues-adjacent-space-duplicate.js
+	* Code cleanup
+	* Add spaceOtherShowHide button
+	* Add adjacentSpaceUpdate button - not working yet
 
 ### 2018-12-09 ~ Theo
 

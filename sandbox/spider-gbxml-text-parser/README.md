@@ -73,6 +73,11 @@ Pop-up Text Parser
 
 ## Change Log
 
+### 2018-12-10 ~ Theo
+
+SGTP R10.2
+* See cookbook/issues
+
 ### 2018-12-09 ~ Theo
 
 SGTP R10.1

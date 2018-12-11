@@ -3,7 +3,7 @@
 /* jshint esversion: 6 */
 
 
-const ISASE = { "release": "R10.1", "date": "2018-12-09" };
+const ISASE = { "release": "R10.2", "date": "2018-12-10" };
 
 
 ISASE.currentStatus =
@@ -12,12 +12,20 @@ ISASE.currentStatus =
 
 			<details>
 
-				<summary>ISASE ${ ISASE.release} status ${ ISASE.date }</summary>
+				<summary><a href="https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-issues/lib/issti-issues-surface-type-invalid.js"
+					title="source code" >ISASE ${ ISASE.release}</a> status ${ ISASE.date }</summary>
 
-				<p>This module is ready for light testing.</p>
+				<p>This module is ready for light testing. Module appears to be operating as intended.</p>
+
+				<p>
+					2018-12-10 ~ code cleanup /streamline
+				</p>
+
+				<!--
 
 				<p>2018-12-09 ~ appears to be operating as intended</p>
 				<p>2018-12-07 ~ new module</p>
+				-->
 
 			</details>
 
@@ -44,19 +52,20 @@ ISASE.getAdjacentSpaceExtraCheck = function() {
 	for ( let i = 0; i < surfaces.length; i++ ) {
 
 		const surface = surfaces[ i ];
-		surfaceType = surface.match ( /surfaceType="(.*?)"/ )[ 1 ];
-		adjacentSpaceArr = surface.match( /spaceIdRef="(.*?)"/gi );
+		const surfaceType = surface.match ( /surfaceType="(.*?)"/ )[ 1 ];
+		const adjacentSpaceArr = surface.match( /spaceIdRef="(.*?)"/gi );
 
-		if ( surfaceType === "Shade" && adjacentSpaceArr > 0 ) {
 
-			console.log( 'Shade with adjacent space found', 23 );
+		if ( oneSpace.includes( surfaceType ) && adjacentSpaceArr && adjacentSpaceArr.length > 1 ) {
+
+			//const spaces = adjacentSpaceArr.map( item => item.match( /spaceIdRef="(.*?)"/ )[ 1 ] );
+			//console.log( 'spaces', spaces );
 
 			ISASE.invalidAdjacentSpaceExtra.push( i );
 
-		} else if ( oneSpace.includes( surfaceType ) && adjacentSpaceArr && adjacentSpaceArr.length > 1 ) {
+		} else if ( surfaceType === "Shade" && adjacentSpaceArr > 0 ) {
 
-			spaces = adjacentSpaceArr.map( item => item.match( /spaceIdRef="(.*?)"/ )[ 1 ] );
-			console.log( 'spaces', spaces );
+			console.log( 'Shade with adjacent space found', 23 );
 
 			ISASE.invalidAdjacentSpaceExtra.push( i );
 
@@ -80,7 +89,7 @@ ISASE.getAdjacentSpaceExtraCheck = function() {
 	}
 
 	ISASEselAdjacentSpaceExtra.innerHTML = htmOptions;
-	ISASEspnCount.innerHTML = `: ${ ISASE.invalidAdjacentSpaceExtra.length } found`;
+	ISASEspnCount.innerHTML = `: ${ ISASE.invalidAdjacentSpaceExtra.length.toLocaleString() } found`;
 
 	return ISASE.invalidAdjacentSpaceExtra.length;
 
@@ -105,7 +114,7 @@ ISASE.getMenuAdjacentSpaceExtra = function() {
 		</p>
 
 		<p>
-			<button onclick=ISASE.setAdjacentSpaceExtraShowHide(this,ISASE.invalidAdjacentSpaceExtra); >
+			<button id=ISASEbutAdjacentSpaceDuplicateShowHide onclick=ISASE.setAdjacentSpaceExtraShowHide(this,ISASE.invalidAdjacentSpaceExtra); >
 				Show/hide Adjacent Space Duplicate surfaces
 			</button>
 		</p>
@@ -257,6 +266,7 @@ ISASE.adjacentSpaceDelete = function( spaceId ) {
 	//console.log( 'len', len );
 
 	ISASEspnCount.innerHTML = '';
+	ISASEbutAdjacentSpaceDuplicateShowHide.classList.remove( "active" );
 	ISASEdivAdjacentSpaceExtra.innerHTML = 'None found';
 
 	ISASEdetAdjacentSpaceExtra.open = false;
