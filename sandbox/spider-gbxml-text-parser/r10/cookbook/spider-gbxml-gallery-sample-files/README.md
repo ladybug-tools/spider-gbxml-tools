@@ -70,6 +70,7 @@ Gallery gbXML Sample Files R10.0
 * gal-sample-files-gallery-gbxml.js
 	* Big cleanup / streamline / refactor
 	* Add ZIP file capability
+	* Add current status details element
 
 
 ### 2018-10-26 ~ Theo

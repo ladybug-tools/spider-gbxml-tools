@@ -2,13 +2,43 @@
 /* globals COR, butGalleryGbxml, butGallerySampleFiles, butGallerySamples2, butGalleryBuildWell, divMenuItems */
 /* jshint esversion: 6 */
 
-var GAL = {};
+var GAL = { "release": "R10.0", "date": "2018-12-11"  };
 
 GAL.iconGitHubMark = 'https://status.github.com/images/invertocat.png';
 
 GAL.threeDefaultFile = 'https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/';
 
 var GALdetGallery, GALdivgallery;
+
+
+GAL.currentStatus =
+	`
+		<aside>
+
+			<details>
+
+				<summary>GAL ${ GAL.release} status ${ GAL.date }</summary>
+
+				<p>This module is ready for testing.</p>
+
+				<p>
+					<ul>
+						<li>2018-12-11 ~ Add ZIP file gallery button & menu</li>
+						<li>2018-12-11 ~ significant code refactor</li>
+					</ul>
+				</p>
+
+				<p>
+					<a href="https://www.ladybug.tools/spider-gbxml-tools/#sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-gallery-sample-files/README.md" target="_blank">Read Me file</a>
+				</p>
+
+			</details>
+
+		</aside>
+
+		<hr>
+	`;
+
 
 
 GAL.getMenuSampleGalleries = function( buttons, target ) {
@@ -41,6 +71,9 @@ GAL.getMenuSampleGalleries = function( buttons, target ) {
 				ZIP files
 			</button>
 		</p>
+
+		${ GAL.currentStatus }
+
 	`;
 
 	return htm;
@@ -170,7 +203,8 @@ GAL.callbackGitHubMenu = function( xhr ) {
 
 		if ( file.name.toLowerCase() === 'README.md' ||
 
-		( file.name.toLowerCase().endsWith( '.xml' ) === false && file.name.toLowerCase().endsWith( '.zip' ) === false ) ) { continue; }
+			( file.name.toLowerCase().endsWith( '.xml' ) === false && file.name.toLowerCase().endsWith( '.zip' ) === false )
+		) { continue; }
 
 		const fileName = encodeURI( file.name );
 
@@ -191,5 +225,3 @@ GAL.callbackGitHubMenu = function( xhr ) {
 	GALdivGallery.innerHTML = htm;
 
 };
-
-
