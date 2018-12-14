@@ -3,7 +3,7 @@
 /* globals */
 
 
-const FIL = { "release": "r10.1", "date": "2018-12-13" };
+const FIL = { "release": "r10.1.1", "date": "2018-12-13" };
 
 FIL.xhr = new XMLHttpRequest();
 FIL.reader = new FileReader();
@@ -478,7 +478,7 @@ FIL.butSaveFileZip = function() {
 
 	zip.file( FIL.name, GBX.text );
 
-	zip.generateAsync( { type:"blob" } )
+	zip.generateAsync( { type:"blob", compression: "DEFLATE" } )
 
 	.then( function( blob ) {
 

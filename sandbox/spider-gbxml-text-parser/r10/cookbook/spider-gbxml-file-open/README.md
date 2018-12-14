@@ -26,7 +26,7 @@ _<small>Spider gbXML Viewer Open File</small>_
 
 ## Issues
 
-* 2018-12-13 ~ Files saved to ZIP are OK but not compressed
+
 
 ## Links of Interest
 
@@ -45,7 +45,7 @@ fil-open-file.js r10.1
 * 2018-12-13 ~ Add cookbook test script<
 * 2018-12-13 ~ Improve modularization and event-handing between modules<
 * 2018-12-13 ~ Improve loading progress indication<
-
+* 2018-12-13 ~ Fixed: Files saved to ZIP are OK but not compressed
 
 ### 2018-11-03 ~ Theo
 
