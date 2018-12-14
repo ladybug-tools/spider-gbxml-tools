@@ -26,7 +26,7 @@ _<small>Spider gbXML Viewer Open File</small>_
 
 ## Issues
 
-
+* 2018-12-13 ~ Files saved to ZIP are OK but not compressed
 
 ## Links of Interest
 
