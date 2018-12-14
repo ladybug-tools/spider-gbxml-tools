@@ -69,7 +69,8 @@ ISASD.getAdjacentSpaceDuplicateCheck = function() {
 			//console.log( 'spaceIdRef', spaceIdRef );
 
 			surfaceType = surface.match( /surfaceType="(.*?)"/)[ 1 ];
-			if ( ISASD.twoSpaces.indexOf( surfaceType ) < 0 ) { console.log( 'wrong type ', surfaceType ); continue; }
+
+			//if ( ISASD.twoSpaces.indexOf( surfaceType ) < 0 ) { console.log( 'wrong type ', surfaceType ); continue; }
 
 			ISASD.invalidAdjacentSpaceDuplicate.push( i );
 

@@ -74,11 +74,21 @@ Pop-up Text Parser
 
 ## Change Log
 
+### 2018-12-13 ~ Theo
+
+SGTP R10.5
+* See cookbook/spider-gbxml-file-open
+* gbx-text-parser.js split in two
+	* gbx-gbxml-text-parser.js
+	* gbxu-gbxml-utilities.js
+* spider-gbxml-text-parser.html
+	* Menu simplified: open xml and open zip combined into singe UI
+
 ### 2018-12-10 ~ Theo
 
 SGTP R10.3
-* See cookbook/template
-* See cookbook/spider-gbxml-gallery-sample-files
+* See [cookbook/template]( https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-text-parser/r10/cookbook/template )
+* See [cookbook/spider-gbxml-gallery-sample-files]( https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-gallery-sample-files )
 
 
 ### 2018-12-10 ~ Theo

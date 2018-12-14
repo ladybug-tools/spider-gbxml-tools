@@ -2,7 +2,7 @@
 /* globals COR, butGalleryGbxml, butGallerySampleFiles, butGallerySamples2, butGalleryBuildWell, divMenuItems */
 /* jshint esversion: 6 */
 
-var GAL = { "release": "r10.1", "date": "2018-12-13"  };
+var GAL = { "release": "R10.0", "date": "2018-12-11"  };
 
 GAL.iconGitHubMark = 'https://status.github.com/images/invertocat.png';
 
@@ -13,38 +13,35 @@ var GALdetGallery, GALdivgallery;
 
 GAL.currentStatus =
 	`
+		<aside>
 
-		<details>
+			<details>
 
-			<summary>GAL ${ GAL.release} status ${ GAL.date }</summary>
+				<summary>GAL ${ GAL.release} status ${ GAL.date }</summary>
 
-			<p>Obtain links to sample gbXML files via GitHub API and update location hash with selected link<./p>
+				<p>This module is ready for testing.</p>
 
-			<p>Updating the URL hash causes the indicated file to be loaded.</p>
+				<p>
+					<ul>
+						<li>2018-12-11 ~ Add ZIP file gallery button & menu</li>
+						<li>2018-12-11 ~ significant code refactor</li>
+					</ul>
+				</p>
 
-			<p>This module is ready for testing.</p>
+				<p>
+					<a href="https://www.ladybug.tools/spider-gbxml-tools/#sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-gallery-sample-files/README.md" target="_blank">Read Me file</a>
+				</p>
 
-			<p>
-				<ul>
-					<li>2018-12-11 ~ Add ZIP file gallery button & menu</li>
-					<li>2018-12-11 ~ significant code refactor</li>
-				</ul>
-			</p>
+			</details>
 
-			<p>
-				<a href="https://www.ladybug.tools/spider-gbxml-tools/#sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-gallery-sample-files/README.md" target="_blank">
-				gal-sample-files-gallery-gbxml.js Read Me file</a>
-			</p>
+		</aside>
 
-		</details>
-
+		<hr>
 	`;
 
 
 
 GAL.getMenuSampleGalleries = function( buttons, target ) {
-
-	GALdivCurrentStatus.innerHTML = GAL.currentStatus;
 
 	const htm =
 	`
@@ -74,6 +71,8 @@ GAL.getMenuSampleGalleries = function( buttons, target ) {
 				ZIP files
 			</button>
 		</p>
+
+		${ GAL.currentStatus }
 
 	`;
 
@@ -124,7 +123,7 @@ GAL.setGALdivGallery = function( button ) {
 
 		GAL.user = 'ladybug-tools';
 		GAL.repo = '/spider';
-		GAL.pathRepo = 'gbxml-sample-files/zip/';
+		GAL.pathRepo = 'gbxml-sample-files/zip';
 		GAL.title = 'Ladybug Tools/Spider gbXML Viewer sample ZIP files #2 on GitHub';
 		GAL.button = butGalleryZip;
 
@@ -150,10 +149,6 @@ GAL.setGALdivGallery = function( button ) {
 
 			<hr>
 
-			<div id=GALdivFileInfo ></div>
-
-			<br>
-
 		</details>
 
 	`;
@@ -161,6 +156,7 @@ GAL.setGALdivGallery = function( button ) {
 	GAL.requestFile( GAL.urlGitHubApiContents, GAL.callbackGitHubMenu );
 
 };
+
 
 
 
@@ -181,10 +177,10 @@ GAL.requestFile = function( url, callback ) {
 
 		name = name ? GAL.user + '/' + name : GAL.user + GAL.repo;
 
-		GALdivFileInfo.innerHTML =
+		divFileInfo.innerHTML =
 		`
-			Files from: ${ name }<br>
-			Bytes loaded: ${ xhr.loaded.toLocaleString() }<br>
+			${ name }<br>
+			bytes loaded: ${xhr.loaded.toLocaleString()}<br>
 		`;
 
 	}
@@ -208,11 +204,9 @@ GAL.callbackGitHubMenu = function( xhr ) {
 		if ( file.name.toLowerCase() === 'README.md' ||
 
 			( file.name.toLowerCase().endsWith( '.xml' ) === false && file.name.toLowerCase().endsWith( '.zip' ) === false )
-
 		) { continue; }
 
 		const fileName = encodeURI( file.name );
-		//console.log( 'fileName', fileName );
 
 		htm +=
 
@@ -220,7 +214,7 @@ GAL.callbackGitHubMenu = function( xhr ) {
 
 			<a href=${ GAL.urlGitHubSource + fileName } title="Edit me" >${ iconInfo }</a>
 
-			<a href=#${ GAL.urlGitHubPage + fileName } title="${ file.size.toLocaleString() } bytes" >${ file.name }</a>
+			<a href=#${ GAL.urlGitHubPage + fileName } title="${ file.size.toLocaleString() } bytes"  >${ file.name }</a>
 
 			<a href=${ GAL.threeDefaultFile }#${ GAL.urlGitHubPage }${ fileName } title="Link to just this file" >&#x2750;</a>
 

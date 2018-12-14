@@ -2,8 +2,9 @@
 // jshint esversion: 6
 /* globals THREE, THR, THRU, timeStart, divLog2 */
 
-var GBX = GBX || { "release": "R9.1", "date": "2018-11-26" };
+var GBX = GBX || { "release": "R10.1", "date": "2018-12-12" };
 
+GBX.filtersDefault = [ "Roof", "ExteriorWall", "ExposedFloor", "Air", "Shade" ];
 
 let step = 1000;
 let count = 0;
@@ -41,15 +42,45 @@ GBX.referenceObject = new THREE.Object3D();
 GBX.triangle = new THREE.Triangle(); // used by GBX.getPlane
 
 
+GBX.getDivMenuGbx = function() {
+
+	FIL.reader.addEventListener( 'load', GBX.onFileLoad, false );
+	FIL.xhr.addEventListener( 'load', GBX.onFileLoadHash, false );
+	//FIL.xhr.addEventListener( 'load', function( e ) { console.log( 'e', e.target.response ); }, false );
+
+	GBXdivStats.addEventListener( 'click', GBX.onFileZipLoad, false );
+
+	stats = GBXU.init();
+
+	return stats;
+
+};
+
+
+
+GBX.onFileLoadHash = function( event ) {
+
+	//console.log( event.target.response  );
+	GBX.parseFile( event.target.response  );
+
+}
+
+GBX.onFileLoad = function() { GBX.parseFile( FIL.reader.result ); };
+
+GBX.onFileZipLoad = function() { if ( FIL.txt ) { GBX.parseFile( FIL.txt ); } };
+
+
 
 GBX.parseFile = function( gbxml )  {
 	//console.log( 'gbxml', gbxml );
+
+	if ( !gbxml ) { return; }
 
 	THR.scene.remove( GBX.surfaceOpenings, GBX.surfaceEdgesThreejs );
 	GBX.surfaceEdgesThreejs = [];
 	GBX.surfaceOpenings = [];
 
-	THR.scene.remove( GBX.boundingBox );
+	//THR.scene.remove( GBX.boundingBox );
 	GBX.boundingBox = undefined;
 
 	if ( GBX.surfaceGroup ) {
@@ -93,17 +124,33 @@ GBX.parseFile = function( gbxml )  {
 	GBX.surfaces = GBX.text.match( reSurface );
 	//console.log( 'GBX.surfaces', GBX.surfaces );
 
-	GBX.surfacesIndexed= GBX.surfaces.map( ( surface, index ) => `indexGbx="${ index }"` + surface );
+	GBX.surfacesIndexed = GBX.surfaces.map( ( surface, index ) => `indexGbx="${ index }"` + surface );
 
 	const meshes = GBX.getSurfaceMeshes( GBX.surfacesIndexed );
 
 	GBX.surfaceGroup.add( ...meshes );
+
+	GBX.setSurfaceTypesVisible( GBX.filtersDefault );
 
 	return GBX.surfaces.length;
 
 };
 
 
+
+GBX.setSurfaceTypesVisible = function ( typesArray ) {
+	//console.log( 'typesArray', typesArray );
+
+	GBX.surfacesFiltered = typesArray.flatMap( filter =>
+
+		GBX.surfacesIndexed.filter( surface => surface.includes( `"${ filter }"` ) )
+
+	);
+
+	//divReportsLog.innerHTML =
+	GBX.sendSurfacesToThreeJs( GBX.surfacesFiltered );
+
+};
 
 //////////
 
@@ -186,9 +233,8 @@ GBX.sendSurfacesToThreeJs = function( surfacesText ) {
 		}
 
 
- 		divLog2.innerHTML =
+		GBXdivStats.innerHTML =
 		`
-			<hr>
 			<b>gbXML parser statistics:</b><br>
 			surfaces rendered: ${ count.toLocaleString() } of ${ GBX.surfacesTmp.length.toLocaleString() } <br>
 			time to render: ${ delta.toLocaleString() } ms<br>
@@ -196,7 +242,6 @@ GBX.sendSurfacesToThreeJs = function( surfacesText ) {
 			time allocated frame: ${ deltaLimit } ms<br>
 			total time elapsed: ${ ( performance.now() - FIL.timeStart ).toLocaleString() } ms
 		`;
-
 
 		requestAnimationFrame( GBX.addMeshes );
 
@@ -223,7 +268,6 @@ GBX.getSurfaceMeshes = function( surfaces ) {
 		const index = surface.match( 'indexGbx="(.*?)"' )[ 1 ];
 
 		const mesh = GBX.getSurfaceMesh( vertices, index );
-		mesh.visible = false;
 		mesh.castShadow = mesh.receiveShadow = true;
 		mesh.userData.index = index;
 
@@ -415,113 +459,5 @@ GBX.getPlane = function( points, start = 0 ) {
 	}
 
 	return GBX.triangle.getPlane( new THREE.Plane() );
-
-};
-
-
-
-GBX.getSurfaceEdgesThreejs = function() {
-
-	const surfaceEdges = [];
-	const lineMaterial = new THREE.LineBasicMaterial( { color: 0x888888 } );
-
-	for ( let mesh of GBX.surfaceGroup.children ) {
-
-		mesh.userData.edges = mesh;
-		const edgesGeometry = new THREE.EdgesGeometry( mesh.geometry );
-		const surfaceEdge = new THREE.LineSegments( edgesGeometry, lineMaterial );
-		surfaceEdge.rotation.copy( mesh.rotation );
-		surfaceEdge.position.copy( mesh.position );
-		surfaceEdges.push( surfaceEdge );
-
-	}
-
-	//console.log( 'surfaceEdges', surfaceEdges );
-	//THR.scene.add( ...surfaceEdges );
-
-	return surfaceEdges;
-
-};
-
-
-
-GBX.getSurfaceOpenings = function() {
-
-	const v = ( arr ) => new THREE.Vector3().fromArray( arr );
-
-	const material = new THREE.LineBasicMaterial( { color: 0x444444, linewidth: 2, transparent: true } );
-	const surfaceOpenings = [];
-
-	for ( let surfaceText of GBX.surfaces ) {
-
-		const reSurface = /<Opening(.*?)<\/Opening>/g;
-		const openings = surfaceText.match( reSurface );
-
-		//console.log( 'o', openings );
-
-		if ( !openings ) { continue; }
-
-		for ( let opening of openings ) {
-
-			const polyloops = GBX.getPolyLoops( opening );
-
-			//console.log( 'bb', polyloops );
-
-			for ( let polyloop of polyloops ) {
-
-				const coordinates = GBX.getVertices( polyloop );
-
-				//console.log( 'coordinates', coordinates );
-
-				const vertices = [];
-
-				for ( let i = 0; i < ( coordinates.length / 3 ); i ++ ) {
-
-					vertices.push( v( coordinates.slice( 3 * i, 3 * i + 3 ) ) );
-
-				}
-
-				//console.log( 'vertices', vertices );
-
-				const geometry = new THREE.Geometry().setFromPoints( vertices );
-				//console.log( 'geometry', geometry );
-
-				const line = new THREE.LineLoop( geometry, material );
-				surfaceOpenings.push( line );
-
-			}
-		}
-
-	}
-
-	//THR.scene.add( surfaceOpenings );
-
-	return surfaceOpenings;
-
-};
-
-
-
-GBX.xxxgetSurfaceEdges = function( surfaces ) {
-
-	const meshes = surfaces.map( ( surface ) => {
-
-		const polyLoops = GBX.getPolyLoops( surface );
-		//console.log( 'polyLoops', polyLoops );
-
-		const vertices = GBX.getVertices( polyLoops[ 0 ] );
-		//console.log( 'vertices', vertices );
-
-		const index = surface.match( 'indexGbx="(.*?)"' )[ 1 ];
-
-		const mesh = GBX.getSurfaceMesh( vertices, index );
-		mesh.castShadow = mesh.receiveShadow = true;
-		mesh.userData.index = index;
-
-		return mesh;
-
-	} );
-
-	return meshes;
 
 };

@@ -5,8 +5,8 @@
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
 <meta name=description content="Open and examine very large gbXML files in your browser with free, open source JavaScript" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name="date" content="2018-12-13" >
-<title>Spider gbXML Text Parser R10.5 </title>
+<meta name="date" content="2018-12-11" >
+<title>Spider gbXML Text Parser R10.3 </title>
 <link rel="stylesheet" href="../lib/style.css">
 <style>
 
@@ -36,8 +36,7 @@
 <script src = "../lib/thru-threejs-utilities.js"></script>
 <script src = "../lib/gal-sample-files-gallery-gbxml.js" ></script>
 
-<script src = "../lib/gbx-gbxml-text-parser.js" ></script>
-<script src = "../lib/gbxu-gbxml-utilities.js" ></script>
+<script src = "../lib/gbx-text-parser.js" ></script>
 
 <script src = "../lib/iscor-issues-core.js" ></script>
 <script src = "../lib/isfic-issues-file-check.js" ></script>
@@ -89,67 +88,89 @@
 
 		<details open >
 
-				<summary class=divMenuTitle >File Menu</summary>
+			<summary class=divMenuTitle >File Menu </summary>
 
-				<details>
+			<details>
 
-					<summary>Open gbXML sample files</summary>
+				<summary>Open gbXML sample file</summary>
 
-					<div id=divSampleFileButtons ></div>
+				<div id=divSampleFileButtons ></div>
 
-					<div id=divSampleFileItems ></div>
+				<div id=divSampleFileItems ></div>
+
+			</details>
+
+			<details open >
+
+				<summary>Open gbXML file</summary>
+
+				<div id="FILdivFileOpen" class="dragDropArea" ></div>
+
+			</details>
+
+			<details open >
+
+				<summary>Open ZIP file</summary>
+
+				<p>
+					<input type=file onchange=FIL.inpOpenFileZip(this); accept="application/zip" >
+				</p>
+
+				<p>Experimental feature.</p>
+
+				<p>
+					Files to download and test:
+					<a href="https://www.ladybug.tools/spider/gbxml-sample-files/zip/UK_London_RoyalArsenalWoolwich.zip" target="_blank">Royal Arsenal</a> /
+					<a href="https://www.ladybug.tools/spider/gbxml-sample-files/zip/LondonOffice_ver01.zip" target="_blank">London Office</a> /
+					<a href="https://www.ladybug.tools/spider/gbxml-sample-files/zip/aim0013 (27).zip" target="_blank">Warwick University</a>
+				</p>
+
+			</details>
+
+
+			<details>
+
+				<summary>Save file as</summary>
+
+				<div id = "divSaveFile" >
+
+					<p>
+						<button onclick=FIL.butSaveFile(); >Save file as XML</button>
+					</p>
+					<p>
+						<button onclick=alert("coming-soon"); >Save file as XML in ZIP</button>
+					</p>
+
+				</div>
+
+			</details>
+
+			<aside>
+
+				<details open>
+
+					<summary>File information</summary>
 
 					<div id=divFileInfo ></div>
 
-					<div id=GALdivCurrentStatus ></div>
+					<div id=divLog2 ></div>
 
-					<hr>
-
-				</details>
-
-				<details id=FILdetFileOpen >
-
-					<summary>Open gbXML or ZIP file</summary>
-
-					<div id="FILdivFileOpen" ></div>
-
-					<br>
+					<div id=FILdivCurrentStatus ></div>
 
 				</details>
 
-				<details>
-
-					<summary>Save file</summary>
-
-					<div id = "divSaveFile" >
-
-						<p>
-							<button onclick=FIL.butSaveFile(); >Save file as gbXML</button>
-						</p>
-						<p>
-							<button onclick=FIL.butSaveFileZip(); >Save file as gbXML in ZIP</button>
-						</p>
-
-						<hr>
-
-					</div>
-
-				</details>
-
-			<br>
-
-			<div id=FILdivCurrentStatus ></div>
+			</aside>
 
 		</details>
 
 
 		<details id=detMenuEdit  >
 
-			<div id = "divMenuNote" ></div>
+				<div id = "divMenuNote" ></div>
 
-			<summary class=divMenuTitle >Edit Menu </summary>
+				<summary class=divMenuTitle >Edit Menu </summary>
 
-			<div id = "ISCORdivMenuIssues" ></div>
+				<div id = "ISCORdivMenuIssues" ></div>
 
 		</details>
 
@@ -191,7 +212,13 @@
 
 			<aside>
 
-				<div id="GBXdivStats" ></div>
+				<details id=detStats ontoggle=divGbxmlInfo.innerHTML=VWSRF.getStats(); >
+
+					<summary>gbXML file statistics</summary>
+
+					<div id = "divGbxmlInfo" ></div>
+
+				</details>
 
 			</aside>
 
@@ -242,28 +269,25 @@ THR.animate();
 
 function init() {
 
-	THR.getThreejs();
-
-	THRU.setHelpers();
-
-	THRU.addSomeLights();
-
 	divHeader.innerHTML = MNU.getNavHeader(); // not essential
 
 	spnStatus.innerHTML = document.head.querySelector( '[ name=date ]' ).content;
 
 	divSampleFileButtons.innerHTML = GAL.getMenuSampleGalleries();
 
-	FILdivFileOpen.innerHTML = FIL.getMenuFileOpen();
-
-	GBXdivStats.innerHTML = GBX.getDivMenuGbx();
+	FILdivFileOpen.innerHTML = FIL.getFileOpen();
 
 	ISCORdivMenuIssues.innerHTML = ISCOR.getMenuIssues();
 
 	divFooter.innerHTML = MNU.getNavFooter(); // not essential
 
-	divPopUpData.innerHTML = POP.getMenuHtmlPopUp();
+	THR.getThreejs();
 
+	THRU.setHelpers();
+
+	THRU.addSomeLights();
+
+	divPopUpData.innerHTML = POP.getMenuHtmlPopUp();
 
 	// loads a default file / great for testing same file many times
 	const thrFilePath = localStorage.getItem( 'thrFilePath' ) || '';

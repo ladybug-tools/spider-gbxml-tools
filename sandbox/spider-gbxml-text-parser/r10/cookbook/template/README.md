@@ -40,8 +40,9 @@ _<small>Spider gbXML ZZZZZ</small>_
 
 ## Change Log
 
-### XXX
+### 2018-12-11
 
+template
 * First commit
 
 

@@ -23,7 +23,7 @@ _<small>Spider gbXML Viewer Sample Files Gallery</small>_
 
 * Uses the GitHub API to obtain up to date listings of file names in a directory
 * Display list of file names as links to source
-	* Click Octocat icon to  go to the source on GitHub
+	* Click Octocat icon to go to the source on GitHub
 	* Click the text link to update the location hash
 		* Used by other modules as an event to load new files etc
 	* Click the external link icon on right to view the file full screen in its own window

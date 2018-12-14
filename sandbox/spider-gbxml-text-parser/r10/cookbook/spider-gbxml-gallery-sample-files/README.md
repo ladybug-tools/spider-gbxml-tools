@@ -18,12 +18,15 @@ _<small>Spider gbXML Text Parser Gallery gbXML Sample Files</small>_
 
 ## Concept
 
+Obtain links to sample gbXML files via GitHub API and update location hash with selected link
+
 
 ## Features
 
+
 * Uses the GitHub API to obtain up to date listings of file names in a directory
 * Display list of file names as links to source
-	* Click Octocat icon to  go to the source on GitHub
+	* Click Octocat icon to go to the source on GitHub
 	* Click the text link to update the location hash
 		* Used by other modules as an event to load new files etc
 	* Click the external link icon on right to view the file full screen in its own window
@@ -57,6 +60,14 @@ _<small>Spider gbXML Text Parser Gallery gbXML Sample Files</small>_
 
 
 ## Change Log
+
+### 2018-12-13 ~ Theo
+
+spider-gbxml-gallery-sample-files.html 10.1
+* rejig menu
+gal-sample-files-gallery-gbxml.js r10.1
+* Update status
+* Fix bugs loading ZIP files
 
 ### 2018-12-11 ~ Theo
 

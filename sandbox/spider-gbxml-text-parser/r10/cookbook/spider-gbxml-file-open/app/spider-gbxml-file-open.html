@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8" >
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
-<meta name=description content="Open and examine very large gbXML files in your browser with free, open source JavaScript" >
+<meta name=description content="Script for developing and testing opening and saving local and remote gbXML and ZIP files" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name="date" content="2018-12-13" >
-<title>Spider gbXML Text Parser R10.5 </title>
-<link rel="stylesheet" href="../lib/style.css">
+<meta name = "date" content = "2018-12-13" >
+<title>Spider gbXML File Open r10.1 </title>
+<link rel="stylesheet" href="../../../lib/style.css">
 <style>
 
 	aside { border: 1px solid lightgray; margin-top:15px; padding: 2px; }
@@ -26,35 +26,43 @@
 </style>
 </head>
 <body>
-<script src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
 <script src = "https://cdn.rawgit.com/mrdoob/three.js/r99/build/three.min.js" ></script>
 <script src = "https://cdn.rawgit.com/mrdoob/three.js/r99/examples/js/controls/OrbitControls.js" ></script>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
+
+<script src = "../../spider-gbxml-gallery-sample-files/lib/gal-sample-files-gallery-gbxml.js" ></script>
+
 <script src = "../lib/fil-open-file.js" ></script>
 
-<script src = "../lib/mnu-menu.js" ></script>
-<script src = "../lib/thr-threejs.js" ></script>
-<script src = "../lib/thru-threejs-utilities.js"></script>
-<script src = "../lib/gal-sample-files-gallery-gbxml.js" ></script>
+<script src = "../../../lib/thr-threejs.js" ></script>
+<script src = "../../../lib/thru-threejs-utilities.js"></script>
 
 <script src = "../lib/gbx-gbxml-text-parser.js" ></script>
 <script src = "../lib/gbxu-gbxml-utilities.js" ></script>
 
-<script src = "../lib/iscor-issues-core.js" ></script>
-<script src = "../lib/isfic-issues-file-check.js" ></script>
-<script src = "../lib/ismet-issues-metadata.js" ></script>
-<script src = "../lib/issti-issues-surface-type-invalid.js" ></script>
-<script src = "../lib/isduc-issues-duplicate-coordinates.js" ></script>
-<script src = "../lib/isasi-issues-adjacent-space-invalid.js" ></script>
-<script src = "../lib/isase-issues-adjacent-space-extra.js" ></script>
-<script src = "../lib/isasd-issues-adjacent-space-duplicate.js" ></script>
-<script src = "../lib/iscod-issues-cad-object-id.js" ></script>
-<script src = "../lib/istmp-issues-template.js" ></script>
+<!--
 
-<script src = "../lib/vwsrf-view-surface-types.js" ></script>
-<script src = "../lib/repl-view-by-level.js" ></script>
-<script src = "../lib/set-settings.js" ></script>
-<script src = "../lib/cut-section-cut.js"></script>
-<script src = "../lib/pop-up-text-parser.js" ></script>
+<script src = "../../../lib/iscor-issues-core.js" ></script>
+<script src = "../../../lib/isfic-issues-file-check.js" ></script>
+<script src = "../../../lib/ismet-issues-metadata.js" ></script>
+<script src = "../../../lib/issti-issues-surface-type-invalid.js" ></script>
+<script src = "../../../lib/isduc-issues-duplicate-coordinates.js" ></script>
+<script src = "../../../lib/isasi-issues-adjacent-space-invalid.js" ></script>
+<script src = "../../../lib/isase-issues-adjacent-space-extra.js" ></script>
+<script src = "../../../lib/isasd-issues-adjacent-space-duplicate.js" ></script>
+<script src = "../../../lib/iscod-issues-cad-object-id.js" ></script>
+
+<script src = "../../../lib/vwsrf-view-surface-types.js" ></script>
+<script src = "../../../lib/repl-view-by-level.js" ></script>
+<script src = "../../../lib/set-settings.js" ></script>
+<script src = "../../../lib/cut-section-cut.js"></script>
+<script src = "../../../lib/pop-up-text-parser.js" ></script>
+-->
+
+<script src = "../../../lib/mnu-menu.js" ></script>
+
+<script src = "../lib/tmp-template.js" ></script>
+
 
 	<main id="container" ></main>
 
@@ -66,92 +74,91 @@
 
 		</header>
 
-
-		<details>
-
-			<summary><span id="spnStatus" ></span> ~ Current Status</summary>
-
-			<p>Model not fully loaded until model centers on screen and starts rotating.</p>
-
-			<p>Default onload shows: Roof, ExteriorWall, ExposedFloor, Air and Shade. May be having issues on large files</p>
-
-			<p>
-				After loading a very large model:
-				<span class=highlight >it's best to reload web page before loading next model.</span>
-				And, be patient, it may take a very long time to clear large files from memory.
-			</p>
-
-			<!--
-				<p>Reloads are faster than first load. Best not to load two big files one after another. Load default file in-between.</p>
-			-->
-
-		</details>
+		<div id=TMPdivTemplate ></div>
 
 		<details open >
 
-				<summary class=divMenuTitle >File Menu</summary>
+			<summary class=divMenuTitle >File Menu</summary>
 
-				<details>
+			<details>
 
-					<summary>Open gbXML sample files</summary>
+				<summary>Open gbXML sample files</summary>
 
-					<div id=divSampleFileButtons ></div>
+				<div id=divSampleFileButtons ></div>
 
-					<div id=divSampleFileItems ></div>
+				<div id=divSampleFileItems ></div>
 
-					<div id=divFileInfo ></div>
+				<div id=divFileInfo ></div>
 
-					<div id=GALdivCurrentStatus ></div>
+				<div id=GALdivCurrentStatus ></div>
+
+				<hr>
+
+			</details>
+
+			<details id=FILdetFileOpen >
+
+				<summary>Open gbXML or ZIP file</summary>
+
+				<div id="FILdivFileOpen" ></div>
+
+				<hr>
+
+			</details>
+
+			<details>
+
+				<summary>Save file</summary>
+
+				<div id = "divSaveFile" >
+
+					<p>
+						<button onclick=FIL.butSaveFile(); >Save file as gbXML</button>
+					</p>
+					<p>
+						<button onclick=FIL.butSaveFileZip(); >Save file as gbXML in ZIP</button>
+					</p>
 
 					<hr>
 
-				</details>
+				</div>
 
-				<details id=FILdetFileOpen >
+			</details>
 
-					<summary>Open gbXML or ZIP file</summary>
+		<br>
 
-					<div id="FILdivFileOpen" ></div>
-
-					<br>
-
-				</details>
-
-				<details>
-
-					<summary>Save file</summary>
-
-					<div id = "divSaveFile" >
-
-						<p>
-							<button onclick=FIL.butSaveFile(); >Save file as gbXML</button>
-						</p>
-						<p>
-							<button onclick=FIL.butSaveFileZip(); >Save file as gbXML in ZIP</button>
-						</p>
-
-						<hr>
-
-					</div>
-
-				</details>
-
-			<br>
-
-			<div id=FILdivCurrentStatus ></div>
+		<div id=FILdivCurrentStatus ></div>
 
 		</details>
 
 
-		<details id=detMenuEdit  >
 
-			<div id = "divMenuNote" ></div>
 
-			<summary class=divMenuTitle >Edit Menu </summary>
+
+		<details id=detMenuItems open >
+
+			<summary class=divMenuTitle >View Menu </summary>
+
+			<div id="GBXdivStats" ></div>
 
 			<div id = "ISCORdivMenuIssues" ></div>
 
 		</details>
+
+
+		<!--
+
+					<details id=detStats ontoggle=divGbxmlInfo.innerHTML=VWSRF.getStats(); >
+
+						<summary>gbXML file statistics</summary>
+
+						<div id = "divGbxmlInfo" ></div>
+
+					</details>
+
+
+
+
 
 
 		<details id=detMenuView >
@@ -189,13 +196,12 @@
 
 			</details>
 
-			<aside>
 
-				<div id="GBXdivStats" ></div>
-
-			</aside>
 
 		</details>
+
+		-->
+
 
 		<details id=detMenuHelp ontoggle=divMenuHelp.innerHTML=MNU.getNavHelp(); >
 
@@ -218,6 +224,7 @@
 	</nav>
 
 
+	<!--
 	<div id="divPopUp" >
 
 		<div id="divPopUpData" ></div>
@@ -225,6 +232,7 @@
 		<div id="divMessage" ></div>
 
 	</div>
+	-->
 
 <script>
 
@@ -250,7 +258,7 @@ function init() {
 
 	divHeader.innerHTML = MNU.getNavHeader(); // not essential
 
-	spnStatus.innerHTML = document.head.querySelector( '[ name=date ]' ).content;
+	TMPdivTemplate.innerHTML = TMP.getDivMenuTemplate();
 
 	divSampleFileButtons.innerHTML = GAL.getMenuSampleGalleries();
 
@@ -258,11 +266,7 @@ function init() {
 
 	GBXdivStats.innerHTML = GBX.getDivMenuGbx();
 
-	ISCORdivMenuIssues.innerHTML = ISCOR.getMenuIssues();
-
 	divFooter.innerHTML = MNU.getNavFooter(); // not essential
-
-	divPopUpData.innerHTML = POP.getMenuHtmlPopUp();
 
 
 	// loads a default file / great for testing same file many times
@@ -273,7 +277,17 @@ function init() {
 	FIL.urlDefaultFile = thrFilePath || urlDefaultFile;
 
 	if ( !location.hash ) { location.hash = FIL.urlDefaultFile; } else { FIL.onHashChange(); }
-	//location.hash = urlDefaultFile;
+
+
+/*
+	spnStatus.innerHTML = document.head.querySelector( '[ name=date ]' ).content;
+
+	divSampleFileButtons.innerHTML = GAL.setCardSampleGalleries();
+
+	ISCORdivMenuIssues.innerHTML = ISCOR.getMenuIssues();
+
+	divPopUpData.innerHTML = POP.getMenuHtmlPopUp();
+*/
 
 }
 

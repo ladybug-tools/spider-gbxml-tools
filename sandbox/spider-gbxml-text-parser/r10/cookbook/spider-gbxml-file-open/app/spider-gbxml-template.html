@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8" >
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
-<meta name=description content="Obtain links to sample gbXML files via GitHub API and update location hash with selected link" >
+<meta name=description content="Template for building Spider gbXML modules" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-12-13" >
-<title>Spider gbXML Sample File Gallery r10.1 </title>
+<meta name = "date" content = "2018-12-11" >
+<title>Spider gbXML Template</title>
 <link rel="stylesheet" href="../../../lib/style.css">
 <style>
 
@@ -26,19 +26,18 @@
 </style>
 </head>
 <body>
-
-
-<script src = "../lib/gal-sample-files-gallery-gbxml.js" ></script>
+<script src = "../../../lib/fil-open-file.js" ></script>
 
 <!--
 <script src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
 <script src = "https://cdn.rawgit.com/mrdoob/three.js/r99/build/three.min.js" ></script>
 <script src = "https://cdn.rawgit.com/mrdoob/three.js/r99/examples/js/controls/OrbitControls.js" ></script>
-<script src = "../../../lib/fil-open-file.js" ></script>
+
 
 
 <script src = "../../../lib/thr-threejs.js" ></script>
 <script src = "../../../lib/thru-threejs-utilities.js"></script>
+<script src = "../../../lib/gal-sample-files-gallery-gbxml.js" ></script>
 
 <script src = "../../../lib/gbx-text-parser.js" ></script>
 
@@ -75,35 +74,12 @@
 
 		</header>
 
-
-
-		<details open >
-
-			<summary class=divMenuTitle >File Menu </summary>
-
-			<details open >
-
-				<summary>Open gbXML sample files</summary>
-
-				<div id=divSampleFileButtons ></div>
-
-				<div id=divSampleFileItems ></div>
-
-				<div id=divFileInfo ></div>
-
-				<div id=GALdivCurrentStatus ></div>
-
-			</details>
-
-<!--
-
 		<details open >
 
 			<summary class=divMenuTitle ><span id="spnStatus" >Menu item</summary>
 
-				<div id=TMPdivTemplate ></div>
+			<div id=TMPdivTemplate ></div>
 
-		</details>
 			<details open >
 
 				<summary>Open gbXML file</summary>
@@ -111,6 +87,129 @@
 				<div id="FILdivFileOpen" class="dragDropArea" ></div>
 
 			</details>
+
+			<aside>
+
+				<details open>
+
+					<summary>File information</summary>
+
+					<div id=divFileInfo ></div>
+
+					<div id=divLog2 ></div>
+
+					<div id=FILdivCurrentStatus ></div>
+
+				</details>
+
+			</aside>
+
+			<aside>
+
+				<details id=detStats ontoggle=divGbxmlInfo.innerHTML=VWSRF.getStats(); >
+
+					<summary>gbXML file statistics</summary>
+
+					<div id = "divGbxmlInfo" ></div>
+
+				</details>
+
+			</aside>
+
+
+			<details id=detReports ontoggle=VWSRF.onToggle(); >
+
+				<summary>Show/hide by surface type</summary>
+
+				<div id = "divReports" ></div>
+
+				<div id = "divReportByLevels" ></div>
+
+				<div id = "divReportsLog" ></div>
+
+			</details>
+
+			<details id=detSettings ontoggle=divSettings.innerHTML=SET.getSettingsMenu(); >
+
+				<summary>Scene display settings</summary>
+
+				<div id = "divSettings" ></div>
+
+				<div id = "divSettingsLog" ></div>
+
+			</details>
+
+
+			<details id=detMenuEdit  >
+
+					<div id = "divMenuNote" ></div>
+
+					<summary class=divMenuTitle >Edit Menu </summary>
+
+					<div id = "ISCORdivMenuIssues" ></div>
+
+			</details>
+
+
+			<details id=detMenuView >
+
+				<summary class=divMenuTitle >View Menu </summary>
+
+				<details id=detReports ontoggle=VWSRF.onToggle(); >
+
+					<summary>Show/hide by surface type</summary>
+
+					<div id = "divReports" ></div>
+
+					<div id = "divReportByLevels" ></div>
+
+					<div id = "divReportsLog" ></div>
+
+				</details>
+
+
+				<details id=detSettings ontoggle=divSettings.innerHTML=SET.getSettingsMenu(); >
+
+					<summary>Scene display settings</summary>
+
+					<div id = "divSettings" ></div>
+
+					<div id = "divSettingsLog" ></div>
+
+				</details>
+
+				<details ontoggle=divSectionCut.innerHTML=CUT.getDetSectionViews(); >
+
+					<summary>Scene cut sections</summary>
+
+					<div id=divSectionCut ></div>
+
+				</details>
+
+
+
+			</details>
+
+		</details>
+
+
+
+		<!--
+		<details open >
+
+			<summary class=divMenuTitle >File Menu </summary>
+
+			<details>
+
+				<summary>Open gbXML sample files</summary>
+
+				<div id=divSampleFileButtons ></div>
+
+				<div id=divSampleFileItems ></div>
+
+			</details>
+
+
 
 			<details open >
 
@@ -149,84 +248,12 @@
 
 			</details>
 
-			<aside>
 
-				<details open>
-
-					<summary>File information</summary>
-
-					<div id=divFileInfo ></div>
-
-					<div id=divLog2 ></div>
-
-					<div id=FILdivCurrentStatus ></div>
-
-				</details>
-
-			</aside>
 
 		</details>
 
 
-		<details id=detMenuEdit  >
 
-				<div id = "divMenuNote" ></div>
-
-				<summary class=divMenuTitle >Edit Menu </summary>
-
-				<div id = "ISCORdivMenuIssues" ></div>
-
-		</details>
-
-
-		<details id=detMenuView >
-
-			<summary class=divMenuTitle >View Menu </summary>
-
-			<details id=detReports ontoggle=VWSRF.onToggle(); >
-
-				<summary>Show/hide by surface type</summary>
-
-				<div id = "divReports" ></div>
-
-				<div id = "divReportByLevels" ></div>
-
-				<div id = "divReportsLog" ></div>
-
-			</details>
-
-
-			<details id=detSettings ontoggle=divSettings.innerHTML=SET.getSettingsMenu(); >
-
-				<summary>Scene display settings</summary>
-
-				<div id = "divSettings" ></div>
-
-				<div id = "divSettingsLog" ></div>
-
-			</details>
-
-			<details ontoggle=divSectionCut.innerHTML=CUT.getDetSectionViews(); >
-
-				<summary>Scene cut sections</summary>
-
-				<div id=divSectionCut ></div>
-
-			</details>
-
-			<aside>
-
-				<details id=detStats ontoggle=divGbxmlInfo.innerHTML=VWSRF.getStats(); >
-
-					<summary>gbXML file statistics</summary>
-
-					<div id = "divGbxmlInfo" ></div>
-
-				</details>
-
-			</aside>
-
-		</details>
 
 		-->
 
@@ -280,17 +307,17 @@ function init() {
 
 	divHeader.innerHTML = MNU.getNavHeader(); // not essential
 
-	//TMPdivTemplate.innerHTML = TMP.getDivMenuTemplate();
+	TMPdivTemplate.innerHTML = TMP.getDivMenuTemplate();
 
-	divSampleFileButtons.innerHTML = GAL.getMenuSampleGalleries();
+	FILdivFileOpen.innerHTML = FIL.getFileOpen();
 
 	divFooter.innerHTML = MNU.getNavFooter(); // not essential
 
 /*
 	spnStatus.innerHTML = document.head.querySelector( '[ name=date ]' ).content;
 
+	divSampleFileButtons.innerHTML = GAL.setCardSampleGalleries();
 
-	FILdivFileOpen.innerHTML = FIL.getFileOpen();
 
 	ISCORdivMenuIssues.innerHTML = ISCOR.getMenuIssues();
 
