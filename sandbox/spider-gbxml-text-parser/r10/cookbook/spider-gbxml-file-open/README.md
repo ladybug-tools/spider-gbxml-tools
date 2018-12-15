@@ -19,10 +19,49 @@ _<small>Spider gbXML Viewer Open File</small>_
 ## Concept
 
 
+
 ## To Do / Wish List
 
 * Needs a bit more cleanup and moving calls to GBX module
 * Rename to fil-file-handling-utilities?
+
+## Features
+
+
+### File Open
+
+Files may be opened is a variety of ways
+* By providing a link in a URL
+* By dragging either a file or URL into the designated area of the file menu
+* By using the operating system file dialog box
+* By entering a link in a designated text input box
+
+Testing often requires reloading a file many times in a rapid succession
+The viewer is designed to help
+* Clicking the reload browser will reload the file in the URL
+* Any link in designated text input box will be reload using
+	* Browser reload button
+	* Clicking the larger script title at the top of the menu
+
+
+Given a URL
+* Requests an XML file and returns the text
+* Uses jsZIP to request ZIP files, decompresses, extracts text from first file found
+
+Given a DOM Reader.result - from Drag and Drop or input type file
+* Load an XML
+* Uses jsZIP to request ZIP files, decompresses, extracts text from first file found
+
+Progress indication
+* Current status update and displayed regularly
+* There is good feedback even on very large files
+
+
+### File save
+
+* Saves files as XML text
+* Compresses XML data and saves to ZIP file with same name as XML file
+
 
 ## Issues
 
@@ -34,11 +73,21 @@ _<small>Spider gbXML Viewer Open File</small>_
 
 ## Change Log
 
+
+### 2018-12-14 ~ Theo
+
+fil-open-file.js r10.2
+* Streamline FIL.onProgress fandling a lot
+* Update variable and function names to be clearer
+* Add events - no more GBX references exept for file saves
+* Fix jsHint warnings
+
 ### 2018-12-13 ~ Theo
 
 spider-gbxml-file-open.html
 spider-gbxml-text-parser.html
 * Rejig the menu again
+
 fil-open-file.js r10.1
 * 2018-12-13 ~ Add save to gbXML abd to ZIP<
 * 2018-12-13 ~ Open gbXML and open zip combined into single UI element. Major code refactor.<

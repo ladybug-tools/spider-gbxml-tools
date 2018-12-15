@@ -35,6 +35,7 @@ Obtain links to sample gbXML files via GitHub API and update location hash with 
 
 ## Wish list
 
+* 2018-12-14 ~ Add notes regarding icons and tooltips
 * Links to more sample files
 	* Where to find more?
 * Credits to sources of files

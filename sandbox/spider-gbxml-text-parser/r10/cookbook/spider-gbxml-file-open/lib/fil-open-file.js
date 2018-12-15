@@ -1,15 +1,15 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
 // jshint esversion: 6
-/* globals */
+/* globals GBX, JSZip */
 
 
-const FIL = { "release": "r10.1.1", "date": "2018-12-13" };
+const FIL = { "release": "r10.2", "date": "2018-12-14" };
 
-FIL.xhr = new XMLHttpRequest();
+
 FIL.reader = new FileReader();
-//zip = new JSZip();
+FIL.xhr = new XMLHttpRequest(); // declare now to load event listeners in other modules
 
-FIL.note = `<p>With large files, after loading there may be a pause of some seconds where nothing happens.</p>`;
+FIL.note = `<p>With large files, after loading, there is a pause of some seconds where nothing happens.</p>`;
 
 
 FIL.currentStatus =
@@ -23,13 +23,7 @@ FIL.currentStatus =
 			<p>
 				Updates
 				<ul>
-
-					<li>2018-12-13 ~ Add save to gbXML ad to ZIP</li>
-					<li>2018-12-13 ~ Open gbXML and open zip combined into single UI element. Major code refactor.</li>
-					<li>2018-12-13 ~ Add cookbook test script</li>
-					<li>2018-12-13 ~ Improve modularization and event-handing between modules</li>
-					<li>2018-12-13 ~ Improve loading progress indication</li>
-					<li></li>
+					<li>2018-12-14 ~ Many internal fixes and code cleanups</li>
 				</ul>
 			</p>
 
@@ -51,8 +45,8 @@ FIL.getMenuFileOpen = function() {  // called from main HTML file
 	FILdivFileOpen.addEventListener( "dragover", function( event ){ event.preventDefault(); }, true );
 	FILdivFileOpen.addEventListener( 'drop', FIL.drop, false );
 
-	//FIL.xhr.addEventListener( 'load', function( e ) { console.log( 'e', e.target.response ); }, false );
-	// see event listener in: gbx-gbxml-text-parser.js
+	// see also event listener in: gbx-gbxml-text-parser.js
+
 
 	FILdivCurrentStatus.innerHTML = FIL.currentStatus;
 
@@ -61,7 +55,7 @@ FIL.getMenuFileOpen = function() {  // called from main HTML file
 		<div id="FILdivFileOpen" class="dragDropArea" >
 
 			<p>
-				<input type=file id=inpOpenFile onchange=FIL.inpFileOpenType(this); accept=".xml, .zip" >
+				<input type=file id=inpOpenFile onchange=FIL.onInputFileOpen(this); accept=".xml, .zip" >
 				or drag & drop files here
 				or enter a default file path &nbsp;<a href=#../assets/file-open.md title="Learn how to speed up your testing" >?</a>
 				<!--
@@ -74,15 +68,11 @@ FIL.getMenuFileOpen = function() {  // called from main HTML file
 
 		<aside>
 
-
 			<div>File name:</div>
 
 			<div id=FILdivProgress ></div>
 
 		</aside>
-
-
-
 	`;
 
 	return htm;
@@ -98,18 +88,13 @@ FIL.onHashChange = function() {
 
 	FIL.name = url.split( '/').pop();
 
+	if ( FIL.name.toLowerCase().endsWith( '.xml' ) ) {
 
-	if ( url.toLowerCase().endsWith( '.xml' ) ) {
+		FIL.XhrRequestFileXml( url );
 
-		THRU.setSceneDispose( [ GBX.surfaceMeshes ] ); // to GBX
+	} else if ( FIL.name.toLowerCase().endsWith( '.zip' )) {
 
-		FIL.requestFile( url, FIL.callbackGbxml );
-
-	} else if ( url.toLowerCase().endsWith( '.zip' )) {
-
-		THRU.setSceneDispose( [ GBX.surfaceMeshes ] );
-
-		FIL.getZipFromUrl( url, FIL.callbackUrlUtf16 );
+		FIL.XhrRequestFileZip( url, FIL.callbackUrlUtf16 );
 
 	} else {
 
@@ -120,27 +105,32 @@ FIL.onHashChange = function() {
 };
 
 
+FIL.XhrRequestFileXml = function( url ) {
 
-FIL.getZipFromUrl = function( url, callback ) {
+	FIL.timeStart = performance.now();
+
+	//FIL.xhr = new XMLHttpRequest();
+	FIL.xhr.open( 'GET', url, true );
+	FIL.xhr.onerror = function( xhr ) { console.log( 'error:', xhr  ); };
+	FIL.xhr.onprogress = function( xhr ) { FIL.onProgress( xhr.loaded, FIL.note ); };
+	FIL.xhr.onload = function( xhr ) { FIL.onProgress( xhr.loaded ); };
+	FIL.xhr.send( null );
+
+};
+
+
+
+FIL.XhrRequestFileZip = function( url ) {
 
 	FIL.timeStart = performance.now();
 
 	const xhr = new XMLHttpRequest();
-	xhr.crossOrigin = 'anonymous';
 	xhr.responseType = 'blob';
 	xhr.open( 'GET', url, true );
-	xhr.onerror = function( xhr ) { console.log( 'error:', xhr  ); };
-	xhr.onprogress = onRequestFileProgress;
-	xhr.onload = callback;
+	xhr.onerror = function( xhr ) { console.log( 'error:', xhr ); };
+	xhr.onprogress = function( xhr ) { FIL.onProgress( xhr.loaded, FIL.note ); };
+	xhr.onload = FIL.callbackUrlUtf16;
 	xhr.send( null );
-
-	function onRequestFileProgress( xhr ) {
-
-		const timeToLoad = performance.now() - FIL.timeStart;
-
-		FIL.onProgress( FIL.name, xhr.loaded.toLocaleString(), timeToLoad, FIL.note );
-
-	}
 
 };
 
@@ -162,9 +152,9 @@ FIL.callbackUrlUtf16 = function( xhr ) {
 		zip.forEach( ( relativePath, zipEntry ) => names.push( zipEntry.name ) );
 
 		// Read from the zip file!
-		const array = zip.file( names[ 0 ] ).async( "uint8array" );
+		const uint8array = zip.file( names[ 0 ] ).async( "uint8array" );
 
-		return array;
+		return uint8array;
 
 	} )
 
@@ -209,15 +199,16 @@ FIL.callbackUrlUtf16 = function( xhr ) {
 
 		function success( text) {
 
-			GBX.parseFile( text );  // to GBX
+			FIL.text = text;
 
-			const timeToLoad = performance.now() - FIL.timeStart;
+			const event = new Event( 'onZipFileParse' );
+			document.body.dispatchEvent( event );
 
-			FIL.onProgress( FIL.name, text.length.toLocaleString(), timeToLoad );
+			FIL.onProgress( text.length );
 
 		},
 
-		function error( e ) { divFileContents.append(`error ${ e } `) }
+		function error( e ) { FILdivProgress.append( `error ${ e } ` ); }
 
 	);
 
@@ -225,56 +216,24 @@ FIL.callbackUrlUtf16 = function( xhr ) {
 
 
 
-FIL.requestFile = function( url, callback ) {
+////////// Handle OS file dialog events
 
-	FIL.timeStart = performance.now();
-
-	FIL.xhr.crossOrigin = 'anonymous';
-	FIL.xhr.open( 'GET', url, true );
-	FIL.xhr.onerror = function( xhr ) { console.log( 'error:', xhr  ); };
-	FIL.xhr.onprogress = onRequestFileProgress;
-	FIL.xhr.onload = callback;
-	FIL.xhr.send( null );
-
-		function onRequestFileProgress( xhr ) {
-
-			const timeToLoad = performance.now() - FIL.timeStart;
-
-			FIL.onProgress( FIL.name, xhr.loaded.toLocaleString(), timeToLoad, FIL.note );
-
-		}
-
-};
-
-
-
-FIL.callbackGbxml = function( xhr ) {
-	//console.log( 'xhr', xhr );
-
-	const timeToLoad = performance.now() - FIL.timeStart;
-
-	FIL.onProgress( FIL.name, xhr.loaded.toLocaleString(), timeToLoad );
-
-};
-
-
-
-FIL.inpFileOpenType = function( files ) {
+FIL.onInputFileOpen = function( files ) {
 	//console.log( 'files', files );
 
 	FIL.timeStart = performance.now();
 
 	const file = files.files[ 0 ];
-	const type = file.type
+	const type = file.type;
 	//console.log( 'type', type );
 
 	if ( type === "text/xml" ) {
 
-		FIL.inpFileOpenXml( files );
+		FIL.fileOpenXml( files );
 
 	} else if ( type === "application/x-zip-compressed" ) {
 
-		FIL.inpFileOpenZip( files );
+		FIL.fileOpenZip( files );
 
 	} else {
 
@@ -282,126 +241,11 @@ FIL.inpFileOpenType = function( files ) {
 
 	}
 
-}
-
-
-FIL.inpFileOpenXml = function( files ) {
-	//console.log( 'file', files.files[ 0 ] );
-
-	FIL.name = files.files[ 0 ].name;
-
-	FIL.reader.onprogress = onRequestFileProgress;
-
-	FIL.reader.onload = function( event ) {
-
-		const timeToLoad = performance.now() - FIL.timeStart;
-
-		FIL.onProgress( FIL.name, event.loaded, timeToLoad );
-
-	};
-
-	FIL.reader.readAsText( files.files[ 0 ] );
-
-
-	function onRequestFileProgress( event ) {
-
-		const timeToLoad = performance.now() - FIL.timeStart;
-
-		FIL.onProgress( FIL.name, event.loaded.toLocaleString(), timeToLoad, FIL.note );
-
-	}
-
 };
 
 
 
-FIL.inpFileOpenZip = function( files ) {
-	//console.log( 'files', files.files[0] );
-
-	FIL.name = files.files[ 0 ].name;
-
-	const zip = new JSZip();
-	const decoder = new TextDecoder( "utf-8" );
-
-	const names = [];
-
-	zip.loadAsync( files.files[ 0 ] )
-
-	.then( zip => {
-		//console.log( 'zip', zip );
-
-		zip.forEach( ( relativePath, zipEntry ) => names.push( zipEntry.name ) );
-		FIL.name = names[ 0 ];
-
-		const arrTemp = zip.files[ FIL.name].async( "uint8array", metadata =>
-			FIL.onProgress( FIL.name, metadata.percent.toFixed(2) + '%', performance.now() - FIL.timeStart, FIL.note )
-		);
-
-		return arrTemp;
-
-	}, ( err ) =>  FILdivProgress.innerHTML += err.message )
-
-	.then( ( uint8array ) => {
-		//console.log( 'uint8array', uint8array );
-
-		if ( uint8array[ 0 ] !== 255 ||  uint8array[ 0 ] === 239 || uint8array[ 0 ] === 60 ) {
-
-			FIL.txt = decoder.decode( uint8array );
-			//console.log( 'txt', FIL.txt );
-
-		} else {
-			//console.log( 'uint8array', uint8array );
-
-			let arr = new Uint8Array( uint8array.length / 2 );
-			let index = 0;
-
-			for ( let i = 0; i < uint8array.length; i++ ) {
-
-				if ( i % 2 === 0 ) { arr[ index++ ] = uint8array[ i ]; }
-
-			}
-			//console.log( 'arr', arr );
-
-			FIL.txt = decoder.decode( arr );
-
-		}
-
-		const timeToLoad = performance.now() - FIL.timeStart;
-
-		FIL.onProgress( FIL.name, FIL.txt.length.toLocaleString(), timeToLoad );
-
-		GBXdivStats.click(); // to GBX
-
-	} );
-
-};
-
-
-
-FIL.onProgress = function( name, size, time, note = '' ) {
-
-	FILdetFileOpen.open = true;
-	//FILdetFileInfo.open = true;
-
-	FILdetFileOpen.scrollIntoViewIfNeeded();
-
-	let htm =
-	`
-		<div style=color:blue; >${ name }</div>
-		<div>bytes loaded: ${ size }</div>
-		<div>time to load: ${ Number( time ).toLocaleString() } ms</div>
-		${ note }
-	`;
-
-	//if ( size.endsWith( '%' ) ) { htm += '<p>On large files, there wil ba a pause for some seconds where nothing seems to happen.</p>'; }
-
-	FILdivProgress.innerHTML = htm;
-
-};
-
-
-
-////////// handle drag and drop events
+////////// handle OS drag and drop events
 
 FIL.drop = function( event ) {
 	//console.log( 'event', event );
@@ -414,19 +258,18 @@ FIL.drop = function( event ) {
 		location.hash = dropUrl;
 
 	} else {
+		//console.log( 'event', event.dataTransfer.files[ 0 ] );
 
-		console.log( 'event', event.dataTransfer.files[ 0 ] );
-
-		type = event.dataTransfer.files[ 0 ].type
+		const type = event.dataTransfer.files[ 0 ].type;
 		console.log( 'type', type );
 
 		if ( type === "text/xml" ) {
 
-			FIL.inpFileOpenXml( event.dataTransfer );
+			FIL.fileOpenXml( event.dataTransfer );
 
 		} else if ( type === "application/x-zip-compressed" ) {
 
-			FIL.inpFileOpenZip( event.dataTransfer );
+			FIL.fileOpenZip( event.dataTransfer );
 
 		} else {
 
@@ -442,23 +285,84 @@ FIL.drop = function( event ) {
 
 
 
-FIL.updateDefaultFilePath = function() {
+//////////
 
-	location.hash = FILinpFilePath.value;
+FIL.fileOpenXml = function( files ) {
+	//console.log( 'file', files.files[ 0 ] );
 
-	const thrFilePath = FILinpFilePath.value;
-	localStorage.setItem( 'thrFilePath', thrFilePath );
+	FIL.name = files.files[ 0 ].name;
+	FIL.reader.onprogress = function( event ) { FIL.onProgress( event.loaded, FIL.note ); };
+	FIL.reader.onload = function( event ) { FIL.onProgress( event.loaded ); };
+	FIL.reader.readAsText( files.files[ 0 ] );
 
 };
 
 
 
-//////////
+FIL.fileOpenZip = function( files ) {
+	//console.log( 'files', files.files[0] );
 
+	const zip = new JSZip();
+	const decoder = new TextDecoder( "utf-8" );
+	const names = [];
+
+	zip.loadAsync( files.files[ 0 ] )
+
+	.then( zip => {
+		//console.log( 'zip', zip );
+
+		zip.forEach( ( relativePath, zipEntry ) => names.push( zipEntry.name ) );
+		FIL.name = names[ 0 ];
+
+		const arrTemp = zip.files[ FIL.name].async(
+			"uint8array",
+			metadata => FIL.onProgress( metadata.percent.toFixed(2) + '%', FIL.note )
+		);
+
+		return arrTemp;
+
+	}, ( err ) =>  FILdivProgress.innerHTML += err.message )
+
+	.then( ( uint8array ) => {
+		//console.log( 'uint8array', uint8array );
+
+		if ( uint8array[ 0 ] !== 255 ||  uint8array[ 0 ] === 239 || uint8array[ 0 ] === 60 ) {
+
+			FIL.text = decoder.decode( uint8array );
+
+		} else {
+
+			let arr = new Uint8Array( uint8array.length / 2 );
+			let index = 0;
+
+			for ( let i = 0; i < uint8array.length; i++ ) {
+
+				if ( i % 2 === 0 ) { arr[ index++ ] = uint8array[ i ]; }
+
+			}
+
+			FIL.text = decoder.decode( arr );
+
+		}
+
+		FIL.onProgress( FIL.text.length );
+
+		const event = new Event( 'onZipFileParse' );
+		document.body.dispatchEvent( event );
+
+	} );
+
+};
+
+
+
+////////// File Save
+
+// better way than using GBX.text?
 
 FIL.butSaveFile = function() {
 
-	const lines = GBX.text.split(/\r\n|\n/);
+	//const lines = GBX.text.split(/\r\n|\n/);
 	//console.log( 'len', lines.length );
 
 	const blob = new Blob( [ GBX.text ] );
@@ -490,4 +394,39 @@ FIL.butSaveFileZip = function() {
 
 	});
 
-}
+};
+
+
+
+////////// Utilities
+
+FIL.onProgress = function( size = 0, note = '' ) {
+
+	FILdetFileOpen.open = true;
+
+	FILdetFileOpen.scrollIntoViewIfNeeded();
+
+	const timeToLoad = ( performance.now() - FIL.timeStart ).toLocaleString();
+
+	let htm =
+	`
+		<div style=color:blue; >${ FIL.name }</div>
+		<div>bytes loaded: ${ size.toLocaleString() }</div>
+		<div>time to load: ${ timeToLoad }ms</div>
+		${ note }
+	`;
+
+	FILdivProgress.innerHTML = htm;
+
+};
+
+
+
+FIL.updateDefaultFilePath = function() {
+
+	location.hash = FILinpFilePath.value;
+
+	const thrFilePath = FILinpFilePath.value;
+	localStorage.setItem( 'thrFilePath', thrFilePath );
+
+};

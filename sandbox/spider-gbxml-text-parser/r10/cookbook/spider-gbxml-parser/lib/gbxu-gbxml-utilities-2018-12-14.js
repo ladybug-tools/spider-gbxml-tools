@@ -2,7 +2,7 @@
 // jshint esversion: 6
 /* globals THREE, THR, THRU, timeStart, divLog2 */
 
-var GBXU = { "release": "R10.1", "date": "2018-12-14" };
+var GBXU = { "release": "R10.0", "date": "2018-12-12" };
 
 
 GBXU.init = function() {
@@ -10,7 +10,6 @@ GBXU.init = function() {
 	FIL.reader.addEventListener( 'load', GBXU.setStats, false );
 	GBXdivStats.addEventListener( 'click', GBXU.setStats, false );
 
-	/*
 	htm =
 	`
 		<b>Text parser statistics</b><br>
@@ -20,7 +19,6 @@ GBXU.init = function() {
 	`;
 
 	return htm;
-	*/
 
 }
 

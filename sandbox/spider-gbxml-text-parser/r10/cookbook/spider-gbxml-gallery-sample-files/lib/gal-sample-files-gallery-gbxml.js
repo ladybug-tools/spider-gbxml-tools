@@ -134,25 +134,19 @@ GAL.setGALdivGallery = function( button ) {
 	GAL.urlGitHubPage = 'https://rawgit.com/' + GAL.user + GAL.repo + '/master/' + GAL.pathRepo;
 	GAL.urlGitHubSource = 'https://github.com/' + GAL.user + GAL.repo + '/blob/master/' + GAL.pathRepo;
 
-	buttons = divSampleFileButtons.querySelectorAll( "button" );
+	buttons = GALdivSampleFileButtons.querySelectorAll( "button" );
 
 	buttons.forEach( butt => butt.classList.remove( 'active' ) );
 
 	button.classList.add( 'active' );
 
-	divSampleFileItems.innerHTML =
+	GALdivSampleFileItems.innerHTML =
 	`
 		<details id="GALdetGallery" class="app-menu" open >
 
 			<summary>${ GAL.title }</summary>
 
 			<div id=GALdivGallery ></div>
-
-			<hr>
-
-			<div id=GALdivFileInfo ></div>
-
-			<br>
 
 		</details>
 
