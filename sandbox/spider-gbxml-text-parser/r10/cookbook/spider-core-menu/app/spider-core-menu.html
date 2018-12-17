@@ -5,9 +5,10 @@
 <meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
 <meta name=description content="HTML and CSS for a basic menu system" >
 <meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-12-06" >
+<meta name = "date" content = "2018-12-16" >
 <title>Spider Viewer Core Menu</title>
 <link rel="stylesheet" href="../lib/style.css">
+<link rel="stylesheet" id="MNUcss" >
 <style>
 
 
@@ -27,7 +28,7 @@
 
 		</header>
 
-		<p><button onclick >update things</button></p>
+		<p><button onclick=MNU.onUpdateThings(); >update things</button></p>
 
 
 
@@ -38,6 +39,18 @@
 		</div>
 
 
+		<details>
+
+			<summary>Themes</summary>
+
+			<div id=MNUdivBootswatch ></div>
+
+			<div id=MNUdivCssOthers ></div>
+
+		</details>
+
+		<div id="MNUdivCurrentStatus" ></div>
+
 		<footer>
 
 			<hr>
@@ -46,13 +59,19 @@
 
 		</footer>
 
+
 	</nav>
 
+
+	<nav>
+		<button id="butHamburger" onclick=MNU.toggleNavLeft(); title="click here to hide this menu"> slide &#9776; </button>
+	</nav>
 
 <script>
 
 
-const urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-viewer-threejs-utilities";
+const urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-text-parser/r10/cookbook/spider-core-menu";
+
 
 
 init();
@@ -63,7 +82,9 @@ function init() {
 
 	divHeader.innerHTML = MNU.getNavHeader(); // not essential
 
+	MNUdivCurrentStatus.innerHTML = MNU.currentStatus;
 
+	MNU.updateCss( themeName );
 	divFooter.innerHTML = MNU.getNavFooter(); // not essential
 
 }

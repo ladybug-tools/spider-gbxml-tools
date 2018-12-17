@@ -19,7 +19,9 @@ TMP.currentStatus =
 				<p>
 					<ul>
 						<li>2018-12-11 ~ xxx</li>
-						<li></li>
+
+
+						<!-- <li></li> -->
 					</ul>
 				</p>
 
