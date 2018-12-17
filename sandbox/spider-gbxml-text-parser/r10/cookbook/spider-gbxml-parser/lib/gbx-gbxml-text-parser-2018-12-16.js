@@ -44,13 +44,15 @@ GBX.triangle = new THREE.Triangle(); // used by GBX.getPlane
 
 GBX.getDivMenuGbx = function() {
 
-	//change to custom event with data passing via event details
 	FIL.xhr.addEventListener( 'load', GBX.onXhrResponse, false );
 	FIL.reader.addEventListener( 'load', GBX.onReaderResult, false );
 	document.body.addEventListener( 'onZipFileParse', GBX.onFileZipLoad, false );
 
 	GBXU.init();
 
+	//const stats = GBXU.init();
+
+	//return stats;
 
 };
 
@@ -71,13 +73,9 @@ GBX.parseFile = function( gbxml )  {
 
 	GBXdetStats.open = gbxml.length > 10000000 ? true : false;
 
-	GBXdivStatsGbx.innerHTML = '';
-	GBXdivStatsThr.innerHTML = '';
+	THRU.setSceneDispose( [ GBX.surfaceMeshes ] );
 
-
-	THRU.setSceneDispose( [ GBX.surfaceMeshes, GBX.surfaceOpenings, GBX.surfaceEdgesThreejs, GBX.boundingBox, THRU.helperNormalsFaces ] );
-
-	//THR.scene.remove( GBX.surfaceOpenings, GBX.surfaceEdgesThreejs );
+	THR.scene.remove( GBX.surfaceOpenings, GBX.surfaceEdgesThreejs );
 	GBX.surfaceEdgesThreejs = [];
 	GBX.surfaceOpenings = [];
 
@@ -133,10 +131,7 @@ GBX.parseFile = function( gbxml )  {
 
 	GBX.setSurfaceTypesVisible( GBX.filtersDefault );
 
-	const event = new Event( 'onGbxParse' );
-	document.body.dispatchEvent( event );
-
-	//use this: document.body.addEventListener( 'onGbxParse', yourFunction, false );
+	GBXU.setStats();
 
 	return GBX.surfaces.length;
 
@@ -158,8 +153,6 @@ GBX.setSurfaceTypesVisible = function ( typesArray ) {
 
 };
 
-
-
 //////////
 
 GBX.sendSurfacesToThreeJs = function( surfacesText ) {
@@ -172,6 +165,7 @@ GBX.sendSurfacesToThreeJs = function( surfacesText ) {
 		surface.visible = false;
 
 	} );
+
 	//const timeStart = performance.now();
 
 	THR.controls.autoRotate = false;
@@ -240,10 +234,8 @@ GBX.sendSurfacesToThreeJs = function( surfacesText ) {
 		}
 
 
-		GBXdivStatsThr.innerHTML =
+		GBXdivStats.innerHTML =
 		`
-			<hr>
-			<b>Current scene rendering data</b><br>
 			surfaces rendered: ${ count.toLocaleString() } of ${ GBX.surfacesTmp.length.toLocaleString() } <br>
 			time to render: ${ delta.toLocaleString() } ms<br>
 			took too long: ${ misses }<br>
@@ -271,24 +263,13 @@ GBX.getSurfaceMeshes = function( surfaces ) {
 		//console.log( 'polyLoops', polyLoops );
 
 		const vertices = GBX.getVertices( polyLoops[ 0 ] );
-
-		if ( vertices.length < 9 ) {
-
-			console.log( 'polyLoops[ 0 ]', polyLoops[ 0 ] );
-			console.log( 'vertices', vertices );
-
-		}
+		//console.log( 'vertices', vertices );
 
 		const index = surface.match( 'indexGbx="(.*?)"' )[ 1 ];
 
 		const mesh = GBX.getSurfaceMesh( vertices, index );
-
-		if ( mesh ) {
-
-			mesh.castShadow = mesh.receiveShadow = true;
-			mesh.userData.index = index;
-
-		}
+		mesh.castShadow = mesh.receiveShadow = true;
+		mesh.userData.index = index;
 
 		return mesh;
 
@@ -302,7 +283,7 @@ GBX.getSurfaceMeshes = function( surfaces ) {
 
 GBX.getPolyLoops = function( surface ) {
 
-	const re = /<PlanarGeometry>(.*?)<polyloop(.*?)<\/polyloop>/gi;
+	const re = /<polyloop(.*?)<\/polyloop>/gi;
 	const polyloopText = surface.match( re );
 	const polyloops = polyloopText.map( polyloop => polyloop.replace(/<\/?polyloop>/gi, '' ) );
 
@@ -338,17 +319,16 @@ GBX.getSurfaceMesh = function( arr, index ) {
 
 	if ( arr.length < 6 ) {
 
-		console.log( 'arr', arr );
+		console.log( 'mesh', mesh );
 		return;
 
 	} else if ( arr.length < 9 ) {
-		//console.log( 'arr', arr );
 
 		// draw a line?
-		vertices = [ v( arr.slice( 0, 3 ) ), v( arr.slice( 3, 6 ) ), v( arr.slice( 0, 3 ) ) ];
-		//console.log( 'vertices', vertices );
 
-		mesh = GBX.getBufferGeometry( vertices, color );
+		vertices = [ v( arr.slice( 0, 3 ) ), v( arr.slice( 3, 6 ) ) ];
+
+		console.log( 'mesh', mesh );
 
 		return;
 

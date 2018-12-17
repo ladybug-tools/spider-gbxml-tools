@@ -52,15 +52,15 @@ GBXU.setStats = function() {
 
 	const htm =
 	`
-			<div>time to parse: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
-			<div>spaces: ${ GBX.spaces.length.toLocaleString() } </div>
-			<div>storeys: ${ GBX.storeys.length.toLocaleString() } </div>
-			<div>zones: ${ GBX.zones.length.toLocaleString() } </div>
-			<div>surfaces: ${ GBX.surfaces.length.toLocaleString() } </div>
-			<div>coordinates: ${ count.toLocaleString() } </div>
+		<div>time to parse: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
+		<div>spaces: ${ GBX.spaces.length.toLocaleString() } </div>
+		<div>storeys: ${ GBX.storeys.length.toLocaleString() } </div>
+		<div>zones: ${ GBX.zones.length.toLocaleString() } </div>
+		<div>surfaces: ${ GBX.surfaces.length.toLocaleString() } </div>
+		<div>coordinates: ${ count.toLocaleString() } </div>
 	`;
 
-	GBXdivStats.innerHTML = htm;
+	GBXdivStatsGbx.innerHTML = htm;
 
 };
 

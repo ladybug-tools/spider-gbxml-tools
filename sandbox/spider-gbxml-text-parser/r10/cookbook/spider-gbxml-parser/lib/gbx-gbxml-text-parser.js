@@ -71,6 +71,10 @@ GBX.parseFile = function( gbxml )  {
 
 	GBXdetStats.open = gbxml.length > 10000000 ? true : false;
 
+	GBXdivStatsGbx.innerHTML = '';
+	GBXdivStatsThr.innerHTML = '';
+
+
 	THRU.setSceneDispose( [ GBX.surfaceMeshes, GBX.surfaceOpenings, GBX.surfaceEdgesThreejs, GBX.boundingBox, THRU.helperNormalsFaces ] );
 
 	//THR.scene.remove( GBX.surfaceOpenings, GBX.surfaceEdgesThreejs );
@@ -236,8 +240,10 @@ GBX.sendSurfacesToThreeJs = function( surfacesText ) {
 		}
 
 
-		GBXdivStats.innerHTML =
+		GBXdivStatsThr.innerHTML =
 		`
+			<hr>
+			<b>Current scene rendering data</b><br>
 			surfaces rendered: ${ count.toLocaleString() } of ${ GBX.surfacesTmp.length.toLocaleString() } <br>
 			time to render: ${ delta.toLocaleString() } ms<br>
 			took too long: ${ misses }<br>

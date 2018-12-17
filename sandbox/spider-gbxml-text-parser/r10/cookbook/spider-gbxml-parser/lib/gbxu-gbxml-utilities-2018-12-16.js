@@ -7,10 +7,8 @@ var GBXU = { "release": "R10.1", "date": "2018-12-14" };
 
 GBXU.init = function() {
 
-	//FIL.reader.addEventListener( 'load', GBXU.setStats, false );
-	//GBXdivStats.addEventListener( 'click', GBXU.setStats, false );
-
-	document.body.addEventListener( 'onGbxParse', GBXU.setStats, false );
+	FIL.reader.addEventListener( 'load', GBXU.setStats, false );
+	GBXdivStats.addEventListener( 'click', GBXU.setStats, false );
 
 	/*
 	htm =
@@ -52,15 +50,15 @@ GBXU.setStats = function() {
 
 	const htm =
 	`
-		<div>time to parse: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
-		<div>spaces: ${ GBX.spaces.length.toLocaleString() } </div>
-		<div>storeys: ${ GBX.storeys.length.toLocaleString() } </div>
-		<div>zones: ${ GBX.zones.length.toLocaleString() } </div>
-		<div>surfaces: ${ GBX.surfaces.length.toLocaleString() } </div>
-		<div>coordinates: ${ count.toLocaleString() } </div>
+			<div>time to parse: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
+			<div>spaces: ${ GBX.spaces.length.toLocaleString() } </div>
+			<div>storeys: ${ GBX.storeys.length.toLocaleString() } </div>
+			<div>zones: ${ GBX.zones.length.toLocaleString() } </div>
+			<div>surfaces: ${ GBX.surfaces.length.toLocaleString() } </div>
+			<div>coordinates: ${ count.toLocaleString() } </div>
 	`;
 
-	GBXdivStatsGbx.innerHTML = htm;
+	GBXdivStats.innerHTML = htm;
 
 };
 

@@ -100,7 +100,7 @@ ISCOD.getCadObjectIdCheck = function() {
 
 	ISCODselCadObjectId.innerHTML = htmOptions;
 	ISCODdivCADTypes.innerHTML = ISCOD.buttonsCadObjectType;
-	ISCODspnCount.innerHTML = `: ${ ISCOD.invalidCadObjectId.length } found`;
+	ISCODspnCount.innerHTML = `: ${ ISCOD.invalidCadObjectId.length.toLocaleString() } found`;
 
 	return ISCOD.invalidCadObjectId.length;
 

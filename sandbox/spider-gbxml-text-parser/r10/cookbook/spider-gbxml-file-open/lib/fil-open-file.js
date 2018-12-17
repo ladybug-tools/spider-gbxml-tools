@@ -86,6 +86,9 @@ FIL.onHashChange = function() {
 	const url = !location.hash ? FIL.urlDefaultFile : location.hash.slice( 1 );
 	//console.log( 'url', url );
 
+	GBXdivStatsGbx.innerHTML = '';
+	GBXdivStatsThr.innerHTML = '';
+
 	FIL.name = url.split( '/').pop();
 
 	if ( FIL.name.toLowerCase().endsWith( '.xml' ) ) {
@@ -223,6 +226,9 @@ FIL.onInputFileOpen = function( files ) {
 
 	FIL.timeStart = performance.now();
 
+	GBXdivStatsGbx.innerHTML = '';
+	GBXdivStatsThr.innerHTML = '';
+
 	const file = files.files[ 0 ];
 	const type = file.type;
 	//console.log( 'type', type );
@@ -253,6 +259,9 @@ FIL.drop = function( event ) {
 	const dropUrl = event.dataTransfer.getData( 'URL' );
 	//console.log( 'dropUrl', dropUrl );
 
+	GBXdivStatsGbx.innerHTML = '';
+	GBXdivStatsThr.innerHTML = '';
+	
 	if ( dropUrl ) {
 
 		location.hash = dropUrl;

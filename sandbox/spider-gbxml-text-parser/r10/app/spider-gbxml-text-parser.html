@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8" >
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
-<meta name=description content="Open and examine very large gbXML files in your browser with free, open source JavaScript" >
+<meta name=description content="Open, examine and edit very large gbXML files in 3D in your browser with free, open source JavaScript" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name="date" content="2018-12-14" >
-<title>Spider gbXML Text Parser R10.6 </title>
+<meta name="date" content="2018-12-16" >
+<title>Spider gbXML Text Parser R10.7 </title>
 <link rel="stylesheet" href="../lib/style.css">
 <style>
 
@@ -31,9 +31,9 @@
 <script src = "https://cdn.rawgit.com/mrdoob/three.js/r99/examples/js/controls/OrbitControls.js" ></script>
 
 <!-- Core -->
-<script src = "../lib/mnu-menu.js" ></script>
 <script src = "../lib/thr-threejs.js" ></script>
 <script src = "../lib/thru-threejs-utilities.js"></script>
+<script src = "../lib/mnu-menu.js" ></script>
 
 <!-- File menu -->
 <script src = "../lib/gal-sample-files-gallery-gbxml.js" ></script>
@@ -132,12 +132,14 @@
 
 						<summary>gbXML parser statistics</summary>
 
-						<div id="GBXdivStats" ></div>
+						<div id="GBXdivStatsGbx" ></div>
+
+						<div id="GBXdivStatsThr" ></div>
 
 					</details>
 
 					<br>
-					
+
 				</details>
 
 				<details>
@@ -166,7 +168,7 @@
 		</details>
 
 
-		<details id=detMenuEdit  >
+		<details id=detMenuEdit >
 
 			<div id = "divMenuNote" ></div>
 
@@ -275,7 +277,7 @@ function init() {
 
 	FILdivFileOpen.innerHTML = FIL.getMenuFileOpen();
 
-	GBXdivStats.innerHTML = GBX.getDivMenuGbx();
+	GBXdivStatsGbx.innerHTML = GBX.getDivMenuGbx();
 
 	ISCORdivMenuIssues.innerHTML = ISCOR.getMenuIssues();
 

@@ -6,6 +6,7 @@
 const ISCOR = { "release": "R10.3", "date": "2018-12-16" };
 
 ISCOR.runAll = false;
+ISCOR.surfaceCheckLimit = 10000;
 
 
 ISCOR.currentStatus =

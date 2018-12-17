@@ -35,6 +35,8 @@ ISTMP.getTemplateCheck = function() {
 
 	if ( ISTMPdetTemplate.open === false && ISCOR.runAll === false ) { return; }
 
+	if ( GBX.surfaces.length > ISCOR.surfaceCheckLimit ) { return; }
+
 	ISTMP.invalidTemplate = [];
 
 	const surfaces = GBX.surfaces;

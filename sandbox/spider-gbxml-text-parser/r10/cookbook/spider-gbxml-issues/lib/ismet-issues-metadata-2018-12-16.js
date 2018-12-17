@@ -2,7 +2,7 @@
 /* globals */
 /* jshint esversion: 6 */
 
-const ISMET = { "release": "R10.0", "data": "2018-12-16" };
+const ISMET = { "release": "R9.4", "data": "2018-12-02" };
 
 
 ISMET.metadataValues = {
@@ -23,15 +23,16 @@ ISMET.currentStatus =
 		<aside>
 
 			<details>
-
 				<summary>ISMET ${ ISFC.release} status ${ ISFC.date }</summary>
 
-				<p>Issues Metadat (ISMET) module is ready for light testing, but is still at an early stage of development.</p>
+				<p>This module is ready for light testing, but is still at an early stage of development.</p>
 
 				<p>
 					As and when the project gets access to more modules with other metadata errors,
 					this module will be enhanced to identify and fix any more errors found.
 				</p>
+
+				<p>Whatever further checks you might need could be added here...</p>
 
 			</details>
 
@@ -55,6 +56,7 @@ ISMET.getMetadataIssuesCheck = function() {
 			ISMET.attributesProvided.push( attribute );
 
 		} else {
+			//console.log( 'attribute', attribute );
 
 			ISMET.attributesMissing.push( attribute );
 

@@ -38,15 +38,13 @@ ISDC.currentStatus =
 	<hr>
 `;
 
-ISDC.limit = 10000;
-
 
 
 ISDC.getDuplicateCoordinatesCheckInit = function() {
 
 	if ( ISDCdetDuplicateCoordinates.open === false && ISCOR.runAll === false ) { return; }
 
-	if ( GBX.surfaces.length > ISDC.limit ) {
+	if ( GBX.surfaces.length > ISCOR.surfaceCheckLimit ) {
 
 		ISDCpIntroExtra.innerHTML =
 		`
@@ -57,6 +55,9 @@ ISDC.getDuplicateCoordinatesCheckInit = function() {
 
 			<p>
 				<button onclick=ISDC.getDuplicateCoordinatesCheck(); >Check for duplicate coordinates</button>
+			</p>
+			<p>
+				Open the JavaScript console in order to view a readout of the progress of the check.
 			</p>
 			`;
 
@@ -94,9 +95,9 @@ ISDC.getDuplicateCoordinatesCheck = function() {
 
 		} );
 
-		if ( index1 % 100 === 0 && planes.length > ISDC.limit ) {
+		if ( index1 % 100 === 0 && planes.length > ISCOR.surfaceCheckLimit ) {
 
-			console.log( 'index1', index1, ( performance.now() - timeStart ).toLocaleString() );
+			console.log( 'surfaces checked', index1, ( performance.now() - timeStart ).toLocaleString() );
 			pLog.innerHTML = `index: ${ index1 }`;
 
 		 }

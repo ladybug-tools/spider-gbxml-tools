@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8" >
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
-<meta name=description content="DEV version: Open, examine and edit very large gbXML files in 3D in your browser with free, open source JavaScript" >
+<meta name=description content="Open and examine very large gbXML files in your browser with free, open source JavaScript" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name="date" content="2018-12-16" >
-<title>Spider gbXML Text Parser R10.7 DEVELOP </title>
-<link rel="stylesheet" href="../../../lib/style.css">
+<meta name="date" content="2018-12-14" >
+<title>Spider gbXML Text Parser R10.6 </title>
+<link rel="stylesheet" href="../lib/style.css">
 <style>
 
 	aside { border: 1px solid lightgray; margin-top:15px; padding: 2px; }
@@ -31,35 +31,35 @@
 <script src = "https://cdn.rawgit.com/mrdoob/three.js/r99/examples/js/controls/OrbitControls.js" ></script>
 
 <!-- Core -->
-<script src = "../../spider-core-threejs/lib/thr-threejs.js" ></script>
-<script src = "../../spider-core-threejs-utilities/lib/thru-threejs-utilities.js"></script>
-<script src = "../../spider-core-menu/lib/mnu-menu.js" ></script>
+<script src = "../lib/mnu-menu.js" ></script>
+<script src = "../lib/thr-threejs.js" ></script>
+<script src = "../lib/thru-threejs-utilities.js"></script>
 
 <!-- File menu -->
-<script src = "../../spider-gbxml-gallery-sample-files/lib/gal-sample-files-gallery-gbxml.js" ></script>
-<script src = "../../spider-gbxml-file-open/lib/fil-open-file.js" ></script>
-<script src = "../../spider-gbxml-parser/lib/gbx-gbxml-text-parser.js" ></script>
-<script src = "../../spider-gbxml-parser/lib/gbxu-gbxml-utilities.js" ></script>
+<script src = "../lib/gal-sample-files-gallery-gbxml.js" ></script>
+<script src = "../lib/fil-open-file.js" ></script>
+<script src = "../lib/gbx-gbxml-text-parser.js" ></script>
+<script src = "../lib/gbxu-gbxml-utilities.js" ></script>
 
 <!-- Edit menu -->
-<script src = "../../spider-gbxml-issues/lib/iscor-issues-core.js" ></script>
-<script src = "../../spider-gbxml-issues/lib/isfic-issues-file-check.js" ></script>
-<script src = "../../spider-gbxml-issues/lib/ismet-issues-metadata.js" ></script>
-<script src = "../../spider-gbxml-issues/lib/issti-issues-surface-type-invalid.js" ></script>
-<script src = "../../spider-gbxml-issues/lib/isduc-issues-duplicate-coordinates.js" ></script>
-<script src = "../../spider-gbxml-issues/lib/isasi-issues-adjacent-space-invalid.js" ></script>
-<script src = "../../spider-gbxml-issues/lib/isase-issues-adjacent-space-extra.js" ></script>
-<script src = "../../spider-gbxml-issues/lib/isasd-issues-adjacent-space-duplicate.js" ></script>
-<script src = "../../spider-gbxml-issues/lib/iscod-issues-cad-object-id.js" ></script>
-<script src = "../../spider-gbxml-issues/lib/istmp-issues-template.js" ></script>
+<script src = "../lib/iscor-issues-core.js" ></script>
+<script src = "../lib/isfic-issues-file-check.js" ></script>
+<script src = "../lib/ismet-issues-metadata.js" ></script>
+<script src = "../lib/issti-issues-surface-type-invalid.js" ></script>
+<script src = "../lib/isduc-issues-duplicate-coordinates.js" ></script>
+<script src = "../lib/isasi-issues-adjacent-space-invalid.js" ></script>
+<script src = "../lib/isase-issues-adjacent-space-extra.js" ></script>
+<script src = "../lib/isasd-issues-adjacent-space-duplicate.js" ></script>
+<script src = "../lib/iscod-issues-cad-object-id.js" ></script>
+<script src = "../lib/istmp-issues-template.js" ></script>
 
 <!-- View menu -->
-<script src = "../../../lib/vwsrf-view-surface-types.js" ></script>
-<script src = "../../../lib/repl-view-by-level.js" ></script>
-<script src = "../../../lib/set-settings.js" ></script>
-<script src = "../../../lib/cut-section-cut.js"></script>
+<script src = "../lib/vwsrf-view-surface-types.js" ></script>
+<script src = "../lib/repl-view-by-level.js" ></script>
+<script src = "../lib/set-settings.js" ></script>
+<script src = "../lib/cut-section-cut.js"></script>
 
-<script src = "../../../lib/pop-up-text-parser.js" ></script>
+<script src = "../lib/pop-up-text-parser.js" ></script>
 
 	<main id="container" ></main>
 
@@ -132,14 +132,12 @@
 
 						<summary>gbXML parser statistics</summary>
 
-						<div id="GBXdivStatsGbx" ></div>
-
-						<div id="GBXdivStatsThr" ></div>
+						<div id="GBXdivStats" ></div>
 
 					</details>
 
 					<br>
-
+					
 				</details>
 
 				<details>
@@ -168,7 +166,7 @@
 		</details>
 
 
-		<details id=detMenuEdit >
+		<details id=detMenuEdit  >
 
 			<div id = "divMenuNote" ></div>
 
@@ -277,7 +275,7 @@ function init() {
 
 	FILdivFileOpen.innerHTML = FIL.getMenuFileOpen();
 
-	GBXdivStatsGbx.innerHTML = GBX.getDivMenuGbx();
+	GBXdivStats.innerHTML = GBX.getDivMenuGbx();
 
 	ISCORdivMenuIssues.innerHTML = ISCOR.getMenuIssues();
 
