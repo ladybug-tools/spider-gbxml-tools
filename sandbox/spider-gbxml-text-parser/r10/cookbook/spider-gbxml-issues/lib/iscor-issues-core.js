@@ -3,7 +3,7 @@
 /* jshint esversion: 6 */
 
 
-const ISCOR = { "release": "R10.2", "date": "2018-12-10" };
+const ISCOR = { "release": "R10.3", "date": "2018-12-16" };
 
 ISCOR.runAll = false;
 
@@ -14,24 +14,32 @@ ISCOR.currentStatus =
 
 			<details>
 
-				<summary><a href="https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-issues/lib/iscor-issues-core.js" title="source code" >
-					ISCOR ${ ISCOR.release}</a> status ${ ISCOR.date }</summary>
+				<summary>ISCOR ${ ISCOR.release}</a> status ${ ISCOR.date }</summary>
 
 				<p>
-					This module loads the desired issues modules.
+					Issues Core (ISCOR) module loads the desired issues modules.
+					Issues modules check the gbXML files for issues, identify what issues have been found
+					and allow you to fix the issues.
 				</p>
 				<p>
-					Every module is set up run as and when you click on the title to open it
+					Every module is set up run as and when you click on its title to open it
 					or when you click the 'check all...' button.
 				</p>
 				<p>
-					2018-12-10 ~ 10.2 ~ Add current status details element
+					<ul>
+						<li>2018-12-16 ~ Add close details and reset summaries when new file loaded</li>
+					</ul>
+
 				</p>
 				<p>
-					<a href="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-issues" target="_blank">Read Me file</a>
+					<a href="https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-issues/lib/iscor-issues-core.js" title="source code" >
+					ISCOR source code </a><br>
+					<a href="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-issues" target="_blank">
+					ISCOR Read Me file</a>
 				</p>
 
 				<!--
+					2018-12-10 ~ 10.2 ~ Add current status details element
 					2018-12-06 ~ Adds ability to run in 'check all issues'. Simplified code a bit. passed through jsHint<br>
 					2018-12-05 ~ Add more functions
 				-->
@@ -44,17 +52,20 @@ ISCOR.currentStatus =
 
 
 
-
 ISCOR.getMenuIssues = function() {
+
+	document.body.addEventListener( 'onGbxParse', ISCOR.onGbxParse, false );
+
 
 	htm =
 	`
 		<p>
-			<button onclick=ISCOR.onClickAllIssues(); title="May take a while to calculate and open menu on large files" >
+			<button onclick=ISCOR.onClickAllIssues();
+				title="May take a while to calculate and open menu on large files" >
 				Check all issues in single pass
 			</button>
 			<br>
-			Running all the checks may take a considerable amount of time on large gbXML files. Duplicate coordinates takes a long time. This will be fixed.
+			Running all the checks may take a considerable amount of time on large gbXML files.
 		</p>
 
 
@@ -94,6 +105,21 @@ ISCOR.getMenuIssues = function() {
 
 
 
+ISCOR.onGbxParse = function() {
+
+	detMenuEdit.open = false;
+
+	const issues = detMenuEdit.querySelectorAll( 'details' );
+	//console.log( 'issues', issues );
+	issues.forEach( item => item.open = false );
+
+	const spans = detMenuEdit.querySelectorAll( 'span' );
+	spans.forEach( item => item.innerHTML = '' );
+
+};
+
+
+
 ISCOR.onClickAllIssues = function() {
 
 	ISCOR.runAll = true;
@@ -102,9 +128,9 @@ ISCOR.onClickAllIssues = function() {
 
 	ISSTI.getSurfaceTypeInvalidCheck();
 
-	ISDC.getDuplicateCoordinatesCheck();
+	ISDC.getDuplicateCoordinatesCheckInit();
 
-	//ISASI.setAdjacentSpaceInvalidCheck();
+	//ISASI.setAdjacentSpaceInvalidCheck(); // deprecated
 
 	ISASE.getAdjacentSpaceExtraCheck();
 

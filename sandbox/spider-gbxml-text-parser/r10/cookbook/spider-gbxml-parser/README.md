@@ -1,18 +1,18 @@
 
-<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( https://www.ladybug.tools/spider-gbxml-tools/#xxxxxx/README.md "View file as a web page." ) </span>
+<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( https://www.ladybug.tools/spider-gbxml-tools/#sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-parser/README.md "View file as a web page." ) </span>
 
-<div><input type=button class = "btn btn-secondary btn-sm" onclick="window.location.href='https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/xxxxxx/README.md'";
+<div><input type=button class = "btn btn-secondary btn-sm" onclick="window.location.href='https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-parser/README.md'";
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' ></div>
 
 <br>
 
-# [Spider gbXML ZZZZZ Read Me]( #xxxxxx/README.md )
+# [Spider gbXML Parser Read Me]( #sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-parser/README.md )
 
 <!--
-<iframe src=https://www.ladybug.tools/spider-gbxml-tools/xxxxxx/index.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
-_<small>Spider gbXML ZZZZZ</small>_
+<iframe src=https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-parser/index.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
+_<small>Spider gbXML Parser</small>_
 
-## Full Screen: [Spider gbXML ZZZZZ]( https://www.ladybug.tools/spider-gbxml-tools/xxxxxx/xxxxxx.html )
+## Full Screen: [Spider gbXML Parser]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-parser/sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-parser.html )
 -->
 
 
@@ -40,6 +40,18 @@ _<small>Spider gbXML ZZZZZ</small>_
 
 
 ## Change Log
+
+### 2018-12-16 ~ Theo
+
+spider-gbxml-parser Read Me
+* add links and text
+
+gbx-gbxml-text-parser.js
+* Add find polyloops inside planar geometry - not just first one found
+	* Fixes issue where some models crashed because rectangular geometry is before planar geometry
+* Add delete openings, bounding box, normals, edges when opening new file
+
+
 
 ### 2018-12-14
 

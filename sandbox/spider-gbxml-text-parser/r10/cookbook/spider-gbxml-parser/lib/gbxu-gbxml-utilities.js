@@ -7,8 +7,10 @@ var GBXU = { "release": "R10.1", "date": "2018-12-14" };
 
 GBXU.init = function() {
 
-	FIL.reader.addEventListener( 'load', GBXU.setStats, false );
-	GBXdivStats.addEventListener( 'click', GBXU.setStats, false );
+	//FIL.reader.addEventListener( 'load', GBXU.setStats, false );
+	//GBXdivStats.addEventListener( 'click', GBXU.setStats, false );
+
+	document.body.addEventListener( 'onGbxParse', GBXU.setStats, false );
 
 	/*
 	htm =

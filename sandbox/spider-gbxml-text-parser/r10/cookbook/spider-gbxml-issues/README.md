@@ -42,7 +42,7 @@ Open, view, examine, identify errors and fix gbXML files in 3D in your browser w
 
 ### Find Duplicate Coordinates
 
-* Two surfaces with the same coordinates
+* Two surfaces with the same planar geometry vertices
 
 
 ### Adjacent Space Invalid
@@ -124,6 +124,21 @@ See also
 
 ## Change Log
 
+### 2018-12-16 ~ Theo
+
+* iscor-issues-core.js
+	* Add close details and reset summaries when new file loaded
+* isduc-issues-duplicate-coordinates.js r10.2
+	* Finishing up on yesterday's efforts
+
+
+### 2018-12-15 ~ Theo
+
+* isduc-issues-duplicate-coordinates.js r10.1
+	* Much better performance on very large files
+	* linear rather than exponential item handling
+	* Don't run on 'check all...' if greater than 10K surfaces
+
 
 ### 2018-12-10 ~ Theo
 
@@ -166,8 +181,11 @@ Spider gbXML Text Parser R10.2
 	* Add update surface button - not yet operational
 
 ### 2018-11-?? ~ Theo
+
 Issues Adjacent Space Invalid ISASI R7.1
 * Fix if adjacent two spaces is not an array
+isduc-issues-duplicate-coordinates.js
+* Adds ability to run in 'check all issues
 
 ### 2018-10-30 ~ Theo
 
