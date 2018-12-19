@@ -261,7 +261,7 @@ FIL.drop = function( event ) {
 
 	GBXdivStatsGbx.innerHTML = '';
 	GBXdivStatsThr.innerHTML = '';
-	
+
 	if ( dropUrl ) {
 
 		location.hash = dropUrl;
@@ -358,6 +358,10 @@ FIL.fileOpenZip = function( files ) {
 
 		const event = new Event( 'onZipFileParse' );
 		document.body.dispatchEvent( event );
+
+		// document.body.addEventListener( 'onGbxParse', GBXU.setStats, false );
+
+		//
 
 	} );
 

@@ -46,10 +46,41 @@ ISASD.currentStatus =
 
 
 ISASD.getAdjacentSpaceDuplicateCheck = function() {
+	//console.log( 'ISASDdetAdjacentSpaceDuplicate.open', ISASDdetAdjacentSpaceDuplicate.open );
 
 	if ( ISASDdetAdjacentSpaceDuplicate.open === false && ISCOR.runAll === false ) { return; }
 
 	ISASD.invalidAdjacentSpaceDuplicate = [];
+
+	const surfaces = GBX.surfaces;
+
+	/*
+	// refactor to a reduce??
+	for ( let i = 0; i < surfaces.length; i++ ) {
+
+		//const surfaceId = surface.match( /id="(.*?)"/)[ 1 ];
+		//const invalidTemplate = GBX.surfaces.find( element => GBX.surfaceTypes.indexOf( surfaceId ) < 0 );
+		//console.log( 'invalidTemplate', invalidTemplate );
+
+		const surface = surfaces[ i ];
+
+		spaceIdRef = surface.match( /spaceIdRef="(.*?)"/g );
+
+		if ( spaceIdRef && spaceIdRef.length && spaceIdRef[ 0 ] === spaceIdRef[ 1 ] ) {
+			//console.log( 'spaceIdRef', spaceIdRef );
+
+			//surfaceType = surface.match( /surfaceType="(.*?)"/)[ 1 ];
+
+			//if ( ISASD.twoSpaces.indexOf( surfaceType ) < 0 ) {
+			//	console.log( 'wrong type ', surfaceType ); continue; }
+
+			//ISASD.invalidAdjacentSpaceDuplicate.push( i );
+
+		}
+
+	}
+	*/
+
 
 	GBX.surfaces.forEach( ( surface, index ) => {
 
@@ -63,6 +94,8 @@ ISASD.getAdjacentSpaceDuplicateCheck = function() {
 		}
 
 	} );
+
+	//console.log( 'ISASD.invalidAdjacentSpaceDuplicate', ISASD.invalidAdjacentSpaceDuplicate );
 
 	let color;
 	let htmOptions = '';
@@ -81,15 +114,10 @@ ISASD.getAdjacentSpaceDuplicateCheck = function() {
 	}
 
 	ISASDselAdjacentSpaceDuplicate.innerHTML = htmOptions;
-
+	
 	ISASDspnCount.innerHTML = `: ${ ISASD.invalidAdjacentSpaceDuplicate.length.toLocaleString() } found`;
 
-	ISASD.setSurfaceSCoordinates();
-
-	ISASD.setSpacesData();
-
-	//ISASD.setSurfaceInSpace();
-
+	ISASD.getSpacesData();
 
 	return ISASD.invalidAdjacentSpaceDuplicate.length;
 
@@ -97,145 +125,63 @@ ISASD.getAdjacentSpaceDuplicateCheck = function() {
 
 
 
-ISASD.setSpacesData = function() {
+ISASD.getSpacesData = function() {
 
 	ISASD.spaces = [];
 
 	GBX.spaces.forEach ( ( space, index ) => {
 
 		id = space.match( 'id="(.*?)"' )[ 1 ];
-		surfacesInSpace = [];
+		surfaceInSpace = [];
 
 		GBX.surfaces.forEach( ( surface, index  ) => {
 
 			if ( surface.includes( id ) ) {
 
-				surfacesInSpace.push( index );
+				surfaceInSpace.push( index )
 
 			}
 
-		} );
+			planes = surface.match( /<PlanarGeometry>(.*)<\/PolyLoop>/ )[ 1 ];
+			points = [];
+			cartesian = planes.match( /<CartesianPoint>(.*?)<\/CartesianPoint>/g )
 
-		//console.log( index, 'surfacesInSpace', surfacesInSpace );
+			cartesian.forEach( item => {
 
-		ISASD.spaces.push( { id, index, surfacesInSpace } );
+				coordinates = [];
+				coors = item.match( /<Coordinate>(.*?)<\/Coordinate>/g );
+				coors.forEach( item => {
 
-	} );
-	//console.log( 'ISASD.spaces', ISASD.spaces );
+					it = item.match( /<Coordinate>(.*?)<\/Coordinate>/ )[ 1 ];
+					coordinates.push( it );
+					//console.log( '', it );
 
-}
+				} );
 
-
-ISASD.setSurfaceSCoordinates = function() {
-
-	ISASD.surfaceCoordinates = [];
-
-	GBX.surfaces.forEach( ( surface, index  ) => {
-
-		const points = [];
-
-		const planar = surface.match( /<PlanarGeometry>(.*)<\/PolyLoop>/ )[ 1 ];
-		//console.log( 'planes', planes );
-
-		const cartesian = planar.match( /<CartesianPoint>(.*?)<\/CartesianPoint>/g )
-		//console.log( 'cartesian', cartesian );
-
-		cartesian.forEach( item => {
-
-			const coordinates = [];
-			const coors = item.match( /<Coordinate>(.*?)<\/Coordinate>/g );
-
-			coors.forEach( item => {
-
-				it = item.match( /<Coordinate>(.*?)<\/Coordinate>/ )[ 1 ];
-				coordinates.push( it );
-				//console.log( '', it );
+				points.push( coordinates )
+				//console.log( '', coors );
 
 			} );
 
-			points.push( coordinates )
-			//console.log( '', coors );
-
 		} );
 
-		ISASD.surfaceCoordinates.push( points )
+		//console.log( index, 'surfaceInSpace', surfaceInSpace );
 
-	} );
-	//console.log( 'ISASD.surfaceCoordinates', ISASD.surfaceCoordinates );
-
-}
-
-
-ISASD.setSurfaceInSpace = function( surfaceId = 494 ) {
-
-	for ( space of ISASD.spaces ) {
-
-		for ( surfaceInSpaceId of space.surfacesInSpace ) {
-			//console.log( 'surfaceInSpaceId', surfaceInSpaceId );
-
-			if ( surfaceId === surfaceInSpaceId &&
-
-				ISASD.surfaceCoordinates[ surfaceId ] === ISASD.surfaceCoordinates[ surfaceInSpaceId ]
-
-			) {
-
-				console.log( 'surfaceId', surfaceId, 'space', space );
-
-				console.log( 'c1', ISASD.surfaceCoordinates[ surfaceId ] );
-
-				console.log( 'c2', ISASD.surfaceCoordinates[ surfaceInSpaceId ] );
-
-			}
-
-		}
-
-	}
-
-};
-
-
-ISASD.checkSurfaces = function( surfaceIndex ) {
-
-	const coordinates = ISASD.surfaceCoordinates[ surfaceIndex ];
-	//console.log( 'coordinates', coordinates );
-
-	strings = coordinates.map( item => item.join() );
-	console.log( 'strings', strings );
-
-	ISASD.surfaceCoordinates.forEach (
-
-		( surfaceCoordinates, index ) => {
-
-			surfaceCoordinates.forEach( ( points, index2 ) => {
-
-				if ( strings.includes( points.join() ) ) {
-
-					//console.log( 'index', index );
-
-					spaceIdRef = GBX.surfaces[ index ].match( /spaceIdRef="(.*?)"/gi );
-
-					if ( spaceIdRef.length > 1 && spaceIdRef[ 0 ] !== spaceIdRef[ 1 ] ) {
-
-						const spaceIds = spaceIdRef.map( item => item.match( /spaceIdRef="(.*?)"/ )[ 1 ] );
-
-
-						console.log( 'spaceIds', spaceIds );
-
-					}
-				}
-
-			} );
-
+		ISASD.spaces.push( { id, index, surfaceInSpace, points } );
 
 	} );
 
+	console.log( 'ISASD.spaces', ISASD.spaces );
 }
-
 
 ISASD.getMenuAdjacentSpaceDuplicate = function() {
 
 	// for testing
+
 	document.body.addEventListener( 'onGbxParse', () => detMenuEdit.open = true , false );
+
+
+	detMenuEdit.open = true;
 
 	const htm =
 
@@ -297,15 +243,8 @@ ISASD.selectSurfaceUpdate = function( select ) {
 	const surfaceId = select.selectedOptions[ 0 ].innerHTML;
 	//console.log( 'id', id );
 
-	surfaceIndex = select.selectedOptions[ 0 ].value;
-	console.log( 'surfaceIndex', surfaceIndex );
-
-	//ISASD.setSurfaceInSpace( surfaceIndex );
-
-	ISASD.checkSurfaces( surfaceIndex )
-
-	//const surfaceText = GBX.surfaces.find( item => item.includes( surfaceId ) );
-	const surfaceText = GBX.surfaces[ surfaceIndex ];
+	const surfaceText = GBX.surfaces.find( item => item.includes( surfaceId ) );
+	//console.log( 'surfaceIndex', surfaceIndex );
 
 	const adjacentSpaceArr = surfaceText.match( /spaceIdRef="(.*?)"/gi );
 	//console.log( 'adjacentSpaceArr', adjacentSpaceArr );
@@ -316,7 +255,6 @@ ISASD.selectSurfaceUpdate = function( select ) {
 		spaceId = item.match( / id="(.*?)"/i )[ 1 ];
 
 		return text + `<option value="${ spaceId }" >${ item.match( /<Name>(.*?)<\/Name>/gi ) }</option>` },
-
 	'' );
 
 
