@@ -74,6 +74,11 @@ Pop-up Text Parser
 
 ## Change Log
 
+### 2018-12-20 ~ Theo
+
+Spider gbXML Text Parser R10.8
+* see [cookbook/spider-gbxml-issues Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-issues/README.md )
+
 ### 2018-12-13 ~ Theo
 
 SGTP R10.5

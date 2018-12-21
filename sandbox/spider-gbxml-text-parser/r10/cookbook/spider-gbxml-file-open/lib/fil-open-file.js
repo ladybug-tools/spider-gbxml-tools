@@ -361,8 +361,6 @@ FIL.fileOpenZip = function( files ) {
 
 		// document.body.addEventListener( 'onGbxParse', GBXU.setStats, false );
 
-		//
-
 	} );
 
 };
