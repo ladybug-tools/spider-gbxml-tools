@@ -103,6 +103,7 @@ ISSTI.getSurfaceTypeInvalidCheck = function() {
 
 ISSTI.getMenuSurfaceTypeInvalid = function() {
 
+
 	ISSTI.buttonsSurfaceType = GBX.surfaceTypes.reduce(
 		( arr, item ) => arr + `<button onclick=ISSTI.setSurfaceType("${item}"); >${ item }</button><br>`,
 		''
@@ -121,12 +122,15 @@ ISSTI.getMenuSurfaceTypeInvalid = function() {
 			<p>
 				<button id=butSurfaceTypeInvalidShowHide
 					onclick=ISSTI.setSurfaceTypeInvalidShowHide(); >
-					show/hide invalid surface types
+					show / hide all invalid surface types
 				</button>
 			</p>
 			<p>
 				Select a surface:<br>
 				<select id=ISTIselSurfaceTypeInvalid onchange=ISSTI.selectedSurfaceFocus(); style=width:100%; size=10 ></select>
+			</p>
+			<p>
+				<button onclick=ISSTI.setSurfaceTypeInvalidShowHide(ISTIselSurfaceTypeInvalid.value); >show / hide selected surface </button>
 			</p>
 			<p>
 			Select new type for surface:<br>
@@ -144,20 +148,22 @@ ISSTI.getMenuSurfaceTypeInvalid = function() {
 
 
 
-ISSTI.setSurfaceTypeInvalidShowHide = function( button, surfaceArray = [] ) {
-	//console.log( 'surfaceArray', surfaceArray );
+ISSTI.setSurfaceTypeInvalidShowHide = function( button, surfaceArray ) {
 
+	surfaceArray = surfaceArray || ISSTI.SurfaceTypeInvalid;
+
+	console.log( 'surfaceArray', surfaceArray );
 	//THR.scene.remove( POP.line, POP.particle );
 
 	butSurfaceTypeInvalidShowHide.classList.toggle( "active" );
 
 	if ( butSurfaceTypeInvalidShowHide.classList.contains( 'active' ) ) {
 
-		if ( ISSTI.SurfaceTypeInvalid.length ) {
+		if ( surfaceArray.length > 0 ) {
 
 			GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
 
-			ISSTI.SurfaceTypeInvalid.forEach( surfaceId =>
+			surfaceArray.forEach( surfaceId =>
 				GBX.surfaceGroup.children[ surfaceId ].visible = true
 			);
 
@@ -177,7 +183,7 @@ ISSTI.selectedSurfaceFocus = function() {
 
 	POP.intersected = GBX.surfaceGroup.children[ ISTIselSurfaceTypeInvalid.value ];
 
-	POP.getIntersectedDataHtml();
+	POP.intersected.visible = true;
 
 	divPopupData.innerHTML = POP.getIntersectedDataHtml();
 

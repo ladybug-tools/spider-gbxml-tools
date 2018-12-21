@@ -124,6 +124,14 @@ See also
 
 ## Change Log
 
+
+### 2018-12-20 ~ Theo
+
+* isasd-issues-adjacent-space-duplicate.js
+	* Much effort here in past two days
+* issti-issues-surface-type-invalid.js
+	* Add 'show hide selected surface' button and code
+
 ### 2018-12-16 ~ Theo
 
 * iscor-issues-core.js
