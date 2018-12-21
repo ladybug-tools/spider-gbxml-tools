@@ -57,7 +57,6 @@ ISCOR.getMenuIssues = function() {
 
 	document.body.addEventListener( 'onGbxParse', ISCOR.onGbxParse, false );
 
-
 	htm =
 	`
 		<p>

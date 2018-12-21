@@ -152,7 +152,7 @@ ISASI.setAdjacentSpaceInvalidToggle = function( button ) {
 
 	THR.scene.remove( POP.line, POP.particle );
 
-	surfaceArray = ISASI.adjacentSpaceInvalid; //[ GBX.gbjson.Campus.Surface[ 88 ],GBX.gbjson.Campus.Surface[ 1 ]  ]
+	surfaceArray = ISASI.adjacentSpaceInvalid;
 
 	if ( button.style.fontStyle !== 'italic' ) {
 

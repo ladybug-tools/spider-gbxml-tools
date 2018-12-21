@@ -5,10 +5,11 @@
 body, html { font: 11pt monospace; height: 100%; margin: 0; overflow: hidden; }
 a { color: crimson; text-decoration: none; }
 a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
 aside { border: 1px solid lightgray; margin-top:15px; padding: 2px; }
 
 button { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
-button:hover { background: #ccc; color: #fff }
+button:hover { background: #ccc; color: #888 }
 
 input[ type = range ] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 90%; }
 input[ type = range ]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }
@@ -28,13 +29,14 @@ summary {font-weight: bold }
 */
 
 
-#navMenu { max-height: 95%; left: 0; margin: 1rem; overflow: auto; padding: 1rem;
+#navMenu { background-color: #eee; max-height: 95%; left: 0; margin: 1rem; overflow: auto; padding: 1rem;
 	position: absolute; resize: both; top: 0; transition: left 0.5s; width: var( --mnu-width ); z-index: 10; }
 
 
 #navMenu button, #navMenu input[type=button] { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;
 	padding: 2px 5px; min-width: 13.5rem; }
 
+	#navMenu button:hover { background: #ccc; color: #888 }
 
 #navMenu button.active { border-color: black; font-style: italic; font-weight: bold; margin-left: 1rem;
 	box-shadow: 2px 2px re#888; }

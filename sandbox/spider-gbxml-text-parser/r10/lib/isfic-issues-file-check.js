@@ -10,6 +10,7 @@ ISFC.currentStatus =
 <aside>
 
 	<details>
+	
 		<summary>ISFC ${ ISFC.release} status ${ ISFC.date }</summary>
 
 		<p>This module is ready for light testing, but is still at an early stage of development</p>

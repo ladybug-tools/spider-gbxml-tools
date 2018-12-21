@@ -55,7 +55,6 @@ ISASE.getAdjacentSpaceExtraCheck = function() {
 		const surfaceType = surface.match ( /surfaceType="(.*?)"/ )[ 1 ];
 		const adjacentSpaceArr = surface.match( /spaceIdRef="(.*?)"/gi );
 
-
 		if ( oneSpace.includes( surfaceType ) && adjacentSpaceArr && adjacentSpaceArr.length > 1 ) {
 
 			//const spaces = adjacentSpaceArr.map( item => item.match( /spaceIdRef="(.*?)"/ )[ 1 ] );

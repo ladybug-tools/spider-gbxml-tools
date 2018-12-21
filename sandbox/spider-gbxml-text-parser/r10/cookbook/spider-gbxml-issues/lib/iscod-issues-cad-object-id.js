@@ -174,8 +174,6 @@ ISCOD.selectedSurfaceFocus = function( select ) {
 
 	POP.intersected = GBX.surfaceGroup.children[ select.value ];
 
-	POP.getIntersectedDataHtml();
-
 	divPopupData.innerHTML = POP.getIntersectedDataHtml();
 
 };
