@@ -5,23 +5,10 @@
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
 <meta name=description content="Template for building Spider gbXML modules" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-12-11" >
+<meta name = "date" content = "2018-12-21" >
 <title>Spider gbXML Template</title>
-<link rel="stylesheet" href="../../../lib/style.css">
+<link rel="stylesheet" href="../../spider-core-menu/lib/style.css">
 <style>
-
-	aside { border: 1px solid lightgray; margin-top:15px; padding: 2px; }
-	button:hover { background: #ccc; color: #fff }
-
-
-	#navMenu button, #navMenu input[type=button] { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;
-		 padding: 2px 5px; min-width: 13.5rem; }
-
-
-	#navMenu button.active { border-color: black; font-style: italic; font-weight: bold; margin-left: 1rem;
-	 box-shadow: 2px 2px re#888; }
-
-	.divMenuTitle { background-color: #ccc; color: #888; margin: 10px 0; text-align: center; }
 
 </style>
 </head>
@@ -56,7 +43,7 @@
 <script src = "../../../lib/pop-up-text-parser.js" ></script>
 -->
 
-<script src = "../../../lib/mnu-menu.js" ></script>
+<script src = "../../spider-core-menu/lib/mnu-menu.js" ></script>
 
 <script src = "../lib/tmp-template.js" ></script>
 
@@ -74,7 +61,7 @@
 
 		<details open >
 
-			<summary class=divMenuTitle ><span id="spnStatus" >Menu item</summary>
+			<summary class=divMenuTitle ><span id="spnStatus" >Template Menu item</summary>
 
 				<div id=TMPdivTemplate ></div>
 
@@ -221,7 +208,7 @@
 
 		-->
 
-		
+
 		<details id=detMenuHelp ontoggle=divMenuHelp.innerHTML=MNU.getNavHelp(); >
 
 			<summary class=divMenuTitle >Help Menu </summary>
@@ -243,7 +230,6 @@
 	</nav>
 
 
-	<!--
 	<div id="divPopUp" >
 
 		<div id="divPopUpData" ></div>
@@ -251,7 +237,7 @@
 		<div id="divMessage" ></div>
 
 	</div>
-	-->
+
 
 <script>
 

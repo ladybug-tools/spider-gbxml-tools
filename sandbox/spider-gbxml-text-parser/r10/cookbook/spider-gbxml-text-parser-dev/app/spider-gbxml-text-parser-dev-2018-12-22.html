@@ -5,8 +5,8 @@
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
 <meta name=description content="DEV version: Open, examine and edit very large gbXML files in 3D in your browser with free, open source JavaScript, WebGL & Three.js" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name="date" content="2018-12-22" >
-<title>Spider gbXML Text Parser R10.10 DEVELOP </title>
+<meta name="date" content="2018-12-21" >
+<title>Spider gbXML Text Parser R10.9 DEVELOP </title>
 <link rel="stylesheet" href="../../spider-core-menu/lib/style.css">
 <style>
 
@@ -47,27 +47,6 @@
 <script src = "../../../lib/cut-section-cut.js"></script>
 
 <script src = "../../../lib/pop-up-text-parser.js" ></script>
-<script>
-
-coreCurrentStatus =
-
-`
-	<h3>${ document.head.querySelector( '[ name=date ]' ).content } ~ Current Status</h3>
-
-	<p>Model not fully loaded until model centers on screen and starts rotating.</p>
-
-	<p>Default onload shows: Roof, ExteriorWall, ExposedFloor, Air and Shade. May be having issues on large files</p>
-
-	<p>
-		After loading a very large model:
-		<span class=highlight >it's best to reload web page before loading next model.</span>
-		And, be patient, it may take a very long time to clear large files from memory.
-	</p>
-
-`;
-
-</script>
-
 
 	<main id="container" ></main>
 
@@ -79,19 +58,26 @@ coreCurrentStatus =
 
 		</header>
 
-<!--
 
 		<details>
 
 			<summary><span id="spnStatus" ></span> ~ Current Status</summary>
 
+			<p>Model not fully loaded until model centers on screen and starts rotating.</p>
 
+			<p>Default onload shows: Roof, ExteriorWall, ExposedFloor, Air and Shade. May be having issues on large files</p>
+
+			<p>
+				After loading a very large model:
+				<span class=highlight >it's best to reload web page before loading next model.</span>
+				And, be patient, it may take a very long time to clear large files from memory.
+			</p>
+
+			<!--
+				<p>Reloads are faster than first load. Best not to load two big files one after another. Load default file in-between.</p>
+			-->
 
 		</details>
-
-
--->
-
 
 		<details open >
 
@@ -215,25 +201,23 @@ coreCurrentStatus =
 
 			</details>
 
+
+
 		</details>
 
-		<details id=detMenuHelp open >
+		<details id=detMenuHelp ontoggle=divMenuHelp.innerHTML=MNU.getNavHelp(); >
 
 			<summary class=divMenuTitle >Help Menu </summary>
 
-			<section id=divThemeSelect ></section>
-
-			<footer>
-
-				<section id = "divFooter" ></section>
-
-			</footer>
+			<div id=divMenuHelp ></div>
 
 		</details>
 
+		<footer>
 
+			<div id = "divFooter" ></div>
 
-
+		</footer>
 
 	</nav>
 
@@ -243,14 +227,10 @@ coreCurrentStatus =
 
 
 	<div id="divPopUp" >
-<!--
 
 		<div id="divPopUpData" ></div>
 
 		<div id="divMessage" ></div>
-
--->
-
 
 	</div>
 
@@ -278,7 +258,7 @@ function init() {
 
 	divHeader.innerHTML = MNU.getNavHeader(); // not essential
 
-	//spnStatus.innerHTML = document.head.querySelector( '[ name=date ]' ).content;
+	spnStatus.innerHTML = document.head.querySelector( '[ name=date ]' ).content;
 
 	GALdivSampleFileButtons.innerHTML = GAL.getMenuSampleGalleries();
 
@@ -288,11 +268,9 @@ function init() {
 
 	ISCORdivMenuIssues.innerHTML = ISCOR.getMenuIssues();
 
-	divThemeSelect.innerHTML = MNU.getThemeSelect();
-
 	divFooter.innerHTML = MNU.getNavFooter(); // not essential
 
-	divPopUp.innerHTML = POP.getMenuHtmlPopUp();
+	divPopUpData.innerHTML = POP.getMenuHtmlPopUp();
 
 
 	// loads a default file / great for testing same file many times

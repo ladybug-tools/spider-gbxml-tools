@@ -1,11 +1,10 @@
 /* Copyright 2018 Ladybug Tools authors. MIT License */
 
-:root { --mnu-width: 28rem; font-size: 0.8em; }
+:root { --mnu-width: 27rem; font-size: 0.8em; }
 
 body, html { font: 11pt monospace; height: 100%; margin: 0; overflow: hidden; }
-a { color: maroon; font-weight: bold; text-decoration: none; }
+a { color: crimson; text-decoration: none; }
 a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
-
 
 aside { border: 1px solid lightgray; margin-top:15px; padding: 2px; }
 
@@ -16,16 +15,21 @@ input[ type = range ] { -webkit-appearance: none; -moz-appearance: none; backgro
 input[ type = range ]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }
 input[ type = range ]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }
 
-summary {font-weight: bold; }
+summary {font-weight: bold }
 
-.attributeTitle { font-style: italic; }
-.attributeValue { color: blue; }
+.attributeTitle { font-style: italic }
+.attributeValue { color: blue }
 .divMenuTitle { background-color: #ccc; color: #888; margin: 10px 0; text-align: center; }
 .dragDropArea { border: 1px dashed gray; box-sizing: border-box; padding: 0 0 0 10px; }
 .highlight {background-color: lightgreen }
 
+/*
+#navMenu { background-color: #eee; max-height: 95%; left: 0; margin: 1rem; overflow: auto; padding: 1rem;
+	position: absolute; resize: both; top: 0; transition: left 0.5s; width: var( --mnu-width ); z-index: 10; }
+*/
 
-#navMenu { background-color: #eee; max-height: 95%; left: 0; margin: 1rem; overflow: auto; /* padding: 0rem; */
+
+#navMenu { background-color: #eee; max-height: 95%; left: 0; margin: 1rem; overflow: auto; padding: 1rem;
 	position: absolute; resize: both; top: 0; transition: left 0.5s; width: var( --mnu-width ); z-index: 10; }
 
 

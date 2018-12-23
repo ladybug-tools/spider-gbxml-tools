@@ -1,4 +1,4 @@
-/* global THREE, THR, THRU, GBX, divPopupData */
+/* global THREE, THR, THRU, GBX, divPopUpData */
 // jshint esversion: 6
 
 // Copyright 2018 Ladybug Tools authors. MIT License.
@@ -63,7 +63,7 @@ POP.getMenuHtmlPopUp = function() { // call from home page
 
 	const htm =
 	`
-		<div id = "divPopupData" >
+		<div id = "divPopUpData" >
 
 			<h3>Pop-Up menu</h3>
 			<p>
@@ -122,7 +122,7 @@ POP.onClickZoomAll = function() {
 
 	buildingXml = campusXml.getElementsByTagName( 'Building' )[ 0 ];
 
-	divPopupData.innerHTML=
+	divPopUpData.innerHTML=
 	`
 		<b>Campus Attributes</b>
 		<div>${ POP.getAttributesHtml( campusXml ) }</div>
@@ -199,13 +199,13 @@ POP.onDocumentMouseDown = function( event ) {
 
 		POP.getIntersectedVertexBufferGeometry( POP.intersects[ 0 ].point );
 
-		divPopupData.innerHTML = POP.getIntersectedDataHtml();
+		divPopUpData.innerHTML = POP.getIntersectedDataHtml();
 
 	} else {
 
 		POP.intersected = null;
 
-		divPopupData.innerHTML = '';
+		divPopUpData.innerHTML = '';
 
 		THR.scene.remove( POP.line, POP.particle );
 
@@ -896,6 +896,3 @@ POP.setSurfaceZoom = function() {
 	POP.setCameraControls( [ surfaceMesh ] );
 
 };
-
-
-
