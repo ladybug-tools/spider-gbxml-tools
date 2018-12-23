@@ -276,7 +276,7 @@ MNU.loadCssBasic = function() {
 
 		MNU.cssBasic = document.head.appendChild( document.createElement('link') );
 		MNU.cssBasic.rel = "stylesheet";
-		MNU.cssBasic.href = "../../spider-core-menu/lib/style.css";
+		MNU.cssBasic.href = "../lib/style.css";
 		//console.log( 'MNU.cssBasic', MNU.cssBasic );
 
 	}
@@ -335,7 +335,7 @@ MNU.loadCssW3school = function() {
 
 		MNU.cssBasic = document.head.appendChild( document.createElement('link') );
 		MNU.cssBasic.rel = "stylesheet";
-		MNU.cssBasic.href = "../../spider-core-menu/lib/style.css";
+		MNU.cssBasic.href = "../lib/style.css";
 		//console.log( 'MNU.cssBasic', MNU.cssBasic );
 
 	}
