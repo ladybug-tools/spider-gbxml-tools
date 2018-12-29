@@ -173,11 +173,11 @@ GAL.setGALdivGallery = function( button ) {
 
 			<p>Click any ${ GAL.iconInfo } icon to view file source code on GitHub.</p>
 
-			<p>Click any file title to view the file in this scrip0.t</p>
+			<p>Click any file title to view the file in this script.</p>
 
 			<p>Click any ❐ icon to go full screen & get link to individual file.</p>
 
-			<p>Tooltips provide file size.
+			<p>Tool tips provide file size.
 
 		</details>
 
