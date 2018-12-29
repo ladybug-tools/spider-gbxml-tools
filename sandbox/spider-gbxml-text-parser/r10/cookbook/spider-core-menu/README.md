@@ -1,30 +1,59 @@
 
-<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( https://www.ladybug.tools/spider-gbxml-tools/#cookbook/spider-viewer-core-menu/README.md "View file as a web page." ) </span>
+<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( https://www.ladybug.tools/spider-gbxml-tools/#sandbox/spider-gbxml-text-parser/r10/cookbook/spider-core-menu/README.md "View file as a web page." ) </span>
 
-<div><input type=button class = "btn btn-secondary btn-sm" onclick="window.location.href='https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/cookbook/spider-viewer-core-menu/README.md'";
+<div><input type=button class = "btn btn-secondary btn-sm" onclick="window.location.href='https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/sandbox/spider-gbxml-text-parser/r10/cookbook/spider-core-menu/README.md'";
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' ></div>
 
 <br>
 
-# [Spider gbXML Viewer Core Menu Read Me]( #cookbook/spider-viewer-core-menu/README.md )
+# [Spider gbXML Viewer Core Menu Read Me]( #sandbox/spider-gbxml-text-parser/r10/cookbook/spider-core-menu/README.md )
 
 
-<iframe src=https://www.ladybug.tools/spider-gbxml-tools/cookbook/spider-viewer-core-menu/index.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
+<iframe src=https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r10/cookbook/spider-core-menu/app/spider-core-menu.html  width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
 _<small>Spider gbXML Viewer Core Menu</small>_
 
-## Full Screen: [Spider gbXML Viewer Core Menu]( https://www.ladybug.tools/spider-gbxml-tools/cookbook/spider-viewer-core-menu/r7/spider-viewer-core-menu.html )
+## Full Screen: [Spider gbXML Viewer Core Menu]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r10/cookbook/spider-core-menu/app/spider-core-menu.html )
 
 
 
 ## Concept
 
+### Main Menu
 * Creates default menu header and footer content and code
-* Code for hamburger sliding menu
-* Code for pop-up window
-* Code to add and select and load theme stylesheets
+* Provides code for hamburger sliding menu
+* Provides code for pop-up window
+
+### Theme
+
+* Provides code to add, select and load theme stylesheets
+
+This module allows you to load:
+
+* Basic Spider style sheet
+* Style sheet from [W3Schools]( https://www.w3schools.com/w3css/w3css_color_themes.asp )
+* Style sheet from [Bootswatch]( https://bootswatch.com/ ) a supplier of free themes for Bootstrap
+
+You can switch themes at any time. Current them choice is saved between sessions (coming soon).
+
+Objective: make it easy for you to adapt the style of this viewer to the needs specific to your organization.
+
+Code
+* Two demos that show you hoe to apply classes to Spider HTML
+* Demo code to show you how to load and unload style sheets
+
 
 ## To Do / Wish List
 
+* Rename from spider core menu to spider viewer menu
+
+
+### Menu
+
+* Add explanations to read me
+
+### Themes
+
+* Save theme selection between sessions
 * Move theme code to separate file
 
 ## Issues
@@ -44,6 +73,13 @@ _<small>Spider gbXML Viewer Core Menu</small>_
 
 
 ## Change Log
+
+### 2018-12-29 ~ Theo
+
+* Update pop-up and read me links and text
+* Add helpItem class
+* Add load module's meta description or custom description
+
 
 ### 2018-12-28 ~ Theo
 

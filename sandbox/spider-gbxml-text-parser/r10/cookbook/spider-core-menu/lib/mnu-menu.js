@@ -4,8 +4,10 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
 
 
-const MNU = { "release": "R10.2", "date": "2018-12-28" };
+const MNU = { "release": "R10.3", "date": "2018-12-29" };
 
+
+MNU.description = MNU.description || document.head.querySelector( "[ name=description ]" ).content;
 
 MNU.currentStatus =
 	`
@@ -13,10 +15,26 @@ MNU.currentStatus =
 
 		<p>Spider Core Menu.</p>
 
-		<p>This module is new / ready for light testing.</p>
+		<p>
+
+			Concept
+			<ul>
+				<li>Creates default menu header and footer content and code</li>
+				<li>Code for hamburger sliding menu</li>
+				<li>Code for pop-up window</li>
+				<li>Code to add and select and load theme stylesheets</li>
+			</ul>
+
+		</p>
+
+		<p>This module is ready for light testing.</p>
+
+		<p><a href="https://www.ladybug.tools/spider-gbxml-tools/#sandbox/spider-gbxml-text-parser/r10/cookbook/spider-core-menu/README.md" target="_blank">MNU Read Me</a></p>
 
 		<p>
+			Change log
 			<ul>
+				<li>2018-12-29 ~ Add helpItem class</li>
 				<li>2018-12-28 ~ Current Status link changed to question mark</li>
 				<li>2018-12-28 ~ Content displayed in the Pop-Up</li>
 				<li>2018-12-22 ~ Themes added</li>
@@ -43,11 +61,17 @@ MNU.statusThemes =
 			You can switch themes at any time. Current them choice is saved between sessions (coming soon).
 		</p>
 		<p>
-				<a href="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-text-parser/r10/cookbook/spider-core-menu" target="_blank">Read Me</a>
+			Objective: make it easy for you to adapt the style of this viewer to the needs specific to your organization.
+		</p>
+		<p>
+			<a href="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-text-parser/r10/cookbook/spider-core-menu" target="_blank">MNU Themes Read Me</a>
 		</p>
 		<p>
 			Status:
 			<ul>
+				<li>2018-12-29 ~ Add helpItem class</li>
+				<li>2018-12-28 ~ Current Status link changed to question mark</li>
+				<li>2018-12-28 ~ Content displayed in the Pop-Up</li>
 				<li>2018-12-22 ~ First commit</li>
 
 				<!-- <li></li> -->
@@ -72,7 +96,7 @@ let themeNameBootswatch = 'https://bootswatch.com/_vendor/bootstrap/dist/css/boo
 
 MNU.getNavHeader = function() {
 
-	//MNU.loadCssBasic();
+	MNU.loadCssBasic();
 
 	const htm  =
 	`
@@ -94,21 +118,21 @@ MNU.getNavHeader = function() {
 			</a>
 			<a href="" title="Click to reload this page" >${ document.title }</a>
 
-			<a id=statusCore href="JavaScript:MNU.setPopupShowHide(statusCore,coreCurrentStatus);"
-			title="Current status: menu MNU module" style=float:right; >&nbsp; ? &nbsp;</a>
+			<a class=helpItem href="JavaScript:MNU.setPopupShowHide(this,coreCurrentStatus);"
+			title="Current status: menu MNU module" >&nbsp; ? &nbsp;</a>
 		</h3>
 
-		<p>
-			 ${ document.head.querySelector( '[ name=description ]' ).content }
-<!--
-			DEV version: Open, examine and edit very large <a href="http://gbxml.org" target="_blank"  title="Thank you, Stephen">gbXML</a> files in 3D in your browser with free, open source
-			<a href="https://en.wikipedia.org/wiki/JavaScript" target="_blank"  title="Thank you, Brendan">JavaScript</a>,
-			<a href="https://en.wikipedia.org/wiki/WebGL" target="_blank" title="Thank you, Ken" >WebGL</a> &
-			<a href="https://en.wikipedia.org/wiki/Three.js" target="_blank" title="Thank you, Ricardo" >Three.js</a>
- -->
-			<a id=statusHeader href="JavaScript:MNU.setPopupShowHide(statusHeader,MNU.currentStatus);"
-				title="Current status: menu MNU module" style=float:right; >&nbsp; ? &nbsp;</a>
+		<p> ${ MNU.description }
 
+		<!--
+			 ${ document.head.querySelector( '[ name=description ]' ).content }
+			 Open, examine and edit very large <a href="http://gbxml.org" target="_blank"  title="Thank you, Stephen">gbXML</a> files in 3D in your browser with free, open source
+			 <a href="https://en.wikipedia.org/wiki/JavaScript" target="_blank"  title="Thank you, Brendan">JavaScript</a>,
+			 <a href="https://en.wikipedia.org/wiki/WebGL" target="_blank" title="Thank you, Ken" >WebGL</a> &
+			 <a href="https://en.wikipedia.org/wiki/Three.js" target="_blank" title="Thank you, Ricardo" >Three.js</a>
+			 <a class=helpItem href="JavaScript:MNU.setPopupShowHide(this,MNU.currentStatus);"
+			 title="Current status: menu MNU module" >&nbsp; ? &nbsp;</a>
+		-->
 		</p>
 	`;
 
@@ -137,7 +161,7 @@ MNU.getNavFooter = function() {
 	<details>
 
 		<summary>Footer / Help
-			<a id=statusFooter class=helpItem href="JavaScript:MNU.setPopupShowHide(this,'Howdy, World!<br> More text coming soon.' );" >&nbsp; ? &nbsp;</a>
+			<a class=helpItem href="JavaScript:MNU.setPopupShowHide(this,MNU.currentStatus);" >&nbsp; ? &nbsp;</a>
 		</summary>
 
 		<div style=margin-top:1rem; title='What is this stuff?' ><a href=https://www.ladybug.tools/spider-gbxml-tools/#../spider/pages/about-spider-code-style.md target="_blank" >Coding style</a></div>
@@ -231,18 +255,13 @@ MNU.getMenuTemplate = function() {
 	htm =
 	`
 		<details>
-
-			<summary>Menu Template
-
-				<a id=statusMenu href="JavaScript:MNU.setPopupShowHide(statusMenu,MNU.currentStatus);" >&nbsp; ? &nbsp;</a></summary>
-
-			<br>
+			<summary>Menu Template <a class=helpItem href="JavaScript:MNU.setPopupShowHide(this,MNU.currentStatus);" >&nbsp; ? &nbsp;</a></summary>
 			<p>
 				<button onclick=MNU.onUpdateThings(); >update things</button>
 			</p>
 			<p>
 				<label><b>Last Name</b></label>
-				<input type="text" style=width:100px; >
+				<input type="text" style=width:100%; >
 			</p>
 			<p>
 				<button >button 1</button>
@@ -259,7 +278,7 @@ MNU.getMenuTemplate = function() {
 				</select>
 			</p>
 			<p>
-				<input type=range title="slider" >
+				<input type=range title="slider" style=width:100%; >
 			</p>
 			<p>
 				lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?

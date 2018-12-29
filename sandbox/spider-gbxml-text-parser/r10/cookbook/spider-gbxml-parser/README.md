@@ -18,6 +18,8 @@ _<small>Spider gbXML Parser</small>_
 
 ## Concept
 
+The code that parses a given txt files of gbXML data and creates a 3D view using Three.js
+
 
 ## To Do / Wish List
 

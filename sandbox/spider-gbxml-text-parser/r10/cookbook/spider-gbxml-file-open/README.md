@@ -1,7 +1,7 @@
 
-<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( https://www.ladybug.tools/spider-gbxml-tools/#cookbook/spider-viewer-open-file/README.md "View file as a web page." ) </span>
+<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( https://www.ladybug.tools/spider-gbxml-tools/#sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-file-open/README.md "View file as a web page." ) </span>
 
-<div><input type=button class = "btn btn-secondary btn-sm" onclick="window.location.href='https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/cookbook/spider-viewer-open-file/README.md'";
+<div><input type=button class = "btn btn-secondary btn-sm" onclick="window.location.href='https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-file-open'";
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' ></div>
 
 <br>
@@ -9,10 +9,10 @@ value='You are now in a GitHub web page view - Click this button to view this re
 # [Spider gbXML Viewer Open File Read Me]( #cookbook/spider-viewer-open-file/README.md )
 
 
-<iframe src=https://www.ladybug.tools/spider-gbxml-tools/cookbook/spider-viewer-open-file/index.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
+<iframe src=https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-file-open/index.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
 _<small>Spider gbXML Viewer Open File</small>_
 
-## Full Screen: [Spider gbXML Viewer Open File]( https://www.ladybug.tools/spider-gbxml-tools/cookbook/spider-viewer-open-file/r7/spider-viewer-open-file.html )
+## Full Screen: [Spider gbXML Viewer Open File]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-file-open/ )
 
 
 
@@ -73,6 +73,11 @@ Progress indication
 
 ## Change Log
 
+
+### 2018-12-29 ~ Theo
+
+* Fix read me links
+* Add helpItem class
 
 ### 2018-12-14 ~ Theo
 

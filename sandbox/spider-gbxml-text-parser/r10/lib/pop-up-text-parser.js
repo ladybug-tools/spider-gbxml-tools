@@ -3,14 +3,14 @@
 
 // Copyright 2018 Ladybug Tools authors. MIT License.
 
-var POP = { "release": "R9.5", "date": "2018-11-15" };
+var POP = { "release": "R10.0", "date": "2018-12-29" };
 
 POP.urlSource = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-pop-up"
 
 POP.currentStatus =
-	`<details>
+	`
 
-		<summary>Pop-Up menu current status ${ POP.date }</summary>
+		<h3>Pop-Up menu current status ${ POP.date }</h3>
 
 		<p>
 			Elements and attributes identified according to <a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">gbXML Schema.</a>
@@ -38,7 +38,7 @@ POP.currentStatus =
 
 		-->
 
-	</details>`;
+	`;
 
 
 
@@ -83,15 +83,13 @@ POP.getMenuHtmlPopUp = function() { // call from home page
 				Axes: Red/Green/Blue = X/Y/Z directions
 			</p>
 
-			${ POP.currentStatus }
-
 		</div>
 
 
 		<div id=POPfooter >
 
 			<p style=text-align:right; >
-				<a href= title="View the read me file for the pop-up module" >${ POP.release }</a>
+				<a class=helpItem href="JavaScript:MNU.setPopupShowHide(this,POP.currentStatus);" title="View the read me file for the pop-up module" >&nbsp; ? &nbsp;</a>
 				<br>
 				<button onclick=POP.onClickZoomAll(); title="Show entire campus & display attributes" >zoom all +</button>
 				<button onclick=SET.toggleOpenings(); >toggle openings</button>

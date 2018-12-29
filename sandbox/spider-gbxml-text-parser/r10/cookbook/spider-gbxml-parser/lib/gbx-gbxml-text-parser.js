@@ -2,7 +2,28 @@
 // jshint esversion: 6
 /* globals THREE, THR, THRU, FIL, GBXU */
 
-var GBX = GBX || { "release": "R10.2", "date": "2018-12-14" };
+var GBX = { "release": "R10.3", "date": "2018-12-29" };
+
+GBX.currentStatus =
+`
+<h3>GBX ${ GBX.release } status ${ GBX.date }</h3>
+
+	<p>gbXML parser</p>
+
+	<p>The code that parses a given txt files of gbXML data and creates a 3D view using Three.js</p>
+
+	<p>
+		Change log
+		<ul>
+			<li>2018-12-29 ~ Add helpItem class</li>
+			<li>2018-12-29 ~ Fix read me links</li>
+		</ul>
+	</p>
+
+	<p><a href="https://www.ladybug.tools/spider-gbxml-tools/#sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-parser/README.md" target="_blank">Spider gbXML Parser Read Me</a></p>
+
+`;
+
 
 GBX.filtersDefault = [ "Roof", "ExteriorWall", "ExposedFloor", "Air", "Shade" ];
 

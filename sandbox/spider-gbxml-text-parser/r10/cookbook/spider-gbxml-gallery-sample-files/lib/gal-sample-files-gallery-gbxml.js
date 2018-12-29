@@ -2,7 +2,7 @@
 /* globals COR, butGalleryGbxml, butGallerySampleFiles, butGallerySamples2, butGalleryBuildWell, divMenuItems */
 /* jshint esversion: 6 */
 
-var GAL = { "release": "r10.2", "date": "2018-12-28"  };
+var GAL = { "release": "r10.3", "date": "2018-12-29"  };
 
 GAL.iconGitHubMark = 'https://status.github.com/images/invertocat.png';
 
@@ -25,6 +25,7 @@ GAL.currentStatus =
 
 			<p>
 				<ul>
+					<li>2018-12-29 ~ Add helpItem class</li>
 					<li>2018-12-28 ~ Move HTML from core script to gallery script</li>
 					<li>2018-12-28 ~ Move current status to Pop-Up</li>
 					<li>2018-12-28 ~ Add and edit text content</li>
@@ -48,7 +49,7 @@ GAL.getMenuSampleFilesGallery = function( buttons, target ) {
 		<details>
 
 			<summary title="gbXML files on the web for exploring, learning and testing" >Open gbXML sample files
-				<a id=statusSamples href="JavaScript:MNU.setPopupShowHide(statusSamples,GAL.currentStatus);" style=float:right; >&nbsp; ? &nbsp;</a>
+				<a class=helpItem href="JavaScript:MNU.setPopupShowHide(this,GAL.currentStatus);" style=float:right; >&nbsp; ? &nbsp;</a>
 			</summary>
 
 			<p>This script obtains links to sample gbXML files from a variety of sources via GitHub API, updates location hash with selected link causing selected file to be loaded.</p>
