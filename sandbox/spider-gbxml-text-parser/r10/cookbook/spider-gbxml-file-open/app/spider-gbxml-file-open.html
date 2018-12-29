@@ -5,64 +5,58 @@
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
 <meta name=description content="Script for developing and testing opening and saving local and remote gbXML and ZIP files" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-12-13" >
-<title>Spider gbXML File Open r10.1 </title>
-<link rel="stylesheet" href="../../../lib/style.css">
-<style>
-
-	aside { border: 1px solid lightgray; margin-top:15px; padding: 2px; }
-	button:hover { background: #ccc; color: #fff }
-
-
-	#navMenu button, #navMenu input[type=button] { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;
-		 padding: 2px 5px; min-width: 13.5rem; }
-
-
-	#navMenu button.active { border-color: black; font-style: italic; font-weight: bold; margin-left: 1rem;
-	 box-shadow: 2px 2px re#888; }
-
-	.divMenuTitle { background-color: #ccc; color: #888; margin: 10px 0; text-align: center; }
-
-</style>
+<meta name = "date" content = "2018-12-28" >
+<title>Spider gbXML File Open r10.2 </title>
+<link rel="stylesheet" href="../../spider-core-menu/lib/style.css">
 </head>
 <body>
-<script src = "https://cdn.rawgit.com/mrdoob/three.js/r99/build/three.min.js" ></script>
-<script src = "https://cdn.rawgit.com/mrdoob/three.js/r99/examples/js/controls/OrbitControls.js" ></script>
-<script src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
+	<script src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
+	<script src = "https://cdn.rawgit.com/mrdoob/three.js/r99/build/three.min.js" ></script>
+	<script src = "https://cdn.rawgit.com/mrdoob/three.js/r99/examples/js/controls/OrbitControls.js" ></script>
 
-<script src = "../../spider-gbxml-gallery-sample-files/lib/gal-sample-files-gallery-gbxml.js" ></script>
+	<!-- Core -->
+	<script src = "../../spider-core-threejs/lib/thr-threejs.js" ></script>
+	<script src = "../../spider-core-threejs-utilities/lib/thru-threejs-utilities.js"></script>
+	<script src = "../../spider-core-menu/lib/mnu-menu.js" ></script>
 
-<script src = "../lib/fil-open-file.js" ></script>
+	<!-- File menu -->
+	<script src = "../../spider-gbxml-gallery-sample-files/lib/gal-sample-files-gallery-gbxml.js" ></script>
+	<script src = "../../spider-gbxml-file-open/lib/fil-open-file.js" ></script>
+	<script src = "../../spider-gbxml-parser/lib/gbx-gbxml-text-parser.js" ></script>
+	<script src = "../../spider-gbxml-parser/lib/gbxu-gbxml-utilities.js" ></script>
 
-<script src = "../../../lib/thr-threejs.js" ></script>
-<script src = "../../../lib/thru-threejs-utilities.js"></script>
+	<!-- Edit menu
+	<script src = "../../spider-gbxml-issues/lib/iscor-issues-core.js" ></script>
+	<script src = "../../spider-gbxml-issues/lib/isfic-issues-file-check.js" ></script>
+	<script src = "../../spider-gbxml-issues/lib/ismet-issues-metadata.js" ></script>
+	<script src = "../../spider-gbxml-issues/lib/issti-issues-surface-type-invalid.js" ></script>
+	<script src = "../../spider-gbxml-issues/lib/isduc-issues-duplicate-coordinates.js" ></script>
+	<script src = "../../spider-gbxml-issues/lib/isasi-issues-adjacent-space-invalid.js" ></script>
+	<script src = "../../spider-gbxml-issues/lib/isase-issues-adjacent-space-extra.js" ></script>
+	<script src = "../../spider-gbxml-issues/lib/isasd-issues-adjacent-space-duplicate.js" ></script>
+	<script src = "../../spider-gbxml-issues/lib/iscod-issues-cad-object-id.js" ></script>
+	<script src = "../../spider-gbxml-issues/lib/istmp-issues-template.js" ></script>
 
-<script src = "../lib/gbx-gbxml-text-parser.js" ></script>
-<script src = "../lib/gbxu-gbxml-utilities.js" ></script>
+	<!-- View menu
+	<script src = "../../../lib/vwsrf-view-surface-types.js" ></script>
+	<script src = "../../../lib/repl-view-by-level.js" ></script>
+	<script src = "../../../lib/set-settings.js" ></script>
+	<script src = "../../../lib/cut-section-cut.js"></script>
 
-<!--
+	<script src = "../../../lib/pop-up-text-parser.js" ></script>
 
-<script src = "../../../lib/iscor-issues-core.js" ></script>
-<script src = "../../../lib/isfic-issues-file-check.js" ></script>
-<script src = "../../../lib/ismet-issues-metadata.js" ></script>
-<script src = "../../../lib/issti-issues-surface-type-invalid.js" ></script>
-<script src = "../../../lib/isduc-issues-duplicate-coordinates.js" ></script>
-<script src = "../../../lib/isasi-issues-adjacent-space-invalid.js" ></script>
-<script src = "../../../lib/isase-issues-adjacent-space-extra.js" ></script>
-<script src = "../../../lib/isasd-issues-adjacent-space-duplicate.js" ></script>
-<script src = "../../../lib/iscod-issues-cad-object-id.js" ></script>
+	-->
+<script>
 
-<script src = "../../../lib/vwsrf-view-surface-types.js" ></script>
-<script src = "../../../lib/repl-view-by-level.js" ></script>
-<script src = "../../../lib/set-settings.js" ></script>
-<script src = "../../../lib/cut-section-cut.js"></script>
-<script src = "../../../lib/pop-up-text-parser.js" ></script>
--->
+coreCurrentStatus =
+	`
+		<h3>${ document.head.querySelector( '[ name=date ]' ).content } ~ FO Current Status</h3>
 
-<script src = "../../../lib/mnu-menu.js" ></script>
+		<p>File Open</p>
 
-<script src = "../lib/tmp-template.js" ></script>
+	`;
 
+</script>
 
 	<main id="container" ></main>
 
@@ -80,59 +74,13 @@
 
 			<summary class=divMenuTitle >File Menu</summary>
 
-			<details>
+			<div id=GALdivSampleFilesGallery ></div>
 
-				<summary>Open gbXML sample files</summary>
+			<div id=FILdivFileOpen ></div>
 
-				<div id=divSampleFileButtons ></div>
-
-				<div id=divSampleFileItems ></div>
-
-				<div id=divFileInfo ></div>
-
-				<div id=GALdivCurrentStatus ></div>
-
-				<hr>
-
-			</details>
-
-			<details id=FILdetFileOpen >
-
-				<summary>Open gbXML or ZIP file</summary>
-
-				<div id="FILdivFileOpen" ></div>
-
-				<hr>
-
-			</details>
-
-			<details>
-
-				<summary>Save file</summary>
-
-				<div id = "divSaveFile" >
-
-					<p>
-						<button onclick=FIL.butSaveFile(); >Save file as gbXML</button>
-					</p>
-					<p>
-						<button onclick=FIL.butSaveFileZip(); >Save file as gbXML in ZIP</button>
-					</p>
-
-					<hr>
-
-				</div>
-
-			</details>
-
-		<br>
-
-		<div id=FILdivCurrentStatus ></div>
+			<div id=FILdivFileSave ></div>
 
 		</details>
-
-
-
 
 
 		<details id=detMenuItems open >
@@ -145,8 +93,8 @@
 
 		</details>
 
-
 		<!--
+
 
 					<details id=detStats ontoggle=divGbxmlInfo.innerHTML=VWSRF.getStats(); >
 
@@ -155,10 +103,6 @@
 						<div id = "divGbxmlInfo" ></div>
 
 					</details>
-
-
-
-
 
 
 		<details id=detMenuView >
@@ -224,7 +168,7 @@
 	</nav>
 
 
-	<!--
+
 	<div id="divPopUp" >
 
 		<div id="divPopUpData" ></div>
@@ -232,7 +176,7 @@
 		<div id="divMessage" ></div>
 
 	</div>
-	-->
+
 
 <script>
 
@@ -258,13 +202,13 @@ function init() {
 
 	divHeader.innerHTML = MNU.getNavHeader(); // not essential
 
-	TMPdivTemplate.innerHTML = TMP.getDivMenuTemplate();
-
-	divSampleFileButtons.innerHTML = GAL.getMenuSampleGalleries();
+	GALdivSampleFilesGallery.innerHTML = GAL.getMenuSampleFilesGallery();
 
 	FILdivFileOpen.innerHTML = FIL.getMenuFileOpen();
 
 	GBXdivStats.innerHTML = GBX.getDivMenuGbx();
+
+	FILdivFileSave.innerHTML = FIL.getMenuFileSave();
 
 	divFooter.innerHTML = MNU.getNavFooter(); // not essential
 

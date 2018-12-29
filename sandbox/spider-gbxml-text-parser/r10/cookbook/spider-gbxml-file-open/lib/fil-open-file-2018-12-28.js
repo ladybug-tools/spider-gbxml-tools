@@ -3,7 +3,7 @@
 /* globals GBX, JSZip */
 
 
-const FIL = { "release": "r10.3", "date": "2018-12-28" };
+const FIL = { "release": "r10.2", "date": "2018-12-14" };
 
 
 FIL.reader = new FileReader();
@@ -14,22 +14,24 @@ FIL.note = `<p>With large files, after loading, there is a pause of some seconds
 
 FIL.currentStatus =
 	`
-		<h3>FIL ${ FIL.release } status ${ FIL.date }</h3>
+		<details>
 
-		<p>File opening and saving of gbXML and ZIP files is generally working well and open for testing.</p>
+			<summary>FIL ${ FIL.release } status ${ FIL.date }</summary>
 
-		<p>
-			Updates
-			<ul>
-				<li>2018-12-28 ~ Add pop-up status / Edit left menu</li>
-				<li>2018-12-14 ~ Many internal fixes and code cleanups</li>
-			</ul>
-		</p>
+			<p>File opening and saving of gbXML and ZIP files is generally working well and open for testing.</p>
 
-		<p>
-			<a href="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-text-parser/r10/cookbook" target="_blank">
-			fil-open-file.js Read Me</a>
-		</p>
+			<p>
+				Updates
+				<ul>
+					<li>2018-12-14 ~ Many internal fixes and code cleanups</li>
+				</ul>
+			</p>
+
+			<p>
+				<a href="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-text-parser/r10/cookbook" target="_blank">
+				fil-open-file.js Read Me</a>
+			</p>
+		</details>
 	`;
 
 
@@ -41,58 +43,36 @@ FIL.getMenuFileOpen = function() {  // called from main HTML file
 	window.addEventListener ( 'hashchange', FIL.onHashChange, false );
 
 	FILdivFileOpen.addEventListener( "dragover", function( event ){ event.preventDefault(); }, true );
-
 	FILdivFileOpen.addEventListener( 'drop', FIL.drop, false );
 
 	// see also event listener in: gbx-gbxml-text-parser.js
 
 
+	FILdivCurrentStatus.innerHTML = FIL.currentStatus;
+
 	const htm =
 	`
+		<div id="FILdivFileOpen" class="dragDropArea" >
 
-		<details id=FILdetFileOpen >
+			<p>
+				<input type=file id=inpOpenFile onchange=FIL.onInputFileOpen(this); accept=".xml, .zip" >
+				or drag & drop files here
+				or enter a default file path &nbsp;<a href=#../assets/file-open.md title="Learn how to speed up your testing" >?</a>
+				<!--
+					try this: 	https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml
+				-->
+				<input id=FILinpFilePath onchange=FIL.updateDefaultFilePath(); style=width:95%; title='paste a file path or URL here then press Enter' >
+			</p>
 
-			<summary>Open gbXML or ZIP file
-				<a id=FILstatus href="JavaScript:MNU.setPopupShowHide(FILstatus,FIL.currentStatus);" style=float:right; >&nbsp; ? &nbsp;</a>
-			</summary>
+		</div>
 
-			<div class="dragDropArea" >
-
-				<p>
-					<input type=file id=inpOpenFile onchange=FIL.onInputFileOpen(this); accept=".xml, .zip" >
-					or drag & drop files here
-					or enter a default file path &nbsp;<a href=#../../../lib/file-open.md title="Learn how to speed up your testing" style=float:right; >?</a>
-					<!--
-						try this: 	https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml
-					-->
-					<input id=FILinpFilePath onchange=FIL.updateDefaultFilePath(); style=width:95%; title='paste a file path or URL here then press Enter' >
-				</p>
-
-			</div>
-
-			<details id=GBXdetStats >
-
-				<summary>gbXML parser statistics</summary>
-
-				<hr>
-
-				<div id="GBXdivStatsGbx" ></div>
-
-				<div id="GBXdivStatsThr" ></div>
-
-				<br>
-
-				<hr>
-
-			</details>
+		<aside>
 
 			<div>File name:</div>
 
 			<div id=FILdivProgress ></div>
 
-			<hr>
-
-		</details>
+		</aside>
 	`;
 
 	return htm;
@@ -100,41 +80,6 @@ FIL.getMenuFileOpen = function() {  // called from main HTML file
 };
 
 
-
-FIL.getMenuFileSave = function() {
-
-
-	htm =
-	`
-	<details>
-
-		<summary>Save file
-		<a id=FILstatusFileSave href="JavaScript:MNU.setPopupShowHide(FILstatusFileSave,FIL.currentStatus);" style=float:right; >&nbsp; ? &nbsp;</a>
-
-
-
-		</summary>
-
-		<div id = "divSaveFile" >
-
-			<p>
-				<button onclick=FIL.butSaveFile(); >Save file as gbXML</button>
-			</p>
-			<p>
-				<button onclick=FIL.butSaveFileZip(); >Save file as gbXML in ZIP</button>
-			</p>
-
-			<hr>
-
-		</div>
-
-	</details>
-
-	`;
-
-	return htm;
-
-}
 
 FIL.onHashChange = function() {
 

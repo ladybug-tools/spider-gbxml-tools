@@ -27,7 +27,7 @@ Obtain links to sample gbXML files via GitHub API and update location hash with 
 * Uses the GitHub API to obtain up to date listings of file names in a directory
 * Display list of file names as links to source
 	* Click Octocat icon to go to the source on GitHub
-	* Click the text link to update the location hash
+	* Click the file name link to update the location hash
 		* Used by other modules as an event to load new files etc
 	* Click the external link icon on right to view the file full screen in its own window
 * Link may be use to embed file in other app or HTML pages
@@ -35,8 +35,7 @@ Obtain links to sample gbXML files via GitHub API and update location hash with 
 
 ## Wish list
 
-* 2018-12-14 ~ Add notes regarding icons and tooltips
-* Links to more sample files
+Links to more sample files
 	* Where to find more?
 * Credits to sources of files
 
@@ -58,9 +57,20 @@ Obtain links to sample gbXML files via GitHub API and update location hash with 
 
 ## Links of Interest
 
+* http://www.ladybug.tools/spider/#gbxml-sample-files/README.md
 
 
 ## Change Log
+
+
+### 2018-12-28 ~ Theo
+
+* Move HTML from core script to gallery script
+* Move current status to Pop-Up
+* Add and edit text content
+
+Done
+* 2018-12-14 ~ Add notes regarding icons and tooltips
 
 ### 2018-12-13 ~ Theo
 

@@ -2,11 +2,9 @@
 /* globals COR, butGalleryGbxml, butGallerySampleFiles, butGallerySamples2, butGalleryBuildWell, divMenuItems */
 /* jshint esversion: 6 */
 
-var GAL = { "release": "r10.2", "date": "2018-12-28"  };
+var GAL = { "release": "r10.1", "date": "2018-12-13"  };
 
 GAL.iconGitHubMark = 'https://status.github.com/images/invertocat.png';
-
-GAL.iconInfo = `<img src=${GAL.iconGitHubMark} height=14 >`;
 
 GAL.threeDefaultFile = 'https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/';
 
@@ -15,19 +13,19 @@ var GALdetGallery, GALdivgallery;
 
 GAL.currentStatus =
 	`
-			<h3>GAL ${ GAL.release} status ${ GAL.date }</h3>
 
-			<p>Sample files gallery script.</p>
+		<details>
 
-			<p>This script is ready for testing. Generally it appears to be working well.</p>
+			<summary>GAL ${ GAL.release} status ${ GAL.date }</summary>
 
-			<p>We are always looking for more sample files and more complete attributions.</p>
+			<p>Obtain links to sample gbXML files via GitHub API and update location hash with selected link<./p>
+
+			<p>Updating the URL hash causes the indicated file to be loaded.</p>
+
+			<p>This module is ready for testing.</p>
 
 			<p>
 				<ul>
-					<li>2018-12-28 ~ Move HTML from core script to gallery script</li>
-					<li>2018-12-28 ~ Move current status to Pop-Up</li>
-					<li>2018-12-28 ~ Add and edit text content</li>
 					<li>2018-12-11 ~ Add ZIP file gallery button & menu</li>
 					<li>2018-12-11 ~ significant code refactor</li>
 				</ul>
@@ -38,65 +36,44 @@ GAL.currentStatus =
 				gal-sample-files-gallery-gbxml.js Read Me file</a>
 			</p>
 
+		</details>
+
 	`;
 
 
-GAL.getMenuSampleFilesGallery = function( buttons, target ) {
+
+GAL.getMenuSampleGalleries = function( buttons, target ) {
+
+	GALdivCurrentStatus.innerHTML = GAL.currentStatus;
 
 	const htm =
 	`
-		<details>
+		<p>
+			<button id="butGalleryGbxml" class="btn btn-primary btn-sm"
+				onclick = GAL.setGALdivGallery(this) >
+				gbXML.org
+			</button>
 
-			<summary title="gbXML files on the web for exploring, learning and testing" >Open gbXML sample files
-				<a id=statusSamples href="JavaScript:MNU.setPopupShowHide(statusSamples,GAL.currentStatus);" style=float:right; >&nbsp; ? &nbsp;</a>
-			</summary>
+			<button id=butGallerySampleFiles class="btn btn-primary btn-sm"
+				onclick = GAL.setGALdivGallery(this) >
+				Samples1
+			</button>
 
-			<p>This script obtains links to sample gbXML files from a variety of sources via GitHub API, updates location hash with selected link causing selected file to be loaded.</p>
+			<button id=butGallerySamples2 class="btn btn-primary btn-sm"
+				onclick = GAL.setGALdivGallery(this) >
+				Samples2
+			</button>
 
-			<p>
-				<button id="butGalleryGbxml"
-					onclick = GAL.setGALdivGallery(this) >
-					gbXML.org
-				</button>
+			<button id=butGalleryBuildWell class="btn btn-primary btn-sm"
+				onclick = GAL.setGALdivGallery(this) >
+				Build Well
+			</button>
 
-				<button id=butGallerySampleFiles
-					onclick = GAL.setGALdivGallery(this) >
-					Samples1
-				</button>
-
-				<button id=butGallerySamples2
-					onclick = GAL.setGALdivGallery(this) >
-					Samples2
-				</button>
-
-				<button id=butGalleryBuildWell
-					onclick = GAL.setGALdivGallery(this) >
-					Build Well
-				</button>
-
-				<button id=butGalleryZip
-					onclick = GAL.setGALdivGallery(this) >
-					ZIP files
-				</button>
-			</p>
-
-			<div id=GALdivSampleFileItems ></div>
-
-			<hr>
-
-			<div id=GALdivFileInfo >
-
-				<p>Click button to view list of files</p>
-
-				<p>When open, tooltips will show info for icons</p>
-
-			</div>
-
-			<br>
-
-			<hr>
-
-		</details>
+			<button id=butGalleryZip class="btn btn-primary btn-sm"
+				onclick = GAL.setGALdivGallery(this) >
+				ZIP files
+			</button>
+		</p>
 
 	`;
 
@@ -107,7 +84,7 @@ GAL.getMenuSampleFilesGallery = function( buttons, target ) {
 
 
 GAL.setGALdivGallery = function( button ) {
-	//console.log( 'button', button );
+	//console.log( 'but', button );
 
 	// Um, this seems like a kind of dorky way of doing things. On the other hand, it works.
 
@@ -157,7 +134,7 @@ GAL.setGALdivGallery = function( button ) {
 	GAL.urlGitHubPage = 'https://rawgit.com/' + GAL.user + GAL.repo + '/master/' + GAL.pathRepo;
 	GAL.urlGitHubSource = 'https://github.com/' + GAL.user + GAL.repo + '/blob/master/' + GAL.pathRepo;
 
-	const buttons = GALdivSampleFilesGallery.querySelectorAll( "button" );
+	buttons = GALdivSampleFileButtons.querySelectorAll( "button" );
 
 	buttons.forEach( butt => butt.classList.remove( 'active' ) );
 
@@ -170,14 +147,6 @@ GAL.setGALdivGallery = function( button ) {
 			<summary>${ GAL.title }</summary>
 
 			<div id=GALdivGallery ></div>
-
-			<p>Click any ${ GAL.iconInfo } icon to view file source code on GitHub.</p>
-
-			<p>Click any file title to view the file in this scrip0.t</p>
-
-			<p>Click any ❐ icon to go full screen & get link to individual file.</p>
-
-			<p>Tooltips provide file size.
 
 		</details>
 
@@ -220,6 +189,7 @@ GAL.requestFile = function( url, callback ) {
 
 GAL.callbackGitHubMenu = function( xhr ) {
 
+	const iconInfo = `<img src=${GAL.iconGitHubMark} height=14 >`;
 	const response = xhr.target.response;
 	const files = JSON.parse( response );
 
@@ -242,7 +212,7 @@ GAL.callbackGitHubMenu = function( xhr ) {
 
 		`<div style=margin:4px 0; >
 
-			<a href=${ GAL.urlGitHubSource + fileName } title="Edit me" >${ GAL.iconInfo }</a>
+			<a href=${ GAL.urlGitHubSource + fileName } title="Edit me" >${ iconInfo }</a>
 
 			<a href=#${ GAL.urlGitHubPage + fileName } title="${ file.size.toLocaleString() } bytes" >${ file.name }</a>
 

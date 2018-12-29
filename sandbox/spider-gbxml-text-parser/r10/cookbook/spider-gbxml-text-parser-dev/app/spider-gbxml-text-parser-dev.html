@@ -5,8 +5,8 @@
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
 <meta name=description content="DEV version: Open, examine and edit very large gbXML files in 3D in your browser with free, open source JavaScript, WebGL & Three.js" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name="date" content="2018-12-22" >
-<title>Spider gbXML Text Parser R10.10 DEVELOP </title>
+<meta name="date" content="2018-12-28" >
+<title>Spider gbXML Text Parser R10.11 DEVELOP </title>
 <link rel="stylesheet" href="../../spider-core-menu/lib/style.css">
 <style>
 
@@ -83,51 +83,28 @@ coreCurrentStatus =
 
 				<summary class=divMenuTitle >File Menu</summary>
 
-				<details>
+				<div id=GALdivSampleFilesGallery ></div>
 
-					<summary>Open gbXML sample files</summary>
+				<div id=FILdivFileOpen ></div>
 
-					<div id=GALdivSampleFileButtons ></div>
+				<div id=FILdivFileSave ></div>
+				
 
-					<div id=GALdivSampleFileItems ></div>
+				<!--
 
-					<hr>
+				<details id=GBXdetStats >
 
-					<div id=GALdivFileInfo >
+					<summary>gbXML parser statistics</summary>
 
-						<p>Click button to view list of files</p>
+					<div id="GBXdivStatsGbx" ></div>
 
-						<p>When open, tooltips will show info for icons</p>
-
-					</div>
-
-					<br>
-
-					<div id=GALdivCurrentStatus ></div>
-
-					<hr>
+					<div id="GBXdivStatsThr" ></div>
 
 				</details>
 
-				<details id=FILdetFileOpen >
+				<br>
 
-					<summary>Open gbXML or ZIP file</summary>
 
-					<div id="FILdivFileOpen" ></div>
-
-					<details id=GBXdetStats >
-
-						<summary>gbXML parser statistics</summary>
-
-						<div id="GBXdivStatsGbx" ></div>
-
-						<div id="GBXdivStatsThr" ></div>
-
-					</details>
-
-					<br>
-
-				</details>
 
 				<details>
 
@@ -147,6 +124,8 @@ coreCurrentStatus =
 					</div>
 
 				</details>
+
+			-->
 
 			<br>
 
@@ -207,7 +186,7 @@ coreCurrentStatus =
 
 			<summary class=divMenuTitle >Help Menu </summary>
 
-			<section id=divThemeSelect ></section>
+			<section id=MNUdivThemeSelect ></section>
 
 			<footer>
 
@@ -216,10 +195,6 @@ coreCurrentStatus =
 			</footer>
 
 		</details>
-
-
-
-
 
 	</nav>
 
@@ -266,15 +241,17 @@ function init() {
 
 	//spnStatus.innerHTML = document.head.querySelector( '[ name=date ]' ).content;
 
-	GALdivSampleFileButtons.innerHTML = GAL.getMenuSampleGalleries();
+	GALdivSampleFilesGallery.innerHTML = GAL.getMenuSampleFilesGallery();
 
 	FILdivFileOpen.innerHTML = FIL.getMenuFileOpen();
 
 	GBXdivStatsGbx.innerHTML = GBX.getDivMenuGbx();
 
+	FILdivFileSave.innerHTML = FIL.getMenuFileSave();
+
 	ISCORdivMenuIssues.innerHTML = ISCOR.getMenuIssues();
 
-	divThemeSelect.innerHTML = MNU.getThemeSelect();
+	MNUdivThemeSelect.innerHTML = MNU.getThemeSelect();
 
 	divFooter.innerHTML = MNU.getNavFooter(); // not essential
 

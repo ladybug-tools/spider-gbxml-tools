@@ -8,24 +8,21 @@ const TMP = { "release": "R10.1", "date": "2018-12-21" };
 
 TMP.currentStatus =
 	`
-		<aside>
 
-				<h3>TMP ${ TMP.release} status ${ TMP.date }</h3>
+		<h3>TMP ${ TMP.release} status ${ TMP.date }</h3>
 
-				<p>This module is new / ready for light testing.</p>
+		<p>This module is new / ready for light testing.</p>
 
-				<p>
-					<ul>
-						<li>2018-12-11 ~ xxx</li>
+		<p>
+			<ul>
+
+				<li>2018-12-11 ~ first commit</li>
 
 
-						<!-- <li></li> -->
-					</ul>
-				</p>
+				<!-- <li></li> -->
+			</ul>
+		</p>
 
-		</aside>
-
-		<hr>
 	`;
 
 
@@ -92,7 +89,9 @@ TMP.getDivMenuTemplate = function() {
 
 	`<details id="TMPdetTemplate" ontoggle=TMP.getTemplateCheck(); open >
 
-		<summary>Template<span id="TMPspnCount" ></span> <a id=stat href="JavaScript:TMP.setPopupShowHide();" >&nbsp; ? &nbsp;</a></summary>
+		<summary>Template<span id="TMPspnCount" ></span>
+			<a id=stat href="JavaScript:MNU.setPopupShowHide(TMPspnCount,TMP.currentStatus);" style=float:right;>&nbsp; ? &nbsp;</a>
+		</summary>
 
 		<p>
 			template template text
@@ -117,8 +116,6 @@ TMP.getDivMenuTemplate = function() {
 				template
 			</button>
 		</p>
-
-		<div>${ TMP.currentStatus }</div>
 
 	</details>`;
 
@@ -171,11 +168,7 @@ TMP.setPopupShowHide = function(  ) {
 
 		divPopUpData.innerHTML =
 
-		TMP.currentStatus +
-
-		`lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?`
-		//GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
-
+		TMP.currentStatus;
 		//surfaceArray.forEach( surfaceId => GBX.surfaceGroup.children[ surfaceId ].visible = true );
 
  	} else {

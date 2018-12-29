@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8" >
 <meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
-<meta name=description content="HTML and CSS for a basic menu system" >
+<meta name=description content="Script for testing default menu code" >
 <meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-12-16" >
+<meta name = "date" content = "2018-12-28" >
 <title>Spider Viewer Core Menu</title>
 <!--
 
@@ -22,7 +22,13 @@
 <script src = "../lib/mnu-menu.js" ></script>
 <script>
 
-coreCurrentStatus = 'howdy';
+coreCurrentStatus =
+
+`
+	<h3>${ document.head.querySelector( '[ name=date ]' ).content } ~ Core Current Status</h3>
+
+	<p>MNU test script</p>
+`;
 
 
 </script>

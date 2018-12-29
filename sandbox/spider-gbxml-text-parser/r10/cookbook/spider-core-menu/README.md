@@ -18,9 +18,14 @@ _<small>Spider gbXML Viewer Core Menu</small>_
 
 ## Concept
 
+* Creates default menu header and footer content and code
+* Code for hamburger sliding menu
+* Code for pop-up window
+* Code to add and select and load theme stylesheets
 
 ## To Do / Wish List
 
+* Move theme code to separate file
 
 ## Issues
 
@@ -40,7 +45,13 @@ _<small>Spider gbXML Viewer Core Menu</small>_
 
 ## Change Log
 
-### XXX
+### 2018-12-28 ~ Theo
+
+* Current Status link changed to question mark
+	* Content displayed in the Pop-Up
+* Themes added
+
+### 2018-11-19 ~ Theo
 
 * First commit
 

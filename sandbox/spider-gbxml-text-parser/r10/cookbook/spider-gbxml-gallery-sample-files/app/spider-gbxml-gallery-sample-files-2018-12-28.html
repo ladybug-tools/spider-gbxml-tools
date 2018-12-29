@@ -3,16 +3,33 @@
 <head>
 <meta charset="utf-8" >
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
-<meta name=description content="Template for building Spider gbXML modules" >
+<meta name=description content="Obtain links to sample gbXML files via GitHub API and update location hash with selected link" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-12-28" >
-<title>Spider gbXML Template</title>
-<link rel="stylesheet" href="../../spider-core-menu/lib/style.css">
+<meta name = "date" content = "2018-12-13" >
+<title>Spider gbXML Sample File Gallery r10.1 </title>
+<link rel="stylesheet" href="../../../lib/style.css">
 <style>
+
+	aside { border: 1px solid lightgray; margin-top:15px; padding: 2px; }
+	button:hover { background: #ccc; color: #fff }
+
+
+	#navMenu button, #navMenu input[type=button] { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;
+		 padding: 2px 5px; min-width: 13.5rem; }
+
+
+	#navMenu button.active { border-color: black; font-style: italic; font-weight: bold; margin-left: 1rem;
+	 box-shadow: 2px 2px re#888; }
+
+	.divMenuTitle { background-color: #ccc; color: #888; margin: 10px 0; text-align: center; }
 
 </style>
 </head>
 <body>
+
+
+<script src = "../lib/gal-sample-files-gallery-gbxml.js" ></script>
+
 <!--
 <script src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
 <script src = "https://cdn.rawgit.com/mrdoob/three.js/r99/build/three.min.js" ></script>
@@ -22,7 +39,6 @@
 
 <script src = "../../../lib/thr-threejs.js" ></script>
 <script src = "../../../lib/thru-threejs-utilities.js"></script>
-<script src = "../../../lib/gal-sample-files-gallery-gbxml.js" ></script>
 
 <script src = "../../../lib/gbx-text-parser.js" ></script>
 
@@ -43,28 +59,11 @@
 <script src = "../../../lib/pop-up-text-parser.js" ></script>
 -->
 
-<script src = "../../spider-core-menu/lib/mnu-menu.js" ></script>
-<script src = "../../template/lib/tmp-template.js" ></script>
+<script src = "../../../lib/mnu-menu.js" ></script>
 
-<script>
+<script src = "../lib/tmp-template.js" ></script>
 
-	coreCurrentStatus =
-	`
-		<h3>${ document.head.querySelector( '[ name=date ]' ).content } ~ Current Status</h3>
 
-		<p>Template current status</p>
-
-		<p>Template for building Spider gbXML script modules </p>
-
-		<p>
-			<ul>
-				<li>2018-12-28 ~ Add pop-up current status</li>
-			</ul>
-		</p>
-
-	`;
-
-	</script>
 
 	<main id="container" ></main>
 
@@ -76,20 +75,13 @@
 
 		</header>
 
-		<details open >
 
-			<summary class=divMenuTitle ><span id="spnStatus" >Template Menu item</summary>
 
-				<div id=TMPdivTemplate ></div>
-
-		</details>
-
-		<!--
 		<details open >
 
 			<summary class=divMenuTitle >File Menu </summary>
 
-			<details>
+			<details open >
 
 				<summary>Open gbXML sample files</summary>
 
@@ -97,8 +89,21 @@
 
 				<div id=divSampleFileItems ></div>
 
+				<div id=divFileInfo ></div>
+
+				<div id=GALdivCurrentStatus ></div>
+
 			</details>
 
+<!--
+
+		<details open >
+
+			<summary class=divMenuTitle ><span id="spnStatus" >Menu item</summary>
+
+				<div id=TMPdivTemplate ></div>
+
+		</details>
 			<details open >
 
 				<summary>Open gbXML file</summary>
@@ -247,6 +252,7 @@
 	</nav>
 
 
+	<!--
 	<div id="divPopUp" >
 
 		<div id="divPopUpData" ></div>
@@ -254,7 +260,7 @@
 		<div id="divMessage" ></div>
 
 	</div>
-
+	-->
 
 <script>
 
@@ -274,14 +280,15 @@ function init() {
 
 	divHeader.innerHTML = MNU.getNavHeader(); // not essential
 
-	TMPdivTemplate.innerHTML = TMP.getDivMenuTemplate();
+	//TMPdivTemplate.innerHTML = TMP.getDivMenuTemplate();
+
+	divSampleFileButtons.innerHTML = GAL.getMenuSampleGalleries();
 
 	divFooter.innerHTML = MNU.getNavFooter(); // not essential
 
 /*
 	spnStatus.innerHTML = document.head.querySelector( '[ name=date ]' ).content;
 
-	divSampleFileButtons.innerHTML = GAL.setCardSampleGalleries();
 
 	FILdivFileOpen.innerHTML = FIL.getFileOpen();
 

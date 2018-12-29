@@ -5,29 +5,11 @@
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
 <meta name=description content="Obtain links to sample gbXML files via GitHub API and update location hash with selected link" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-12-13" >
-<title>Spider gbXML Sample File Gallery r10.1 </title>
-<link rel="stylesheet" href="../../../lib/style.css">
-<style>
-
-	aside { border: 1px solid lightgray; margin-top:15px; padding: 2px; }
-	button:hover { background: #ccc; color: #fff }
-
-
-	#navMenu button, #navMenu input[type=button] { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;
-		 padding: 2px 5px; min-width: 13.5rem; }
-
-
-	#navMenu button.active { border-color: black; font-style: italic; font-weight: bold; margin-left: 1rem;
-	 box-shadow: 2px 2px re#888; }
-
-	.divMenuTitle { background-color: #ccc; color: #888; margin: 10px 0; text-align: center; }
-
-</style>
+<meta name = "date" content = "2018-12-28" >
+<title>Spider gbXML Sample File Gallery r10.2 </title>
+<link rel="stylesheet" href="../../spider-core-menu/lib/style.css">
 </head>
 <body>
-
-
 <script src = "../lib/gal-sample-files-gallery-gbxml.js" ></script>
 
 <!--
@@ -58,13 +40,19 @@
 <script src = "../../../lib/cut-section-cut.js"></script>
 <script src = "../../../lib/pop-up-text-parser.js" ></script>
 -->
+<script src = "../../spider-core-menu/lib/mnu-menu.js" ></script>
 
-<script src = "../../../lib/mnu-menu.js" ></script>
+<script>
 
-<script src = "../lib/tmp-template.js" ></script>
+coreCurrentStatus =
 
+	`
+		<h3>${ document.head.querySelector( '[ name=date ]' ).content } ~ Current Status</h3>
+		<p>Core sample files gallery test </p>
 
+	`;
 
+</script>
 	<main id="container" ></main>
 
 	<nav id = "navMenu" >
@@ -75,25 +63,7 @@
 
 		</header>
 
-
-
-		<details open >
-
-			<summary class=divMenuTitle >File Menu </summary>
-
-			<details open >
-
-				<summary>Open gbXML sample files</summary>
-
-				<div id=divSampleFileButtons ></div>
-
-				<div id=divSampleFileItems ></div>
-
-				<div id=divFileInfo ></div>
-
-				<div id=GALdivCurrentStatus ></div>
-
-			</details>
+		<div id=GALdivSampleFilesGallery ></div>
 
 <!--
 
@@ -239,6 +209,8 @@
 
 		</details>
 
+		<section id=MNUdivThemeSelect ></section>
+
 		<footer>
 
 			<div id = "divFooter" ></div>
@@ -252,7 +224,6 @@
 	</nav>
 
 
-	<!--
 	<div id="divPopUp" >
 
 		<div id="divPopUpData" ></div>
@@ -260,7 +231,7 @@
 		<div id="divMessage" ></div>
 
 	</div>
-	-->
+
 
 <script>
 
@@ -282,7 +253,9 @@ function init() {
 
 	//TMPdivTemplate.innerHTML = TMP.getDivMenuTemplate();
 
-	divSampleFileButtons.innerHTML = GAL.getMenuSampleGalleries();
+	GALdivSampleFilesGallery.innerHTML = GAL.getMenuSampleFilesGallery();
+
+	MNUdivThemeSelect.innerHTML = MNU.getThemeSelect();
 
 	divFooter.innerHTML = MNU.getNavFooter(); // not essential
 
