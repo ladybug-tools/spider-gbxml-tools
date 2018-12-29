@@ -3,7 +3,7 @@
 /* globals GBX, JSZip */
 
 
-const FIL = { "release": "r10.4", "date": "2018-12-29" };
+const FIL = { "release": "r10.3", "date": "2018-12-28" };
 
 
 FIL.reader = new FileReader();
@@ -19,17 +19,15 @@ FIL.currentStatus =
 		<p>File opening and saving of gbXML and ZIP files is generally working well and open for testing.</p>
 
 		<p>
-			Change log
+			Updates
 			<ul>
-				<li>2018-12-29 ~ Add helpItem class</li>
-				<li>2018-12-29 ~ Fix read me links</li>
 				<li>2018-12-28 ~ Add pop-up status / Edit left menu</li>
 				<li>2018-12-14 ~ Many internal fixes and code cleanups</li>
 			</ul>
 		</p>
 
 		<p>
-			<a href="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-file-open/" target="_blank">
+			<a href="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-text-parser/r10/cookbook" target="_blank">
 			fil-open-file.js Read Me</a>
 		</p>
 	`;
@@ -55,7 +53,7 @@ FIL.getMenuFileOpen = function() {  // called from main HTML file
 		<details id=FILdetFileOpen >
 
 			<summary>Open gbXML or ZIP file
-				<a class=helpItem href="JavaScript:MNU.setPopupShowHide(this,FIL.currentStatus);" >&nbsp; ? &nbsp;</a>
+				<a id=FILstatus href="JavaScript:MNU.setPopupShowHide(FILstatus,FIL.currentStatus);" style=float:right; >&nbsp; ? &nbsp;</a>
 			</summary>
 
 			<div class="dragDropArea" >
@@ -63,7 +61,7 @@ FIL.getMenuFileOpen = function() {  // called from main HTML file
 				<p>
 					<input type=file id=inpOpenFile onchange=FIL.onInputFileOpen(this); accept=".xml, .zip" >
 					or drag & drop files here
-					or enter a default file path <a class=helpItem href=https://www.ladybug.tools/spider-gbxml-tools/#sandbox/spider-gbxml-text-parser/r10/lib/file-open.md title="Learn how to speed up your testing" target=-blank >?</a>
+					or enter a default file path &nbsp;<a href=#../../../lib/file-open.md title="Learn how to speed up your testing" style=float:right; >?</a>
 					<!--
 						try this: 	https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml
 					-->
@@ -72,27 +70,27 @@ FIL.getMenuFileOpen = function() {  // called from main HTML file
 
 			</div>
 
-			<details open >
-
-				<summary>File open statistics</summary>
-
-				<div id=FILdivProgress ></div>
-
-			</details>
-
 			<details id=GBXdetStats >
 
-				<summary>gbXML parser statistics
-					<a class=helpItem href="JavaScript:MNU.setPopupShowHide(this,GBX.currentStatus);" >&nbsp; ? &nbsp;</a>
-				</summary>
+				<summary>gbXML parser statistics</summary>
+
+				<hr>
 
 				<div id="GBXdivStatsGbx" ></div>
 
 				<div id="GBXdivStatsThr" ></div>
 
+				<br>
+
 				<hr>
 
 			</details>
+
+			<div>File name:</div>
+
+			<div id=FILdivProgress ></div>
+
+			<hr>
 
 		</details>
 	`;
@@ -111,7 +109,10 @@ FIL.getMenuFileSave = function() {
 	<details>
 
 		<summary>Save file
-			<a class=helpItem href="JavaScript:MNU.setPopupShowHide(this,FIL.currentStatus);" >&nbsp; ? &nbsp;</a>
+		<a id=FILstatusFileSave href="JavaScript:MNU.setPopupShowHide(FILstatusFileSave,FIL.currentStatus);" style=float:right; >&nbsp; ? &nbsp;</a>
+
+
+
 		</summary>
 
 		<div id = "divSaveFile" >
@@ -475,13 +476,10 @@ FIL.onProgress = function( size = 0, note = '' ) {
 
 	let htm =
 	`
-		<div style=margin:1rem; >
-			<div>File name:</div>
-			<div style=color:blue; >${ FIL.name }</div>
-			<div>bytes loaded: ${ size.toLocaleString() }</div>
-			<div>time to load: ${ timeToLoad }ms</div>
-			${ note }
-		</div>
+		<div style=color:blue; >${ FIL.name }</div>
+		<div>bytes loaded: ${ size.toLocaleString() }</div>
+		<div>time to load: ${ timeToLoad }ms</div>
+		${ note }
 	`;
 
 	FILdivProgress.innerHTML = htm;

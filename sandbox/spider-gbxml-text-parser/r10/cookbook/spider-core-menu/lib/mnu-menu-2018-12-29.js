@@ -4,52 +4,57 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
 
 
-const MNU = { "release": "R10.1", "date": "2018-12-21" };
+const MNU = { "release": "R10.2", "date": "2018-12-28" };
 
 
 MNU.currentStatus =
 	`
 		<h3>MNU ${ MNU.release} status ${ MNU.date }</h3>
 
+		<p>Spider Core Menu.</p>
+
 		<p>This module is new / ready for light testing.</p>
 
 		<p>
 			<ul>
+				<li>2018-12-28 ~ Current Status link changed to question mark</li>
+				<li>2018-12-28 ~ Content displayed in the Pop-Up</li>
+				<li>2018-12-22 ~ Themes added</li>
 				<li>2018-12-22 ~ Update subtext</li>
-
 				<!-- <li></li> -->
 			</ul>
 		</p>
 	`;
 
+
 MNU.statusThemes =
-`
-	<h3>MNU Themes ${ MNU.release} status ${ MNU.date }</h3>
+	`
+		<h3>MNU Themes ${ MNU.release} status ${ MNU.date }</h3>
 
-	<p>This module allows you to load:
-		<ul>
-			<li>Basic style sheet</li>
-			<li>Style sheet from W3Schools</li>
-			<li>Style sheet from Bootswatch (coming soon)</li>
-		<!-- <li></li> -->
-		</ul>
-	</p>
-	<p>
-		You can switch themes at any time. Current them choice is saved between sessions (coming soon).
-	</p>
-	<p>
-			<a href="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-text-parser/r10/cookbook/spider-core-menu" target="_blank">Read Me</a>
-	</p>
-	<p>
-		Status:
-		<ul>
-			<li>2018-12-22 ~ First commit</li>
-
+		<p>This module allows you to load:
+			<ul>
+				<li>Basic style sheet</li>
+				<li>Style sheet from W3Schools</li>
+				<li>Style sheet from Bootswatch (coming soon)</li>
 			<!-- <li></li> -->
-		</ul>
-	</p>
+			</ul>
+		</p>
+		<p>
+			You can switch themes at any time. Current them choice is saved between sessions (coming soon).
+		</p>
+		<p>
+				<a href="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-text-parser/r10/cookbook/spider-core-menu" target="_blank">Read Me</a>
+		</p>
+		<p>
+			Status:
+			<ul>
+				<li>2018-12-22 ~ First commit</li>
 
-`;
+				<!-- <li></li> -->
+			</ul>
+		</p>
+
+	`;
 
 //MNU.urlSourceCode = 'https://github.com/pushme-pullyou/pushme-pullyou.github.io/tree/master/tootoo-templates/threejs-lib';
 
@@ -90,19 +95,19 @@ MNU.getNavHeader = function() {
 			<a href="" title="Click to reload this page" >${ document.title }</a>
 
 			<a id=statusCore href="JavaScript:MNU.setPopupShowHide(statusCore,coreCurrentStatus);"
-			title="Current status: menu MNU module" >&nbsp; ? &nbsp;</a>
+			title="Current status: menu MNU module" style=float:right; >&nbsp; ? &nbsp;</a>
 		</h3>
 
 		<p>
-			<!-- ${ document.head.querySelector( '[ name=description ]' ).content } -->
-
+			 ${ document.head.querySelector( '[ name=description ]' ).content }
+<!--
 			DEV version: Open, examine and edit very large <a href="http://gbxml.org" target="_blank"  title="Thank you, Stephen">gbXML</a> files in 3D in your browser with free, open source
 			<a href="https://en.wikipedia.org/wiki/JavaScript" target="_blank"  title="Thank you, Brendan">JavaScript</a>,
 			<a href="https://en.wikipedia.org/wiki/WebGL" target="_blank" title="Thank you, Ken" >WebGL</a> &
 			<a href="https://en.wikipedia.org/wiki/Three.js" target="_blank" title="Thank you, Ricardo" >Three.js</a>
-
+ -->
 			<a id=statusHeader href="JavaScript:MNU.setPopupShowHide(statusHeader,MNU.currentStatus);"
-				title="Current status: menu MNU module" >&nbsp; ? &nbsp;</a>
+				title="Current status: menu MNU module" style=float:right; >&nbsp; ? &nbsp;</a>
 
 		</p>
 	`;
@@ -131,9 +136,8 @@ MNU.getNavFooter = function() {
 	`
 	<details>
 
-		<summary>
-			Footer
-			<a id=statusFooter href="JavaScript:MNU.setPopupShowHide(statusFooter,'Howdy, World!<br> More text coming soon.');" >&nbsp; ? &nbsp;</a>
+		<summary>Footer / Help
+			<a id=statusFooter class=helpItem href="JavaScript:MNU.setPopupShowHide(this,'Howdy, World!<br> More text coming soon.' );" >&nbsp; ? &nbsp;</a>
 		</summary>
 
 		<div style=margin-top:1rem; title='What is this stuff?' ><a href=https://www.ladybug.tools/spider-gbxml-tools/#../spider/pages/about-spider-code-style.md target="_blank" >Coding style</a></div>
@@ -189,10 +193,10 @@ MNU.getThemeSelect = function () {
 
 	const htm =
 	`
-		<details open>
+		<details>
 
-			<summary>Change Themes
-				<a id=statusThemes href="JavaScript:MNU.setPopupShowHide(statusThemes,MNU.statusThemes);" >&nbsp; ? &nbsp;</a>
+			<summary>Change Menu Theme
+				<a class=helpItem href="JavaScript:MNU.setPopupShowHide(this,MNU.statusThemes);" >&nbsp; ? &nbsp;</a>
 			</summary>
 
 			<br>
@@ -229,6 +233,7 @@ MNU.getMenuTemplate = function() {
 		<details>
 
 			<summary>Menu Template
+
 				<a id=statusMenu href="JavaScript:MNU.setPopupShowHide(statusMenu,MNU.currentStatus);" >&nbsp; ? &nbsp;</a></summary>
 
 			<br>
@@ -254,6 +259,9 @@ MNU.getMenuTemplate = function() {
 				</select>
 			</p>
 			<p>
+				<input type=range title="slider" >
+			</p>
+			<p>
 				lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?
 			</p>
 
@@ -276,7 +284,7 @@ MNU.loadCssBasic = function() {
 
 		MNU.cssBasic = document.head.appendChild( document.createElement('link') );
 		MNU.cssBasic.rel = "stylesheet";
-		MNU.cssBasic.href = "../lib/style.css";
+		MNU.cssBasic.href = "../../spider-core-menu/lib/style.css";
 		//console.log( 'MNU.cssBasic', MNU.cssBasic );
 
 	}
@@ -335,7 +343,7 @@ MNU.loadCssW3school = function() {
 
 		MNU.cssBasic = document.head.appendChild( document.createElement('link') );
 		MNU.cssBasic.rel = "stylesheet";
-		MNU.cssBasic.href = "../lib/style.css";
+		MNU.cssBasic.href = "../../spider-core-menu/lib/style.css";
 		//console.log( 'MNU.cssBasic', MNU.cssBasic );
 
 	}

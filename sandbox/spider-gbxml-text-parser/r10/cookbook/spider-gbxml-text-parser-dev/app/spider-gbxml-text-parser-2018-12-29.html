@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8" >
 <meta name="viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
-<meta name=description content="Open, examine and edit very large gbXML files in 3D in your browser with free, open source JavaScript" >
+<meta name=description content="Open, examine and edit very large gbXML files in 3D in your browser with free, open source JavaScript, WebGL & Three.js" >
 <meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name="date" content="2018-12-22" >
-<title>Spider gbXML Text Parser R10.10 </title>
+<meta name="date" content="2018-12-28" >
+<title>Spider gbXML Text Parser R10.11 </title>
 <link rel="stylesheet" href="../lib/style.css">
 <style>
 
@@ -71,7 +71,7 @@ coreCurrentStatus =
 
 	<main id="container" ></main>
 
-	<nav id = "navMenu" >
+	<nav id="navMenu" >
 
 		<header>
 
@@ -81,72 +81,13 @@ coreCurrentStatus =
 
 		<details open >
 
-				<summary class=divMenuTitle >File Menu</summary>
+			<summary class=divMenuTitle >File Menu</summary>
 
-				<details>
+			<div id=GALdivSampleFilesGallery ></div>
 
-					<summary>Open gbXML sample files</summary>
+			<div id=FILdivFileOpen ></div>
 
-					<div id=GALdivSampleFileButtons ></div>
-
-					<div id=GALdivSampleFileItems ></div>
-
-					<hr>
-
-					<div id=GALdivFileInfo >
-
-						<p>Click button to view list of files</p>
-
-						<p>When open, tooltips will show info for icons</p>
-
-					</div>
-
-					<br>
-
-					<div id=GALdivCurrentStatus ></div>
-
-					<hr>
-
-				</details>
-
-				<details id=FILdetFileOpen >
-
-					<summary>Open gbXML or ZIP file</summary>
-
-					<div id="FILdivFileOpen" ></div>
-
-					<details id=GBXdetStats >
-
-						<summary>gbXML parser statistics</summary>
-
-						<div id="GBXdivStatsGbx" ></div>
-
-						<div id="GBXdivStatsThr" ></div>
-
-					</details>
-
-					<br>
-
-				</details>
-
-				<details>
-
-					<summary>Save file</summary>
-
-					<div id = "divSaveFile" >
-
-						<p>
-							<button onclick=FIL.butSaveFile(); >Save file as gbXML</button>
-						</p>
-						<p>
-							<button onclick=FIL.butSaveFileZip(); >Save file as gbXML in ZIP</button>
-						</p>
-
-						<hr>
-
-					</div>
-
-				</details>
+				<div id=FILdivFileSave ></div>
 
 			<br>
 
@@ -193,6 +134,7 @@ coreCurrentStatus =
 
 			</details>
 
+
 			<details ontoggle=divSectionCut.innerHTML=CUT.getDetSectionViews(); >
 
 				<summary>Scene cut sections</summary>
@@ -207,7 +149,7 @@ coreCurrentStatus =
 
 			<summary class=divMenuTitle >Help Menu </summary>
 
-			<section id=divThemeSelect ></section>
+			<section id=MNUdivThemeSelect ></section>
 
 			<footer>
 
@@ -217,10 +159,6 @@ coreCurrentStatus =
 
 		</details>
 
-
-
-
-
 	</nav>
 
 	<nav>
@@ -228,17 +166,7 @@ coreCurrentStatus =
 	</nav>
 
 
-	<div id="divPopUp" >
-<!--
-
-		<div id="divPopUpData" ></div>
-
-		<div id="divMessage" ></div>
-
--->
-
-
-	</div>
+	<div id="divPopUp" ></div>
 
 <script>
 
@@ -266,15 +194,17 @@ function init() {
 
 	//spnStatus.innerHTML = document.head.querySelector( '[ name=date ]' ).content;
 
-	GALdivSampleFileButtons.innerHTML = GAL.getMenuSampleGalleries();
+	GALdivSampleFilesGallery.innerHTML = GAL.getMenuSampleFilesGallery();
 
 	FILdivFileOpen.innerHTML = FIL.getMenuFileOpen();
 
 	GBXdivStatsGbx.innerHTML = GBX.getDivMenuGbx();
 
+	FILdivFileSave.innerHTML = FIL.getMenuFileSave();
+
 	ISCORdivMenuIssues.innerHTML = ISCOR.getMenuIssues();
 
-	divThemeSelect.innerHTML = MNU.getThemeSelect();
+	MNUdivThemeSelect.innerHTML = MNU.getThemeSelect();
 
 	divFooter.innerHTML = MNU.getNavFooter(); // not essential
 
