@@ -151,7 +151,7 @@ ISTMP.selectedSurfaceFocus = function( select ) {
 
 	POP.getIntersectedDataHtml();
 
-	divPopupData.innerHTML = POP.getIntersectedDataHtml();
+	divPopUpData.innerHTML = POP.getIntersectedDataHtml();
 
 };
 
