@@ -31,6 +31,10 @@ The scripts here are a fork of the scripts at https://www.ladybug.tools/spider/.
 The impetus for this code arose from the request by the developers of OpenStudio for a viewer that could embedded in their code. It became quickly evident that the new codebase offered significant advantages over the the previous codebase. And, thus, the majority of ongoing development efforts have been transferred to this project. Previous releases will be supported at least to the extent of fixing bugs that that are reported.
 
 
+2019-01-01 ~ The following list is is outdated and needs refactoring
+
+[Spider gbXML Text Parser]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/ )
+
 ***
 
 ### Latest release: [gbXML Viewer Basic]( https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/index.html )
@@ -118,9 +122,17 @@ And much more
 * <https://twitter.com/gbXML>
 > The gbXML open schema helps facilitate the transfer of building properties stored in 3D building information models (BIM) to engineering analysis tools.
 
+## To Do
+
+* 2019-01-01 ~ HTML iframes and textareas have incorrect height
+* 2019-01-01 ~ Footer links needs homogenizing with tootoo
+* 2019-01-01 ~ Bootstrap menu backgrounds need better classes
 
 ## Change Log
 
+### 2019-01-01 ~ Theo
+
+New home page based on tootoo cms r13
 
 ### 2018-10-23 ~ Theo
 

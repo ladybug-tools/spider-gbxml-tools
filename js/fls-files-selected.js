@@ -34,7 +34,7 @@ FLS.getMenuSelectedFiles = function() {
 
 			<p>The objective is to open and view huge files very quickly. See also its <a href="#sandbox/spider-gbxml-text-parser/README.md" target="_blank">Read Me</a> file.</p>
 
-			<p>Scripts of interest include <a href="https://www.ladybug.tools/spider-gbxml-tools/master/gbxml-viewer-basic/index.html" target="_blank">Spider gbXML Viewer Basic</a></p>
+			<p>Scripts of interest include <a href="https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/index.html" target="_blank">Spider gbXML Viewer Basic</a></p>
 
 
 		</details>
