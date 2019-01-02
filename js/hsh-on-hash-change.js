@@ -61,7 +61,7 @@ HSH.onHashChange = function() {
 		divContents.style.maxWidth = '100%';
 		document.body.style.overflow = 'hidden';
 
-		divContents.innerHTML = `<iframe src=${ url } height=100% width=100% ></iframe>`;
+		divContents.innerHTML = `<iframe src=${ url } height=900px width=100% ></iframe>`;
 
 	} else if ( /\.(jpe?g|png|ico|svg|gif)$/i.test( ulc )  ) {
 	//} else if ( ulc.endsWith( '.gif' ) || ulc.endsWith( '.png' ) || ulc.endsWith( '.jpg' ) || ulc.endsWith( '.ico' ) || ulc.endsWith( '.svg' ) ) {
@@ -112,7 +112,7 @@ HSH.callbackToTextarea = function( xhr ){
 
 	const response = xhr.target.response;
 
-	divContents.innerHTML = `<textarea style=height:100%;width:100%; >${ response }</textarea>`;
+	divContents.innerHTML = `<textarea style=height:900px;width:100%; >${ response }</textarea>`;
 
 };
 

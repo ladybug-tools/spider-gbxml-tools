@@ -124,9 +124,10 @@ And much more
 
 ## To Do
 
-* 2019-01-01 ~ HTML iframes and textareas have incorrect height
+* 2019-01-01 ~ HTML iframes and textareas have incorrect heights
 * 2019-01-01 ~ Footer links needs homogenizing with tootoo
 * 2019-01-01 ~ Bootstrap menu backgrounds need better classes
+* 2019-01-01 ~ W3Schools fonts need better text sizes
 
 ## Change Log
 
