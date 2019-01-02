@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1" >
+<meta name = "description" content = "This menu is a component of a basic html content management script with sliding menu, css theme selection, Markdown to HTML, drag and drop file reading capability, access to frequently used pages and more" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2019-01-01" >
+<title>Spider gbXML Tools CMS</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<script src="https://rawgit.com/showdownjs/showdown/1.9.0/dist/showdown.min.js" ></script>
+
+<script>
+
+const COR = { "release": "R11.0", "date": "2019-01-01" };
+
+// For main menu header
+COR.homeText="<img src='https://ladybug.tools/artwork/icons_bugs/ico/ladybug.ico' height=24 >";
+COR.homeTitle="Ladybug Tools: free computer applications that support environmental design and education";
+COR.homeUrl="https://www.ladybug.tools";
+
+COR.repoText="<img src='https://ladybug.tools/artwork/icons_bugs/ico/spider.ico' height=24 >";
+COR.repoTitle="Spider: 3D interactive analysis in your browser mostly written around the Three.js JavaScript library";
+COR.repoUrl="https://www.ladybug.tools/spider/";
+
+COR.appText= ""; //"gbXML Tools";
+COR.appTitle = ""; //"Tools to help you find, load, examine and edit gbXML files - in large numbers and sizes";
+COR.appUrl = ""; //"https://www.ladybug.tools/spider-gbxml-tools/";
+
+COR.urlSourceCodeImage="https://status.github.com/images/invertocat.png";
+COR.urlSourceCodeIcon=`<img src="${ COR.urlSourceCodeImage }" height=18 >`;
+COR.urlSourceCodeUrl="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-text-parser";
+
+// for parsing
+const user = 'ladybug-tools';
+const repo = 'spider-gbxml-tools';
+const pathRepo = '';
+const branch = '/master/'
+
+const iconInfo = '<img src="https://status.github.com/images/invertocat.png" height=18 >';
+const urlGitHubSource = 'https://github.com/' + user + '/' + repo;
+const urlGitHubApiContents = 'https://api.github.com/repos/' + user + '/' + repo + '/contents/' + pathRepo;
+
+//const urlGitHubPage = location.href.includes( '/' + user + '.github.io' ) ? '' : 'https://rawgit.com/' + user + repo + branch;
+const urlGitHubPage  = 'https://rawgit.com/' + user + '/' + repo + branch;
+//console.log( 'urlGitHubPage', urlGitHubPage );
+
+//	location.hash = '../README.md';
+const uriDefaultFile = 'README.md';
+const urlSourceCode = "https://github.com/pushme-pullyou/pushme-pullyou.github.io/tree/master/tootoo-templates/hamburger-css";
+
+const urlSourceCodeIcon = "https://status.github.com/images/invertocat.png";
+
+
+COR.currentStatus =
+
+`
+	<h3>${ document.head.querySelector( '[ name=date ]' ).content } ~ Current Status</h3>
+
+	<p>Core Status</p>
+
+
+`;
+
+COR.description =
+`
+This menu is a component of a basic html content management script with sliding menu, css theme selection, Markdown to HTML, drag and drop file reading capability, access to frequently used pages and more
+`;
+
+
+</script>
+
+<script src="js/mnu-menu.js" ></script>
+<script src="js/fls-files-selected.js" ></script>
+
+<script src="js/fil-file-open.js" ></script>
+<script src="js/thm-theme-select.js" ></script>
+<script src="js/hsh-on-hash-change.js" ></script>
+<script src="js/tmp-template.js" ></script>
+
+	<nav id="navMenu" >
+
+		<header>
+
+			<div id="MNUdivHeader" ></div>
+
+		</header>
+
+		<details open >
+
+				<summary class=divMenuTitle >File Menu</summary>
+
+				<section id="FLSsecSelectedFiles" ></section>
+
+				<section id="HSHsecMenuRepoFilesFolders" ></section>
+
+				<div id=FILdivFileOpen ></div>
+
+				<div id=FILdivFileSave ></div>
+
+			</details>
+
+
+			<details id=detMenuHelp open >
+
+				<summary class=divMenuTitle >Help Menu </summary>
+
+				<section id=THMsecMenuThemeSelect ></section>
+
+				<section id=TMPsecMenuTemplate ></section>
+
+				<footer>
+
+					<section id = "MNUdivFooter" ></section>
+
+				</footer>
+
+		</details>
+
+		<h1 onclick=navMenu.scrollTop=0; style=cursor:pointer;text-align:center; title='go to top of menu' > ❦ </h1>
+
+	</nav>
+
+
+	<nav>
+
+		<button id="butHamburger" onclick=MNU.toggleNavLeft(); title="click here to hide this menu"> slide &#9776; </button>
+
+	</nav>
+
+
+	<nav id="divPopUp" >
+
+		<div id="divPopUpData" ></div>
+
+		<div id="divMessage" ></div>
+
+	</nav>
+
+
+	<div id="divContainer" >
+
+		<div id="divContents" ></div>
+
+	</div>
+
+<script>
+
+
+
+init();
+
+
+function init() {
+
+	MNUdivHeader.innerHTML = MNU.getNavHeader();
+
+	HSHsecMenuRepoFilesFolders.innerHTML = HSH.getMenuRepoFilesFolders();
+
+	FLSsecSelectedFiles.innerHTML = FLS.getMenuSelectedFiles();
+
+	FILdivFileOpen.innerHTML = FIL.getMenuFileOpen( divPopUpData );
+
+	THMsecMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
+
+	TMPsecMenuTemplate.innerHTML = TMP.getMenuTemplate();
+
+	MNUdivFooter.innerHTML = MNU.getNavFooter(); // not essential
+
+	THM.init();
+
+	HSH.onHashChange();
+
+}
+
+
+// localStorage.getItem('GitHubPersonalAccessToken' )
+
+function setGPATStorage() {
+
+	const GitHubPersonalAccessToken = inpGitHubPersonalAccessToken.value;
+	localStorage.setItem('GitHubPersonalAccessToken', GitHubPersonalAccessToken );
+
+}
+
+
+</script>
+</body>
+</html>

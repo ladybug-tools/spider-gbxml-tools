@@ -109,7 +109,8 @@ MNU.getNavHeader = function() {
 		<img src="https://ladybug.tools/artwork/icons_bugs/ico/spider.ico" height=24 >
 		</a>
 		&raquo;
-		<a href="https://www.ladybug.tools/spider-gbxml-tools/" title="Tools to help you find, load, examine and edit gbXML files - in large numbers and sizes" >gbXML Tools</a>
+		<a href="https://www.ladybug.tools/spider-gbxml-tools/" title="Tools to help you find, load, examine and edit gbXML files - in large numbers and sizes" >
+		gbXML Tools</a>
 		&raquo;
 		</h3>
 		<h2>
