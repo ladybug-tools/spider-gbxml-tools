@@ -63,14 +63,14 @@ MNU.getNavHeader = function() {
 		${ COR.homeText }
 		</a>
 		&raquo;
-		<a href="${ COR.repoUrl }#tootoo-templates/README.md" title="${ COR.repoTitle }" target="_top">
+		<a href="${ COR.repoUrl }" title="${ COR.repoTitle }" target="_top">
 		${ COR.repoText }
 		</a>
 		&raquo;
 		<a href="${ COR.appUrl }" title="${ COR.appTitle }" >
 		${ COR.appText }
 		</a>
-		&raquo;
+		${ COR.appUrl ? '&raquo;' : '' }
 		</h3>
 		<h2>
 			<a href=${ COR.urlSourceCodeUrl } target="_blank" title="Source code on GitHub" >

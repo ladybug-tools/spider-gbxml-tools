@@ -2,7 +2,7 @@
 // jshint esversion: 6
 /* globals navMenu, divW3Schools, divBootswatch, THMcssCurrent, THMcssW3schools, THMcssBootswatch */
 
-const THM = { "release": "R3.0", "date": "2018-12-31" };
+const THM = { "release": "R1.3", "date": "2019-01-02" };
 
 THM.currentStatus =
 	`
@@ -57,7 +57,7 @@ THM.init = function() {
 	THM.themeUrl = localStorage.getItem( THM.themeUrlStorage ) || THM.cssBasic;
 	THMcssCurrent.value = THM.themeUrl;
 
-	console.log( 'THM.themeUrl', THM.themeUrl );
+	//console.log( 'THM.themeUrl', THM.themeUrl );
 
 	 if ( THM.themeUrl.includes( 'w3schools' ) ) {
 

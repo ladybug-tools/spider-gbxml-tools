@@ -1,10 +1,9 @@
+// Copyright 2019 pushMe-pullYou authors. MIT License
 /* global THREE * /
 /* jshint esversion: 6 */
 
-// Copyright 2019 pushMe-pullYou authors. MIT License
 
-
-const MNU = { "release": "R1.0", "date": "2018-12-31" };
+const MNU = { "release": "R1.1", "date": "2019-01-02" };
 
 MNU.description = COR.description || document.head.querySelector( "[ name=description ]" ).content;
 

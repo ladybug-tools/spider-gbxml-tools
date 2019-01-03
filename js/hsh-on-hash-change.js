@@ -2,7 +2,7 @@
 // jshint esversion: 6
 /* globals navMenu */
 
-const HSH = { "release": "R1.1", "date": "2019-01-01" };
+const HSH = { "release": "R1.2", "date": "2019-01-02" };
 
 HSH.currentStatus =
 	`

@@ -2,7 +2,7 @@
 // jshint esversion: 6
 /* globals navMenu */
 
-const HSH = { "release": "R1.1", "date": "2019-01-01" };
+const HSH = { "release": "R1.2", "date": "2019-01-02" };
 
 HSH.currentStatus =
 	`
@@ -23,7 +23,7 @@ HSH.getMenuRepoFilesFolders= function() {
 	`
 		<details open >
 
-			<summary>Files and Folders
+			<summary>All files and folders
 				<a id=hshSum class=helpItem href="JavaScript:MNU.setPopupShowHide(hshSum,HSH.currentStatus);" >&nbsp; ? &nbsp;</a>
 			</summary>
 
@@ -61,7 +61,7 @@ HSH.onHashChange = function() {
 		divContents.style.maxWidth = '100%';
 		document.body.style.overflow = 'hidden';
 
-		divContents.innerHTML = `<iframe src=${ url } height=100% width=100% ></iframe>`;
+		divContents.innerHTML = `<iframe src=${ url } height=900px width=100% ></iframe>`;
 
 	} else if ( /\.(jpe?g|png|ico|svg|gif)$/i.test( ulc )  ) {
 	//} else if ( ulc.endsWith( '.gif' ) || ulc.endsWith( '.png' ) || ulc.endsWith( '.jpg' ) || ulc.endsWith( '.ico' ) || ulc.endsWith( '.svg' ) ) {
@@ -112,7 +112,7 @@ HSH.callbackToTextarea = function( xhr ){
 
 	const response = xhr.target.response;
 
-	divContents.innerHTML = `<textarea style=height:100%;width:100%; >${ response }</textarea>`;
+	divContents.innerHTML = `<textarea style=height:900px;width:100%; >${ response }</textarea>`;
 
 };
 
@@ -293,7 +293,7 @@ HSH.setBreadcrumbs = function( path ) {
 
 	let txt =
 		'<b>' +
-			'<a href=JavaScript:HSH.setMenuGitHubPathFileNames(); >' +
+			'<a href=JavaScript:HSH.setMenuGitHubPathFileNames(); title="home folder" >' +
 
 				( pathRepo ? pathRepo : '<span style=font-size:24px >&#x2302</span>' ) +
 
