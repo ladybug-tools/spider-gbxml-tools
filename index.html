@@ -43,8 +43,8 @@ const iconInfo = '<img src="https://status.github.com/images/invertocat.png" hei
 const urlGitHubSource = 'https://github.com/' + user + '/' + repo;
 const urlGitHubApiContents = 'https://api.github.com/repos/' + user + '/' + repo + '/contents/' + pathRepo;
 
-//const urlGitHubPage = location.href.includes( '/' + user + '.github.io' ) ? '' : 'https://rawgit.com/' + user + repo + branch;
-const urlGitHubPage  = 'https://rawgit.com/' + user + '/' + repo + branch;
+const urlGitHubPage = location.href.includes( repo ) ? '' : 'https://rawgit.com/' + user + repo + branch;
+//const urlGitHubPage  = 'https://rawgit.com/' + user + '/' + repo + branch;
 //console.log( 'urlGitHubPage', urlGitHubPage );
 
 //	location.hash = '../README.md';

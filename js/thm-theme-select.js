@@ -77,7 +77,6 @@ THM.init = function() {
 
 	}
 
-
 };
 
 
@@ -193,19 +192,19 @@ THM.toggleTagsClassListW3schools= function( action = 'add' ) {
 	.forEach( item => item.classList[ action ]( "w3-theme-l5" ) );
 
 	document.body.querySelectorAll( 'a' )
-	.forEach( item => item.classList[ action ]( "w3-text-theme", "w3-hover-shadow" ) );
+	.forEach( item => item.classList[ action ]( "w3-text-theme", "w3-medium", "w3-hover-shadow" ) );
 
 	navMenu.querySelectorAll( 'div' )
-	.forEach( item => item.classList[ action ]( "w3-container", "w3-text-theme" ) );
+	.forEach( item => item.classList[ action ]( "w3-container", "w3-text-theme", "w3-small" ) );
 
 	document.body.querySelectorAll( 'summary' )
-	.forEach( item => item.classList[ action ]( "w3-bar-item", "w3-theme", "w3-padding-small", "w3-hover-shadow"  ) );
+	.forEach( item => item.classList[ action ]( "w3-bar-item", "w3-theme-l2", "w3-small", "w3-hover-shadow"  ) );
 
 	document.body.querySelectorAll( 'button' )
-	.forEach( item => item.classList[ action ]( "w3-btn", "w3-theme-l2", "w3-round" ) );
+	.forEach( item => item.classList[ action ]( "w3-button", "w3-theme-l3", "w3-small", "w3-round" ) );
 
 	document.body.querySelectorAll( 'input' )
-	.forEach( item => item.classList[ action ]( "w3-input", "w3-theme-l4", "w3-round", "w3-border", "w3-hover-theme" ) );
+	.forEach( item => item.classList[ action ]( "w3-input", "w3-theme-l4", "w3-small", "w3-round", "w3-border", "w3-hover-theme" ) );
 
 	document.body.querySelectorAll( 'select' )
 	.forEach( item => item.classList[ action ]( "w3-select", "w3-theme-l2", "w3-round" ) );
@@ -283,7 +282,14 @@ THM.loadCssBootswatch = function() {
 THM.toggleTagsClassListBootswatch = function( action = 'add' ) {
 
 	document.body.querySelectorAll( 'nav' )
-		.forEach( item => item.classList[ action ]( "jumbotron" ) );
+		.forEach( item => {
+			item.classList[ action ]( "jumbotron" );
+			item.style.backgroundColor = '';
+		} );
+
+
+	document.body.querySelectorAll( 'div' )
+		.forEach( item => item.classList[ action ]( "card-body" ) );
 
 	document.body.querySelectorAll( 'summary' )
 		.forEach( item => item.classList[ action ]( "nav-link", "btn", "btn-primary" ) );
