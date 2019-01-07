@@ -58,15 +58,19 @@ HSH.onHashChange = function() {
 
 	} else if ( ulc.endsWith( '.html' ) ) {
 
+		//divContents.style.maxWidth = '100%';
+		//document.body.style.overflow = 'hidden';
+
 		divContents.innerHTML = `<iframe src=${ url } height=900px width=100% ></iframe>`;
 
 	} else if ( /\.(jpe?g|png|ico|svg|gif)$/i.test( ulc )  ) {
+	//} else if ( ulc.endsWith( '.gif' ) || ulc.endsWith( '.png' ) || ulc.endsWith( '.jpg' ) || ulc.endsWith( '.ico' ) || ulc.endsWith( '.svg' ) ) {
 
 		divContents.innerHTML = `<img src=${ url } >`;
 
 	} else {
 
-		HSH.requestFile( url, FOB.callbackOtherToTextarea );
+		HSH.requestFile( url, HSH.callbackToTextarea );
 
 	}
 
@@ -86,6 +90,117 @@ HSH.requestFile = function( url, callback ) {
 
 };
 
+
+/*
+HSH.callbackMarkdown = function( xhr ){
+
+	showdown.setFlavor('github');
+	const converter = new showdown.Converter();
+	const response = xhr.target.response;
+	const html = converter.makeHtml( response );
+
+	divContents.style.maxWidth = '800px';
+	document.body.overflow = '';
+	divContents.innerHTML = html;
+	window.scrollTo( 0, 0 );
+
+};
+
+
+
+HSH.callbackToTextarea = function( xhr ){
+
+	const response = xhr.target.response;
+
+	divContents.innerHTML = `<textarea style=height:900px;width:100%; >${ response }</textarea>`;
+
+};
+
+
+HSH.onDrop = function( event ) {
+
+	//console.log( 'event', event );
+
+	const dropUrl = event.dataTransfer.getData( 'URL' );
+
+	if ( dropUrl ) {
+
+		location.hash = dropUrl;
+
+	} else {
+
+		//var file = event.dataTransfer.files[0];
+		//console.log(file.name);
+
+		HFOBSH.openFile( event.dataTransfer );
+		//console.log( 'ed', event.dataTransfer );
+
+	}
+
+	event.preventDefault();
+
+};
+
+
+
+HSH.openFile = function( files ) {
+
+	file = files.files[ 0 ];
+
+	//reader.onprogress = onRequestFileProgress;
+	const reader = new FileReader();
+
+	reader.onload = function( event ) {
+
+		//console.log( 'reader', reader );
+
+		if ( file.name.endsWith('.md' ) ) {
+
+			showdown.setFlavor('github');
+			const converter = new showdown.Converter();
+			const html = converter.makeHtml( reader.result );
+
+			divContents.style.maxWidth = '800px';
+			document.body.overflow = '';
+			divContents.innerHTML = html;
+			window.scrollTo( 0, 0 );
+
+		} else if ( /\.(jpe?g|png|ico|svg|gif)$/i.test( file.name)  ) {
+
+			divContents.innerHTML = `<img src=${ reader.result } >`;
+
+		} else {
+
+			divContents.innerHTML = `<textarea style=height:100%;width:100%; >${ reader.result }</textarea>`;
+
+		}
+
+
+	};
+
+	if ( /\.(jpe?g|png|ico|svg|gif)$/i.test(file.name) ) {
+
+		reader.readAsDataURL(file);
+
+	} else {
+
+		reader.readAsText( file );
+
+	}
+
+
+		function onRequestFileProgress( event ) {
+
+			divLog.innerHTML =
+				fileAttributes.name + ' bytes loaded: ' + event.loaded.toLocaleString() +
+				//( event.lengthComputable ? ' of ' + event.total.toLocaleString() : '' ) +
+			'';
+
+		}
+
+};
+
+*/
 
 
 //////////

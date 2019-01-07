@@ -19,11 +19,12 @@ const FLS = { "release": "R11.0", "date": "2018-12-31" };
 
 FLS.getMenuSelectedFiles = function() {
 
+
 	const htm =
 	`
 		<details open >
 
-			<summary>Selected SpiderFiles
+			<summary>Selected Files
 				<a id=FLSSum class=helpItem href="JavaScript:MNU.setPopupShowHide(FLSSum,FLS.currentStatus);" >&nbsp; ? &nbsp;</a>
 			</summary>
 
@@ -31,12 +32,11 @@ FLS.getMenuSelectedFiles = function() {
 
 			<b><a href="https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/index.html" target="_blank">Spider gbXML Text Parser</a></b>
 
-			<p>The objective is to open and view huge gbXML files very quickly.
-			See also its <a href="#sandbox/spider-gbxml-text-parser/README.md" target="_blank">Read Me</a> file.</p>
+			<p>The objective is to open and view huge gbXML files very quickly. See also its <a href="#sandbox/spider-gbxml-text-parser/README.md" target="_blank">Read Me</a> file.</p>
 
-			<p>Other scripts of interest include <a href="https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/index.html" target="_blank">Spider gbXML Viewer Basic</a>.</p>
+			<p>Scripts of interest include <a href="https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/index.html" target="_blank">Spider gbXML Viewer Basic</a></p>
 
-			<p>For more background see <a href="https://www.ladybug.tools/spider" target="_blank">Ladybug Tools / Spider</a>.</p>
+			<p>For more background see []</p>
 		</details>
 	`;
 
