@@ -275,8 +275,8 @@ OHC.callbackGitHubPathFileNames = function( xhr ) {
 			if ( ( !location.hash || location.hash.toLowerCase().endsWith( 'readme.md' ) )
 				&& ( item.name.toLowerCase() === 'readme.md' ) ) {
 
-				console.log( 'location.hash', location.hash );
-				console.log( 'item', item );
+				//console.log( 'location.hash', location.hash );
+				//console.log( 'item', item );
 
 				location.hash = OHC.urlGitHubPage + OHC.pathRepo + itemPath;
 
