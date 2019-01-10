@@ -5,7 +5,7 @@
 :root { --mnu-width: 30rem; font-size: 0.7em; --screen-width: calc( 100vw ); }
 
 /* body, html { font: 11pt monospace; height: 100%; margin: 0; overflow: hidden; } */
-body { box-sizing: border-box; font: 12pt monospace; }
+body { font: 12pt monospace; height: 100%; margin: 0; }
 
 a { color: maroon; font-weight: bold; text-decoration: none; }
 a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
@@ -36,7 +36,7 @@ summary { cursor: pointer; font-weight: bold; }
 /* #divContents { margin: 0 auto; max-width: 600px; } */
 
 #navMenu { /* background-color: #eee; */ border: 1px solid #888; box-sizing: border-box;
-	left: 0; margin: 1rem; max-height: 95%; overflow: auto;
+	left: 0; margin: 0; height: 100%; overflow: auto;
 	position: fixed; resize: both; top: 0; transition: left 0.5s; width: var( --mnu-width ); z-index: 10; }
 
 #navMenu button, #navMenu input[type=button] { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;

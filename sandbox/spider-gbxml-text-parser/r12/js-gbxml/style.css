@@ -1,6 +1,7 @@
 /* Copyright 2019 Ladybug Tools authors. MIT License */
 
-* { box-sizing: border-box; }
+* {box-sizing: border-box; }
+
 :root { --mnu-width: 30rem; font-size: 0.7em; --screen-width: calc( 100vw ); }
 
 /* body, html { font: 11pt monospace; height: 100%; margin: 0; overflow: hidden; } */

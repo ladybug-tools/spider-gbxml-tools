@@ -2,7 +2,7 @@
 // jshint esversion: 6
 /* globals navMenu, divW3Schools, divBootswatch, THMcssCurrent, THMcssW3schools, THMcssBootswatch */
 
-const THM = { "release": "R1.3", "date": "2019-01-02" };
+const THM = { "release": "R13.4", "date": "2019-01-09" };
 
 THM.currentStatus =
 	`
@@ -91,24 +91,28 @@ THM.getMenuThemeSelect = function() {
 				<a id=thmSum class=helpItem href="JavaScript:MNU.setPopupShowHide(thmSum,THM.currentStatus);" >&nbsp; ? &nbsp;</a>
 			</summary>
 
-			<p>
-				Current stylesheet:<br>
-				<input id=THMcssCurrent >
-			</p>
+			<div>
 
-			<p>
-				<button onclick=THM.loadCssBasic(); accessKey='z' title='access key: z '>load CSS Basic</button>
-			</p>
+				<p>
+					Current stylesheet:<br>
+					<input id=THMcssCurrent >
+				</p>
 
-			<p>
-				<button onclick=THM.loadCssW3schools(); accessKey='x' title='access key: x ' >load CSS W3schools</button>
-			</p>
+				<p>
+					<button onclick=THM.loadCssBasic(); accessKey='z' title='access key: z '>load CSS Basic</button>
+				</p>
 
-			<p id=divW3Schools ></p>
+				<p>
+					<button onclick=THM.loadCssW3schools(); accessKey='x' title='access key: x ' >load CSS W3schools</button>
+				</p>
 
-			<p>
-				<button onclick=THM.loadCssBootswatch(); accessKey='c' title='access key: c ' >load CSS Bootswatch</button>
-			</p>
+				<p id=divW3Schools ></p>
+
+				<p>
+					<button onclick=THM.loadCssBootswatch(); accessKey='c' title='access key: c ' >load CSS Bootswatch</button>
+				</p>
+
+			</div>
 
 			<div id=divBootswatch ></div>
 

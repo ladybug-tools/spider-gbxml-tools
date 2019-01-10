@@ -1,9 +1,9 @@
 /* global THREE, THR, THRU, GBX, divPopUpData */
 // jshint esversion: 6
 
-// Copyright 2018 Ladybug Tools authors. MIT License.
+// Copyright 2019 Ladybug Tools authors. MIT License.
 
-var POP = { "release": "R10.0", "date": "2018-12-29" };
+var POP = { "release": "R13.1", "date": "2019-01-09" };
 
 POP.urlSource = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-pop-up"
 
@@ -24,7 +24,7 @@ POP.currentStatus =
 			&bull; 2018-11-13 ~ buttons should be in same place between clicks
 		</p>
 
-		<p>What buttons should be addd or dropped here? What tooltips should appear and where?</p>
+		<p>What buttons should be addd or dropped here? What tool tips should appear and where?</p>
 		<p>
 			To add to wish list and get things fixed see <a href="../../spider-gbxml-viewer-issues/index.html" target="_blank">issues module</a>
 		</p>
@@ -89,7 +89,7 @@ POP.getMenuHtmlPopUp = function() { // call from home page
 		<div id=POPfooter >
 
 			<p style=text-align:right; >
-				<a class=helpItem href="JavaScript:MNU.setPopupShowHide(this,POP.currentStatus);" title="View the read me file for the pop-up module" >&nbsp; ? &nbsp;</a>
+				<a id=popFoot class=helpItem href="JavaScript:MNU.setPopupShowHide(popFoot,POP.currentStatus);" title="View the read me file for the pop-up module" >&nbsp; ? &nbsp;</a>
 				<br>
 				<button onclick=POP.onClickZoomAll(); title="Show entire campus & display attributes" >zoom all +</button>
 				<button onclick=SET.toggleOpenings(); >toggle openings</button>

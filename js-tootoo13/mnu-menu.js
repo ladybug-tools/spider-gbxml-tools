@@ -3,13 +3,32 @@
 /* jshint esversion: 6 */
 
 
-const MNU = { "release": "R13.2", "date": "2019-01-09" };
+const MNU = { "release": "R13.3", "date": "2019-01-09" };
 
 MNU.description = document.head.querySelector( "[ name=description ]" ).content;
 
 MNU.currentStatusCore =
 	`
 		<h3>MNU.currentStatusCore</h3>
+	`;
+
+MNU.descriptionTooToo =
+	`
+		<h3><a href="https://pushme-pullyou.github.io#tootoo13/README.md" target="_blank">TooToo13</a></h3>
+
+		<p>
+			<ul>
+				<li>Browse and view the contents of many files on GitHub with remarkable ease</li>
+				<li>View HTML, Markdown format files - and many other file types - as rendered web pages or as source code</li>
+				<li>Traverse, select and display folder and file names with single clicks in a tree menu</li>
+				<li>Open local files with OS file dialog or by drag and drop</li>
+				<li>Access files quickly and then edit and commit changes to source using the GitHub interface</li>
+				<li>Web app with sliding menu that works on computer, tablet or phone</li>
+				<li>Written in plain-vanilla JavaScript/ Uses the GitHub Developer API / Hosted with GitHub pages / Simple CSS them selection</li>
+			</ul>
+		</p>
+
+		<p>TooToo is is one of several apps in the <a href="https://pushme-pullyou.github.io" target="_blank">pushMe-pullYou</a> GitHub organization</p>
 	`;
 
 MNU.currentStatusMenu =
@@ -37,7 +56,7 @@ MNU.currentStatusMenu =
 			Change log
 			<ul>
 				<li>2019-01-09 ~ Content update and minor code fixes</li>
-				<li>Add vars: MNU.footerUrl, MNU.footerTarget, MNU.footerIssues</li>
+				<li>Add vars: MNU.descriptionTooToo, MNU.footerUrl, MNU.footerTarget, MNU.footerIssues</li>
 				<li>2018-12-29 ~ Add helpItem class</li>
 				<li>2018-12-28 ~ Current Status link changed to question mark</li>
 				<li>2018-12-28 ~ Content displayed in the Pop-Up</li>

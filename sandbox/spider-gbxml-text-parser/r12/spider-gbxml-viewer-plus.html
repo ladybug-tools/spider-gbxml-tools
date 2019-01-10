@@ -3,7 +3,7 @@
 <head>
 <meta charset = "utf-8" >
 <meta name = "viewport" content= "width=device-width, initial-scale=1" >
-<meta name = "description" content = "This menu is a component of a basic html content management script with sliding menu, css theme selection, Markdown to HTML, drag and drop file reading capability, access to frequently used pages and more" >
+<meta name = "description" content = "Open, examine and edit very large gbXML files in 3D in your browser with free, open source JavaScript, WebGL & Three.js" >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
 <meta name = "date" content = "2019-01-09" >
 <meta name = "release" content = "12.0" >
@@ -58,23 +58,40 @@
 
 <script>
 
+//Copyright 2019 pushMe-pullYou authors. MIT License
 
 MNU.currentStatusCore =
 	`
 		<h3>
-			${ document.title }
+			Spider gbXML Viewer Plus
+			R${ document.head.querySelector( '[ name=release ]' ).content }
 			~
 			${ document.head.querySelector( '[ name=date ]' ).content }
 		</h3>
 
-		<p>Status</p>
+		<p>
+			Change log
+			<ul>
+				<li>2019-01-09 ~ Rolling out Spider gbXML Viewer Plus R12</li>
+				<li>2019-01-09 ~ Rolling out TooToo content management</li>
+			</ul>
+		</p>
+
+		${ MNU.descriptionTooToo }
 	`;
 
-MNU.descriptionCore =
+MNU.description =
 	`
-		Scripts to help you view and manage <a href="http://gbxml.org" target="_blank">gbXML</a> files
+	Open, examine and edit very large <a href="http://gbxml.org" target="_blank"  title="Thank you, Stephen">gbXML</a> files in 3D
 	`;
-
+/*
+	with free, open source
+	<a href="https://en.wikipedia.org/wiki/JavaScript" target="_blank"  title="Thank you, Brendan">JavaScript</a>,
+	<a href="https://en.wikipedia.org/wiki/WebGL" target="_blank" title="Thank you, Ken" >WebGL</a> &
+	<a href="https://en.wikipedia.org/wiki/Three.js" target="_blank" title="Thank you, Ricardo" >Three.js</a>
+	<a id=corDes class=helpItem href="JavaScript:MNU.setPopupShowHide( corDes,MNU.currentStatus );"
+	title="Current status: menu MNU module" >&nbsp; ? &nbsp;</a>
+ */
 
 //const uriDefaultFile = '../README.md';
 const urlDefaultFile='https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml';
@@ -99,6 +116,9 @@ MNU.appUrl = "https://www.ladybug.tools/spider-gbxml-tools/";
 MNU.urlSourceCodeImage="https://status.github.com/images/invertocat.png";
 MNU.urlSourceCodeIcon=`<img src="${ MNU.urlSourceCodeImage }" height=18 >`;
 
+MNU.footerUrl = "#../";
+MNU.footerTarget = ""; //"target=_blank";
+MNU.footerIssues = "https://github.com/pushme-pullyou/pushme-pullyou.github.io/issues";
 
 // for parsing
 OHC.user = 'ladybug-tools';
