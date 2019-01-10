@@ -218,7 +218,8 @@ OHC.callbackGitHubPathFileNames = function( xhr ) {
 
 	let txt = "";
 
-	if ( items.message ) { alert( items.message ); return; }
+	//if ( items.message !== "Not Found" ) { alert( items.message ); return; }
+	if ( items.message ) { console.log( 'error', items.message ); return; } //breadcrumbs??
 
 	const ignoreFolders = [ "data" ]; //, "plugins"?
 

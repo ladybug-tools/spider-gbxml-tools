@@ -5,10 +5,13 @@
 <meta name = "viewport" content= "width=device-width, initial-scale=1" >
 <meta name = "description" content = "This menu is a component of a basic html content management script with sliding menu, css theme selection, Markdown to HTML, drag and drop file reading capability, access to frequently used pages and more" >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
-<meta name = "date" content = "2019-01-08" >
+<meta name = "date" content = "2019-01-09" >
 <meta name = "release" content = "12.0" >
 <title>Spider gbXML Viewer Plus R12.0</title>
-<link rel="stylesheet" href="js13/style.css">
+<link rel="stylesheet" href="js-gbxml/style.css">
+<style>
+
+</style>
 </head>
 <body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
@@ -17,12 +20,12 @@
 <script src="https://rawgit.com/showdownjs/showdown/1.9.0/dist/showdown.min.js" ></script>
 
 <!-- tootoo -->
-<script src="../../../js13/mnu-menu.js" ></script>
-<script src="../../../js13/fls-files-selected.js" ></script>
-<script src="../../../js13/fob-file-open-basic.js" ></script>
-<script src="../../../js13/thm-theme-select.js" ></script>
-<script src="../../../js13/ohc-on-hash-change.js" ></script>
-<script src="../../../js13/tmp-template.js" ></script>
+<script src="../../../js-tootoo13/mnu-menu.js" ></script>
+<script src="../../../js-tootoo13/fls-files-selected.js" ></script>
+<script src="../../../js-tootoo13/fob-file-open-basic.js" ></script>
+<script src="../../../js-tootoo13/thm-theme-select.js" ></script>
+<script src="../../../js-tootoo13/ohc-on-hash-change.js" ></script>
+<script src="../../../js-tootoo13/tmp-template.js" ></script>
 
 <!-- Three.js -->
 <script src="js-gbxml/thr-threejs.js" ></script>
@@ -78,7 +81,7 @@ MNU.descriptionCore =
 //const uriDefaultFile = '../README.md';
 const urlDefaultFile='https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml';
 
-THM.cssBasic = "js13/style.css";
+THM.cssBasic = "../../../js-tootoo13/style.css";
 
 // For main menu header
 MNU.urlSourceCodeUrl="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-text-parser";
