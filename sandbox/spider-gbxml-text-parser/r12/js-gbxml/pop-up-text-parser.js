@@ -169,6 +169,8 @@ POP.onDocumentTouchStart = function( event ) {
 
 	event.preventDefault();
 
+	//console.log( '', event );
+
 	event.clientX = event.touches[0].clientX;
 	event.clientY = event.touches[0].clientY;
 

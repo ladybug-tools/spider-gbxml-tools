@@ -327,6 +327,8 @@ function init() {
 
 	//OHC.onHashChange();
 
+	document.removeEventListener( 'touchstart', MNU.onTouchStart, false );
+	document.removeEventListener( 'touchmove', MNU.onTouchMove, false );
 }
 
 
