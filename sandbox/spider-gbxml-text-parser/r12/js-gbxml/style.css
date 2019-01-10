@@ -1,9 +1,10 @@
 /* Copyright 2019 Ladybug Tools authors. MIT License */
 
+* { box-sizing: border-box; }
 :root { --mnu-width: 30rem; font-size: 0.7em; --screen-width: calc( 100vw ); }
 
 /* body, html { font: 11pt monospace; height: 100%; margin: 0; overflow: hidden; } */
-body { box-sizing: border-box; font: 12pt monospace; }
+body { font: 12pt monospace; height: 100%; margin: 0; }
 
 a { color: maroon; font-weight: bold; text-decoration: none; }
 a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
@@ -28,14 +29,16 @@ summary { cursor: pointer; font-weight: bold; }
 .helpItem { float: right; clear: both; }
 .highlight {background-color: lightgreen }
 
-#divContainer { height: 100%; margin: 0 0 0 var( --mnu-width ); padding: 0; position: relative; transition: margin-left .5s; }
+#divContainer { height: 100%; margin: 0 0 0 var( --mnu-width ); padding: 0; position: relative;
+	transition: margin-left .5s; }
+
 /* #divContents { height: 100%; left: 0; margin: 0 auto; max-width: 60rem; padding: 1rem; right: 0; } */
 
-
-#divContents { border: 1px solid #444; box-sizing: border-box; margin: 0; height: calc( 100vh ); overflow: hidden;padding: 0; width: 100%; }
+#divContents { border: 0px solid #444; margin: 0; height: calc( 100vh );
+	margin: 0; max-width: calc( 100vw ); overflow: hidden; padding: 0; width: 100%; }
 
 #navMenu { /* background-color: #eee; */ border: 1px solid #888; box-sizing: border-box;
-	left: 0; margin: 1rem; max-height: 95%; overflow: auto;
+	left: 0; margin: 0; height: 100%; overflow: auto;
 	position: fixed; resize: both; top: 0; transition: left 0.5s; width: var( --mnu-width ); z-index: 10; }
 
 #navMenu button, #navMenu input[type=button] { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;

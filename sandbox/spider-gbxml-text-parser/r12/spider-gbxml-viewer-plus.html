@@ -9,9 +9,7 @@
 <meta name = "release" content = "12.0" >
 <title>Spider gbXML Viewer Plus R12.0</title>
 <link rel="stylesheet" href="js-gbxml/style.css">
-<style>
 
-</style>
 </head>
 <body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
@@ -81,7 +79,7 @@ MNU.descriptionCore =
 //const uriDefaultFile = '../README.md';
 const urlDefaultFile='https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml';
 
-THM.cssBasic = "../../../js-tootoo13/style.css";
+THM.cssBasic = "js-gbxml/style.css";
 
 // For main menu header
 MNU.urlSourceCodeUrl="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-text-parser";
@@ -94,9 +92,9 @@ MNU.repoText="<img src='https://ladybug.tools/artwork/icons_bugs/ico/spider.ico'
 MNU.repoTitle="Spider: 3D interactive analysis in your browser mostly written around the Three.js JavaScript library";
 MNU.repoUrl="https://www.ladybug.tools/spider/";
 
-MNU.appText= ""; //"gbXML Tools";
-MNU.appTitle = ""; //"Tools to help you find, load, examine and edit gbXML files - in large numbers and sizes";
-MNU.appUrl = ""; //"https://www.ladybug.tools/spider-gbxml-tools/";
+MNU.appText= "gbXML Tools";
+MNU.appTitle = "Tools to help you find, load, examine and edit gbXML files - in large numbers and sizes";
+MNU.appUrl = "https://www.ladybug.tools/spider-gbxml-tools/";
 
 MNU.urlSourceCodeImage="https://status.github.com/images/invertocat.png";
 MNU.urlSourceCodeIcon=`<img src="${ MNU.urlSourceCodeImage }" height=18 >`;
@@ -110,7 +108,7 @@ OHC.branch = '/master/';
 
 OHC.urlGitHubPage  = "https://www.ladybug.tools/" + OHC.repo + "/";
 
-
+THM.themeUrlStorage = 'tootooCookbookThemeUrlGbxml';
 
 </script>
 
@@ -220,11 +218,11 @@ OHC.urlGitHubPage  = "https://www.ladybug.tools/" + OHC.repo + "/";
 	</nav>
 
 
-	<nav>
+	<div>
 
 		<button id="butHamburger" onclick=MNU.toggleNavLeft(); title="click here to hide this menu"> slide &#9776; </button>
 
-	</nav>
+	</div>
 
 
 	<nav id="divPopUp" >
