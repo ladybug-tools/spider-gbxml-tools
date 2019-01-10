@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1" >
+<meta name = "description" content = "This menu is a component of a basic html content management script with sliding menu, css theme selection, Markdown to HTML, drag and drop file reading capability, access to frequently used pages and more" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2019-01-08" >
+<meta name = "release" content = "12.0" >
+<title>Spider gbXML Viewer Plus R12.0</title>
+<link rel="stylesheet" href="js13/style.css">
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
+<script src="https://cdn.rawgit.com/mrdoob/three.js/r99/build/three.min.js" ></script>
+<script src="https://cdn.rawgit.com/mrdoob/three.js/r99/examples/js/controls/OrbitControls.js" ></script>
+<script src="https://rawgit.com/showdownjs/showdown/1.9.0/dist/showdown.min.js" ></script>
+
+<!-- tootoo -->
+<script src="../../../js13/mnu-menu.js" ></script>
+<script src="../../../js13/fls-files-selected.js" ></script>
+<script src="../../../js13/fob-file-open-basic.js" ></script>
+<script src="../../../js13/thm-theme-select.js" ></script>
+<script src="../../../js13/ohc-on-hash-change.js" ></script>
+<script src="../../../js13/tmp-template.js" ></script>
+
+<!-- Three.js -->
+<script src="js-gbxml/thr-threejs.js" ></script>
+<script src="js-gbxml/thru-threejs-utilities.js"></script>
+<script src="js-gbxml/pop-up-text-parser.js" ></script>
+
+<!-- File menu -->
+<script src="js-gbxml/gal-sample-files-gallery-gbxml.js" ></script>
+<script src="js-gbxml/fil-file-open-xml-zip.js" ></script>
+<script src="js-gbxml/gbx-gbxml-text-parser.js" ></script>
+<script src="js-gbxml/gbxu-gbxml-utilities.js" ></script>
+
+<!-- Edit menu -->
+<script src="js-gbxml/iscor-issues-core.js" ></script>
+<script src="js-gbxml/isfic-issues-file-check.js" ></script>
+<script src="js-gbxml/ismet-issues-metadata.js" ></script>
+<script src="js-gbxml/issti-issues-surface-type-invalid.js" ></script>
+<script src="js-gbxml/isduc-issues-duplicate-coordinates.js" ></script>
+<script src="js-gbxml/isasi-issues-adjacent-space-invalid.js" ></script>
+<script src="js-gbxml/isase-issues-adjacent-space-extra.js" ></script>
+<script src="js-gbxml/isasd-issues-adjacent-space-duplicate.js" ></script>
+<script src="js-gbxml/iscod-issues-cad-object-id.js" ></script>
+<script src="js-gbxml/istmp-issues-template.js" ></script>
+
+<!-- View menu -->
+<script src="js-gbxml/vwsrf-view-surface-types.js" ></script>
+<script src="js-gbxml/repl-view-by-level.js" ></script>
+<script src="js-gbxml/set-settings.js" ></script>
+<script src="js-gbxml/cut-section-cut.js"></script>
+
+
+
+<script>
+
+
+MNU.currentStatusCore =
+	`
+		<h3>
+			${ document.title }
+			~
+			${ document.head.querySelector( '[ name=date ]' ).content }
+		</h3>
+
+		<p>Status</p>
+	`;
+
+MNU.descriptionCore =
+	`
+		Scripts to help you view and manage <a href="http://gbxml.org" target="_blank">gbXML</a> files
+	`;
+
+
+//const uriDefaultFile = '../README.md';
+const urlDefaultFile='https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml';
+
+THM.cssBasic = "js13/style.css";
+
+// For main menu header
+MNU.urlSourceCodeUrl="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-text-parser";
+
+MNU.homeText="<img src='https://ladybug.tools/artwork/icons_bugs/ico/ladybug.ico' height=24 >";
+MNU.homeTitle="Ladybug Tools: free computer applications that support environmental design and education";
+MNU.homeUrl="https://www.ladybug.tools";
+
+MNU.repoText="<img src='https://ladybug.tools/artwork/icons_bugs/ico/spider.ico' height=24 >";
+MNU.repoTitle="Spider: 3D interactive analysis in your browser mostly written around the Three.js JavaScript library";
+MNU.repoUrl="https://www.ladybug.tools/spider/";
+
+MNU.appText= ""; //"gbXML Tools";
+MNU.appTitle = ""; //"Tools to help you find, load, examine and edit gbXML files - in large numbers and sizes";
+MNU.appUrl = ""; //"https://www.ladybug.tools/spider-gbxml-tools/";
+
+MNU.urlSourceCodeImage="https://status.github.com/images/invertocat.png";
+MNU.urlSourceCodeIcon=`<img src="${ MNU.urlSourceCodeImage }" height=18 >`;
+
+
+// for parsing
+OHC.user = 'ladybug-tools';
+OHC.repo = 'spider-gbxml-tools';
+OHC.pathRepo = '';
+OHC.branch = '/master/';
+
+OHC.urlGitHubPage  = "https://www.ladybug.tools/" + OHC.repo + "/";
+
+
+
+</script>
+
+	<nav id="navMenu" >
+
+		<header>
+
+			<div id="MNUdivHeader" ></div>
+
+		</header>
+
+		<details open >
+
+				<summary class=divMenuTitle >File Menu</summary>
+
+				<section id=GALdivSampleFilesGallery ></section>
+
+				<section id=FILdivFileOpen ></section>
+
+				<section id=FILdivFileSave ></section>
+
+				<section id=FILdivCurrentStatus ></section>
+
+				<!--
+
+					<section id="FLSsecSelectedFiles" ></section>
+
+					<section id="OHCsecMenuRepoFilesFolders" ></section>
+
+					<section id=FOBsecFileOpenBasic ></section>
+
+					<section id=FILdivFileSave ></section>
+				-->
+
+			</details>
+
+
+		<details id=detMenuEdit >
+
+				<div id="divMenuNote" ></div>
+
+				<summary class=divMenuTitle >Edit Menu </summary>
+
+				<div id="ISCORdivMenuIssues" ></div>
+
+			</details>
+
+
+			<details id=detMenuView >
+
+				<summary class=divMenuTitle >View Menu </summary>
+
+				<details id=detReports ontoggle=VWSRF.onToggle(); >
+
+					<summary>Show/hide by surface type</summary>
+
+					<div id="divReports" ></div>
+
+					<div id="divReportByLevels" ></div>
+
+					<div id="divReportsLog" ></div>
+
+				</details>
+
+
+				<details id=detSettings ontoggle=divSettings.innerHTML=SET.getSettingsMenu(); >
+
+					<summary>Scene display settings</summary>
+
+					<div id="divSettings" ></div>
+
+					<div id="divSettingsLog" ></div>
+
+				</details>
+
+
+				<details ontoggle=divSectionCut.innerHTML=CUT.getDetSectionViews(); >
+
+					<summary>Scene cut sections</summary>
+
+					<div id=divSectionCut ></div>
+
+				</details>
+
+			</details>
+
+
+
+			<details id=detMenuHelp open >
+
+				<summary class=divMenuTitle >Help Menu </summary>
+
+				<section id=THMsecMenuThemeSelect ></section>
+
+				<section id=TMPsecMenuTemplate ></section>
+
+				<footer>
+
+					<section id = "MNUdivFooter" ></section>
+
+				</footer>
+
+		</details>
+
+		<h1 onclick=navMenu.scrollTop=0; style=cursor:pointer;text-align:center; title="go to top of menu" > ❦ </h1>
+
+	</nav>
+
+
+	<nav>
+
+		<button id="butHamburger" onclick=MNU.toggleNavLeft(); title="click here to hide this menu"> slide &#9776; </button>
+
+	</nav>
+
+
+	<nav id="divPopUp" >
+
+		<div id="divPopUpData" ></div>
+
+		<div id="divMessage" ></div>
+
+	</nav>
+
+
+	<div id="divContainer" >
+
+		<div id="divContents" ></div>
+
+	</div>
+
+<script>
+
+
+
+init();
+
+THR.animate();
+
+function init() {
+
+	THR.getThreejs();
+
+	THRU.setHelpers();
+
+	THRU.addSomeLights2();
+
+	//mesh = THRU.getGeometry();
+	//THR.scene.add( mesh );
+
+	MNUdivHeader.innerHTML = MNU.getNavHeader();
+
+	GALdivSampleFilesGallery.innerHTML=GAL.getMenuSampleFilesGallery();
+
+	FILdivFileOpen.innerHTML=FIL.getMenuFileOpen();
+
+	GBXdivStatsGbx.innerHTML=GBX.getDivMenuGbx();
+
+	FILdivFileSave.innerHTML=FIL.getMenuFileSave();
+
+	//
+
+	ISCORdivMenuIssues.innerHTML=ISCOR.getMenuIssues();
+
+	THMsecMenuThemeSelect.innerHTML=THM.getMenuThemeSelect();
+
+	TMPsecMenuTemplate.innerHTML=TMP.getMenuTemplate();
+
+	//OHCsecMenuRepoFilesFolders.innerHTML = OHC.getMenuRepoFilesFolders();
+
+	//FLSsecSelectedFiles.innerHTML = FLS.getMenuSelectedFiles();
+
+	//FOBsecFileOpenBasic.innerHTML = FOB.getMenuFileOpenBasic( divContents, divPopUpData );
+
+	THMsecMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
+
+	TMPsecMenuTemplate.innerHTML = TMP.getMenuTemplate();
+
+	MNUdivFooter.innerHTML = MNU.getNavFooter(); // not essential
+
+	divPopUp.innerHTML=POP.getMenuHtmlPopUp();
+
+	// loads a default file / great for testing same file many times
+	const thrFilePath=localStorage.getItem( 'thrFilePath' ) || '';
+
+	FILinpFilePath.value=thrFilePath;
+
+	FIL.urlDefaultFile=thrFilePath || urlDefaultFile;
+
+	if ( !location.hash ) { location.hash=FIL.urlDefaultFile; } else { FIL.onHashChange(); }
+	location.hash=urlDefaultFile;
+
+	THM.init();
+
+	//OHC.onHashChange();
+
+}
+
+
+</script>
+</body>
+</html>

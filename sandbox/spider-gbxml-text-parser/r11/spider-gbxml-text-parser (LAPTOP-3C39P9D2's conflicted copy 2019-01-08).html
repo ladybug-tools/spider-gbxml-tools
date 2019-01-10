@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
+<meta name=description content="DEV version: Open, examine and edit very large gbXML files in 3D in your browser with free, open source JavaScript, WebGL & Three.js" >
+<meta name=keywords content="Spider,Ladybug.tools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name="date" content="2019-01-01" >
+<title>Spider gbXML Text Parser R11.0</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
+<script src="https://cdn.rawgit.com/mrdoob/three.js/r99/build/three.min.js" ></script>
+<script src="https://cdn.rawgit.com/mrdoob/three.js/r99/examples/js/controls/OrbitControls.js" ></script>
+<script src="https://rawgit.com/showdownjs/showdown/1.9.0/dist/showdown.min.js" ></script>
+
+<script>
+
+const COR = { "release": "R11.0", "date": "2019-01-01" };
+
+COR.currentStatus =
+`
+	<h3>${ document.head.querySelector( '[ name=date ]' ).content } ~ Current Status</h3>
+
+	<p>Model not fully loaded until model centers on screen and starts rotating.</p>
+
+	<p>Default onload shows: Roof, ExteriorWall, ExposedFloor, Air and Shade. May be having issues on large files</p>
+
+	<p>
+		After loading a very large model:
+		<span class=highlight >it's best to reload web page before loading next model.</span>
+		And, be patient, it may take a very long time to clear large files from memory.
+	</p>
+
+	<p>
+		Change log
+		<ul>
+			<li>2018-12-29 ~ See file open and menu modules</li>
+
+		</ul>
+	</p>
+
+`;
+
+// For main menu header
+COR.homeText="<img src='https://ladybug.tools/artwork/icons_bugs/ico/ladybug.ico' height=24 >";
+COR.homeTitle="Ladybug Tools: free computer applications that support environmental design and education";
+COR.homeUrl="https://www.ladybug.tools";
+
+COR.repoText="<img src='https://ladybug.tools/artwork/icons_bugs/ico/spider.ico' height=24 >";
+COR.repoTitle="Spider: 3D interactive analysis in your browser mostly written around the Three.js JavaScript library";
+COR.repuUrl="https://www.ladybug.tools/spider/";
+
+COR.appText="gbXML Tools";
+COR.appTitle="Tools to help you find, load, examine and edit gbXML files - in large numbers and sizes";
+COR.appUrl="https://www.ladybug.tools/spider-gbxml-tools/";
+
+COR.urlSourceCodeImage="https://status.github.com/images/invertocat.png";
+COR.urlSourceCodeIcon=`<img src="${ COR.urlSourceCodeImage }" height=18 >`;
+COR.urlSourceCodeUrl="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-text-parser";
+
+/*
+// for parsing
+const user='ladybug-tools';
+const repo='spider-tools';
+const pathRepo='';
+const branch='/master/'
+const urlGitHubSource='https://github.com/' + user + '/' + repo;
+//const urlGitHubApiContents='https://api.github.com/repos/' + user + repo + '/contents/' + pathRepo;
+
+//const urlGitHubPage=location.href.includes( '/' + user + '.github.io' ) ? '' : 'https://rawgit.com/' + user + repo + branch;
+//const urlGitHubPage ='https://rawgit.com/' + user + repo + branch;
+//console.log( 'urlGitHubPage', urlGitHubPage );
+
+//	location.hash='../README.md';
+const uriDefaultFile='README.md';
+const urlSourceCode="https://github.com/pushme-pullyou/pushme-pullyou.github.io/tree/master/tootoo-templates/hamburger-css";
+*/
+
+
+const urlDefaultFile='https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml';
+//const urlDefaultFile='https://www.ladybug.tools/spider/gbxml-sample-files/coventry-university-of-warwick-small.xml';
+
+COR.description =
+`
+	Open, examine and edit very large <a href="http://gbxml.org" target="_blank"  title="Thank you, Stephen">gbXML</a> files in 3D in your browser with free, open source
+	<a href="https://en.wikipedia.org/wiki/JavaScript" target="_blank"  title="Thank you, Brendan">JavaScript</a>,
+	<a href="https://en.wikipedia.org/wiki/WebGL" target="_blank" title="Thank you, Ken" >WebGL</a> &
+	<a href="https://en.wikipedia.org/wiki/Three.js" target="_blank" title="Thank you, Ricardo" >Three.js</a>
+	<a id=corDes class=helpItem href="JavaScript:MNU.setPopupShowHide( corDes,MNU.currentStatus );"
+	title="Current status: menu MNU module" >&nbsp; ? &nbsp;</a>
+`;
+
+</script>
+
+<!-- Core -->
+<script src="js/thr-threejs.js" ></script>
+<script src="js/thru-threejs-utilities.js"></script>
+<script src="js/mnu-menu.js" ></script>
+<script src="js/pop-up-text-parser.js" ></script>
+
+<!-- File menu -->
+<script src="js/gal-sample-files-gallery-gbxml.js" ></script>
+<script src="js/fil-file-open-xml-zip.js" ></script>
+<script src="js/gbx-gbxml-text-parser.js" ></script>
+<script src="js/gbxu-gbxml-utilities.js" ></script>
+
+<!-- Edit menu -->
+<script src="js/iscor-issues-core.js" ></script>
+<script src="js/isfic-issues-file-check.js" ></script>
+<script src="js/ismet-issues-metadata.js" ></script>
+<script src="js/issti-issues-surface-type-invalid.js" ></script>
+<script src="js/isduc-issues-duplicate-coordinates.js" ></script>
+<script src="js/isasi-issues-adjacent-space-invalid.js" ></script>
+<script src="js/isase-issues-adjacent-space-extra.js" ></script>
+<script src="js/isasd-issues-adjacent-space-duplicate.js" ></script>
+<script src="js/iscod-issues-cad-object-id.js" ></script>
+<script src="js/istmp-issues-template.js" ></script>
+
+<!-- View menu -->
+<script src="js/vwsrf-view-surface-types.js" ></script>
+<script src="js/repl-view-by-level.js" ></script>
+<script src="js/set-settings.js" ></script>
+<script src="js/cut-section-cut.js"></script>
+
+
+<!-- Help menu -->
+<script src="js/thm-theme-select.js" ></script>
+<script src="js/tmp-template.js" ></script>
+
+<!-- here we go -->
+
+	<main id="container" ></main>
+
+	<nav id="navMenu" >
+
+		<header>
+
+			<div id="divHeader" ></div>
+
+		</header>
+
+		<details open >
+
+			<summary class=divMenuTitle >File Menu</summary>
+
+			<div id=GALdivSampleFilesGallery ></div>
+
+			<div id=FILdivFileOpen ></div>
+
+			<div id=FILdivFileSave ></div>
+
+			<div id=FILdivCurrentStatus ></div>
+
+		</details>
+
+
+		<details id=detMenuEdit >
+
+			<div id="divMenuNote" ></div>
+
+			<summary class=divMenuTitle >Edit Menu </summary>
+
+			<div id="ISCORdivMenuIssues" ></div>
+
+		</details>
+
+
+		<details id=detMenuView >
+
+			<summary class=divMenuTitle >View Menu </summary>
+
+			<details id=detReports ontoggle=VWSRF.onToggle(); >
+
+				<summary>Show/hide by surface type</summary>
+
+				<div id="divReports" ></div>
+
+				<div id="divReportByLevels" ></div>
+
+				<div id="divReportsLog" ></div>
+
+			</details>
+
+
+			<details id=detSettings ontoggle=divSettings.innerHTML=SET.getSettingsMenu(); >
+
+				<summary>Scene display settings</summary>
+
+				<div id="divSettings" ></div>
+
+				<div id="divSettingsLog" ></div>
+
+			</details>
+
+
+			<details ontoggle=divSectionCut.innerHTML=CUT.getDetSectionViews(); >
+
+				<summary>Scene cut sections</summary>
+
+				<div id=divSectionCut ></div>
+
+			</details>
+
+		</details>
+
+		<details id=detMenuHelp open >
+
+			<summary class=divMenuTitle >Help Menu </summary>
+
+			<section id=THMsecMenuThemeSelect ></section>
+
+			<section id=TMPsecMenuTemplate ></section>
+
+			<footer>
+
+				<section id="divFooter" ></section>
+
+			</footer>
+
+		</details>
+
+		<h1 onclick=navMenu.scrollTop=0; style=cursor:pointer;text-align:center; title='go to top of menu' > ❦ </h1>
+
+
+	</nav>
+
+	<nav>
+		<button id="butHamburger" onclick=MNU.toggleNavLeft(); title="click to hide this menu"> slide &#9776; </button>
+	</nav>
+
+
+	<div id="divPopUp" >
+
+		<div id="divPopUpData" ></div>
+
+		<div id="divPopUpMessage" ></div>
+
+	</div>
+
+<script>
+
+
+init();
+
+THR.animate();
+
+
+function init() {
+
+	THR.getThreejs();
+
+	THRU.setHelpers();
+
+	THRU.addSomeLights();
+
+	divHeader.innerHTML=MNU.getNavHeader(); // not essential
+
+	GALdivSampleFilesGallery.innerHTML=GAL.getMenuSampleFilesGallery();
+
+	FILdivFileOpen.innerHTML=FIL.getMenuFileOpen();
+
+	GBXdivStatsGbx.innerHTML=GBX.getDivMenuGbx();
+
+	FILdivFileSave.innerHTML=FIL.getMenuFileSave();
+
+	//
+
+	ISCORdivMenuIssues.innerHTML=ISCOR.getMenuIssues();
+
+	THMsecMenuThemeSelect.innerHTML=THM.getMenuThemeSelect();
+
+	TMPsecMenuTemplate.innerHTML=TMP.getMenuTemplate();
+
+	divFooter.innerHTML=MNU.getNavFooter(); // not essential
+
+	divPopUp.innerHTML=POP.getMenuHtmlPopUp();
+
+
+	// loads a default file / great for testing same file many times
+	const thrFilePath=localStorage.getItem( 'thrFilePath' ) || '';
+
+	FILinpFilePath.value=thrFilePath;
+
+	FIL.urlDefaultFile=thrFilePath || urlDefaultFile;
+
+	if ( !location.hash ) { location.hash=FIL.urlDefaultFile; } else { FIL.onHashChange(); }
+	location.hash=urlDefaultFile;
+
+	THM.init(); // best to do this after all the HTML has been loaded
+
+}
+
+</script>
+</body>
+</html>
