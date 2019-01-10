@@ -96,7 +96,7 @@ GBX.parseFile = function( gbxml )  {
 	GBXdivStatsThr.innerHTML = '';
 
 
-	THRU.setSceneDispose( [ GBX.surfaceMeshes, GBX.surfaceOpenings, GBX.surfaceEdgesThreejs, GBX.boundingBox, THRU.helperNormalsFaces ] );
+	THRU.setSceneDispose( [ GBX.surfaceMeshes, GBX.surfaceOpenings, GBX.surfaceEdgesThreejs, GBX.boundingBox, THRU.helperNormalsFaces, THRU.groundHelper ] );
 
 	//THR.scene.remove( GBX.surfaceOpenings, GBX.surfaceEdgesThreejs );
 	GBX.surfaceEdgesThreejs = [];
@@ -104,6 +104,7 @@ GBX.parseFile = function( gbxml )  {
 
 	//THR.scene.remove( GBX.boundingBox );
 	GBX.boundingBox = undefined;
+	THRU.groundHelper = undefined;
 
 	if ( GBX.surfaceGroup ) {
 

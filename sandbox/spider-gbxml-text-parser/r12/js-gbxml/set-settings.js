@@ -16,6 +16,8 @@ SET.getSettingsMenu = function() {
 			<button onclick="THR.controls.autoRotate = !THR.controls.autoRotate;" >toggle rotation</button>
 
 			<button onclick=THRU.toggleAxesHelper(); >toggle axes</button>
+
+			<button onclick=GBXU.toggleGroundHelper(); >toggle ground</button>
 		</p>
 
 		<p>

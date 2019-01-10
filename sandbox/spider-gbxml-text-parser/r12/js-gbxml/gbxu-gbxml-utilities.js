@@ -1,8 +1,8 @@
-// Copyright 2018 Ladybug Tools authors. MIT License
+// Copyright 2019 Ladybug Tools authors. MIT License
 // jshint esversion: 6
 /* globals THREE, THR, THRU, timeStart, divLog2 */
 
-var GBXU = { "release": "R10.1", "date": "2018-12-14" };
+const GBXU = { "release": "R12.2", "date": "2019-01-09" };
 
 
 GBXU.init = function() {
@@ -12,41 +12,37 @@ GBXU.init = function() {
 
 	document.body.addEventListener( 'onGbxParse', GBXU.setStats, false );
 
-	/*
-	htm =
-	`
-		<b>Text parser statistics</b><br>
-		<p>Render statistics will appear here.</p>
-		<p>On very large files it may take some time before rendering begins.</p>
-
-	`;
-
-	return htm;
-	*/
-
-}
+};
 
 
 GBXU.toggleGroundHelper = function() {
 
 	if ( !THRU.groundHelper ) {
 
-		const geometry = new THREE.PlaneGeometry( THRU.radius, THRU.radius);
-		const material = new THREE.MeshBasicMaterial( { color: 0xff0000, opacity: 1, side: 2 } );
+		//const reElevation = /<Elevation>(.*?)<\/Elevation>/i;
+		//GBX.elevation = GBX.text.match( reElevation )[ 1 ];
+		//console.log( 'elevation', GBX.elevation );
 
+		elevation = GBX.boundingBox.box.min.z;
+
+		const geometry = new THREE.PlaneGeometry( 2 * THRU.radius, 2 * THRU.radius);
+		const material = new THREE.MeshPhongMaterial( { color: 0x888888, opacity: 0.5, side: 2 } );
 		THRU.groundHelper = new THREE.Mesh( geometry, material );
+		THRU.groundHelper.receiveShadow = true;
 
-		THRU.groundHelper.position.set( GBX.boundingBox.position.x, GBX.boundingBox.position.y, 0 );
+		THRU.groundHelper.position.set( GBX.boundingBox.position.x, GBX.boundingBox.position.y, parseFloat( elevation ) );
 
 		THRU.groundHelper.name = "groundHelper";
 
 		THR.scene.add( THRU.groundHelper );
 
+		THRU.groundHelper.visible = false;
+
 		return;
 
 	}
 
-	//THRU.groundHelper.visible = !THRU.axesHelper.visible;
+	THRU.groundHelper.visible = !THRU.groundHelper.visible;
 
 };
 
