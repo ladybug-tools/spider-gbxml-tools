@@ -292,6 +292,7 @@ GBX.sendSurfacesToThreeJs = function( surfacesText ) {
 
 
 GBX.getSurfaceMeshes = function( surfaces ) {
+	// console.log( 'surfaces', surfaces );
 
 	const meshes = surfaces.map( ( surface ) => {
 
@@ -329,9 +330,12 @@ GBX.getSurfaceMeshes = function( surfaces ) {
 
 
 GBX.getPolyLoops = function( surface ) {
+	//console.log( 'surface', surface );
 
-	const re = /<PlanarGeometry>(.*?)<polyloop(.*?)<\/polyloop>/gi;
+	const re = /<PlanarGeometry(.*?)<polyloop(.*?)<\/polyloop>/gi;
 	const polyloopText = surface.match( re );
+
+	if ( !polyloopText ) { console.log( 'polyloopText', polyloopText, surface ) }
 	const polyloops = polyloopText.map( polyloop => polyloop.replace(/<\/?polyloop>/gi, '' ) );
 
 	return polyloops;

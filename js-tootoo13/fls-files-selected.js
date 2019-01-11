@@ -4,14 +4,15 @@
 
 
 
-const FLS = { "release": "R11.0", "date": "2018-12-31" };
+const FLS = { "release": "R13.1", "date": "2019-01-10" };
 
  FLS.description = FLS.description || document.head.querySelector( "[ name=description ]" ).content;
+
  FLS.currentStatus =
 	`
-		<h3 FLS ${ FLS.release} status ${ FLS.date }</h3>
+		<h3>Spider Selected Files ${ FLS.release} ~ ${ FLS.date }</h3>
 
-		<p>Selected Files.</p>
+		<p>Menu panel inserted into TooToo menu</p>
 
 	`;
 
@@ -23,20 +24,25 @@ FLS.getMenuSelectedFiles = function() {
 	`
 		<details open >
 
-			<summary>Selected SpiderFiles
+			<summary>Selected Spider Files
 				<a id=FLSSum class=helpItem href="JavaScript:MNU.setPopupShowHide(FLSSum,FLS.currentStatus);" >&nbsp; ? &nbsp;</a>
 			</summary>
 
-			<p>Current development activity is primarily going on here:<br>
+			<div>
 
-			<b><a href="https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/index.html" target="_blank">Spider gbXML Text Parser</a></b>
+				<p>Current development activity is primarily going on here:<br>
 
-			<p>The objective is to open and view huge gbXML files very quickly.
-			See also its <a href="#sandbox/spider-gbxml-text-parser/README.md" target="_blank">Read Me</a> file.</p>
+				<b><a href="https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/index.html" target="_blank">Spider gbXML Plus</a></b>
 
-			<p>Other scripts of interest include <a href="https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/index.html" target="_blank">Spider gbXML Viewer Basic</a>.</p>
+				<p>The objective is to open and view huge gbXML files very quickly.
+				See also its <a href="#sandbox/spider-gbxml-text-parser/README.md" target="_blank">Read Me</a> file.</p>
 
-			<p>For more background see <a href="https://www.ladybug.tools/spider" target="_blank">Ladybug Tools / Spider</a>.</p>
+				<p>Other scripts of interest include <a href="https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/index.html" target="_blank">Spider gbXML Viewer Basic</a>.</p>
+
+				<p>For more background see <a href="https://www.ladybug.tools/spider" target="_blank">Ladybug Tools / Spider</a>.</p>
+
+			</div>
+
 		</details>
 	`;
 
