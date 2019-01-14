@@ -82,9 +82,9 @@ Progress indication
 ### 2018-12-14 ~ Theo
 
 fil-open-file.js r10.2
-* Streamline FIL.onProgress fandling a lot
+* Streamline FIL.onProgress handling a lot
 * Update variable and function names to be clearer
-* Add events - no more GBX references exept for file saves
+* Add events - no more GBX references except for file saves
 * Fix jsHint warnings
 
 ### 2018-12-13 ~ Theo
