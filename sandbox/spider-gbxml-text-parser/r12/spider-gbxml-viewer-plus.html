@@ -7,7 +7,7 @@
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
 <meta name = "date" content = "2019-01-11" >
 <meta name = "release" content = "12.1" >
-<title>Spider gbXML Viewer Plus R12.1</title>
+<title>Spider gbXML Viewer Plus</title>
 <link rel="stylesheet" href="js-gbxml/style.css">
 
 </head>
@@ -17,13 +17,18 @@
 <script src="https://cdn.rawgit.com/mrdoob/three.js/r99/examples/js/controls/OrbitControls.js" ></script>
 <script src="https://rawgit.com/showdownjs/showdown/1.9.0/dist/showdown.min.js" ></script>
 
-<!-- tootoo -->
-<script src="../../../js-tootoo13/mnu-menu.js" ></script>
+<!-- tootoo
+
 <script src="../../../js-tootoo13/fls-files-selected.js" ></script>
 <script src="../../../js-tootoo13/fob-file-open-basic.js" ></script>
-<script src="../../../js-tootoo13/thm-theme-select.js" ></script>
-<script src="../../../js-tootoo13/ohc-on-hash-change.js" ></script>
-<script src="../../../js-tootoo13/tmp-template.js" ></script>
+
+-->
+
+<script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13/mnu-menu.js" ></script>
+<script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13/ohc-on-hash-change.js" ></script>
+
+<script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13/thm-theme-select.js" ></script>
+<script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13/tmp-template.js" ></script>
 
 <!-- Three.js -->
 <script src="js-gbxml/thr-threejs.js" ></script>
@@ -248,7 +253,7 @@ THM.themeUrlStorage = 'tootooCookbookThemeUrlGbxml';
 	</div>
 
 
-	<nav id="divPopUp" >
+	<nav id="navPopUp" >
 
 		<div id="divPopUpData" ></div>
 
@@ -312,7 +317,7 @@ function init() {
 
 	MNUdivFooter.innerHTML = MNU.getNavFooter(); // not essential
 
-	divPopUp.innerHTML=POP.getMenuHtmlPopUp();
+	navPopUp.innerHTML=POP.getMenuHtmlPopUp();
 
 	// loads a default file / great for testing same file many times
 	const thrFilePath=localStorage.getItem( 'thrFilePath' ) || '';
