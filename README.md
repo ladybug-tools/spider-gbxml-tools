@@ -31,13 +31,13 @@ The scripts here are a fork of the scripts at https://www.ladybug.tools/spider/.
 The impetus for this code arose from the request by the developers of OpenStudio for a viewer that could embedded in their code. It became quickly evident that the new codebase offered significant advantages over the the previous codebase. And, thus, the majority of ongoing development efforts have been transferred to this project. Previous releases will be supported at least to the extent of fixing bugs that that are reported.
 
 
-2019-01-01 ~ The following list is is outdated and needs refactoring
 
-[Spider gbXML Text Parser]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/ )
+### Latest release: [Spider gbXML Viewer 'Maevia' R15 ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/ )
 
 ***
 
-### Latest release: [gbXML Viewer Basic]( https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/index.html )
+2019-01-19 ~ The following list is is outdated and needs refactoring
+
 
 
 #### [gbXML Viewer Basic Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#gbxml-viewer-basic/README.md )
