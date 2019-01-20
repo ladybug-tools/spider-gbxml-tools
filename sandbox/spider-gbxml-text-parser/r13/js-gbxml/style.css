@@ -2,7 +2,7 @@
 
 * {box-sizing: border-box; }
 
-:root { --mnu-width: 30rem; font-size: 0.7em; --screen-width: calc( 100vw ); }
+:root { --mnu-width: 20rem; --screen-width: calc( 100vw ); }
 
 /* body, html { font: 11pt monospace; height: 100%; margin: 0; overflow: hidden; } */
 body { font: 12pt monospace; height: 100%; margin: 0; }
@@ -11,6 +11,8 @@ a { color: maroon; font-weight: bold; text-decoration: none; }
 a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
 
 aside { border: 1px solid lightgray; margin-top:15px; padding: 2px; }
+
+blockquote, pre { background-color: #eee; padding: 10px; }
 
 button, input[ type=button ] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
 button:hover, input[ type=button ]:hover{ background: #ccc; color: #888 }
@@ -61,7 +63,7 @@ summary { cursor: pointer; font-weight: bold; }
 	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23); }
 
 
-#navPopUp, #divPopUp { background-color: #eee; border-radius: 8px; display: block; max-height: 95%; max-width: 25%;
+#navPopUp { /* background-color: #eee; */ border-radius: 8px; display: block; max-height: 95%; max-width: 25%;
 	padding: 0 5px 10px 5px; opacity: 0.95;  overflow: auto; position: fixed; resize: both; right: 1rem;
 	top: 1rem; z-index: 10; };
 
@@ -81,9 +83,8 @@ summary { cursor: pointer; font-weight: bold; }
 	#divContainer { width: 80rem; }
 	#divContainer { margin: 0; padding: 0;}
 
-	#divContents { max-width: 100%; width: 100%; }
-	#divContents { margin: 0; padding: 0;}
-
+	#divContents { max-width: cal( 100vw ); width: calc( 100vw ); }
+	#divContents { margin: 0; padding: 0 1rem; }
 
   }
 

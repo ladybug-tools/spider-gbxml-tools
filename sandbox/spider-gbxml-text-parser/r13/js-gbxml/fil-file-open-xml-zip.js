@@ -475,11 +475,11 @@ FIL.onProgress = function( size = 0, note = '' ) {
 
 	let htm =
 	`
-		<div style=margin:1rem; >
-			<div>File name:</div>
-			<div style=color:blue; >${ FIL.name }</div>
-			<div>bytes loaded: ${ size.toLocaleString() }</div>
-			<div>time to load: ${ timeToLoad }ms</div>
+		<div style="padding: 1rem 0;" >
+			<div style=padding:0; >File name:</div>
+			<div style=color:blue;padding:0; >${ FIL.name }</div>
+			<div  style=padding:0; >bytes loaded: ${ size.toLocaleString() }</div>
+			<div style=padding:0; >time to load: ${ timeToLoad }ms</div>
 			${ note }
 		</div>
 	`;
