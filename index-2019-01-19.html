@@ -3,15 +3,16 @@
 <head>
 <meta charset = "utf-8" >
 <meta name = "viewport" content= "width=device-width, initial-scale=1" >
-<meta name = "description" content = "Scripts to help you view and manage gbXML files" >
+<meta name = "description" content = "This menu is a component of a basic html content management script with sliding menu, css theme selection, Markdown to HTML, drag and drop file reading capability, access to frequently used pages and more" >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
-<meta name = "date" content = "2019-01-19" >
-<meta name = "release" content = "2.0" >
+<meta name = "date" content = "2019-01-17" >
+<meta name = "release" content = "13.3" >
 <title>Spider gbXML Tools</title>
 </head>
 <body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js" ></script>
 <!--
+
 	<script src="../../js-tootoo13/mnu-menu.js" ></script>
 	<script src="../../js-tootoo13/fob-file-open-basic.js" ></script>
 	<script src="../../js-tootoo13/thm-theme-select.js" ></script>
@@ -27,12 +28,13 @@
 <script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13/tmp-template.js" ></script>
 <script>
 
-//Copyright 2019 Ladybug-tools authors. MIT License
+//Copyright 2019 pushMe-pullYou authors. MIT License
 
 MNU.currentStatusCore =
 	`
 		<h3>
-			Spider gbXML Tools R${ document.head.querySelector( '[ name=release ]' ).content }
+			Spider gbXML Tools
+			<!-- R${ document.head.querySelector( '[ name=release ]' ).content } -->
 			~
 			${ document.head.querySelector( '[ name=date ]' ).content }
 		</h3>
@@ -64,11 +66,11 @@ const uriDefaultFile = 'README.md';
 THM.cssBasic = "https://pushme-pullyou.github.io/tootoo13/js-tootoo13/style.css";
 
 // For main menu header
-MNU.urlSourceCode ="https://github.com/ladybug-tools/spider-gbxml-tools/";
+MNU.urlSourceCodeUrl="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-text-parser";
 
-MNU.homeText = "<img src='https://ladybug.tools/artwork/icons_bugs/ico/ladybug.ico' height=24 >";
-MNU.homeTitle ="Ladybug Tools: free computer applications that support environmental design and education";
-MNU.homeUrl = "https://www.ladybug.tools";
+MNU.homeText="<img src='https://ladybug.tools/artwork/icons_bugs/ico/ladybug.ico' height=24 >";
+MNU.homeTitle="Ladybug Tools: free computer applications that support environmental design and education";
+MNU.homeUrl="https://www.ladybug.tools";
 
 MNU.repoText="<img src='https://ladybug.tools/artwork/icons_bugs/ico/spider.ico' height=24 >";
 MNU.repoTitle="Spider: 3D interactive analysis in your browser mostly written around the Three.js JavaScript library";
@@ -93,8 +95,6 @@ OHC.branch = '/master/';
 
 //OHC.urlGitHubPage  = "https://www.ladybug.tools/" + OHC.repo + "/";
 OHC.urlGitHubPage = "";
-
-
 
 const FLS = { "release": "R13.0", "date": "2019-01-17" };
 
@@ -139,6 +139,7 @@ FLS.getMenuSelectedFiles = function() {
 	`;
 
 	return htm;
+
 
 };
 
