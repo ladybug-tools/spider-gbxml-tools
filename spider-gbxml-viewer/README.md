@@ -72,7 +72,7 @@ Pop-up Viewer 'Maevia' R15
 ***
 
 
-## Change Log*
+## Change Log
 
 
 ### 2019-01-19 ~ Theo

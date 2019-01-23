@@ -45,6 +45,13 @@ Use of carousels
 
 ## Change Log
 
+
+### 2019-01-23 ~ Theo
+
+spider-gbxml-iframe-carousel R1.2
+
+* Link to R15
+
 #### 2018-10-23 ~ Theo
 
 spider-gbxml-iframe-carousel R1.1
