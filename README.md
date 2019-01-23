@@ -10,7 +10,7 @@
 # [Spider gbXML Tools Read Me]( #README.md )
 
 <iframe class=iframeReadMe src=https://www.ladybug.tools/spider-gbxml-tools/cookbook/spider-gbxml-iframe-carousel/ width=100% height=500px >Iframes are not displayed on github.com</iframe>
-_<small>Spider gbXML Viewer ~ Iframe Carousel: display multiple interactive 3D models in a single space on any web page. Zoom turned off.</small>_
+_<small>Spider gbXML Viewer ~ [Iframe Carousel]( https://www.ladybug.tools/spider-gbxml-tools/index.html#cookbook/spider-gbxml-iframe-carousel/README.md ): display multiple interactive 3D models in a single space on any web page. Scroll zoom in display turned off so read me can scroll.</small>_
 
 
 ## Welcome <a href="https://www.openstudio.net/" title="Hi Dan! Hi NREL!" style=color:red; target="_blank">Open Studio</a> fans! <br>Welcome [LinkedIn]( https://www.linkedin.com/feed/update/urn:li:activity:6458956499195568128/ ) and [discourse.ladybug.tools]( https://discourse.ladybug.tools/t/spider-gbxml-viewer-embedded-in-openstudio/4129 ) viewers
@@ -37,9 +37,55 @@ The impetus for this code arose from the request by the developers of OpenStudio
 
 <details>
 
-<summary>Concept</summary>
+<summary>Concept / the desired pattern</summary>
 
-bbb
+_Knowledge embedded in gbXML files is viewable, analyzable and editable in real-time interactive 3D with free, open-source web apps_
+
+### The current issues / the problems to be solved
+
+
+[Green Building XML (gbXML)]( https://en.wikipedia.org/wiki/Green_Building_XML ) as described by its authors:
+
+> gbXML allows disparate 3D [building information models (BIM)]( https://en.wikipedia.org/wiki/Building_information_modeling ) and architectural/engineering analysis software to share information with each other
+
+The current set of [BIM authoring and CAD software tools]( http://www.gbxml.org/Software_Tools_that_Support_GreenBuildingXML_gbXML ) for gbXML include various proprietary, closed-source applications that you must download and install.
+
+GbXML being open source, it would also be nice to be able to view gbXML files in 3D in your browser with no fees and with open source code.
+
+The Ladybug Tools/Spider gbXML Viewer scripts are first steps toward making gbXML viewers readily available.
+
+### Mission
+
+gbXML Viewer is a collection of modular experiments for viewing, examining and validating gbXML files in 3D in your browser.
+
+#### General objectives
+
+* Loads almost instantly
+* Non-modal interface
+* Fast effective workflow: get things done faster
+* Full interactive 3D
+
+#### Coding objectives
+
+* Files are no more than a few hundred lines
+* Code is simple, plain-vanilla JavaScript
+* Every JavaScript file has its own name space so you can quickly identify the location of variables and functions
+* Every module has a descriptive read me file
+* Every JavaScript file has an accompanying standalone HTML file for testing purposes
+* All revisions are always available and runnable via GitHub pages with a click of a button
+
+#### Vision and engineering objectives
+
+* Helping students, clients and non-AEC peeps gain access BIM data easily, quickly and freely
+* Facilitating the transfer of data between design programs and analysis programs
+
+#### Previous releases always available to run and view in your browser
+
+* [Spider gbXML Viewer Previous Releases]( https://www.ladybug.tools/spider/index.html#gbxml-viewer/previous-releases.md )
+	* Load and run every release of the gbXML Viewer since the first commit
+	* Watch the development process of a project unfold
+
+
 </details>
 
 
@@ -109,6 +155,8 @@ And much more
 * <http://www.gbxml.org/>
 > gbXML is an industry supported schema for sharing building information between disparate building design software tools.
 
+### gbXML
+
 #### gbXML GitHub Presence
 * <https://github.com/GreenBuildingXML>
 	* <https://github.com/GreenBuildingXML/gbXML-Schema>
@@ -117,11 +165,13 @@ And much more
 
 > Repositories for all things gbXML including the schema, validator source code, test cases, and a fork of the Spider gbXML Viewer
 
+
 #### gbXML Schema as a document
 
 * <http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html>
 
 > Schema GreenBuildingXML_Ver6.01.xsd / the core definition of gbXML in a format that is easier to read than the source code.
+
 
 ### More gbXML References
 
@@ -152,11 +202,33 @@ And much more
 
 > gbXML is an industry supported file format for sharing building information between disparate building design software tools. The OpenStudio Application can import and export gbXML files through the File->Import and File->Export menus.
 
+NREL include a very basic version of the Spider gbXML Viewer in current releases of OpenStudio. The Ladybug Tools / Spider team is proud to be included in the project and makes best efforts to support users.
+
+
 <img src=images/openstudio-imported-gbxml.jpg width=800 >
 _Screen capture NREL tutorial on Spider gbXML Viewer running in OpenStudio_
 
+### Other Spider gbXML Resources
 
-#### [gbXML to OpenStudio Report]( https://www.ladybug.tools/spider-gbxml-tools/#gbxml-to-openstudio-report.md )
+#### [Spider gbXML Sample Files]( file:///D:/Dropbox/Public/git-repos/spider/index.html#gbxml-sample-files/README.md)
+
+Access to gbXML files from a variety of sources either available by URL or availble to download or both
+
+#### [Spider gbXML User Guide]( https://www.ladybug.tools/spider/gbxml-user-guide/gbxml-user-guide.html )
+
+A work-in-progress
+
+
+#### [Spider Build Well]( https://www.ladybug.tools/spider/index.html#build-well/README.md )
+
+Create 3D building data in a variety of shapes parametrically and export in gbXML format
+
+
+#### [Spider gbXML to OpenStudio Report]( https://www.ladybug.tools/spider-gbxml-tools/#gbxml-to-openstudio-report.md )
+
+
+The goal of the scripts in this project is to enable you to transfer data from a CAD progran to an analysis program with as few steps of human intervention as possible.
+
 
 </details>
 
@@ -215,7 +287,7 @@ R5
 
 ***
 
-# <center title="hello!" ><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > &#x1f578; </a></center>
+# <center title="hello!" ><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > ❦ </a></center>
 
 
 <style>
