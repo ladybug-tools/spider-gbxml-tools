@@ -264,7 +264,8 @@ function init() {
 	FIL.urlDefaultFile=thrFilePath || urlDefaultFile;
 
 	if ( !location.hash ) { location.hash=FIL.urlDefaultFile; } else { FIL.onHashChange(); }
-	location.hash=urlDefaultFile;
+	
+	//location.hash=urlDefaultFile;
 
 	THM.init();
 
