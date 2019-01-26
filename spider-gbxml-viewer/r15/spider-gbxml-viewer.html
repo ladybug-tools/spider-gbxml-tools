@@ -5,8 +5,8 @@
 <meta name = "viewport" content= "width=device-width, initial-scale=1" >
 <meta name = "description" content = "This menu is a component of a basic html content management script with sliding menu, css theme selection, Markdown to HTML, drag and drop file reading capability, access to frequently used pages and more" >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
-<meta name = "date" content = "2019-01-20" >
-<meta name = "release" content = "15.0.1" >
+<meta name = "date" content = "2019-01-25" >
+<meta name = "release" content = "15.1" >
 <title>Spider gbXML Viewer 'Maevia'</title>
 <link rel="stylesheet" href="js-gbxml/style.css">
 </head>
@@ -170,6 +170,57 @@ OHC.urlGitHubPage = `https://${ OHC.repo }/`;
 			</details>
 
 
+
+			<details id=detMenuEdit >
+
+				<div id="divMenuNote" ></div>
+
+				<summary class=divMenuTitle >Edit Menu </summary>
+
+				<div id="ISCORdivMenuIssues" ></div>
+
+			</details>
+
+
+			<details id=detMenuView >
+
+				<summary class=divMenuTitle >View Menu </summary>
+
+				<details id=detReports ontoggle=VWSRF.onToggle(); >
+
+					<summary>Show/hide by surface type</summary>
+
+					<div id="divReports" ></div>
+
+					<div id="divReportByLevels" ></div>
+
+					<div id="divReportsLog" ></div>
+
+				</details>
+
+
+				<details id=detSettings ontoggle=divSettings.innerHTML=SET.getSettingsMenu(); >
+
+					<summary>Scene display settings</summary>
+
+					<div id="divSettings" ></div>
+
+					<div id="divSettingsLog" ></div>
+
+				</details>
+
+
+				<details ontoggle=divSectionCut.innerHTML=CUT.getDetSectionViews(); >
+
+					<summary>Scene cut sections</summary>
+
+					<div id=divSectionCut ></div>
+
+				</details>
+
+			</details>
+
+
 			<details id=detMenuHelp open >
 
 				<summary class=divMenuTitle >Help Menu </summary>
@@ -244,9 +295,8 @@ function init() {
 
 	FILdivFileSave.innerHTML=FIL.getMenuFileSave();
 
-	//OHCsecMenuRepoFilesFolders.innerHTML = OHC.getMenuRepoFilesFolders();
 
-	//FOBsecFileOpenBasic.innerHTML = FOB.getMenuFileOpenBasic( divContents, divPopUpData );
+	ISCORdivMenuIssues.innerHTML=ISCOR.getMenuIssues();
 
 	THMsecMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
 
@@ -264,7 +314,7 @@ function init() {
 	FIL.urlDefaultFile=thrFilePath || urlDefaultFile;
 
 	if ( !location.hash ) { location.hash=FIL.urlDefaultFile; } else { FIL.onHashChange(); }
-	
+
 	//location.hash=urlDefaultFile;
 
 	THM.init();

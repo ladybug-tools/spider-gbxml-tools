@@ -75,6 +75,13 @@ Pop-up Viewer 'Maevia' R15
 ## Change Log
 
 
+### 2019-01-25 ~ Theo
+
+Spider gbXML Viewer 'Maevia' R15.1
+
+* Add Edit and View menus
+
+
 ### 2019-01-19 ~ Theo
 
 * Commit Spider gbXML Viewer 'Maevia' R15
