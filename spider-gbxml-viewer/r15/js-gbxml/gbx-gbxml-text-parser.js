@@ -513,3 +513,6 @@ GBX.getPlane = function( points, start = 0 ) {
 	return GBX.triangle.getPlane( new THREE.Plane() );
 
 };
+
+
+

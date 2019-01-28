@@ -344,10 +344,7 @@ THRU.zoomObjectBoundingSphere = function( obj = THR.scene ) {
 
 THRU.onThreejsSceneLoaded = function() {
 
-
-
 	return THR.scene;
-
 
 };
 

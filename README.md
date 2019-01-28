@@ -37,7 +37,7 @@ The impetus for this code arose from the request by the developers of OpenStudio
 
 <details>
 
-<summary>Concept / the desired pattern</summary>
+<summary style=font-size:1.5rem; >Concept / the desired pattern</summary>
 
 _Knowledge embedded in gbXML files is viewable, analyzable and editable in real-time interactive 3D with free, open-source web apps_
 
@@ -91,38 +91,66 @@ gbXML Viewer is a collection of modular experiments for viewing, examining and v
 
 <details>
 
-<summary>Selected Repository Contents</summary>
+<summary style=font-size:1.5rem; >Selected Repository Contents</summary>
+
+_The following section highlight some of the files to be found in this repository._
+
+## Spider gbXML Viewer 'Maevia'
+
+### [Spider gbXML Viewer Read Me]( index.html#spider-gbxml-viewer/README.md )
+
+### Full screen: [Spider gbXML Viewer Read Me]( spider-gbxml-viewer/index.html )
+
+Latest version: Open and examine very large gbXML files in your browser with free, open source JavaScript
 
 
-2019-01-19 ~ The following list is is outdated and needs refactoring
+
+### [gbXML Viewer Basic Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#gbxml-viewer-basic/README.md )
 
 
-#### [gbXML Viewer Basic Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#gbxml-viewer-basic/README.md )
+## gbXML Viewer Basic
+
+### [gbXML Viewer Basic Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#gbxml-viewer-basic/README.md )
 
 * Open, view gbXML files in 3D in your browser with free, open source entry-level Three.js JavaScript
 * This script contains the core or basic modules for an entry level viewing experience
 
+The code in this series was the based on the initial fork from R1 through R44 the Spider repository. The early version (R4 and R5) were based on the precept of building an update to the Spider gbXML Viewer in OpenStudio. They generally comply with NREL needs. Both versions are available in NPM and can be combined into a single file.
+
+Also at this time, while we were adding features. the complexities of working with a single very large JavaScript file became overwhelming and we started to brake the project into multiple smaller scripts (R6 and R7).
+
+
+
+
+
 ***
 
-### [gbXML Viewer Cookbook Gallery]( https://www.ladybug.tools/spider-gbxml-tools/#cookbook/cookbook-viewer-one-pager.html )
+## Cookbook Files
 
-#### [gbXML Viewer Cookbook Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#cookbook/README.md )
+
+### [gbXML Viewer Cookbook Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#cookbook/README.md )
 
 * A variety of add-on scripts that enhance Spider gbXML Basic
 * Current capabilities include identifying issues with gbXML files, cutting 3D sections through 3D models and more
 * Eventually all the features of Spider 'Aragog' Viewer R14 will be added as modules here
 
+### [gbXML Viewer Cookbook Gallery]( https://www.ladybug.tools/spider-gbxml-tools/#cookbook/cookbook-viewer-one-pager.html )
 
 ***
+
+## Sandbox Files
+
 
 
 ### [gbXML Viewer Sandbox Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#sandbox/README.md )
 
+_Experiments_
+
 * Files at an early stage of development
 
-#### Latest release: [Spider gbXML Text Parser]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/ )
+### [Spider gbXML Text Parser]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-text-parser/ )
 
-#### [Spider gbXML Text Parser Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#sandbox/spider-gbxml-text-parser/README.md )
+### [Spider gbXML Text Parser Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#sandbox/spider-gbxml-text-parser/README.md )
 
 Many features
 * Load very large gbXML files ( greater than 700 megabytes ) at a reasonable speed
@@ -134,10 +162,20 @@ Many features
 
 And much more
 
+In November 2018, we were challenged by a user to build a version of the viewer that could handle very large gbXML files. The user offered a 700 megabyte gbXML file with over 5,000 spaces as a test case (for private use only ). Using the code base at the time, it's possible to load the file but this can take twenty minutes or more. Slow response time when loaded may the script unusable.
 
-#### Latest release: [Fetch Assemble Save ]( https://www.ladybug.tools/spider-gbxml-tools/fetch-assemble-save/index.html )
+We built a new code base in response to the challenge.
 
-#### [Fetch Assemble Save Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#fetch-assemble-save/README.md )
+The old code base reads a file as text and uses the browser to convert the text into XML then our code translates the JML into JSON and then parses the JSON to create Three.js 3D meshes.
+
+The new code base reads and retains the file as text and uses regular expressions to parse the text. The new code load the 700 MB file in under two minutes and provides acceptable interaction response time.
+
+
+
+
+### [Fetch Assemble Save ]( https://www.ladybug.tools/spider-gbxml-tools/fetch-assemble-save/index.html )
+
+### [Fetch Assemble Save Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#fetch-assemble-save/README.md )
 
 * Fetch source files from a CDN, assemble these into a single HTML file, save to file
 * Build the source code needed to embed the Spider gbXML Viewer in OpenStudio
@@ -147,7 +185,7 @@ And much more
 
 <details>
 
-<summary title="Better title for this section?" >Links of Interest</summary>
+<summary style=font-size:1.5rem; title="Better title for this section?" >Links of Interest</summary>
 
 
 #### gbXML Home Page
@@ -235,7 +273,7 @@ The goal of the scripts in this project is to enable you to transfer data from a
 
 <details>
 
-<summary>To Do / Change Log</summary>
+<summary style=font-size:1.5rem; >To Do / Change Log</summary>
 
 
 ## To Do
@@ -289,9 +327,3 @@ R5
 
 # <center title="hello!" ><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > ❦ </a></center>
 
-
-<style>
-
-	summary { font-size: 1.5rem; }
-
-</style>
