@@ -99,7 +99,7 @@ _The following section highlight some of the files to be found in this repositor
 
 ### [Spider gbXML Viewer Read Me]( index.html#spider-gbxml-viewer/README.md )
 
-### Full screen: [Spider gbXML Viewer Read Me]( spider-gbxml-viewer/index.html )
+### Full screen: [Spider gbXML Viewer Read Me]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/index.html )
 
 Latest version: Open and examine very large gbXML files in your browser with free, open source JavaScript
 
