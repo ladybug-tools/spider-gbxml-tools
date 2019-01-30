@@ -5,23 +5,8 @@
 
 const REPL = {"release": "R9.3", "date": "2018-11-14" };
 
+// rename to vbl??
 
-REPL.getReportByLevels = function() {
-
-	optionsStorey = REPL.getStoreys();
-
-	size = GBX.storeys.length > 10 ? 10 : GBX.storeys.length;
-
-	const htm =
-	`
-		<p>
-			<div>Show/hide by storey</div>
-			<select id=selStorey onClick=REPL.selStoreys(); multiple size=${ size } style=min-width:15rem; > ${ optionsStorey } </select></p>
-	`;
-
-	return htm;
-
-};
 
 
 
@@ -42,6 +27,33 @@ REPL.getReportCurrentStatus = function() {
 
 	return htm;
 }
+
+
+REPL.getReportByLevels = function() {
+
+	const reStoreys = /<BuildingStorey(.*?)<\/BuildingStorey>/gi;
+	GBX.storeys = GBX.text.match( reStoreys );
+	GBX.storeys = Array.isArray( GBX.storeys ) ? GBX.storeys : [];
+	//console.log( 'GBX.storeys', GBX.storeys );
+
+
+	optionsStorey = REPL.getStoreys();
+
+	size = GBX.storeys.length > 10 ? 10 : GBX.storeys.length;
+
+	const htm =
+	`
+		<p>
+			Show/hide by storey
+			<a id=replHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(replHelp,FIL.currentStatus);" >&nbsp; ? &nbsp;</a>
+			<select id=selStorey onClick=REPL.selStoreys(); multiple size=${ size } style=min-width:15rem; > ${ optionsStorey } </select>
+		</p>
+	`;
+
+	return htm;
+
+};
+
 
 
 //////////

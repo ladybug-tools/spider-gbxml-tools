@@ -5,8 +5,8 @@
 <meta name = "viewport" content= "width=device-width, initial-scale=1" >
 <meta name = "description" content = "This menu is a component of a basic html content management script with sliding menu, css theme selection, Markdown to HTML, drag and drop file reading capability, access to frequently used pages and more" >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
-<meta name = "date" content = "2019-01-25" >
-<meta name = "release" content = "15.1" >
+<meta name = "date" content = "2019-01-30" >
+<meta name = "release" content = "15.2" >
 <title>Spider gbXML Viewer 'Maevia'</title>
 <link rel="stylesheet" href="js-gbxml/style.css">
 </head>
@@ -49,7 +49,13 @@
 
 <!-- View menu -->
 <script src="js-gbxml/vwsrf-view-surface-types.js" ></script>
-<script src="js-gbxml/repl-view-by-level.js" ></script>
+<!--
+	<script src="js-gbxml/repl-view-by-level.js" ></script>
+
+-->
+
+<script src="js-gbxml/vbs-view-by-storeys.js" ></script>
+
 <script src="js-gbxml/set-settings.js" ></script>
 <script src="js-gbxml/cut-section-cut.js"></script>
 
@@ -182,7 +188,7 @@ OHC.urlGitHubPage = `https://${ OHC.repo }/`;
 			</details>
 
 
-			<details id=detMenuView >
+			<details id=detMenuView open >
 
 				<summary class=divMenuTitle >View Menu </summary>
 
@@ -192,11 +198,13 @@ OHC.urlGitHubPage = `https://${ OHC.repo }/`;
 
 					<div id="divReports" ></div>
 
-					<div id="divReportByLevels" ></div>
+					<div id="divReportByStoreys" ></div>
 
 					<div id="divReportsLog" ></div>
 
 				</details>
+
+				<section id=VBLsecViewByStoreys ></section>
 
 
 				<details id=detSettings ontoggle=divSettings.innerHTML=SET.getSettingsMenu(); >
@@ -294,6 +302,8 @@ function init() {
 	GBXdivStatsGbx.innerHTML=GBX.getDivMenuGbx();
 
 	FILdivFileSave.innerHTML=FIL.getMenuFileSave();
+
+	VBLsecViewByStoreys.innerHTML = VBS.getMenuViewByStoreys();
 
 
 	ISCORdivMenuIssues.innerHTML=ISCOR.getMenuIssues();

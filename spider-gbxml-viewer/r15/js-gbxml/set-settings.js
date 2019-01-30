@@ -17,7 +17,11 @@ SET.getSettingsMenu = function() {
 
 			<button onclick=THRU.toggleAxesHelper(); >toggle axes</button>
 
+			<button onclick=GBX.boundingBox.visible=!GBX.boundingBox.visible; >toggle bounding box</button>
+
 			<button onclick=GBXU.toggleGroundHelper(); >toggle ground</button>
+
+			<button onclick=SET.toggleShadows(); >toggle shadows</button>
 		</p>
 
 		<p>
@@ -53,6 +57,18 @@ SET.getSettingsMenu = function() {
 	`;
 
 	return htm;
+
+};
+
+
+
+SET.toggleShadows = function() {
+
+	THR.renderer.shadowMap.enabled = !THR.renderer.shadowMap.enabled;
+
+	THR.renderer.shadowMap.needsUpdate = true;
+
+	THR.renderer.clearTarget( THRU.lightDirectional.shadow.map );
 
 };
 

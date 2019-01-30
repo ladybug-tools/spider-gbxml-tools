@@ -823,7 +823,7 @@ POP.getToggleZoneVisible = function ( button, zoneIdRef ) {
 
 	const focus = button.classList.contains( "active" );
 
-	const children =  GBX.surfaceGroup.children;
+	const children = GBX.surfaceGroup.children;
 
 	if ( focus === true ) {
 
@@ -835,11 +835,12 @@ POP.getToggleZoneVisible = function ( button, zoneIdRef ) {
 
 		const spaceIdsInZone = [];
 
-		for ( space of spaces ) {
+		for ( let space of spaces ) {
 
-			spaceZoneId = space.match( `zoneIdRef="(.*?)"` )[ 1 ];
+			spaceZoneId = space.match( /zoneIdRef="(.*?)"/ );
 
-			if ( spaceZoneId === zoneIdRef ) {
+			if ( spaceZoneId && spaceZoneId[ 1 ] === zoneIdRef ) {
+				//console.log( 'spaceZoneId', spaceZoneId[ 1 ] );
 
 				spaceId = space.match( ` id="(.*?)"` )[ 1 ];
 				//console.log( 'spaceId', spaceId );
@@ -849,24 +850,26 @@ POP.getToggleZoneVisible = function ( button, zoneIdRef ) {
 			}
 
 		}
-		//console.log( 'spaceIdsInStory', spaceIdsInStory );
+		//console.log( 'spaceIdsInZone', spaceIdsInZone );
 
 
 		for ( let child of children ) {
 
 			const id = child.userData.index;
 			const surface = GBX.surfaces[ id ];
-			const spacesArr = surface.match( / zoneIdRef="(.*?)"/g );
+			const spacesArr = surface.match( / spaceIdRef="(.*?)"/g );
+			//console.log( 'spacesArr', spacesArr );
 
-			if ( !spacesArr ) { break; }
+			if ( spacesArr ) {
 
-			spacesIdsArr = spacesArr.map( space => space.match( `="(.*?)"` )[ 1 ] );
+				spacesIdsArr = spacesArr.map( space => space.match( `="(.*?)"` )[ 1 ] );
+				//console.log( 'spacesIdsArr', spacesIdsArr );
 
-			//console.log( 'spacesIdsArr', spacesIdsArr );
+				for ( spaceId of spaceIdsInZone ) {
 
-			for ( spaceId of spaceIdsInZone ) {
+					child.visible = spacesIdsArr.includes( spaceId ) ? true : child.visible;
 
-				child.visible = spacesIdsArr.includes( spaceId ) ? true : child.visible;
+				}
 
 			}
 
@@ -875,6 +878,7 @@ POP.getToggleZoneVisible = function ( button, zoneIdRef ) {
 	} else {
 
 		children.forEach( child => child.visible = true );
+
 	}
 
 	const zoneTxt = GBX.zones.find( item => item.includes( ` id="${ zoneIdRef }"` ) );
@@ -883,6 +887,16 @@ POP.getToggleZoneVisible = function ( button, zoneIdRef ) {
 	//console.log( 'spaceXml ', spaceXml );
 
 	const htmZone = POP.getAttributesHtml( zoneXml );
+
+	GBX.surfaceOpenings.traverse( function ( child ) {
+
+		if ( child instanceof THREE.Line ) {
+
+			child.visible = false;
+
+		}
+
+	} );
 
 	const htm =
 	`

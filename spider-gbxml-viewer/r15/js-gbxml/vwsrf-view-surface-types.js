@@ -50,7 +50,7 @@ VWSRF.onToggle = function() {
 
 	divReports.innerHTML = VWSRF.getReportsMenu();
 
-	divReportByLevels.innerHTML=REPL.getReportByLevels();
+	//divReportByLevels.innerHTML=REPL.getReportByLevels();
 
 	VWSRF.setSurfacesActiveByDefaults();
 
@@ -194,6 +194,7 @@ VWSRF.setSurfacesActiveByDefaults = function() {
 	if ( REPdivSurfaceType ) {
 
 		const buttons = REPdivSurfaceType.querySelectorAll( "button" );
+
 		buttons.forEach( button => VWSRF.filtersDefault.includes( button.innerText ) ?
 			button.classList.add( "active" ) : button.classList.remove( "active" )
 		);

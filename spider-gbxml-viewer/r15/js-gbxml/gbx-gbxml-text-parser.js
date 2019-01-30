@@ -155,13 +155,16 @@ GBX.parseFile = function( gbxml )  {
 
 	GBX.setSurfaceTypesVisible( GBX.filtersDefault );
 
-	const event = new Event( 'onGbxParse' );
-	document.body.dispatchEvent( event );
-
 	GBXU.toggleGroundHelper();
+	THRU.groundHelper.visible = true;
 
 	SET.toggleOpenings();
 
+	THR.controls.autoRotate = true;
+	THRU.zoomObjectBoundingSphere( GBX.boundingBox );
+
+	const event = new Event( 'onGbxParse' );
+	document.body.dispatchEvent( event );
 	//use this: document.body.addEventListener( 'onGbxParse', yourFunction, false );
 
 	return GBX.surfaces.length;
@@ -223,9 +226,9 @@ GBX.sendSurfacesToThreeJs = function( surfacesText ) {
 
 	}
 
-	THRU.zoomObjectBoundingSphere( GBX.boundingBox );
+	//THRU.zoomObjectBoundingSphere( GBX.boundingBox );
 
-	GBXU.toggleGroundHelper();
+	//GBXU.toggleGroundHelper();
 
 	return surfacesText.length.toLocaleString() + ' surfaces visible';
 
@@ -283,7 +286,7 @@ GBX.sendSurfacesToThreeJs = function( surfacesText ) {
 
 	} else {
 
-		THR.controls.autoRotate = true;
+		//THR.controls.autoRotate = true;
 
 	}
 
