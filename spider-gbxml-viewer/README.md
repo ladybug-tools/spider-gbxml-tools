@@ -75,6 +75,16 @@ Pop-up Viewer 'Maevia' R15
 ## Change Log
 
 
+### 2019-01-31 ~ Theo
+
+Spider gbXML Viewer 'Maevia' R15.3
+
+* Reversed the normal of second triangle in quads
+* Added Rood to horizontal surfaces
+
+R15.2
+* Fixes for Evgeny
+
 ### 2019-01-25 ~ Theo
 
 Spider gbXML Viewer 'Maevia' R15.1

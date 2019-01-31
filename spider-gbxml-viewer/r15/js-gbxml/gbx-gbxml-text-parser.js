@@ -2,7 +2,7 @@
 // jshint esversion: 6
 /* globals THREE, THR, THRU, FIL, GBXU */
 
-var GBX = { "release": "R10.3", "date": "2018-12-29" };
+var GBX = { "release": "R15.0", "date": "2019-01-31 ~ " };
 
 GBX.currentStatus =
 `
@@ -15,6 +15,7 @@ GBX.currentStatus =
 	<p>
 		Change log
 		<ul>
+			<li>2019-01-31 ~ reversed the normal of second triangle in quads</li>
 			<li>2018-12-29 ~ Add helpItem class</li>
 			<li>2018-12-29 ~ Fix read me links</li>
 		</ul>
@@ -398,7 +399,7 @@ GBX.getSurfaceMesh = function( arr, index ) {
 		vertices = [
 
 			v( arr.slice( 0, 3 ) ), v( arr.slice( 3, 6 ) ), v( arr.slice( 6, 9 ) ),
-			v( arr.slice( 9, 12 ) ), v( arr.slice( 6, 9 ) ), v( arr.slice( 0, 3 ) )
+			v( arr.slice( 0, 3 ) ),  v( arr.slice( 6, 9 ) ), v( arr.slice( 9, 12 ) )
 
 		];
 

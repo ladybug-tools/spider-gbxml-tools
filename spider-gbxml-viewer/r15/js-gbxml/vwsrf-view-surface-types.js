@@ -3,7 +3,7 @@
 /* globals THREE, THR, THRU, REPL, divReports */
 
 
-const VWSRF = { "release": "R9.5", "date": "2019-01-30" };
+const VWSRF = { "release": "R15.0", "date": "2019-01-31" };
 
 VWSRF.filtersDefault = [ "Roof", "ExteriorWall", "ExposedFloor", "Air", "Shade" ];
 
@@ -102,7 +102,7 @@ VWSRF.getReportCurrentStatus = function() {
 
 			<summary>${ VWSRF.date } ~ Reports ${ VWSRF.release }</summary>
 
-			<p>To b updated soon</p>
+			<p>To be updated soon</p>
 
 			<p>Wish list: faster operations on very large files</p>
 
@@ -128,7 +128,7 @@ VWSRF.getReportByFilters = function() {
 			</p>
 
 			<p>
-				<button onclick=VWSRF.setSurfaceTypesVisible(["Ceiling","InteriorFloor","SlabOnGrade","UndergroundSlab"],this); >horizontal</button>
+				<button onclick=VWSRF.setSurfaceTypesVisible(["Ceiling","InteriorFloor","SlabOnGrade","Roof","UndergroundSlab"],this); >horizontal</button>
 
 				<button onclick=VWSRF.setSurfaceTypesVisible(["ExteriorWall","InteriorWall","UndergroundWall"],this); >vertical</button>
 			</p>
