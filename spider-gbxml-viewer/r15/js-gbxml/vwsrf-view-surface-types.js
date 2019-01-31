@@ -3,7 +3,7 @@
 /* globals THREE, THR, THRU, REPL, divReports */
 
 
-const VWSRF = { "release": "R9.5", "date": "2018-11-26" };
+const VWSRF = { "release": "R9.5", "date": "2019-01-30" };
 
 VWSRF.filtersDefault = [ "Roof", "ExteriorWall", "ExposedFloor", "Air", "Shade" ];
 
@@ -102,7 +102,7 @@ VWSRF.getReportCurrentStatus = function() {
 
 			<summary>${ VWSRF.date } ~ Reports ${ VWSRF.release }</summary>
 
-			<p>Making good progress. All buttons working as expected.</p>
+			<p>To b updated soon</p>
 
 			<p>Wish list: faster operations on very large files</p>
 
