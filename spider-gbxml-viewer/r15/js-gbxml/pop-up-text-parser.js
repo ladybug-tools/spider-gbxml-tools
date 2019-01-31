@@ -3,7 +3,7 @@
 
 // Copyright 2019 Ladybug Tools authors. MIT License.
 
-var POP = { "release": "R13.1", "date": "2019-01-09" };
+var POP = { "release": "R13.1", "date": "2019-01-29" };
 
 POP.urlSource = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-pop-up"
 
