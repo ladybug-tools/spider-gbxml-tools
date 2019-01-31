@@ -155,13 +155,13 @@ GBX.parseFile = function( gbxml )  {
 
 	GBX.setSurfaceTypesVisible( GBX.filtersDefault );
 
-	GBXU.toggleGroundHelper();
-	THRU.groundHelper.visible = true;
-
 	SET.toggleOpenings();
 
 	THR.controls.autoRotate = true;
 	THRU.zoomObjectBoundingSphere( GBX.boundingBox );
+
+	GBXU.toggleGroundHelper();
+	THRU.groundHelper.visible = true;
 
 	const event = new Event( 'onGbxParse' );
 	document.body.dispatchEvent( event );

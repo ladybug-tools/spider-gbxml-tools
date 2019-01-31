@@ -564,6 +564,7 @@ POP.setAttributesStoreyAndZone = function( spaceId ) {
 	POP.zoneName = zoneText.match ( '<Name>(.*?)</Name>' )[ 1 ];
 	//console.log( 'POP.zoneName', POP.zoneName );
 
+
 }
 
 
