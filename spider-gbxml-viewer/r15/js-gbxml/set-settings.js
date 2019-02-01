@@ -3,7 +3,7 @@
 /* globals THREE, THR, THRU, timeStart, divSettingss */
 
 
-const SET = {"release": "R9.1", "date": "2018-11-15" };
+const SET = {"release": "R15.1", "date": "2019-01-31" };
 
 SET.getSettingsMenu = function() {
 
@@ -47,7 +47,7 @@ SET.getSettingsMenu = function() {
 		</p>
 
 		<p>
-			<button onclick=THRU.zoomObjectBoundingSphere(GBX.surfaceMeshes);>zoom all</button>
+			<button onclick=THRU.zoomObjectBoundingSphere(GBX.boundingBox);>zoom all</button>
 
 			<button accesskey="z" onclick=THR.controls.screenSpacePanning=!THR.controls.screenSpacePanning; title="Access key + B: Up/down curser kes to forward/backward or up/down" >toggle cursor keys</button>
 		</p>
