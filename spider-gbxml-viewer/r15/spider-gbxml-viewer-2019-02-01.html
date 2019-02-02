@@ -5,8 +5,8 @@
 <meta name = "viewport" content= "width=device-width, initial-scale=1" >
 <meta name = "description" content = "This menu is a component of a basic html content management script with sliding menu, css theme selection, Markdown to HTML, drag and drop file reading capability, access to frequently used pages and more" >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
-<meta name = "date" content = "2019-02-01" >
-<meta name = "release" content = "15.5" >
+<meta name = "date" content = "2019-01-31" >
+<meta name = "release" content = "15.4" >
 <title>Spider gbXML Viewer 'Maevia'</title>
 <link rel="stylesheet" href="js-gbxml/style.css">
 </head>
@@ -49,6 +49,11 @@
 
 <!-- View menu -->
 <script src="js-gbxml/vst-view-surface-types.js" ></script>
+<!--
+	<script src="js-gbxml/repl-view-by-level.js" ></script>
+
+-->
+
 <script src="js-gbxml/vbs-view-by-storeys.js" ></script>
 
 <script src="js-gbxml/set-settings.js" ></script>
@@ -188,11 +193,19 @@ OHC.urlGitHubPage = `https://${ OHC.repo }/`;
 
 				<summary class=divMenuTitle >View Menu </summary>
 
+				<details id=detReports ontoggle=VWSRF.onToggle(); >
 
+					<summary>Show/hide by surface type</summary>
 
-				<section id=VSTsecViewSurfaceType ></section>
+					<div id="divReports" ></div>
 
-				<section id=VBSsecViewByStoreys ></section>
+					<div id="divReportByStoreys" ></div>
+
+					<div id="divReportsLog" ></div>
+
+				</details>
+
+				<section id=VBLsecViewByStoreys ></section>
 
 
 				<details id=detSettings ontoggle=divSettings.innerHTML=SET.getSettingsMenu(); >
@@ -283,9 +296,6 @@ function init() {
 	//mesh = THRU.getGeometry();
 	//THR.scene.add( mesh );
 
-	navPopUp.innerHTML = POP.getMenuHtmlPopUp();
-
-	// File open menu
 	GALdivSampleFilesGallery.innerHTML=GAL.getMenuSampleFilesGallery();
 
 	FILdivFileOpen.innerHTML=FIL.getMenuFileOpen();
@@ -294,20 +304,10 @@ function init() {
 
 	FILdivFileSave.innerHTML=FIL.getMenuFileSave();
 
+	VBLsecViewByStoreys.innerHTML = VBS.getMenuViewByStoreys();
 
-	// Edit menu
 
 	ISCORdivMenuIssues.innerHTML=ISCOR.getMenuIssues();
-
-
-	// View menu
-
-	VSTsecViewSurfaceType.innerHTML = VST.getMenuViewSurfaceTypes();
-
-	VBSsecViewByStoreys.innerHTML = VBS.getMenuViewByStoreys();
-
-
-	// Help meni
 
 	THMsecMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
 
@@ -315,8 +315,7 @@ function init() {
 
 	MNUdivFooter.innerHTML = MNU.getNavFooter(); // not essential
 
-
-
+	navPopUp.innerHTML=POP.getMenuHtmlPopUp();
 
 	// loads a default file / great for testing same file many times
 	const thrFilePath=localStorage.getItem( 'thrFilePath' ) || '';
