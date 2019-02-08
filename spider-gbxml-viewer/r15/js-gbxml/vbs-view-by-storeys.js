@@ -3,16 +3,17 @@
 /* globals THREE, THR, THRU, timeStart, divReports */
 
 
-const VBS = {"release": "R15.1", "date": "2019-02-01" };
+const VBS = {"release": "R15.2", "date": "2019-02-07" };
 
 VBS.description =
 	`
 		View the surfaces in a gbXML file by selecting one or more storeys from a list of all storeys
 	`;
 
+
 VBS.currentStatus =
 	`
-		<h3>Show/Hide by Storeys ${ VBS.release } ~ ${ VBS.date }</h3>
+		<h3>View by Storeys (VBS) ${ VBS.release } ~ ${ VBS.date }</h3>
 
 		<p>
 			${ VBS.description }
@@ -21,7 +22,6 @@ VBS.currentStatus =
 		<p>Notes
 			<ul>
 				<li>Select multiple storeys by pressing shift or control keys</li>
-				<!-- <li></li> -->
 			</ul>
 		</p>
 		<p>
@@ -42,11 +42,13 @@ VBS.currentStatus =
 		<details>
 			<summary>Change log</summary>
 			<ul>
+				<li>2019-02-07 ~ Update pop-up text</li>
 				<li>2019-02-01 ~ Better interaction with currently visible surface types</li>
 				<li>2019-01-30 ~ First commit ~ forked from repl-view-by-level.js</li>
 				<li>See <a href="https://github.com/ladybug-tools/spider-gbxml-tools/issues/18" target="_blank">Issue 18</a></li>
 				<li>Description and current status much updated</li>
-				<!-- <li></li> -->
+				<!-- <li></li>
+				-->
 			</ul>
 		</details>
 	`;
@@ -58,7 +60,7 @@ VBS.getMenuViewByStoreys = function() {
 
 	const htm =
 	`
-	<details id=detReports ontoggle=VBS.getReportByStoreys(); >
+	<details ontoggle=VBS.getViewByStoreys(); >
 
 		<summary>Show/hide by storeys
 			<a id=VBSHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(VBSHelp,VBS.currentStatus);" >&nbsp; ? &nbsp;</a>
@@ -66,7 +68,7 @@ VBS.getMenuViewByStoreys = function() {
 
 		<div id="VBSdivViewByStoreys" ></div>
 
-		<div id="divReportsLog" ></div>
+		<div id="VBSdivReportsLog" ></div>
 
 		<div><p>Select multiple storeys by pressing shift or control keys</p></div>
 
@@ -78,26 +80,30 @@ VBS.getMenuViewByStoreys = function() {
 
 
 
-VBS.getReportByStoreys = function() {
+VBS.getViewByStoreys = function() {
 
-	const reStoreys = /<BuildingStorey(.*?)<\/BuildingStorey>/gi;
-	GBX.storeys = GBX.text.match( reStoreys );
-	GBX.storeys = Array.isArray( GBX.storeys ) ? GBX.storeys : [];
+	//const reStoreys = /<BuildingStorey(.*?)<\/BuildingStorey>/gi;
+	//GBX.storeys = GBX.text.match( reStoreys );
+	//GBX.storeys = Array.isArray( GBX.storeys ) ? GBX.storeys : [];
 	//console.log( 'GBX.storeys', GBX.storeys );
 
-	const optionsStorey = VBS.getStoreysOptions();
+	if ( VBSdivViewByStoreys.innerHTML === "" ) {
 
-	const size = GBX.storeys.length > 10 ? 10 : GBX.storeys.length;
+		const optionsStorey = VBS.getStoreysOptions();
 
-	const htm =
-	`
-		<p>
-			Show/hide by storey<br>
-			<select id=selStorey onchange=VBS.selStoreys(); multiple size=${ size } style=min-width:15rem; > ${ optionsStorey } </select>
-		</p>
-	`;
+		const size = GBX.storeys.length > 10 ? 10 : GBX.storeys.length;
 
-	VBSdivViewByStoreys.innerHTML = htm
+		const htm =
+		`
+			<p>
+				Show/hide by storey<br>
+				<select id=VBSselStorey onchange=VBS.selStoreys(); multiple size=${ size } style=min-width:15rem; > ${ optionsStorey } </select>
+			</p>
+		`;
+
+		VBSdivViewByStoreys.innerHTML = htm;
+
+	}
 
 };
 
@@ -115,10 +121,10 @@ VBS.selStoreys = function() {
 
 	}
 
-	const storeyIds = selStorey.selectedOptions;
+	const storeyIds = VBSselStorey.selectedOptions;
 	//console.log( 'storeyIds', storeyIds );
 
-	GBX.surfacesFiltered = [];
+	VBS.surfacesFiltered = [];
 
 	for ( let storeyId of storeyIds ) {
 
@@ -136,7 +142,12 @@ VBS.selStoreys = function() {
 		const current = document.getElementsByClassName( "active" );
 		//console.log( 'current', current );
 
-		let filterArr = Array.from( current ).map ( current => current.innerText );
+		const buttonsActive = VSTdivSurfaceType.getElementsByClassName( "active" ); // collection
+
+		let filterArr = Array.from( buttonsActive ).map( button => button.innerText );
+
+		//let filterArr = Array.from( current ).map ( current => current.innerText );
+
 		filterArr = filterArr.length > 0 ? filterArr : GBX.filtersDefault;
 
 		const surfacesFiltered = filterArr.flatMap( filter =>
@@ -145,12 +156,12 @@ VBS.selStoreys = function() {
 
 		);
 
-		GBX.surfacesFiltered.push( ...surfacesFiltered );
+		VBS.surfacesFiltered.push( ...surfacesFiltered );
 		//console.log( 'GBX.surfacesFiltered',  GBX.surfacesFiltered );
 
 	}
 
-	divReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( GBX.surfacesFiltered );
+	VBSdivReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( VBS.surfacesFiltered );
 
 	GBX.surfaceOpenings.traverse( function ( child ) {
 

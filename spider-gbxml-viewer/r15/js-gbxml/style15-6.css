@@ -1,5 +1,5 @@
 /* Copyright 2019 Ladybug Tools authors. MIT License */
-/* 2019-02-07 ~ 15.6 */
+/* 2019-02-07 ~ 13.3 */
 
 * {box-sizing: border-box; }
 
@@ -30,11 +30,14 @@ summary { cursor: pointer; font-weight: bold; }
 .helpItem { float: right; clear: both; }
 .highlight {background-color: lightgreen }
 .navSubMenu { /* background-color: yellow; */ padding: 0 0.5rem; }
-.divMenuTitle { background-color: #ccc; color: #888; margin: 10px 0; text-align: center; }
+.sumMenuTitle { background-color: #ccc; color: #888; margin: 10px 0; text-align: center; }
 /*
 #divContainer { height: 100%; margin: 0 0 0 var( --mnu-width ); transition: margin-left .5s; position: relative; }
 #divContents { height: 100%; left: 0; margin: 0 auto; max-width: 60rem; padding: 1rem; right: 0; }
-*/
+
+#divContents { margin: 0 auto; max-width: 600px; } */
+
+
 
 #divContainer { height: 100%; margin: 0; padding: 0; position: relative; }
 
