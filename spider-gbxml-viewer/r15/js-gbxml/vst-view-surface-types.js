@@ -3,7 +3,7 @@
 /* globals THREE, THR, THRU, REPL, GBX */
 
 
-const VST = { "release": "R15.1", "date": "2019-02-07" };
+const VST = { "release": "R15.2", "date": "2019-02-08" };
 
 VST.description =
 	`
@@ -41,6 +41,7 @@ VST.currentStatus =
 
 			<summary>Change log</summary>
 			<ul>
+				<li>2019-02-08 ~ Working on types/storeys integration</li>
 				<li>2019-02-07 ~ Refactor/simplify code a lot. Improve filtering for roof/shade etc. Add 'reset surfaces' and 'Show all' buttons. Add surface types and storeys connections. </li>
 				<li>2019-02-07 ~ Update pop-up text / variable names. Reposition stats.</li>
 				<li>2019-02-01 ~ First commit, Fork from vwsrf-view-surface-types.js. Big cleanup. </li>
@@ -201,6 +202,8 @@ VST.setSurfacesActiveByDefaults = function() {
 
 VST.toggleSurfaceFiltered = function( button ) {
 
+	VBS.surfacesFiltered = GBX.surfacesIndexed;
+
 	button.classList.toggle( "active" );
 
 	const buttonsActive = VSTdivSurfaceType.getElementsByClassName( "active" ); // collection
@@ -248,7 +251,11 @@ VST.sendSurfacesToThreeJs = function( filters ) {
 		button.classList.add( "active" ) : button.classList.remove( "active" )
 	);
 
+	VBS.surfacesFiltered = VBS.setSurfacesFilteredByStorey();
+
 	const surfaces = VBS.surfacesFiltered ? VBS.surfacesFiltered : GBX.surfacesIndexed;
+
+
 
 	console.log( 'surfaces', surfaces.length  );
 

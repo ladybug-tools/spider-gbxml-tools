@@ -3,7 +3,7 @@
 /* globals THREE, THR, THRU, timeStart, divReports */
 
 
-const VBS = {"release": "R15.2", "date": "2019-02-07" };
+const VBS = {"release": "R15.3", "date": "2019-02-08" };
 
 VBS.description =
 	`
@@ -42,6 +42,7 @@ VBS.currentStatus =
 		<details>
 			<summary>Change log</summary>
 			<ul>
+				<li>2019-02-08 ~ Working on types/storeys integration</li>
 				<li>2019-02-07 ~ Update pop-up text</li>
 				<li>2019-02-01 ~ Better interaction with currently visible surface types</li>
 				<li>2019-01-30 ~ First commit ~ forked from repl-view-by-level.js</li>
@@ -109,6 +110,27 @@ VBS.getViewByStoreys = function() {
 
 
 
+VBS.getStoreysOptions = function() {
+	//console.log( 'GBX.storeys', GBX.storeys );
+
+	const storeyNames = GBX.storeys.map( storey => storey.match( '<Name>(.*?)</Name>' )[ 1 ] );
+	//console.log( 'storeyNames', storeyNames);
+
+	const storeyIds = GBX.storeys.map( storey => storey.match( 'id="(.*?)">')[ 1 ] );
+	//console.log( 'storeyIds', storeyIds );
+
+	// how to de-structure or create object so  can sort these two arrays?
+
+	//console.log( 'storeyNames', storeyNames );
+
+	const options = storeyNames.map( ( name, index ) => `<option value=${ storeyIds[ index ] }>${ name }</option>` );
+
+	return options;
+
+};
+
+
+
 //////////
 
 VBS.selStoreys = function() {
@@ -117,14 +139,38 @@ VBS.selStoreys = function() {
 
 		const reSpaces = /<Space(.*?)<\/Space>/gi;
 		GBX.spaces = GBX.text.match( reSpaces );
-		//console.log( 'spaces', GBX.spaces );
+		console.log( 'spaces', GBX.spaces );
 
 	}
 
-	const storeyIds = VBSselStorey.selectedOptions;
+	VBS.surfacesFilteredByStorey = VBS.setSurfacesFilteredByStorey();
+
+	VBSdivReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( VBS.surfacesFilteredByStorey );
+
+	GBX.surfaceOpenings.traverse( function ( child ) {
+
+		if ( child instanceof THREE.Line ) {
+
+			child.visible = false;
+
+		}
+
+	} );
+
+};
+
+
+
+VBS.setSurfacesFilteredByStorey = function( surfaces ) {
+
+	selStorey = document.body.querySelector( "#VBSselStorey" );
+
+	if ( !selStorey ) { return ""; }
+
+	const storeyIds = selStorey.selectedOptions;
 	//console.log( 'storeyIds', storeyIds );
 
-	VBS.surfacesFiltered = [];
+	const surfacesFilteredByStory = surfaces ? surfaces : [];
 
 	for ( let storeyId of storeyIds ) {
 
@@ -156,44 +202,13 @@ VBS.selStoreys = function() {
 
 		);
 
-		VBS.surfacesFiltered.push( ...surfacesFiltered );
+		surfacesFilteredByStory.push( ...surfacesFiltered );
 		//console.log( 'GBX.surfacesFiltered',  GBX.surfacesFiltered );
 
 	}
 
-	VBSdivReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( VBS.surfacesFiltered );
+	return surfacesFilteredByStory;
 
-	GBX.surfaceOpenings.traverse( function ( child ) {
-
-		if ( child instanceof THREE.Line ) {
-
-			child.visible = false;
-
-		}
-
-	} );
-
-};
-
-
-
-VBS.getStoreysOptions = function() {
-	//console.log( 'GBX.storeys', GBX.storeys );
-
-	var storeyNames = GBX.storeys.map( storey => storey.match( '<Name>(.*?)</Name>' )[ 1 ] );
-	//console.log( 'storeyNames', storeyNames);
-
-	var storeyIds = GBX.storeys.map( storey => storey.match( 'id="(.*?)">')[ 1 ] );
-	//console.log( 'storeyIds', storeyIds );
-
-	// how to destructure or creae object so  can sort these two arrays?
-
-	//console.log( 'storeyNames', storeyNames );
-
-	const options = storeyNames.map( ( name, index ) => `<option value=${ storeyIds[ index ] }>${ name }</option>` );
-
-	return options;
-
-};
+}
 
 
