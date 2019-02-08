@@ -148,11 +148,11 @@ VBS.selStoreys = function() {
 
 		//let filterArr = Array.from( current ).map ( current => current.innerText );
 
-		filterArr = filterArr.length > 0 ? filterArr : GBX.filtersDefault;
+		filterArr = filterArr.length > 0 ? filterArr : VST.filtersDefault;
 
 		const surfacesFiltered = filterArr.flatMap( filter =>
 
-			surfacesVisibleBySpace.filter( surface => surface.includes( `${ filter }` ) )
+			surfacesVisibleBySpace.filter( surface => surface.includes( `"${ filter }"` ) )
 
 		);
 
