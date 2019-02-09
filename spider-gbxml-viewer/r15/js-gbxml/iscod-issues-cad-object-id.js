@@ -1,5 +1,5 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
-/* globals GBX, POP, ISCOR, divPopupData */
+/* globals GBX, POP, ISCOR, divPopUpData */
 /* jshint esversion: 6 */
 
 
@@ -174,7 +174,7 @@ ISCOD.selectedSurfaceFocus = function( select ) {
 
 	POP.intersected = GBX.surfaceGroup.children[ select.value ];
 
-	divPopupData.innerHTML = POP.getIntersectedDataHtml();
+	divPopUpData.innerHTML = POP.getIntersectedDataHtml();
 
 };
 

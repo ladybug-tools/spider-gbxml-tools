@@ -255,8 +255,6 @@ VST.sendSurfacesToThreeJs = function( filters ) {
 
 	const surfaces = VBS.surfacesFiltered ? VBS.surfacesFiltered : GBX.surfacesIndexed;
 
-
-
 	console.log( 'surfaces', surfaces.length  );
 
 	const surfacesFiltered = filters.flatMap( filter =>

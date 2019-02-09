@@ -200,6 +200,6 @@ ISASI.selectedSurfaceFocus = function() {
 
 	POP.getIntersectedDataHtml();
 
-	divPopupData.innerHTML = POP.getIntersectedDataHtml();
+	divPopUpData.innerHTML = POP.getIntersectedDataHtml();
 
 };

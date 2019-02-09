@@ -185,7 +185,7 @@ ISSTI.selectedSurfaceFocus = function() {
 
 	POP.intersected.visible = true;
 
-	divPopupData.innerHTML = POP.getIntersectedDataHtml();
+	divPopUpData.innerHTML = POP.getIntersectedDataHtml();
 
 };
 

@@ -82,6 +82,9 @@ SET.toggleOpenings = function() {
 		GBX.surfaceOpenings= new THREE.Group();
 		GBX.surfaceOpenings.name = 'GBX.surfaceOpenings';
 		surfaceOpenings = GBX.getSurfaceOpenings();
+		//console.log( 'surfaceOpenings', surfaceOpenings );
+		
+		if ( !surfaceOpenings.length ) { return; }
 
 		GBX.surfaceOpenings.add( ...surfaceOpenings );
 

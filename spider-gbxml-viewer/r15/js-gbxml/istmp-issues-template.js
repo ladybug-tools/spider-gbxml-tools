@@ -1,5 +1,5 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
-/* globals GBX, POP, ISCOR, divPopupData */
+/* globals GBX, POP, ISCOR, divPopUpData */
 /* jshint esversion: 6 */
 
 

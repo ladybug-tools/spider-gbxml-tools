@@ -1,5 +1,5 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
-/* globals GBX, POP, divPopupData */
+/* globals GBX, POP, divPopUpData */
 /* jshint esversion: 6 */
 
 
@@ -303,7 +303,7 @@ ISASD.findSurfacesAdjacent = function() {
 
 				spaceIdRef = GBX.surfaces[ index ].match( /spaceIdRef="(.*?)"/gi );
 
-				if ( spaceIdRef.length > 1 && spaceIdRef[ 0 ] !== spaceIdRef[ 1 ] ) {
+				if ( spaceIdRef && spaceIdRef.length > 1 && spaceIdRef[ 0 ] !== spaceIdRef[ 1 ] ) {
 
 					const spaceIds = spaceIdRef.map( item => item.match( /spaceIdRef="(.*?)"/ )[ 1 ] );
 					//console.log( 'spaceIds', spaceIds );
@@ -505,7 +505,7 @@ ISASD.selectedSurfaceFocus = function() {
 
 	POP.intersected.visible = true;
 
-	divPopupData.innerHTML = POP.getIntersectedDataHtml();
+	divPopUpData.innerHTML = POP.getIntersectedDataHtml();
 
 };
 

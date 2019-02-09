@@ -1,5 +1,5 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
-/* globals GBX, POP, divPopupData */
+/* globals GBX, POP, divPopUpData */
 /* jshint esversion: 6 */
 
 
@@ -194,7 +194,7 @@ ISASE.selectedSurfaceFocus = function( select ) {
 
 	POP.getIntersectedDataHtml();
 
-	divPopupData.innerHTML = POP.getIntersectedDataHtml();
+	divPopUpData.innerHTML = POP.getIntersectedDataHtml();
 
 };
 

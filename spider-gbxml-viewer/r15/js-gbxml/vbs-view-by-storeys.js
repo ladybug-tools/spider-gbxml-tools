@@ -71,12 +71,28 @@ VBS.getMenuViewByStoreys = function() {
 
 		<div id="VBSdivReportsLog" ></div>
 
-		<div><p>Select multiple storeys by pressing shift or control keys</p></div>
+		<p><button onclick=VBS.showAllStoreys(); >show all storeys</button> </p>
+
+		<p>Select multiple storeys by pressing shift or control keys</p>
 
 	</details>
 	`;
 
 	return htm;
+};
+
+
+VBS.showAllStoreys = function() {
+
+	VBSselStorey.selectedIndex = -1;
+
+	VST.setShowAll();
+
+	//VBS.selStoreys();
+
+	//VBS.surfacesFilteredByStorey = VBS.setSurfacesFilteredByStorey();
+
+	//VST.sendSurfacesToThreeJs( VBS.surfacesFilteredByStorey )
 };
 
 
@@ -168,7 +184,13 @@ VBS.setSurfacesFilteredByStorey = function( surfaces ) {
 	if ( !selStorey ) { return ""; }
 
 	const storeyIds = selStorey.selectedOptions;
-	//console.log( 'storeyIds', storeyIds );
+	console.log( 'storeyIds', storeyIds );
+
+	if ( storeyIds.length === 0 ) {
+
+		return GBX.surfacesIndexed;
+
+	}
 
 	const surfacesFilteredByStory = surfaces ? surfaces : [];
 
