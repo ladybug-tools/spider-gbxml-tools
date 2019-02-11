@@ -42,7 +42,6 @@ VST.currentStatus =
 			<summary>Change log</summary>
 			<ul>
 				<li>2019-02-11 ~ Pass through jsHint.com and make repairs</li>
-				<li>2019-02-11 ~ Code cleanup. Drop 'reset surfaces' button/code as being redundant</li>
 				<li>2019-02-08 ~ Working on types/storeys integration</li>
 				<li>2019-02-07 ~ Refactor/simplify code a lot. Improve filtering for roof/shade etc. Add 'reset surfaces' and 'Show all' buttons. Add surface types and storeys connections. </li>
 				<li>2019-02-07 ~ Update pop-up text / variable names. Reposition stats.</li>
@@ -72,7 +71,7 @@ VST.getMenuViewSurfaceTypes = function() {
 			</summary>
 
 			<p>
-				Show by surface type. Default is exterior surfaces only.
+				Show by surface type
 			</p>
 
 			<div id="VSTdivSurfaceType" ></div>
@@ -137,6 +136,8 @@ VST.getViewByFilters = function() {
 			</p>
 
 			<p>
+				<button id=but onclick=VST.setSurfacesReset(); >reset surfaces</button>
+
 				<button id=but onclick=VST.setShowAll(); >show all surfaces</button>
 			</p>
 		</div>
@@ -203,6 +204,8 @@ VST.setSurfacesActiveByDefaults = function() {
 
 VST.toggleSurfaceFiltered = function( button ) {
 
+	//VBS.surfacesFiltered = GBX.surfacesIndexed;
+
 	button.classList.toggle( "active" );
 
 	const buttonsActive = VSTdivSurfaceType.getElementsByClassName( "active" ); // collection
@@ -215,11 +218,23 @@ VST.toggleSurfaceFiltered = function( button ) {
 
 
 
+VST.setSurfacesReset = function() {
+
+	//VBS.surfacesFiltered = GBX.surfacesIndexed;
+
+	VST.setSurfacesActiveByDefaults();
+
+};
+
+
+
 VST.setShowAll = function() {
 
 	const buttons = VSTdivSurfaceType.querySelectorAll( "button" );
 
 	buttons.forEach( button => button.classList.add( "active" ) );
+
+	//VBS.surfacesFiltered = GBX.surfacesIndexed;
 
 	GBX.sendSurfacesToThreeJs( GBX.surfacesIndexed );
 

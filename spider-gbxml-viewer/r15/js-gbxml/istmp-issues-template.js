@@ -32,14 +32,14 @@ ISTMP.currentStatus =
 				Issues Template source code
 			</a>
 		</p>
-		<p>
-			Change log
+		<details>
+			<summary>Change log</summary>
 			<ul>
 				<li>2019-02-11 ~ Bring up to same level a TooToo TMP</li>
 				<!-- <li></li>
 				-->
 			</ul>
-		</p>
+		</details>
 	`;
 
 
