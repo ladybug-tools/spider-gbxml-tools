@@ -8,8 +8,7 @@ const ISCOD = { "release": "R15.0", "date": "2019-02-11" };
 
 ISCOD.description =
 	`
-	CAD Object ID Missing (ISCOD) checks if a surface is missing an ID ans allows you to assign an existing ID if wanted.
-
+		CAD Object ID Missing (ISCOD) checks if a surface is missing an ID ans allows you to assign an existing ID if wanted.
 	`;
 
 ISCOD.currentStatus =
@@ -19,9 +18,9 @@ ISCOD.currentStatus =
 			<p>
 				${ ISCOD.description }
 			</p>
-				Concept
+				Notes
 				<ul>
-					<li>TBD</li>
+					<li>Spider Team wants confirmation that missing CAD IDs is actually an issue that occurs frequently in projects</li>
 				</ul>
 			</p>
 			<p>
