@@ -3,32 +3,85 @@
 /* jshint esversion: 6 */
 
 
-const ISTMP = { "release": "R9.1", "date": "2018-12-05" };
+const ISTMP = { "release": "R15.0", "date": "2019-02-11" };
 
+ISTMP.description =
+	`
+		Issues Template (ISTMP) provides HTML and JavaScript 'boilerplate' to create a typical TooToo menu.
+
+	`;
 
 ISTMP.currentStatus =
 	`
-		<aside>
 
-			<details>
+		<summary>Issues Template ISTMP ${ ISTMP.release} ~ ${ ISTMP.date }</summary>
 
-				<summary>ISTMP ${ ISTMP.release} status ${ ISTMP.date }</summary>
-
-				<p>This module is ready for light testing.</p>
-
-				<p>
-					2018-12-06 ~ Adds ability to run in 'check all issues'. Simplified code a bit. passed through jsHint<br>
-					2018-12-05 ~ Add more functions
-				</p>
-
-			</details>
-
-		</aside>
-
-		<hr>
+		<p>
+			${ ISTMP.description }
+		</p>
+		<p>
+		Concept
+			<ul>
+				<li>Provides default current status text template</li>
+				<li>Provides default description text template</li>
+				<li>Includes JavaScript code to generate an HTML menu</li>
+			</ul>
+		</p>
+		<p>
+			<a href="https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/r15/js-gbxml/istmp-issues-template.js: target="_blank" >
+				Issues Template source code
+			</a>
+		</p>
+		<p>
+			Change log
+			<ul>
+				<li>2019-02-11 ~ Bring up to same level a TooToo TMP</li>
+				<!-- <li></li>
+				-->
+			</ul>
+		</p>
 	`;
 
 
+	ISTMP.getMenuTemplate = function() {
+
+		const htm =
+
+		`<details id="ISTMPdetTemplate" ontoggle=ISTMP.getTemplateCheck(); >
+
+			<summary>Issues Template<span id="ISTMPspnCount" ></span>
+			<a id=ISTMPsumHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(ISTMPsumHelp,ISTMP.currentStatus);" >&nbsp; ? &nbsp;</a>
+
+			</summary>
+
+			<p>
+				template template text
+			</p>
+
+			<p>
+				<button onclick=ISTMP.setTemplateShowHide(this,ISTMP.invalidTemplate); >
+					Show/hide template surfaces
+				</button>
+			</p>
+
+			<p>
+				<select id=ISTMPselTemplate onchange=ISTMP.selectedSurfaceFocus(this); style=width:100%; size=10 >
+				</select>
+			</p>
+
+			<p>
+				<button onclick=ISTMP.selectedSurfaceDelete(); title="Starting to work!" >
+					template
+				</button>
+			</p>
+
+			<div>${ ISTMP.currentStatus }</div>
+
+		</details>`;
+
+		return htm;
+
+	};
 
 ISTMP.getTemplateCheck = function() {
 	//console.log( 'ISTMPdetTemplate.open', ISTMPdetTemplate.open );
@@ -78,45 +131,6 @@ ISTMP.getTemplateCheck = function() {
 	ISTMPspnCount.innerHTML = `: ${ ISTMP.invalidTemplate.length } found`;
 
 	return ISTMP.invalidTemplate.length;
-
-};
-
-
-
-ISTMP.getMenuTemplate = function() {
-
-	const htm =
-
-	`<details id="ISTMPdetTemplate" ontoggle=ISTMP.getTemplateCheck(); >
-
-		<summary>Template<span id="ISTMPspnCount" ></span></summary>
-
-		<p>
-			template template text
-		</p>
-
-		<p>
-			<button onclick=ISTMP.setTemplateShowHide(this,ISTMP.invalidTemplate); >
-				Show/hide template surfaces
-			</button>
-		</p>
-
-		<p>
-			<select id=ISTMPselTemplate onchange=ISTMP.selectedSurfaceFocus(this); style=width:100%; size=10 >
-			</select>
-		</p>
-
-		<p>
-			<button onclick=ISTMP.selectedSurfaceDelete(); title="Starting to work!" >
-				template
-			</button>
-		</p>
-
-		<div>${ ISTMP.currentStatus }</div>
-
-	</details>`;
-
-	return htm;
 
 };
 
