@@ -21,15 +21,16 @@ VST.currentStatus =
 		<p>Concept
 			<ul>
 				<li>View selected surfaces in a gbXML file</li>
-				<li>View various reports about the file</li>
+				<li>View various reports about the gbXML file</li>
 			</ul>
 		</p>
 
 		<p>Wish list
 			<ul>
+				<li>2019-02-08 ~ Shade types not updating as expected</li>
 				<li>2019-02-07 ~ Better interaction with openings</li>
 				<li>faster operations on very large files</li>
-				<li>buttons updated when hor/ver buttons pressed</li>
+
 			</ul>
 		</p>
 		<p>
@@ -44,6 +45,7 @@ VST.currentStatus =
 				<li>2019-02-08 ~ Working on types/storeys integration</li>
 				<li>2019-02-07 ~ Refactor/simplify code a lot. Improve filtering for roof/shade etc. Add 'reset surfaces' and 'Show all' buttons. Add surface types and storeys connections. </li>
 				<li>2019-02-07 ~ Update pop-up text / variable names. Reposition stats.</li>
+				<li>buttons updated when hor/ver buttons pressed</li>
 				<li>2019-02-01 ~ First commit, Fork from vwsrf-view-surface-types.js. Big cleanup. </li>
 
 				<!-- <li></li>
