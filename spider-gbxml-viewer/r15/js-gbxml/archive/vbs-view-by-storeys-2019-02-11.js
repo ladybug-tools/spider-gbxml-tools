@@ -1,9 +1,9 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
 // jshint esversion: 6
-/* globals GBX, VST, THREE, VBSselStorey, VBSdivReportsLog, VSTdivSurfaceType */
+/* globals THREE, THR, THRU, timeStart, divReports */
 
 
-const VBS = {"release": "R15.4", "date": "2019-02-11" };
+const VBS = {"release": "R15.3", "date": "2019-02-08" };
 
 VBS.description =
 	`
@@ -43,8 +43,6 @@ VBS.currentStatus =
 		<details>
 			<summary>Change log</summary>
 			<ul>
-				<li>2019-02-11 ~ Update text content. Code cleanup.</li>
-				<li>2019-02-11 ~ Better types/storeys integration on show all storeys</li>
 				<li>2019-02-08 ~ Working on types/storeys integration</li>
 				<li>2019-02-07 ~ Update pop-up text</li>
 				<li>2019-02-01 ~ Better interaction with currently visible surface types</li>
@@ -64,7 +62,7 @@ VBS.getMenuViewByStoreys = function() {
 
 	const htm =
 	`
-		<details ontoggle=VBS.getStoreysOptions(); >
+		<details ontoggle=VBS.getViewByStoreys(); >
 
 			<summary>Show/hide by storeys
 				<a id=VBSHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(VBSHelp,VBS.currentStatus);" >&nbsp; ? &nbsp;</a>
@@ -72,9 +70,7 @@ VBS.getMenuViewByStoreys = function() {
 
 			<p>Display surfaces by storey. Default is all storeys visible.</p>
 
-			<div id="VBSdivViewByStoreys" >
-				<select id=VBSselStorey onchange=VBS.selStoreys(); multiple style=min-width:15rem; ></select
-			</div>
+			<div id="VBSdivViewByStoreys" ></div>
 
 			<div id="VBSdivReportsLog" ></div>
 
@@ -89,10 +85,49 @@ VBS.getMenuViewByStoreys = function() {
 };
 
 
+VBS.showAllStoreys = function() {
+
+	VBSselStorey.selectedIndex = -1;
+
+	VST.setShowAll();
+
+	//VBS.selStoreys();
+
+	//VBS.surfacesFilteredByStorey = VBS.setSurfacesFilteredByStorey();
+
+	//VST.sendSurfacesToThreeJs( VBS.surfacesFilteredByStorey )
+};
+
+
+
+VBS.getViewByStoreys = function() {
+
+	//const reStoreys = /<BuildingStorey(.*?)<\/BuildingStorey>/gi;
+	//GBX.storeys = GBX.text.match( reStoreys );
+	//GBX.storeys = Array.isArray( GBX.storeys ) ? GBX.storeys : [];
+	//console.log( 'GBX.storeys', GBX.storeys );
+
+	if ( VBSdivViewByStoreys.innerHTML === "" ) {
+
+		const optionsStorey = VBS.getStoreysOptions();
+
+		const size = GBX.storeys.length > 10 ? 10 : GBX.storeys.length;
+
+		const htm =
+		`
+			<select id=VBSselStorey onchange=VBS.selStoreys(); multiple size=${ size } style=min-width:15rem; > ${ optionsStorey } </select>
+		`;
+
+		VBSdivViewByStoreys.innerHTML = htm;
+
+	}
+
+};
+
+
 
 VBS.getStoreysOptions = function() {
-
-	VBSselStorey.size = GBX.storeys.length > 10 ? 10 : GBX.storeys.length;
+	//console.log( 'GBX.storeys', GBX.storeys );
 
 	const storeyNames = GBX.storeys.map( storey => storey.match( '<Name>(.*?)</Name>' )[ 1 ] );
 	//console.log( 'storeyNames', storeyNames);
@@ -100,19 +135,13 @@ VBS.getStoreysOptions = function() {
 	const storeyIds = GBX.storeys.map( storey => storey.match( 'id="(.*?)">')[ 1 ] );
 	//console.log( 'storeyIds', storeyIds );
 
+	// how to de-structure or create object so  can sort these two arrays?
+
+	//console.log( 'storeyNames', storeyNames );
+
 	const options = storeyNames.map( ( name, index ) => `<option value=${ storeyIds[ index ] }>${ name }</option>` );
 
-	VBSselStorey.innerHTML = options;
-
-};
-
-
-
-VBS.showAllStoreys = function() {
-
-	VBSselStorey.selectedIndex = -1;
-
-	VBS.selStoreys();
+	return options;
 
 };
 
@@ -121,6 +150,14 @@ VBS.showAllStoreys = function() {
 //////////
 
 VBS.selStoreys = function() {
+
+	if ( !GBX.spaces ) {
+
+		const reSpaces = /<Space(.*?)<\/Space>/gi;
+		GBX.spaces = GBX.text.match( reSpaces );
+		console.log( 'spaces', GBX.spaces );
+
+	}
 
 	VBS.surfacesFilteredByStorey = VBS.setSurfacesFilteredByStorey();
 
@@ -142,23 +179,16 @@ VBS.selStoreys = function() {
 
 VBS.setSurfacesFilteredByStorey = function( surfaces ) {
 
-	const storeyIds = VBSselStorey.selectedOptions;
-	//console.log( 'storeyIds', storeyIds );
+	selStorey = document.body.querySelector( "#VBSselStorey" );
+
+	if ( !selStorey ) { return ""; }
+
+	const storeyIds = selStorey.selectedOptions;
+	console.log( 'storeyIds', storeyIds );
 
 	if ( storeyIds.length === 0 ) {
 
-		const buttonsActive = VSTdivSurfaceType.getElementsByClassName( "active" ); // collection
-
-		let filterArray = Array.from( buttonsActive ).map( button => button.innerText );
-
-		filterArray = filterArray.length > 0 ? filterArray : VST.filtersDefault;
-		//console.log( 'filterArray', filterArray );
-
-		surfaces = filterArray.flatMap( filter =>
-
-			GBX.surfacesIndexed.filter( surface => surface.includes( `"${ filter }"` ) )
-
-		);
+		return GBX.surfacesIndexed;
 
 	}
 
@@ -166,7 +196,7 @@ VBS.setSurfacesFilteredByStorey = function( surfaces ) {
 
 	for ( let storeyId of storeyIds ) {
 
-		const spacesInStorey = GBX.spaces.filter ( space => space.includes( `buildingStoreyIdRef="${ storeyId.value }"` ) );
+		spacesInStorey = GBX.spaces.filter ( space => space.includes( `buildingStoreyIdRef="${ storeyId.value }"` ) );
 		//console.log( 'spacesInStorey', spacesInStorey );
 
 		const spacesInStoreyIds = spacesInStorey.map( space => space.match( ' id="(.*?)"' )[ 1 ] );
@@ -177,9 +207,14 @@ VBS.setSurfacesFilteredByStorey = function( surfaces ) {
 		);
 		//console.log( 'surfacesVisibleBySpace', surfacesVisibleBySpace );
 
+		const current = document.getElementsByClassName( "active" );
+		//console.log( 'current', current );
+
 		const buttonsActive = VSTdivSurfaceType.getElementsByClassName( "active" ); // collection
 
 		let filterArr = Array.from( buttonsActive ).map( button => button.innerText );
+
+		//let filterArr = Array.from( current ).map ( current => current.innerText );
 
 		filterArr = filterArr.length > 0 ? filterArr : VST.filtersDefault;
 
@@ -196,4 +231,6 @@ VBS.setSurfacesFilteredByStorey = function( surfaces ) {
 
 	return surfacesFilteredByStory;
 
-};
+}
+
+

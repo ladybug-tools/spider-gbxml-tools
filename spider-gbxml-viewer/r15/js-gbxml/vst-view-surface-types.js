@@ -20,8 +20,8 @@ VST.currentStatus =
 
 		<p>Concept
 			<ul>
-				<li>View selected surfaces in a gbXML file</li>
-				<li>View various reports about the gbXML file</li>
+				<li>View selected surfaces in a gbXML file using a variety of filters</li>
+				<li>View various statistics about the gbXML file</li>
 			</ul>
 		</p>
 
@@ -43,6 +43,7 @@ VST.currentStatus =
 			<ul>
 				<li>2019-02-11 ~ Pass through jsHint.com and make repairs</li>
 				<li>2019-02-11 ~ Code cleanup. Drop 'reset surfaces' button/code as being redundant</li>
+				<li>2019-02-11 ~ Add log of surfaces currently visible</li>
 				<li>2019-02-08 ~ Working on types/storeys integration</li>
 				<li>2019-02-07 ~ Refactor/simplify code a lot. Improve filtering for roof/shade etc. Add 'reset surfaces' and 'Show all' buttons. Add surface types and storeys connections. </li>
 				<li>2019-02-07 ~ Update pop-up text / variable names. Reposition stats.</li>
@@ -77,7 +78,23 @@ VST.getMenuViewSurfaceTypes = function() {
 
 			<div id="VSTdivSurfaceType" ></div>
 
-			<p id="VSTdivViewByFilters" ></p>
+			<p>
+				<button id=butExterior onclick=VST.setSurfacesActiveByDefaults(this); >exterior surfaces</button>
+
+				<button id=butExposed onclick=VST.sendSurfacesToThreeJs('exposedToSun="true"'); title="Does not update the buttons" >exposed to sun</button>
+			</p>
+
+			<p>
+				<button onclick=VST.sendSurfacesToThreeJs(["Ceiling","InteriorFloor","SlabOnGrade","Roof","UndergroundSlab"],this); >horizontal</button>
+
+				<button onclick=VST.sendSurfacesToThreeJs(["ExteriorWall","InteriorWall","UndergroundWall"],this); >vertical</button>
+			</p>
+
+			<p>
+				<button id=but onclick=VST.setShowAll(); >show all surfaces</button>
+			</p>
+
+			<div id="VSTdivReportsLog" ></div>
 
 			<p id="VSTdivViewCurrentStats" > </p>
 
@@ -94,7 +111,7 @@ VST.onToggle = function() {
 
 	if ( VSTdivSurfaceType.innerHTML === '' ) {
 
-		const types = GBX.surfaceTypes.filter( type => GBX.surfaces.find( surface => surface.includes( type ) ) );
+		const types = GBX.surfaceTypes.filter( type => GBX.surfaces.find( surface => surface.includes( `"${ type }"` ) ) );
 
 		let colors =  types.map( type => GBX.colorsDefault[ type ].toString( 16 ) );
 		colors = colors.map( color => color.length > 4 ? color : '00' + color ); // otherwise greens no show
@@ -106,8 +123,6 @@ VST.onToggle = function() {
 
 		VSTdivSurfaceType.innerHTML = buttonSurfaceTypes.join( '<br>' );
 
-		VSTdivViewByFilters.innerHTML = VST.getViewByFilters();
-
 		VSTdivViewCurrentStats.innerHTML = VST.getViewStats();
 
 		VST.setSurfacesActiveByDefaults();
@@ -116,36 +131,6 @@ VST.onToggle = function() {
 
 };
 
-
-
-VST.getViewByFilters = function() {
-
-	const htm =
-	`
-		<div id=REPdivReportByFilters >
-
-			<p>
-				<button id=butExterior onclick=VST.setSurfacesActiveByDefaults(this); >exterior surfaces</button>
-
-				<button id=butExposed onclick=VST.sendSurfacesToThreeJs('exposedToSun="true"'); title="Does not update the buttons" >exposed to sun</button>
-			</p>
-
-			<p>
-				<button onclick=VST.sendSurfacesToThreeJs(["Ceiling","InteriorFloor","SlabOnGrade","Roof","UndergroundSlab"],this); >horizontal</button>
-
-				<button onclick=VST.sendSurfacesToThreeJs(["ExteriorWall","InteriorWall","UndergroundWall"],this); >vertical</button>
-			</p>
-
-			<p>
-				<button id=but onclick=VST.setShowAll(); >show all surfaces</button>
-			</p>
-		</div>
-
-	`;
-
-	return htm;
-
-};
 
 
 VST.getViewStats = function() {
@@ -221,7 +206,7 @@ VST.setShowAll = function() {
 
 	buttons.forEach( button => button.classList.add( "active" ) );
 
-	GBX.sendSurfacesToThreeJs( GBX.surfacesIndexed );
+	VSTdivReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( GBX.surfacesIndexed );
 
 };
 
@@ -238,11 +223,10 @@ VST.sendSurfacesToThreeJs = function( filters ) {
 		button.classList.add( "active" ) : button.classList.remove( "active" )
 	);
 
-	VBS.surfacesFiltered = VBS.setSurfacesFilteredByStorey();
+	VBS.surfacesFilteredByStorey = VBS.setSurfacesFilteredByStorey();
 
-	const surfaces = VBS.surfacesFiltered ? VBS.surfacesFiltered : GBX.surfacesIndexed;
-
-	console.log( 'surfaces', surfaces.length  );
+	const surfaces = VBS.surfacesFilteredByStorey ? VBS.surfacesFilteredByStorey : GBX.surfacesIndexed;
+	//console.log( 'surfaces', surfaces.length  );
 
 	const surfacesFiltered = filters.flatMap( filter =>
 
@@ -250,6 +234,8 @@ VST.sendSurfacesToThreeJs = function( filters ) {
 
 	);
 
-	GBX.sendSurfacesToThreeJs( surfacesFiltered );
+	VSTdivReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( surfacesFiltered );
+
+	return VSTdivReportsLog.innerHTML;
 
 };
