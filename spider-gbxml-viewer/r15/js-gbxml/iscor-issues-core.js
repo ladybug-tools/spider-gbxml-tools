@@ -1,33 +1,31 @@
 // Copyright 2019 Ladybug Tools authors. MIT License
-/* globals */
+/* globals IFC, ISMET, ISSTI, ISDC, detMenuEdit*/
 /* jshint esversion: 6 */
 
 
-const ISCOR = { "release": "R11.0", "date": "2019-01-01" };
+const ISCOR = { "release": "R15.0", "date": "2019-02-12" };
 
 ISCOR.runAll = false;
 ISCOR.surfaceCheckLimit = 10000;
 
+ISCOR.description =
+	`
+		Issues Core (ISCOR) module loads the desired issues modules.
+		Issues modules check the gbXML files for issues, identify what issues have been found
+		and allow you to fix the issues.
+	`;
+
 
 ISCOR.currentStatus =
 	`
-
-		<h3>ISCOR ${ ISCOR.release}</a> status ${ ISCOR.date }</h3>
+		<h3>ISCOR ${ ISCOR.release}</a> ~ ${ ISCOR.date }</h3>
 
 		<p>
-			Issues Core (ISCOR) module loads the desired issues modules.
-			Issues modules check the gbXML files for issues, identify what issues have been found
-			and allow you to fix the issues.
+			${ ISCOR.description }
 		</p>
 		<p>
 			Every module is set up run as and when you click on its title to open it
 			or when you click the 'check all...' button.
-		</p>
-		<p>
-			<ul>
-				<li>2018-12-16 ~ Add close details and reset summaries when new file loaded</li>
-			</ul>
-
 		</p>
 		<p>
 			<a href="https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-issues/lib/iscor-issues-core.js" title="source code" >
@@ -36,11 +34,18 @@ ISCOR.currentStatus =
 			ISCOR Read Me file</a>
 		</p>
 
-		<!--
-			2018-12-10 ~ 10.2 ~ Add current status details element
-			2018-12-06 ~ Adds ability to run in 'check all issues'. Simplified code a bit. passed through jsHint<br>
-			2018-12-05 ~ Add more functions
-		-->
+		<details>
+			<summary>Change log</summary>
+			<ul>
+				<li>2019-02-12 ~ 15.0 ~ Update text content. Add 'Air Surface Type on Exterior' module</li>
+				<li>2018-12-16 ~ Add close details and reset summaries when new file loaded</li>
+				<li>2018-12-10 ~ 10.2 ~ Add current status details element</li>
+				<li>2018-12-06 ~ Adds ability to run in 'check all issues'. Simplified code a bit. passed through jsHint</li>
+				<li>2018-12-05 ~ Add more functions</li>
+				<!-- <li></li>
+				-->
+			</ul>
+		</details>
 
 	`;
 
@@ -50,7 +55,7 @@ ISCOR.getMenuIssues = function() {
 
 	document.body.addEventListener( 'onGbxParse', ISCOR.onGbxParse, false );
 
-	htm =
+	const htm =
 	`
 		<p>
 			<button onclick=ISCOR.onClickAllIssues();
@@ -60,9 +65,7 @@ ISCOR.getMenuIssues = function() {
 			<br>
 			Running all the checks may take a considerable amount of time on large gbXML files.
 			<a id=isCor class=helpItem href="JavaScript:MNU.setPopupShowHide(isCor,ISCOR.currentStatus);" >&nbsp; ? &nbsp;</a>
-
 		</p>
-
 
 		${ ISFC.getMenuFileCheck() }
 
@@ -78,6 +81,8 @@ ISCOR.getMenuIssues = function() {
 
 		${ ISASD.getMenuAdjacentSpaceDuplicate() }
 
+		${ ISASTE.getMenuAirOnExterior() }
+
 		${ ISCOD.getMenuCadObjectId() }
 
 		<div id = "divDuplicateRectangularGeometry" ></div>
@@ -87,8 +92,6 @@ ISCOR.getMenuIssues = function() {
 		<div id = "divPointInPolygon" ></div>
 
 		${ ISTMP.getMenuTemplate() }
-
-		<hr>
 
 	`;
 
@@ -100,7 +103,7 @@ ISCOR.getMenuIssues = function() {
 
 ISCOR.onGbxParse = function() {
 
-	detMenuEdit.open = false;
+	//detMenuEdit.open = false;
 
 	const issues = detMenuEdit.querySelectorAll( 'details' );
 	//console.log( 'issues', issues );
@@ -129,6 +132,8 @@ ISCOR.onClickAllIssues = function() {
 
 	ISASD.getAdjacentSpaceDuplicateCheck();
 
+	ISAOE.getAirOnExteriorCheck();
+
 	ISCOD.getCadObjectIdCheck();
 
 	ISTMP.getTemplateCheck();
@@ -145,4 +150,3 @@ ISCOR.onClickAllIssues = function() {
 	ISCOR.runAll = false;
 
 };
-

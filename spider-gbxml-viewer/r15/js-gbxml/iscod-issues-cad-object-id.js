@@ -114,7 +114,6 @@ ISCOD.getCadObjectIdCheck = function() {
 		const surfaceType = surface.match( /surfaceType="Air"/);
 		//console.log( 'surfaceType', surfaceType );
 
-
 		if ( !surfaceType && ISCODchkTypeAir.checked ) {
 
 			break;

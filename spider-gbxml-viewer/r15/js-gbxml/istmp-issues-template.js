@@ -75,8 +75,6 @@ ISTMP.currentStatus =
 				</button>
 			</p>
 
-			<div>${ ISTMP.currentStatus }</div>
-
 		</details>`;
 
 		return htm;
@@ -88,7 +86,7 @@ ISTMP.getTemplateCheck = function() {
 
 	if ( ISTMPdetTemplate.open === false && ISCOR.runAll === false ) { return; }
 
-	if ( GBX.surfaces.length > ISCOR.surfaceCheckLimit ) { return; }
+	if ( GBX.surfaces.length > ISCOR.surfaceCheckLimit ) { return; } // don't run test automatically on very large files
 
 	ISTMP.invalidTemplate = [];
 
@@ -101,8 +99,9 @@ ISTMP.getTemplateCheck = function() {
 
 		const surfaceId = surface.match( /id="(.*?)"/)[ 1 ];
 
+		// bogus code - admits all surfaces
 		const invalidTemplate = GBX.surfaces.find( element => GBX.surfaceTypes.indexOf( surfaceId ) < 0 );
-		//console.log( 'invalidTemplate', invalidTemplate );
+		console.log( 'invalidTemplate', invalidTemplate );
 
 		if ( invalidTemplate ) {
 

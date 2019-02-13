@@ -5,8 +5,8 @@
 <meta name = "viewport" content= "width=device-width, initial-scale=1" >
 <meta name = "description" content = "This menu is a component of a basic html content management script with sliding menu, css theme selection, Markdown to HTML, drag and drop file reading capability, access to frequently used pages and more" >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
-<meta name = "date" content = "2019-02-11" >
-<meta name = "release" content = "15.12" >
+<meta name = "date" content = "2019-02-12" >
+<meta name = "release" content = "15.13" >
 <title>Spider gbXML Viewer 'Maevia'</title>
 <link rel="stylesheet" href="js-gbxml/style15-6.css">
 </head>
@@ -41,6 +41,8 @@
 <script src="js-gbxml/isasi-issues-adjacent-space-invalid.js" ></script>
 <script src="js-gbxml/isase-issues-adjacent-space-extra.js" ></script>
 <script src="js-gbxml/isasd-issues-adjacent-space-duplicate.js" ></script>
+<script src="js-gbxml/isaste-issues-air-surface-type-editor.js" ></script>
+
 <script src="js-gbxml/iscod-issues-cad-object-id.js" ></script>
 <script src="js-gbxml/istmp-issues-template.js" ></script>
 
@@ -69,6 +71,7 @@ MNU.currentStatusCore =
 		<p>
 			Change log
 			<ul>
+				<li>2019-02-12 ~ R15.3 ~ Add 'Air Surface Type on Exterior' issues module</li>
 				<li>2019-02-11 ~ R15.12 > View menu > Show/hide by storey: Better types/storeys integration on show all storeys</li>
 				<li>2019-02-11 ~ R15.11 > View menu > Show/hide by surface type: Code cleanup. Drop 'reset surfaces' button/code as being redundant</li>
 				<li>2019-02-11 ~ R15.10 > Edit menu > Issues Template: Bring up to same level as TooToo TMP</li>
@@ -177,7 +180,7 @@ OHC.urlGitHubPage = `https://${ OHC.repo }/`;
 		</details>
 
 
-		<details id=detMenuEdit class=navSubMenu >
+		<details id=detMenuEdit class=navSubMenu open >
 
 			<div id="divMenuNote" ></div>
 
