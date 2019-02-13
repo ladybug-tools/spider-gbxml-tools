@@ -31,6 +31,15 @@ ISASTE.currentStatus =
 			Air Surface Type Editor source code
 			</a>
 		</p>
+
+		<details>
+			<summary>Wish List / To Do</summary>
+			<ul>
+
+				<li>2019-02-12 ~ Add colors to surface type buttons</li>
+
+			</ul>
+		<details>
 		<details>
 			<summary>Change log</summary>
 			<ul>
