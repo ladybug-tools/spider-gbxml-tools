@@ -2,7 +2,7 @@
 // jshint esversion: 6
 /* globals THREE, THR, THRU, FIL, GBXU */
 
-var GBX = { "release": "R15.0", "date": "2019-01-31 ~ " };
+var GBX = { "release": "R15.1", "date": "2019-02-12" };
 
 GBX.currentStatus =
 `
@@ -15,6 +15,7 @@ GBX.currentStatus =
 	<p>
 		Change log
 		<ul>
+			<li>2019-02-12 ~ Update no surfaces visible display/text</li>
 			<li>2019-01-31 ~ reversed the normal of second triangle in quads</li>
 			<li>2018-12-29 ~ Add helpItem class</li>
 			<li>2018-12-29 ~ Fix read me links</li>
@@ -195,7 +196,6 @@ GBX.setSurfaceTypesVisible = function ( typesArray ) {
 GBX.sendSurfacesToThreeJs = function( surfacesText ) {
 	//console.log( 'surfacesText', surfacesText );
 
-	if ( !surfacesText.length ) { return "<span class='highlight' >No surfaces would be visible</span>"; }
 
 	GBX.surfaceGroup.children.forEach( ( surface, index ) => {
 
@@ -231,7 +231,9 @@ GBX.sendSurfacesToThreeJs = function( surfacesText ) {
 
 	//GBXU.toggleGroundHelper();
 
-	return surfacesText.length.toLocaleString() + ' surfaces visible';
+	const txt = !surfacesText.length ? "<span class='highlight' >No surfaces are visible</span>" : surfacesText.length.toLocaleString() + ' surfaces visible';
+
+	return txt;
 
 };
 
