@@ -67,7 +67,9 @@ ISASTE.currentStatus =
 				<select id=ISASTEselAirOnExterior onchange=ISASTE.selectedSurfaceFocus(this); style=width:100%; multiple size=10 >
 				</select>
 			</p>
-
+			<p>
+				Select multiple surfaces by pressing shift or control keys
+			</p>
 			<p>
 				<button id=ISASTEbutViewSelected onclick=ISASTE.selectedSurfaceShowHide(this,ISASTEselAirOnExterior); title="" >
 					show/hide selected air surfaces
