@@ -34,8 +34,7 @@ ISASTE.currentStatus =
 		<p>
 			Issues
 			<ul>
-				<!-- <li></li>
-				-->
+				<li>2019-02-13 ~ Only works once - must reload between each ron </li>
 			</ul>
 
 		</p>
@@ -43,7 +42,7 @@ ISASTE.currentStatus =
 		<details>
 			<summary>Wish List / To Do</summary>
 			<ul>
-			<li>2019-02-13 ~ Complete finding intersections</li>
+				<li>2019-02-13 ~ Complete finding intersections</li>
 			</ul>
 		<details>
 
