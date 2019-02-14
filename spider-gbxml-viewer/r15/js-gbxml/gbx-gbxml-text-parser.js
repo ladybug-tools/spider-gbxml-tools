@@ -59,7 +59,7 @@ GBX.colorsDefault = {
 
 GBX.colors = Object.assign( {}, GBX.colorsDefault ); // create working copy of default colors
 
-GBX.surfaceTypes  = Object.keys( GBX.colors );
+GBX.surfaceTypes = Object.keys( GBX.colors );
 
 GBX.referenceObject = new THREE.Object3D();
 GBX.triangle = new THREE.Triangle(); // used by GBX.getPlane

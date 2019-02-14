@@ -3,14 +3,14 @@
 
 // Copyright 2019 Ladybug Tools authors. MIT License.
 
-var POP = { "release": "R13.1", "date": "2019-01-29" };
+var POP = { "release": "R15.0", "date": "2019-02-13" };
 
 POP.urlSource = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-pop-up"
 
 POP.currentStatus =
 	`
 
-		<h3>Pop-Up menu current status ${ POP.date }</h3>
+		<h3>Pop-Up menu (POP) ${ POP.release }</h3>
 
 		<p>
 			Elements and attributes identified according to <a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">gbXML Schema.</a>
@@ -24,12 +24,23 @@ POP.currentStatus =
 			&bull; 2018-11-13 ~ buttons should be in same place between clicks
 		</p>
 
-		<p>What buttons should be addd or dropped here? What tool tips should appear and where?</p>
+		<p>
+			What buttons should be addd or dropped here? What tool tips should appear and where?
+		</p>
+
+		<details>
+			<summary>Change log ~ ${ POP.date }</summary>
+
+			<li>2019-02-13 ~ Fix issues when no zone. Update current status</li>
+			<ul>
+				<!-- <li></li>
+				-->
+		</ul>
+		<!--
+
 		<p>
 			To add to wish list and get things fixed see <a href="../../spider-gbxml-viewer-issues/index.html" target="_blank">issues module</a>
 		</p>
-
-		<!--
 		<p>Status: Getting to be stable. Needs more testing. Wishlists items welcome.</p>
 
 		<p>Toggling focus or visibility and identifying are two different things. As we design, let us try to keep these actions separate.</p>
@@ -265,7 +276,7 @@ POP.getIntersectedDataHtml = function() {
 
 	const storeyButton = POP.storeyId ? `<button id=POPbutStoreyVisible onclick=POPelementAttributes.innerHTML=POP.toggleStoreyVisible(this,"${ POP.storeyId }"); title="id: ${ POP.storeyId }" >storey: ${ POP.storeyName}</button>` : `<div id=POPbutStoreyVisible ></div>`;
 
-	const zoneButton = POP.zoneId ? `<button id=POPbutZoneVisible onclick=POPelementAttributes.innerHTML=POP.getToggleZoneVisible(this,"${ POP.zoneId }"); title="id: ${ POP.zoneId }" >zone: ${ POP.zoneName }</button> &nbsp;` : `<div id=POPbutZoneVisible ></div>`;
+	const zoneButton = POP.zoneId ? `<button id=POPbutZoneVisible onclick=POPelementAttributes.innerHTML=POP.getToggleZoneVisible(this,"${ POP.zoneId }"); title="id: ${ POP.zoneId }" >zone: ${ POP.zoneName }</button> &nbsp;` : `<span id=POPbutZoneVisible >None</span>`;
 
 	const htm =
 	`
@@ -555,14 +566,26 @@ POP.setAttributesStoreyAndZone = function( spaceId ) {
 	POP.storeyName = storeyText.match ( '<Name>(.*?)</Name>' )[ 1 ];
 	//console.log( 'POP.storeyName', POP.storeyName );
 
-	POP.zoneId = spaceText.match ( /zoneIdRef="(.*?)"/ )[ 1 ];
-	//console.log( 'zoneId', POP.zoneId[ 1 ] );
+	POP.zoneId = spaceText.match ( /zoneIdRef="(.*?)"/ );
 
-	const zoneText = GBX.zones.find( item => item.includes( POP.zoneId ) );
-	//console.log( 'storeyText', zoneText );
+	if ( POP.zoneId ) {
 
-	POP.zoneName = zoneText.match ( '<Name>(.*?)</Name>' )[ 1 ];
-	//console.log( 'POP.zoneName', POP.zoneName );
+		POP.zoneId = POP.zoneId[ 1 ];
+		//console.log( 'zoneId', POP.zoneId[ 1 ] );
+
+		const zoneText = GBX.zones.find( item => item.includes( POP.zoneId ) );
+		//console.log( 'storeyText', zoneText );
+
+		POP.zoneName = zoneText.match ( '<Name>(.*?)</Name>' )[ 1 ];
+		//console.log( 'POP.zoneName', POP.zoneName );
+
+
+	} else {
+
+		POP.zoneName = "None";
+
+	}
+
 
 }
 

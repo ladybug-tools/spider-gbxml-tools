@@ -27,7 +27,7 @@ VST.currentStatus =
 
 		<p>
 			Issues
-			<li>2019-02-13 ~ not all surface types in model are displayed</li>
+			<li>2019-02-13 ~ not all surface types in model are displayed when looking at multiple models << but getting better</li>
 		</p>
 		<p>Wish list
 			<ul>
@@ -47,6 +47,7 @@ VST.currentStatus =
 		<details>
 			<summary>Change log</summary>
 			<ul>
+				<li>2019-02-13 ~ Close menu when new file loaded. Reset vars</li>
 				<li>2019-02-11 ~ Pass through jsHint.com and make repairs</li>
 				<li>2019-02-11 ~ Code cleanup. Drop 'reset surfaces' button/code as being redundant</li>
 				<li>2019-02-11 ~ Add log of surfaces currently visible</li>
@@ -69,6 +70,8 @@ VST.filtersDefault = [ "Air", "ExposedFloor", "ExteriorWall", "Roof", "Shade" ];
 
 
 VST.getMenuViewSurfaceTypes = function() {
+
+	document.body.addEventListener( 'onGbxParse', VST.resetMenu, false );
 
 	const htm =
 	`
@@ -111,6 +114,15 @@ VST.getMenuViewSurfaceTypes = function() {
 
 };
 
+
+VST.resetMenu = function() {
+
+	detReports.open = false;
+	VSTdivSurfaceType.innerHTML = "";
+
+
+
+};
 
 
 VST.onToggle = function() {

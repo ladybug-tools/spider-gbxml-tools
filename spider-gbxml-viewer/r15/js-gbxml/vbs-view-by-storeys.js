@@ -43,6 +43,7 @@ VBS.currentStatus =
 		<details>
 			<summary>Change log</summary>
 			<ul>
+				<li>2019-02-13 ~ Close menu when new file loaded</li>
 				<li>2019-02-11 ~ Update text content. Code cleanup.</li>
 				<li>2019-02-11 ~ Better types/storeys integration on show all storeys</li>
 				<li>2019-02-08 ~ Working on types/storeys integration</li>
@@ -62,9 +63,11 @@ VBS.currentStatus =
 
 VBS.getMenuViewByStoreys = function() {
 
+	document.body.addEventListener( 'onGbxParse', function(){ VBSdetMenu.open = false; }, false );
+
 	const htm =
 	`
-		<details ontoggle=VBS.getStoreysOptions(); >
+		<details id=VBSdetMenu ontoggle=VBS.getStoreysOptions(); >
 
 			<summary>Show/hide by storeys
 				<a id=VBSHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(VBSHelp,VBS.currentStatus);" >&nbsp; ? &nbsp;</a>

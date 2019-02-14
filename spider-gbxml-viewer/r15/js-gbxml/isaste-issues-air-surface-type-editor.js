@@ -121,9 +121,9 @@ ISASTE.getMenuAirSurfaceTypeEditor = function() {
 			<button onclick=ISASTE.setNewSurfaceType(this) style="background-color:#ffb400;" >ExteriorWall</button><br>
 			<button onclick=ISASTE.setNewSurfaceType(this) style="background-color:#800000;" >Roof</button><br>
 			<button onclick=ISASTE.setNewSurfaceType(this) style="background-color:#ffce9d;" >Shade</button><br>
-			<button onclick=ISASTE.setNewSurfaceType(this) style="background-color:#aaa;" >SlabOnGrade</button><br>
-			<button onclick=ISASTE.setNewSurfaceType(this) style="background-color:#aaa;" >UndergroundWall</button><br>
-			<button onclick=ISASTE.setNewSurfaceType(this) style="background-color:#aaa;" >UndergroundSlab</button><br>
+			<button onclick=ISASTE.setNewSurfaceType(this) style="background-color:#804000;" >SlabOnGrade</button><br>
+			<button onclick=ISASTE.setNewSurfaceType(this) style="background-color:#a55200;" >UndergroundWall</button><br>
+			<button onclick=ISASTE.setNewSurfaceType(this) style="background-color:#804000;" >UndergroundSlab</button><br>
 		</p>
 
 	</details>`;
