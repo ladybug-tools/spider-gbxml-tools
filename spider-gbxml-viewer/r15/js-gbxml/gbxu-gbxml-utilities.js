@@ -2,8 +2,15 @@
 // jshint esversion: 6
 /* globals THREE, THR, THRU, timeStart, divLog2 */
 
-const GBXU = { "release": "R12.2", "date": "2019-01-09" };
+const GBXU = { "release": "R15.0", "date": "2019-02-14" };
 
+/*
+
+Change Log
+
+2019-02-14 ~ Lowered elevation of grounf helper to reduce Moire effect
+
+*/
 
 GBXU.init = function() {
 
@@ -23,7 +30,7 @@ GBXU.toggleGroundHelper = function() {
 		//GBX.elevation = GBX.text.match( reElevation )[ 1 ];
 		//console.log( 'elevation', GBX.elevation );
 
-		elevation = GBX.boundingBox.box.min.z;
+		elevation = GBX.boundingBox.box.min.z - 0.001 * THRU.radius;
 
 		const geometry = new THREE.PlaneGeometry( 2 * THRU.radius, 2 * THRU.radius);
 		const material = new THREE.MeshPhongMaterial( { color: 0x888888, opacity: 0.5, side: 2 } );

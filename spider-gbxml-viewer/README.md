@@ -79,7 +79,7 @@ Pop-up Viewer 'Maevia' R15
 
 Spider gbXML Viewer 'Maevia' R15
 
-* Currently changes are being added to the main HTML file
+* Currently changes are being added to the popup window avaiable when you run main HTML file
 
 
 ### 2019-01-31 ~ Theo

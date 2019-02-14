@@ -3,7 +3,7 @@
 /* jshint esversion: 6 */
 
 
-const ISASTE = { "release": "R15.1", "date": "2019-02-14" };
+const ISASTE = { "release": "R15.2", "date": "2019-02-14" };
 
 ISASTE.description =
 	`
@@ -115,6 +115,7 @@ ISASTE.getMenuAirSurfaceTypeEditor = function() {
 			3. <button onclick=ISASTE.castRaysGetIntersections(this); >cast rays get intersections</button><br>
 		</p>
 
+		<p id=ISASTEfixes ></p>
 		<p>
 			Update surface(s) type to:
 			<button onclick=ISASTE.setNewSurfaceType(this); style="background-color:#aaa;" >ExposedFloor</button><br>
@@ -254,6 +255,8 @@ ISASTE.castRaysGetIntersections = function( button ) {
 
 	button.classList.toggle( "active" );
 
+	let fixes = 0;
+
 	const normals = ISASTE.airNormalsFaces;
 	//console.log( 'normals', normals );
 
@@ -268,15 +271,83 @@ ISASTE.castRaysGetIntersections = function( button ) {
 			const material = new THREE.MeshNormalMaterial();
 			const mesh = new THREE.Mesh( geometry, material );
 			mesh.position.set( coordinates[ i++ ], coordinates[ i++ ],coordinates[ i++ ] );
-			THR.scene.add( mesh );
+			//THR.scene.add( mesh );
 
 		}
 
 	}
 
+	const v = ( x, y, z ) => new THREE.Vector3( x, y, z );
+
+	for ( let normal of normals.children ) {
+
+		const coordinates = normal.geometry.attributes.position.array;
+		//console.log( 'coordinates', coordinates );
+
+		for ( let i = 0; i < coordinates.length; ) {
+
+			const vertex1 = v( coordinates[ i++ ], coordinates[ i++ ], coordinates[ i++ ] );
+			const vertex2 = v( coordinates[ i++ ], coordinates[ i++ ],coordinates[ i++ ] );
+			//console.log( 'vertex1', vertex1 );
+
+			const direction = vertex2.clone().sub( vertex1 ).normalize();
+			//console.log( 'direction', direction );
+
+			fixes += findIntersections( GBX.surfaceGroup.children, vertex1, direction );
+
+		}
+
+	}
+
+	ISASTEfixes.innerHTML = `Air surfaces on exterior identified: ${ fixes }`;
 
 };
 
+
+
+function findIntersections( objs, origin, direction ) {
+
+	let count = 0;
+	const spriteMaterial = new THREE.SpriteMaterial( { color: 'magenta' } );
+
+	const raycaster = new THREE.Raycaster();
+	near = 0.001 * THRU.radius;
+	raycaster.set( origin, direction, near, THRU.radius ); // has to be the correct vertex order
+
+	const intersects = raycaster.intersectObjects( objs );
+	//console.log( 'intersects', intersects );
+
+	for ( let intersect of intersects ) {
+
+		if ( intersect.distance > 0 ) {
+
+			const sprite = new THREE.Sprite( spriteMaterial );
+			s = 0.005 * THRU.radius;
+			sprite.scale.set( s, s, s,);
+			sprite.position.copy( intersect.point );
+
+			THR.scene.add( sprite );
+
+		}
+
+
+	}
+
+	if ( intersects.length === 1 ) {
+
+		//console.log( 'intersect.object', intersects[ 0 ].object );
+
+		intersects[ 0 ].object.material = new THREE.MeshNormalMaterial( { side: 2 });
+
+		intersects[ 0 ].object.material.needsUpdate = true;
+
+		count++;
+
+	}
+
+	return count;
+
+}
 
 
 
