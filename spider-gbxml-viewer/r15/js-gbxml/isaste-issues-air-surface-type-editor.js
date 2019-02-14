@@ -3,7 +3,7 @@
 /* jshint esversion: 6 */
 
 
-const ISASTE = { "release": "R15.0", "date": "2019-02-12" };
+const ISASTE = { "release": "R15.1", "date": "2019-02-14" };
 
 ISASTE.description =
 	`
@@ -13,7 +13,6 @@ ISASTE.description =
 
 ISASTE.currentStatus =
 	`
-
 		<summary>Air Surface Type Editor (ISASTE) ${ ISASTE.release} ~ ${ ISASTE.date }</summary>
 
 		<p>
@@ -32,17 +31,30 @@ ISASTE.currentStatus =
 			</a>
 		</p>
 
+		<p>
+			Issues
+			<ul>
+				<!-- <li></li>
+				-->
+			</ul>
+
+		</p>
+
 		<details>
 			<summary>Wish List / To Do</summary>
 			<ul>
-
-				<li>2019-02-12 ~ Add colors to surface type buttons</li>
-
+			<li>2019-02-13 ~ Complete finding intersections</li>
 			</ul>
 		<details>
+
 		<details>
 			<summary>Change log</summary>
 			<ul>
+
+				<li>2019-02-13 ~ Add find intersections between Air and other surfaces but not shade</li>
+				<li>2019-02-13 ~ Fixed using cursor keys updates select 3D at same time</li>
+				<li>2019-02-13 ~ Add colors to surface type buttons << started</li>
+				<li>2019-02-13 ~ Add show number surfaces currently visible</li>
 				<li>2019-02-12 ~ first commit</li>
 				<!-- <li></li>
 				-->
@@ -51,59 +63,221 @@ ISASTE.currentStatus =
 	`;
 
 
-	ISASTE.getMenuAirOnExterior = function() {
 
-		const htm =
+ISASTE.getMenuAirSurfaceTypeEditor = function() {
 
-		`<details id="ISASTEdetAirOnExterior" ontoggle=ISASTE.getAirOnExteriorCheck(); >
+	const htm =
 
-			<summary>Air Surface Type Editor<span id="ISASTEspnCount" ></span>
-			<a id=ISASTEsumHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(ISASTEsumHelp,ISASTE.currentStatus);" >&nbsp; ? &nbsp;</a>
+	`<details id="ISASTEdetAirSurfaceTypeEditor" ontoggle=ISASTE.getAirSurfaceTypeEditorCheck(); >
 
-			</summary>
+		<summary>Air Surface Type Editor<span id="ISASTEspnCount" ></span>
+		<a id=ISASTEsumHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(ISASTEsumHelp,ISASTE.currentStatus);" >&nbsp; ? &nbsp;</a>
 
-			<p>
-				${ ISASTE.description }
-			</p>
+		</summary>
 
-			<p>
-				<button id=ISASTEbutViewAll onclick=ISASTE.setAirOnExteriorShowHide(this,ISASTE.surfaceAirIndices); >
-					Show/hide all air type surfaces
-				</button>
-			</p>
+		<p>
+			${ ISASTE.description }
+		</p>
 
-			<p>
-				<select id=ISASTEselAirOnExterior onchange=ISASTE.selectedSurfaceFocus(this); style=width:100%; multiple size=10 >
-				</select>
-			</p>
-			<p>
-				Select multiple surfaces by pressing shift or control keys
-			</p>
-			<p>
-				<button id=ISASTEbutViewSelected onclick=ISASTE.selectedSurfaceShowHide(this,ISASTEselAirOnExterior); title="" >
-					show/hide selected air surfaces
-				</button>
-			</p>
+		<p>
+			<button id=ISASTEbutViewAll onclick=ISASTE.setAirSurfaceTypeEditorShowHide(this,ISASTE.surfaceAirIndices); >
+				Show/hide all air type surfaces
+			</button>
+		</p>
 
-			<p>
-			<button onclick=ISASTE.setNewSurfaceType(this); >Identify possible Air surfaces on exterior</button><br>
-			</p>
-			<p>
-				Update surface(s) type to:
-				<button onclick=ISASTE.setNewSurfaceType(this); >ExposedFloor</button><br>
-				<button onclick=ISASTE.setNewSurfaceType(this) >ExteriorWall</button><br>
-				<button onclick=ISASTE.setNewSurfaceType(this) >Roof</button><br>
-				<button onclick=ISASTE.setNewSurfaceType(this) >Shade</button><br>
-				<button onclick=ISASTE.setNewSurfaceType(this) >SlabOnGrade</button><br>
-				<button onclick=ISASTE.setNewSurfaceType(this) >UndergroundWall</button><br>
-				<button onclick=ISASTE.setNewSurfaceType(this) >UndergroundSlab</button><br>
-			</p>
+		<p>
+			<select id=ISASTEselAirSurfaceTypeEditor onchange=ISASTE.selectedSurfaceFocus(this); style=width:100%; multiple size=10 >
+			</select>
+		</p>
+		<p>
+			Select multiple surfaces by pressing shift or control keys
+		</p>
+		<p>
+			<button id=ISASTEbutViewSelected onclick=ISASTE.selectedSurfaceShowHide(this,ISASTEselAirSurfaceTypeEditor); title="" >
+				show/hide selected air surfaces
+			</button>
+		</p>
 
-		</details>`;
+		<p id=ISASTEpNumberSurfacesVisible ></p>
 
-		return htm;
+		<hr>
 
-	};
+		<p>The following is work-in-progress</p>
+
+		<p>
+			1. <button onclick=ISASTE.addNormals(this); >add normals to Air surfaces</button><br>
+		</p>
+
+		<p>
+			2. <button onclick=ISASTE.setTargetSurfacesVisible(this); >set target surfaces visible</button><br>
+		</p>
+
+		<p>
+			3. <button onclick=ISASTE.castRaysGetIntersections(this); >cast rays get intersections</button><br>
+		</p>
+
+		<p>
+			Update surface(s) type to:
+			<button onclick=ISASTE.setNewSurfaceType(this); style="background-color:#aaa;" >ExposedFloor</button><br>
+			<button onclick=ISASTE.setNewSurfaceType(this) style="background-color:#ffb400;" >ExteriorWall</button><br>
+			<button onclick=ISASTE.setNewSurfaceType(this) style="background-color:#800000;" >Roof</button><br>
+			<button onclick=ISASTE.setNewSurfaceType(this) style="background-color:#ffce9d;" >Shade</button><br>
+			<button onclick=ISASTE.setNewSurfaceType(this) style="background-color:#aaa;" >SlabOnGrade</button><br>
+			<button onclick=ISASTE.setNewSurfaceType(this) style="background-color:#aaa;" >UndergroundWall</button><br>
+			<button onclick=ISASTE.setNewSurfaceType(this) style="background-color:#aaa;" >UndergroundSlab</button><br>
+		</p>
+
+	</details>`;
+
+	return htm;
+
+};
+
+
+
+ISASTE.addNormals = function( button ) {
+
+	button.classList.toggle( "active" );
+
+	THRU.groundHelper.visible = !button.classList.contains( 'active' );
+
+	if ( button.classList.contains( 'active' ) ) {
+
+		GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
+
+		ISASTE.surfaceAirIndices.forEach( surfaceId => GBX.surfaceGroup.children[ surfaceId ].visible = true );
+
+	}
+
+	ISASTE.toggleSurfaceNormals();
+
+};
+
+
+
+ISASTE.toggleSurfaceNormals = function() {
+
+	let material = new THREE.MeshNormalMaterial();
+
+	const types = [ 'BoxBufferGeometry', 'BufferGeometry', 'ConeBufferGeometry', 'CylinderBufferGeometry',
+		'ShapeBufferGeometry', 'SphereBufferGeometry' ];
+
+	if ( ISASTE.airNormalsFaces === undefined ) {
+
+		ISASTE.airNormalsFaces = new THREE.Group();
+
+		THR.scene.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh && child.visible ) {
+
+				if ( child.geometry.type === 'Geometry' ) {
+
+					child.geometry.computeFaceNormals();
+
+					const helperNormalsFace = new THREE.FaceNormalsHelper( child, 2, 0xff00ff, 3 );
+					ISASTE.airNormalsFaces.add( helperNormalsFace );
+					ISASTE.airNormalsFaces.visible = false;
+					console.log( 'helperNormalsFace', helperNormalsFace );
+
+				} else if ( types.includes( child.geometry.type ) === true ) {
+
+					//console.log( 'child', child.position, child.rotation );
+
+					const geometry = new THREE.Geometry();
+					const geo = geometry.fromBufferGeometry( child.geometry );
+					const mesh = new THREE.Mesh( geo, material );
+					mesh.rotation.copy( child.rotation );
+					mesh.position.copy( child.position );
+					const helperNormalsFace = new THREE.FaceNormalsHelper( mesh, 0.05 * THRU.radius, 0xff00ff, 3 );
+
+					ISASTE.airNormalsFaces.add( helperNormalsFace );
+					ISASTE.airNormalsFaces.visible = false;
+
+				} else {
+
+					//console.log( 'child.geometry.type', child.geometry.type );
+
+				}
+
+			}
+
+		} );
+
+		ISASTE.airNormalsFaces.name = 'airNormalsFaces';
+		THR.scene.add( ISASTE.airNormalsFaces );
+		ISASTE.airNormalsFaces.visible = false;
+
+	}
+
+	ISASTE.airNormalsFaces.visible = !ISASTE.airNormalsFaces.visible;
+
+};
+
+
+
+ISASTE.setTargetSurfacesVisible = function( button ) {
+
+	button.classList.toggle( "active" );
+
+	ISASTE.surfaceNotShadeIndices = [];
+
+	const surfaces = GBX.surfaces;
+
+	// refactor to a reduce??
+	for ( let i = 0; i < surfaces.length; i++ ) {
+
+		const surface = surfaces[ i ];
+		//console.log( 'surface', surface );
+		const surfaceMatch = surface.match( /surfaceType="Shade"/ );
+		//console.log( 'surfaceMatch', surfaceMatch );
+
+		if ( !surfaceMatch ) {
+
+			ISASTE.surfaceNotShadeIndices.push( i );
+
+		}
+
+	}
+
+	if ( button.classList.contains( 'active' ) ) {
+
+		GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
+
+		ISASTE.surfaceNotShadeIndices.forEach( surfaceId => GBX.surfaceGroup.children[ surfaceId ].visible = true );
+
+	}
+
+};
+
+
+
+ISASTE.castRaysGetIntersections = function( button ) {
+
+	button.classList.toggle( "active" );
+
+	const normals = ISASTE.airNormalsFaces;
+	//console.log( 'normals', normals );
+
+	for ( let normal of normals.children ) {
+
+		const coordinates = normal.geometry.attributes.position.array;
+		//console.log( 'coordinates', coordinates );
+
+		for ( let i  = 0; i < coordinates.length;) {
+
+			const geometry = new THREE.BoxBufferGeometry( 0.2, 0.2, 0.2 );
+			const material = new THREE.MeshNormalMaterial();
+			const mesh = new THREE.Mesh( geometry, material );
+			mesh.position.set( coordinates[ i++ ], coordinates[ i++ ],coordinates[ i++ ] );
+			THR.scene.add( mesh );
+
+		}
+
+	}
+
+
+};
+
 
 
 
@@ -115,10 +289,10 @@ ISASTE.setNewSurfaceType = function( that ) {
 
 
 
-ISASTE.getAirOnExteriorCheck = function() {
-	//console.log( 'ISASTEdetAirOnExterior.open', ISASTEdetAirOnExterior.open );
+ISASTE.getAirSurfaceTypeEditorCheck = function() {
+	//console.log( 'ISASTEdetAirSurfaceTypeEditor.open', ISASTEdetAirSurfaceTypeEditor.open );
 
-	if ( ISASTEdetAirOnExterior.open === false && ISCOR.runAll === false ) { return; }
+	if ( ISASTEdetAirSurfaceTypeEditor.open === false && ISCOR.runAll === false ) { return; }
 
 	if ( GBX.surfaces.length > ISCOR.surfaceCheckLimit ) { return; } // don't run test automatically on very large files
 
@@ -157,7 +331,7 @@ ISASTE.getAirOnExteriorCheck = function() {
 			`<option style=background-color:${ color } value=${ surfaceIndex } >${ id }</option>`;
 	}
 
-	ISASTEselAirOnExterior.innerHTML = htmOptions;
+	ISASTEselAirSurfaceTypeEditor.innerHTML = htmOptions;
 	ISASTEspnCount.innerHTML = `: ${ ISASTE.surfaceAirIndices.length } found`;
 
 	return ISASTE.surfaceAirIndices.length;
@@ -166,7 +340,7 @@ ISASTE.getAirOnExteriorCheck = function() {
 
 
 
-ISASTE.setAirOnExteriorShowHide = function( button, surfaceArray ) {
+ISASTE.setAirSurfaceTypeEditorShowHide = function( button, surfaceArray ) {
 
 	button.classList.toggle( "active" );
 
@@ -190,6 +364,8 @@ ISASTE.setAirOnExteriorShowHide = function( button, surfaceArray ) {
 
 ISASTE.selectedSurfaceFocus = function( select ) {
 
+	THR.controls.enableKeys = false;
+
 	POP.intersected = GBX.surfaceGroup.children[ select.value ];
 
 	POP.getIntersectedDataHtml();
@@ -199,7 +375,10 @@ ISASTE.selectedSurfaceFocus = function( select ) {
 };
 
 
+
 ISASTE.selectedSurfaceShowHide = function( button, select ) {
+
+	THR.controls.enableKeys = false;
 
 	options = Array.from( select.selectedOptions );
 	//console.log( 'options', options );
@@ -214,9 +393,13 @@ ISASTE.selectedSurfaceShowHide = function( button, select ) {
 
 		options.forEach( option => GBX.surfaceGroup.children[ option.value ].visible = true );
 
+		ISASTEpNumberSurfacesVisible.innerHTML = `Number surfaces visible: ${ options.length }`;
+
 	} else {
 
 		GBX.surfaceGroup.children.forEach( element => element.visible = true );
+
+		ISASTEpNumberSurfacesVisible.innerHTML = `Number surfaces visible: ${ GBX.surfaceGroup.children.length }`;
 
 	}
 

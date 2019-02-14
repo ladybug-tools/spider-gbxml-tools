@@ -25,19 +25,25 @@ VST.currentStatus =
 			</ul>
 		</p>
 
+		<p>
+			Issues
+			<li>2019-02-13 ~ not all surface types in model are displayed</li>
+		</p>
 		<p>Wish list
 			<ul>
-				<li>2019-02-08 ~ Shade types not updating as expected</li>
+
 				<li>2019-02-07 ~ Better interaction with openings</li>
 				<li>faster operations on very large files</li>
 
 			</ul>
 		</p>
+
 		<p>
 			<a href="https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/r15/js-gbxml/vst-view-surface-types.js" target="_blank" >
 				View Surface Type Source code
 			</a>
 		</p>
+
 		<details>
 			<summary>Change log</summary>
 			<ul>

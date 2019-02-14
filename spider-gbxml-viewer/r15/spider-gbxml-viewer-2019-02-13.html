@@ -5,8 +5,8 @@
 <meta name = "viewport" content= "width=device-width, initial-scale=1" >
 <meta name = "description" content = "This menu is a component of a basic html content management script with sliding menu, css theme selection, Markdown to HTML, drag and drop file reading capability, access to frequently used pages and more" >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
-<meta name = "date" content = "2019-02-13" >
-<meta name = "release" content = "15.14" >
+<meta name = "date" content = "2019-02-12" >
+<meta name = "release" content = "15.13" >
 <title>Spider gbXML Viewer 'Maevia'</title>
 <link rel="stylesheet" href="js-gbxml/style15-6.css">
 </head>
@@ -57,28 +57,20 @@
 
 //Copyright 2019 pushMe-pullYou authors. MIT License
 
-MNU.description =
-	`
-		Open, examine and edit very large <a href="http://gbxml.org" target="_blank"  title="Thank you, Stephen">gbXML</a> files in 3D
-	`;
-
 MNU.currentStatusCore =
 	`
 		<h3>
 			Spider gbXML Viewer 'Maevia' R${ document.head.querySelector( '[ name=release ]' ).content }
+			~ ${ document.head.querySelector( '[ name=date ]' ).content }
 		</h3>
 
 		<a title="Opoterser [CC BY 3.0 (https://creativecommons.org/licenses/by/3.0)], from Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Dimorphic_Jumping_Spider.jpg"><img width="256" alt="Dimorphic Jumping Spider" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Dimorphic_Jumping_Spider.jpg/512px-Dimorphic_Jumping_Spider.jpg"><br>
-			<i>Maevia inclemens</i></a> - 'Maevia' is the code name for this release of the Ladybug Tools / Spider gbXML Viewer
+			<i>Maevia inclemens</i></a>
+
+
 		<p>
-
-		<p>Mission: build a fast, easy free viewer. Help people profit by teaching, consulting, and customizing what we build together.</p>
-
-		<details>
-			<summary>Change log ~ ${ document.head.querySelector( '[ name=date ]' ).content }</summary>
-
+			Change log
 			<ul>
-				<li>2019-02-13 ~ Add own theme local storage var. Update main popup text. Many updates to 'Air Surface Type Editor'</li>
 				<li>2019-02-12 ~ R15.3 ~ Add 'Air Surface Type on Exterior' issues module</li>
 				<li>2019-02-11 ~ R15.12 > View menu > Show/hide by storey: Better types/storeys integration on show all storeys</li>
 				<li>2019-02-11 ~ R15.11 > View menu > Show/hide by surface type: Code cleanup. Drop 'reset surfaces' button/code as being redundant</li>
@@ -98,25 +90,22 @@ MNU.currentStatusCore =
 				<!-- <li></li>
 					-->
 			</ul>
-		</details>
-
 		</p>
 
-		<p>
-			<details>
+		This web page is built with:
+		${ MNU.descriptionTooToo }
+	`;
 
-			<summary>This web page is built with TooToo</summary>
 
-			${ MNU.descriptionTooToo }
-
-		</p>
+MNU.description =
+	`
+		Open, examine and edit very large <a href="http://gbxml.org" target="_blank"  title="Thank you, Stephen">gbXML</a> files in 3D
 	`;
 
 
 //const uriDefaultFile = '#README.md';
 const urlDefaultFile='https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml';
 
-THM.themeUrlStorage = 'maevia15ThemeUrl'; // set for each instance in HTML file
 THM.cssBasic = "js-gbxml/style15-6.css";
 
 // For main menu header
@@ -142,6 +131,19 @@ MNU.footerUrl = "https://pushme-pullyou.github.io/tootoo13/#";
 MNU.footerTarget = "target=_blank";
 MNU.footerIssues = "https://github.com/ladybug-tools/spider-gbxml-tools/issues";
 
+/*
+// for parsing
+OHC.user = 'ladybug-tools';
+OHC.repo = 'spider-gbxml-tools';
+OHC.pathRepo = '';
+OHC.branch = '/master/';
+
+// When running in dev folder
+// = location.href.includes( OHC.repo ) ? '../' : 'https://' + OHC.repo + "/";
+OHC.urlGitHubPage = `https://${ OHC.repo }/`;
+// When running in build repo
+//OHC.urlGitHubPage = "";
+*/
 
 </script>
 
@@ -178,7 +180,9 @@ MNU.footerIssues = "https://github.com/ladybug-tools/spider-gbxml-tools/issues";
 		</details>
 
 
-		<details id=detMenuEdit class=navSubMenu open >
+		<details id=detMenuEdit class=navSubMenu>
+
+			<div id="divMenuNote" ></div>
 
 			<summary class=sumMenuTitle >Edit Menu </summary>
 

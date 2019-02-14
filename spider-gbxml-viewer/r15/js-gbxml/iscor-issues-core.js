@@ -81,7 +81,7 @@ ISCOR.getMenuIssues = function() {
 
 		${ ISASD.getMenuAdjacentSpaceDuplicate() }
 
-		${ ISASTE.getMenuAirOnExterior() }
+		${ ISASTE.getMenuAirSurfaceTypeEditor() }
 
 		${ ISCOD.getMenuCadObjectId() }
 
@@ -103,7 +103,7 @@ ISCOR.getMenuIssues = function() {
 
 ISCOR.onGbxParse = function() {
 
-	detMenuEdit.open = false;
+	//detMenuEdit.open = false;
 
 	const issues = detMenuEdit.querySelectorAll( 'details' );
 	//console.log( 'issues', issues );
@@ -132,7 +132,7 @@ ISCOR.onClickAllIssues = function() {
 
 	ISASD.getAdjacentSpaceDuplicateCheck();
 
-	ISAOE.getAirOnExteriorCheck();
+	ISAOE.getAirSurfaceTypeEditorCheck();
 
 	ISCOD.getCadObjectIdCheck();
 
