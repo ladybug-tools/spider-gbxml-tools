@@ -484,6 +484,8 @@ ISASTE.castRaysGetIntersections = function( button ) {
 
 	ISASTE.airNormalsFaces.visible = false;
 
+	THRU.groundHelper.visible = false;
+
 };
 
 
