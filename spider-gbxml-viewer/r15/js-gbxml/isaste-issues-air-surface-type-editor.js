@@ -42,14 +42,15 @@ ISASTE.currentStatus =
 		<details>
 			<summary>Wish List / To Do</summary>
 			<ul>
-				<li>2019-02-13 ~ Complete finding intersections</li>
+				<li>2019-02-14 ~ Reset variables when loading new file/li>
+				<li>2019-02-14 ~ Handle models with concavities</li>
 			</ul>
 		<details>
 
 		<details>
 			<summary>Change log</summary>
 			<ul>
-
+				<li>2019-02-14 ~ Add beginning of working check if Air surface types are on exterior of a model</li>
 				<li>2019-02-13 ~ Add find intersections between Air and other surfaces but not shade</li>
 				<li>2019-02-13 ~ Fixed using cursor keys updates select 3D at same time</li>
 				<li>2019-02-13 ~ Add colors to surface type buttons << started</li>
