@@ -3,7 +3,7 @@
 /* globals GBX, VST, THREE, VBSselStorey, VBSdivReportsLog, VSTdivSurfaceType */
 
 
-const VBS = {"release": "R15.4", "date": "2019-02-11" };
+const VBS = {"release": "R15.5", "date": "2019-02-20" };
 
 VBS.description =
 	`
@@ -43,6 +43,7 @@ VBS.currentStatus =
 		<details>
 			<summary>Change log</summary>
 			<ul>
+				<li>2019-02-20 ~ Add display storey level names in elevation order </li>
 				<li>2019-02-13 ~ Close menu when new file loaded</li>
 				<li>2019-02-11 ~ Update text content. Code cleanup.</li>
 				<li>2019-02-11 ~ Better types/storeys integration on show all storeys</li>
@@ -97,13 +98,27 @@ VBS.getStoreysOptions = function() {
 
 	VBSselStorey.size = GBX.storeys.length > 10 ? 10 : GBX.storeys.length;
 
-	const storeyNames = GBX.storeys.map( storey => storey.match( '<Name>(.*?)</Name>' )[ 1 ] );
-	//console.log( 'storeyNames', storeyNames);
-
 	const storeyIds = GBX.storeys.map( storey => storey.match( 'id="(.*?)">')[ 1 ] );
 	//console.log( 'storeyIds', storeyIds );
 
-	const options = storeyNames.map( ( name, index ) => `<option value=${ storeyIds[ index ] }>${ name }</option>` );
+	const storeyLevels = GBX.storeys.map( storey => storey.match( '<Level>(.*?)</Level>' )[ 1 ] );
+	console.log( 'storeyLevels', storeyLevels);
+
+	const storeyLevelsSorted = storeyLevels.slice().sort( (a, b) => a - b );
+	console.log( 'storeyLevelsSorted', storeyLevelsSorted );
+
+	const storeyNames = GBX.storeys.map( storey => storey.match( '<Name>(.*?)</Name>' )[ 1 ] );
+	//console.log( 'storeyNames', storeyNames);
+
+	const options = storeyLevelsSorted.map( level => {
+		//console.log( 'level', level );
+
+		const index = storeyLevels.indexOf( level );
+		//console.log( 'indexUnsorted', indexUnsorted );
+
+		return `<option value=${ storeyIds[ index ] }>${ storeyNames[ index ] }</option>`
+
+	} );
 
 	VBSselStorey.innerHTML = options;
 
