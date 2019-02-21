@@ -104,7 +104,7 @@ VBS.getStoreysOptions = function() {
 	const storeyLevels = GBX.storeys.map( storey => storey.match( '<Level>(.*?)</Level>' )[ 1 ] );
 	console.log( 'storeyLevels', storeyLevels);
 
-	const storeyLevelsSorted = storeyLevels.slice().sort( (a, b) => a - b );
+	const storeyLevelsSorted = storeyLevels.slice().sort( (a, b) => b - a );
 	console.log( 'storeyLevelsSorted', storeyLevelsSorted );
 
 	const storeyNames = GBX.storeys.map( storey => storey.match( '<Name>(.*?)</Name>' )[ 1 ] );
