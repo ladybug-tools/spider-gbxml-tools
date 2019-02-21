@@ -3,7 +3,7 @@
 /* jshint esversion: 6 */
 
 
-const ISASTE = { "release": "R15.5", "date": "2019-02-21" };
+const ISASTE = { "release": "R15.4", "date": "2019-02-20" };
 
 ISASTE.description =
 	`
@@ -80,7 +80,7 @@ ISASTE.currentStatus =
 		<details>
 			<summary>Wish List / To Do</summary>
 			<ul>
-				<li>2019-02-15 ~ Easy access to show edges external vertical and/or horizontal surfaces</li>
+				<li>2019-02-15 ~ Easy access to show edges external vertical and/or horizontal suraces</li>
 				<li>2019-02-15 ~ Check normals for both sides of surfaces</li>f
 				<li>2019-02-15 ~ Save changes to files</li>
 				<li>2019-02-15 ~ Identify separately vertical and horizontal surfaces</li>
@@ -93,8 +93,6 @@ ISASTE.currentStatus =
 		<details>
 			<summary>Change log</summary>
 			<ul>
-				<li>2019-02-21 ~ Add first pass at adding 'Point in Polygon' search. Seems to be working OK. Need to add other side normal check.</li>
-				<li>2019-02-21 ~ Add button to view only internal air surfaces</li>
 				<li>2019-02-20 ~ Add buttons to display only horizontal or vertical exterior air surfaces</li>
 				<li>2019-02-15 ~ Add vertical surfaces display in red, horizontal surfaces in blue. (Not perfectly yet.)</li>
 				<li>2019-02-15 ~ Add text to popup help. Set default Air surface to display if none selected by user.</li>
@@ -166,11 +164,9 @@ ISASTE.getMenuAirSurfaceTypeEditor = function() {
 
 		<p id=ISASTEfixes ></p>
 
-		<p>4. <button onclick=ISASTE.selectSurfaces("ff0000"); >select exterior vertical air surfaces</button></p>
+		<p>4. <button onclick=ISASTE.selectSurfaces("ff0000"); >select vertical surfaces</button></p>
 
-		<p>4. <button onclick=ISASTE.selectSurfaces("0000ff"); >select exterior horizontal air surfaces</button></p>
-
-		<p>4. <button onclick=ISASTE.selectSurfaces(); >select internal air surfaces</button></p>
+		<p>4. <button onclick=ISASTE.selectSurfaces("0000ff"); >select horizontal surfaces</button></p>
 
 		<p>
 			Update surface(s) type to:
@@ -193,25 +189,16 @@ ISASTE.getMenuAirSurfaceTypeEditor = function() {
 
 ISASTE.selectSurfaces = function( color ) {
 
-	if ( color ) {
+	ISASTE.surfaceAirIndices
 
-		GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
-		ISASTE.surfaceAirIndices.forEach( surfaceId => {
+	GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
 
-			mesh = GBX.surfaceGroup.children[ surfaceId ];
-			mesh.visible = mesh.material.color.getHexString() === color ? true : false;
+	ISASTE.surfaceAirIndices.forEach( surfaceId => {
 
-		} );
+		mesh = GBX.surfaceGroup.children[ surfaceId ];
+		mesh.visible = mesh.material.color.getHexString() === color ? true : false;
 
-	} else {
-
-		GBX.surfaceGroup.children.forEach( mesh => {
-			//console.log( '', mesh.material.color.getHexString() );
-			mesh.visible = mesh.material.color.getHexString() === "ffff00" ? true : false;
-
-		} );
-
-	}
+	} );
 
 }
 
@@ -257,7 +244,6 @@ ISASTE.getAirSurfaceTypeEditorCheck = function() {
 
 		htmOptions +=
 			`<option style=background-color:${ color } value=${ surfaceIndex } >${ id }</option>`;
-
 	}
 
 	ISASTEselAirSurfaceTypeEditor.innerHTML = htmOptions;
@@ -462,8 +448,6 @@ ISASTE.setTargetSurfacesVisible = function( button ) {
 };
 
 
-let count2 = 0;
-
 
 ISASTE.castRaysGetIntersections = function( button ) {
 
@@ -472,7 +456,6 @@ ISASTE.castRaysGetIntersections = function( button ) {
 	ISASTE.airSurfacesOnExterior = [];
 
 	let fixes = 0;
-
 
 	const normals = ISASTE.airNormalsFaces;
 	//console.log( 'normals', normals );
@@ -516,12 +499,7 @@ ISASTE.castRaysGetIntersections = function( button ) {
 
 	}
 
-	console.log( 'count2', count2 );
-
-	ISASTEfixes.innerHTML =
-		`Air surfaces on exterior identified: ${ fixes }
-		<br>
-		Identified by Inside Polygon method: ${ count2 }`;
+	ISASTEfixes.innerHTML = `Air surfaces on exterior identified: ${ fixes }`;
 
 	GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
 
@@ -537,89 +515,43 @@ ISASTE.castRaysGetIntersections = function( button ) {
 
 ISASTE.findIntersections = function( objs, origin, direction ) {
 
+
+	let count = 0;
 	const spriteMaterial = new THREE.SpriteMaterial( { color: 'magenta' } );
-	let count1 = 0;
 
 	const raycaster = new THREE.Raycaster();
-	near = 0.2 * THRU.radius;
+	near = 0.001 * THRU.radius;
 	raycaster.set( origin, direction, near, THRU.radius ); // has to be the correct vertex order
 
 	const intersects = raycaster.intersectObjects( objs );
-	//console.log( 'intersects', intersects.length );
+	//console.log( 'intersects', intersects );
 
-	const surfacesExterior = ["ExposedFloor","ExteriorWall","Roof","SlabOnGrade","UndergroundWall","UndergroundSlab" ]
 
-	if ( intersects.length === 0 ) {
-
-		//console.log( 'intersects', intersects ); //??
-
-	} else if ( intersects.length === 1 ) {
+	if ( intersects.length === 1 ) {
 
 		//console.log( 'intersect.object', intersects[ 0 ].object );
 
 		const mesh = intersects[ 0 ].object;
 
-		count1++;
-		ISASTE.addColor( mesh );
+		const surface = GBX.surfaces[ mesh.userData.index ];
+		//console.log( 'surface', surface );
 
-	} else if ( intersects.length > 1 && ( intersects.length - 1 ) % 2 === 0 ) {
+		const tilt = surface.match( /tilt>(.*?)\<\/tilt/i )[ 1 ];
+		//console.log( 'tilt', tilt );
 
-		let countExt = 0;
+		const color = ( tilt !== "90" ) ? 'blue' : 'red';
 
-		for ( let i = 1; i < intersects.length; i++) {
+		mesh.material = new THREE.MeshBasicMaterial( { color: color, side: 2 });
 
-			const index = intersects[ i ].object.userData.index;
+		mesh.material.needsUpdate = true;
 
-			const surface = GBX.surfaces[ index ];
-			//console.log( 'surface', surface );
+		ISASTE.airSurfacesOnExterior.push( mesh.userData.index )
 
-			const surfaceType = surface.match( /surfaceType="(.*?)"/ )[ 1 ];
-
-			if ( surfacesExterior.includes( surfaceType ) ) {
-
-				//console.log( 'surfaceType', surfaceType );
-
-				countExt++;
-
-			}
-
-		}
-
-
-		if ( countExt % 2 === 0 ) {
-
-			ISASTE.addColor( intersects[ 0 ].object );
-			//console.log( 'intersects even', intersects );
-
-			count1++
-			count2++;
-
-		}
+		count++;
 
 	}
 
-
-	return count1;
-
-};
-
-
-
-ISASTE.addColor = function( mesh ){
-
-	const surface = GBX.surfaces[ mesh.userData.index ];
-	//console.log( 'surface', surface );
-
-	const tilt = surface.match( /tilt>(.*?)\<\/tilt/i )[ 1 ];
-	//console.log( 'tilt', tilt );
-
-	const color = ( tilt !== "90" ) ? 'blue' : 'red';
-
-	mesh.material = new THREE.MeshBasicMaterial( { color: color, side: 2 });
-
-	mesh.material.needsUpdate = true;
-
-	ISASTE.airSurfacesOnExterior.push( mesh.userData.index );
+	return count;
 
 };
 
