@@ -3,7 +3,7 @@
 /* jshint esversion: 6 */
 
 
-const ISASTE = { "release": "R15.4", "date": "2019-02-20" };
+const ISASTE = { "release": "R15.3", "date": "2019-02-15" };
 
 ISASTE.description =
 	`
@@ -81,7 +81,7 @@ ISASTE.currentStatus =
 			<summary>Wish List / To Do</summary>
 			<ul>
 				<li>2019-02-15 ~ Easy access to show edges external vertical and/or horizontal suraces</li>
-				<li>2019-02-15 ~ Check normals for both sides of surfaces</li>f
+				<li>2019-02-15 ~ Check normals for both sides of surfaces</li>
 				<li>2019-02-15 ~ Save changes to files</li>
 				<li>2019-02-15 ~ Identify separately vertical and horizontal surfaces</li>
 				<li>2019-02-15 ~ Show/hide identified incorrect surfaces</li>
@@ -93,7 +93,6 @@ ISASTE.currentStatus =
 		<details>
 			<summary>Change log</summary>
 			<ul>
-				<li>2019-02-20 ~ Add buttons to display only horizontal or vertical exterior air surfaces</li>
 				<li>2019-02-15 ~ Add vertical surfaces display in red, horizontal surfaces in blue. (Not perfectly yet.)</li>
 				<li>2019-02-15 ~ Add text to popup help. Set default Air surface to display if none selected by user.</li>
 				<li>2019-02-14 ~ Add beginning of working check if Air surface types are on exterior of a model</li>
@@ -163,11 +162,6 @@ ISASTE.getMenuAirSurfaceTypeEditor = function() {
 		</p>
 
 		<p id=ISASTEfixes ></p>
-
-		<p>4. <button onclick=ISASTE.selectSurfaces("ff0000"); >select vertical surfaces</button></p>
-
-		<p>4. <button onclick=ISASTE.selectSurfaces("0000ff"); >select horizontal surfaces</button></p>
-
 		<p>
 			Update surface(s) type to:
 			<button onclick=ISASTE.setNewSurfaceType(this); style="background-color:#aaa;" >ExposedFloor</button><br>
@@ -184,23 +178,6 @@ ISASTE.getMenuAirSurfaceTypeEditor = function() {
 	return htm;
 
 };
-
-
-
-ISASTE.selectSurfaces = function( color ) {
-
-	ISASTE.surfaceAirIndices
-
-	GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
-
-	ISASTE.surfaceAirIndices.forEach( surfaceId => {
-
-		mesh = GBX.surfaceGroup.children[ surfaceId ];
-		mesh.visible = mesh.material.color.getHexString() === color ? true : false;
-
-	} );
-
-}
 
 
 
@@ -526,20 +503,35 @@ ISASTE.findIntersections = function( objs, origin, direction ) {
 	const intersects = raycaster.intersectObjects( objs );
 	//console.log( 'intersects', intersects );
 
+	/*
+	ISASTE.sprites = new THREE.Group();
+	const s = 0.005 * THRU.radius;
+
+	for ( let intersect of intersects ) {
+
+		if ( intersect.distance > 0 ) {
+
+			const sprite = new THREE.Sprite( spriteMaterial );
+			sprite.scale.set( s, s, s,);
+			sprite.position.copy( intersect.point );
+
+			ISASTE.sprites.add( sprite );
+
+		}
+
+	}
+
+	THR.scene.add( ISASTE.sprites );
+
+	*/
 
 	if ( intersects.length === 1 ) {
 
 		//console.log( 'intersect.object', intersects[ 0 ].object );
 
-		const mesh = intersects[ 0 ].object;
+		mesh = intersects[ 0 ].object;
 
-		const surface = GBX.surfaces[ mesh.userData.index ];
-		//console.log( 'surface', surface );
-
-		const tilt = surface.match( /tilt>(.*?)\<\/tilt/i )[ 1 ];
-		//console.log( 'tilt', tilt );
-
-		const color = ( tilt !== "90" ) ? 'blue' : 'red';
+		color = ( Math.abs( mesh.geometry.attributes.normal.array[ 2 ] ) === 1 ) ? 'blue' : 'red';
 
 		mesh.material = new THREE.MeshBasicMaterial( { color: color, side: 2 });
 
@@ -553,7 +545,7 @@ ISASTE.findIntersections = function( objs, origin, direction ) {
 
 	return count;
 
-};
+}
 
 
 
