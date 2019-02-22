@@ -1,15 +1,20 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
-/* globals GBX, POP, ISCOR, divPopUpData */
+/* globals THR, THRU, THREE, GBX, POP, ISCOR, ISASTEdetAirSurfaceTypeEditor,ISASTEselAirSurfaceTypeEditor,
+ISASTEspnCount, ISASTEbutViewSelected,ISASTEbutViewAll, ISASTEpNumberSurfacesVisible, ISASTEfixes, divPopUpData */
 /* jshint esversion: 6 */
 
 
-const ISASTE = { "release": "R15.5", "date": "2019-02-21" };
+const ISASTE = { "release": "R15.6", "date": "2019-02-22" };
+
+let count2 = 0;
+
 
 ISASTE.description =
 	`
 		Air Surface Type Editor (ISASTE) allows you display all or some Air surfaces, update the surface type and identify Air surfaces that may be at the exterior of the model.
 
 	`;
+
 
 ISASTE.currentStatus =
 	`
@@ -80,6 +85,7 @@ ISASTE.currentStatus =
 		<details>
 			<summary>Wish List / To Do</summary>
 			<ul>
+
 				<li>2019-02-15 ~ Easy access to show edges external vertical and/or horizontal surfaces</li>
 				<li>2019-02-15 ~ Check normals for both sides of surfaces</li>f
 				<li>2019-02-15 ~ Save changes to files</li>
@@ -93,6 +99,7 @@ ISASTE.currentStatus =
 		<details>
 			<summary>Change log</summary>
 			<ul>
+				<li>2019-02-22 ~ 15.6 ~ Minor fixes. Run through jsHint & do fixes</li>
 				<li>2019-02-21 ~ Add first pass at adding 'Point in Polygon' search. Seems to be working OK. Need to add other side normal check.</li>
 				<li>2019-02-21 ~ Add button to view only internal air surfaces</li>
 				<li>2019-02-20 ~ Add buttons to display only horizontal or vertical exterior air surfaces</li>
@@ -118,9 +125,8 @@ ISASTE.getMenuAirSurfaceTypeEditor = function() {
 
 	`<details id="ISASTEdetAirSurfaceTypeEditor" ontoggle=ISASTE.getAirSurfaceTypeEditorCheck(); >
 
-		<summary class=highlight >Air Surface Type Editor<span id="ISASTEspnCount" ></span>
-		<a id=ISASTEsumHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(ISASTEsumHelp,ISASTE.currentStatus);" >&nbsp; ? &nbsp;</a>
-
+		<summary>Air Surface Type Editor<span id="ISASTEspnCount" ></span>
+			<a id=ISASTEsumHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(ISASTEsumHelp,ISASTE.currentStatus);" >&nbsp; ? &nbsp;</a>
 		</summary>
 
 		<p>
@@ -198,7 +204,7 @@ ISASTE.selectSurfaces = function( color ) {
 		GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
 		ISASTE.surfaceAirIndices.forEach( surfaceId => {
 
-			mesh = GBX.surfaceGroup.children[ surfaceId ];
+			const mesh = GBX.surfaceGroup.children[ surfaceId ];
 			mesh.visible = mesh.material.color.getHexString() === color ? true : false;
 
 		} );
@@ -213,7 +219,7 @@ ISASTE.selectSurfaces = function( color ) {
 
 	}
 
-}
+};
 
 
 
@@ -312,11 +318,11 @@ ISASTE.selectedSurfaceShowHide = function( button, select ) {
 
 	if ( ISASTEselAirSurfaceTypeEditor.selectedOptions.length === 0 ) {
 
-		ISASTEselAirSurfaceTypeEditor.selectedIndex = 0
+		ISASTEselAirSurfaceTypeEditor.selectedIndex = 0;
 
 	}
 
-	options = Array.from( select.selectedOptions );
+	const options = Array.from( select.selectedOptions );
 	//console.log( 'options', options );
 
 	button.classList.toggle( "active" );
@@ -340,7 +346,7 @@ ISASTE.selectedSurfaceShowHide = function( button, select ) {
 	}
 
 
-}
+};
 
 
 
@@ -462,7 +468,7 @@ ISASTE.setTargetSurfacesVisible = function( button ) {
 };
 
 
-let count2 = 0;
+
 
 
 ISASTE.castRaysGetIntersections = function( button ) {
@@ -472,7 +478,6 @@ ISASTE.castRaysGetIntersections = function( button ) {
 	ISASTE.airSurfacesOnExterior = [];
 
 	let fixes = 0;
-
 
 	const normals = ISASTE.airNormalsFaces;
 	//console.log( 'normals', normals );
@@ -515,8 +520,7 @@ ISASTE.castRaysGetIntersections = function( button ) {
 		}
 
 	}
-
-	console.log( 'count2', count2 );
+	//console.log( 'count2', count2 );
 
 	ISASTEfixes.innerHTML =
 		`Air surfaces on exterior identified: ${ fixes }
@@ -537,17 +541,16 @@ ISASTE.castRaysGetIntersections = function( button ) {
 
 ISASTE.findIntersections = function( objs, origin, direction ) {
 
-	const spriteMaterial = new THREE.SpriteMaterial( { color: 'magenta' } );
 	let count1 = 0;
 
 	const raycaster = new THREE.Raycaster();
-	near = 0.2 * THRU.radius;
+	const near = 0.2 * THRU.radius;
 	raycaster.set( origin, direction, near, THRU.radius ); // has to be the correct vertex order
 
 	const intersects = raycaster.intersectObjects( objs );
 	//console.log( 'intersects', intersects.length );
 
-	const surfacesExterior = ["ExposedFloor","ExteriorWall","Roof","SlabOnGrade","UndergroundWall","UndergroundSlab" ]
+	const surfacesExterior = ["ExposedFloor","ExteriorWall","Roof","SlabOnGrade","UndergroundWall","UndergroundSlab" ];
 
 	if ( intersects.length === 0 ) {
 
@@ -591,7 +594,7 @@ ISASTE.findIntersections = function( objs, origin, direction ) {
 			ISASTE.addColor( intersects[ 0 ].object );
 			//console.log( 'intersects even', intersects );
 
-			count1++
+			count1++;
 			count2++;
 
 		}
@@ -610,7 +613,7 @@ ISASTE.addColor = function( mesh ){
 	const surface = GBX.surfaces[ mesh.userData.index ];
 	//console.log( 'surface', surface );
 
-	const tilt = surface.match( /tilt>(.*?)\<\/tilt/i )[ 1 ];
+	const tilt = surface.match( /tilt>(.*?)<\/tilt/i )[ 1 ];
 	//console.log( 'tilt', tilt );
 
 	const color = ( tilt !== "90" ) ? 'blue' : 'red';

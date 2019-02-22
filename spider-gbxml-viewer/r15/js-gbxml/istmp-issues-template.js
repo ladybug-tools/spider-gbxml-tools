@@ -101,7 +101,7 @@ ISTMP.getTemplateCheck = function() {
 
 		// bogus code - admits all surfaces
 		const invalidTemplate = GBX.surfaces.find( element => GBX.surfaceTypes.indexOf( surfaceId ) < 0 );
-		console.log( 'invalidTemplate', invalidTemplate );
+		//console.log( 'invalidTemplate', invalidTemplate );
 
 		if ( invalidTemplate ) {
 

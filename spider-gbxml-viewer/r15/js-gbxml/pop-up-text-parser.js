@@ -1,11 +1,11 @@
-/* global THREE, THR, THRU, GBX, divPopUpData */
+/* global THREE, THR, THRU, GBX, divPopUpData, POPdivShowHide, POPelementAttributes, POPbutAdjacentSpace1, POPbutAdjacentSpace2 */
 // jshint esversion: 6
 
 // Copyright 2019 Ladybug Tools authors. MIT License.
 
-var POP = { "release": "R15.0", "date": "2019-02-13" };
+var POP = { "release": "R15.1", "date": "2019-02-22" };
 
-POP.urlSource = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-pop-up"
+POP.urlSource = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-pop-up";
 
 POP.currentStatus =
 	`
@@ -31,8 +31,9 @@ POP.currentStatus =
 		<details>
 			<summary>Change log ~ ${ POP.date }</summary>
 
-			<li>2019-02-13 ~ Fix issues when no zone. Update current status</li>
 			<ul>
+				<li>2019-02-22 ~ Pass through jsHint and make fixes</li>
+				<li>2019-02-13 ~ Fix issues when no zone. Update current status</li>
 				<!-- <li></li>
 				-->
 		</ul>
@@ -123,13 +124,13 @@ POP.onClickZoomAll = function() {
 
 	THRU.zoomObjectBoundingSphere( GBX.boundingBox );
 
-	time = performance.now();
+	const time = performance.now();
 
-	campusXml = POP.parser.parseFromString( GBX.text, "application/xml").documentElement;
+	const campusXml = POP.parser.parseFromString( GBX.text, "application/xml").documentElement;
 	POP.campusXml = campusXml;
-	//console.log( 'surfaceXml', surfaceXml.attributes );
+	//console.log( 'campusXml', campusXml.attributes );
 
-	buildingXml = campusXml.getElementsByTagName( 'Building' )[ 0 ];
+	const buildingXml = campusXml.getElementsByTagName( 'Building' )[ 0 ];
 
 	divPopUpData.innerHTML=
 	`
@@ -327,11 +328,11 @@ POP.drawBorder = function( surfaceXml ) {
 	const points = Array.from( planar.getElementsByTagName( 'CartesianPoint' ) );
 	//console.log( 'points', points );
 
-	vertices = points.map( point => {
+	const vertices = points.map( point => {
 
 		const cord = Array.from( point.children );
 
-		const vertex = new THREE.Vector3( Number( cord[ 0 ].innerHTML ), Number( cord[ 1 ].innerHTML ), Number( cord[ 2 ].innerHTML ) )
+		const vertex = new THREE.Vector3( Number( cord[ 0 ].innerHTML ), Number( cord[ 1 ].innerHTML ), Number( cord[ 2 ].innerHTML ) );
 
 		return vertex;
 
@@ -492,7 +493,7 @@ POP.getSurfaceAttributes = function( surfaceXml ) {
 
 POP.getAttributesAdjacentSpace = function( surfaceXml ){
 
-	adjacentSpaceId = surfaceXml.getElementsByTagName( "AdjacentSpaceId" );
+	const adjacentSpaceId = surfaceXml.getElementsByTagName( "AdjacentSpaceId" );
 	//console.log( 'adjacentSpaceId', adjacentSpaceId );
 	//a = adjacentSpaceId
 
@@ -509,8 +510,8 @@ POP.getAttributesAdjacentSpace = function( surfaceXml ){
 
 		//console.log( 'obj.AdjacentSpaceId', obj.AdjacentSpaceId );
 
-		space1 = adjacentSpaceId[ 0 ].getAttribute( "spaceIdRef" );
-		space2 = adjacentSpaceId[ 1 ].getAttribute( "spaceIdRef" );
+		const space1 = adjacentSpaceId[ 0 ].getAttribute( "spaceIdRef" );
+		const space2 = adjacentSpaceId[ 1 ].getAttribute( "spaceIdRef" );
 
 		POP.adjacentSpaceId = [ space1, space2 ];
 
@@ -532,7 +533,7 @@ POP.getAttributesAdjacentSpace = function( surfaceXml ){
 
 		//console.log( 'obj.AdjacentSpaceId', obj.AdjacentSpaceId );
 
-		spaceId = adjacentSpaceId[ 0 ].getAttribute( "spaceIdRef" );
+		const spaceId = adjacentSpaceId[ 0 ].getAttribute( "spaceIdRef" );
 		POP.adjacentSpaceId = [ spaceId];
 
 		POP.setAttributesStoreyAndZone( spaceId );
@@ -554,7 +555,7 @@ POP.getAttributesAdjacentSpace = function( surfaceXml ){
 
 POP.setAttributesStoreyAndZone = function( spaceId ) {
 
-	const spaceText = GBX.spaces.find( item => item.includes( spaceId ) )
+	const spaceText = GBX.spaces.find( item => item.includes( spaceId ) );
 	//console.log( 'spaceText', spaceText );
 
 	POP.storeyId = spaceText.match ( /buildingStoreyIdRef="(.*?)"/ )[ 1 ];
@@ -587,7 +588,7 @@ POP.setAttributesStoreyAndZone = function( spaceId ) {
 	}
 
 
-}
+};
 
 
 
@@ -622,9 +623,9 @@ POP.getAttributesPlanarGeometry = function( surfaceXml ) {
 
 POP.setOneButtonActive = function( button ) {
 
-	buttons = POPdivShowHide.querySelectorAll( "button" );
+	const buttons = POPdivShowHide.querySelectorAll( "button" );
 
-	Array.from( buttons ).forEach( butt => { if ( butt !== button ) ( button.classList.remove( "active" ) )} );
+	Array.from( buttons ).forEach( butt => { if ( butt !== button ) ( button.classList.remove( "active" ) ); } );
 
 	//button.classList.add( "active" );
 
@@ -638,7 +639,7 @@ POP.toggleSurfaceFocus = function( button ) {
 
 	//POP.setOneButtonActive( button );
 
-	focus = button.classList.contains( "active" );
+	const focus = button.classList.contains( "active" );
 
 	if ( focus === true ) {
 
@@ -692,13 +693,12 @@ POP.toggleSpaceVisible = function( button, spaceId ) {
 
 	button.classList.toggle( "active" );
 
-	visible1 = POPbutAdjacentSpace1.classList.contains( "active" );
-	spaceId1 = POPbutAdjacentSpace1.innerHTML.slice( 7 );
+	const visible1 = POPbutAdjacentSpace1.classList.contains( "active" );
+	const spaceId1 = POPbutAdjacentSpace1.innerHTML.slice( 7 );
 
-	visible2 = POPbutAdjacentSpace2.classList.contains( "active" );
-	spaceId2 = POPbutAdjacentSpace2.innerHTML.slice( 7 );
+	const visible2 = POPbutAdjacentSpace2.classList.contains( "active" );
+	const spaceId2 = POPbutAdjacentSpace2.innerHTML.slice( 7 );
 	//console.log( 'adj space vis', visible1, visible2 );
-
 
 	const children =  GBX.surfaceGroup.children;
 
@@ -733,7 +733,7 @@ POP.toggleSpaceVisible = function( button, spaceId ) {
 			const surface = GBX.surfaces[ id ];
 			const arr = surface.match( / spaceIdRef="(.*?)"/g );
 
-			if ( !arr ) { break; };
+			if ( !arr ) { break; }
 
 			arr.forEach( item => child.visible = item.includes( spaceId1 ) || item.includes( spaceId2 ) ? true : child.visible );
 
@@ -778,13 +778,13 @@ POP.toggleStoreyVisible = function( button, storeyId ) {
 
 		const spaceIdsInStory = [];
 
-		for ( space of spaces ) {
+		for ( let space of spaces ) {
 
-			spaceStoryId = space.match( `buildingStoreyIdRef="(.*?)"` )[ 1 ];
+			const spaceStoryId = space.match( `buildingStoreyIdRef="(.*?)"` )[ 1 ];
 
 			if ( spaceStoryId === storeyId ) {
 
-				spaceId = space.match( ` id="(.*?)"` )[ 1 ];
+				const spaceId = space.match( ` id="(.*?)"` )[ 1 ];
 				//console.log( 'spaceId', spaceId );
 
 				spaceIdsInStory.push( spaceId );
@@ -803,11 +803,11 @@ POP.toggleStoreyVisible = function( button, storeyId ) {
 
 			if ( !spacesArr ) { break; }
 
-			spacesIdsArr = spacesArr.map( space => space.match( `="(.*?)"` )[ 1 ] );
+			const spacesIdsArr = spacesArr.map( space => space.match( `="(.*?)"` )[ 1 ] );
 
 			//console.log( 'spacesIdsArr', spacesIdsArr );
 
-			for ( spaceId of spaceIdsInStory ) {
+			for ( let spaceId of spaceIdsInStory ) {
 
 				child.visible = spacesIdsArr.includes( spaceId ) ? true : child.visible;
 
@@ -860,12 +860,12 @@ POP.getToggleZoneVisible = function ( button, zoneIdRef ) {
 
 		for ( let space of spaces ) {
 
-			spaceZoneId = space.match( /zoneIdRef="(.*?)"/ );
+			const spaceZoneId = space.match( /zoneIdRef="(.*?)"/ );
 
 			if ( spaceZoneId && spaceZoneId[ 1 ] === zoneIdRef ) {
 				//console.log( 'spaceZoneId', spaceZoneId[ 1 ] );
 
-				spaceId = space.match( ` id="(.*?)"` )[ 1 ];
+				const spaceId = space.match( ` id="(.*?)"` )[ 1 ];
 				//console.log( 'spaceId', spaceId );
 
 				spaceIdsInZone.push( spaceId );
@@ -885,10 +885,10 @@ POP.getToggleZoneVisible = function ( button, zoneIdRef ) {
 
 			if ( spacesArr ) {
 
-				spacesIdsArr = spacesArr.map( space => space.match( `="(.*?)"` )[ 1 ] );
+				const spacesIdsArr = spacesArr.map( space => space.match( `="(.*?)"` )[ 1 ] );
 				//console.log( 'spacesIdsArr', spacesIdsArr );
 
-				for ( spaceId of spaceIdsInZone ) {
+				for ( let spaceId of spaceIdsInZone ) {
 
 					child.visible = spacesIdsArr.includes( spaceId ) ? true : child.visible;
 
