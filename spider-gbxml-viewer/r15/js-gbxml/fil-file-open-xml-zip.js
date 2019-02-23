@@ -469,7 +469,7 @@ FIL.onProgress = function( size = 0, note = '' ) {
 
 	FILdetFileOpen.open = true;
 
-	FILdetFileOpen.scrollIntoViewIfNeeded();
+	FILdetFileOpen.scrollIntoView();
 
 	const timeToLoad = ( performance.now() - FIL.timeStart ).toLocaleString();
 

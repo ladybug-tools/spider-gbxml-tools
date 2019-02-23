@@ -55,7 +55,7 @@ summary { cursor: pointer; font-weight: bold; }
 #navMenu button:hover { background: #ccc; color: #888 }
 
 #navMenu button.active { border-color: black; font-style: italic; font-weight: bold; margin-left: 1rem;
-	box-shadow: 2px 2px re#888; }
+	box-shadow: 2px 2px #888; }
 
 
 #butHamburger { box-sizing: border-box;
@@ -66,7 +66,7 @@ summary { cursor: pointer; font-weight: bold; }
 
 #navPopUp { /* background-color: #eee; */ border-radius: 8px; display: block; max-height: 95%; max-width: 25%;
 	opacity: 0.95;  overflow: auto; padding: 0 5px 10px 5px; position: fixed; resize: both; right: 1rem;
-	top: 1rem; z-index: 10; };
+	top: 1rem; z-index: 10; }
 
 
 
@@ -84,7 +84,7 @@ summary { cursor: pointer; font-weight: bold; }
 	#divContainer { width: 80rem; }
 	#divContainer { margin: 0; padding: 0;}
 
-	#divContents { max-width: cal( 100vw ); width: calc( 100vw ); }
+	#divContents { max-width: calc( 100vw ); width: calc( 100vw ); }
 	#divContents { margin: 0; padding: 0 1rem; }
 
   }
