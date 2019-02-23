@@ -142,7 +142,7 @@ POP.onClickZoomAll = function() {
 
 	`;
 
-	console.log( '', performance.now() - time );
+	//console.log( '', performance.now() - time );
 };
 
 
