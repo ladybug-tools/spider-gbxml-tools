@@ -178,11 +178,19 @@ GBX.parseFile = function( gbxml )  {
 GBX.setSurfaceTypesVisible = function ( typesArray ) {
 	//console.log( 'typesArray', typesArray );
 
-	GBX.surfacesFiltered = typesArray.flatMap( filter =>
+	//GBX.surfacesFiltered = typesArray.flatMap( filter =>
+
+	//	GBX.surfacesIndexed.filter( surface => surface.includes( `"${ filter }"` ) )
+
+	//);
+
+
+	// polyfill for MS Edge
+	GBX.surfacesFiltered = typesArray.reduce( (acc, filter ) => acc.concat(
 
 		GBX.surfacesIndexed.filter( surface => surface.includes( `"${ filter }"` ) )
 
-	);
+	), []);
 
 	//divReportsLog.innerHTML =
 	GBX.sendSurfacesToThreeJs( GBX.surfacesFiltered );
