@@ -42,8 +42,11 @@
 
 <script>
 
-	const path = "../../../spider-gbxml-viewer/r15/spider-gbxml-viewer.html";
-	const folder = "https://www.ladybug.tools/spider/gbxml-sample-files/";
+	const path = "../../../spider-gbxml-viewer/r15/spider-gbxml-viewer15.html";
+	const folder = "../../../spider/gbxml-sample-files/";
+
+	//const path = "https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/r15/spider-gbxml-viewer15.html";
+	//const folder = "https://www.ladybug.tools/spider/gbxml-sample-files/";
 
 	const sites = [
 
@@ -66,8 +69,6 @@
 
 		ifr.src = path;
 
-		//ifr.onload = function() {  }
-
 		ifr.onload = function() {
 
 			ifr.className = 'fade-in';
@@ -80,20 +81,22 @@
 			ifr.contentWindow.THR.controls.autoRotate = true;
 			ifr.contentWindow.THR.controls.enableZoom = false;
 
+			ifr.contentWindow.divPopUpData.innerHTML = '';
+
 		}
 
 		clearInterval( timer );
 
 		displayNext();
 
-		timer = setInterval( displayNext, 10000 );
+		timer = setInterval( displayNext, 8000 );
 
 	}
 
 
 	function displayNext() {
 
-		//console.log( 'sites[ index ].fileName', sites[ index ].fileName );
+		console.log( 'sites[ index ].fileName', folder, sites[ index ].fileName );
 
 		//setTimeout( function(){ ifr.className = 'fade-out'; }, 8000 );
 

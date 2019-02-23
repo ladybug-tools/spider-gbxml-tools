@@ -399,8 +399,8 @@ POP.getAttributesHtml = function( obj ) {
 
 	let htm ='';
 
-	if ( !obj.attributes ) { return htm; }
-	
+	if ( !obj.attributes ) { return htm; }  //////////  make more forgiving
+
 	for ( let attribute of obj.attributes ) {
 
 		htm +=
@@ -408,6 +408,7 @@ POP.getAttributesHtml = function( obj ) {
 			<span class=attributeTitle >${ attribute.name }</span>:
 			<span class=attributeValue >${ attribute.value }</span>
 		</div>`;
+
 	}
 
 	const nodes = obj.childNodes;

@@ -87,6 +87,10 @@ They follow the Three.js examples: https://threejs.org/examples/
 
 ## Change Log
 
+### 2019-02-22 ~ Theo
+
+* fix iframe carousel
+
 ### 2018-10-09 ~ Theo
 
 * First commit
