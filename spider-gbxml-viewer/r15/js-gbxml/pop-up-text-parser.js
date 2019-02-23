@@ -399,6 +399,8 @@ POP.getAttributesHtml = function( obj ) {
 
 	let htm ='';
 
+	if ( !obj.attributes ) { return htm; }
+	
 	for ( let attribute of obj.attributes ) {
 
 		htm +=
