@@ -3,7 +3,7 @@
 /* globals GBX, JSZip */
 
 
-const FIL = { "release": "r11.0", "date": "2019-01-01" };
+const FIL = { "release": "r15.0", "date": "2019-02-24" };
 
 
 FIL.reader = new FileReader();
@@ -21,6 +21,7 @@ FIL.currentStatus =
 		<p>
 			Change log
 			<ul>
+				<li>2019-02-24 ~ Update source and file-open.md links</li>
 				<li>2018-12-29 ~ Add helpItem class</li>
 				<li>2018-12-29 ~ Fix read me links</li>
 				<li>2018-12-28 ~ Add pop-up status / Edit left menu</li>
@@ -29,8 +30,8 @@ FIL.currentStatus =
 		</p>
 
 		<p>
-			<a href="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-file-open/" target="_blank">
-			fil-open-file.js Read Me</a>
+			<a href="https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/r15/js-gbxml/fil-file-open-xml-zip.js" target="_blank">
+			fil-open-file.js source code</a>
 		</p>
 	`;
 
@@ -63,7 +64,7 @@ FIL.getMenuFileOpen = function() {  // called from main HTML file
 				<p>
 					<input type=file id=inpOpenFile onchange=FIL.onInputFileOpen(this); accept=".xml, .zip" >
 					or drag & drop files here
-					or enter a default file path <a class=helpItem href=https://www.ladybug.tools/spider-gbxml-tools/#sandbox/spider-gbxml-text-parser/r10/lib/file-open.md title="Learn how to speed up your testing" target=-blank >?</a>
+					or enter a default file path <a class=helpItem href=https://www.ladybug.tools/spider/#pages/file-open.md title="Learn how to speed up your testing" target=-blank >?</a>
 					<!--
 						try this: 	https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml
 					-->
