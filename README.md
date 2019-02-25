@@ -19,6 +19,9 @@ _<small>Spider gbXML Viewer ~ [Iframe Carousel]( https://www.ladybug.tools/spide
 ## Welcome <a href="https://www.rtcevents.com/bilt/eur18/" title="Hi Michal! Hi Ljubljana!" style=color:red; target="_blank">BILT EUR 2018</a> attendees!
 -->
 
+### Latest pre-release viewer: [Spider gbXML Viewer 'Maevia' R15 ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/ "this one is hot" )
+
+
 <br>
 
 [Spider gbXML Tools]( https://github.com/ladybug-tools/spider "Source code on GitHub" ) is a collection of [free, open source]( https://opensource.guide/ "Read all about it at OpenSource Guides" ) modular [JavaScript]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/About_JavaScript "Callout to Brendan" ) / [WebGL]( https://www.khronos.org/webgl/ "Tip of the hat to Ken Russell" ) / [Three.js]( https://threejs.org/ "Hi Mr.doob" ) experiments hosted on [GitHub]( https://github.com/about "Beep for where the geek peeps keep" ) for viewing, validating and editing [gbXML]( http://gbxml.org "Where's your schema today?" ) files in 3D in your browser. gbXML is an industry supported file format for sharing building information between numerous building design software tools.
@@ -31,7 +34,6 @@ The intention is to provide a faster, simpler more effective user experience bas
 The impetus for this code arose from the request by the developers of OpenStudio for a viewer that can be embedded in their code. It became quickly evident that the new codebase offered significant advantages over the the previous codebase. And, thus, the majority of ongoing development efforts have been transferred to this project. Previous releases will be supported at least to the extent of fixing bugs that that are reported.
 -->
 
-### Latest pre-release viewer: [Spider gbXML Viewer 'Maevia' R15 ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/ "this one is hot" )
 
 <br>
 
