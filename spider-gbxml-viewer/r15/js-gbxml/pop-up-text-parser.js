@@ -181,7 +181,7 @@ POP.onDocumentTouchStart = function( event ) {
 
 	event.preventDefault();
 
-	//console.log( '', event );
+	//console.log( 'event', event );
 
 	event.clientX = event.touches[0].clientX;
 	event.clientY = event.touches[0].clientY;
@@ -202,9 +202,11 @@ POP.onDocumentMouseDown = function( event ) {
 	POP.mouse.y = - ( event.clientY / size.height ) * 2 + 1;
 	*/
 
-	var x = event.offsetX == undefined ? event.layerX : event.offsetX;
-	var y = event.offsetY == undefined ? event.layerY : event.offsetY;
-	var size = THR.renderer.getSize();
+	const x = event.offsetX == undefined ? event.layerX : event.offsetX;
+	const y = event.offsetY == undefined ? event.layerY : event.offsetY;
+	//console.log( 'x', x );
+
+	const size = THR.renderer.getSize();
 
 	POP.mouse.x = ( x / size.width ) * 2 - 1;
 	POP.mouse.y = - ( y / size.height ) * 2 + 1;
@@ -212,7 +214,7 @@ POP.onDocumentMouseDown = function( event ) {
 	POP.raycaster.setFromCamera( POP.mouse, THR.camera );
 
 	POP.intersects = POP.raycaster.intersectObjects( GBX.surfaceGroup.children );
-	//console.log( 'POP.intersects', POP.intersects );
+	console.log( 'POP.intersects', POP.intersects );
 
 	if ( POP.intersects.length > 0 ) {
 
