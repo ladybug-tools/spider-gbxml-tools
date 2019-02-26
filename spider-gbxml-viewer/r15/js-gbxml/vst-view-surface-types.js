@@ -3,7 +3,7 @@
 /* globals VBS, GBX, VSTdivSurfaceType, VSTdivSurfaceType, VSTdivViewByFilters, VSTdivViewCurrentStats */
 
 
-const VST = { "release": "R15.3", "date": "2019-02-11" };
+const VST = { "release": "R15.4", "date": "2019-02-25" };
 
 VST.description =
 	`
@@ -29,11 +29,12 @@ VST.currentStatus =
 			Issues
 			<li>2019-02-13 ~ not all surface types in model are displayed when looking at multiple models << but getting better</li>
 		</p>
+
 		<p>Wish list
 			<ul>
 
 				<li>2019-02-07 ~ Better interaction with openings</li>
-				<li>faster operations on very large files</li>
+				<li>Faster operations on very large files</li>
 
 			</ul>
 		</p>
@@ -47,6 +48,7 @@ VST.currentStatus =
 		<details>
 			<summary>Change log</summary>
 			<ul>
+				<li>2019-02-25 ~ 15.4 ~ Fixes 'exposed to sun; button</li>
 				<li>2019-02-13 ~ Close menu when new file loaded. Reset vars</li>
 				<li>2019-02-11 ~ Pass through jsHint.com and make repairs</li>
 				<li>2019-02-11 ~ Code cleanup. Drop 'reset surfaces' button/code as being redundant</li>
@@ -90,7 +92,7 @@ VST.getMenuViewSurfaceTypes = function() {
 			<p>
 				<button id=butExterior onclick=VST.setSurfacesActiveByDefaults(this); >exterior surfaces</button>
 
-				<button id=butExposed onclick=VST.sendSurfacesToThreeJs('exposedToSun="true"'); title="Does not update the buttons" >exposed to sun</button>
+				<button id=butExposed onclick=VST.setSurfacesActiveByExposedToSun('exposedToSun="true"'); title="Does not update the buttons" >exposed to sun</button>
 			</p>
 
 			<p>
@@ -204,6 +206,26 @@ VST.setSurfacesActiveByDefaults = function() {
 
 
 
+VST.setSurfacesActiveByExposedToSun = function( filter ) {
+	// console.log( 'filter', filter );
+
+	surfacesFiltered = GBX.surfacesIndexed.filter( surface => surface.includes( `${ filter }` ) );
+	//console.log( 'surfacesFiltered', surfacesFiltered );
+
+	VSTdivReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( surfacesFiltered );
+
+	const buttons = VSTdivSurfaceType.querySelectorAll( "button" );
+
+	buttons.forEach( button => button.classList.remove( "active" ) );
+
+	THRU.groundHelper.visible = false;
+
+	//return VSTdivReportsLog.innerHTML;
+
+};
+
+
+
 VST.toggleSurfaceFiltered = function( button ) {
 
 	button.classList.toggle( "active" );
@@ -233,7 +255,7 @@ VST.setShowAll = function() {
 VST.sendSurfacesToThreeJs = function( filters ) {
 
 	filters = Array.isArray( filters ) ? filters : [ filters ];
-	//console.log( 'filters', filters );
+	console.log( 'filters', filters );
 
 	const buttons = VSTdivSurfaceType.querySelectorAll( "button" );
 
