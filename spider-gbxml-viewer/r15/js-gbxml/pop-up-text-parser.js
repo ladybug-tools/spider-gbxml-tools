@@ -3,7 +3,7 @@
 
 // Copyright 2019 Ladybug Tools authors. MIT License.
 
-var POP = { "release": "R15.1", "date": "2019-02-22" };
+var POP = { "release": "R15.2", "date": "2019-02-26" };
 
 POP.urlSource = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-pop-up";
 
@@ -32,6 +32,7 @@ POP.currentStatus =
 			<summary>Change log ~ ${ POP.date }</summary>
 
 			<ul>
+				<li>2019-02-26 ~ R15.2 ~ Add check for no storey name</li>
 				<li>2019-02-22 ~ Pass through jsHint and make fixes</li>
 				<li>2019-02-13 ~ Fix issues when no zone. Update current status</li>
 				<!-- <li></li>
@@ -556,7 +557,7 @@ POP.getAttributesAdjacentSpace = function( surfaceXml ){
 
 };
 
-
+// D:\temp\2019-01-31-michal-xml\Rhino.to.BHoM.Test_IES.zip
 
 POP.setAttributesStoreyAndZone = function( spaceId ) {
 
@@ -569,7 +570,9 @@ POP.setAttributesStoreyAndZone = function( spaceId ) {
 	const storeyText = GBX.storeys.find( item => item.includes( POP.storeyId ) );
 	//console.log( 'storeyText', storeyText );
 
-	POP.storeyName = storeyText.match ( '<Name>(.*?)</Name>' )[ 1 ];
+	const storeyName = storeyText.match ( '<Name>(.*?)</Name>' );
+
+	POP.storeyName = storeyName ? storeyName[ 1 ] : "no storey name in file";
 	//console.log( 'POP.storeyName', POP.storeyName );
 
 	POP.zoneId = spaceText.match ( /zoneIdRef="(.*?)"/ );

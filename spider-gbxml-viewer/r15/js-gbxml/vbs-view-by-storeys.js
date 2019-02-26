@@ -3,7 +3,7 @@
 /* globals GBX, VST, THREE, VBSselStorey, VBSdivReportsLog, VSTdivSurfaceType */
 
 
-const VBS = {"release": "R15.5", "date": "2019-02-20" };
+const VBS = {"release": "R15.6", "date": "2019-02-26" };
 
 VBS.description =
 	`
@@ -43,6 +43,7 @@ VBS.currentStatus =
 		<details>
 			<summary>Change log</summary>
 			<ul>
+				<li>2019-02-26 ~ R15.6 ~ Add check for no storey name</li>
 				<li>2019-02-20 ~ Add display storey level names in elevation order </li>
 				<li>2019-02-13 ~ Close menu when new file loaded</li>
 				<li>2019-02-11 ~ Update text content. Code cleanup.</li>
@@ -107,7 +108,13 @@ VBS.getStoreysOptions = function() {
 	const storeyLevelsSorted = storeyLevels.slice().sort( (a, b) => b - a );
 	console.log( 'storeyLevelsSorted', storeyLevelsSorted );
 
-	const storeyNames = GBX.storeys.map( storey => storey.match( '<Name>(.*?)</Name>' )[ 1 ] );
+	const storeyNames = GBX.storeys.map( storey => {
+
+		const storeyArr = storey.match( '<Name>(.*?)</Name>' );
+
+		return storeyName = storeyArr ? storeyArr[ 1 ] : "no storey name in file";
+
+	} );
 	//console.log( 'storeyNames', storeyNames);
 
 	const options = storeyLevelsSorted.map( level => {
