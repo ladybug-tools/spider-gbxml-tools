@@ -5,7 +5,7 @@
 /* jshint loopfunc:true */
 
 
-const ISDC = { "release": "R10.2", "date": "2018-12-16"  }
+const ISDC = { "release": "R15.0", "date": "2019-02-26"  }
 
 
 ISDC.currentStatus =
@@ -22,6 +22,7 @@ ISDC.currentStatus =
 
 			<p>
 				<ul>
+					<li>2019-02-26 ~ R15.0 ~ Allow for no planar geometry</li>
 					<li>2018-12-16 ~ Much better performance on very large files</li>
 					<li>2018-12-16 ~ If greater than 10K surfaces, then run manually only</li>
 					<!-- <li></li> -->
@@ -78,7 +79,16 @@ ISDC.getDuplicateCoordinatesCheck = function() {
 
 	ISDC.duplicates = [];
 
-	const planes = surfaces.map( surface => surface.match( /<PlanarGeometry>(.*?)<\/PlanarGeometry>/ )[ 1 ] );
+	planes = [];
+
+	for ( surface of surfaces ) {
+
+		arr = surface.match( /<PlanarGeometry>(.*?)<\/PlanarGeometry>/ );
+
+		if ( arr ) { planes.push( arr[ 1 ] ) }
+
+	}
+	//console.log( 'planes', planes );
 
 	planes.forEach( ( plane1, index1 ) => {
 

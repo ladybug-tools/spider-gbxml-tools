@@ -3,7 +3,7 @@
 /* jshint esversion: 6 */
 
 
-const ISASD = { "release": "R10.5", "date": "2018-12-20" };
+const ISASD = { "release": "R15.9", "date": "2018-12-26" };
 
 ISASD.twoSpaces = ['Air', 'InteriorWall', 'InteriorFloor', 'Ceiling' ];
 ISASD.souce = "https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-issues/lib/isasd-issues-adjacent-space-duplicate.js";
@@ -22,9 +22,10 @@ ISASD.currentStatus =
 					<a href="${ ISASD.source }" >source code</a>
 				</p>
 				<p>
-					2018-12-10
+
 					<ul>
-						<li>Code cleanup</li>
+						<li>2019-02-26 ~ r15.0 ~ Allow for no planar geometry</li>
+						<li>2018-12-10 ~ Code cleanup</li>
 						<li> button</li>
 						<li>Add gbxmlUpdateAdjacentSpace button - not working yet</li>
 
@@ -111,10 +112,12 @@ ISASD.getSurfacesCoordinates = function() {
 
 		const points = [];
 
-		const planar = surface.match( /<PlanarGeometry>(.*)<\/PolyLoop>/ )[ 1 ];
+		const planar = surface.match( /<PlanarGeometry>(.*)<\/PolyLoop>/ );
 		//console.log( 'planes', planes );
 
-		const cartesian = planar.match( /<CartesianPoint>(.*?)<\/CartesianPoint>/g )
+		if ( !planar ) { return }
+
+		const cartesian = planar[ 1 ].match( /<CartesianPoint>(.*?)<\/CartesianPoint>/g )
 		//console.log( 'cartesian', cartesian );
 
 		cartesian.forEach( item => {

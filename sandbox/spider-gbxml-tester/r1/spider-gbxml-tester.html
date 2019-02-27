@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1" >
+<meta name = "description" content = "This menu is a component of a basic html content management script with sliding menu, css theme selection, Markdown to HTML, drag and drop file reading capability, access to frequently used pages and more" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2019-02-26" >
+<meta name = "release" content = "1.0" >
+<title>Spider gbXML Tester</title>
+<link rel="stylesheet" href="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/style.css">
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js" ></script>
+<!--
+<script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/fob-file-open-basic.js" ></script>
+-->
+<script src="fil-file-open-xml-zip.js" ></script>
+<script src="spider-gbxml-tester.js" ></script>
+
+<script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/mnu-menu.js" ></script>
+<script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/ohc-on-hash-change.js" ></script>
+<script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/sfm-selected-files-markdown.js" ></script>
+<script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/thm-theme-select.js" ></script>
+<script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/tmp-template.js" ></script>
+<script>
+
+//Copyright 2019 pushMe-pullYou authors. MIT License
+
+MNU.description =
+	`
+		Run basic check on gbXML files and identify & report errors
+	`;
+
+MNU.currentStatusCore =
+	`
+		<h3>
+			template
+			R${ document.head.querySelector( '[ name=release ]' ).content }
+			~
+			${ document.head.querySelector( '[ name=date ]' ).content }
+		</h3>
+
+		<p>${ MNU.description }</p>
+
+		<details>
+
+			<summary>Change log</summary>
+
+			<ul>
+				<li>2019-02-26 ~ R1.0 ~ First commit</li>
+
+				<!--
+					<li></li>
+				-->
+			</ul>
+
+		</details>
+
+		<details>
+
+			<summary>TooToo Content Manager</summary>
+
+			<p>This web page is built with:</p>
+
+			${ MNU.descriptionTooToo }
+
+		</details>
+	`;
+
+
+
+
+const uriDefaultFile = 'README.md';
+
+THM.themeUrlStorage = 'spider-gbxml-tester-theme-url';
+THM.cssBasic = "https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/style.css";
+
+// For main menu header
+MNU.urlSourceCode = "";
+
+// For main menu header
+MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer";
+
+
+MNU.homeText="<img src='https://ladybug.tools/artwork/icons_bugs/ico/ladybug.ico' height=24 >";
+MNU.homeTitle="Ladybug Tools: free computer applications that support environmental design and education";
+MNU.homeUrl="https://www.ladybug.tools";
+
+MNU.repoText="<img src='https://ladybug.tools/artwork/icons_bugs/ico/spider.ico' height=24 >";
+MNU.repoTitle="Spider: 3D interactive analysis in your browser mostly written around the Three.js JavaScript library";
+MNU.repoUrl="https://www.ladybug.tools/spider/";
+
+MNU.appText= "gbXML Tools";
+MNU.appTitle = "Tools to help you find, load, examine and edit gbXML files - in large numbers and sizes";
+MNU.appUrl = "https://www.ladybug.tools/spider-gbxml-tools/";
+
+MNU.urlSourceCodeImage="https://status.github.com/images/invertocat.png";
+MNU.urlSourceCodeIcon=`<img src="${ MNU.urlSourceCodeImage }" height=18 >`;
+
+MNU.footerUrl = "https://pushme-pullyou.github.io/tootoo13/#";
+MNU.footerTarget = "target=_blank";
+MNU.footerIssues = "https://github.com/ladybug-tools/spider-gbxml-tools/issues";
+
+// for parsing
+OHC.user = 'pushme-pullyou';
+OHC.repo = 'pushme-pullyou.github.io';
+OHC.pathRepo = '';
+OHC.branch = '/master/';
+
+// When running in dev folder
+// = location.href.includes( OHC.repo ) ? '../' : 'https://' + OHC.repo + "/";
+OHC.urlGitHubPage = `https://${ OHC.repo }/`;
+// When running in build repo
+//OHC.urlGitHubPage = "";
+
+</script>
+
+
+	<nav id="navMenu" >
+
+		<header>
+
+			<div id="MNUdivHeader" ></div>
+
+		</header>
+
+		<details class=navSubMenu open >
+
+			<summary class=sumMenuTitle >File Menu</summary>
+
+			<section id=SFMsecPrototypes ></section>
+
+			<section id="OHCsecMenuRepoFilesFolders" ></section>
+
+			<section id=FOBsecFileOpenBasic ></section>
+
+			<section id="FILdivFileOpen"></section>
+
+			<section id="FILdivFileSave"></section>
+
+			<section id=FILdivFileSave ></section>
+
+		</details>
+
+
+		<details class=navSubMenu open >
+
+			<summary class=sumMenuTitle >Settings</summary>
+
+			<section id=THMsecMenuThemeSelect ></section>
+
+			<section id=TMPsecMenuTemplate ></section>
+
+		</details>
+
+
+		<footer class=navSubMenu >
+
+			<section id="MNUdivFooter" ></section>
+
+		</footer>
+
+
+		<h1 onclick=navMenu.scrollTop=0; style=cursor:pointer;text-align:center; title="go to top of menu" > ❦ </h1>
+
+	</nav>
+
+
+	<div>
+
+		<button id="butHamburger" onclick=MNU.toggleNavLeft(); title="click here to hide this menu"> slide &#9776; </button>
+
+	</div>
+
+
+	<nav id="navPopUp" >
+
+		<div id="divPopUpData" ></div>
+
+		<div id="divMessage" ></div>
+
+	</nav>
+
+
+	<div id="divContainer" >
+
+		<div id="divContents" ></div>
+
+	</div>
+
+<script>
+
+
+init();
+
+
+function init() {
+
+	MNUdivHeader.innerHTML = MNU.getNavHeader();
+
+	//SFM.getMarkdownFileContents("../sfrm-selected-files-markdown.md",SFMsecPrototypes);
+
+	//OHCsecMenuRepoFilesFolders.innerHTML = OHC.getMenuRepoFilesFolders();
+
+	//FOBsecFileOpenBasic.innerHTML = FOB.getMenuFileOpenBasic( divContents, divPopUpData );
+
+	FILdivFileOpen.innerHTML=FIL.getMenuFileOpen();
+
+	FILdivFileSave.innerHTML=FIL.getMenuFileSave();
+
+	THMsecMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
+
+	//TMPsecMenuTemplate.innerHTML = TMP.getMenuTemplate();
+
+	MNUdivFooter.innerHTML = MNU.getNavFooter(); // not essential
+
+	THM.init();
+
+	//OHC.onHashChange();
+
+	document.body.addEventListener( 'onXmlFileLoad', SGT.setGeneralCheck, false );
+
+}
+
+
+
+
+
+
+</script>
+</body>
+</html>
