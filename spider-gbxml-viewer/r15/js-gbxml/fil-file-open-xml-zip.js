@@ -63,6 +63,11 @@ FIL.getMenuFileOpen = function() {  // called from main HTML file
 
 				<p>
 					<input type=file id=inpOpenFile onchange=FIL.onInputFileOpen(this); accept=".xml, .zip" >
+				</p>
+				<p>
+					<button onclick=FIL.reloadFile(); >reload file</button>
+				</p>
+				<p>
 					or drag & drop files here
 					or enter a default file path <a class=helpItem href=https://www.ladybug.tools/spider/#pages/file-open.md title="Learn how to speed up your testing" target=-blank >?</a>
 					<!--
@@ -70,6 +75,7 @@ FIL.getMenuFileOpen = function() {  // called from main HTML file
 					-->
 					<input id=FILinpFilePath onchange=FIL.updateDefaultFilePath(); style=width:95%; title='paste a file path or URL here then press Enter' >
 				</p>
+
 
 			</div>
 
@@ -279,12 +285,14 @@ FIL.callbackUrlUtf16 = function( xhr ) {
 FIL.onInputFileOpen = function( files ) {
 	//console.log( 'files', files );
 
+	FIL.files = files;
 	FIL.timeStart = performance.now();
 
 	GBXdivStatsGbx.innerHTML = '';
 	GBXdivStatsThr.innerHTML = '';
 
 	const file = files.files[ 0 ];
+
 	const type = file.type;
 	//console.log( 'type', type );
 
@@ -306,6 +314,15 @@ FIL.onInputFileOpen = function( files ) {
 
 
 
+FIL.reloadFile = function() {
+
+	FIL.onInputFileOpen( FIL.files );
+
+	//FIL.fileOpenXml( FIL.files );
+
+};
+
+
 ////////// handle OS drag and drop events
 
 FIL.drop = function( event ) {
@@ -313,6 +330,8 @@ FIL.drop = function( event ) {
 
 	const dropUrl = event.dataTransfer.getData( 'URL' );
 	//console.log( 'dropUrl', dropUrl );
+
+
 
 	GBXdivStatsGbx.innerHTML = '';
 	GBXdivStatsThr.innerHTML = '';
@@ -328,6 +347,8 @@ FIL.drop = function( event ) {
 		console.log( 'type', type );
 
 		if ( type === "text/xml" ) {
+
+			FIL.files = event.dataTransfer;
 
 			FIL.fileOpenXml( event.dataTransfer );
 
