@@ -68,7 +68,7 @@ ISASD.getAdjacentSpaceDuplicateCheck = function() {
 
 			} else {
 
-				console.log( 'surfaceType', surfaceType );
+				//console.log( 'surfaceType', surfaceType );
 			}
 
 		}
