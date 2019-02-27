@@ -13,7 +13,7 @@ value="You are now in a GitHub web page view - Click this button to view this re
 _<small>Spider gbXML Tester</small>_
 -->
 
-## Full Screen: [Spider gbXML Tester]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-tester/sandbox/spider-gbxml-tester.html )
+## Full Screen: [Spider gbXML Tester]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-tester/index.html )
 
 
 ## Concept
@@ -23,6 +23,7 @@ _<small>Spider gbXML Tester</small>_
 
 ## To Do / Wish List
 
+* Add as many test in Spider gbXML Viewer as possible
 
 ## Issues
 
