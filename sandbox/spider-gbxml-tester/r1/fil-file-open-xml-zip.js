@@ -1,4 +1,4 @@
-// Copyright 2018 Ladybug Tools authors. MIT License
+  // Copyright 2018 Ladybug Tools authors. MIT License
 // jshint esversion: 6
 /* globals GBX, JSZip */
 
@@ -174,7 +174,7 @@ FIL.XhrRequestFileXml = function( url ) {
 	FIL.xhr.open( 'GET', url, true );
 	FIL.xhr.onerror = function( xhr ) { console.log( 'error:', xhr  ); };
 	FIL.xhr.onprogress = function( xhr ) { FIL.onProgress( xhr.loaded, FIL.note ); };
-	FIL.xhr.onload = function( xhr ) { FIL.text = FIL.xhr.target.response; FIL.onProgress( xhr.loaded, "loaded" ); };
+	FIL.xhr.onload = function( xhr ) { FIL.text = xhr.target.response; FIL.onProgress( xhr.loaded, "loaded" ); };
 	FIL.xhr.send( null );
 
 };

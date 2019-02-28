@@ -50,8 +50,7 @@ ISTMP.currentStatus =
 		`<details id="ISTMPdetTemplate" ontoggle=ISTMP.getTemplateCheck(); >
 
 			<summary>Issues Template<span id="ISTMPspnCount" ></span>
-			<a id=ISTMPsumHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(ISTMPsumHelp,ISTMP.currentStatus);" >&nbsp; ? &nbsp;</a>
-
+				<a id=ISTMPsumHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(ISTMPsumHelp,ISTMP.currentStatus);" >&nbsp; ? &nbsp;</a>
 			</summary>
 
 			<p>

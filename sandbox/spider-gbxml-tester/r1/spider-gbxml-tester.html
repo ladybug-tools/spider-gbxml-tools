@@ -5,8 +5,8 @@
 <meta name = "viewport" content= "width=device-width, initial-scale=1" >
 <meta name = "description" content = "This menu is a component of a basic html content management script with sliding menu, css theme selection, Markdown to HTML, drag and drop file reading capability, access to frequently used pages and more" >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
-<meta name = "date" content = "2019-02-26" >
-<meta name = "release" content = "1.0" >
+<meta name = "date" content = "2019-02-28" >
+<meta name = "release" content = "1.1" >
 <title>Spider gbXML Tester</title>
 <link rel="stylesheet" href="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/style.css">
 </head>
@@ -16,12 +16,19 @@
 <!--
 <script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/fob-file-open-basic.js" ></script>
 -->
+
+<!-- File menu -->
+<script src="http://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/r15/js-gbxml/gal-sample-files-gallery-gbxml.js" ></script>
 <script src="fil-file-open-xml-zip.js" ></script>
+
+<!-- Edit Menu -->
+<script src="iscor-issues-core.js" ></script>
 <script src="spider-gbxml-tester.js" ></script>
+<script src="ismet-issues-metadata.js" ></script>
 
 <script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/mnu-menu.js" ></script>
-<script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/ohc-on-hash-change.js" ></script>
 <script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/sfm-selected-files-markdown.js" ></script>
+<script src="ohc-on-hash-change.js" ></script>
 <script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/thm-theme-select.js" ></script>
 <script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/tmp-template.js" ></script>
 <script>
@@ -36,7 +43,7 @@ MNU.description =
 MNU.currentStatusCore =
 	`
 		<h3>
-			template
+			Spider gbXML Tester
 			R${ document.head.querySelector( '[ name=release ]' ).content }
 			~
 			${ document.head.querySelector( '[ name=date ]' ).content }
@@ -49,11 +56,9 @@ MNU.currentStatusCore =
 			<summary>Change log</summary>
 
 			<ul>
+				<li>2019-02-28 ~ R1.1 ~ Add sample files, read me file on open</li>
 				<li>2019-02-26 ~ R1.0 ~ First commit</li>
 
-				<!--
-					<li></li>
-				-->
 			</ul>
 
 		</details>
@@ -73,6 +78,8 @@ MNU.currentStatusCore =
 
 
 const uriDefaultFile = 'README.md';
+
+OHC.uriDefaultFile = "../README.md";
 
 THM.themeUrlStorage = 'spider-gbxml-tester-theme-url';
 THM.cssBasic = "https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/style.css";
@@ -128,6 +135,8 @@ OHC.urlGitHubPage = "";
 
 			<section id=SFMsecPrototypes ></section>
 
+			<section id="GALdivSampleFilesGallery"></section>
+
 			<section id="OHCsecMenuRepoFilesFolders" ></section>
 
 			<section id=FOBsecFileOpenBasic ></section>
@@ -136,7 +145,15 @@ OHC.urlGitHubPage = "";
 
 			<section id="FILdivFileSave"></section>
 
-			<section id=FILdivFileSave ></section>
+
+		</details>
+
+
+		<details id="detMenuEdit" class=navSubMenu open >
+
+			<summary class=sumMenuTitle >Edit Menu </summary>
+
+			<div id="ISCORdivMenuIssues" ></div>
 
 		</details>
 
@@ -194,6 +211,8 @@ init();
 
 function init() {
 
+	OHC.divContents = divContents;
+
 	MNUdivHeader.innerHTML = MNU.getNavHeader();
 
 	//SFM.getMarkdownFileContents("../sfrm-selected-files-markdown.md",SFMsecPrototypes);
@@ -202,9 +221,15 @@ function init() {
 
 	//FOBsecFileOpenBasic.innerHTML = FOB.getMenuFileOpenBasic( divContents, divPopUpData );
 
+	// File open menu
+	GALdivSampleFilesGallery.innerHTML=GAL.getMenuSampleFilesGallery();
+
 	FILdivFileOpen.innerHTML=FIL.getMenuFileOpen();
 
 	FILdivFileSave.innerHTML=FIL.getMenuFileSave();
+
+	//Edit menu
+	ISCORdivMenuIssues.innerHTML=ISCOR.getMenuIssues();
 
 	THMsecMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
 
@@ -214,14 +239,11 @@ function init() {
 
 	THM.init();
 
-	//OHC.onHashChange();
+	OHC.onHashChange();
 
 	document.body.addEventListener( 'onXmlFileLoad', SGT.setGeneralCheck, false );
 
 }
-
-
-
 
 
 
