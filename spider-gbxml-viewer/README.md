@@ -15,9 +15,11 @@ _<small>Spider gbXML Viewer 'Maevia' R15</small>_
 ## Full Screen: [Spider gbXML Viewer 'Maevia' R15]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/index.html )
 
 
-## Local version: https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/
+## Local version: https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/r15/spider-gbxml-viewer15-local.html
 
-Download this file ( Chrome context menu > 'Save lonk as...' ), follow guidelines for loading local files here [Opening and loading files with gbXML Viewer]( https://www.ladybug.tools/spider/#pages/file-open.md ) in order to embed the Viewer in a local workflow and avoid CORS issues.
+
+Download this file ( Chrome context menu > 'Save link as...' ) to your desktop or wherever, follow guidelines for loading local files here [Opening and loading files with gbXML Viewer]( https://www.ladybug.tools/spider/#pages/file-open.md ) in order to embed the Viewer in a local workflow and avoid CORS issues.
+
 
 ***
 
