@@ -155,6 +155,7 @@ FIL.onHashChange = function() {
 
 	detMenuEdit.open = false;
 	detMenuView.open = false;
+	detSectionCut.open = false;
 	detSettings.open = false;
 	detMenuHelp.open = false;
 
@@ -302,6 +303,7 @@ FIL.onInputFileOpen = function( files ) {
 
 	detMenuEdit.open = false;
 	detMenuView.open = false;
+	detSectionCut.open = false;
 	detSettings.open = false;
 	detMenuHelp.open = false;
 
@@ -346,12 +348,12 @@ FIL.drop = function( event ) {
 	//console.log( 'dropUrl', dropUrl );
 
 
-
 	GBXdivStatsGbx.innerHTML = '';
 	GBXdivStatsThr.innerHTML = '';
 
 	detMenuEdit.open = false;
 	detMenuView.open = false;
+	detSectionCut.open = false;
 	detSettings.open = false;
 	detMenuHelp.open = false;
 
