@@ -3,7 +3,7 @@
 /* globals GBX, JSZip */
 
 
-const FIL = { "release": "r15.0", "date": "2019-02-24" };
+const FIL = { "release": "r15.1", "date": "2019-02-28" };
 
 
 FIL.reader = new FileReader();
@@ -21,6 +21,7 @@ FIL.currentStatus =
 		<p>
 			Change log
 			<ul>
+				<li>2019-02-28 ~ Add close menu panels on open</li>
 				<li>2019-02-24 ~ Update source and file-open.md links</li>
 				<li>2018-12-29 ~ Add helpItem class</li>
 				<li>2018-12-29 ~ Fix read me links</li>
@@ -142,6 +143,8 @@ FIL.getMenuFileSave = function() {
 
 }
 
+
+
 FIL.onHashChange = function() {
 
 	const url = !location.hash ? FIL.urlDefaultFile : location.hash.slice( 1 );
@@ -149,6 +152,11 @@ FIL.onHashChange = function() {
 
 	GBXdivStatsGbx.innerHTML = '';
 	GBXdivStatsThr.innerHTML = '';
+
+	detMenuEdit.open = false;
+	detMenuView.open = false;
+	detSettings.open = false;
+	detMenuHelp.open = false;
 
 	FIL.name = url.split( '/').pop();
 
@@ -167,6 +175,7 @@ FIL.onHashChange = function() {
 	}
 
 };
+
 
 
 FIL.XhrRequestFileXml = function( url ) {
@@ -291,6 +300,11 @@ FIL.onInputFileOpen = function( files ) {
 	GBXdivStatsGbx.innerHTML = '';
 	GBXdivStatsThr.innerHTML = '';
 
+	detMenuEdit.open = false;
+	detMenuView.open = false;
+	detSettings.open = false;
+	detMenuHelp.open = false;
+
 	const file = files.files[ 0 ];
 
 	const type = file.type;
@@ -335,6 +349,11 @@ FIL.drop = function( event ) {
 
 	GBXdivStatsGbx.innerHTML = '';
 	GBXdivStatsThr.innerHTML = '';
+
+	detMenuEdit.open = false;
+	detMenuView.open = false;
+	detSettings.open = false;
+	detMenuHelp.open = false;
 
 	if ( dropUrl ) {
 

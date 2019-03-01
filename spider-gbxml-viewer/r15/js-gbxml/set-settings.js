@@ -83,7 +83,7 @@ SET.toggleOpenings = function() {
 		GBX.surfaceOpenings.name = 'GBX.surfaceOpenings';
 		surfaceOpenings = GBX.getSurfaceOpenings();
 		//console.log( 'surfaceOpenings', surfaceOpenings );
-		
+
 		if ( !surfaceOpenings.length ) { return; }
 
 		GBX.surfaceOpenings.add( ...surfaceOpenings );

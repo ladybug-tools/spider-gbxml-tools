@@ -4,7 +4,7 @@
 
 const CUT = {};
 
-CUT.colorButtonToggle = 'pink';
+//CUT.colorButtonToggle = 'pink';
 
 
 // move into own related functions?
@@ -20,17 +20,23 @@ CUT.localClipZ2= new THREE.Plane( new THREE.Vector3( 0, 0, 1 ), 0 );
 
 CUT.getDetSectionViews = function() {
 
+	const bb = new THREE.Box3().setFromObject( THR.scene );
+	//console.log( 'bbox', bbox );
+
+	//const bb = THRU.boundingBox;
+
+
 	const htm =
 
 	`
 		<small><i>
-		<p>
-			Click 'Toggle section view' button to start.
-			Click the buttons twice to reset. Rotate sections around Z-axis coming next.
-		</p>
-		<p>
-			Issue: not always adjusting range as expected when opening new model.
-		</p>
+			<p>
+				Click 'Toggle section view' button to start.
+				Click the buttons twice to reset. Rotate sections around Z-axis coming next.
+			</p>
+			<p>
+				Issue: not always adjusting range as expected when opening new model.
+			</p>
 		</i></small>
 
 		<p>
@@ -38,44 +44,44 @@ CUT.getDetSectionViews = function() {
 		</p>
 
 		<div>
-			clipping plane front: <output id=outClipX1 >50</output><br>
-			<input type=range id=inpClipX1 max=50 min=-50 step=1 value=50
-			oninput=outClipX1.value=inpClipX1.value;CUT.updateCLipX(); title="-50 to 50: OK" >
+			clipping plane front: <output id=outClipX1 >${ THRU.radius.toFixed() }</output><br>
+			<input type=range id=inpClipX1 max=${ THRU.radius } min=${ -THRU.radius } step=1 value=${ THRU.radius }
+			oninput=outClipX1.value=Number(inpClipX1.value).toFixed();CUT.updateCLipX(); title="-50 to 50: OK" >
 		</div>
 
 		<div>
-			clipping plane back: <output id=outClipX2 >-50</output><br>
-			<input type=range id=inpClipX2 max=50 min=-50 step=1 value=-50
-			oninput=outClipX2.value=inpClipX2.value;CUT.updateCLipX(); title="-50 to 50: OK" >
-		</div>
-
-		<br>
-
-
-		<div>
-			Clipping plane right: <output id=outClipY1 >50</output><br>
-			<input type=range id=inpClipY1 max=50 min=-50 step=1 value=50
-			oninput=outClipY1.value=inpClipY1.value;CUT.updateCLipY(); title="-50 to 50: OK" >
-		</div>
-
-		<div>
-			Clipping plane left: <output id=outClipY2 >-50</output><br>
-			<input type=range id=inpClipY2 max=50 min=-50 step=1 value=-50
-			oninput=outClipY2.value=inpClipY2.value;CUT.updateCLipY(); title="-50 to 50: OK" >
+			clipping plane back: <output id=outClipX2 >${ -THRU.radius.toFixed() }</output><br>
+			<input type=range id=inpClipX2 max=${ THRU.radius } min=${ -THRU.radius } step=1 value=${ -THRU.radius }
+			oninput=outClipX2.value=Number(inpClipX2.value).toFixed();CUT.updateCLipX(); title="-50 to 50: OK" >
 		</div>
 
 		<br>
 
+
 		<div>
-			Clipping plane top: <output id=outClipZ1 >50</output><br>
-			<input type=range id=inpClipZ1 max=50 min=-50 step=1 value=50
-			oninput=outClipZ1.value=inpClipZ1.value;CUT.updateCLipZ(); title="-50 to 50: OK" >
+			Clipping plane right: <output id=outClipY1 >${ THRU.radius.toFixed() }</output><br>
+			<input type=range id=inpClipY1 max=${ THRU.radius } min=${ -THRU.radius } step=1 value=${ THRU.radius }
+			oninput=outClipY1.value=Number(inpClipY1.value).toFixed();CUT.updateCLipY(); title="-50 to 50: OK" >
 		</div>
 
 		<div>
-			Clipping plane bottom: <output id=outClipZ2 >-50</output><br>
-			<input type=range id=inpClipZ2 max=50 min=-50 step=1 value=-50
-			oninput=outClipZ2.value=inpClipZ2.value;CUT.updateCLipZ(); title="-50 to 50: OK" >
+			Clipping plane left: <output id=outClipY2 >${ -THRU.radius.toFixed() }</output><br>
+			<input type=range id=inpClipY2 max=${ THRU.radius } min=${ -THRU.radius } step=1 value=${ -THRU.radius }
+			oninput=outClipY2.value=Number(inpClipY2.value).toFixed();CUT.updateCLipY(); title="-50 to 50: OK" >
+		</div>
+
+		<br>
+
+		<div>
+			Clipping plane top: <output id=outClipZ1 >${ THRU.radius.toFixed() }</output><br>
+			<input type=range id=inpClipZ1 max=${ THRU.radius } min=${ -THRU.radius } step=1 value=${ THRU.radius }
+			oninput=outClipZ1.value=Number(inpClipZ1.value).toFixed();CUT.updateCLipZ(); title="-50 to 50: OK" >
+		</div>
+
+		<div>
+			Clipping plane bottom: <output id=outClipZ2 >${ -THRU.radius.toFixed() }</output><br>
+			<input type=range id=inpClipZ2 max=${ THRU.radius } min=${ -THRU.radius } step=1 value=${ -THRU.radius }
+			oninput=outClipZ2.value=Number(inpClipZ2.value).toFixed();CUT.updateCLipZ(); title="-50 to 50: OK" >
 		</div>
 
 		<!--
