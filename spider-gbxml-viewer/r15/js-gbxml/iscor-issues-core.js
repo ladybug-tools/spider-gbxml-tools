@@ -1,9 +1,9 @@
 // Copyright 2019 Ladybug Tools authors. MIT License
-/* globals ISFC, ISASI, ISASD, ISASE, ISASTE, ISCOD, ISMET, ISSTI, ISDC, ISSOV, ISTMP, detMenuEdit*/
+/* globals ISFC, ISASI, ISASD, ISASE, ISASTE, ISCOD, ISMET, ISSTI, ISDC, ISSOH, ISSOV, ISTMP, detMenuEdit*/
 /* jshint esversion: 6 */
 
 
-const ISCOR = { "release": "R15.1", "date": "2019-02-22" };
+const ISCOR = { "release": "R15.2", "date": "2019-03-04" };
 
 ISCOR.runAll = false;
 ISCOR.surfaceCheckLimit = 10000;
@@ -45,6 +45,7 @@ ISCOR.currentStatus =
 		<details>
 			<summary>Change log</summary>
 			<ul>
+				<li>2019-03-04 ~ 15.2 ~ ISSOH & ISSOV added</li>
 				<li>2019-02-22 ~ 15.1 ~ fix ISASTE link. Add wish list. Run through jsHint & do fix</li>
 				<li>2019-02-12 ~ 15.0 ~ Update text content. Add 'Air Surface Type on Exterior' module</li>
 				<li>2018-12-16 ~ Add close details and reset summaries when new file loaded</li>
@@ -97,6 +98,8 @@ ISCOR.getMenuIssues = function() {
 		${ ISASTE.getMenuAirSurfaceTypeEditor() }
 
 		${ ISSOV.getMenuSurfaceOverlapVerticals() }
+
+		${ ISSOH.getMenuSurfaceOverlapHorizontals() }
 
 		<div id = "divDuplicateRectangularGeometry" ></div>
 
