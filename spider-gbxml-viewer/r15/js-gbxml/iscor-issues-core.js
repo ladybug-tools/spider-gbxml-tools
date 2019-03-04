@@ -119,7 +119,7 @@ ISCOR.getMenuIssues = function() {
 
 ISCOR.onGbxParse = function() {
 
-	detMenuEdit.open = true;
+	//detMenuEdit.open = true;
 
 	const issues = detMenuEdit.querySelectorAll( 'details' ); // agree with FIL!
 	//console.log( 'issues', issues );
