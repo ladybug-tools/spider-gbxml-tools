@@ -215,7 +215,7 @@ POP.onDocumentMouseDown = function( event ) {
 	POP.raycaster.setFromCamera( POP.mouse, THR.camera );
 
 	POP.intersects = POP.raycaster.intersectObjects( GBX.surfaceGroup.children );
-	console.log( 'POP.intersects', POP.intersects );
+	//console.log( 'POP.intersects', POP.intersects );
 
 	if ( POP.intersects.length > 0 ) {
 

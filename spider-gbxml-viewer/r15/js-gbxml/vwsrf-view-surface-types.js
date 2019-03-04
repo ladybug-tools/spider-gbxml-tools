@@ -128,9 +128,9 @@ VWSRF.getReportByFilters = function() {
 			</p>
 
 			<p>
-				<button onclick=VWSRF.setSurfaceTypesVisible(["Ceiling","InteriorFloor","SlabOnGrade","Roof","UndergroundSlab"],this); >horizontal</button>
+				<button onclick=VWSRF.setSurfaceTypesVisible(["Ceiling","InteriorFloor","SlabOnGrade","Roof","UndergroundSlab"],this); title="Does not include Air" >horizontal</button>
 
-				<button onclick=VWSRF.setSurfaceTypesVisible(["ExteriorWall","InteriorWall","UndergroundWall"],this); >vertical</button>
+				<button onclick=VWSRF.setSurfaceTypesVisible(["ExteriorWall","InteriorWall","UndergroundWall"],this); title="Does not include Air" >vertical</button>
 			</p>
 
 		</div>

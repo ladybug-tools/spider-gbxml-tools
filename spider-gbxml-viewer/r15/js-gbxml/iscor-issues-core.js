@@ -1,5 +1,5 @@
 // Copyright 2019 Ladybug Tools authors. MIT License
-/* globals ISFC, ISASI, ISASD, ISASE, ISASTE, ISCOD, ISMET, ISSTI, ISDC, ISTMP, detMenuEdit*/
+/* globals ISFC, ISASI, ISASD, ISASE, ISASTE, ISCOD, ISMET, ISSTI, ISDC, ISSOV, ISTMP, detMenuEdit*/
 /* jshint esversion: 6 */
 
 
@@ -90,9 +90,13 @@ ISCOR.getMenuIssues = function() {
 
 		${ ISASD.getMenuAdjacentSpaceDuplicate() }
 
+		${ ISCOD.getMenuCadObjectId() }
+
+		Not yet part of 'Check all...'<br>
+
 		${ ISASTE.getMenuAirSurfaceTypeEditor() }
 
-		${ ISCOD.getMenuCadObjectId() }
+		${ ISSOV.getMenuSurfaceOverlapVerticals() }
 
 		<div id = "divDuplicateRectangularGeometry" ></div>
 
@@ -112,9 +116,9 @@ ISCOR.getMenuIssues = function() {
 
 ISCOR.onGbxParse = function() {
 
-	//detMenuEdit.open = false;
+	detMenuEdit.open = true;
 
-	const issues = detMenuEdit.querySelectorAll( 'details' );
+	const issues = detMenuEdit.querySelectorAll( 'details' ); // agree with FIL!
 	//console.log( 'issues', issues );
 	issues.forEach( item => item.open = false );
 

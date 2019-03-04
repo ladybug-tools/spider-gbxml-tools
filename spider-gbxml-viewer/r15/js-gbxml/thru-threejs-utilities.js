@@ -308,7 +308,7 @@ THRU.zoomObjectBoundingSphere = function( obj = THR.scene ) {
 	THR.controls.maxDistance = 5 * radius;
 
 	THR.camera.position.copy( center.clone().add( new THREE.Vector3( 1.5 * radius, 1.5 * radius, 1.5 * radius ) ) );
-	THR.camera.near = 0.1 * radius; //2 * camera.position.length();
+	THR.camera.near = 0.001 * radius; //2 * camera.position.length();
 	THR.camera.far = 10 * radius; //2 * camera.position.length();
 	THR.camera.updateProjectionMatrix();
 
