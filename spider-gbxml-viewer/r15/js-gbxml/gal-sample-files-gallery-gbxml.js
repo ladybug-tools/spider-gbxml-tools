@@ -4,9 +4,8 @@
 
 var GAL = { "release": "r11.0", "date": "2019-01-01"  };
 
-GAL.iconGitHubMark = 'https://status.github.com/images/invertocat.png';
-
-GAL.iconInfo = `<img src=${GAL.iconGitHubMark} height=14 >`;
+GAL.iconGitHubMark = "https://pushme-pullyou.github.io/github-mark-64.png"
+GAL.iconInfo = `<img src=${GAL.iconGitHubMark} height=14 style=opacity:0.5 >`;
 
 GAL.threeDefaultFile = 'https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/';
 
@@ -42,7 +41,7 @@ GAL.currentStatus =
 	`;
 
 
-	
+
 GAL.getMenuSampleFilesGallery = function( buttons, target ) {
 
 	const htm =

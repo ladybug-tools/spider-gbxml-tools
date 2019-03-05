@@ -372,10 +372,10 @@ ISSOH.findIntersections = function( objs, origin, direction ) {
 		} else if ( Math.abs( intersects[ 1 ].distance ) - Math.abs( intersects[ 0 ].distance ) < 0.00001 ) {
 
 			normal1 = intersects[ 0 ].object.geometry.attributes.normal.array.slice( 0, 3 );
-			console.log( 'normal1', normal1 );
+			//console.log( 'normal1', normal1 );
 
 			normal2 = intersects[ 1 ].object.geometry.attributes.normal.array.slice( 0, 3 );
-			console.log( 'normal2', normal2 );
+			//console.log( 'normal2', normal2 );
 
 			//if ( Math.abs( normal1[ 0 ] ) - Math.abs( normal2[ 0 ] ) < 0.001
 			//	&& Math.abs( normal1[ 1 ] ) - Math.abs( normal2[ 1 ] ) < 0.001
