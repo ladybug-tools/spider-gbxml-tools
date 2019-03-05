@@ -177,6 +177,14 @@ OHC.onHashChange = function() {
 
 		divContents.innerHTML = `<img src=${ url } >`;
 
+	} else if ( ulc.endsWith( ".xml" ) ) {
+
+		FIL.XhrRequestFileXml( url );
+
+	} else if ( ulc.endsWith( '.zip' )) {
+
+		FIL.XhrRequestFileZip( url, FIL.callbackUrlUtf16 );
+
 	} else {
 
 		OHC.requestFile( url, OHC.callbackOtherToTextarea );

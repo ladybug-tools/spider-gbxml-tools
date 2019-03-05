@@ -2,7 +2,7 @@
 /* globals */
 /* jshint esversion: 6 */
 
-const ISMET = { "release": "R10.0", "data": "2018-12-16" };
+const ISMET = { "release": "R15.0", "date": "2019-03-04" };
 
 
 ISMET.metadataValues = {
@@ -24,9 +24,9 @@ ISMET.currentStatus =
 
 			<details>
 
-				<summary>ISMET ${ ISFC.release} status ${ ISFC.date }</summary>
+				<summary>ISMET ${ ISMET.release} status ${ ISMET.date }</summary>
 
-				<p>Issues Metadat (ISMET) module is ready for light testing, but is still at an early stage of development.</p>
+				<p>Issues Metadata (ISMET) module is ready for light testing, but is still at an early stage of development.</p>
 
 				<p>
 					As and when the project gets access to more modules with other metadata errors,
@@ -39,6 +39,34 @@ ISMET.currentStatus =
 
 		<hr>
 	`;
+
+
+ISMET.currentStatus =
+	`
+		<h3>ISMET ${ ISMET.release} status ${ ISMET.date }</h3>
+
+		<p>Issues Metadata (ISMET) module is ready for light testing, but is still at an early stage of development.</p>
+
+		<p>
+			As and when the project gets access to more modules with other metadata errors,
+			this module will be enhanced to identify and fix any more errors found.
+		</p>
+
+		<p>
+			<a href="https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/r15/js-gbxml/istmp-issues-template.js: target="_blank" >
+				Issues Metadata source code
+			</a>
+		</p>
+		<details>
+			<summary>Change log</summary>
+			<ul>
+				<li>2019-02-28 ~ R15.0 ~ Update help to pop-up</li>
+
+			</ul>
+		</details>
+
+	`;
+
 
 
 
@@ -89,6 +117,32 @@ ISMET.getMenuMetadataIssues = function() {
 		<div id="ISMETdivMetadataIssues" ></div>
 
 		<div>${ ISMET.currentStatus }</div>
+
+	</details>`;
+
+	return htm;
+
+};
+
+
+ISMET.getMenuMetadataIssues = function() {
+
+	const htm =
+
+	`<details id=ISMETdetMetadataIssues ontoggle=ISMET.getMetadataIssuesCheck();	>
+
+		<summary>Missing gbXML Metadata<span id="ISMETspnCount" ></span>
+		<a id=ISMETsumHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(ISMETsumHelp,ISMET.currentStatus);" >&nbsp; ? &nbsp;</a>
+
+		</summary>
+
+		<p>
+			<i>
+				Identify required gbXML attributes that are missing in the file.
+			</i>
+		</p>
+
+		<div id="ISMETdivMetadataIssues" ></div>
 
 	</details>`;
 

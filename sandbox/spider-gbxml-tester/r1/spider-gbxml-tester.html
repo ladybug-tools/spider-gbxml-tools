@@ -15,6 +15,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js" ></script>
 <!--
 <script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/fob-file-open-basic.js" ></script>
+
+<script src="ismet-issues-metadata.js" ></script>
 -->
 
 <!-- File menu -->
@@ -22,9 +24,14 @@
 <script src="fil-file-open-xml-zip.js" ></script>
 
 <!-- Edit Menu -->
-<script src="iscor-issues-core.js" ></script>
+
 <script src="spider-gbxml-tester.js" ></script>
-<script src="ismet-issues-metadata.js" ></script>
+
+<script src="https://ladybug-tools.github.io/spider-gbxml-tools/spider-gbxml-viewer/r15/js-gbxml/iscor-issues-core.js" ></script>
+
+<script src="https://ladybug-tools.github.io/spider-gbxml-tools/spider-gbxml-viewer/r15/js-gbxml/ismet-issues-metadata.js" ></script>
+<script src="https://ladybug-tools.github.io/spider-gbxml-tools/spider-gbxml-viewer/r15/js-gbxml/issti-issues-surface-type-invalid.js" ></script>
+
 
 <script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/mnu-menu.js" ></script>
 <script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/sfm-selected-files-markdown.js" ></script>
@@ -99,16 +106,16 @@ MNU.appText= "gbXML Tools";
 MNU.appTitle = "Tools to help you find, load, examine and edit gbXML files - in large numbers and sizes";
 MNU.appUrl = "https://www.ladybug.tools/spider-gbxml-tools/";
 
-MNU.urlSourceCodeImage = "https://pushme-pullyou.github.io/github-mark-64.png";
-MNU.urlSourceCodeIcon = `<img src="${ MNU.urlSourceCodeImage }" height=18 style=opacity:0.5 >`;
+//MNU.urlSourceCodeImage = "https://pushme-pullyou.github.io/github-mark-64.png";
+//MNU.urlSourceCodeIcon = `<img src="${ MNU.urlSourceCodeImage }" height=18 style=opacity:0.5 >`;
 
 MNU.footerUrl = "https://pushme-pullyou.github.io/tootoo13/#";
 MNU.footerTarget = "target=_blank";
 MNU.footerIssues = "https://github.com/ladybug-tools/spider-gbxml-tools/issues";
 
 // for parsing
-OHC.user = 'pushme-pullyou';
-OHC.repo = 'pushme-pullyou.github.io';
+OHC.user = 'ladybug-tools';
+OHC.repo = 'spider-gbxml-tools';
 OHC.pathRepo = '';
 OHC.branch = '/master/';
 
@@ -131,15 +138,15 @@ OHC.urlGitHubPage = "";
 
 		<details class=navSubMenu open >
 
-			<summary class=sumMenuTitle >File Menu</summary>
+			<summary class="sumMenuTitle" >File Menu</summary>
 
-			<section id=SFMsecPrototypes ></section>
+			<section id="SFMsecPrototypes" ></section>
 
 			<section id="GALdivSampleFilesGallery"></section>
 
-			<section id="OHCsecMenuRepoFilesFolders" ></section>
 
-			<section id=FOBsecFileOpenBasic ></section>
+
+			<section id="FOBsecFileOpenBasic" ></section>
 
 			<section id="FILdivFileOpen"></section>
 
@@ -148,7 +155,10 @@ OHC.urlGitHubPage = "";
 
 		</details>
 
+<!--
 
+
+			<section id="OHCsecMenuRepoFilesFolders" ></section>
 		<details id="detMenuEdit" class=navSubMenu open >
 
 			<summary class=sumMenuTitle >Edit Menu </summary>
@@ -156,6 +166,9 @@ OHC.urlGitHubPage = "";
 			<div id="ISCORdivMenuIssues" ></div>
 
 		</details>
+
+-->
+
 
 
 		<details class=navSubMenu open >
@@ -176,7 +189,9 @@ OHC.urlGitHubPage = "";
 		</footer>
 
 
-		<h1 onclick=navMenu.scrollTop=0; style=cursor:pointer;text-align:center; title="go to top of menu" > ❦ </h1>
+		<h1 onclick=navMenu.scrollTop=0; style=cursor:pointer;text-align:center; title="go to top of menu" >
+			<img src="https://ladybug.tools/artwork/icons_bugs/ico/spider.ico" height=18 >
+		</h1>
 
 	</nav>
 
@@ -229,7 +244,9 @@ function init() {
 	FILdivFileSave.innerHTML=FIL.getMenuFileSave();
 
 	//Edit menu
-	ISCORdivMenuIssues.innerHTML=ISCOR.getMenuIssues();
+	//ISCORdivMenuIssues.innerHTML=ISCOR.getMenuIssues();
+
+	// Settings menu
 
 	THMsecMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
 
