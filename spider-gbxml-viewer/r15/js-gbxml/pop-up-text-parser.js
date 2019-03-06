@@ -129,7 +129,7 @@ POP.onClickZoomAll = function() {
 
 	const campusXml = POP.parser.parseFromString( GBX.text, "application/xml").documentElement;
 	POP.campusXml = campusXml;
-	console.log( 'campusXml', campusXml.attributes );
+	//console.log( 'campusXml', campusXml.attributes );
 
 	const buildingXml = campusXml.getElementsByTagName( 'Building' )[ 0 ];
 
