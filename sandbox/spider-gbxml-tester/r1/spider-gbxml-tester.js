@@ -2,6 +2,37 @@
 
 const SGT = {}
 
+let GBX = {};
+
+GBX.colorsDefault = {
+
+	InteriorWall: 0x008000,
+	ExteriorWall: 0xFFB400,
+	Roof: 0x800000,
+	InteriorFloor: 0x80FFFF,
+	ExposedFloor: 0x40B4FF,
+	Shade: 0xFFCE9D,
+	UndergroundWall: 0xA55200,
+	UndergroundSlab: 0x804000,
+	Ceiling: 0xFF8080,
+	Air: 0xFFFF00,
+	UndergroundCeiling: 0x408080,
+	RaisedFloor: 0x4B417D,
+	SlabOnGrade: 0x804000,
+	FreestandingColumn: 0x808080,
+	EmbeddedColumn: 0x80806E,
+	Undefined: 0x88888888
+
+};
+
+GBX.colors = Object.assign( {}, GBX.colorsDefault ); // create working copy of default colors
+
+GBX.surfaceTypes = Object.keys( GBX.colors );
+
+
+
+
+
 
 SGT.setGeneralCheck = function() {
 
@@ -15,13 +46,21 @@ SGT.setGeneralCheck = function() {
 
 		<section id=ISMETsec ></section>
 
+		<section id=ISSTIsec>
+
+			<details id=ISSTIdetSurfaceTypeInvalid open >
+				<summary>Surface Type Invalid<span id=ISSTIspnCount ></span> </summary>
+
+				<select id=ISTIselSurfaceTypeInvalid ></select>
+			</details>
+
+		</section>
+
 	`;
 
-	ISSdivCheckText.innerHTML = SGT.checkLines();
+	//ISSdivCheckText.innerHTML = SGT.checkLines();
 
-	ISMETsec.innerHTML = ISMET.getMenuMetadataIssues();
 
-	ISMET.getMetadataIssuesCheck();
 
 	SGT.setSurfaces();
 
@@ -103,11 +142,17 @@ SGT.checkLines = function() {
 };
 
 
+
 SGT.setSurfaces = function() {
 
-	SGT.text = FIL.text.replace( /\r\n|\n/g, '' );
-	SGT.surfaces = SGT.text.match( /<Surface(.*?)<\/Surface>/gi );
-	console.log( 'SGT.surfaces', SGT.surfaces );
-	
+	GBX.text = FIL.text.replace( /\r\n|\n/g, '' );
+	GBX.surfaces = GBX.text.match( /<Surface(.*?)<\/Surface>/gi );
+	//console.log( 'GBX.surfaces', GBX.surfaces );
+
+	ISMETsec.innerHTML = ISMET.getMenuMetadataIssues();
+
+	ISMET.getMetadataIssuesCheck();
+
+	ISSTI.getSurfaceTypeInvalidCheck();
 
 };

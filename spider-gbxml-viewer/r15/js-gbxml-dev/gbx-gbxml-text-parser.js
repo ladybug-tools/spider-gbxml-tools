@@ -176,7 +176,7 @@ GBX.parseFile = function( gbxml )  {
 
 
 GBX.setSurfaceTypesVisible = function ( typesArray ) {
-
+	
 	//console.log( 'typesArray', typesArray );
 
 	//GBX.surfacesFiltered = typesArray.flatMap( filter =>

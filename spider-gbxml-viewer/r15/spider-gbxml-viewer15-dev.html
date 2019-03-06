@@ -5,10 +5,10 @@
 <meta name = "viewport" content= "width=device-width, initial-scale=1" >
 <meta name = "description" content = "This menu is a component of a basic html content management script with sliding menu, css theme selection, Markdown to HTML, drag and drop file reading capability, access to frequently used pages and more" >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
-<meta name = "date" content = "2019-03-05" >
-<meta name = "release" content = "15.28" >
-<title>Spider gbXML Viewer 'Maevia'</title>
-<link rel="stylesheet" href="js-gbxml/style15-6.css">
+<meta name = "date" content = "2019-03-04" >
+<meta name = "release" content = "15.27" >
+<title>DEV Spider gbXML Viewer 'Maevia' DEV</title>
+<link rel="stylesheet" href="js-gbxml-dev/style15-6.css">
 </head>
 <body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
@@ -22,38 +22,39 @@
 	<script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/tmp-template.js" ></script>
 -->
 
-<script src="js-gbxml/thr-threejs.js" ></script>
-<script src="js-gbxml/thru-threejs-utilities.js"></script>
-<script src="js-gbxml/pop-up-text-parser.js" ></script>
+<script src="js-gbxml-dev/thr-threejs.js" ></script>
+<script src="js-gbxml-dev/thru-threejs-utilities.js"></script>
+<script src="js-gbxml-dev/pop-up-text-parser.js" ></script>
 
 <!-- File menu -->
-<script src="js-gbxml/gal-sample-files-gallery-gbxml.js" ></script>
-<script src="js-gbxml/fil-file-open-xml-zip.js" ></script>
-<script src="js-gbxml/gbx-gbxml-text-parser.js" ></script>
-<script src="js-gbxml/gbxu-gbxml-utilities.js" ></script>
+<script src="js-gbxml-dev/gal-sample-files-gallery-gbxml.js" ></script>
+<script src="js-gbxml-dev/fil-file-open-xml-zip.js" ></script>
+<script src="js-gbxml-dev/gbx-gbxml-text-parser.js" ></script>
+<script src="js-gbxml-dev/gbxu-gbxml-utilities.js" ></script>
 
 <!-- Edit menu -->
-<script src="js-gbxml/iscor-issues-core.js" ></script>
-<script src="js-gbxml/isfic-issues-file-check.js" ></script>
-<script src="js-gbxml/ismet-issues-metadata.js" ></script>
-<script src="js-gbxml/issti-issues-surface-type-invalid.js" ></script>
-<script src="js-gbxml/isduc-issues-duplicate-coordinates.js" ></script>
-<script src="js-gbxml/isasi-issues-adjacent-space-invalid.js" ></script>
-<script src="js-gbxml/isase-issues-adjacent-space-extra.js" ></script>
-<script src="js-gbxml/isasd-issues-adjacent-space-duplicate.js" ></script>
-<script src="js-gbxml/issov-issues-surface-overlap-verticals.js" ></script>
-<script src="js-gbxml/issoh-issues-surface-overlap-horizontals.js" ></script>
-<script src="js-gbxml/isaoioe-air-or-interior-on-exterior.js" ></script>
-<script src="js-gbxml/iscod-issues-cad-object-id.js" ></script>
-<script src="js-gbxml/istmp-issues-template.js" ></script>
+<script src="js-gbxml-dev/iscor-issues-core.js" ></script>
+<script src="js-gbxml-dev/isrc-raycaster.js" ></script>
+<script src="js-gbxml-dev/isfic-issues-file-check.js" ></script>
+<script src="js-gbxml-dev/ismet-issues-metadata.js" ></script>
+<script src="js-gbxml-dev/issti-issues-surface-type-invalid.js" ></script>
+<script src="js-gbxml-dev/isduc-issues-duplicate-coordinates.js" ></script>
+<script src="js-gbxml-dev/isasi-issues-adjacent-space-invalid.js" ></script>
+<script src="js-gbxml-dev/isase-issues-adjacent-space-extra.js" ></script>
+<script src="js-gbxml-dev/isasd-issues-adjacent-space-duplicate.js" ></script>
+<script src="js-gbxml-dev/issov-issues-surface-overlap-verticals.js" ></script>
+<script src="js-gbxml-dev/issoh-issues-surface-overlap-horizontals.js" ></script>
+<script src="js-gbxml-dev/isaoioe-air-or-interior-on-exterior.js" ></script>
+<script src="js-gbxml-dev/iscod-issues-cad-object-id.js" ></script>
+<script src="js-gbxml-dev/istmp-issues-template.js" ></script>
 
 <!-- View menu -->
-<script src="js-gbxml/vst-view-surface-types.js" ></script>
-<script src="js-gbxml/vbs-view-by-storeys.js" ></script>
+<script src="js-gbxml-dev/vst-view-surface-types.js" ></script>
+<script src="js-gbxml-dev/vbs-view-by-storeys.js" ></script>
 
 <!-- Settings menu -->
-<script src="js-gbxml/set-settings.js" ></script>
-<script src="js-gbxml/cut-section-cut.js"></script>
+<script src="js-gbxml-dev/set-settings.js" ></script>
+<script src="js-gbxml-dev/cut-section-cut.js"></script>
 
 <script>
 
@@ -91,7 +92,6 @@ MNU.currentStatusCore =
 			<summary>Change log ~ ${ document.head.querySelector( '[ name=date ]' ).content }</summary>
 
 			<ul>
-				<li>2019-03-05 ~ R15.28 ~ POP > add primitive construction data readout - appears when construction data is available</li>
 				<li>2019-03-03 ~ R15.27 ~ ISSOH > beginning to find horizontal overlaps nicely</li>
 				<li>2019-03-03 ~ R15.26 ~ ISSOV > beginning to find vertical overlaps nicely</li>
 				<li>2019-02-28 ~ R15.25 ~ CUT > Improve behavior: View menu > Scene cut sections. FIL > close menus on open</li>
@@ -140,7 +140,7 @@ MNU.currentStatusCore =
 const urlDefaultFile='https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml';
 
 THM.themeUrlStorage = 'maevia15ThemeUrl'; // set for each instance in HTML file
-THM.cssBasic = "js-gbxml/style15-6.css";
+THM.cssBasic = "js-gbxml-dev/style15-6.css";
 
 // For main menu header
 MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer";

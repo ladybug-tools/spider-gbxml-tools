@@ -129,7 +129,7 @@ POP.onClickZoomAll = function() {
 
 	const campusXml = POP.parser.parseFromString( GBX.text, "application/xml").documentElement;
 	POP.campusXml = campusXml;
-	console.log( 'campusXml', campusXml.attributes );
+	//console.log( 'campusXml', campusXml.attributes );
 
 	const buildingXml = campusXml.getElementsByTagName( 'Building' )[ 0 ];
 
@@ -411,29 +411,6 @@ POP.getAttributesHtml = function( obj ) {
 			<span class=attributeTitle >${ attribute.name }</span>:
 			<span class=attributeValue >${ attribute.value }</span>
 		</div>`;
-
-		if ( attribute.name === "constructionIdRef" ) {
-
-			//console.log( 'attribute.value', attribute.value );
-
-			//constructions = GBX.text.match( /<Construction(.*?)<\/Construction>/gi );
-
-			// silly way of doing things, but it's a start
-			const campusXml = POP.parser.parseFromString( GBX.text, "application/xml").documentElement;
-			//POP.campusXml = campusXml;
-			//console.log( 'campusXml', campusXml.attributes );
-
-			constructions = Array.from( campusXml.getElementsByTagName( 'Construction' ) );
-			construction = constructions.find( item => item.id === attribute.value )
-			//console.log( 'construction', construction);
-
-			xmlText = new XMLSerializer().serializeToString( construction );
-			//console.log( 'xmlText', xmlText );
-
-			htm += `<textarea style=height:5rem;width:100%; >${ xmlText }</textarea>`;
-
-
-		}
 
 	}
 

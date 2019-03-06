@@ -61,15 +61,15 @@ ISSOH.getMenuSurfaceOverlapHorizontals = function() {
 		</p>
 -->
 		<p>
-			1. <button onclick=ISSOH.addNormals(this); >add normals to horizontal surfaces</button><br>
+			1. <button onclick=ISRC.addNormals(this,ISSOH.horizontalSurfaces,ISSOHselSurfaceOverlapHorizontals,ISSOHoverlaps); >add normals to horizontal surfaces</button><br>
 		</p>
 
 		<p>
-			2. <button onclick=ISSOH.castRaysGetIntersections(this); >cast rays get intersections</button><br>
+			2. <button onclick=ISRC.castRaysGetIntersections(this,ISSOHoverlaps); >cast rays get intersections</button><br>
 		</p>
 
 		<p>
-			<button onclick=ISSOH.setSurfaceOverlapHorizontalsShowHide(this,ISSOH.surfaceOverlaps); title="Starting to work!" >
+			<button onclick=ISSOH.setSurfaceOverlapHorizontalsShowHide(this,ISRC.surfaceIntersectionArrays); title="Starting to work!" >
 			show/hide overlaps
 			</button>
 		</p>
@@ -321,7 +321,7 @@ ISSOH.castRaysGetIntersections = function( button ) {
 	ISSOHselSurfaceOverlapHorizontals.innerHTML = ISSOH.getSelectOptions( ISSOH.surfaceOverlaps);
 
 	THR.scene.remove( ISSOH.horizontalNormalsFaces );
-	
+
 };
 
 
