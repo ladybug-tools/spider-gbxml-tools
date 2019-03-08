@@ -6,7 +6,7 @@
 <meta name = "description" content = "This menu is a component of a basic html content management script with sliding menu, css theme selection, Markdown to HTML, drag and drop file reading capability, access to frequently used pages and more" >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
 <meta name = "date" content = "2019-03-04" >
-<meta name = "release" content = "15.27" >
+<meta name = "release" content = "15.28" >
 <title>DEV Spider gbXML Viewer 'Maevia' DEV</title>
 <link rel="stylesheet" href="js-gbxml-dev/style15-6.css">
 </head>
@@ -92,6 +92,7 @@ MNU.currentStatusCore =
 			<summary>Change log ~ ${ document.head.querySelector( '[ name=date ]' ).content }</summary>
 
 			<ul>
+				<li>2019-03-05 ~ R15.28 ~ POP > add primitive construction data readout - appears when construction data is available</li>
 				<li>2019-03-03 ~ R15.27 ~ ISSOH > beginning to find horizontal overlaps nicely</li>
 				<li>2019-03-03 ~ R15.26 ~ ISSOV > beginning to find vertical overlaps nicely</li>
 				<li>2019-02-28 ~ R15.25 ~ CUT > Improve behavior: View menu > Scene cut sections. FIL > close menus on open</li>
@@ -161,7 +162,7 @@ MNU.appUrl = "https://www.ladybug.tools/spider-gbxml-tools/";
 //MNU.urlSourceCodeImage="https://status.github.com/images/invertocat.png";
 //MNU.urlSourceCodeIcon=`<img src="${ MNU.urlSourceCodeImage }" height=18 >`;
 
-MNU.footerUrl = "https://pushme-pullyou.github.io/tootoo13/#";
+MNU.footerUrl = "https://ladybug-tools.github.io/spider/#";
 MNU.footerTarget = "target=_blank";
 MNU.footerIssues = "https://github.com/ladybug-tools/spider-gbxml-tools/issues";
 
@@ -258,7 +259,9 @@ MNU.footerIssues = "https://github.com/ladybug-tools/spider-gbxml-tools/issues";
 		</footer>
 
 
-		<h1 onclick="navMenu.scrollTop=0;" style="cursor:pointer;text-align:center;" title="go to top of menu" > ❦ </h1>
+		<h1 onclick="navMenu.scrollTop=0;" style="cursor:pointer;text-align:center;" title="go to top of menu" >
+			<img src="https://ladybug.tools/artwork/icons_bugs/ico/spider.ico" height=18 >
+		</h1>
 
 	</nav>
 

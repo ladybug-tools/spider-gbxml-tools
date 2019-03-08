@@ -99,7 +99,7 @@ ISCOR.getMenuIssues = function() {
 
 		${ ISSOH.getMenuSurfaceOverlapHorizontals() }
 
-		${ ISAOIOE.getMenuAirOrInteriorOnExterior() }
+
 
 		<div id = "divDuplicateRectangularGeometry" ></div>
 
@@ -115,11 +115,11 @@ ISCOR.getMenuIssues = function() {
 
 };
 
-
+// 		${ ISAOIOE.getMenuAirOrInteriorOnExterior() }
 
 ISCOR.onGbxParse = function() {
 
-	detMenuEdit.open = true;
+	//detMenuEdit.open = true;
 
 	const issues = detMenuEdit.querySelectorAll( 'details' ); // agree with FIL!
 	//console.log( 'issues', issues );
@@ -148,7 +148,7 @@ ISCOR.onClickAllIssues = function() {
 
 	ISASD.getAdjacentSpaceDuplicateCheck();
 
-	ISASTE.getAirSurfaceTypeEditorCheck();
+	//ISASTE.getAirSurfaceTypeEditorCheck();
 
 	ISCOD.getCadObjectIdCheck();
 

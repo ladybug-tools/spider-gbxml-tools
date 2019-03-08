@@ -4,21 +4,21 @@ ISAOIOEspnCount, ISAOIOEbutViewSelected,ISAOIOEbutViewAll, ISAOIOEpNumberSurface
 /* jshint esversion: 6 */
 
 
-const ISAOIOE = { "release": "R15.0", "date": "2019-03-05" };
+const ISAOIOE = { "release": "R15.1", "date": "2019-03-08" };
 
 let count2 = 0;
 
 
 ISAOIOE.description =
 	`
-		Air or Interior on Exterior (ISAOIOE) allows you display Air or Interior surface types that may be at the exterior of the model.
+		Interior Wall on Exterior (ISIOE) allows you display InteriorWall surface types that may be at the exterior of the model.
 
 	`;
 
 
 ISAOIOE.currentStatus =
 	`
-		<summary>Air or Interior on Exterior (ISAOIOE) ${ ISAOIOE.release} ~ ${ ISAOIOE.date }</summary>
+		<summary>Interior Wall on Exterior (ISIOE) ${ ISAOIOE.release} ~ ${ ISAOIOE.date }</summary>
 
 		<p>
 			${ ISAOIOE.description }
@@ -26,7 +26,7 @@ ISAOIOE.currentStatus =
 
 		<p>
 			<a href="https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/r15/js-gbxml/isAOIOE-issues-air-surface-type-editor.js" target="_blank" >
-			Air or Interior on Exterior source code
+			Interior on Exterior source code
 			</a>
 		</p>
 
@@ -49,10 +49,10 @@ ISAOIOE.currentStatus =
 			<p>Select box and buttons should be working as expected.</p>
 
 			<p>
-				Identifying external Air surfaces is a work-in-progress.
+				Identifying external InteriorWall surfaces is a work-in-progress.
 				<span class=highlight>The web page must be reloaded between each session.</span>
 				Click the numbered boxes in numerical order.
-				Various normals and sprites at intersection will be drawn. These are for testing while devloping and will not appear in final version.
+				Various normals and sprites at intersection will be drawn. These are for testing while developing and will not appear in final version.
 			</p>
 
 			<p>Editing surface types and saving your edits has not yet been started.</p>
@@ -87,7 +87,6 @@ ISAOIOE.currentStatus =
 			<ul>
 
 				<li>2019-02-15 ~ Easy access to show edges external vertical and/or horizontal surfaces</li>
-				<li>2019-02-15 ~ Check normals for both sides of surfaces</li>f
 				<li>2019-02-15 ~ Save changes to files</li>
 				<li>2019-02-15 ~ Identify separately vertical and horizontal surfaces</li>
 				<li>2019-02-15 ~ Show/hide identified incorrect surfaces</li>
@@ -99,6 +98,7 @@ ISAOIOE.currentStatus =
 		<details>
 			<summary>Change log</summary>
 			<ul>
+				<li>2019-03-08 ~ R15.1 ~ Many fixes. Checks normals for both sides of surfaces</li>
 				<li>2019-03-05 ~ first commit</li>
 			</ul>
 		</details>
@@ -112,54 +112,34 @@ ISAOIOE.getMenuAirOrInteriorOnExterior = function() {
 
 	`<details id="ISAOIOEdetAirOrInteriorOnExterior" ontoggle=ISAOIOE.getAirOrInteriorOnExteriorCheck(); >
 
-		<summary>Air/Interior on Exterior<span id="ISAOIOEspnCount" ></span>
+		<summary>InteriorWall on Exterior<span id="ISAOIOEspnCount" ></span>
 			<a id=ISAOIOEsumHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(ISAOIOEsumHelp,ISAOIOE.currentStatus);" >&nbsp; ? &nbsp;</a>
 		</summary>
 
 		<p>
 			${ ISAOIOE.description }
 		</p>
-<!--
-		<p>
-			<button id=ISAOIOEbutViewAll onclick=ISAOIOE.setAirOrInteriorOnExteriorShowHide(this,ISAOIOE.surfaceAirInteriorIndices); >
-				Show/hide all air type surfaces
-			</button>
-		</p>
-
-
-		<p>
-			Select multiple surfaces by pressing shift or control keys.
-		</p>
-		<p>
-			<button id=ISAOIOEbutViewSelected onclick=ISAOIOE.selectedSurfaceShowHide(this,ISAOIOEselAirOrInteriorOnExterior); title="If none selected, first is taken as default" >
-				show/hide currently selected air surfaces
-			</button>
-		</p>
-
-		<p id=ISAOIOEpNumberSurfacesVisible ></p>
-
-		<hr>
--->
 
 		<p>The following is work-in-progress</p>
 
 		<p>
-			1. <button onclick=ISAOIOE.addNormals(this); >add normals to Air/InteriorWall surfaces</button><br>
+			1. <button onclick=ISRC.addNormals(this,ISAOIOE.surfaceAirInteriorIndices,ISAOIOEselAirOrInteriorOnExterior,ISAOIOEfixes); >
+				add normals to InteriorWall surfaces</button><br>
 		</p>
 
 		<p>
-			2. <button onclick=ISAOIOE.castRaysGetIntersections(this); >cast rays get intersections</button><br>
+			2. <button onclick=ISAOIOE.castRaysGetIntersections(this,ISAOIOEfixes); >cast rays get intersections</button><br>
 		</p>
 
 		<p>
-			<select id=ISAOIOEselAirOrInteriorOnExterior onchange=ISAOIOE.selectedSurfaceFocus(this); style=width:100%; multiple size=10 >
-			</select>
-		</p>
-
-		<p>
-			<button onclick=ISAOIOE.setAirOrInteriorOnExteriorShowHide(this,ISAOIOE.surfaceAirInteriorIndices); title="Starting to work!" >
-			show/hide overlaps
+			<button onclick=ISAOIOE.setSurfaceArraysShowHide(this,ISAOIOE.surfaceIntersections); title="Starting to work!" >
+			show/hide wall with issues
 			</button>
+		</p>
+
+		<p>
+			<select id=ISAOIOEselAirOrInteriorOnExterior onchange=ISRC.selectedSurfaceFocus(this); style=width:100%; multiple size=10 >
+			</select>
 		</p>
 
 		<p id=ISAOIOEfixes >
@@ -180,91 +160,24 @@ ISAOIOE.getMenuAirOrInteriorOnExterior = function() {
 
 
 
-ISAOIOE.selectSurfaces = function( color ) {
-
-	if ( color ) {
-
-		GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
-		ISAOIOE.surfaceAirInteriorIndices.forEach( surfaceId => {
-
-			const mesh = GBX.surfaceGroup.children[ surfaceId ];
-			mesh.visible = mesh.material.color.getHexString() === color ? true : false;
-
-		} );
-
-	} else {
-
-		GBX.surfaceGroup.children.forEach( mesh => {
-			//console.log( '', mesh.material.color.getHexString() );
-			mesh.visible = mesh.material.color.getHexString() === "ffff00" ? true : false;
-
-		} );
-
-	}
-
-};
-
-
-
 ISAOIOE.getAirOrInteriorOnExteriorCheck = function() {
-	//console.log( 'ISAOIOEdetAirOrInteriorOnExterior.open', ISAOIOEdetAirOrInteriorOnExterior.open );
 
-	//if ( ISAOIOEdetAirOrInteriorOnExterior.open === false && ISCOR.runAll === false ) { return; }
-
-	//if ( GBX.surfaces.length > ISCOR.surfaceCheckLimit ) { return; } // don't run test automatically on very large files
+	THR.scene.remove( ISSOH.horizontalNormalsFaces );
 
 	ISAOIOE.surfaceAirInteriorIndices = [];
 
-	const surfaces = GBX.surfaces;
+	GBX.surfaces.forEach( ( surface, index ) => {
+		//const surfaceMatchAir = surface.match( /surfaceType="Air"/ );
 
-	// refactor to a reduce??
-	for ( let i = 0; i < surfaces.length; i++ ) {
+		const surfaceMatchInterior = surface.match( /surfaceType="InteriorWall"/ );
 
-		const surface = surfaces[ i ];
-		//console.log( 'surface', surface );
+		if ( surfaceMatchInterior ) {
 
-		let surfaceMatch = surface.match( /surfaceType="Air"/ );
-		//console.log( 'surfaceMatch', surfaceMatch );
-
-		if ( surfaceMatch ) {
-
-			ISAOIOE.surfaceAirInteriorIndices.push( i );
+			ISAOIOE.surfaceAirInteriorIndices.push( index );
 
 		}
 
-		surfaceMatch = surface.match( /surfaceType="InteriorWall"/ );
-		//console.log( 'surfaceMatch', surfaceMatch );
-
-		if ( surfaceMatch ) {
-
-			ISAOIOE.surfaceAirInteriorIndices.push( i );
-
-		}
-
-	}
-
-	/*
-	let color;
-	let htmOptions = '';
-
-	for ( let surfaceIndex of ISAOIOE.surfaceAirInteriorIndices ) {
-
-		color = color === 'pink' ? '' : 'pink';
-
-		const surfaceText = GBX.surfaces[ surfaceIndex ];
-
-		const id = surfaceText.match( 'id="(.*?)"' )[ 1 ];
-
-		htmOptions +=
-			`<option style=background-color:${ color } value=${ surfaceIndex } >${ id }</option>`;
-
-	}
-
-	ISAOIOEselAirOrInteriorOnExterior.innerHTML = htmOptions;
-
-	*/
-
-	//ISAOIOEspnCount.innerHTML = `: ${ ISAOIOE.surfaceAirInteriorIndices.length } found`;
+	} );
 
 	return ISAOIOE.surfaceAirInteriorIndices.length;
 
@@ -272,302 +185,33 @@ ISAOIOE.getAirOrInteriorOnExteriorCheck = function() {
 
 
 
-
-ISAOIOE.setAirOrInteriorOnExteriorShowHide = function( button, surfaceArray ) {
-
-	button.classList.toggle( "active" );
-
-	//ISAOIOEbutViewSelected.classList.remove( "active" );
-
-	if ( button.classList.contains( 'active' ) && surfaceArray.length ) {
-
-		GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
-
-		surfaceArray.forEach( surfaceId => GBX.surfaceGroup.children[ surfaceId ].visible = true );
-
-	} else {
-
-		GBX.surfaceGroup.children.forEach( element => element.visible = true );
-
-	}
-
-};
-
-
-
-ISAOIOE.selectedSurfaceFocus = function( select ) {
-
-	THR.controls.enableKeys = false;
-
-	POP.intersected = GBX.surfaceGroup.children[ select.value ];
-
-	POP.getIntersectedDataHtml();
-
-	divPopUpData.innerHTML = POP.getIntersectedDataHtml();
-
-};
-
-
-
-ISAOIOE.selectedSurfaceShowHide = function( button, select ) {
-
-	THR.controls.enableKeys = false;
-
-	if ( ISAOIOEselAirOrInteriorOnExterior.selectedOptions.length === 0 ) {
-
-		ISAOIOEselAirOrInteriorOnExterior.selectedIndex = 0;
-
-	}
-
-	const options = Array.from( select.selectedOptions );
-	//console.log( 'options', options );
-
-	button.classList.toggle( "active" );
-
-	ISAOIOEbutViewAll.classList.remove( "active" );
-
-	if ( button.classList.contains( 'active' ) && options.length ) {
-
-		GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
-
-		options.forEach( option => GBX.surfaceGroup.children[ option.value ].visible = true );
-
-		ISAOIOEpNumberSurfacesVisible.innerHTML = `Number surfaces visible: ${ options.length }`;
-
-	} else {
-
-		GBX.surfaceGroup.children.forEach( element => element.visible = true );
-
-		ISAOIOEpNumberSurfacesVisible.innerHTML = `Number surfaces visible: ${ GBX.surfaceGroup.children.length }`;
-
-	}
-
-
-};
-
-
-
-//////////
-
-
-ISAOIOE.addNormals = function( button ) {
-
-	button.classList.toggle( "active" );
-
-	THRU.groundHelper.visible = false; //!button.classList.contains( 'active' );
-
-	if ( button.classList.contains( 'active' ) ) {
-
-		GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
-
-		ISAOIOE.surfaceAirInteriorIndices.forEach( surfaceId => GBX.surfaceGroup.children[ surfaceId ].visible = true );
-
-	}
-
-	ISAOIOE.toggleSurfaceNormals();
-
-};
-
-
-
-ISAOIOE.toggleSurfaceNormals = function() {
-
-	let material = new THREE.MeshNormalMaterial();
-
-	const types = [ 'BoxBufferGeometry', 'BufferGeometry', 'ConeBufferGeometry', 'CylinderBufferGeometry',
-		'ShapeBufferGeometry', 'SphereBufferGeometry' ];
-
-	//if ( ISAOIOE.airNormalsFaces === undefined ) {
-
-		ISAOIOE.airNormalsFaces = new THREE.Group();
-
-		THR.scene.traverse( function ( child ) {
-
-			if ( child instanceof THREE.Mesh && child.visible ) {
-
-				if ( child.geometry.type === 'Geometry' ) {
-
-					child.geometry.computeFaceNormals();
-
-					const helperNormalsFace = new THREE.FaceNormalsHelper( child, 2, 0xff00ff, 3 );
-					ISAOIOE.airNormalsFaces.add( helperNormalsFace );
-					//ISAOIOE.airNormalsFaces.visible = false;
-					console.log( 'helperNormalsFace', helperNormalsFace );
-
-				} else if ( types.includes( child.geometry.type ) === true ) {
-
-					//console.log( 'child', child.position, child.rotation );
-
-					const geometry = new THREE.Geometry();
-					const geo = geometry.fromBufferGeometry( child.geometry );
-					const mesh = new THREE.Mesh( geo, material );
-					mesh.rotation.copy( child.rotation );
-					mesh.position.copy( child.position );
-					const helperNormalsFace = new THREE.FaceNormalsHelper( mesh, 0.05 * THRU.radius, 0xff00ff, 3 );
-
-					ISAOIOE.airNormalsFaces.add( helperNormalsFace );
-					//ISAOIOE.airNormalsFaces.visible = false;
-
-				} else {
-
-					//console.log( 'child.geometry.type', child.geometry.type );
-
-				}
-
-			}
-
-		} );
-
-		ISAOIOE.airNormalsFaces.name = 'airNormalsFaces';
-		THR.scene.add( ISAOIOE.airNormalsFaces );
-		//ISAOIOE.airNormalsFaces.visible = false;
-
-	//}
-
-	//ISAOIOE.airNormalsFaces.visible = !ISAOIOE.airNormalsFaces.visible;
-
-};
-
-
-
-ISAOIOE.setTargetSurfacesVisible = function( button ) {
-
-	button.classList.toggle( "active" );
-
-	ISAOIOE.surfaceNotShadeIndices = [];
-
-	const surfaces = GBX.surfaces;
-
-	// refactor to a reduce??
-	for ( let i = 0; i < surfaces.length; i++ ) {
-
-		const surface = surfaces[ i ];
-		//console.log( 'surface', surface );
-		const surfaceMatch = surface.match( /surfaceType="Shade"/ );
-		//console.log( 'surfaceMatch', surfaceMatch );
-
-		if ( !surfaceMatch ) {
-
-			ISAOIOE.surfaceNotShadeIndices.push( i );
-
-		}
-
-	}
-
-	if ( button.classList.contains( 'active' ) ) {
-
-		GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
-
-		ISAOIOE.surfaceNotShadeIndices.forEach( surfaceId => GBX.surfaceGroup.children[ surfaceId ].visible = true );
-
-	}
-
-};
-
-
-
-
-
 ISAOIOE.castRaysGetIntersections = function( button ) {
 
 	button.classList.toggle( "active" );
-
-	ISAOIOE.airSurfacesOnExterior = [];
-
-	let fixes = 0;
-
-	const normals = ISAOIOE.airNormalsFaces;
-	//console.log( 'normals', normals );
-
-	for ( let normal of normals.children ) {
-
-		const coordinates = normal.geometry.attributes.position.array;
-		//console.log( 'coordinates', coordinates );
-
-		for ( let i  = 0; i < coordinates.length;) {
-
-			const geometry = new THREE.BoxBufferGeometry( 0.2, 0.2, 0.2 );
-			const material = new THREE.MeshNormalMaterial();
-			const mesh = new THREE.Mesh( geometry, material );
-			mesh.position.set( coordinates[ i++ ], coordinates[ i++ ],coordinates[ i++ ] );
-			//THR.scene.add( mesh );
-
-		}
-
-	}
-
-	const v = ( x, y, z ) => new THREE.Vector3( x, y, z );
-
-	for ( let normal of normals.children ) {
-
-		const coordinates = normal.geometry.attributes.position.array;
-		//console.log( 'coordinates', coordinates );
-
-		for ( let i = 0; i < coordinates.length; ) {
-
-			const vertex1 = v( coordinates[ i++ ], coordinates[ i++ ], coordinates[ i++ ] );
-			const vertex2 = v( coordinates[ i++ ], coordinates[ i++ ],coordinates[ i++ ] );
-			//console.log( 'vertex1', vertex1 );
-
-			const direction = vertex2.clone().sub( vertex1 ).normalize();
-			//console.log( 'direction', direction );
-
-			fixes += ISAOIOE.findIntersections( GBX.surfaceGroup.children, vertex1, direction );
-
-		}
-
-	}
-	//console.log( 'count2', count2 );
-
-	ISAOIOEfixes.innerHTML =
-		`Air surfaces on exterior identified: ${ fixes }
-		<br>
-		Identified by Inside Polygon method: ${ count2 }`;
-
-	GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
-
-	ISAOIOE.surfaceAirInteriorIndices.forEach( surfaceId => GBX.surfaceGroup.children[ surfaceId ].visible = true );
-
-	ISAOIOE.airNormalsFaces.visible = false;
-
-	THRU.groundHelper.visible = false;
-
-};
-
-
-
-
-
-ISAOIOE.castRaysGetIntersections = function( button ) {
-
-	button.classList.toggle( "active" );
-
-	//ISAOIOE.airSurfacesOnExterior = [];
 
 	const v = ( x, y, z ) => new THREE.Vector3( x, y, z );
 	let normalsCount = 0;
-	let overlaps = 0;
-	ISAOIOE.surfaceOverlaps = [];
+	ISAOIOE.surfaceIntersections = [];
 
-	const normals = ISAOIOE.horizontalNormalsFaces.children;
+	const normals = ISRC.normalsFaces.children;
 	//console.log( 'normals', normals );
 
-	for ( let normal of normals ) {
+	ISAOIOE.meshesExterior = [];
 
-		const coordinates = normal.geometry.attributes.position.array;
-		//console.log( 'coordinates', coordinates );
+	const surfacesExterior = ["ExteriorWall", "UndergroundWall"];
 
-		for ( let i  = 0; i < coordinates.length;) {
+	GBX.surfaces.forEach( ( surface, index ) => {
 
-			const geometry = new THREE.BoxBufferGeometry( 0.2, 0.2, 0.2 );
-			const material = new THREE.MeshNormalMaterial();
-			const mesh = new THREE.Mesh( geometry, material );
-			mesh.position.set( coordinates[ i++ ], coordinates[ i++ ], coordinates[ i++ ] );
-			//THR.scene.add( mesh );
+		if ( surfacesExterior.includes( surface.match( /surfaceType="(.*?)"/ )[ 1 ] ) ) {
+
+			ISAOIOE.meshesExterior.push( GBX.surfaceGroup.children[ index ] );
 
 		}
 
-	}
+	} );
+	//console.log( 'ISAOIOE.meshesExterior', ISAOIOE.meshesExterior );
+
+	ISAOIOE.meshesExterior.forEach( mesh => mesh.visible = true );
 
 
 	for ( let normal of normals ) {
@@ -584,130 +228,118 @@ ISAOIOE.castRaysGetIntersections = function( button ) {
 			const direction = vertex2.clone().sub( vertex1 ).normalize();
 			//console.log( 'direction', direction );
 
-			overlaps += ISAOIOE.findIntersections( GBX.surfaceGroup.children, vertex1, direction );
-			//overlaps += ISAOIOE.findIntersections( ISAOIOE.horizontalSurfaces, vertex1, direction );
+			ISAOIOE.findIntersections( normal.userData.index, vertex1, direction );
+			//console.log( 'intersections', intersections );
 
 			normalsCount++;
 
 		}
 
 	}
-	//console.log( 'ISAOIOE.surfaceOverlaps', ISAOIOE.surfaceOverlaps );
+	//console.log( 'ISAOIOE.surfaceIntersectionArrays', ISAOIOE.surfaceIntersectionArrays );
 
-	ISAOIOEoverlaps.innerHTML =
+	ISRC.targetLog.innerHTML =
 	`
-		Horizontal surfaces: ${ ISAOIOE.horizontalSurfaces.length.toLocaleString() }<br>
+		Surfaces: ${ ISAOIOE.surfaceAirInteriorIndices.length.toLocaleString() }<br>
 		Normals created: ${ normalsCount.toLocaleString() }<br>
-		Overlaps found: ${ overlaps.toLocaleString() }
+		intersections found: ${ ISAOIOE.surfaceIntersections.length.toLocaleString() }
 
 		<p>Use Pop-up menu to zoom and show/hide individual surfaces.</p>
 
 		<p><i>Better user-interface and best ways of fixing issues: TBD.</i></p>
 	`;
 
-	ISAOIOEselSurfaceOverlapHorizontals.innerHTML = ISAOIOE.getSelectOptions( ISAOIOE.surfaceOverlaps);
+	ISRC.targetSelect.innerHTML = ISAOIOE.getSelectOptions( ISAOIOE.surfaceIntersections );
 
-	THR.scene.remove( ISAOIOE.horizontalNormalsFaces );
+	THR.scene.remove( ISAOIOE.normalsFaces );
 
 };
 
 
 
+ISAOIOE.findIntersections = function( index, origin, direction ) {
 
-ISAOIOE.findIntersections = function( objs, origin, direction ) {
-
-	let count1 = 0;
+	let count = 0;
 
 	const raycaster = new THREE.Raycaster();
-	const near = 0.2 * THRU.radius;
-	raycaster.set( origin, direction, near, THRU.radius ); // has to be the correct vertex order
+	raycaster.set( origin, direction ); // has to be the correct vertex order
 
-	const intersects = raycaster.intersectObjects( objs );
-	//console.log( 'intersects', intersects.length );
+	const intersects1 = raycaster.intersectObjects( ISAOIOE.meshesExterior );
 
-	const surfacesExterior = ["ExposedFloor","ExteriorWall","Roof","SlabOnGrade","UndergroundWall","UndergroundSlab" ];
+	raycaster.set( origin, direction.negate() );
+	const intersects2 = raycaster.intersectObjects( ISAOIOE.meshesExterior );
 
-	if ( intersects.length === 0 ) {
+	if (  intersects1.length % 2 === 0 || intersects2.length % 2 === 0 ) {
 
-		//console.log( 'intersects', intersects ); //??
-
-	} else if ( intersects.length === 1 ) {
-
-		//console.log( 'intersect.object', intersects[ 0 ].object );
-
-		const mesh = intersects[ 0 ].object;
-
-		count1++;
-		ISAOIOE.addColor( mesh );
-
-	} else if ( intersects.length > 1 && ( intersects.length - 1 ) % 2 === 0 ) {
-
-		let countExt = 0;
-
-		for ( let i = 1; i < intersects.length; i++) {
-
-			const index = intersects[ i ].object.userData.index;
-
-			const surface = GBX.surfaces[ index ];
+			const mesh = GBX.surfaceGroup.children[ index ];
 			//console.log( 'surface', surface );
 
-			const surfaceType = surface.match( /surfaceType="(.*?)"/ )[ 1 ];
+			mesh.material = new THREE.MeshBasicMaterial( { color: 'red', side: 2 });
+			mesh.material.needsUpdate = true;
 
-			if ( surfacesExterior.includes( surfaceType ) ) {
+			if ( ISAOIOE.surfaceIntersections.includes( index ) === false ) { ISAOIOE.surfaceIntersections.push( index ); }
 
-				//console.log( 'surfaceType', surfaceType );
-
-				countExt++;
-
-			}
-
-		}
-
-
-		if ( countExt % 2 === 0 ) {
-
-			ISAOIOE.addColor( intersects[ 0 ].object );
-			//console.log( 'intersects even', intersects );
-
-			count1++;
-			count2++;
-
-		}
+			count ++;
 
 	}
 
-
-	return count1;
-
-};
-
-
-
-ISAOIOE.addColor = function( mesh ){
-
-	const surface = GBX.surfaces[ mesh.userData.index ];
-	//console.log( 'surface', surface );
-
-	const tilt = surface.match( /tilt>(.*?)<\/tilt/i )[ 1 ];
-	//console.log( 'tilt', tilt );
-
-	const color = ( tilt !== "90" ) ? 'blue' : 'red';
-
-	mesh.material = new THREE.MeshBasicMaterial( { color: color, side: 2 });
-
-	mesh.material.needsUpdate = true;
-
-	ISAOIOE.airSurfacesOnExterior.push( mesh.userData.index );
+	return count;
 
 };
 
 
 
-ISAOIOE.setNewSurfaceType = function( that ) {
+ISAOIOE.setSurfaceArraysShowHide = function( button, surfaceIndexArray ) {
+	//console.log( 'surfaceIndexArray', surfaceIndexArray );
 
-	alert( "coming soon!" );
+	button.classList.toggle( "active" );
+
+	if ( button.classList.contains( 'active' ) && surfaceIndexArray.length ) {
+
+		GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
+
+		surfaceIndexArray.forEach( index => GBX.surfaceGroup.children[ Number( index ) ].visible = true );
+
+		THRU.groundHelper.visible = false;
+
+	} else {
+
+		GBX.surfaceGroup.children.forEach( element => element.visible = true );
+
+		THRU.groundHelper.visible = true;
+
+	}
 
 };
 
 
 
+ISAOIOE.getSelectOptions = function( surfaceArrays ) {
+
+	let htmOptions = '';
+	let count = 1;
+
+	for ( let index of surfaceArrays ) {
+
+			const surfaceText = GBX.surfaces[ index ];
+			//console.log( 'surfaceText', surfaceText );
+
+			const id = surfaceText.match( 'id="(.*?)"' )[ 1 ];
+
+			const cadIdMatch = surfaceText.match( /<CADObjectId>(.*?)<\/CADObjectId>/i );
+			const cadId = cadIdMatch ? cadIdMatch[ 1 ] : "";
+
+			const type = surfaceText.match( 'surfaceType="(.*?)"' )[ 1 ];
+			let color = GBX.colors[ type ].toString( 16 );
+			color = color.length > 4 ? color : '00' + color; // otherwise greens no show
+
+			htmOptions +=
+				`<option style=background-color:#${ color } value=${ index } title="${ cadId }" >${ count ++ } - ${ id }</option>`;
+
+
+
+	}
+
+	return htmOptions;
+
+};
