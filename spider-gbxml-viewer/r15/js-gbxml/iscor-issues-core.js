@@ -99,7 +99,9 @@ ISCOR.getMenuIssues = function() {
 
 		${ ISSOH.getMenuSurfaceOverlapHorizontals() }
 
-		${ ISAOIOE.getMenuAirOrInteriorOnExterior() }
+		${ ISAOIOEW.getMenuAirOrInteriorOnExterior() }
+
+		${ ISAOIOEF.getMenuAirOrInteriorFloorOnExterior() }
 
 		<div id = "divDuplicateRectangularGeometry" ></div>
 

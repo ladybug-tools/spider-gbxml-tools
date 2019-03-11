@@ -5,8 +5,8 @@
 <meta name = "viewport" content= "width=device-width, initial-scale=1" >
 <meta name = "description" content = "This menu is a component of a basic html content management script with sliding menu, css theme selection, Markdown to HTML, drag and drop file reading capability, access to frequently used pages and more" >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
-<meta name = "date" content = "2019-03-08" >
-<meta name = "release" content = "15.29" >
+<meta name = "date" content = "2019-03-11" >
+<meta name = "release" content = "15.30" >
 <title>Spider gbXML Viewer 'Maevia'</title>
 <link rel="stylesheet" href="js-gbxml/style15-6.css">
 </head>
@@ -44,7 +44,8 @@
 <script src="js-gbxml/isasd-issues-adjacent-space-duplicate.js" ></script>
 <script src="js-gbxml/issov-issues-surface-overlap-verticals.js" ></script>
 <script src="js-gbxml/issoh-issues-surface-overlap-horizontals.js" ></script>
-<script src="js-gbxml/isaoioe-air-or-interior-on-exterior.js" ></script>
+<script src="js-gbxml/isaoioew-air-or-interior-on-exterior-wall.js" ></script>
+<script src="js-gbxml/isaoioef-air-or-interior-on-exterior-floor.js" ></script>
 <script src="js-gbxml/iscod-issues-cad-object-id.js" ></script>
 <script src="js-gbxml/istmp-issues-template.js" ></script>
 
@@ -92,6 +93,7 @@ MNU.currentStatusCore =
 			<summary>Change log ~ ${ document.head.querySelector( '[ name=date ]' ).content }</summary>
 
 			<ul>
+				<li>2019-03-11 ~ R15.30 ~ ISAOIOEW & ISAOIOEF> big updates. See Pop-up help</li>
 				<li>2019-03-08 ~ R15.29 ~ IAIO > Add interiorWall on exterior </li>
 				<li>2019-03-05 ~ R15.28 ~ POP > add primitive construction data readout - appears when construction data is available</li>
 				<li>2019-03-03 ~ R15.27 ~ ISSOH > beginning to find horizontal overlaps nicely</li>

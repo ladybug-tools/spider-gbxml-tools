@@ -1,13 +1,19 @@
+// Copyright 2019 Ladybug Tools authors. MIT License
+/* globals THR, THRU, THREE, GBX, POP, divPopUpData */
+/* jshint esversion: 6 */
 
 const ISRC = {};
 
 
+
 ISRC.addNormals = function( button, selectedSurfaces = [], targetSelect = "", targetLog = "" ) {
+
+	THR.scene.remove( ISRC.normalsFaces );
+	ISRC.normalsFaces = new THREE.Group();
 
 	ISRC.selectedSurfaces = selectedSurfaces;
 	ISRC.targetSelect = targetSelect;
 	ISRC.targetLog = targetLog;
-	ISRC.normalsFaces = new THREE.Group();
 
 	button.classList.toggle( "active" );
 
@@ -61,7 +67,7 @@ ISRC.toggleSurfaceNormals = function() {
 
 				const helperNormalsFace = new THREE.FaceNormalsHelper( mesh, 0.05 * THRU.radius, 0xff00ff, 3 );
 				helperNormalsFace.userData.index = child.userData.index;
-				
+
 				ISRC.normalsFaces.add( helperNormalsFace );
 				//ISRC.normalsFaces.visible = false;
 
@@ -79,7 +85,6 @@ ISRC.toggleSurfaceNormals = function() {
 	THR.scene.add( ISRC.normalsFaces );
 
 };
-
 
 
 
@@ -176,14 +181,14 @@ ISRC.findIntersections = function( objs, origin, direction ) {
 	if ( intersects.length > 1 ) {
 		//console.log( 'intersects', intersects );
 
-		ISRC.surfaceIntersections.push([ intersects[ 0 ].object.userData.index, intersects.length ] )
+		ISRC.surfaceIntersections.push([ intersects[ 0 ].object.userData.index, intersects.length ] );
 
 		if ( Math.abs( intersects[ 1 ].distance ) - Math.abs( intersects[ 0 ].distance ) < 0.00001 ) {
 
 			const mesh = intersects[ 1 ].object;
 			ISRC.addColor( mesh );
 
-			surfaceIndices = intersects.map( intersect => intersect.object.userData.index );
+			const surfaceIndices = intersects.map( intersect => intersect.object.userData.index );
 			ISRC.surfaceIntersectionArrays.push( surfaceIndices );
 
 			count++;
@@ -248,12 +253,12 @@ ISRC.getSelectOptions = function( surfaceArrays ) {
 
 	return htmOptions;
 
-}
+};
 
 
 
 ISRC.setSurfaceArraysShowHide = function( button, surfaceArrays ) {
-	//console.log( 'surfaceArray', surfaceArray );
+	//console.log( 'surfaceArrays', surfaceArrays );
 
 	button.classList.toggle( "active" );
 
@@ -262,6 +267,8 @@ ISRC.setSurfaceArraysShowHide = function( button, surfaceArrays ) {
 		GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
 
 		surfaceArrays.forEach( array => array.slice( 0, 2 ).forEach( surfaceId => GBX.surfaceGroup.children[ surfaceId ].visible = true ) );
+
+		THR.scene.remove( ISRC.normalsFaces );
 
 		THRU.groundHelper.visible = false;
 
@@ -287,18 +294,17 @@ ISRC.setSurfaceArraysExteriorShowHide = function( button, surfaceArrays ) {
 
 		GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
 
-		for ( surface of surfaceArrays ) {
+		for ( let surface of surfaceArrays ) {
 
 			if ( surface[ 1 ] % 2 === 0 ) {
 
-				console.log( '',  );
-
-				GBX.surfaceGroup.children[ Number( surface[ 0 ] ) ].visible = true
+				GBX.surfaceGroup.children[ Number( surface[ 0 ] ) ].visible = true;
 
 			}
 
 		}
 
+		THR.scene.remove( ISRC.normalsFaces );
 
 		THRU.groundHelper.visible = false;
 
@@ -313,9 +319,10 @@ ISRC.setSurfaceArraysExteriorShowHide = function( button, surfaceArrays ) {
 };
 
 
+
 ISRC.selectedSurfaceFocus = function( select ) {
 
-	THR.controls.enableKeys = false
+	THR.controls.enableKeys = false;
 
 	POP.intersected = GBX.surfaceGroup.children[ select.value ];
 
