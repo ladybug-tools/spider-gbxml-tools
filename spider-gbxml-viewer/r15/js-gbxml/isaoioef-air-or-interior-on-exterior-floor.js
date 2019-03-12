@@ -4,12 +4,12 @@
 
 // depends on ISRC
 
-const ISAOIOEF = { "release": "R15.0", "date": "2019-03-11" };
+const ISAOIOEF = { "release": "R15.1", "date": "2019-03-12" };
 
 
 ISAOIOEF.description =
 	`
-		Interior Floor or Air with Tilt of 0 or 180 on Exterior (ISIOE) allows you display surface types that may be at the exterior of the model incorrectly.
+		Interior Floor or Air with Tilt of 0 or 180 on Exterior (ISAOIOEF) allows you display surface types that may be at the exterior of the model incorrectly.
 
 	`;
 
@@ -34,7 +34,7 @@ ISAOIOEF.currentStatus =
 			<summary>Usage</summary>
 
 			<p>
-				The current test case file for this project <a href="#https://rawgit.com/ladybug-tools/spider/master/gbxml-sample-files/zip/TypicalProblems-AirSurface.zip" >TypicalProblems-AirSurface.zip</a>
+				The current test case file for this project <a href="#https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/TypicalProblems-AirSurface.zip" >TypicalProblems-AirSurface.zip</a>
 				in the <a href="https://github.com/ladybug-tools/spider/tree/master/gbxml-sample-files" target="_blank">Spider gbXML sample files folder</a>.
 			</p>
 
@@ -72,8 +72,9 @@ ISAOIOEF.currentStatus =
 
 		<details>
 			<summary>Issues</summary>
-			
+
 			<ul>
+				<li>2019-03-12 ~ Move more functions to ISRC. Select list box now handles multi-select. Add button to show/hide selected.</li>
 				<li>
 					2019-03-11 ~ When the exterior of a model has holes/is non-manifold,
 					a number of false positives may be generated
@@ -143,8 +144,8 @@ ISAOIOEF.getMenuAirOrInteriorFloorOnExterior = function() {
 		</p>
 
 		<p>
-			<button onclick=ISAOIOEF.setSurfaceArraysShowHide(this,ISAOIOEF.surfaceIntersections); title="Starting to work!" >
-			show/hide walls with issues
+			<button onclick=ISRC.setSurfaceArrayShowHide(this,ISAOIOEF.surfaceIntersections); title="Starting to work!" >
+			show/hide floors with issues
 			</button>
 		</p>
 
@@ -153,10 +154,11 @@ ISAOIOEF.getMenuAirOrInteriorFloorOnExterior = function() {
 			</select>
 		</p>
 
-		<p id=ISAOIOEFfixes >
-			Air/Interior surfaces on exterior identified: run test<br>
-			Identified by Inside Polygon method: run test
+		<p>
+			<button onclick=ISRC.showHideSelected(this,ISAOIOEFselAirOrInteriorOnExterior); >show/hide selected surfaces</button>
 		</p>
+
+		<p id=ISAOIOEFfixes ></p>
 
 		<p>
 			Update surface(s) type to:
@@ -219,14 +221,11 @@ ISAOIOEF.castRaysGetIntersections = function( button ) {
 
 	button.classList.toggle( "active" );
 
-	const v = ( x, y, z ) => new THREE.Vector3( x, y, z );
-	let normalsCount = 0;
-	ISAOIOEF.surfaceIntersections = [];
-
 	const normals = ISRC.normalsFaces.children;
 	//console.log( 'normals', normals );
 
-	ISAOIOEF.meshesExterior = [];
+	ISAOIOEF.surfaceIntersections = [];
+	ISRC.meshesExterior = [];
 
 	const surfacesExterior = [ "ExposedFloor", "Roof", "SlabOnGrade", "UndergroundSlab" ];
 
@@ -234,15 +233,18 @@ ISAOIOEF.castRaysGetIntersections = function( button ) {
 
 		if ( surfacesExterior.includes( surface.match( /surfaceType="(.*?)"/ )[ 1 ] ) ) {
 
-			ISAOIOEF.meshesExterior.push( GBX.surfaceGroup.children[ index ] );
+			ISRC.meshesExterior.push( GBX.surfaceGroup.children[ index ] );
 
 		}
 
 	} );
-	//console.log( 'ISAOIOEF.meshesExterior', ISAOIOEF.meshesExterior );
+	//console.log( 'ISRC.meshesExterior', ISRC.meshesExterior );
 
-	ISAOIOEF.meshesExterior.forEach( mesh => mesh.visible = true );
+	ISRC.meshesExterior.forEach( mesh => mesh.visible = true );
 
+	const arr = [];
+	const v = ( x, y, z ) => new THREE.Vector3( x, y, z );
+	let normalsCount = 0;
 
 	for ( let normal of normals ) {
 
@@ -258,15 +260,16 @@ ISAOIOEF.castRaysGetIntersections = function( button ) {
 			const direction = vertex2.clone().sub( vertex1 ).normalize();
 			//console.log( 'direction', direction );
 
-			ISAOIOEF.findIntersections( normal.userData.index, vertex1, direction );
-			//console.log( 'intersections', intersections );
+			arr.push( ...ISRC.getExteriors( normal.userData.index, vertex1, direction ) );
 
-			normalsCount++;
+			normalsCount ++;
 
 		}
 
 	}
 	//console.log( 'ISAOIOEF.surfaceIntersectionArrays', ISAOIOEF.surfaceIntersectionArrays );
+
+	ISAOIOEF.surfaceIntersections = [ ... new Set( arr ) ];
 
 	ISRC.targetLog.innerHTML =
 	`
@@ -285,11 +288,12 @@ ISAOIOEF.castRaysGetIntersections = function( button ) {
 
 
 
-ISAOIOEF.findIntersections = function( index, origin, direction ) {
+
+ISAOIOEF.cccccccfindIntersections = function( index, origin, direction ) {
 
 	const raycaster = new THREE.Raycaster();
-	raycaster.set( origin, direction ); // has to be the correct vertex order
 
+	raycaster.set( origin, direction ); // has to be the correct vertex order
 	const intersects1 = raycaster.intersectObjects( ISAOIOEF.meshesExterior );
 
 	raycaster.set( origin, direction.negate() );
@@ -310,8 +314,29 @@ ISAOIOEF.findIntersections = function( index, origin, direction ) {
 
 
 
-ISAOIOEF.setSurfaceArraysShowHide = function( button, surfaceIndexArray ) {
+ISAOIOEF.bbbshowHideSelected = function( button, select ) {
+
+
+	if ( select.selectedOptions.length ) {
+
+		arr = Array.from( select.selectedOptions );
+
+		indices = arr.map( item => Number( item.value ) );
+		//console.log( 'arr', arr );
+
+		ISAOIOEF.setSurfaceArraysExteriorShowHide( button, indices );
+
+	}
+
+};
+
+
+ISAOIOEF.vvvsetSurfaceArrayShowHide = function( button, surfaceIndexArray ) {
 	//console.log( 'surfaceIndexArray', surfaceIndexArray );
+
+	//const buttons = ISAOIOEFdetAirOrInteriorOnExterior.querySelectorAll( "button" );
+
+	//buttons.forEach( button => button.classList.remove( "active" ) );
 
 	button.classList.toggle( "active" );
 
@@ -337,12 +362,12 @@ ISAOIOEF.setSurfaceArraysShowHide = function( button, surfaceIndexArray ) {
 
 
 
-ISAOIOEF.getSelectOptions = function( surfaceArrays ) {
+ISAOIOEF.getSelectOptions = function( surfaceArray ) {
 
 	let htmOptions = '';
 	let count = 1;
 
-	for ( let index of surfaceArrays ) {
+	for ( let index of surfaceArray ) {
 
 		const surfaceText = GBX.surfaces[ index ];
 		//console.log( 'surfaceText', surfaceText );

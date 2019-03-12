@@ -157,17 +157,19 @@ OHC.urlGitHubPage = "";
 
 <!--
 
-
 			<section id="OHCsecMenuRepoFilesFolders" ></section>
-		<details id="detMenuEdit" class=navSubMenu open >
+-->
 
-			<summary class=sumMenuTitle >Edit Menu </summary>
+		<details id="detMenuTest" class=navSubMenu open >
 
-			<div id="ISCORdivMenuIssues" ></div>
+			<summary class=sumMenuTitle >Test Menu </summary>
+
+			<p>
+				<button onclick=checkOffset(); >check origin offset</button>
+			</p>
 
 		</details>
 
--->
 
 
 
@@ -241,7 +243,7 @@ function init() {
 
 	FILdivFileOpen.innerHTML=FIL.getMenuFileOpen();
 
-	FILdivFileSave.innerHTML=FIL.getMenuFileSave();
+	//FILdivFileSave.innerHTML=FIL.getMenuFileSave();
 
 	//Edit menu
 	//ISCORdivMenuIssues.innerHTML=ISCOR.getMenuIssues();
@@ -264,6 +266,29 @@ function init() {
 
 
 
+function checkOffset() {
+
+	const coords = FIL.text.match( /<Coordinate>(.*?)<\/Coordinate>/gi );
+
+	//console.log( 'coords', coords );
+
+	max = 0;
+
+	numbers = coords.forEach ( coord => {
+
+		numb = Number( coord.match( /<Coordinate>(.*?)<\/Coordinate>/i )[ 1 ] );
+
+		max = numb > max ? numb : max;
+
+		return max;
+
+	} );
+
+	console.log( 'numbers', max);
+
+
+
+}
 </script>
 </body>
 </html>

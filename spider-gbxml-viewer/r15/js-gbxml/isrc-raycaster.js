@@ -92,7 +92,7 @@ ISRC.castRaysGetIntersections = function( button ) {
 
 	button.classList.toggle( "active" );
 
-	//ISRC.airSurfacesOnExterior = [];
+	//ISRC.meshesExterior = meshesExterior;
 
 	//GBX.surfaceGroup.children.forEach( mesh => mesh.visible = true );
 
@@ -202,6 +202,34 @@ ISRC.findIntersections = function( objs, origin, direction ) {
 
 
 
+ISRC.getExteriors = function( index, origin, direction ) {
+
+	const raycaster = new THREE.Raycaster();
+
+	raycaster.set( origin, direction ); // has to be the correct vertex order
+	const intersects1 = raycaster.intersectObjects( ISRC.meshesExterior ).length;
+
+	raycaster.set( origin, direction.negate() );
+	const intersects2 = raycaster.intersectObjects( ISRC.meshesExterior ).length;
+
+	const array = [];
+
+	if ( intersects1 % 2 === 0 || intersects2 % 2 === 0 ) {
+
+		const mesh = GBX.surfaceGroup.children[ index ];
+		mesh.material = new THREE.MeshBasicMaterial( { color: 'red', side: 2 });
+		mesh.material.needsUpdate = true;
+
+		if ( array.includes( index ) === false ) { array.push( index ); }
+
+	}
+
+	return array;
+
+};
+
+
+
 ISRC.addColor = function( mesh ){
 
 	const surface = GBX.surfaces[ mesh.userData.index ];
@@ -257,6 +285,8 @@ ISRC.getSelectOptions = function( surfaceArrays ) {
 
 
 
+
+
 ISRC.setSurfaceArraysShowHide = function( button, surfaceArrays ) {
 	//console.log( 'surfaceArrays', surfaceArrays );
 
@@ -285,7 +315,7 @@ ISRC.setSurfaceArraysShowHide = function( button, surfaceArrays ) {
 
 
 
-ISRC.setSurfaceArraysExteriorShowHide = function( button, surfaceArrays ) {
+ISRC.xxxxsetSurfaceArraysExteriorShowHide = function( button, surfaceArrays ) {
 	//console.log( 'surfaceArrays', surfaceArrays );
 
 	button.classList.toggle( "active" );
@@ -303,6 +333,52 @@ ISRC.setSurfaceArraysExteriorShowHide = function( button, surfaceArrays ) {
 			}
 
 		}
+
+		THR.scene.remove( ISRC.normalsFaces );
+
+		THRU.groundHelper.visible = false;
+
+	} else {
+
+		GBX.surfaceGroup.children.forEach( element => element.visible = true );
+
+		THRU.groundHelper.visible = true;
+
+	}
+
+};
+
+
+
+
+
+ISRC.showHideSelected = function( button, select ) {
+
+	if ( select.selectedOptions.length ) {
+
+		arr = Array.from( select.selectedOptions );
+
+		indices = arr.map( item => Number( item.value ) );
+		//console.log( 'arr', arr );
+
+		ISRC.setSurfaceArrayShowHide( button, indices );
+
+	}
+
+};
+
+
+
+ISRC.setSurfaceArrayShowHide = function( button, surfaceIndexArray ) {
+	//console.log( 'surfaceIndexArray', surfaceIndexArray );
+
+	button.classList.toggle( "active" );
+
+	if ( button.classList.contains( 'active' ) && surfaceIndexArray.length ) {
+
+		GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
+
+		surfaceIndexArray.forEach( index => GBX.surfaceGroup.children[ Number( index ) ].visible = true );
 
 		THR.scene.remove( ISRC.normalsFaces );
 

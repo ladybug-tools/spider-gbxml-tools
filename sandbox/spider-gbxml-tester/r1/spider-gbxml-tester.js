@@ -60,8 +60,6 @@ SGT.setGeneralCheck = function() {
 
 	//ISSdivCheckText.innerHTML = SGT.checkLines();
 
-
-
 	SGT.setSurfaces();
 
 }
@@ -77,7 +75,6 @@ SGT.checkLines = function() {
 	//console.log( 'SGT.lines', SGT.lines.length );
 
 
-
 	if ( SGT.lines[ 0 ].includes( 'utf-16' ) ) {
 
 		htm += `line 0: ${ SGT.lines[ 0 ] }\n`;
@@ -88,6 +85,7 @@ SGT.checkLines = function() {
 
 		line = SGT.lines[ i ];
 
+		/*
 		if ( line.includes( '<area>0</area>') ) {
 
 			htm += `line ${i}: ${line}\n`;
@@ -101,6 +99,8 @@ SGT.checkLines = function() {
 			htm += `Empty string at line ${i}: ${line}\n`;
 
 		}
+
+		*/
 
 		const coord = line.match( /<Coordinate>(.*?)<\/Coordinate>/i );
 

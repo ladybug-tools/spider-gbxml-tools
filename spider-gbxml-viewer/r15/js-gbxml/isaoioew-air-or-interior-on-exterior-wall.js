@@ -5,7 +5,7 @@ ISAOIOEWspnCount, ISAOIOEWbutViewSelected,ISAOIOEWbutViewAll, ISAOIOEWpNumberSur
 
 // depends on ISRC
 
-const ISAOIOEW = { "release": "R15.2", "date": "2019-03-11" };
+const ISAOIOEW = { "release": "R15.3", "date": "2019-03-12" };
 
 
 ISAOIOEW.description =
@@ -33,11 +33,10 @@ ISAOIOEW.currentStatus =
 
 			<summary>Usage</summary>
 
-
 			<p>This module is a work-in-progress. See Issues and Wish List for details.</p>
 
 			<p>
-				The current test case file for this project <a href="#https://ladybug-tools.github.io/spider/gbxml-sample-files/zip/TypicalProblems-AirSurface.zip" >TypicalProblems-AirSurface.zip</a>
+				The current test case file for this project <a href="#https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/TypicalProblems-AirSurface.zip" >TypicalProblems-AirSurface.zip</a>
 				in the <a href="https://github.com/ladybug-tools/spider/tree/master/gbxml-sample-files" target="_blank">Spider gbXML sample files folder</a>.
 			</p>
 
@@ -48,11 +47,9 @@ ISAOIOEW.currentStatus =
 
 			<p>Usage is still at an early stage. </p>
 
-			<p>Select box and buttons should be working as expected.</p>
-
 			<p>
 				Identifying external InteriorWall surfaces is a work-in-progress.
-				<span class=highlight>The web page must be reloaded between each session.</span>
+				The web page should be reloaded between each session.
 				Click the numbered boxes in numerical order.
 				Various normals and sprites at intersection will be drawn. These are for testing while developing and will not appear in final version.
 			</p>
@@ -62,6 +59,7 @@ ISAOIOEW.currentStatus =
 		</details>
 
 		<details>
+
 			<summary>Methodology</summary>
 
 			<p>See also Wikipedia: <a href="https://en.wikipedia.org/wiki/Point_in_polygon" target="_blank">Point in polygon</a></p>
@@ -75,9 +73,11 @@ ISAOIOEW.currentStatus =
 
 
 		<details>
+
 			<summary>Issues</summary>
 
 			<ul>
+				<li>2019-03-12 ~ Move more functions to ISRC. Select list box now handles multi-select. Add button to show/hide selected.</li>
 				<li>
 					2019-03-11 ~ When the exterior of a model has holes/is non-manifold,
 					a number of false positives may be generated
@@ -151,7 +151,7 @@ ISAOIOEW.getMenuAirOrInteriorOnExterior = function() {
 		</p>
 
 		<p>
-			<button onclick=ISAOIOEW.setSurfaceArraysShowHide(this,ISAOIOEW.surfaceIntersections); title="Starting to work!" >
+			<button onclick=ISRC.setSurfaceArrayShowHide(this,ISAOIOEW.surfaceIntersections); title="Starting to work!" >
 			show/hide walls with issues
 			</button>
 		</p>
@@ -161,10 +161,11 @@ ISAOIOEW.getMenuAirOrInteriorOnExterior = function() {
 			</select>
 		</p>
 
-		<p id=ISAOIOEWfixes >
-			Air/Interior surfaces on exterior identified: run test<br>
-			Identified by Inside Polygon method: run test
+		<p>
+			<button onclick=ISRC.showHideSelected(this,ISAOIOEWselAirOrInteriorOnExterior); >show/hide selected surfaces</button>
 		</p>
+
+		<p id=ISAOIOEWfixes ></p>
 
 		<p>
 			Update surface(s) type to:
@@ -180,7 +181,6 @@ ISAOIOEW.getMenuAirOrInteriorOnExterior = function() {
 
 
 ISAOIOEW.getAirOrInteriorOnExteriorCheck = function() {
-
 
 	const buttons = ISAOIOEWdetAirOrInteriorOnExterior.querySelectorAll( "button" );
 
@@ -220,30 +220,30 @@ ISAOIOEW.castRaysGetIntersections = function( button ) {
 
 	button.classList.toggle( "active" );
 
-	const v = ( x, y, z ) => new THREE.Vector3( x, y, z );
-	let normalsCount = 0;
-	ISAOIOEW.surfaceIntersections = [];
-
 	const normals = ISRC.normalsFaces.children;
 	//console.log( 'normals', normals );
 
-	ISAOIOEW.meshesExterior = [];
+	ISAOIOEW.surfaceIntersections = [];
+	ISRC.meshesExterior = [];
 
-	const surfacesExterior = [ "ExteriorWall", "UndergroundWall" ];
+	const surfacesExterior = [ "ExteriorWall", "Roof", "UndergroundWall" ];
 
 	GBX.surfaces.forEach( ( surface, index ) => {
 
 		if ( surfacesExterior.includes( surface.match( /surfaceType="(.*?)"/ )[ 1 ] ) ) {
 
-			ISAOIOEW.meshesExterior.push( GBX.surfaceGroup.children[ index ] );
+			ISRC.meshesExterior.push( GBX.surfaceGroup.children[ index ] );
 
 		}
 
 	} );
-	//console.log( 'ISAOIOEW.meshesExterior', ISAOIOEW.meshesExterior );
+	//console.log( 'ISRC.meshesExterior', ISRC.meshesExterior );
 
-	ISAOIOEW.meshesExterior.forEach( mesh => mesh.visible = true );
+	ISRC.meshesExterior.forEach( mesh => mesh.visible = true );
 
+	const arr = [];
+	const v = ( x, y, z ) => new THREE.Vector3( x, y, z );
+	let normalsCount = 0;
 
 	for ( let normal of normals ) {
 
@@ -259,17 +259,22 @@ ISAOIOEW.castRaysGetIntersections = function( button ) {
 			const direction = vertex2.clone().sub( vertex1 ).normalize();
 			//console.log( 'direction', direction );
 
-			ISAOIOEW.findIntersections( normal.userData.index, vertex1, direction );
+			arr.push( ...ISRC.getExteriors( normal.userData.index, vertex1, direction ) );
+
+			normalsCount ++;
 
 		}
 
 	}
-	//console.log( 'ISAOIOEW.surfaceIntersectionArrays', ISAOIOEW.surfaceIntersectionArrays );
+
+	ISAOIOEW.surfaceIntersections = [ ... new Set( arr ) ];
+
+	//console.log( 'ISAOIOEW.surfaceIntersections', ISAOIOEW.surfaceIntersections );
 
 	ISRC.targetLog.innerHTML =
 	`
 		Surfaces: ${ ISAOIOEW.surfaceAirInteriorIndices.length.toLocaleString() }<br>
-		Normals created: ${ ISAOIOEW.findIntersections.length.toLocaleString() }<br>
+		Normals created: ${ normalsCount.toLocaleString() }<br>
 		intersections found: ${ ISAOIOEW.surfaceIntersections.length.toLocaleString() }
 
 		<p>Use Pop-up menu to zoom and show/hide individual surfaces.</p>
@@ -283,11 +288,11 @@ ISAOIOEW.castRaysGetIntersections = function( button ) {
 
 
 
-ISAOIOEW.findIntersections = function( index, origin, direction ) {
+ISAOIOEW.vvvvvvvvvvvvvvfindIntersections = function( index, origin, direction ) {
 
 	const raycaster = new THREE.Raycaster();
-	raycaster.set( origin, direction ); // has to be the correct vertex order
 
+	raycaster.set( origin, direction ); // has to be the correct vertex order
 	const intersects1 = raycaster.intersectObjects( ISAOIOEW.meshesExterior );
 
 	raycaster.set( origin, direction.negate() );
@@ -308,7 +313,7 @@ ISAOIOEW.findIntersections = function( index, origin, direction ) {
 
 
 
-ISAOIOEW.setSurfaceArraysShowHide = function( button, surfaceIndexArray ) {
+ISAOIOEW.nnnnnnnnnnnnnnnsetSurfaceArraysShowHide = function( button, surfaceIndexArray ) {
 	//console.log( 'surfaceIndexArray', surfaceIndexArray );
 
 	button.classList.toggle( "active" );
