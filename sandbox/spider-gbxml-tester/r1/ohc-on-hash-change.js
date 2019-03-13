@@ -160,6 +160,8 @@ OHC.onHashChange = function() {
 	const crumbs = url.slice( OHC.urlGitHubPage.length );
 	let pathCurrent = crumbs.lastIndexOf( '/' ) > 0 ? crumbs.slice( 0, crumbs.lastIndexOf( '/' ) ) : '';
 
+	FIL.name = url.split( '/').pop();
+	
 	// note two requests...
 
 	// if new !== old

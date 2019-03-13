@@ -15,17 +15,25 @@ _<small>Spider gbXML Tester</small>_
 
 ## Bookmark this link: [Spider gbXML Tester]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-tester/ )
 
+## [Sample test run]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-tester/r1/spider-gbxml-tester.html#https://rawgit.com/ladybug-tools/spider/master/gbxml-sample-files/bristol-clifton-downs-broken.xml )
+
 
 ## Concept
 
-* Run basic check on gbXML files and identify & report errors
+* Run basic checks on gbXML files and identify & report errors
+* The script is still at an early stage. Many more checks can be added.
 
 
 ## To Do / Wish List
 
-* Add as many tests currently in Spider gbXML Viewer that do not require 3D as possible
+* 2019-03-12 ~ Add as many tests currently in Spider gbXML Viewer as possible that do not require 3D
+* 2019-03-12 ~ Add fixing the issues where possible
+* 2019-03-12 ~ Add check for opening vertices greater then four
+* 2019-03-12 ~ Add check for openings larger or outside their parent surface
 
 ## Issues
+
+* 2019-03-12 ~ In some workflows an Air surface type with duplicate adjacent spaces acceptable. You should be able to adjust the settings so an error is not issued.
 
 
 ## Things you can do using this script
@@ -47,6 +55,14 @@ Enhancing the Script
 
 
 ## Change Log
+
+
+### 2019-03-12 ~ Theo
+
+R1.2
+* Looking good
+* Most future change log updates will be available from the pop-up menu
+
 
 ### 2019-02-26 ~ Theo
 
