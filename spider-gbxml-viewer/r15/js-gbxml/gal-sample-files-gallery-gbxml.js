@@ -2,12 +2,12 @@
 /* globals COR, butGalleryGbxml, butGallerySampleFiles, butGallerySamples2, butGalleryBuildWell, divMenuItems */
 /* jshint esversion: 6 */
 
-var GAL = { "release": "r11.0", "date": "2019-01-01"  };
+var GAL = { "release": "r15.0", "date": "2019-03-12"  };
 
 GAL.iconGitHubMark = "https://pushme-pullyou.github.io/github-mark-64.png"
 GAL.iconInfo = `<img src=${GAL.iconGitHubMark} height=14 style=opacity:0.5 >`;
 
-GAL.threeDefaultFile = 'https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/';
+GAL.threeDefaultFile = 'https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/';
 
 var GALdetGallery, GALdivgallery;
 
@@ -24,6 +24,7 @@ GAL.currentStatus =
 
 		<p>
 			<ul>
+				<li>2019-03-12 ~ Change cdb to jsdlivr.net</li>
 				<li>2018-12-29 ~ Add helpItem class</li>
 				<li>2018-12-28 ~ Move HTML from core script to gallery script</li>
 				<li>2018-12-28 ~ Move current status to Pop-Up</li>
@@ -155,7 +156,7 @@ GAL.setGALdivGallery = function( button ) {
 	}
 
 	GAL.urlGitHubApiContents = 'https://api.github.com/repos/' + GAL.user + GAL.repo + '/contents/' + GAL.pathRepo;
-	GAL.urlGitHubPage = 'https://rawgit.com/' + GAL.user + GAL.repo + '/master/' + GAL.pathRepo;
+	GAL.urlGitHubPage = 'https://cdn.jsdelivr.net/gh/' + GAL.user + GAL.repo + '@master/' + GAL.pathRepo;
 	GAL.urlGitHubSource = 'https://github.com/' + GAL.user + GAL.repo + '/blob/master/' + GAL.pathRepo;
 
 	const buttons = GALdivSampleFilesGallery.querySelectorAll( "button" );

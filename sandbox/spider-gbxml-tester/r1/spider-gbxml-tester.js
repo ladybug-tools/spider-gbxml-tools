@@ -32,115 +32,17 @@ GBX.surfaceTypes = Object.keys( GBX.colors );
 
 
 
-
-
 SGT.setGeneralCheck = function() {
 
 	divContents.innerHTML =
 	`
 		<h3>General Check</h3>
-
-		<section id=checkGeneral ></section>
-
-		<div id=ISSdivCheckText ></div>
-
-		<section id=ISMETsec ></section>
-
-		<section id=ISSTIsec>
-
-			<details id=ISSTIdetSurfaceTypeInvalid open >
-				<summary>Surface Type Invalid<span id=ISSTIspnCount ></span> </summary>
-
-				<select id=ISTIselSurfaceTypeInvalid ></select>
-			</details>
-
-		</section>
-
 	`;
 
-	//ISSdivCheckText.innerHTML = SGT.checkLines();
 
 	SGT.setSurfaces();
 
 }
-
-
-SGT.checkLines = function() {
-
-	let htm = '';
-	SGT.max = 0;
-	SGT.timeStart = performance.now();
-
-	SGT.lines = ( FIL.text.split( /\r\n|\n/ ) ).map( line => line.toLowerCase() );
-	//console.log( 'SGT.lines', SGT.lines.length );
-
-
-	if ( SGT.lines[ 0 ].includes( 'utf-16' ) ) {
-
-		htm += `line 0: ${ SGT.lines[ 0 ] }\n`;
-
-	}
-
-	for ( let i = 0; i < SGT.lines.length; i++ ) {
-
-		line = SGT.lines[ i ];
-
-		/*
-		if ( line.includes( '<area>0</area>') ) {
-
-			htm += `line ${i}: ${line}\n`;
-
-		} else if ( line.includes( '<volume>0</volume>') ) {
-
-			htm += `line ${i}: ${line}\n`;
-
-		} else if ( line.includes( '""') ) {
-
-			htm += `Empty string at line ${i}: ${line}\n`;
-
-		}
-
-		*/
-
-		const coord = line.match( /<Coordinate>(.*?)<\/Coordinate>/i );
-
-		const number = coord ? Number( coord[ 1 ] ): 0;
-
-		SGT.max = number > SGT.max ? number : SGT.max;
-
-		checkGeneral.innerHTML =
-		`
-			<p>Lines checked: ${ SGT.lines.length.toLocaleString()}</p>
-			<p>Max coordinate = ${ SGT.max }</p>
-			<p>Time to read: ${ ( performance.now() - SGT.timeStart ).toLocaleString() } ms</p>
-
-		`;
-
-	}
-
-
-	if ( htm === '' ) {
-
-		htm +=
-		`
-			<p>All lines checked appear to contain valid XML data.</p>
-			<p>No empty text strings or values equal to zero found.</p>
-		`;
-
-	} else {
-
-		htm =
-		`
-			<textarea style=height:200px;width:100%>${ htm }</textarea>
-		`;
-
-	}
-
-	return htm;
-
-
-};
-
 
 
 SGT.setSurfaces = function() {
@@ -149,10 +51,326 @@ SGT.setSurfaces = function() {
 	GBX.surfaces = GBX.text.match( /<Surface(.*?)<\/Surface>/gi );
 	//console.log( 'GBX.surfaces', GBX.surfaces );
 
-	ISMETsec.innerHTML = ISMET.getMenuMetadataIssues();
+	SGT.generalCheck();
 
-	ISMET.getMetadataIssuesCheck();
+	SGT.checkMetaData();
 
-	ISSTI.getSurfaceTypeInvalidCheck();
+	SGT.checkSurfaceTypeInvalid();
+
+	SGT.checkDuplicatePlanarCoordinates();
+
+	SGT.checkAdjacentSpaceExtra();
+
+	SGT.checkAdjacentSpaceDuplicate();
+
+	SGT.checkCadIdMissing();
+
+	SGT.checkOffset();
 
 };
+
+
+
+
+SGT.generalCheck = function() {
+
+	let htm = ""
+
+	if ( GBX.text.includes( 'utf-16' ) ) {
+
+		htm +=
+		`
+			<p>
+				File is utf-16
+			</p>
+		`;
+	}
+
+	const area =  GBX.text.match( /<area>[0\s]<\/area>/gi );
+
+	htm +=
+	`
+		<p>
+			Area = 0: ${ area ? area.length : 0 } found
+		</p>
+	`;
+
+
+	const vol = GBX.text.match( /<volume>[0\s]<\/volume>/gi )
+
+	htm  +=
+	`
+		<p>
+			Volume = 0: ${ vol? vol.length : 0 } found
+		</p>
+	`;
+
+	const string = GBX.text.match( /""/gi )
+
+	htm  +=
+	`
+		<p>
+			string = "": ${ string? string.length : 0 } found
+		</p>
+	`;
+
+	divContents.innerHTML += htm;
+
+}
+
+
+
+SGT.checkMetaData = function() {
+
+	const metadataValues = {
+
+		'areaUnit': 'SquareMeters',
+		'lengthUnit': 'Meters',
+		'temperatureUnit': 'C',
+		'useSIUnitsForResults': 'true',
+		'version': '0.37',
+		'volumeUnit': 'CubicMeters',
+		'xmlns': 'http://www.gbxml.org/schema'
+	};
+
+
+	const attributesProvided = [];
+	const attributesMissing = [];
+
+	for ( let attribute of Object.keys( metadataValues ) ){
+		//console.log( 'attribute', attribute );
+
+		if ( GBX.text.includes( attribute) ) {
+
+			attributesProvided.push( attribute );
+
+		} else {
+
+			attributesMissing.push( attribute );
+
+		}
+
+	}
+
+	divContents.innerHTML +=
+	`
+		<p>
+			Attributes provided: ${ attributesProvided.length.toLocaleString() } found<br>
+			Attributes missing: ${ attributesMissing.length.toLocaleString() } found<br>
+		</p>
+	`;
+
+
+};
+
+
+
+
+SGT.checkSurfaceTypeInvalid = function() {
+
+	const surfaceTypeInvalid = [];
+
+	for ( surface of GBX.surfaces ) {
+
+		const surfaceType = surface.match( /surfaceType="(.*?)"/)[ 1 ];
+
+		if ( GBX.surfaceTypes.includes( surfaceType ) === false ) {
+
+			surfaceTypeInvalid.push( surface );
+
+		}
+
+	}
+
+	divContents.innerHTML +=
+	`
+		<p>
+			Surfaces with invalid surface type: ${ surfaceTypeInvalid.length.toLocaleString() } found
+		</p>
+	`;
+
+}
+
+
+
+SGT.checkDuplicatePlanarCoordinates = function() {
+
+	const planes = [];
+
+	for ( let surface of GBX.surfaces ) {
+
+		const arr = surface.match( /<PlanarGeometry>(.*?)<\/PlanarGeometry>/ );
+
+		if ( arr ) { planes.push( arr[ 1 ] ) }
+
+	}
+
+	duplicates = [];
+
+	planes.forEach( ( plane1, index1 ) => {
+
+		const planesRemainder = planes.slice( index1 + 1 );
+
+		planesRemainder.forEach( ( plane2, index2 ) => {
+
+			if ( plane1 === plane2 ) {
+
+				duplicates.push( index1, ( planes.length - planesRemainder.length ) );
+
+			}
+
+		} );
+
+	} );
+
+	divContents.innerHTML +=
+	`
+		<p>
+			Surfaces with duplicate planar coordinates: ${ ( duplicates.length / 2 ).toLocaleString() } found
+		</p>
+	`;
+
+};
+
+
+
+SGT.checkAdjacentSpaceExtra = function() {
+
+
+	const oneSpace = [ 'ExteriorWall', 'Roof', 'ExposedFloor', 'UndergroundCeiling', 'UndergroundWall',
+		'UndergroundSlab', 'RaisedFloor', 'SlabOnGrade', 'FreestandingColumn', 'EmbeddedColumn' ];
+
+	invalidAdjacentSpaceExtra = [];
+
+	const surfaces = GBX.surfaces;
+
+	// refactor to a reduce??
+	for ( let i = 0; i < surfaces.length; i++ ) {
+
+		const surface = surfaces[ i ];
+		const surfaceType = surface.match ( /surfaceType="(.*?)"/ )[ 1 ];
+		const adjacentSpaceArr = surface.match( /spaceIdRef="(.*?)"/gi );
+
+		if ( oneSpace.includes( surfaceType ) && adjacentSpaceArr && adjacentSpaceArr.length > 1 ) {
+
+			//const spaces = adjacentSpaceArr.map( item => item.match( /spaceIdRef="(.*?)"/ )[ 1 ] );
+			//console.log( 'spaces', spaces );
+
+			invalidAdjacentSpaceExtra.push( i );
+
+		} else if ( surfaceType === "Shade" && adjacentSpaceArr > 0 ) {
+
+			//console.log( 'Shade with adjacent space found', 23 );
+
+			invalidAdjacentSpaceExtra.push( i );
+
+		}
+
+	}
+
+	divContents.innerHTML +=
+	`
+		<p>
+			Surfaces with extra adjacent space: ${ invalidAdjacentSpaceExtra.length.toLocaleString() } found
+		</p>
+	`;
+
+};
+
+
+
+SGT.checkAdjacentSpaceDuplicate = function() {
+
+
+	const twoSpaces = [ "Air", "InteriorWall", "InteriorFloor", "Ceiling" ];
+	const invalidAdjacentSpaceDuplicate = [];
+
+	GBX.surfaces.forEach( ( surface, index ) => {
+
+		spaceIdRef = surface.match( /spaceIdRef="(.*?)"/gi );
+
+		if ( spaceIdRef && spaceIdRef.length && spaceIdRef[ 0 ] === spaceIdRef[ 1 ] ) {
+			//console.log( 'spaceIdRef', spaceIdRef );
+
+			surfaceType = surface.match( /surfaceType="(.*?)"/i )[ 1 ];
+			//console.log( 'surfaceType', surfaceType );
+
+			if ( twoSpaces.includes( surfaceType ) ) {
+
+				invalidAdjacentSpaceDuplicate.push( index );
+
+			} else {
+
+				//console.log( 'surfaceType', surfaceType );
+
+			}
+
+		}
+
+	} );
+
+	divContents.innerHTML +=
+	`
+		<p>
+			Surfaces with duplicate adjacent space: ${ invalidAdjacentSpaceDuplicate.length.toLocaleString() } found
+		</p>
+	`;
+};
+
+
+
+SGT.checkCadIdMissing = function() {
+
+	let noId = 0;
+
+	for ( let surface of GBX.surfaces ) {
+
+		const cadId = surface.match( /<CADObjectId>(.*?)<\/CADObjectId>/);
+
+		if ( !cadId ){ noId ++; }
+
+	}
+
+	divContents.innerHTML +=
+	`
+		<p>
+			Surfaces with no CAD Object ID: ${ noId.toLocaleString() } out of ${ GBX.surfaces.length.toLocaleString() }
+		</p>
+	`;
+
+};
+
+
+
+
+
+SGT.checkOffset = function() {
+
+	const coords = FIL.text.match( /<Coordinate>(.*?)<\/Coordinate>/gi );
+
+	//console.log( 'coords', coords );
+
+	let max = 0;
+
+	const numbers = coords.forEach ( coord => {
+
+		const numb = Number( coord.match( /<Coordinate>(.*?)<\/Coordinate>/i )[ 1 ] );
+
+		max = numb > max ? numb : max;
+
+		return max;
+
+	} );
+
+	//console.log( 'numbers', max);
+
+	divContents.innerHTML +=
+	`
+		<p>
+			Largest coordinate found: ${ max.toLocaleString() }
+		</p>
+	`;
+
+
+
+}

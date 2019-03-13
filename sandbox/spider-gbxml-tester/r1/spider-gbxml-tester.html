@@ -5,8 +5,8 @@
 <meta name = "viewport" content= "width=device-width, initial-scale=1" >
 <meta name = "description" content = "This menu is a component of a basic html content management script with sliding menu, css theme selection, Markdown to HTML, drag and drop file reading capability, access to frequently used pages and more" >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
-<meta name = "date" content = "2019-02-28" >
-<meta name = "release" content = "1.1" >
+<meta name = "date" content = "2019-03-12" >
+<meta name = "release" content = "1.2" >
 <title>Spider gbXML Tester</title>
 <link rel="stylesheet" href="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/style.css">
 </head>
@@ -145,7 +145,6 @@ OHC.urlGitHubPage = "";
 			<section id="GALdivSampleFilesGallery"></section>
 
 
-
 			<section id="FOBsecFileOpenBasic" ></section>
 
 			<section id="FILdivFileOpen"></section>
@@ -154,24 +153,6 @@ OHC.urlGitHubPage = "";
 
 
 		</details>
-
-<!--
-
-			<section id="OHCsecMenuRepoFilesFolders" ></section>
--->
-
-		<details id="detMenuTest" class=navSubMenu open >
-
-			<summary class=sumMenuTitle >Test Menu </summary>
-
-			<p>
-				<button onclick=checkOffset(); >check origin offset</button>
-			</p>
-
-		</details>
-
-
-
 
 		<details class=navSubMenu open >
 
@@ -232,24 +213,12 @@ function init() {
 
 	MNUdivHeader.innerHTML = MNU.getNavHeader();
 
-	//SFM.getMarkdownFileContents("../sfrm-selected-files-markdown.md",SFMsecPrototypes);
-
-	//OHCsecMenuRepoFilesFolders.innerHTML = OHC.getMenuRepoFilesFolders();
-
-	//FOBsecFileOpenBasic.innerHTML = FOB.getMenuFileOpenBasic( divContents, divPopUpData );
-
 	// File open menu
 	GALdivSampleFilesGallery.innerHTML=GAL.getMenuSampleFilesGallery();
 
 	FILdivFileOpen.innerHTML=FIL.getMenuFileOpen();
 
-	//FILdivFileSave.innerHTML=FIL.getMenuFileSave();
-
-	//Edit menu
-	//ISCORdivMenuIssues.innerHTML=ISCOR.getMenuIssues();
-
 	// Settings menu
-
 	THMsecMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
 
 	//TMPsecMenuTemplate.innerHTML = TMP.getMenuTemplate();
@@ -264,31 +233,6 @@ function init() {
 
 }
 
-
-
-function checkOffset() {
-
-	const coords = FIL.text.match( /<Coordinate>(.*?)<\/Coordinate>/gi );
-
-	//console.log( 'coords', coords );
-
-	max = 0;
-
-	numbers = coords.forEach ( coord => {
-
-		numb = Number( coord.match( /<Coordinate>(.*?)<\/Coordinate>/i )[ 1 ] );
-
-		max = numb > max ? numb : max;
-
-		return max;
-
-	} );
-
-	console.log( 'numbers', max);
-
-
-
-}
 </script>
 </body>
 </html>
