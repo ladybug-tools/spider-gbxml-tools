@@ -110,7 +110,7 @@ SGT.generalCheck = function() {
 	htm  +=
 	`
 		<p>
-			string = "": ${ string? string.length : 0 } found
+			String = "": ${ string? string.length : 0 } found
 		</p>
 	`;
 
