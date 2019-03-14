@@ -74,11 +74,50 @@ Pop-up Viewer 'Maevia' R15
 * Zoom all and toggle openings
 
 
+## Issues
+
+* 2019-02-25 ~ Pop-up not showing when screen is touched with finger
 
 ***
 
 
 ## Change Log
+
+### 2019-03-14 ~ Copied from Pop-up
+
+* 2019-03-12 ~ R15.31 ~ ISAOIOEW & ISAOIOEF> Move more functions to ISRC. Select list box now handles multi-select. Add button to show/hide selected.
+* 2019-03-11 ~ R15.30 ~ ISAOIOEW & ISAOIOEF> big updates. See Pop-up help
+* 2019-03-08 ~ R15.29 ~ IAIO > Add interiorWall on exterior
+* 2019-03-05 ~ R15.28 ~ POP > add primitive construction data readout - appears when construction data is available
+* 2019-03-03 ~ R15.27 ~ ISSOH > beginning to find horizontal overlaps nicely
+* 2019-03-03 ~ R15.26 ~ ISSOV > beginning to find vertical overlaps nicely
+* 2019-02-28 ~ R15.25 ~ CUT > Improve behavior: View menu > Scene cut sections. FIL > close menus on open
+* 2019-02-28 ~ R15.24 Local ~ First commit. For downloading and running local files
+* 2019-02-26 ~ R15.23 ~ FIL > Add 'reload file' button and code
+* 2019-02-26 ~ R15.22 ~ ISDUC/ISASD: Allow for no planar geometry
+* 2019-02-26 ~ R15.21 ~ POP/VBS > Add check for no storey name
+* 2019-02-25 ~ R15.20 ~ Set several menu items default to closed.
+* 2019-02-24 ~ R15.20 ~ Update FIL file-open links
+* 2019-02-22 ~ R15.19 ~ Minor fixes several modules. POP & ISCOR: pass through jsHint and makes fixes
+* 2019-02-15 ~ Updates to Air Surface Type Editor
+* 2019-02-14 ~ Add beginning of check if Air surface types are on exterior of a model
+* 2019-02-13 ~ Add own theme local storage var. Update main popup text. Many updates to 'Air Surface Type Editor'
+* 2019-02-12 ~ R15.3 ~ Add 'Air Surface Type on Exterior' issues module
+* 2019-02-11 ~ R15.12 > View menu > Show/hide by storey: Better types/storeys integration on show all storeys
+* 2019-02-11 ~ R15.11 > View menu > Show/hide by surface type: Code cleanup. Drop 'reset surfaces' button/code as being redundant
+* 2019-02-11 ~ R15.10 > Edit menu > Issues Template: Bring up to same level as TooToo TMP
+* 2019-02-11 ~ R15.9 > Edit menu >CAD Object ID Missing: Add checkbox to ignore surfaces of type 'Air'. Set default to ignore
+* 2019-02-08 ~ R15.8 ~ add (not very smart) show all storeys button
+* 2019-02-08 ~ R15.7 ~ better storey/type interaction
+* 2019-02-07 ~ R15.6 ~ refactor styles
+* 2019-01-31 ~ Fix settings - zoom all
+* 2019-01-19 ~ New release R15 based on TooToo13
+* 2019-01-17 ~ Add many TooToo fixes
+* 2019-01-13 ~ Links to nearly 100% standard TooToo
+* 2019-01-11 ~ Fixes crash when PlanarGeometry includes attributes
+* 2019-01-09 ~ Index/html now based on TooToo R13 - beginning to look OK
+* 2019-01-09 ~ Rolling out Spider gbXML Viewer Plus R12
+* 2019-01-09 ~ Rolling out TooToo content management
 
 
 ### 2019-02-13 ~ Theo
