@@ -93,6 +93,7 @@ MNU.currentStatusCore =
 			<summary>Change log ~ ${ document.head.querySelector( '[ name=date ]' ).content }</summary>
 
 			<ul>
+				<li>2019-03-13 ~ R15.32 ~ ISSOV, ISSOH, ISAOIOEW & ISAOIOEF > many fixes. Beginning to look good</li>
 				<li>2019-03-12 ~ R15.31 ~ ISAOIOEW & ISAOIOEF> Move more functions to ISRC. Select list box now handles multi-select. Add button to show/hide selected.</li>
 				<li>2019-03-11 ~ R15.30 ~ ISAOIOEW & ISAOIOEF> big updates. See Pop-up help</li>
 				<li>2019-03-08 ~ R15.29 ~ IAIO > Add interiorWall on exterior </li>
@@ -126,8 +127,6 @@ MNU.currentStatusCore =
 				<li>2019-01-09 ~ Index/html now based on TooToo R13 - beginning to look OK</li>
 				<li>2019-01-09 ~ Rolling out Spider gbXML Viewer Plus R12</li>
 				<li>2019-01-09 ~ Rolling out TooToo content management</li>
-				<!-- <li></li>
-					-->
 			</ul>
 		</details>
 
@@ -193,14 +192,6 @@ MNU.footerIssues = "https://github.com/ladybug-tools/spider-gbxml-tools/issues";
 				<section id="FILdivFileSave"></section>
 
 				<section id="FILdivCurrentStatus"></section>
-
-				<!--
-				<section id="OHCsecMenuRepoFilesFolders" ></section>
-
-				<section id="FOBsecFileOpenBasic"></section>
-
-				<section id="FILdivFileSave"></section>
-				-->
 
 		</details>
 
@@ -332,17 +323,16 @@ function init() {
 
 
 	// View menu
-
 	VSTsecViewSurfaceType.innerHTML = VST.getMenuViewSurfaceTypes();
 
 	VBSsecViewByStoreys.innerHTML = VBS.getMenuViewByStoreys();
 
 
 	// Settings menu
-
 	THMsecMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
 
 	//TMPsecMenuTemplate.innerHTML = TMP.getMenuTemplate();
+
 
 	// Footer / help menu
 	MNUdivFooter.innerHTML = MNU.getNavFooter(); // not essential
@@ -359,16 +349,18 @@ function init() {
 
 	//location.hash=urlDefaultFile;
 
+	//See OHC.onHashChange() for opening file process
+
 	THM.init();
 
-	//OHC.onHashChange();
-
+	// special for Maevia
 	document.removeEventListener( 'touchstart', MNU.onTouchStart, false );
 	document.removeEventListener( 'touchmove', MNU.onTouchMove, false );
 
 }
 
 
+// special for Maevia
 
 MNU.toggleNavLeft = function() {
 

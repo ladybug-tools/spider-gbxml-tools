@@ -1,9 +1,9 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
-/* globals THR, GBX */
+/* globals GBX, POP, ISCOR, divPopUpData */
 /* jshint esversion: 6 */
 
 
-const ISSOV = { "release": "R15.2", "date": "2019-03-13" };
+const ISSOV = { "release": "R15.1", "date": "2019-03-03" };
 
 ISSOV.description =
 	`
@@ -31,10 +31,8 @@ ISSOV.currentStatus =
 			</a>
 		</p>
 		<details>
-		
 			<summary>Change log</summary>
 			<ul>
-				<li>2019-03-13 ~ R15.2 ~ Many fixes</li>
 				<li>2019-03-03 ~ R15.1 ~ beginning to find overlaps nicely</li>
 				<li>2019-03-01 ~ R15.0 ~ First commit</li>
 			</ul>
@@ -55,14 +53,19 @@ ISSOV.getMenuSurfaceOverlapVerticals = function() {
 		<p>
 			Module is work-in-progress. Checking verticals only. You will need to reload the web page between each run.
 		</p>
-
+<!--
 		<p>
-			1. <button onclick=ISRC.addNormals(this,ISSOV.verticalSurfaces,ISSOVselSurfaceOverlapVerticals); >
-			add normals to vertical surfaces</button><br>
+			<button onclick=ISRC.setSurfaceOverlapVerticalsShowHide(this,ISRC.verticalSurfaces); >
+				Show/hide vertical surfaces
+			</button>
+		</p>
+-->
+		<p>
+			1. <button onclick=ISRC.addNormals(this,ISSOV.verticalSurfaces,ISSOVselSurfaceOverlapVerticals); >add normals to vertical surfaces</button><br>
 		</p>
 
 		<p>
-			2. <button onclick=ISRC.castRaysSetIntersectionArrays(this); >cast rays get intersections</button><br>
+			2. <button onclick=ISRC.castRaysGetIntersections(this,ISSOVoverlaps); >cast rays get intersections</button><br>
 		</p>
 
 		<p>
@@ -76,9 +79,6 @@ ISSOV.getMenuSurfaceOverlapVerticals = function() {
 			</select>
 		</p>
 
-		<p>
-			<button onclick=ISRC.showHideSelected(this,ISSOVselSurfaceOverlapVerticals); >show/hide selected surfaces</button>
-		</p>
 		<p id=ISSOVoverlaps ></p>
 
 

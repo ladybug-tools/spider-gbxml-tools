@@ -1,10 +1,11 @@
 // Copyright 2019 Ladybug Tools authors. MIT License
-/* globals THREE, GBX, ISRC, ISAOIOEWdetAirOrInteriorOnExterior,ISAOIOEWselAirOrInteriorOnExterior */
+/* globals THR, THRU, THREE, GBX, POP, ISCOR, ISAOIOEWdetAirOrInteriorOnExterior,ISAOIOEWselAirOrInteriorOnExterior,
+ISAOIOEWspnCount, ISAOIOEWbutViewSelected,ISAOIOEWbutViewAll, ISAOIOEWpNumberSurfacesVisible, ISAOIOEWfixes, divPopUpData */
 /* jshint esversion: 6 */
 
 // depends on ISRC
 
-const ISAOIOEW = { "release": "R15.4", "date": "2019-03-13" };
+const ISAOIOEW = { "release": "R15.3", "date": "2019-03-12" };
 
 
 ISAOIOEW.description =
@@ -76,7 +77,6 @@ ISAOIOEW.currentStatus =
 			<summary>Issues</summary>
 
 			<ul>
-				<li>2019-03-13 ~ R15.4 ~ Many fixes</li>
 				<li>2019-03-12 ~ Move more functions to ISRC. Select list box now handles multi-select. Add button to show/hide selected.</li>
 				<li>
 					2019-03-11 ~ When the exterior of a model has holes/is non-manifold,
@@ -108,7 +108,6 @@ ISAOIOEW.currentStatus =
 			<summary>Change log</summary>
 
 			<ul>
-				<li>2019-03-13 ~ R15.2 ~ Many fixes</li>
 				<li>2019-03-11 ~ Move normals remove to ISRC. Add back vertical air surface types</li>
 				<li>2019-03-11 ~ Following well underway</li>
 					<ul>
@@ -221,14 +220,30 @@ ISAOIOEW.castRaysGetIntersections = function( button ) {
 
 	button.classList.toggle( "active" );
 
-	ISRC.setMeshesExterior();
-	ISRC.meshesExterior.forEach( mesh => mesh.visible = true );
-
 	const normals = ISRC.normalsFaces.children;
 	//console.log( 'normals', normals );
-	let normalsCount = 0;
+
+	ISAOIOEW.surfaceIntersections = [];
+	ISRC.meshesExterior = [];
+
+	const surfacesExterior = [ "ExteriorWall", "Roof", "UndergroundWall" ];
+
+	GBX.surfaces.forEach( ( surface, index ) => {
+
+		if ( surfacesExterior.includes( surface.match( /surfaceType="(.*?)"/ )[ 1 ] ) ) {
+
+			ISRC.meshesExterior.push( GBX.surfaceGroup.children[ index ] );
+
+		}
+
+	} );
+	//console.log( 'ISRC.meshesExterior', ISRC.meshesExterior );
+
+	ISRC.meshesExterior.forEach( mesh => mesh.visible = true );
+
 	const arr = [];
 	const v = ( x, y, z ) => new THREE.Vector3( x, y, z );
+	let normalsCount = 0;
 
 	for ( let normal of normals ) {
 
@@ -252,8 +267,8 @@ ISAOIOEW.castRaysGetIntersections = function( button ) {
 
 	}
 
-	ISAOIOEW.surfaceIntersections = arr.filter( ( value, index, array ) => array.indexOf ( value ) == index );
-	//ISAOIOEW.surfaceIntersections = [ ... new Set( arr ) ];
+	ISAOIOEW.surfaceIntersections = [ ... new Set( arr ) ];
+
 	//console.log( 'ISAOIOEW.surfaceIntersections', ISAOIOEW.surfaceIntersections );
 
 	ISRC.targetLog.innerHTML =
@@ -267,6 +282,89 @@ ISAOIOEW.castRaysGetIntersections = function( button ) {
 		<p><i>Better user-interface and best ways of fixing issues: TBD.</i></p>
 	`;
 
-	ISRC.targetSelect.innerHTML = ISRC.getSelectOptionsIndexes( ISAOIOEW.surfaceIntersections );
+	ISRC.targetSelect.innerHTML = ISAOIOEW.getSelectOptions( ISAOIOEW.surfaceIntersections );
+
+};
+
+
+
+ISAOIOEW.vvvvvvvvvvvvvvfindIntersections = function( index, origin, direction ) {
+
+	const raycaster = new THREE.Raycaster();
+
+	raycaster.set( origin, direction ); // has to be the correct vertex order
+	const intersects1 = raycaster.intersectObjects( ISAOIOEW.meshesExterior );
+
+	raycaster.set( origin, direction.negate() );
+	const intersects2 = raycaster.intersectObjects( ISAOIOEW.meshesExterior );
+
+	if ( intersects1.length % 2 === 0 || intersects2.length % 2 === 0 ) {
+
+			const mesh = GBX.surfaceGroup.children[ index ];
+			mesh.material = new THREE.MeshBasicMaterial( { color: 'red', side: 2 });
+			mesh.material.needsUpdate = true;
+
+			if ( ISAOIOEW.surfaceIntersections.includes( index ) === false ) { ISAOIOEW.surfaceIntersections.push( index ); }
+	}
+
+	return ISAOIOEW.surfaceIntersections.length;
+
+};
+
+
+
+ISAOIOEW.nnnnnnnnnnnnnnnsetSurfaceArraysShowHide = function( button, surfaceIndexArray ) {
+	//console.log( 'surfaceIndexArray', surfaceIndexArray );
+
+	button.classList.toggle( "active" );
+
+	if ( button.classList.contains( 'active' ) && surfaceIndexArray.length ) {
+
+		GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
+
+		surfaceIndexArray.forEach( index => GBX.surfaceGroup.children[ Number( index ) ].visible = true );
+
+		THR.scene.remove( ISRC.normalsFaces );
+
+		THRU.groundHelper.visible = false;
+
+	} else {
+
+		GBX.surfaceGroup.children.forEach( element => element.visible = true );
+
+		THRU.groundHelper.visible = true;
+
+	}
+
+};
+
+
+// to ISRC??
+
+ISAOIOEW.getSelectOptions = function( surfaceArrays ) {
+
+	let htmOptions = '';
+	let count = 1;
+
+	for ( let index of surfaceArrays ) {
+
+		const surfaceText = GBX.surfaces[ index ];
+		//console.log( 'surfaceText', surfaceText );
+
+		const id = surfaceText.match( 'id="(.*?)"' )[ 1 ];
+
+		const cadIdMatch = surfaceText.match( /<CADObjectId>(.*?)<\/CADObjectId>/i );
+		const cadId = cadIdMatch ? cadIdMatch[ 1 ] : "";
+
+		const type = surfaceText.match( 'surfaceType="(.*?)"' )[ 1 ];
+		let color = GBX.colors[ type ].toString( 16 );
+		color = color.length > 4 ? color : '00' + color; // otherwise greens no show
+
+		htmOptions +=
+			`<option style=background-color:#${ color } value=${ index } title="${ cadId }" >${ count ++ } - ${ id }</option>`;
+
+	}
+
+	return htmOptions;
 
 };

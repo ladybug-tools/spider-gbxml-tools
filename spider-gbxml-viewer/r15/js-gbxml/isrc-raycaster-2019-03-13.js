@@ -2,17 +2,10 @@
 /* globals THR, THRU, THREE, GBX, POP, divPopUpData */
 /* jshint esversion: 6 */
 
-const ISRC = { "release": "R15.0", "date": "2019-03-13" };
+const ISRC = {};
 
-ISRC.description =
-	`
-		Issues Ray Caster Core ( ISRC) - utilities used by several modules
-	`;
 
-////////// used by many
 
-// used by aoioe*
-// used by isso*
 ISRC.addNormals = function( button, selectedSurfaces = [], targetSelect = "", targetLog = "" ) {
 
 	THR.scene.remove( ISRC.normalsFaces );
@@ -47,12 +40,13 @@ ISRC.toggleSurfaceNormals = function() {
 	const types = [ 'BoxBufferGeometry', 'BufferGeometry', 'ConeBufferGeometry', 'CylinderBufferGeometry',
 		'ShapeBufferGeometry', 'SphereBufferGeometry' ];
 
+	//THR.scene.traverse( function ( child ) {
 	GBX.surfaceGroup.traverse( function ( child ) {
 
 		if ( child instanceof THREE.Mesh && child.visible ) {
 
 			if ( child.geometry.type === 'Geometry' ) {
-				// never occurs ??
+
 				child.geometry.computeFaceNormals();
 
 				const helperNormalsFace = new THREE.FaceNormalsHelper( child, 2, 0xff00ff, 3 );
@@ -93,37 +87,41 @@ ISRC.toggleSurfaceNormals = function() {
 };
 
 
-// used by aoioe*
-// used by isso*
-ISRC.showHideSelected = function( button, select ) {
 
-	if ( select.selectedOptions.length ) {
-
-		const arr = Array.from( select.selectedOptions );
-
-		const indices = arr.map( item => Number( item.value ) );
-		//console.log( 'arr', arr );
-
-		ISRC.setSurfaceArrayShowHide( button, indices );
-
-	}
-
-};
-
-
-
-//////////
-
-// used by isso*
-ISRC.castRaysSetIntersectionArrays = function( button ) {
+ISRC.castRaysGetIntersections = function( button ) {
 
 	button.classList.toggle( "active" );
 
+	//ISRC.meshesExterior = meshesExterior;
+
+	//GBX.surfaceGroup.children.forEach( mesh => mesh.visible = true );
+
+	const v = ( x, y, z ) => new THREE.Vector3( x, y, z );
+	let normalsCount = 0;
+	let intersections = 0;
+	ISRC.surfaceIntersectionArrays = [];
+	ISRC.surfaceIntersections = [];
+
 	const normals = ISRC.normalsFaces.children;
 	//console.log( 'normals', normals );
-	let normalsCount = 0;
-	const v = ( x, y, z ) => new THREE.Vector3( x, y, z );
-	const arrs = [];
+
+	for ( let normal of normals ) {
+
+		const coordinates = normal.geometry.attributes.position.array;
+		//console.log( 'coordinates', coordinates );
+
+		for ( let i  = 0; i < coordinates.length;) {
+
+			const geometry = new THREE.BoxBufferGeometry( 0.2, 0.2, 0.2 );
+			const material = new THREE.MeshNormalMaterial();
+			const mesh = new THREE.Mesh( geometry, material );
+			mesh.position.set( coordinates[ i++ ], coordinates[ i++ ], coordinates[ i++ ] );
+			//THR.scene.add( mesh );
+
+		}
+
+	}
+
 
 	for ( let normal of normals ) {
 
@@ -133,47 +131,28 @@ ISRC.castRaysSetIntersectionArrays = function( button ) {
 		for ( let i = 0; i < coordinates.length; ) {
 
 			const vertex1 = v( coordinates[ i++ ], coordinates[ i++ ], coordinates[ i++ ] );
-			const vertex2 = v( coordinates[ i++ ], coordinates[ i++ ], coordinates[ i++ ] );
+			const vertex2 = v( coordinates[ i++ ], coordinates[ i++ ],coordinates[ i++ ] );
 			//console.log( 'vertex1', vertex1 );
 
 			const direction = vertex2.clone().sub( vertex1 ).normalize();
 			//console.log( 'direction', direction );
 
-			const intersections = ISRC.getIntersectionArrays( vertex1, direction, GBX.surfaceGroup.children );
+			intersections += ISRC.findIntersections( GBX.surfaceGroup.children, vertex1, direction );
+			//intersections += ISRC.findIntersections( ISRC.horizontalSurfaces, vertex1, direction );
 			//console.log( 'intersections', intersections );
-
-			if ( intersections ) { arrs.push( intersections ); }
 
 			normalsCount++;
 
 		}
 
 	}
-	//ISRC.surfaceIntersectionArrays = arr.filter( ( value, index, array ) => array.indexOf ( value ) == index );
-
-	ISRC.surfaceIntersectionArrays = [];
-	const strings = [];
-
-	for ( let arr of arrs ) {
-
-		const str = arr.join();
-
-		if ( strings.indexOf( str ) === -1 ) {
-
-			strings.push( str );
-			ISRC.surfaceIntersectionArrays.push( arr );
-
-		}
-
-	}
-
-	console.log( 'ISRC.surfaceIntersectionArrays', ISRC.surfaceIntersectionArrays );
+	//console.log( 'ISRC.surfaceIntersectionArrays', ISRC.surfaceIntersectionArrays );
 
 	ISRC.targetLog.innerHTML =
 	`
 		Surfaces: ${ ISRC.selectedSurfaces.length.toLocaleString() }<br>
 		Normals created: ${ normalsCount.toLocaleString() }<br>
-		intersections found: ${ ISRC.surfaceIntersectionArrays.length.toLocaleString() }
+		intersections found: ${ intersections.toLocaleString() }
 
 		<p>Use Pop-up menu to zoom and show/hide individual surfaces.</p>
 
@@ -188,33 +167,64 @@ ISRC.castRaysSetIntersectionArrays = function( button ) {
 
 
 
+ISRC.findIntersections = function( objs, origin, direction ) {
 
-ISRC.getIntersectionArrays = function( origin, direction, meshes ) {
-
-	let surfaceIndices;
+	let count = 0;
 
 	const raycaster = new THREE.Raycaster();
 
 	raycaster.set( origin, direction ); // has to be the correct vertex order
 
-	const intersects = raycaster.intersectObjects( meshes );
+	const intersects = raycaster.intersectObjects( objs );
 	//console.log( 'intersects', intersects.length );
 
 	if ( intersects.length > 1 ) {
+		//console.log( 'intersects', intersects );
+
+		ISRC.surfaceIntersections.push([ intersects[ 0 ].object.userData.index, intersects.length ] );
 
 		if ( Math.abs( intersects[ 1 ].distance ) - Math.abs( intersects[ 0 ].distance ) < 0.00001 ) {
 
 			const mesh = intersects[ 1 ].object;
 			ISRC.addColor( mesh );
 
-			surfaceIndices = intersects.map( intersect => intersect.object.userData.index ).slice( 0, 2 );
+			const surfaceIndices = intersects.map( intersect => intersect.object.userData.index );
+			ISRC.surfaceIntersectionArrays.push( surfaceIndices );
 
+			count++;
 		}
 
 	}
-	//console.log( 'surfaceIndices', surfaceIndices );
 
-	return surfaceIndices;
+	return count;
+
+};
+
+
+
+ISRC.getExteriors = function( index, origin, direction ) {
+
+	const raycaster = new THREE.Raycaster();
+
+	raycaster.set( origin, direction ); // has to be the correct vertex order
+	const intersects1 = raycaster.intersectObjects( ISRC.meshesExterior ).length;
+
+	raycaster.set( origin, direction.negate() );
+	const intersects2 = raycaster.intersectObjects( ISRC.meshesExterior ).length;
+
+	const array = [];
+
+	if ( intersects1 % 2 === 0 || intersects2 % 2 === 0 ) {
+
+		const mesh = GBX.surfaceGroup.children[ index ];
+		mesh.material = new THREE.MeshBasicMaterial( { color: 'red', side: 2 });
+		mesh.material.needsUpdate = true;
+
+		if ( array.includes( index ) === false ) { array.push( index ); }
+
+	}
+
+	return array;
 
 };
 
@@ -239,22 +249,19 @@ ISRC.addColor = function( mesh ){
 
 
 
-// used by isso*
 ISRC.getSelectOptions = function( surfaceArrays ) {
 
-	let htmOptions = "";
+	let htmOptions = '';
 	let count = 1;
 
 	for ( let surfaceIndices of surfaceArrays ) {
-		//console.log( 'surfaceIndices', surfaceIndices );
 
-		for ( let index of surfaceIndices ) {
+		for ( let index of surfaceIndices.slice( 0, 1 ) ) {
 
 			const surfaceText = GBX.surfaces[ index ];
 			//console.log( 'surfaceText', surfaceText );
 
 			const id = surfaceText.match( 'id="(.*?)"' )[ 1 ];
-			//console.log( 'id', id );
 
 			const cadIdMatch = surfaceText.match( /<CADObjectId>(.*?)<\/CADObjectId>/i );
 			const cadId = cadIdMatch ? cadIdMatch[ 1 ] : "";
@@ -264,17 +271,19 @@ ISRC.getSelectOptions = function( surfaceArrays ) {
 			color = color.length > 4 ? color : '00' + color; // otherwise greens no show
 
 			htmOptions +=
-				`<option style=background-color:#${ color } value=${ index } title="${ cadId }" >${ count } - ${ id }</option>`;
+				`<option style=background-color:#${ color } value=${ index } title="${ cadId }" >${ count ++ } - ${ id }</option>`;
+
 
 		}
 
-		count ++;
 
 	}
 
 	return htmOptions;
 
 };
+
+
 
 
 
@@ -305,64 +314,37 @@ ISRC.setSurfaceArraysShowHide = function( button, surfaceArrays ) {
 
 
 
-//////////
 
+ISRC.xxxxsetSurfaceArraysExteriorShowHide = function( button, surfaceArrays ) {
+	//console.log( 'surfaceArrays', surfaceArrays );
 
-// used by aoioe*
-ISRC.getExteriors = function( index, origin, direction ) {
+	button.classList.toggle( "active" );
 
-	const raycaster = new THREE.Raycaster();
+	if ( button.classList.contains( 'active' ) && surfaceArrays.length ) {
 
-	raycaster.set( origin, direction ); // has to be the correct vertex order
-	const intersects1 = raycaster.intersectObjects( ISRC.meshesExterior ).length;
+		GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
 
-	raycaster.set( origin, direction.negate() );
-	const intersects2 = raycaster.intersectObjects( ISRC.meshesExterior ).length;
+		for ( let surface of surfaceArrays ) {
 
-	const array = [];
+			if ( surface[ 1 ] % 2 === 0 ) {
 
-	if ( intersects1 % 2 === 0 || intersects2 % 2 === 0 ) {
+				GBX.surfaceGroup.children[ Number( surface[ 0 ] ) ].visible = true;
 
-		const mesh = GBX.surfaceGroup.children[ index ];
-		mesh.material = new THREE.MeshBasicMaterial( { color: 'red', side: 2 });
-		mesh.material.needsUpdate = true;
+			}
 
-		if ( array.includes( index ) === false ) { array.push( index ); }
+		}
 
-	}
+		THR.scene.remove( ISRC.normalsFaces );
 
-	return array;
+		THRU.groundHelper.visible = false;
 
-};
+	} else {
 
+		GBX.surfaceGroup.children.forEach( element => element.visible = true );
 
-
-// used by aoioe*
-ISRC.getSelectOptionsIndexes = function( surfaceIndexes ) {
-
-	let htmOptions = '';
-	let count = 1;
-
-	for ( let index of surfaceIndexes ) {
-
-		const surfaceText = GBX.surfaces[ index ];
-		//console.log( 'surfaceText', surfaceText );
-
-		const id = surfaceText.match( 'id="(.*?)"' )[ 1 ];
-
-		const cadIdMatch = surfaceText.match( /<CADObjectId>(.*?)<\/CADObjectId>/i );
-		const cadId = cadIdMatch ? cadIdMatch[ 1 ] : "";
-
-		const type = surfaceText.match( 'surfaceType="(.*?)"' )[ 1 ];
-		let color = GBX.colors[ type ].toString( 16 );
-		color = color.length > 4 ? color : '00' + color; // otherwise greens no show
-
-		htmOptions +=
-			`<option style=background-color:#${ color } value=${ index } title="${ cadId }" >${ count ++ } - ${ id }</option>`;
+		THRU.groundHelper.visible = true;
 
 	}
-
-	return htmOptions;
 
 };
 
@@ -370,8 +352,23 @@ ISRC.getSelectOptionsIndexes = function( surfaceIndexes ) {
 
 
 
+ISRC.showHideSelected = function( button, select ) {
 
-// used by aoioe*
+	if ( select.selectedOptions.length ) {
+
+		arr = Array.from( select.selectedOptions );
+
+		indices = arr.map( item => Number( item.value ) );
+		//console.log( 'arr', arr );
+
+		ISRC.setSurfaceArrayShowHide( button, indices );
+
+	}
+
+};
+
+
+
 ISRC.setSurfaceArrayShowHide = function( button, surfaceIndexArray ) {
 	//console.log( 'surfaceIndexArray', surfaceIndexArray );
 
@@ -399,25 +396,6 @@ ISRC.setSurfaceArrayShowHide = function( button, surfaceIndexArray ) {
 
 
 
-// used by aoioe*
-ISRC.setMeshesExterior = function( types ) {
-
-	const wallTypes = [ "ExteriorWall", "Roof", "UndergroundWall" ];
-	//const floorTypes = [ "ExposedFloor", "Roof", "SlabOnGrade", "UndergroundSlab" ];
-
-	types = types ? types : wallTypes;
-
-	ISRC.meshesExterior = GBX.surfaces.filter(
-		surface => types.includes( surface.match( /surfaceType="(.*?)"/ )[ 1 ] )
-	)
-	.map( item => GBX.surfaceGroup.children[ GBX.surfaces.indexOf( item ) ] );
-	//console.log( 'ISRC.meshesExterior', ISRC.meshesExterior );
-
-};
-
-
-
-// used by aoioe*
 ISRC.selectedSurfaceFocus = function( select ) {
 
 	THR.controls.enableKeys = false;

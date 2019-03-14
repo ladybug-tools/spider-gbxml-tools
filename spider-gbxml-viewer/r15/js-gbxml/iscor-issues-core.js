@@ -93,7 +93,7 @@ ISCOR.getMenuIssues = function() {
 
 		${ ISCOD.getMenuCadObjectId() }
 
-		Not yet part of 'Check all...'<br>
+		<p>Not yet part of 'Check all...'</p>
 
 		${ ISSOV.getMenuSurfaceOverlapVerticals() }
 
@@ -150,7 +150,7 @@ ISCOR.onClickAllIssues = function() {
 
 	ISASD.getAdjacentSpaceDuplicateCheck();
 
-	ISASTE.getAirSurfaceTypeEditorCheck();
+	//ISASTE.getAirSurfaceTypeEditorCheck();
 
 	ISCOD.getCadObjectIdCheck();
 

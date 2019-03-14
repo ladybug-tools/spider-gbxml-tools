@@ -20,6 +20,9 @@ _<small>Spider gbXML Tester</small>_
 
 ## Concept
 
+Many of the issues to be found in parsing gbXML files are clerical matters that can found using simple text search routines - full 3D viewing is not needed and may actually slow things down. In future revisions new utilities will add replace capability so that issues can be fixed and saved.
+
+
 * Run basic checks on gbXML files and identify & report errors
 * The script is still at an early stage. Many more checks can be added.
 

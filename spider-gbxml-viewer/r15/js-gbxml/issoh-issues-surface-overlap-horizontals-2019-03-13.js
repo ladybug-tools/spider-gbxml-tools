@@ -1,9 +1,9 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
-/* globals THR, GBX */
+/* globals GBX, POP, ISCOR, divPopUpData */
 /* jshint esversion: 6 */
 
 
-const ISSOH = { "release": "R15.3", "date": "2019-03-13" };
+const ISSOH = { "release": "R15.2", "date": "2019-03-05" };
 
 ISSOH.description =
 	`
@@ -32,10 +32,7 @@ ISSOH.currentStatus =
 		</p>
 
 		<details>
-			<summary>Change log</summary>
-
-			<ul>
-				<li>2019-03-13 ~ R15.3 ~ Many fixes</li>
+			<summary
 				<li>2019-03-06 ~ R15.2 ~ bring in ISRC</li>
 				<li>2019-03-03 ~ R15.1 ~ beginning to find overlaps nicely</li>
 				<li>2019-03-01 ~ R15.0 ~ First commit</li>
@@ -59,12 +56,11 @@ ISSOH.getMenuSurfaceOverlapHorizontals = function() {
 		</p>
 
 		<p>
-			1. <button onclick=ISRC.addNormals(this,ISSOH.horizontalSurfaces,ISSOHselSurfaceOverlapHorizontals,ISSOHoverlaps); >
-			add normals to horizontal surfaces</button>
+			1. <button onclick=ISRC.addNormals(this,ISSOH.horizontalSurfaces,ISSOHselSurfaceOverlapHorizontals,ISSOHoverlaps); >add normals to horizontal surfaces</button><br>
 		</p>
 
 		<p>
-			2. <button onclick=ISRC.castRaysSetIntersectionArrays(this); >cast rays get intersections</button>
+			2. <button onclick=ISRC.castRaysSetIntersectionArrays(this,ISSOHoverlaps); >cast rays get intersections</button><br>
 		</p>
 
 		<p>
@@ -76,10 +72,6 @@ ISSOH.getMenuSurfaceOverlapHorizontals = function() {
 		<p>
 			<select id=ISSOHselSurfaceOverlapHorizontals multiple onchange=ISRC.selectedSurfaceFocus(this); style=width:100%; size=10 >
 			</select>
-		</p>
-
-		<p>
-			<button onclick=ISRC.showHideSelected(this,ISSOHselSurfaceOverlapHorizontals); >show/hide selected surfaces</button>
 		</p>
 
 		<p id=ISSOHoverlaps ></p>
