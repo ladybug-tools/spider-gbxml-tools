@@ -3,7 +3,7 @@
 /* jshint esversion: 6 */
 
 
-const ISSOV = { "release": "R15.2", "date": "2019-03-13" };
+const ISSOV = { "release": "R15.3", "date": "2019-03-14" };
 
 ISSOV.description =
 	`
@@ -31,9 +31,10 @@ ISSOV.currentStatus =
 			</a>
 		</p>
 		<details>
-		
+
 			<summary>Change log</summary>
 			<ul>
+				<li>2019-03-14 ~ R15.3 ~ Add non-working delete button. Add stats display and text</li>
 				<li>2019-03-13 ~ R15.2 ~ Many fixes</li>
 				<li>2019-03-03 ~ R15.1 ~ beginning to find overlaps nicely</li>
 				<li>2019-03-01 ~ R15.0 ~ First commit</li>
@@ -57,7 +58,7 @@ ISSOV.getMenuSurfaceOverlapVerticals = function() {
 		</p>
 
 		<p>
-			1. <button onclick=ISRC.addNormals(this,ISSOV.verticalSurfaces,ISSOVselSurfaceOverlapVerticals); >
+			1. <button onclick=ISRC.addNormals(this,ISSOV.verticalSurfaces,ISSOVselSurfaceOverlapVerticals,ISSOVoverlaps); >
 			add normals to vertical surfaces</button><br>
 		</p>
 
@@ -79,8 +80,12 @@ ISSOV.getMenuSurfaceOverlapVerticals = function() {
 		<p>
 			<button onclick=ISRC.showHideSelected(this,ISSOVselSurfaceOverlapVerticals); >show/hide selected surfaces</button>
 		</p>
-		<p id=ISSOVoverlaps ></p>
 
+		<p>
+			<button onclick=alert("coming_soon"); >delete selected surfaces</button>
+		</p>
+
+		<p id=ISSOVoverlaps ></p>
 
 	</details>`;
 

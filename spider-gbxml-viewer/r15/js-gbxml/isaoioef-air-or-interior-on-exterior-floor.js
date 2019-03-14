@@ -223,7 +223,7 @@ ISAOIOEF.castRaysGetIntersections = function( button ) {
 
 	button.classList.toggle( "active" );
 
-	ISRC.setMeshesExterior( [ "ExposedFloor", "Roof", "SlabOnGrade", "UndergroundSlab" ] );
+	ISRC.setMeshesExterior( [ "ExposedFloor", "RaisedFloor", "Roof", "SlabOnGrade", "UndergroundSlab" ] );
 	ISRC.meshesExterior.forEach( mesh => mesh.visible = true );
 
 	const normals = ISRC.normalsFaces.children;
@@ -246,7 +246,27 @@ ISAOIOEF.castRaysGetIntersections = function( button ) {
 			const direction = vertex2.clone().sub( vertex1 ).normalize();
 			//console.log( 'direction', direction );
 
-			arr.push( ...ISRC.getExteriors( normal.userData.index, vertex1, direction ) );
+			//arr.push( ...ISRC.getExteriors( normal.userData.index, vertex1, direction ) );
+
+			indexIntersects = ISAOIOEF.getExteriors2( normal.userData.index, vertex1, direction );
+
+			//console.log( '',  indexIntersects, normal.userData.index );
+
+			if ( indexIntersects ) {
+
+				indexChecked = ISAOIOEF.checkForInteriorIntersections( indexIntersects, vertex1, direction );
+
+				if ( indexChecked && arr.includes( indexChecked ) === false ) {
+
+					const mesh = GBX.surfaceGroup.children[ indexChecked ];
+					mesh.material = new THREE.MeshBasicMaterial( { color: 'red', side: 2 });
+					mesh.material.needsUpdate = true;
+
+					arr.push( indexChecked );
+
+				}
+
+			}
 
 			normalsCount ++;
 
@@ -254,7 +274,7 @@ ISAOIOEF.castRaysGetIntersections = function( button ) {
 
 	}
 
-	ISAOIOEF.surfaceIntersections = arr.filter( ( value, index, array ) => array.indexOf ( value ) == index );
+	ISAOIOEF.surfaceIntersections = arr; //.filter( ( value, index, array ) => array.indexOf ( value ) == index );
 	//ISAOIOEF.surfaceIntersections = [ ... new Set( arr ) ];
 	//console.log( 'ISAOIOEF.surfaceIntersections', .surfaceIntersections );
 
@@ -264,11 +284,73 @@ ISAOIOEF.castRaysGetIntersections = function( button ) {
 		Normals created: ${ normalsCount.toLocaleString() }<br>
 		intersections found: ${ ISAOIOEF.surfaceIntersections.length.toLocaleString() }
 
+		<p>Select multiple surfaces by pressing shift or control keys.</p>
+
 		<p>Use Pop-up menu to zoom and show/hide individual surfaces.</p>
 
-		<p><i>Better user-interface and best ways of fixing issues: TBD.</i></p>
 	`;
 
 	ISRC.targetSelect.innerHTML = ISRC.getSelectOptionsIndexes( ISAOIOEF.surfaceIntersections );
+
+};
+
+
+
+
+ISAOIOEF.checkForInteriorIntersections = function( index, origin, direction ) {
+
+	if ( !ISAOIOEF.meshesInteriorVertical ) {
+
+		ISAOIOEF.meshesInteriorVertical = ISRC.getMeshesByType( [ "Air", "Ceiling", "InteriorFloor", "UndergroundCeiling" ] );
+
+	}
+	//console.log( 'ISAOIOEF.meshesInteriorVertical', ISAOIOEF.meshesInteriorVertical);
+
+	const raycaster = new THREE.Raycaster();
+
+	raycaster.set( origin, direction ); // has to be the correct vertex order
+	const intersects1 = raycaster.intersectObjects( ISAOIOEF.meshesInteriorVertical ).length;
+
+	raycaster.set( origin, direction.negate() );
+	const intersects2 = raycaster.intersectObjects( ISAOIOEF.meshesInteriorVertical ).length;
+
+	let indexIntersects = index;
+
+	if ( intersects1 !== 1 && intersects2 !== 1 ) {
+
+		indexIntersects = undefined;
+
+	} else {
+
+		//console.log( 'intersects1', intersects1 );
+		//console.log( 'intersects2', intersects2 );
+
+	}
+
+	return indexIntersects;
+
+};
+
+
+
+ISAOIOEF.getExteriors2 = function( index, origin, direction ) {
+
+	const raycaster = new THREE.Raycaster();
+
+	raycaster.set( origin, direction ); // has to be the correct vertex order
+	const intersects1 = raycaster.intersectObjects( ISRC.meshesExterior ).length;
+
+	raycaster.set( origin, direction.negate() );
+	const intersects2 = raycaster.intersectObjects( ISRC.meshesExterior ).length;
+
+	let indexIntersects;
+
+	if ( intersects1 % 2 === 0 || intersects2 % 2 === 0 ) {
+
+		indexIntersects = index;
+
+	}
+
+	return indexIntersects;
 
 };

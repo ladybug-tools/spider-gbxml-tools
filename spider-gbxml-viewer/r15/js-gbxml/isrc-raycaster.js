@@ -2,7 +2,7 @@
 /* globals THR, THRU, THREE, GBX, POP, divPopUpData */
 /* jshint esversion: 6 */
 
-const ISRC = { "release": "R15.0", "date": "2019-03-13" };
+const ISRC = { "release": "R15.1", "date": "2019-03-14" };
 
 ISRC.description =
 	`
@@ -175,9 +175,10 @@ ISRC.castRaysSetIntersectionArrays = function( button ) {
 		Normals created: ${ normalsCount.toLocaleString() }<br>
 		intersections found: ${ ISRC.surfaceIntersectionArrays.length.toLocaleString() }
 
-		<p>Use Pop-up menu to zoom and show/hide individual surfaces.</p>
+		<p>Select multiple surfaces by pressing shift or control keys.</p>
 
-		<p><i>Better user-interface and best ways of fixing issues: TBD.</i></p>
+		<p>Use Pop-up menu at top right to zoom and show/hide individual surfaces.</p>
+
 	`;
 
 	ISRC.targetSelect.innerHTML = ISRC.getSelectOptions( ISRC.surfaceIntersectionArrays );
@@ -308,8 +309,8 @@ ISRC.setSurfaceArraysShowHide = function( button, surfaceArrays ) {
 //////////
 
 
-// used by aoioe*
 ISRC.getExteriors = function( index, origin, direction ) {
+	// used by aoioe*
 
 	const raycaster = new THREE.Raycaster();
 
@@ -319,7 +320,7 @@ ISRC.getExteriors = function( index, origin, direction ) {
 	raycaster.set( origin, direction.negate() );
 	const intersects2 = raycaster.intersectObjects( ISRC.meshesExterior ).length;
 
-	const array = [];
+	const arr = [];
 
 	if ( intersects1 % 2 === 0 || intersects2 % 2 === 0 ) {
 
@@ -327,18 +328,19 @@ ISRC.getExteriors = function( index, origin, direction ) {
 		mesh.material = new THREE.MeshBasicMaterial( { color: 'red', side: 2 });
 		mesh.material.needsUpdate = true;
 
-		if ( array.includes( index ) === false ) { array.push( index ); }
+		if ( arr.includes( index ) === false ) { arr.push( index ); }
 
 	}
 
-	return array;
+
+	return arr;
 
 };
 
 
 
-// used by aoioe*
 ISRC.getSelectOptionsIndexes = function( surfaceIndexes ) {
+	// used by aoioe*
 
 	let htmOptions = '';
 	let count = 1;
@@ -368,11 +370,8 @@ ISRC.getSelectOptionsIndexes = function( surfaceIndexes ) {
 
 
 
-
-
-
-// used by aoioe*
 ISRC.setSurfaceArrayShowHide = function( button, surfaceIndexArray ) {
+	// used by aoioe*
 	//console.log( 'surfaceIndexArray', surfaceIndexArray );
 
 	button.classList.toggle( "active" );
@@ -399,8 +398,8 @@ ISRC.setSurfaceArrayShowHide = function( button, surfaceIndexArray ) {
 
 
 
-// used by aoioe*
 ISRC.setMeshesExterior = function( types ) {
+	// used by aoioe* to be deprecated
 
 	const wallTypes = [ "ExteriorWall", "Roof", "UndergroundWall" ];
 	//const floorTypes = [ "ExposedFloor", "Roof", "SlabOnGrade", "UndergroundSlab" ];
@@ -412,6 +411,26 @@ ISRC.setMeshesExterior = function( types ) {
 	)
 	.map( item => GBX.surfaceGroup.children[ GBX.surfaces.indexOf( item ) ] );
 	//console.log( 'ISRC.meshesExterior', ISRC.meshesExterior );
+
+};
+
+
+
+// used by aoioe*
+ISRC.getMeshesByType = function( types ) {
+
+	const wallTypes = [ "ExteriorWall", "Roof", "UndergroundWall" ];
+	//const floorTypes = [ "ExposedFloor", "Roof", "SlabOnGrade", "UndergroundSlab" ];
+
+	types = types ? types : wallTypes;
+
+	const meshes = GBX.surfaces.filter(
+		surface => types.includes( surface.match( /surfaceType="(.*?)"/ )[ 1 ] )
+	)
+	.map( item => GBX.surfaceGroup.children[ GBX.surfaces.indexOf( item ) ] );
+	//console.log( 'ISRC.meshesExterior', ISRC.meshesExterior );
+
+	return meshes;
 
 };
 

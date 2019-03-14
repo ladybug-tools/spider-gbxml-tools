@@ -1,5 +1,5 @@
 
-<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/#README.md "View file as a web page." ) </span>
+<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( https://www.ladybug.tools/spider-gbxml-tools/#spider-gbxml-viewer/README.md "View file as a web page." ) </span>
 
 <div><input type=button class = "btn btn-secondary btn-sm" onclick="window.location.href='https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/'";
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' ></div>
@@ -14,6 +14,9 @@ _<small>Spider gbXML Viewer 'Maevia' R15</small>_
 
 ## Full Screen: [Spider gbXML Viewer 'Maevia' R15]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/index.html )
 
+Or copy this link: https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/
+
+***
 
 ## Local version: https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/r15/spider-gbxml-viewer15-local.html
 
@@ -80,8 +83,9 @@ Pop-up Viewer 'Maevia' R15
 
 ***
 
+<details>
 
-## Change Log
+<summary>Change Log</summary>
 
 ### 2019-03-14 ~ Copied from Pop-up
 
@@ -500,25 +504,9 @@ Does almost nothing. You must use 'Choose File' and developer console to see any
 * 2018-11-08 ~ Theo ~ Some shades also showing as roof / and other places when surfaces not showing up as expectd
 * File not loading: annapolis-md-single-family-residential-2016.xml
 
-## Things you can do using this script
-
-* Click the three bars( 'hamburger menu icon' ) to slide the menu in and out
-* Click the Octocat icon to view or edit the source code on GitHub
-* Click on title to reload
-* Press Control-U/Command-Option-U to view the source code
-* Press Control-Shift-J/Command-Option-J to see if the JavaScript console reports any errors
-
-
-## Links of Interest
-
-
-
-## Change Log
-
-
 ### 2018-11-15 ~ Theo
 
-Se previou day comments. Converting text files over 3 MB compressed crashes the browser while the conversion to xml is taking place.
+See previous day comments. Converting text files over 3 MB compressed crashes the browser while the conversion to xml is taking place.
 
 ### 2018-11-14 ~ Theo
 
@@ -547,8 +535,9 @@ It will take a number of revisions of scripts in order to see if this process do
 
 * First commit
 
+</details>
 
 ***
 
-### <center title="Howdy! My web is better than yours. ;-)" ><a href=javascript:window.scrollTo(0,0); style="text-decoration:none !important;" > &#x1f578; </a></center>
+### <center title="Howdy! My web is better than yours. ;-)" ><a href=javascript:window.scrollTo(0,0); style="text-decoration:none !important;" > <img src="https://ladybug.tools/artwork/icons_bugs/ico/spider.ico" height="18"> </a></center>
 
