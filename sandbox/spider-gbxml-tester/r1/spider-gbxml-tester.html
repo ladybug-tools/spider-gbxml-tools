@@ -5,19 +5,14 @@
 <meta name = "viewport" content= "width=device-width, initial-scale=1" >
 <meta name = "description" content = "This menu is a component of a basic html content management script with sliding menu, css theme selection, Markdown to HTML, drag and drop file reading capability, access to frequently used pages and more" >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
-<meta name = "date" content = "2019-03-12" >
-<meta name = "release" content = "1.2" >
+<meta name = "date" content = "2019-03-14" >
+<meta name = "release" content = "1.3" >
 <title>Spider gbXML Tester</title>
 <link rel="stylesheet" href="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/style.css">
 </head>
 <body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js" ></script>
-<!--
-<script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/fob-file-open-basic.js" ></script>
-
-<script src="ismet-issues-metadata.js" ></script>
--->
 
 <!-- File menu -->
 <script src="https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/r15/js-gbxml/gal-sample-files-gallery-gbxml.js" ></script>
@@ -26,11 +21,6 @@
 <!-- Edit Menu -->
 
 
-<script src="https://ladybug-tools.github.io/spider-gbxml-tools/spider-gbxml-viewer/r15/js-gbxml/iscor-issues-core.js" ></script>
-
-<script src="https://ladybug-tools.github.io/spider-gbxml-tools/spider-gbxml-viewer/r15/js-gbxml/ismet-issues-metadata.js" ></script>
-<script src="https://ladybug-tools.github.io/spider-gbxml-tools/spider-gbxml-viewer/r15/js-gbxml/issti-issues-surface-type-invalid.js" ></script>
-
 <script src="spider-gbxml-tester.js" ></script>
 
 <script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/mnu-menu.js" ></script>
@@ -38,6 +28,7 @@
 <script src="ohc-on-hash-change.js" ></script>
 <script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/thm-theme-select.js" ></script>
 <script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/tmp-template.js" ></script>
+
 <script>
 
 //Copyright 2019 Ladybug Tools authors. MIT License
@@ -84,7 +75,7 @@ MNU.currentStatusCore =
 
 
 
-const uriDefaultFile = 'README.md';
+
 
 OHC.uriDefaultFile = "../README.md";
 
@@ -144,9 +135,6 @@ OHC.urlGitHubPage = "";
 
 			<section id="GALdivSampleFilesGallery"></section>
 
-
-			<section id="FOBsecFileOpenBasic" ></section>
-
 			<section id="FILdivFileOpen"></section>
 
 			<section id="FILdivFileSave"></section>
@@ -201,6 +189,7 @@ OHC.urlGitHubPage = "";
 
 	</div>
 
+
 <script>
 
 
@@ -220,8 +209,6 @@ function init() {
 
 	// Settings menu
 	THMsecMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
-
-	//TMPsecMenuTemplate.innerHTML = TMP.getMenuTemplate();
 
 	MNUdivFooter.innerHTML = MNU.getNavFooter(); // not essential
 

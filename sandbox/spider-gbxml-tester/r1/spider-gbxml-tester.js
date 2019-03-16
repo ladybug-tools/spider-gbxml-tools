@@ -1,6 +1,8 @@
+//Copyright 2019 Ladybug Tools authors. MIT License
+// jshint esversion: 6
+/* globals FIL, divContents */
 
-
-const SGT = {}
+const SGT = {};
 
 let GBX = {};
 
@@ -30,19 +32,20 @@ GBX.colors = Object.assign( {}, GBX.colorsDefault ); // create working copy of d
 GBX.surfaceTypes = Object.keys( GBX.colors );
 
 
-
-
 SGT.setGeneralCheck = function() {
 
 	divContents.innerHTML =
 	`
-		<h3>General Check</h3>
+	<br><br>
+
+		<h3>Check: ${ FIL.name } </h3>
 	`;
 
 
 	SGT.setSurfaces();
 
-}
+};
+
 
 
 SGT.setSurfaces = function() {
@@ -67,14 +70,21 @@ SGT.setSurfaces = function() {
 
 	SGT.checkOffset();
 
+	divContents.innerHTML +=
+
+	`<div id=divFooter >
+		See also <a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">Schema GreenBuildingXML_Ver6.01.xsd </a>
+	</div>`;
+
 };
+
 
 
 
 
 SGT.generalCheck = function() {
 
-	let htm = ""
+	let htm = "";
 
 	if ( GBX.text.includes( 'utf-16' ) ) {
 
@@ -86,8 +96,9 @@ SGT.generalCheck = function() {
 		`;
 	}
 
-	const area =  GBX.text.match( /<area>[0\s]<\/area>/gi );
+	const area =  GBX.text.match( /<Area(> <|><|>0<?)\/Area>/gi );
 
+	console.log( 'area', area );
 	htm +=
 	`
 		<p>
@@ -96,7 +107,7 @@ SGT.generalCheck = function() {
 	`;
 
 
-	const vol = GBX.text.match( /<volume>[0\s]<\/volume>/gi )
+	const vol = GBX.text.match( /<volume(> <|><|>0<?)\/volume>/gi );
 
 	htm  +=
 	`
@@ -105,7 +116,7 @@ SGT.generalCheck = function() {
 		</p>
 	`;
 
-	const string = GBX.text.match( /""/gi )
+	const string = GBX.text.match( /""/gi );
 
 	htm  +=
 	`
@@ -114,9 +125,15 @@ SGT.generalCheck = function() {
 		</p>
 	`;
 
-	divContents.innerHTML += htm;
+	//divContents.innerHTML += htm;
 
-}
+	SGT.addItem( {
+		summary: `General Check`,
+		description: ``,
+		contents: `${ htm }`
+	} );
+
+};
 
 
 
@@ -136,8 +153,9 @@ SGT.checkMetaData = function() {
 
 	const attributesProvided = [];
 	const attributesMissing = [];
+	const keys = Object.keys( metadataValues );
 
-	for ( let attribute of Object.keys( metadataValues ) ){
+	for ( let attribute of keys ){
 		//console.log( 'attribute', attribute );
 
 		if ( GBX.text.includes( attribute) ) {
@@ -152,14 +170,15 @@ SGT.checkMetaData = function() {
 
 	}
 
-	divContents.innerHTML +=
-	`
-		<p>
-			Attributes provided: ${ attributesProvided.length.toLocaleString() } found<br>
-			Attributes missing: ${ attributesMissing.length.toLocaleString() } found<br>
-		</p>
-	`;
-
+	SGT.addItem( {
+		summary: `Invalid Metadata`,
+		description: `Seven types of attributes are required: ${ keys.join( ', ' ) }`,
+		contents:
+		`
+		Attributes provided: ${ attributesProvided.length.toLocaleString() } found<br>
+		Attributes missing: ${ attributesMissing.length.toLocaleString() } found<br>
+		`
+	} );
 
 };
 
@@ -170,7 +189,7 @@ SGT.checkSurfaceTypeInvalid = function() {
 
 	const surfaceTypeInvalid = [];
 
-	for ( surface of GBX.surfaces ) {
+	for ( let surface of GBX.surfaces ) {
 
 		const surfaceType = surface.match( /surfaceType="(.*?)"/)[ 1 ];
 
@@ -182,14 +201,13 @@ SGT.checkSurfaceTypeInvalid = function() {
 
 	}
 
-	divContents.innerHTML +=
-	`
-		<p>
-			Surfaces with invalid surface type: ${ surfaceTypeInvalid.length.toLocaleString() } found
-		</p>
-	`;
+	SGT.addItem( {
+		summary: `Surfaces with Invalid Surface Type`,
+		description: `A surface type was supplied that is not one of the following: ${ GBX.surfaceTypes.join( ', ' ) }`,
+		contents: `${ surfaceTypeInvalid.length.toLocaleString() } found`
+	} );
 
-}
+};
 
 
 
@@ -201,11 +219,11 @@ SGT.checkDuplicatePlanarCoordinates = function() {
 
 		const arr = surface.match( /<PlanarGeometry>(.*?)<\/PlanarGeometry>/ );
 
-		if ( arr ) { planes.push( arr[ 1 ] ) }
+		if ( arr ) { planes.push( arr[ 1 ] ); }
 
 	}
 
-	duplicates = [];
+	const duplicates = [];
 
 	planes.forEach( ( plane1, index1 ) => {
 
@@ -223,12 +241,12 @@ SGT.checkDuplicatePlanarCoordinates = function() {
 
 	} );
 
-	divContents.innerHTML +=
-	`
-		<p>
-			Surfaces with duplicate planar coordinates: ${ ( duplicates.length / 2 ).toLocaleString() } found
-		</p>
-	`;
+	SGT.addItem( {
+		summary: `Surfaces with Duplicate Planar Coordinates`,
+		description: `Two surfaces with identical vertex coordinates for their planar geometry`,
+		contents: `${ ( duplicates.length / 2 ).toLocaleString() } found`
+	} );
+
 
 };
 
@@ -236,11 +254,10 @@ SGT.checkDuplicatePlanarCoordinates = function() {
 
 SGT.checkAdjacentSpaceExtra = function() {
 
-
 	const oneSpace = [ 'ExteriorWall', 'Roof', 'ExposedFloor', 'UndergroundCeiling', 'UndergroundWall',
 		'UndergroundSlab', 'RaisedFloor', 'SlabOnGrade', 'FreestandingColumn', 'EmbeddedColumn' ];
 
-	invalidAdjacentSpaceExtra = [];
+	const invalidAdjacentSpaceExtra = [];
 
 	const surfaces = GBX.surfaces;
 
@@ -268,12 +285,11 @@ SGT.checkAdjacentSpaceExtra = function() {
 
 	}
 
-	divContents.innerHTML +=
-	`
-		<p>
-			Surfaces with extra adjacent space: ${ invalidAdjacentSpaceExtra.length.toLocaleString() } found
-		</p>
-	`;
+	SGT.addItem( {
+		summary: `Surfaces with a Extra Adjacent Space`,
+		description: `Exterior surfaces that normally take a single adjacent space that are found to have two`,
+		contents: `${ invalidAdjacentSpaceExtra.length.toLocaleString() } found`
+	} );
 
 };
 
@@ -281,27 +297,22 @@ SGT.checkAdjacentSpaceExtra = function() {
 
 SGT.checkAdjacentSpaceDuplicate = function() {
 
-
 	const twoSpaces = [ "Air", "InteriorWall", "InteriorFloor", "Ceiling" ];
 	const invalidAdjacentSpaceDuplicate = [];
 
 	GBX.surfaces.forEach( ( surface, index ) => {
 
-		spaceIdRef = surface.match( /spaceIdRef="(.*?)"/gi );
+		const spaceIdRef = surface.match( /spaceIdRef="(.*?)"/gi );
 
 		if ( spaceIdRef && spaceIdRef.length && spaceIdRef[ 0 ] === spaceIdRef[ 1 ] ) {
 			//console.log( 'spaceIdRef', spaceIdRef );
 
-			surfaceType = surface.match( /surfaceType="(.*?)"/i )[ 1 ];
+			const surfaceType = surface.match( /surfaceType="(.*?)"/i )[ 1 ];
 			//console.log( 'surfaceType', surfaceType );
 
 			if ( twoSpaces.includes( surfaceType ) ) {
 
 				invalidAdjacentSpaceDuplicate.push( index );
-
-			} else {
-
-				//console.log( 'surfaceType', surfaceType );
 
 			}
 
@@ -309,12 +320,13 @@ SGT.checkAdjacentSpaceDuplicate = function() {
 
 	} );
 
-	divContents.innerHTML +=
-	`
-		<p>
-			Surfaces with duplicate adjacent space: ${ invalidAdjacentSpaceDuplicate.length.toLocaleString() } found
-		</p>
-	`;
+
+	SGT.addItem( {
+		summary: `Surfaces with Duplicate Adjacent Spaces`,
+		description: `Air, InteriorWall, InteriorFloor, or Ceiling surfaces where both adjacent space IDs point to the same space`,
+		contents: `${ invalidAdjacentSpaceDuplicate.length.toLocaleString() } found`
+	} );
+
 };
 
 
@@ -331,46 +343,64 @@ SGT.checkCadIdMissing = function() {
 
 	}
 
+	SGT.addItem( {
+		summary: "Missing CAD Object ID",
+		description: `The CADObjectId Element is used to map unique CAD object identifiers to gbXML elements. Allows CAD/BIM tools to read results from a gbXML file and map them to their CAD objects.`,
+		contents: `Surfaces with no CAD Object ID: ${ noId.toLocaleString() } out of ${ GBX.surfaces.length.toLocaleString() }`
+	} );
+
+};
+
+
+
+SGT.checkOffset = function() {
+
+	let max = 0;
+
+	FIL.text.match( /<Coordinate>(.*?)<\/Coordinate>/gi )
+		.forEach ( coordinate => {
+
+			const numb = Number( coordinate.match( /<Coordinate>(.*?)<\/Coordinate>/i )[ 1 ] );
+			max = numb > max ? numb : max;
+
+		} );
+
+	SGT.addItem( {
+		summary: "Offset from Origin", description: "Largest distance - x, y, or x - from 0, 0, 0",
+		contents: `Largest coordinate found: ${ max.toLocaleString() }`
+	} );
+
+};
+
+
+
+SGT.addItem = function( item ) {
+
 	divContents.innerHTML +=
 	`
-		<p>
-			Surfaces with no CAD Object ID: ${ noId.toLocaleString() } out of ${ GBX.surfaces.length.toLocaleString() }
-		</p>
+		<details open >
+
+			<summary>${ item.summary }</summary>
+
+			<div><i>${ item.description }</i></div>
+
+			<p>${ item.contents }</p>
+
+			<hr>
+
+		</details>
 	`;
 
 };
 
 
 
+/*
 
-
-SGT.checkOffset = function() {
-
-	const coords = FIL.text.match( /<Coordinate>(.*?)<\/Coordinate>/gi );
-
-	//console.log( 'coords', coords );
-
-	let max = 0;
-
-	const numbers = coords.forEach ( coord => {
-
-		const numb = Number( coord.match( /<Coordinate>(.*?)<\/Coordinate>/i )[ 1 ] );
-
-		max = numb > max ? numb : max;
-
-		return max;
-
+	SGT.addItem( {
+		summary: ``,
+		description: ``,
+		contents: `${ .toLocaleString() } out of ${ .length.toLocaleString() }`
 	} );
 
-	//console.log( 'numbers', max);
-
-	divContents.innerHTML +=
-	`
-		<p>
-			Largest coordinate found: ${ max.toLocaleString() }
-		</p>
-	`;
-
-
-
-}
+*/

@@ -60,6 +60,21 @@ Enhancing the Script
 ## Change Log
 
 
+### 2019-03-15 ~ Theo
+
+spider-gbxml-tester.js
+
+R1.3
+* Add details and function to add add the details to divContents
+* Code cleanup
+* Run through jsHint
+
+It's a lot easier to build test here than in the 3D viewer.
+* There is no need to fit into an existing UI
+* There is no need to make the changes visible in the 3D model
+
+
+
 ### 2019-03-12 ~ Theo
 
 R1.2
