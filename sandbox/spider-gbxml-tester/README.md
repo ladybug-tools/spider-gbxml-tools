@@ -69,16 +69,18 @@ R1.3
 * Code cleanup
 * Run through jsHint
 
-It's a lot easier to build test here than in the 3D viewer.
+It's a lot easier to build tests here than in the 3D viewer.
+
 * There is no need to fit into an existing UI
 * There is no need to make the changes visible in the 3D model
 
 The current effort points to a change of direction regarding the way the Viewer is developed. The viewer is currently a viewer and a fixer/editor. The way things seem to be going is that the tester should become the fixer for all testing that does not require 3D and 3D features such as ray-casting. And it currently feels like this is a doable proposition. Almost all fixes should be available with a single click. Occasionally there might be fixes where you have to choose from a list of items.
 
-For example, let us say that you typed in an invalid surface type in your CAD program. We can let you select a valid surface type from the list of fifteen valid types. But then, we could see that your surface has a tilt of 90 degrees and it has an opening tht is raised off the bottom of the surface and we can see that exposedToSun is set to true. Therefore we can preselect 'ExteriorWall' and you can fix the error with a single click.
+For example, let us say that you typed in an invalid surface type in your CAD program. We can let you select a valid surface type from the list of fifteen valid types. But then, we could see that your surface has a tilt of 90 degrees and it has an opening that is raised off the bottom of the surface and we can see that exposedToSun is set to true. Therefore we can pre-select 'ExteriorWall' and you can fix the error with a single click.
 
 With some hard-thinking all of the text-based errors should be fixable in the fixer. This may mean that the viewer may more easily become a better viewer with more features being added more quickly.
 
+Another benefit is that it will be easier to run a text-based fixer script with Node.js on a server and verify many files in a batch run
 
 
 ### 2019-03-12 ~ Theo
