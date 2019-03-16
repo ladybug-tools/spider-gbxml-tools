@@ -69,7 +69,7 @@ ISSOV.getMenuSurfaceOverlapVerticals = function() {
 		</p>
 
 		<p>
-			<button onclick=ISRC.setSurfaceArraysShowHide(this,ISRC.surfaceIntersectionArrays); title="Starting to work!" >
+			3. <button onclick=ISRC.setSurfaceArraysShowHide(this,ISRC.surfaceIntersectionArrays); title="Starting to work!" >
 			show/hide overlaps
 			</button>
 		</p>
@@ -93,6 +93,9 @@ ISSOV.getMenuSurfaceOverlapVerticals = function() {
 ISSOV.getSurfaceOverlapVerticalsCheck = function() {
 
 	THR.scene.remove( ISSOV.verticalNormalsFaces );
+
+	const buttons = ISSOVdetSurfaceOverlapVerticals.querySelectorAll( 'button' );
+	buttons.forEach( button => button.classList.remove( "active" ) );
 
 	ISSOV.verticalSurfaces = [];
 

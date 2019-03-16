@@ -2,7 +2,7 @@
 /* globals THR, THRU, THREE, GBX, POP, divPopUpData */
 /* jshint esversion: 6 */
 
-const ISRC = { "release": "R15.1", "date": "2019-03-14" };
+const ISRC = { "release": "R15.2", "date": "2019-03-15" };
 
 ISRC.description =
 	`
@@ -11,13 +11,14 @@ ISRC.description =
 
 ////////// used by many
 
-// used by aoioe*
+// used by aoioe* button #1
 // used by isso*
 ISRC.addNormals = function( button, selectedSurfaces = [], targetSelect = "", targetLog = "" ) {
 
 	THR.scene.remove( ISRC.normalsFaces );
 	ISRC.normalsFaces = new THREE.Group();
 
+	// change to local?
 	ISRC.selectedSurfaces = selectedSurfaces;
 	ISRC.targetSelect = targetSelect;
 	ISRC.targetLog = targetLog;
@@ -34,13 +35,13 @@ ISRC.addNormals = function( button, selectedSurfaces = [], targetSelect = "", ta
 
 	}
 
-	ISRC.toggleSurfaceNormals();
+	ISRC.addSurfaceNormalsHelpers();
 
 };
 
 
 
-ISRC.toggleSurfaceNormals = function() {
+ISRC.addSurfaceNormalsHelpers = function() {
 
 	let material = new THREE.MeshNormalMaterial();
 
@@ -70,7 +71,6 @@ ISRC.toggleSurfaceNormals = function() {
 				mesh.rotation.copy( child.rotation );
 				mesh.position.copy( child.position );
 
-
 				const helperNormalsFace = new THREE.FaceNormalsHelper( mesh, 0.05 * THRU.radius, 0xff00ff, 3 );
 				helperNormalsFace.userData.index = child.userData.index;
 
@@ -79,7 +79,7 @@ ISRC.toggleSurfaceNormals = function() {
 
 			} else {
 
-				//console.log( 'child.geometry.type', child.geometry.type );
+				console.log( 'child.geometry.type', child.geometry.type );
 
 			}
 
@@ -93,20 +93,34 @@ ISRC.toggleSurfaceNormals = function() {
 };
 
 
-// used by aoioe*
-// used by isso*
-ISRC.showHideSelected = function( button, select ) {
+// called by aoioe* buttons
+// called by isso* buttons
+ISRC.showHideSelected = function( button, select, surfaceIndexes ) {
 
 	if ( select.selectedOptions.length ) {
 
 		const arr = Array.from( select.selectedOptions );
 
-		const indices = arr.map( item => Number( item.value ) );
+		const indexes = arr.map( item => Number( item.value ) );
 		//console.log( 'arr', arr );
 
-		ISRC.setSurfaceArrayShowHide( button, indices );
+		ISRC.setSurfacesShowHide( button, indexes );
 
 	}
+
+};
+
+
+// called by select list boxes in aoioe* & and by isso*
+ISRC.selectedSurfaceFocus = function( select ) {
+
+	THR.controls.enableKeys = false;
+
+	POP.intersected = GBX.surfaceGroup.children[ select.value ];
+
+	POP.getIntersectedDataHtml();
+
+	divPopUpData.innerHTML = POP.getIntersectedDataHtml();
 
 };
 
@@ -118,6 +132,7 @@ ISRC.showHideSelected = function( button, select ) {
 ISRC.castRaysSetIntersectionArrays = function( button ) {
 
 	button.classList.toggle( "active" );
+
 
 	const normals = ISRC.normalsFaces.children;
 	//console.log( 'normals', normals );
@@ -139,7 +154,9 @@ ISRC.castRaysSetIntersectionArrays = function( button ) {
 			const direction = vertex2.clone().sub( vertex1 ).normalize();
 			//console.log( 'direction', direction );
 
+			// why all children?? Use ISSOV.verticalSurfaces to meshes??
 			const intersections = ISRC.getIntersectionArrays( vertex1, direction, GBX.surfaceGroup.children );
+
 			//console.log( 'intersections', intersections );
 
 			if ( intersections ) { arrs.push( intersections ); }
@@ -149,7 +166,6 @@ ISRC.castRaysSetIntersectionArrays = function( button ) {
 		}
 
 	}
-	//ISRC.surfaceIntersectionArrays = arr.filter( ( value, index, array ) => array.indexOf ( value ) == index );
 
 	ISRC.surfaceIntersectionArrays = [];
 	const strings = [];
@@ -166,14 +182,13 @@ ISRC.castRaysSetIntersectionArrays = function( button ) {
 		}
 
 	}
-
-	console.log( 'ISRC.surfaceIntersectionArrays', ISRC.surfaceIntersectionArrays );
+	//console.log( 'ISRC.surfaceIntersectionArrays', ISRC.surfaceIntersectionArrays );
 
 	ISRC.targetLog.innerHTML =
 	`
 		Surfaces: ${ ISRC.selectedSurfaces.length.toLocaleString() }<br>
 		Normals created: ${ normalsCount.toLocaleString() }<br>
-		intersections found: ${ ISRC.surfaceIntersectionArrays.length.toLocaleString() }
+		Overlaps found: ${ ISRC.surfaceIntersectionArrays.length.toLocaleString() }
 
 		<p>Select multiple surfaces by pressing shift or control keys.</p>
 
@@ -181,7 +196,7 @@ ISRC.castRaysSetIntersectionArrays = function( button ) {
 
 	`;
 
-	ISRC.targetSelect.innerHTML = ISRC.getSelectOptions( ISRC.surfaceIntersectionArrays );
+	ISRC.targetSelect.innerHTML = ISRC.getSelectArrayOptions( ISRC.surfaceIntersectionArrays );
 
 	THR.scene.remove( ISRC.normalsFaces );
 
@@ -241,7 +256,7 @@ ISRC.addColor = function( mesh ){
 
 
 // used by isso*
-ISRC.getSelectOptions = function( surfaceArrays ) {
+ISRC.getSelectArrayOptions = function( surfaceArrays ) {
 
 	let htmOptions = "";
 	let count = 1;
@@ -279,26 +294,46 @@ ISRC.getSelectOptions = function( surfaceArrays ) {
 
 
 
-ISRC.setSurfaceArraysShowHide = function( button, surfaceArrays ) {
+// called by isso*
+ISRC.setSurfaceArrayShowHide = function( button, surfaceArrays = [], surfaceIndexes =  [] ) {
 	//console.log( 'surfaceArrays', surfaceArrays );
+
+	const buttons = Array.from( detMenuEdit.querySelectorAll( 'button' ) );
+	buttons.filter( item => item !== button ).map( item => item.classList.remove( "active" ) );
 
 	button.classList.toggle( "active" );
 
-	if ( button.classList.contains( 'active' ) && surfaceArrays.length ) {
+	if ( button.classList.contains( 'active' ) ) {
 
-		GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
+		if ( surfaceArrays.length > 0 ) {
 
-		surfaceArrays.forEach( array => array.slice( 0, 2 ).forEach( surfaceId => GBX.surfaceGroup.children[ surfaceId ].visible = true ) );
+			GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
 
-		THR.scene.remove( ISRC.normalsFaces );
+			surfaceArrays.forEach( array => array.forEach( surfaceId => GBX.surfaceGroup.children[ surfaceId ].visible = true ) );
 
-		THRU.groundHelper.visible = false;
+			THR.scene.remove( ISRC.normalsFaces );
+
+			THRU.groundHelper.visible = false;
+
+		} else {
+
+			alert( "No surfaces with issues identified");
+
+		}
 
 	} else {
 
-		GBX.surfaceGroup.children.forEach( element => element.visible = true );
+		if ( surfaceIndexes.length > 0 ) {
 
-		THRU.groundHelper.visible = true;
+			surfaceIndexes.forEach( index => GBX.surfaceGroup.children[ index ].visible = true );
+
+		} else {
+
+			GBX.surfaceGroup.children.forEach( element => element.visible = true );
+
+		}
+
+		//THRU.groundHelper.visible = true;
 
 	}
 
@@ -306,7 +341,7 @@ ISRC.setSurfaceArraysShowHide = function( button, surfaceArrays ) {
 
 
 
-//////////
+////////// used by aoioe*
 
 
 ISRC.getExteriors = function( index, origin, direction ) {
@@ -370,25 +405,45 @@ ISRC.getSelectOptionsIndexes = function( surfaceIndexes ) {
 
 
 
-ISRC.setSurfaceArrayShowHide = function( button, surfaceIndexArray ) {
+ISRC.setSurfacesShowHide = function( button, surfaceIndexes = [], meshesExterior = [] ) {
 	// used by aoioe*
-	//console.log( 'surfaceIndexArray', surfaceIndexArray );
+	//console.log( 'surfaceIndexes', surfaceIndexes );
+
+	const buttons = Array.from( detMenuEdit.querySelectorAll( 'button' ) );
+	buttons.filter( item => item !== button ).map( item => item.classList.remove( "active" ) );
 
 	button.classList.toggle( "active" );
 
-	if ( button.classList.contains( 'active' ) && surfaceIndexArray.length ) {
+	if ( button.classList.contains( 'active' ) ) {
 
-		GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
+		if ( surfaceIndexes.length > 0 ) {
 
-		surfaceIndexArray.forEach( index => GBX.surfaceGroup.children[ Number( index ) ].visible = true );
+			GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
 
-		THR.scene.remove( ISRC.normalsFaces );
+			surfaceIndexes.forEach( index => GBX.surfaceGroup.children[ Number( index ) ].visible = true );
 
-		THRU.groundHelper.visible = false;
+			THR.scene.remove( ISRC.normalsFaces );
+
+			THRU.groundHelper.visible = false;
+
+		} else {
+
+			alert( "No surfaces with issues identified");
+
+		}
+
 
 	} else {
 
-		GBX.surfaceGroup.children.forEach( element => element.visible = true );
+		if ( meshesExterior.length > 0 ) {
+
+			meshesExterior.forEach( mesh => mesh.visible = true );
+
+		} else {
+
+			GBX.surfaceGroup.children.forEach( element => element.visible = true );
+
+		}
 
 		THRU.groundHelper.visible = true;
 
@@ -416,8 +471,8 @@ ISRC.setMeshesExterior = function( types ) {
 
 
 
-// used by aoioe*
 ISRC.getMeshesByType = function( types ) {
+	// used by aoioe*
 
 	const wallTypes = [ "ExteriorWall", "Roof", "UndergroundWall" ];
 	//const floorTypes = [ "ExposedFloor", "Roof", "SlabOnGrade", "UndergroundSlab" ];
@@ -436,15 +491,41 @@ ISRC.getMeshesByType = function( types ) {
 
 
 
-// used by aoioe*
-ISRC.selectedSurfaceFocus = function( select ) {
+//////////
 
-	THR.controls.enableKeys = false;
 
-	POP.intersected = GBX.surfaceGroup.children[ select.value ];
+ISRC.deleteSelectedSurface = function( button, select ) {
 
-	POP.getIntersectedDataHtml();
+	const buttons = Array.from( detMenuEdit.querySelectorAll( 'button' ) );
+	buttons.filter( item => item !== button ).map( item => item.classList.remove( "active" ) );
 
-	divPopUpData.innerHTML = POP.getIntersectedDataHtml();
+	button.classList.toggle( "active" );
+
+	console.log( 'select.value', select );
+
+	result = confirm(
+		`OK to delete\n`+
+		`\n${ select.selectedOptions[ 0 ].title }\n` +
+		`${ select.selectedOptions[ 0 ].innerText }\n` +
+		`\nWork-in-progress. Could be working soon.`
+	);
+
+	if ( result === true ) {
+
+		index = select.value;
+
+		child = GBX.surfaceGroup.children.find( item => item.userData.index === index );
+
+		GBX.surfaceGroup.remove( child );
+
+		str = GBX.surfaces[ index ];
+		console.log( 'str', str );
+
+		reg = new RegExp( `${ str }`, 'i');
+
+		text = GBX.text.replace( reg, '' );
+		//console.log( 'text', text );
+
+	}
 
 };

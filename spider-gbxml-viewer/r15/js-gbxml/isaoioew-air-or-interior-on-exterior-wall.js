@@ -152,7 +152,7 @@ ISAOIOEW.getMenuAirOrInteriorOnExterior = function() {
 		</p>
 
 		<p>
-			<button onclick=ISRC.setSurfaceArrayShowHide(this,ISAOIOEW.surfaceIntersections); title="Starting to work!" >
+			3. <button onclick=ISRC.setSurfacesShowHide(this,ISAOIOEW.surfaceIntersections,ISRC.meshesExterior); title="Starting to work!" >
 			show/hide walls with issues
 			</button>
 		</p>
@@ -218,6 +218,8 @@ ISAOIOEW.getAirOrInteriorOnExteriorCheck = function() {
 
 
 ISAOIOEW.castRaysGetIntersections = function( button ) {
+
+	if ( !ISRC.normalsFaces ) { alert("first add the normals"); return; }
 
 	button.classList.toggle( "active" );
 
@@ -293,6 +295,30 @@ ISAOIOEW.castRaysGetIntersections = function( button ) {
 };
 
 
+ISAOIOEW.getExteriors2 = function( index, origin, direction ) {
+
+	const raycaster = new THREE.Raycaster();
+
+	raycaster.set( origin, direction ); // has to be the correct vertex order
+	const intersects1 = raycaster.intersectObjects( ISRC.meshesExterior ).length;
+
+	raycaster.set( origin, direction.negate() );
+	const intersects2 = raycaster.intersectObjects( ISRC.meshesExterior ).length;
+
+	let indexIntersects;
+
+	if ( intersects1 % 2 === 0 || intersects2 % 2 === 0 ) {
+
+		indexIntersects = index;
+
+	}
+
+	return indexIntersects;
+
+};
+
+
+
 ISAOIOEW.checkForInteriorIntersections = function( index, origin, direction ) {
 
 	if ( !ISAOIOEW.meshesInteriorVertical ) {
@@ -320,30 +346,6 @@ ISAOIOEW.checkForInteriorIntersections = function( index, origin, direction ) {
 
 		//console.log( 'intersects1', intersects1 );
 		//console.log( 'intersects2', intersects2 );
-
-	}
-
-	return indexIntersects;
-
-};
-
-
-
-ISAOIOEW.getExteriors2 = function( index, origin, direction ) {
-
-	const raycaster = new THREE.Raycaster();
-
-	raycaster.set( origin, direction ); // has to be the correct vertex order
-	const intersects1 = raycaster.intersectObjects( ISRC.meshesExterior ).length;
-
-	raycaster.set( origin, direction.negate() );
-	const intersects2 = raycaster.intersectObjects( ISRC.meshesExterior ).length;
-
-	let indexIntersects;
-
-	if ( intersects1 % 2 === 0 || intersects2 % 2 === 0 ) {
-
-		indexIntersects = index;
 
 	}
 

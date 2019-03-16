@@ -123,9 +123,17 @@ ISCOR.onGbxParse = function() {
 
 	detMenuEdit.open = true;
 
+
+
 	const issues = detMenuEdit.querySelectorAll( 'details' ); // agree with FIL!
 	//console.log( 'issues', issues );
 	issues.forEach( item => item.open = false );
+
+	const buttons = detMenuEdit.querySelectorAll( 'button' );
+	buttons.forEach( button => button.classList.remove( "active" ) );
+
+	const selects = detMenuEdit.querySelectorAll( 'select' );
+	selects.forEach( item => item.innerHTML = '' );
 
 	const spans = detMenuEdit.querySelectorAll( 'span' );
 	spans.forEach( item => item.innerHTML = '' );

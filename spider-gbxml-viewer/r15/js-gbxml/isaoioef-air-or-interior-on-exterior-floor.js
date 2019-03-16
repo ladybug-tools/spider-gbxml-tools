@@ -146,7 +146,7 @@ ISAOIOEF.getMenuAirOrInteriorFloorOnExterior = function() {
 		</p>
 
 		<p>
-			<button onclick=ISRC.setSurfaceArrayShowHide(this,ISAOIOEF.surfaceIntersections); title="Starting to work!" >
+			3. <button onclick=ISRC.setSurfacesShowHide(this,ISAOIOEF.surfaceIntersections,ISRC.meshesExterior); title="Starting to work!" >
 			show/hide floors with issues
 			</button>
 		</p>
@@ -221,9 +221,11 @@ ISAOIOEF.getAirOrInteriorOnExteriorCheck = function() {
 
 ISAOIOEF.castRaysGetIntersections = function( button ) {
 
+	if ( !ISRC.normalsFaces ) { alert("first add the normals"); return; }
+
 	button.classList.toggle( "active" );
 
-	ISRC.setMeshesExterior( [ "ExposedFloor", "RaisedFloor", "Roof", "SlabOnGrade", "UndergroundSlab" ] );
+	ISRC.meshesExterior = ISRC.getMeshesByType( [ "ExposedFloor", "RaisedFloor", "Roof", "SlabOnGrade", "UndergroundSlab" ] );
 	ISRC.meshesExterior.forEach( mesh => mesh.visible = true );
 
 	const normals = ISRC.normalsFaces.children;

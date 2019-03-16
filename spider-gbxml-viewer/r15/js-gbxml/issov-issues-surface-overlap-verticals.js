@@ -3,11 +3,11 @@
 /* jshint esversion: 6 */
 
 
-const ISSOV = { "release": "R15.3", "date": "2019-03-14" };
+const ISSOV = { "release": "R15.5", "date": "2019-03-15" };
 
 ISSOV.description =
 	`
-		Issues Surface Overlap Verticals (ISSOV) checks if a surface includes another surface.
+		Issues Surface Overlap Verticals (ISSOV) checks if a vertical surface includes another vertical surface.
 
 	`;
 
@@ -34,6 +34,7 @@ ISSOV.currentStatus =
 
 			<summary>Change log</summary>
 			<ul>
+				<li>2019-03-15 ~ R15.4 ~ Delete button nearly working. Many minor fixes</li>
 				<li>2019-03-14 ~ R15.3 ~ Add non-working delete button. Add stats display and text</li>
 				<li>2019-03-13 ~ R15.2 ~ Many fixes</li>
 				<li>2019-03-03 ~ R15.1 ~ beginning to find overlaps nicely</li>
@@ -53,8 +54,9 @@ ISSOV.getMenuSurfaceOverlapVerticals = function() {
 			<a id=ISSOVsumHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(ISSOVsumHelp,ISSOV.currentStatus);" >&nbsp; ? &nbsp;</a>
 		</summary>
 
+		<p>${ ISSOV.description }</p>
 		<p>
-			Module is work-in-progress. Checking verticals only. You will need to reload the web page between each run.
+			Module is work-in-progress.
 		</p>
 
 		<p>
@@ -63,11 +65,11 @@ ISSOV.getMenuSurfaceOverlapVerticals = function() {
 		</p>
 
 		<p>
-			2. <button onclick=ISRC.castRaysSetIntersectionArrays(this); >cast rays get intersections</button><br>
+			2. <button onclick=ISRC.castRaysSetIntersectionArrays(this); >cast rays find overlaps</button><br>
 		</p>
 
 		<p>
-			<button onclick=ISRC.setSurfaceArraysShowHide(this,ISRC.surfaceIntersectionArrays); title="Starting to work!" >
+			3. <button onclick=ISRC.setSurfaceArrayShowHide(this,ISRC.surfaceIntersectionArrays,ISSOV.verticalSurfaces); title="Starting to work!" >
 			show/hide overlaps
 			</button>
 		</p>
@@ -78,11 +80,11 @@ ISSOV.getMenuSurfaceOverlapVerticals = function() {
 		</p>
 
 		<p>
-			<button onclick=ISRC.showHideSelected(this,ISSOVselSurfaceOverlapVerticals); >show/hide selected surfaces</button>
+			<button onclick=ISRC.showHideSelected(this,ISSOVselSurfaceOverlapVerticals,ISSOV.verticalSurfaces); >show/hide selected surfaces</button>
 		</p>
 
 		<p>
-			<button onclick=alert("coming_soon"); >delete selected surfaces</button>
+			<button onclick=ISRC.deleteSelectedSurface(this,ISSOVselSurfaceOverlapVerticals); >delete selected surfaces</button>
 		</p>
 
 		<p id=ISSOVoverlaps ></p>
@@ -100,6 +102,9 @@ ISSOV.getSurfaceOverlapVerticalsCheck = function() {
 	THR.scene.remove( ISSOV.verticalNormalsFaces );
 
 	ISSOV.verticalSurfaces = [];
+
+	const buttons = ISSOVdetSurfaceOverlapVerticals.querySelectorAll( 'button' );
+	buttons.forEach( button => button.classList.remove( "active" ) );
 
 	GBX.surfaces.forEach( ( surface, index ) => {
 

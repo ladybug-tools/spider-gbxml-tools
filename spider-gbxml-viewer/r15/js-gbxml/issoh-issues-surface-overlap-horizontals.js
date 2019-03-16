@@ -7,7 +7,7 @@ const ISSOH = { "release": "R15.4", "date": "2019-03-14" };
 
 ISSOH.description =
 	`
-		Issues Surface Overlap Horizontals (ISSOH) checks if a horizontal surface includes another surface.
+		Issues Surface Overlap Horizontals (ISSOH) checks if a horizontal surface includes another horizontal surface.
 
 	`;
 
@@ -17,12 +17,9 @@ ISSOH.currentStatus =
 		<summary>Surface Overlap Horizontals (ISSOH) ${ ISSOH.release} ~ ${ ISSOH.date }</summary>
 
 		<p>
-			${ ISSOH.description }
-		</p>
-		<p>
 		Concept
 			<ul>
-				<li>Module is work-in-progress. Checking horizontals only. <i class=highlight >You will need to reload the web page between each run.</i></li>
+				<li>Module is work-in-progress. Checking horizontals only.</li>
 			</ul>
 		</p>
 		<p>
@@ -35,6 +32,7 @@ ISSOH.currentStatus =
 			<summary>Change log</summary>
 
 			<ul>
+				<li>2019-03-15 ~ R15.5 ~ Delete button nearly working. Many minor fixes</li>
 				<li>2019-03-14 ~ R15.4 ~ Add non-working delete button. Add stats display and text</li>
 				<li>2019-03-13 ~ R15.3 ~ Many fixes</li>
 				<li>2019-03-06 ~ R15.2 ~ bring in ISRC</li>
@@ -56,7 +54,10 @@ ISSOH.getMenuSurfaceOverlapHorizontals = function() {
 		</summary>
 
 		<p>
-			Module is work-in-progress. Checking horizontals only. You will need to reload the web page between each run.
+			${ ISSOH.description }
+		</p>
+		<p>
+			Module is work-in-progress
 		</p>
 
 		<p>
@@ -69,7 +70,7 @@ ISSOH.getMenuSurfaceOverlapHorizontals = function() {
 		</p>
 
 		<p>
-			<button onclick=ISRC.setSurfaceArraysShowHide(this,ISRC.surfaceIntersectionArrays); title="Starting to work!" >
+			3. <button onclick=ISRC.setSurfaceArrayShowHide(this,ISRC.surfaceIntersectionArrays,ISSOH.horizontalSurfaces); title="Starting to work!" >
 			show/hide overlaps
 			</button>
 		</p>
@@ -80,11 +81,11 @@ ISSOH.getMenuSurfaceOverlapHorizontals = function() {
 		</p>
 
 		<p>
-			<button onclick=ISRC.showHideSelected(this,ISSOHselSurfaceOverlapHorizontals); >show/hide selected surfaces</button>
+			<button onclick=ISRC.showHideSelected(this,ISSOHselSurfaceOverlapHorizontals,ISSOH.horizontalSurfaces); >show/hide selected surfaces</button>
 		</p>
 
 		<p>
-			<button onclick=alert("coming_soon"); >delete selected surfaces</button>
+			<button onclick=onclick=ISRC.deleteSelectedSurface(this,ISSOHselSurfaceOverlapHorizontals); >delete selected surfaces</button>
 		</p>
 
 		<p id=ISSOHoverlaps ></p>
