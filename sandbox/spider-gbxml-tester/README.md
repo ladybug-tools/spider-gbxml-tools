@@ -59,6 +59,16 @@ Enhancing the Script
 
 ## Change Log
 
+### 2019-03-18 ~ Theo
+
+spider-gbxml-tester.js
+
+R1.4
+* Add full details fro each surface
+* Open and close details depending on errors found
+* Display number of errors found in summary
+* Add beginning of delete and update buttons
+
 
 ### 2019-03-15 ~ Theo
 

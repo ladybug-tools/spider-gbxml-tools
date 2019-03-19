@@ -483,7 +483,7 @@ FIL.onProgress = function( size = 0, note = '' ) {
 	`
 		<div style="padding: 1rem 0;" >
 			<div style=padding:0; >File name:</div>
-			<div style=color:blue;padding:0; >${ FIL.name }</div>
+			<div style=color:blue;padding:0; >${ decodeURI( FIL.name ) }</div>
 			<div  style=padding:0; >bytes loaded: ${ size.toLocaleString() }</div>
 			<div style=padding:0; >time to load: ${ timeToLoad }ms</div>
 			${ note }

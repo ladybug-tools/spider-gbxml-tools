@@ -580,8 +580,6 @@ POP.getAttributesAdjacentSpace = function( surfaceXml ){
 
 };
 
-// D:\temp\2019-01-31-michal-xml\Rhino.to.BHoM.Test_IES.zip
-
 POP.setAttributesStoreyAndZone = function( spaceId ) {
 
 	const spaceText = GBX.spaces.find( item => item.includes( spaceId ) );
