@@ -64,7 +64,7 @@ Enhancing the Script
 spider-gbxml-tester.js
 
 R1.4
-* Add full details fro each surface
+* Add full details for each surface
 * Open and close details depending on errors found
 * Display number of errors found in summary
 * Add beginning of delete and update buttons
