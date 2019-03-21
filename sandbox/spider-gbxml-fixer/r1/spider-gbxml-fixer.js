@@ -4,7 +4,7 @@
 
 const SGT = { release: "1.4", date: "2019-03-18" };
 
-SGT.description = `Run basic checks on SGTML files and identify & report errors`;
+SGT.description = `Run basic checks on gbXML files and identify & report errors`;
 
 SGT.colorsDefault = {
 
@@ -51,17 +51,19 @@ SGT.setChecks = function() {
 			<br><br>
 
 			<h3>Check file: ${ decodeURI( FIL.name ) } </h3>
+
+			<div>${ SGT.getStats() }</div>
+
+			<div>${ SGT.getCheckGeneral() }</div>
+
+			<div>${ SGT.getCheckOffset() }</div>
+
+			<div id=FXMdivMetaData >${ FXM.checkMetaData() }</div>
+
+			<div id=FXSTIdivTypeInvalid>${ FXSTI.getCheckSurfaceTypeInvalid() }</div>
+
 		`;
 
-	SGT.setStats();
-
-	SGT.checkGeneral();
-
-	SGT.checkOffset();
-
-	SGT.checkMetaData();
-
-	SGT.checkSurfaceTypeInvalid();
 
 	SGT.checkDuplicatePlanarCoordinates();
 
@@ -81,7 +83,7 @@ SGT.setChecks = function() {
 
 
 
-SGT.setStats = function() {
+SGT.getStats = function() {
 
 	const timeStart = performance.now();
 
@@ -114,7 +116,7 @@ SGT.setStats = function() {
 	`;
 
 
-	SGT.addItem( {
+	statsHtm = SGT.getItemHtm( {
 		summary: `File Statistics`,
 		description: `SGTML elements statistics`,
 		contents: `${ htm }`,
@@ -133,11 +135,12 @@ SGT.setStats = function() {
 
 	};
 
+	return statsHtm;
 };
 
 
 
-SGT.checkGeneral = function() {
+SGT.getCheckGeneral = function() {
 
 	const timeStart = performance.now();
 	let htm = "";
@@ -190,7 +193,7 @@ SGT.checkGeneral = function() {
 
 	const errors = area + vol + string;
 
-	SGT.addItem( {
+	generalHtm = SGT.getItemHtm( {
 		open: errors > 0 ? "open" : "",
 		summary: `General Check - ${ errors } found`,
 		description: `check for elements with no values`,
@@ -198,11 +201,12 @@ SGT.checkGeneral = function() {
 		timeStart: timeStart
 	} );
 
+	return generalHtm;
 };
 
 
 
-SGT.checkOffset = function() {
+SGT.getCheckOffset = function() {
 
 	const timeStart = performance.now();
 	let max = 0;
@@ -217,7 +221,7 @@ SGT.checkOffset = function() {
 
 
 
-	SGT.addItem( {
+	offsetHtm = SGT.getItemHtm( {
 		open: max > 100000 ? "open" : "",
 		summary: `Maximum offset from Origin - ${ max.toLocaleString() }`,
 		 description: "Largest distance - x, y, or x - from 0, 0, 0",
@@ -225,64 +229,15 @@ SGT.checkOffset = function() {
 		timeStart: timeStart
 	} );
 
-};
-
-
-
-SGT.checkMetaData = function() {
-
-	const timeStart = performance.now();
-
-	const metadataValues = {
-
-		'areaUnit': 'SquareMeters',
-		'lengthUnit': 'Meters',
-		'temperatureUnit': 'C',
-		'useSIUnitsForResults': 'true',
-		'version': '0.37',
-		'volumeUnit': 'CubicMeters',
-		'xmlns': 'http://www.SGTml.org/schema'
-	};
-
-
-	const attributesProvided = [];
-	const attributesMissing = [];
-	const keys = Object.keys( metadataValues );
-
-	for ( let attribute of keys ){
-		//console.log( 'attribute', attribute );
-
-		if ( SGT.text.includes( attribute) ) {
-
-			attributesProvided.push( attribute );
-
-		} else {
-
-			attributesMissing.push( attribute );
-
-		}
-
-	}
-
-	SGT.addItem( {
-		open: ( attributesMissing.length ? "open" : "" ),
-		summary: `Invalid Metadata - ${ attributesMissing.length} found`,
-		description: `Seven types of attributes are required: ${ keys.join( ', ' ) }`,
-		contents:
-		`
-		Attributes provided: ${ attributesProvided.length.toLocaleString() } found<br>
-		Attributes missing: ${ attributesMissing.length.toLocaleString() } found<br>
-		<i>fixes coming soon</i>
-		`,
-		timeStart: timeStart
-
-	} );
+	return offsetHtm
 
 };
 
 
 
-SGT.checkSurfaceTypeInvalid = function() {
+
+
+SGT.vvvvgetCheckSurfaceTypeInvalid = function() {
 
 	const timeStart = performance.now();
 
@@ -326,7 +281,8 @@ SGT.checkSurfaceTypeInvalid = function() {
 
 	const sel = `Select new surface type <select id=selSurfaceType >${ options }</select> <button onclick=alert("Coming-soon"); >update</button>`;
 
-	SGT.addItem( {
+	const invalidTypeHtm = SGT.getItemHtm( {
+
 		open: surfacesTypeInvalid.length > 0 ? "open" : "",
 		summary: `Surfaces with Invalid Surface Type - ${ surfacesTypeInvalid.length} found`,
 		description:
@@ -337,7 +293,10 @@ SGT.checkSurfaceTypeInvalid = function() {
 			${ sel }<br>
 		`,
 		timeStart: timeStart
+
 	} );
+
+	return invalidTypeHtm;
 
 };
 
@@ -575,7 +534,7 @@ SGT.getSurfacesAttributesByIndex = function( indexes ) {
 
 SGT.getSurfacesAttributesByIndex = function( indexes ) {
 
-	parser = new DOMParser();
+	const parser = new DOMParser();
 
 	const htmArray = indexes.map( ( index, count ) => {
 
@@ -657,7 +616,8 @@ SGT.getAttributesHtml = function( obj ) {
 			//constructions = SGT.text.match( /<Construction(.*?)<\/Construction>/gi );
 
 			// silly way of doing things, but it's a start
-			const campusXml = SGT.parser.parseFromString( SGT.text, "application/xml").documentElement;
+			parser = new DOMParser();
+			const campusXml = parser.parseFromString( SGT.text, "application/xml").documentElement;
 			//SGT.campusXml = campusXml;
 			//console.log( 'campusXml', campusXml.attributes );
 
@@ -780,13 +740,16 @@ SGT.setAttributesStoreyAndZone = function( spaceId ) {
 	const spaceText = SGT.spaces.find( item => item.includes( spaceId ) );
 	//console.log( 'spaceText', spaceText );
 
-	SGT.storeyId = spaceText.match ( /buildingStoreyIdRef="(.*?)"/ )[ 1 ];
+	storeyId = spaceText.match ( /buildingStoreyIdRef="(.*?)"/ )
+	//console.log( 'storeyId', SGT.storeyId[ 1 ] );
+
+	SGT.storeyId = storeyId ? storeyId[ 1 ] : [];
 	//console.log( 'storeyId', SGT.storeyId[ 1 ] );
 
 	const storeyText = SGT.storeys.find( item => item.includes( SGT.storeyId ) );
 	//console.log( 'storeyText', storeyText );
 
-	const storeyName = storeyText.match ( '<Name>(.*?)</Name>' );
+	const storeyName = storeyText ? storeyText.match ( '<Name>(.*?)</Name>' ) : "";
 
 	SGT.storeyName = storeyName ? storeyName[ 1 ] : "no storey name in file";
 	//console.log( 'SGT.storeyName', SGT.storeyName );
@@ -865,6 +828,29 @@ SGT.addItem = function( item ) {
 
 };
 
+
+SGT.getItemHtm = function( item ) {
+
+	htm =
+	`
+		<details ${ item.open } >
+
+			<summary class=sumHeader>${ item.summary }</summary>
+
+			<div><i>${ item.description }</i></div>
+
+			<p>${ item.contents }</p>
+
+			<p>Time to check: ${ ( performance.now() - item.timeStart ).toLocaleString() }</p>
+
+			<hr>
+
+		</details>
+	`;
+
+	return htm;
+
+};
 
 
 /*

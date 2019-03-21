@@ -24,6 +24,8 @@
 <script src="fil-file-open-xml-zip.js" ></script>
 
 <!-- Edit Menu -->
+<script src="fxm-fix-metadata.js" ></script>
+<script src="fxsti-fix-surface-type-invalid.js" ></script>
 <script src="spider-gbxml-fixer.js" ></script>
 
 <!-- Settings menu -->
@@ -34,15 +36,17 @@
 
 //Copyright 2019 Ladybug Tools authors. MIT License
 
+// following belong lower but moved here to be easier to see amd update
+
 MNU.description =
 	`
-		Run basic check on gbXML files and identify, report and fix any errors
+		Run a series of basics check on gbXML files and identify, report and fix any errors
 	`;
 
 MNU.currentStatusCore =
 	`
 		<h3>
-			Spider gbXML Tester
+			Spider gbXML Fixer
 			R${ document.head.querySelector( '[ name=release ]' ).content }
 			~
 			${ document.head.querySelector( '[ name=date ]' ).content }
@@ -55,8 +59,7 @@ MNU.currentStatusCore =
 			<summary>Change log</summary>
 
 			<ul>
-				<li>2019-02-28 ~ R1.1 ~ Add sample files, read me file on open</li>
-				<li>2019-02-26 ~ R1.0 ~ First commit</li>
+				<li>2019-03-19 ~ R1.0 ~ First commit</li>
 
 			</ul>
 
@@ -80,11 +83,11 @@ MNU.currentStatusCore =
 
 OHC.uriDefaultFile = "../README.md";
 
-THM.themeUrlStorage = 'spider-gbxml-tester-theme-url';
+THM.themeUrlStorage = 'spider-gbxml-fixer-theme-url';
 THM.cssBasic = "https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/style.css";
 
 // For main menu header
-MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-tester";
+MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-fixer";
 
 MNU.homeText="<img src='https://ladybug.tools/artwork/icons_bugs/ico/ladybug.ico' height=24 >";
 MNU.homeTitle="Ladybug Tools: free computer applications that support environmental design and education";
@@ -112,7 +115,7 @@ OHC.pathRepo = '';
 OHC.branch = '/master/';
 
 // When running in dev folder
-// = location.href.includes( OHC.repo ) ? '../' : 'https://' + OHC.repo + "/";
+// OHC.urlGitHubPage = location.href.includes( OHC.repo ) ? '../' : 'https://' + OHC.repo + "/";
 //OHC.urlGitHubPage = `https://${ OHC.repo }/`;
 // When running in build repo
 OHC.urlGitHubPage = "";
@@ -129,6 +132,8 @@ OHC.urlGitHubPage = "";
 		</header>
 
 		<details class=navSubMenu open >
+
+			<section><i>May take a minute or more on files over 10MB or with many issues. This will be fixed.</i></section>
 
 			<summary class="sumMenuTitle" >File Menu</summary>
 
@@ -208,6 +213,8 @@ function init() {
 
 	FILdivFileOpen.innerHTML=FIL.getMenuFileOpen();
 
+	FILdivFileSave.innerHTML=FIL.getMenuFileSave();
+
 	// Settings menu
 	THMsecMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
 
@@ -215,9 +222,9 @@ function init() {
 
 	THM.init();
 
-	OHC.onHashChange();
+	OHC.onHashChange(); // checks location hash, if none set default file to open
 
-	document.body.addEventListener( 'onXmlFileLoad', SGT.init, false );
+	document.body.addEventListener( 'onXmlFileLoad', SGT.init, false ); // hash changed, file loaded so let's go
 
 }
 

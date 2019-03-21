@@ -93,6 +93,7 @@ ISSTI.getSurfaceTypeInvalidCheck = function() {
 	}
 
 	ISTIselSurfaceTypeInvalid.innerHTML = htmOptions;
+	
 	ISSTIspnCount.innerHTML = `: ${ ISSTI.SurfaceTypeInvalid.length } found`;
 
 	return ISSTI.SurfaceTypeInvalid.length;

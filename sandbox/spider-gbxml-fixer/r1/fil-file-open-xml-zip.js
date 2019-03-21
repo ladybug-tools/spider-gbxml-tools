@@ -106,7 +106,6 @@ FIL.getMenuFileOpen = function() {  // called from main HTML file
 
 FIL.getMenuFileSave = function() {
 
-
 	htm =
 	`
 	<details>
@@ -328,7 +327,7 @@ FIL.drop = function( event ) {
 		//console.log( 'event', event.dataTransfer.files[ 0 ] );
 
 		const type = event.dataTransfer.files[ 0 ].type;
-		console.log( 'type', type );
+		//console.log( 'type', type );
 
 		if ( type === "text/xml" ) {
 
@@ -428,14 +427,13 @@ FIL.fileOpenZip = function( files ) {
 
 ////////// File Save
 
-// better way than using GBX.text?
 
 FIL.butSaveFile = function() {
 
-	//const lines = GBX.text.split(/\r\n|\n/);
+	//const lines = SGT.text.split(/\r\n|\n/);
 	//console.log( 'len', lines.length );
 
-	const blob = new Blob( [ GBX.text ] );
+	const blob = new Blob( [ SGT.text ] );
 	let a = document.body.appendChild( document.createElement( 'a' ) );
 	a.href = window.URL.createObjectURL( blob );
 	a.download = FIL.name;

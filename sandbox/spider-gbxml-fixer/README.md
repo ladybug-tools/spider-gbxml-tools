@@ -20,10 +20,10 @@ _<small>Spider gbXML Fixer</small>_
 
 ## Concept
 
-Many of the issues to be found in parsing gbXML files are clerical matters that can found using simple text search routines - full 3D viewing is not needed and may actually slow things down. In future revisions new utilities will add replace capability so that issues can be fixed and saved.
+Many of the issues to be found in parsing gbXML files are clerical matters that can found using simple text search routines. Full 3D viewing of the errors is not needed and may actually slow things down. In future revisions new utilities will add replace capability so that all issues may be fixed and the corrected data saved.
 
 * Run basic checks on gbXML files and identify, report and fix any errors
-* The script is still at an early stage. Many more checks can be added.
+* The script is still at an early stage. Many more checks may be added.
 
 
 ## To Do / Wish List
@@ -35,15 +35,18 @@ Many of the issues to be found in parsing gbXML files are clerical matters that 
 
 ## Issues
 
-* 2019-03-12 ~ In some workflows an Air surface type with duplicate adjacent spaces acceptable. You should be able to adjust the settings so an error is not issued.
+* 2019-03-12 ~ In some workflows an Air surface type with duplicate adjacent spaces is acceptable. You should be able to adjust the settings so an error is not issued.
 
 
 ## Things you can do using this script
 
 Using the Script
+* Click 'Choose file' and load a gbXML files or a ZIP file containing a gbXML file
+* Drag and dtop a gbXML or ZIP file to the area inside the dotted lines in the left menu
+* Click 'Open gbXML sample files' to access the Spider gbXML sample files
 * Click the three bars( 'hamburger menu icon' ) to slide the menu in and out
 * Click the Octocat icon to view or edit the source code on GitHub
-* Click on title to reload
+* Click on title in the menu to reload the web page
 * Press Control-U/Command-Option-U to view the source code
 * Press Control-Shift-J/Command-Option-J to see if the JavaScript console reports any errors
 
