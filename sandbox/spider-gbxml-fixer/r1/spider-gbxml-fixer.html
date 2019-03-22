@@ -5,8 +5,8 @@
 <meta name = "viewport" content= "width=device-width, initial-scale=1" >
 <meta name = "description" content = "This menu is a component of a basic html content management script with sliding menu, css theme selection, Markdown to HTML, drag and drop file reading capability, access to frequently used pages and more" >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
-<meta name = "date" content = "2019-03-19" >
-<meta name = "release" content = "1.0" >
+<meta name = "date" content = "2019-03-21" >
+<meta name = "release" content = "1.1" >
 <title>Spider gbXML Fixer</title>
 <link rel="stylesheet" href="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/style.css">
 </head>
@@ -26,7 +26,15 @@
 <!-- Edit Menu -->
 <script src="fxm-fix-metadata.js" ></script>
 <script src="fxsti-fix-surface-type-invalid.js" ></script>
+
+
+<script src="spider-gbxml-core.js" ></script>
 <script src="spider-gbxml-fixer.js" ></script>
+<script src="fxdpc-fix-duplicate-planar-coordinates.js" ></script>
+<script src="fxase-fix-adjacent-space-extra.js" ></script>
+<script src="fxasd-fix-adjacent-space-duplicate.js" ></script>
+<script src="fxcim-fix-cad-id-missing.js" ></script>
+
 
 <!-- Settings menu -->
 <script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/thm-theme-select.js" ></script>
@@ -116,7 +124,7 @@ OHC.branch = '/master/';
 
 // When running in dev folder
 // OHC.urlGitHubPage = location.href.includes( OHC.repo ) ? '../' : 'https://' + OHC.repo + "/";
-//OHC.urlGitHubPage = `https://${ OHC.repo }/`;
+// OHC.urlGitHubPage = `https://${ OHC.repo }/`;
 // When running in build repo
 OHC.urlGitHubPage = "";
 
@@ -128,6 +136,10 @@ OHC.urlGitHubPage = "";
 		<header>
 
 			<div id="MNUdivHeader" ></div>
+
+			<section class=navSubMenu >
+				See also <a href="http://SGTml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">Schema GreenBuildingXML_Ver6.01.xsd </a>
+			</section>
 
 		</header>
 
