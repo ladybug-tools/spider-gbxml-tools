@@ -53,22 +53,51 @@ FXSTI.getCheckSurfaceTypeInvalid = function() {
 	//console.log( 'FXSTI.surfaceTypeInvalids', FXSTI.surfaceTypeInvalids );
 
 
-	const options = FXSTI.surfaceTypeInvalids.map( index =>
+	const items = FXSTI.surfaceTypeInvalids.map( index =>
 		`<option value=${index } >${ SGT.surfaces[ index ].match( / id="(.*?)"/i )[ 1 ] }</option>` );
-	//console.log( 'options', options );
+	//console.log( 'items', items );
 
 	const help = `<a id=fxstiHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(fxstiHelp,FXSTI.currentStatus);" >&nbsp; ? &nbsp;</a>`;
 
-	FXSTIsumSurfaceTypeInvalid.innerHTML = `Fix surfaces with invalid surface type ~ ${ FXSTI.surfaceTypeInvalids.length.toLocaleString() } found`
+	/*
+	const htm = SGT.getItemHtm( {
 
-	const htm =
+		open: FXSTI.surfaceTypeInvalids.length > 0 ? "open" : "",
+		summary: `Surfaces with Invalid Surface Type - ${ FXSTI.surfaceTypeInvalids.length} found ${ help }`,
+		description:
+		`
+			A surface type was supplied that is not one of the following: ${ SGT.surfaceTypes.join( ', ' ) }`,
+			contents:
+			`
+			<p>${ FXSTI.surfaceTypeInvalids.length.toLocaleString() } invalid surface types found</p>
+
+			<p>
+				<select onclick=FXSTI.setTypeInvalidData(this); size=5 >${ items }</select>
+			</p>
+
+			<div id="FXSTIdivTypeInvalidData" >Click a surface ID above to view its details and update its surface type</div>
+
+			<p>
+				<button onclick=FXSTIdivTypeInvalid.innerHTML=FXSTI.getCheckSurfaceTypeInvalid(); >Run check again</button>
+			</p>
+
+			<p>
+				Click 'Save file' button in File menu to save changes to a file.
+			</p>
+		`,
+		timeStart: timeStart
+
+	} );
+	*/
+
+	htm =
 	`
 		<p><i>A surface type was supplied that is not one of the following: ${ SGT.surfaceTypes.join( ', ' ) }</i></p>
 
 		<p>${ FXSTI.surfaceTypeInvalids.length.toLocaleString() } invalid surface types found</p>
 
 		<p>
-			<select onclick=FXSTI.setTypeInvalidData(this); size=5 style=min-width:8rem; >${ options }</select>
+			<select onclick=FXSTI.setTypeInvalidData(this); size=5 style=min-width:8rem; >${ items }</select>
 		</p>
 
 		<div id="FXSTIdivTypeInvalidData" >Click a surface ID above to view its details and update its surface type</div>
@@ -85,7 +114,80 @@ FXSTI.getCheckSurfaceTypeInvalid = function() {
 
 	`;
 
+
+
 	return htm;
+
+
+
+
+	/*
+	invalidsData = SGT.getSurfacesAttributesByIndex( FXSTI.surfaceTypeInvalids );
+
+
+	let selectedIndex = 0;
+
+	const options = SGT.surfaceTypes.map( ( type, index ) => {
+
+		const selected = index === selectedIndex ? "selected" : "";
+		return `<option ${ selected } >${ type }</option>`;
+
+	} ).join( "" );
+
+	const sel =
+		`
+		<p>
+			Select new surface type <select id=selSurfaceType >${ options }</select>
+			<button onclick=FXSTI.setSurfaceType(this); >update</button>
+		</P
+		`;
+
+	htm = invalidsData.map( ( item, index ) =>  {
+
+		return item +
+		`
+		<p>
+			Select new surface type <select id=selSurfaceType${ index } >${ options }</select>
+			<button onclick=FXSTI.setSurfaceType(${ index }); >update data in memory</button>
+			<button onclick=FXSTI.showSurfaceGbxml(this,${ index }); >view gbXML text</button>
+			<div id=divSurfaceType${ index } ></div>
+
+		</P>
+		`;
+
+	} ).join( "");
+
+	const help = `<a id=fxstiHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(fxstiHelp,FXSTI.currentStatus);" >&nbsp; ? &nbsp;</a>`;
+
+	const invalidTypeHtm = SGT.getItemHtm( {
+
+		open: FXSTI.surfaceTypeInvalids.length > 0 ? "open" : "",
+		summary: `Surfaces with Invalid Surface Type - ${ FXSTI.surfaceTypeInvalids.length} found ${ help }`,
+		description:
+		`
+			A surface type was supplied that is not one of the following: ${ SGT.surfaceTypes.join( ', ' ) }`,
+			contents: `${ FXSTI.surfaceTypeInvalids.length.toLocaleString() } invalid surface types found<br>
+
+			${ htm }<br>
+
+			<p>
+
+				<button onclick=FXSTIdivTypeInvalid.innerHTML=FXSTI.getCheckSurfaceTypeInvalid(); >Run check again</button>
+
+			</p>
+
+			<p>
+				Click 'Save file' button in File menu to save changes to a file.
+			</p>
+		`,
+		timeStart: timeStart
+
+	} );
+
+	return invalidTypeHtm;
+
+	*/
+
 
 };
 

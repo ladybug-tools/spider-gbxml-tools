@@ -37,80 +37,82 @@ SGT.init = function() {
 	divContents.innerHTML = thing.innerHTML;
 
 	SGTh1FileName.innerHTML = `File: ${ decodeURI( FIL.name ) }`;
-
+	
 	SGT.text = FIL.text.replace( /\r\n|\n/g, '' );
 	SGT.surfaces = SGT.text.match( /<Surface(.*?)<\/Surface>/gi );
 	//console.log( 'SGT.surfaces', SGT.surfaces );
 
-	SGT.getStats();
 
+	//SGT.setFixes();
+
+};
+
+
+SGT.setFixes = function() {
+
+	divContents.innerHTML =
+		`
+			<br><br>
+
+			<h3>Check file: ${ decodeURI( FIL.name ) } </h3>
+
+			<!--
+			<div>${ SGT.getStats() }</div>
+
+			<div>${ SGT.getCheckGeneral() }</div>
+
+			<div id=FXdivCheckOffset >${ SGT.getCheckOffset() }</div>
+
+			<div id=FXMdivMetaData >${ FXM.checkMetaData() }</div>
+
+			<div id=FXSTIdivTypeInvalid>${ FXSTI.getCheckSurfaceTypeInvalid() }</div>
+
+			<div id=FXDPCdivDuplicatePlanar >${ SGT.getCheckDuplicatePlanarCoordinates() }</div>
+
+			<div id=FXASEdivSpaceExtra >${ SGT.getFixAdjacentSpaceExtra() }</div>
+
+			<div id=FXASDdivSpaceDuplicate >${ SGT.getFixAdjacentSpaceDuplicate() }</div>
+
+			<div id=FXCIMdivIdMissing >${ SGT.getFixCadIdMissing() }</div>
+			-->
+
+			<br>
+
+			<h1 onclick=navMenu.scrollTop=0; style=cursor:pointer;text-align:center; title="go to top of menu" >
+				<img src="https://ladybug.tools/artwork/icons_bugs/ico/spider.ico" height=18 >
+			</h1>
+		`;
+
+		console.log( '', 23 );
 };
 
 
 
 ////////// utilities
 
+SGT.xxxgetSurfacesAttributesByIndex = function( indexes ) {
 
-SGT.runAll = function(){
+	const htmArray = indexes.map( index => {
 
-	details = divContents.querySelectorAll( 'details' );
+		const surface = SGT.surfaces[ index ];
+		const id = surface.match( /id="(.*?)"/i )[ 1 ];
+		const name = surface.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
+		const cadIdMatch = surface.match( /<CADObjectId>(.*?)<\/CADObjectId>/i )
+		const cadId = cadIdMatch ? cadIdMatch[ 1 ] : "none";
+		const surfaceType = surface.match( /surfaceType="(.*?)"/)[ 1 ];
+		const tilt = surface.match( /<Tilt>(.*?)<\/Tilt>/i )[ 1 ];
 
-	for ( let item of details ) { item.open = true; }
-
-};
-
-
-
-SGT.getStats = function() {
-
-	const timeStart = performance.now();
-
-	const reSpaces = /<Space(.*?)<\/Space>/gi;
-	SGT.spaces = SGT.text.match( reSpaces );
-	//console.log( 'spaces', SGT.spaces );
-
-	const reStoreys = /<BuildingStorey(.*?)<\/BuildingStorey>/gi;
-	SGT.storeys = SGT.text.match( reStoreys );
-	SGT.storeys = Array.isArray( SGT.storeys ) ? SGT.storeys : [];
-	//console.log( 'SGT.storeys', SGT.storeys );
-
-	const reZones = /<Zone(.*?)<\/Zone>/gi;
-	SGT.zones = SGT.text.match( reZones );
-	SGT.zones = Array.isArray( SGT.zones ) ? SGT.zones : [];
-	//console.log( 'SGT.zones', SGT.zones );
-
-	const verticesCount = SGT.surfaces.map( surfaces => getVertices( surfaces ) );
-	//console.log( 'vertices', vertices );
-
-	const count = verticesCount.reduce( ( count, val, index ) => count + verticesCount[ index ].length, 0 );
-
-	FXsumStats.innerHTML = `Show gbXML file statistics ~ ${ SGT.surfaces.length.toLocaleString() } surfaces`;
-
-	const htm =
-		`
-			<p><i>gbXML elements statistics</i></p>
-			<p>Spaces: ${ SGT.spaces.length.toLocaleString() } </p>
-			<p>Storeys: ${ SGT.storeys.length.toLocaleString() } </p>
-			<p>Zones: ${ SGT.zones.length.toLocaleString() } </p>
-			<p>Surfaces: ${ SGT.surfaces.length.toLocaleString() } </p>
-			<p>Coordinates in surfaces: ${ count.toLocaleString() } </p>
-
-			<p>Time to check: ${ ( performance.now() - timeStart ).toLocaleString() } ms</p>
+		return `
+				id: ${ id }<br>
+				Name: ${ name }<br>
+				CADObjectId: ${ cadId }<br>
+				Surface type: ${ surfaceType }<br>
+				tilt: ${ tilt }<br>
 		`;
 
-	return htm;
+	} );
 
-
-		function getVertices( surface ) {
-
-			const re = /<coordinate(.*?)<\/coordinate>/gi;
-			const coordinatesText = surface.match( re );
-			const coordinates = coordinatesText.map( coordinate => coordinate.replace(/<\/?coordinate>/gi, '' ) )
-				.map( txt => Number( txt ) );
-
-			return coordinates;
-
-		};
+	return htmArray;
 
 };
 
@@ -119,7 +121,6 @@ SGT.getStats = function() {
 SGT.getSurfacesAttributesByIndex = function( indexes ) {
 
 	indexes = Array.isArray( indexes ) ? indexes : [ indexes ];
-	//console.log( 'indexes', indexes );
 
 	const parser = new DOMParser();
 
@@ -300,10 +301,11 @@ SGT.getAttributesAdjacentSpace = function( surfaceXml ){
 		`;
 
 	} else {
+
 		//console.log( 'obj.AdjacentSpaceId', obj.AdjacentSpaceId );
 
 		const spaceId = adjacentSpaceId[ 0 ].getAttribute( "spaceIdRef" );
-		SGT.adjacentSpaceId = [ spaceId ];
+		SGT.adjacentSpaceId = [ spaceId];
 
 		SGT.setAttributesStoreyAndZone( spaceId );
 
@@ -354,6 +356,7 @@ SGT.setAttributesStoreyAndZone = function( spaceId ) {
 		SGT.zoneName = zoneText.match ( '<Name>(.*?)</Name>' )[ 1 ];
 		//console.log( 'SGT.zoneName', SGT.zoneName );
 
+
 	} else {
 
 		SGT.zoneName = "None";
@@ -392,3 +395,59 @@ SGT.getAttributesPlanarGeometry = function( surfaceXml ) {
 };
 
 
+
+SGT.addItem = function( item ) {
+
+	divContents.innerHTML +=
+	`
+		<details ${ item.open } >
+
+			<summary class=sumHeader>${ item.summary }</summary>
+
+			<div><i>${ item.description }</i></div>
+
+			<p>${ item.contents }</p>
+
+			<p>Time to check: ${ ( performance.now() - item.timeStart ).toLocaleString() }</p>
+
+			<hr>
+
+		</details>
+	`;
+
+};
+
+
+SGT.getItemHtm = function( item ) {
+
+	htm =
+	`
+		<details ${ item.open } >
+
+			<summary class=sumHeader>${ item.summary }</summary>
+
+			<div><i>${ item.description }</i></div>
+
+			<p>${ item.contents }</p>
+
+			<p>Time to check: ${ ( performance.now() - item.timeStart ).toLocaleString() }</p>
+
+			<hr>
+
+		</details>
+	`;
+
+	return htm;
+
+};
+
+
+/*
+
+	SGT.addItem( {
+		summary: ``,
+		description: ``,
+		contents: `${ .toLocaleString() } out of ${ .length.toLocaleString() }`
+	} );
+
+*/

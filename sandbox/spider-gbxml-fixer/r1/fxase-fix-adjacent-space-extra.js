@@ -40,56 +40,34 @@ SGT.getFixAdjacentSpaceExtra = function() {
 	//console.log( 'options', options );
 
 
-	const aseHtm = SGT.getItemHtm( {
-		open: invalidAdjacentSpaceExtra.length > 0 ? "open" : "",
-		summary: `Surfaces with a Extra Adjacent Space - ${ invalidAdjacentSpaceExtra.length } found`,
-		description: `Exterior surfaces that normally take a single adjacent space that are found to have two`,
-		contents:
-			`
-				<p>
-					${ invalidAdjacentSpaceExtra.length.toLocaleString() } found
-				</p>
+	FXASEsumSpaceExtra.innerHTML = `Fix surfaces with an extra adjacent space ~ ${ invalidAdjacentSpaceExtra.length.toLocaleString() } found`;
 
-				<p>
-					<select onclick=SGT.setSpaceExtraData(this); size=5 >${ options }</select>
-				</p>
+	const aseHtm =
+		`
 
-				<div id="FXASEdivSpaceExtraData" >Click a surface ID above to view its details and update its surface type</div>
+			<p><i>Exterior surfaces that normally take a single adjacent space that are found to have two</i></p>
 
-				<p>
-					<button onclick=FXASEdivSpaceExtra.innerHTML=SGT.getFixAdjacentSpaceExtra(); >Run check again</button>
-				</p>
+			<p>
+				${ invalidAdjacentSpaceExtra.length.toLocaleString() } found
+			</p>
 
-				<p>
-					Click 'Save file' button in File menu to save changes to a file.
-				</p>
-			`,
-		timeStart: timeStart
+			<p>
+				<select onclick=SGT.setSpaceExtraData(this); size=5 >${ options }</select>
+			</p>
 
-	} );
+			<div id="FXASEdivSpaceExtraData" >Click a surface ID above to view its details and update its surface type</div>
 
+			<p>
+				<button onclick=FXASEdivSpaceExtra.innerHTML=SGT.getFixAdjacentSpaceExtra(); >Run check again</button>
+			</p>
 
-	/*
-	const htm = SGT.getSurfacesAttributesByIndex( invalidAdjacentSpaceExtra ).map( item => {
+			<p>
+				Click 'Save file' button in File menu to save changes to a file.
+			</p>
 
-		return item + `<button onclick=confirm("coming-soon"); >delete extra adjacent space</button><hr>`;
+			<p>Time to check: ${ ( performance.now() - timeStart ).toLocaleString() } ms</p>
 
-	} ).join( "" );
-
-	const aseHtm = SGT.getItemHtm( {
-		open: invalidAdjacentSpaceExtra.length > 0 ? "open" : "",
-		summary: `Surfaces with a Extra Adjacent Space - ${ invalidAdjacentSpaceExtra.length } found`,
-		description: `Exterior surfaces that normally take a single adjacent space that are found to have two`,
-		contents:
-			`
-			${ invalidAdjacentSpaceExtra.length.toLocaleString() } found
-			${ htm }
-			`,
-		timeStart: timeStart
-
-	} );
-
-	*/
+		`;
 
 	return aseHtm;
 

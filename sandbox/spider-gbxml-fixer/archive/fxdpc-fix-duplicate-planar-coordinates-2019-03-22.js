@@ -47,13 +47,13 @@ SGT.getCheckDuplicatePlanarCoordinates = function() {
 	);
 	//console.log( 'options', options );
 
-
-	FXDPCsumDuplicatePlanar.innerHTML = `Fix surfaces with duplicate planar coordinates ~ ${ duplicates.length.toLocaleString() } found`;
-
-	const htm =
-	`
-			<p><i>Two surfaces with identical vertex coordinates for their planar geometry</i></p>
-
+	/*
+	const htm = SGT.getItemHtm( {
+		open: duplicates.length > 0 ? "open" : "",
+		summary: `Surfaces with Duplicate Planar Coordinates - ${ duplicates.length} found`,
+		description: `Two surfaces with identical vertex coordinates for their planar geometry`,
+		contents:
+		`
 			<p>
 				${ duplicates.length.toLocaleString() } sets duplicates found<br>
 			</p>
@@ -63,11 +63,59 @@ SGT.getCheckDuplicatePlanarCoordinates = function() {
 			</p>
 
 			<div id="SGTdivDuplData" >Click a surface ID above to view its details and delete if necessary</div>
+		`,
+		timeStart: timeStart
 
-			<p>Time to check: ${ ( performance.now() - timeStart ).toLocaleString() } ms</p>
-		`;
+	} );
+	*/
+
+	
+	const htm =
+	`
+		<p><i>Two surfaces with identical vertex coordinates for their planar geometry</i></p>
+
+		<p>
+			${ duplicates.length.toLocaleString() } sets duplicates found<br>
+		</p>
+
+		<p>
+			<select onclick=SGT.setDuplData(this); size=5 >${ options }</select>
+		</p>
+
+		<div id="SGTdivDuplData" >Click a surface ID above to view its details and delete if necessary</div>
+
+		<p>Time to check: ${ ( performance.now() - timeStart ).toLocaleString() } ms</p>
+	`;
 
 	return htm;
+
+
+
+
+/*
+	duplicatesData = SGT.getSurfacesAttributesByIndex( duplicates );
+
+	//console.log( 'duplicatesData', duplicatesData );
+
+
+	htm = duplicatesData.map( ( item, index ) =>  {
+
+		return item + `<button onclick=confirm("coming-soon"); >delete</button>${ ( ( index + 1 ) % 2 === 0 ? "<hr>" : "<br>" ) }`;
+
+	} ).join( "");
+
+	SGT.addItem( {
+		open: duplicates.length > 0 ? "open" : "",
+		summary: `Surfaces with Duplicate Planar Coordinates - ${ duplicates.length} found`,
+		description: `Two surfaces with identical vertex coordinates for their planar geometry`,
+		contents:
+		`
+			${ ( duplicates.length / 2 ).toLocaleString() } sets found<br>
+			${ htm }
+		`,
+		timeStart: timeStart
+	} );
+	*/
 
 };
 
@@ -75,7 +123,7 @@ SGT.getCheckDuplicatePlanarCoordinates = function() {
 
 SGT.setDuplData = function( select ) {
 
-	//console.log( '', select.value );
+	console.log( '', select.value );
 
 	items = select.value.split( ",");
 

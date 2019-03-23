@@ -39,7 +39,7 @@ FXM.currentStatus =
 
 
 
-FXM.checkMetaData = function() {
+FXM.checkAttributes = function() {
 
 	const timeStart = performance.now();
 
@@ -74,35 +74,33 @@ FXM.checkMetaData = function() {
 
 	}
 
-	const data = FXM.setMenuMetadata();
+	const data = FXM.setMenuAttributes();
 
 	const help = `<a id=fxmHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(fxmHelp,FXM.currentStatus);" >&nbsp; ? &nbsp;</a>`;
 
-	FXMdet = SGT.getItemHtm( {
+	FXMsumAtributes.innerHTML = `Check for missing required gbXML attributes ~ ${FXM.attributesMissing.length} missing`;
 
-		open: ( FXM.attributesMissing.length ? "open" : "" ),
-		summary: `Invalid Metadata - ${ FXM.attributesMissing.length} found ${ help }`,
-		description: `Seven types of attributes are required: ${ keys.join( ', ' ) }`,
-		contents:
-			`
+	htm =
+		`
+			<p><i>Seven types of attributes are required: ${ keys.join( ', ' ) }.</i></p>
+
 			Attributes provided: ${ FXM.attributesProvided.length.toLocaleString() } found<br>
+
 			Attributes missing: ${ FXM.attributesMissing.length.toLocaleString() } found<br>
 
 			<div>${ data }</div
-			`,
-		timeStart: timeStart
 
-	} );
+			<p>Time to check: ${ ( performance.now() - timeStart ).toLocaleString() } ms</p>
+
+		`;
 
 
-	return FXMdet;
+	return htm;
 };
 
 
 
-FXM.setMenuMetadata = function() {
-
-	//FXM.getMetadataIssuesCheck();
+FXM.setMenuAttributes = function() {
 
 	let htm;
 
@@ -110,8 +108,6 @@ FXM.setMenuMetadata = function() {
 
 		htm =
 		`
-			<p>${ FXM.attributesMissing.length } attributes missing</p>
-
 			<p>Checked:<br>
 			${ FXM.attributesProvided.map( ( item, index ) => `${ 1 + index }. ${ item }` ).join( '<br>' ) }</p>
 		`;
@@ -120,8 +116,6 @@ FXM.setMenuMetadata = function() {
 
 		htm =
 		`
-			${FXM.attributesMissing.length} attributes missing
-
 			<p>gbXML attributes provided:<br>
 				${ FXM.attributesProvided.map( ( item, index ) => `${ 1 + index }. ${ item }` ).join( '<br>' )}</p>
 

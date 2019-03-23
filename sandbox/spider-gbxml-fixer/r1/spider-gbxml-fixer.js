@@ -5,62 +5,6 @@
 
 
 
-SGT.getStats = function() {
-
-	const timeStart = performance.now();
-
-	const reSpaces = /<Space(.*?)<\/Space>/gi;
-	SGT.spaces = SGT.text.match( reSpaces );
-	//console.log( 'spaces', SGT.spaces );
-
-	const reStoreys = /<BuildingStorey(.*?)<\/BuildingStorey>/gi;
-	SGT.storeys = SGT.text.match( reStoreys );
-	SGT.storeys = Array.isArray( SGT.storeys ) ? SGT.storeys : [];
-	//console.log( 'SGT.storeys', SGT.storeys );
-
-	const reZones = /<Zone(.*?)<\/Zone>/gi;
-	SGT.zones = SGT.text.match( reZones );
-	SGT.zones = Array.isArray( SGT.zones ) ? SGT.zones : [];
-	//console.log( 'SGT.zones', SGT.zones );
-
-	const verticesCount = SGT.surfaces.map( surfaces => getVertices( surfaces ) );
-	//console.log( 'vertices', vertices );
-
-	const count = verticesCount.reduce( ( count, val, index ) => count + verticesCount[ index ].length, 0 );
-
-	const htm =
-	`
-		<div>Spaces: ${ SGT.spaces.length.toLocaleString() } </div>
-		<div>Storeys: ${ SGT.storeys.length.toLocaleString() } </div>
-		<div>Zones: ${ SGT.zones.length.toLocaleString() } </div>
-		<div>Surfaces: ${ SGT.surfaces.length.toLocaleString() } </div>
-		<div>Coordinates in surfaces: ${ count.toLocaleString() } </div>
-	`;
-
-
-	statsHtm = SGT.getItemHtm( {
-		summary: `File Statistics`,
-		description: `SGTML elements statistics`,
-		contents: `${ htm }`,
-		timeStart: timeStart
-	} );
-
-
-	function getVertices( surface ) {
-
-		const re = /<coordinate(.*?)<\/coordinate>/gi;
-		const coordinatesText = surface.match( re );
-		const coordinates = coordinatesText.map( coordinate => coordinate.replace(/<\/?coordinate>/gi, '' ) )
-			.map( txt => Number( txt ) );
-
-		return coordinates;
-
-	};
-
-	return statsHtm;
-
-};
-
 
 
 SGT.getCheckGeneral = function() {
@@ -116,16 +60,21 @@ SGT.getCheckGeneral = function() {
 
 	const errors = area + vol + string;
 
-	generalHtm = SGT.getItemHtm( {
-		open: errors > 0 ? "open" : "",
-		summary: `General Check - ${ errors } found`,
-		description: `check for elements with no values`,
-		contents: `${ htm }`,
-		timeStart: timeStart
-	} );
+	FXsumCheckGeneral.innerHTML = `Check for valid text and numbers ~ ${ errors } erors found`;
+
+	const generalHtm =
+		`
+			<p><i>check for elements with no values</i></p>
+
+			<p>General Check - ${ errors } found</p>
+
+			<p>${ htm }</p>
+
+			<p>Time to check: ${ ( performance.now() - timeStart ).toLocaleString() } ms</p>
+		`;
 
 	return generalHtm;
-	
+
 };
 
 
@@ -143,15 +92,20 @@ SGT.getCheckOffset = function() {
 
 		} );
 
-	const offsetHtm = SGT.getItemHtm( {
-		open: max > 100000 ? "open" : "",
-		summary: `Maximum offset from Origin - ${ max.toLocaleString() }`,
-		 description: "Largest distance - x, y, or x - from 0, 0, 0",
-		contents: `Largest coordinate found: ${ max.toLocaleString() }`,
-		timeStart: timeStart
-	} );
+
+	FXsumCheckOffset.innerHTML = `Check maximum offset distance from origin ~ ${ max.toLocaleString() } units`;
+
+	const offsetHtm =
+
+	`
+		<p><i>Largest distance - x, y, or z - from the origin at 0, 0, 0./i></p>
+
+		<p>Largest coordinate found: ${ max.toLocaleString() }</p>
+
+		<p>Time to check: ${ ( performance.now() - timeStart ).toLocaleString() } ms</p>
+
+	`;
 
 	return offsetHtm;
 
 };
-

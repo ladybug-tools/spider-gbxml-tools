@@ -61,6 +61,12 @@ Enhancing the Script
 
 ## Change Log
 
+### 2019-03-22 ~ Theo
+
+spider-gbxml-fixer.html/.js R1.2
+* Almost complete rewrite
+* Fast
+* Uses HTML template element - my first use of
 
 ### 2019-03-19 ~ Theo
 
