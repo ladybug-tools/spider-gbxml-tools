@@ -10,6 +10,8 @@ const FXASD = { "release": "R1.0", "date": "2019-03-22" };
 
 FXASD.description = ``;
 
+FXASD.currentStatus = `TBD`;
+
 FXASD.getFixAdjacentSpaceDuplicate = function() {
 
 	const timeStart = performance.now();
@@ -37,7 +39,10 @@ FXASD.getFixAdjacentSpaceDuplicate = function() {
 	} );
 	//console.log( 'invalidAdjacentSpaceDuplicate', invalidAdjacentSpaceDuplicate );
 
-	FXASDsumSpaceDuplicate.innerHTML = `Fix surfaces with duplicate adjacent spaces ~ ${ invalidAdjacentSpaceDuplicate.length.toLocaleString() } found`;
+	const help = `<a id=fxasdHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(fxasdHelp,FXASD.currentStatus);" >&nbsp; ? &nbsp;</a>`;
+
+	FXASDsumSpaceDuplicate.innerHTML =
+	`Fix surfaces with duplicate adjacent spaces ~ ${ invalidAdjacentSpaceDuplicate.length.toLocaleString() } found ${ help }`;
 
 
 	const options = invalidAdjacentSpaceDuplicate.map( index =>
@@ -53,29 +58,28 @@ FXASD.getFixAdjacentSpaceDuplicate = function() {
 */
 
 	const asdHtm =
+		`
+			<p><i>Air, InteriorWall, InteriorFloor, or Ceiling surfaces where both adjacent space IDs point to the same space</i></p>
 
-	`
-		<p><i>Air, InteriorWall, InteriorFloor, or Ceiling surfaces where both adjacent space IDs point to the same space</i></p>
+			${ invalidAdjacentSpaceDuplicate.length.toLocaleString() } found<br>
 
-		${ invalidAdjacentSpaceDuplicate.length.toLocaleString() } found<br>
+			<p>
+				<select onclick=FXASD.setSpaceDuplicateData(this); size=5 style=min-width:8rem; >${ options }</select>
+			</p>
 
-		<p>
-			<select onclick=FXASD.setSpaceDuplicateData(this); size=5 style=min-width:8rem; >${ options }</select>
-		</p>
+			<div id="FXASDdivAdjacentSpaceDuplicateData" >Click a surface ID above to view its details and update its surface type</div>
 
-		<div id="FXASDdivAdjacentSpaceDuplicateData" >Click a surface ID above to view its details and update its surface type</div>
+			<p>
+				<button onclick=FXASDdivSpaceDuplicate.innerHTML=FXASD.getFixAdjacentSpaceDuplicate(); >Run check again</button>
+			</p>
 
-		<p>
-			<button onclick=FXASDdivSpaceDuplicate.innerHTML=FXASD.getFixAdjacentSpaceDuplicate(); >Run check again</button>
-		</p>
-
-		<p>
-			Click 'Save file' button in File menu to save changes to a file.
-		</p>
+			<p>
+				Click 'Save file' button in File menu to save changes to a file.
+			</p>
 
 
-		<p>Time to check: ${ ( performance.now() - timeStart ).toLocaleString() } ms</p>
-	`;
+			<p>Time to check: ${ ( performance.now() - timeStart ).toLocaleString() } ms</p>
+		`;
 
 	return asdHtm;
 

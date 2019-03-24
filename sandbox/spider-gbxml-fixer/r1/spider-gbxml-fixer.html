@@ -5,8 +5,8 @@
 <meta name = "viewport" content= "width=device-width, initial-scale=1" >
 <meta name = "description" content = "This menu is a component of a basic html content management script with sliding menu, css theme selection, Markdown to HTML, drag and drop file reading capability, access to frequently used pages and more" >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
-<meta name = "date" content = "2019-03-22" >
-<meta name = "release" content = "1.2" >
+<meta name = "date" content = "2019-03-23" >
+<meta name = "release" content = "1.3" >
 <title>Spider gbXML Fixer</title>
 <link rel="stylesheet" href="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/style.css">
 </head>
@@ -24,7 +24,7 @@
 <script src="fil-file-open-xml-zip.js" ></script>
 
 <!-- Edit Menu -->
-<script src="fxm-fix-metadata.js" ></script>
+<script src="fxa-fix-attributes.js" ></script>
 <script src="fxsti-fix-surface-type-invalid.js" ></script>
 
 
@@ -48,25 +48,38 @@
 
 MNU.description =
 	`
-		Run a series of basics check on gbXML files and identify, report and fix any errors
+		Mission: run a series of basics checks on gbXML files and identify, report and help you fix any errors
 	`;
 
 MNU.currentStatusCore =
 	`
 		<h3>
-			Spider gbXML Fixer
+			Spider gbXML Fixer 'Atrax'
 			R${ document.head.querySelector( '[ name=release ]' ).content }
 			~
 			${ document.head.querySelector( '[ name=date ]' ).content }
 		</h3>
 
+		<p>
+			<a title="By Tirin at the English language Wikipedia, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=128531"
+				href="https://en.wikipedia.org/wiki/Sydney_funnel-web_spider">
+				<img width="256" alt="Sydney funnel-web spider" src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Atrax_robustus.jpg" ><br>
+				<i>Atrax robustus</i></a> - 'Atrax' is the code name for this release of the Ladybug Tools / Spider gbXML Fixer
+		</p>
+
 		<p>${ MNU.description }</p>
+
+		<p>
+			<a href="https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-fixer/" target="_blank">
+				Spider gbXML Fixer source code</a>
+		</p>
 
 		<details>
 
 			<summary>Change log</summary>
 
 			<ul>
+				<li>2019-03-23 ~ R1.3 ~ Code name: 'Atrax'</li>
 				<li>2019-03-22 ~ R1.2 ~ Much faster</li>
 				<li>2019-03-19 ~ R1.0 ~ First commit</li>
 			</ul>
@@ -154,7 +167,6 @@ OHC.urlGitHubPage = "";
 
 			<section id="FILdivFileSave"></section>
 
-
 		</details>
 
 		<details class=navSubMenu open >
@@ -241,11 +253,11 @@ OHC.urlGitHubPage = "";
 		</details>
 
 
-		<details ontoggle=FXMdivAttributes.innerHTML=FXM.checkAttributes();  >
+		<details ontoggle=FXAdivAttributes.innerHTML=FXA.checkAttributes();  >
 
-			<summary id=FXMsumAtributes class=sumHeader >Fix missing required gbXML attributes</summary>
+			<summary id=FXAsumAtributes class=sumHeader >Fix missing required gbXML attributes</summary>
 
-			<div id=FXMdivAttributes ></div>
+			<div id=FXAdivAttributes ></div>
 
 		</details>
 
@@ -259,7 +271,7 @@ OHC.urlGitHubPage = "";
 		</details>
 
 
-		<details ontoggle=FXDPCdivDuplicatePlanar.innerHTML=SGT.getCheckDuplicatePlanarCoordinates(); >
+		<details ontoggle=FXDPCdivDuplicatePlanar.innerHTML=FXDPC.getCheckDuplicatePlanarCoordinates(); >
 
 			<summary id=FXDPCsumDuplicatePlanar class=sumHeader >Fix surfaces with duplicate planar coordinates </summary>
 
@@ -268,7 +280,7 @@ OHC.urlGitHubPage = "";
 		</details>
 
 
-		<details ontoggle=FXASEdivSpaceExtra.innerHTML=SGT.getFixAdjacentSpaceExtra(); >
+		<details ontoggle=FXASEdivSpaceExtra.innerHTML=FXASE.getFixAdjacentSpaceExtra(); >
 
 			<summary id=FXASEsumSpaceExtra class=sumHeader >Fix surfaces with extra adjacent spaces</summary>
 

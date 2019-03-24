@@ -5,7 +5,13 @@
 /* jshint loopfunc:true */
 
 
-SGT.getCheckDuplicatePlanarCoordinates = function() {
+const FXDPC = { "release": "R1.0", "date": "2019-03-23" }
+
+FXDPC.description = `TBD`;
+
+FXDPC.currentStatus = `TBD`;
+
+FXDPC.getCheckDuplicatePlanarCoordinates = function() {
 
 	const timeStart = performance.now();
 	const planes = [];
@@ -48,7 +54,12 @@ SGT.getCheckDuplicatePlanarCoordinates = function() {
 	//console.log( 'options', options );
 
 
-	FXDPCsumDuplicatePlanar.innerHTML = `Fix surfaces with duplicate planar coordinates ~ ${ duplicates.length.toLocaleString() } found`;
+	const help = `<a id=fxdpcHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(fxdpcHelp,FXDPC.currentStatus);" >&nbsp; ? &nbsp;</a>`;
+
+	FXDPCsumDuplicatePlanar.innerHTML =
+		`Fix surfaces with duplicate planar coordinates ~ ${ duplicates.length.toLocaleString() } found
+			${ help }
+		`;
 
 	const htm =
 	`
@@ -59,10 +70,10 @@ SGT.getCheckDuplicatePlanarCoordinates = function() {
 			</p>
 
 			<p>
-				<select onclick=SGT.setDuplData(this); size=5 >${ options }</select>
+				<select onclick=FXDPC.setDuplData(this); size=5 >${ options }</select>
 			</p>
 
-			<div id="SGTdivDuplData" >Click a surface ID above to view its details and delete if necessary</div>
+			<div id="FXDPCdivDuplData" >Click a surface ID above to view its details and delete if necessary</div>
 
 			<p>Time to check: ${ ( performance.now() - timeStart ).toLocaleString() } ms</p>
 		`;
@@ -73,7 +84,7 @@ SGT.getCheckDuplicatePlanarCoordinates = function() {
 
 
 
-SGT.setDuplData = function( select ) {
+FXDPC.setDuplData = function( select ) {
 
 	//console.log( '', select.value );
 
@@ -87,23 +98,23 @@ SGT.setDuplData = function( select ) {
 			${ SGT.getSurfacesAttributesByIndex( items[ 0 ] ) }
 
 			<p>
-				<button onclick=SGT.deleteSelectedSurface(${ items[ 1 ] }); >delete</button>
+				<button onclick=FXDPC.deleteSelectedSurface(${ items[ 1 ] }); >delete</button>
 			</p>
 
 			${ SGT.getSurfacesAttributesByIndex( items[ 1 ] ) }
 
 			<p>
-				<button onclick=SGT.deleteSelectedSurface(${ items[ 1 ] }); >delete</button>
+				<button onclick=FXDPC.deleteSelectedSurface(${ items[ 1 ] }); >delete</button>
 			</p>
 		`;
 
-	SGTdivDuplData.innerHTML= htm;
+	FXDPCdivDuplData.innerHTML= htm;
 
 };
 
 
 
-SGT.deleteSelectedSurface = function( index ) {
+FXDPC.deleteSelectedSurface = function( index ) {
 
 	//console.log( 'select.value', select );
 

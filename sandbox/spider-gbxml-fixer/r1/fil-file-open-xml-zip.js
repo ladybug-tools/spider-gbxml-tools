@@ -3,39 +3,55 @@
 /* globals GBX, JSZip */
 
 
-const FIL = { "release": "r15.0", "date": "2019-02-24" };
+const FIL = { "release": "r1.1", "date": "2019-03-23 ~ " };
 
 
-FIL.reader = new FileReader();
-FIL.xhr = new XMLHttpRequest(); // declare now to load event listeners in other modules
-
-FIL.note = `<p>With large files, after loading, there is a pause of some seconds where nothing happens.</p>`;
-
+FIL.description = `Open and save gbXML and ZIP files using location.hash, the operating system file dialog box or drag&drop.`
 
 FIL.currentStatus =
 	`
 		<h3>FIL ${ FIL.release } status ${ FIL.date }</h3>
 
-		<p>File opening and saving of gbXML and ZIP files is generally working well and open for testing.</p>
+		<p>${ FIL.description }</p>
 
 		<p>
-			Change log
+			<a href="https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/sandbox/spider-gbxml-fixer/r1/fil-file-open-xml-zip.js" target="_blank">
+			fil-open-file.js source code</a>
+		</p>
+
+		<details>
+
+			<summary>Wish List / To Do</summary>
+
 			<ul>
+				<li>2019-03-23 ~ Handle more file types</li>
+
+			</ul>
+
+		</details>
+
+		<details>
+
+			<summary>Change log</summary>
+			
+			<ul>
+  				<li>2019-03-23 ~ Fix source code link</li>
 				<li>2019-02-24 ~ Update source and file-open.md links</li>
 				<li>2018-12-29 ~ Add helpItem class</li>
 				<li>2018-12-29 ~ Fix read me links</li>
 				<li>2018-12-28 ~ Add pop-up status / Edit left menu</li>
 				<li>2018-12-14 ~ Many internal fixes and code cleanups</li>
 			</ul>
-		</p>
 
-		<p>
-			<a href="https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/r15/js-gbxml/fil-file-open-xml-zip.js" target="_blank">
-			fil-open-file.js source code</a>
-		</p>
+		</details>
+
 	`;
 
 
+FIL.reader = new FileReader();
+FIL.xhr = new XMLHttpRequest(); // declare now to load event listeners in other modules
+
+FIL.note = `<p>With large files, after loading, there is a pause of some seconds where nothing happens.</p>`;
 
 FIL.getMenuFileOpen = function() {  // called from main HTML file
 
@@ -52,7 +68,6 @@ FIL.getMenuFileOpen = function() {  // called from main HTML file
 
 	const htm =
 	`
-
 		<details id=FILdetFileOpen open >
 
 			<summary>Open gbXML or ZIP file

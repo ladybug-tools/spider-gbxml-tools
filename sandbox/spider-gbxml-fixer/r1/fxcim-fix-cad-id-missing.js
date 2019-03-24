@@ -6,6 +6,10 @@
 
 const FXCIM = { "release": "R1.0", "date": "2019-03-22" };
 
+FXCIM.description = `tbd`;
+
+FXCIM.currentStatus = `tbd`;
+
 FXCIM.getFixCadIdMissing = function() {
 
 	const timeStart = performance.now();
@@ -23,7 +27,12 @@ FXCIM.getFixCadIdMissing = function() {
 		`<option value=${index } >${ SGT.surfaces[ index ].match( / id="(.*?)"/i )[ 1 ] }</option>` );
 	//console.log( 'options', options );
 
-	FXCIMsumIdMissing.innerHTML = `Fix surfaces with missing CAD object ID ~ ${ noId.length.toLocaleString() } found`;
+	const help = `<a id=fxcimHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(fxcimHelp,FXCIM.currentStatus);" >&nbsp; ? &nbsp;</a>`;
+
+	FXCIMsumIdMissing.innerHTML =
+		`Fix surfaces with missing CAD object ID ~ ${ noId.length.toLocaleString() } found
+			${ help }
+		`;
 
 
 	const cimHtm =

@@ -5,7 +5,7 @@
 
 
 
-const FXSTI = { "release": "R1.1", "date": "2019-03-21" };
+const FXSTI = { "release": "R1.2", "date": "2019-03-23" };
 
 
 FXSTI.description =
@@ -22,19 +22,23 @@ FXSTI.currentStatus =
 		</p>
 
 		<p>
-			To do:<br>
+			Most likely this type of error is quite rare. It occurs when a user types in a non-valid surface type in the originating CAD application.
+		</p>
+
+		<p>
+			Wish List / To do:<br>
 			<ul>
 				<li>2019-03-19 ~ Pre-select the correct surface type in the select type list box</li>
 			</ul>
 		</p>
-		<p>
-			Most likely this type of error is quite rare. It occurs when a user types in a non-valid surface type in the originating CAD application.
-		</p>
-		<p>
+
+		<details>
+			<summary>Change log</summary>
 			<ul>
+				<li>2019-03-23 ~ Add help pop-up. Fix 'run again'</li>
 				<li>2019-03-19 ~ First commit</li>
 			</ul>
-		</p>
+		</details>
 	`;
 
 
@@ -59,7 +63,10 @@ FXSTI.getCheckSurfaceTypeInvalid = function() {
 
 	const help = `<a id=fxstiHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(fxstiHelp,FXSTI.currentStatus);" >&nbsp; ? &nbsp;</a>`;
 
-	FXSTIsumSurfaceTypeInvalid.innerHTML = `Fix surfaces with invalid surface type ~ ${ FXSTI.surfaceTypeInvalids.length.toLocaleString() } found`
+	FXSTIsumSurfaceTypeInvalid.innerHTML =
+		`Fix surfaces with invalid surface type ~ ${ FXSTI.surfaceTypeInvalids.length.toLocaleString() } found
+			${ help }
+		`;
 
 	const htm =
 	`
@@ -74,7 +81,7 @@ FXSTI.getCheckSurfaceTypeInvalid = function() {
 		<div id="FXSTIdivTypeInvalidData" >Click a surface ID above to view its details and update its surface type</div>
 
 		<p>
-			<button onclick=FXSTIdivTypeInvalid.innerHTML=FXSTI.getCheckSurfaceTypeInvalid(); >Run check again</button>
+			<button onclick=FXSTIdivSurfaceTypeInvalid.innerHTML=FXSTI.getCheckSurfaceTypeInvalid(); >Run check again</button>
 		</p>
 
 		<p>

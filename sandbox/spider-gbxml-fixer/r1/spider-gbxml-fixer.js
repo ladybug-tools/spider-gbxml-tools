@@ -4,9 +4,6 @@
 /* jshint loopfunc:true */
 
 
-
-
-
 SGT.getCheckGeneral = function() {
 
 	const timeStart = performance.now();
