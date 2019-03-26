@@ -4,11 +4,37 @@
 /* jshint loopfunc:true */
 
 
-const FXCIM = { "release": "R1.0", "date": "2019-03-22" };
+const FXCIM = { "release": "1.1", "date": "2019-03-25" };
 
-FXCIM.description = `tbd`;
+FXCIM.description = `Fix surfaces with missing CAD object ID`;
 
-FXCIM.currentStatus = `tbd`;
+FXCIM.currentStatus =
+	`
+		<h3>Fix Surface CAD Objct ID Missing (FXCIM) R${ FXCIM.release } ~ ${ FXCIM.date }</h3>
+
+		<p>
+			${ FXCIM.description }.
+		</p>
+
+		<p>
+			Wish List / To do:<br>
+			<ul>
+				<li>2019-03-25 ~ Add select and update multiple surfaces at once</li>
+				<li>2019-03-19 ~ Pre-select the correct surface type in the select type list box</li>
+			</ul>
+		</p>
+
+		<details>
+			<summary>Change log</summary>
+			<ul>
+				<li>2019-03-25 ~ List errant surfaces by name with IDs as tool tips</li>
+				<li>2019-03-23 ~ Add help pop-up. Fix 'run again'</li>
+				<li>2019-03-19 ~ First commit</li>
+			</ul>
+		</details>
+	`;
+
+
 
 FXCIM.getFixCadIdMissing = function() {
 

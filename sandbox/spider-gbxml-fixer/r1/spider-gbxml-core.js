@@ -36,6 +36,8 @@ SGT.init = function() {
 
 	divContents.innerHTML = thing.innerHTML;
 
+	//console.log( 'FIL.text', FIL.text );
+
 	SGTh1FileName.innerHTML = `File: ${ decodeURI( FIL.name ) }`;
 
 	SGT.text = FIL.text.replace( /\r\n|\n/g, '' );
@@ -160,7 +162,7 @@ SGT.getSurfaceAttributes = function( surfaceXml, index ) {
 
 		<details>
 			<summary> AdjacentSpace</summary>
-			<p> ${ htmAdjacentSpace }
+			${ htmAdjacentSpace }
 		</details>
 
 		<details>
@@ -271,7 +273,7 @@ SGT.getAttributesAdjacentSpace = function( surfaceXml ){
 
 	if ( adjacentSpaceId.length === 0 ) {
 
-		SGT.adjacentSpaceId = [];
+		SGT.adjacentSpaceIds = [];
 		SGT.storey = '';
 
 		htm = 'No adjacent space';
@@ -280,22 +282,30 @@ SGT.getAttributesAdjacentSpace = function( surfaceXml ){
 
 		//console.log( 'obj.AdjacentSpaceId', obj.AdjacentSpaceId );
 
-		const space1 = adjacentSpaceId[ 0 ].getAttribute( "spaceIdRef" );
-		const space2 = adjacentSpaceId[ 1 ].getAttribute( "spaceIdRef" );
+		const spaceId1 = adjacentSpaceId[ 0 ].getAttribute( "spaceIdRef" );
+		const spaceId2 = adjacentSpaceId[ 1 ].getAttribute( "spaceIdRef" );
 
-		SGT.adjacentSpaceId = [ space1, space2 ];
+		spaceText1 = SGT.spaces.find( item => item.includes( spaceId1 ) )
+		//console.log( 'spaceText1', spaceText1 );
+		spaceName1 = spaceText1.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
 
-		SGT.setAttributesStoreyAndZone( space2 );
+		spaceText2 = SGT.spaces.find( item => item.includes( spaceId2 ) )
+		//console.log( 'spaceText2', spaceText2 );
+		spaceName2 = spaceText2.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
+
+		SGT.adjacentSpaceIds = [ spaceId1, spaceId2 ];
+
+		SGT.setAttributesStoreyAndZone( spaceId2 );
 
 		htm =
-		`
-			<div>
+		`<div>
 				<span class=attributeTitle >spaceIdRef 1:</span>
-				<span class=attributeValue >${ space1 }</span>
+				<span class=attributeValue >${ spaceId1 } / ${ spaceName1 }</span>
+
 			</div>
 			<div>
 				<span class=attributeTitle >spaceIdRef 2:</span>
-				<span class=attributeValue >${ space2 }</span>
+				<span class=attributeValue >${ spaceId2 } / ${ spaceName2 }</span>
 			</div>
 		`;
 
@@ -303,15 +313,18 @@ SGT.getAttributesAdjacentSpace = function( surfaceXml ){
 		//console.log( 'obj.AdjacentSpaceId', obj.AdjacentSpaceId );
 
 		const spaceId = adjacentSpaceId[ 0 ].getAttribute( "spaceIdRef" );
-		SGT.adjacentSpaceId = [ spaceId ];
+		SGT.adjacentSpaceIds = [ spaceId ];
+
+		spaceText1 = SGT.spaces.find( item => item.includes( spaceId ) )
+		//console.log( 'spaceText1', spaceText1 );
+		spaceName1 = spaceText1.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
 
 		SGT.setAttributesStoreyAndZone( spaceId );
 
 		htm =
-
 		`<div>
 			<span class=attributeTitle >spaceIdRef:</span>
-			<span class=attributeValue >${ spaceId }</span>
+			<span class=attributeValue >${ spaceId } / ${ spaceName1 }</span>
 		</div>`;
 
 	}

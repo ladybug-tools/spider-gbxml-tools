@@ -95,7 +95,7 @@ SGT.getCheckOffset = function() {
 	const offsetHtm =
 
 	`
-		<p><i>Largest distance - x, y, or z - from the origin at 0, 0, 0./i></p>
+		<p><i>Largest distance - x, y, or z - from the origin at 0, 0, 0</i></p>
 
 		<p>Largest coordinate found: ${ max.toLocaleString() }</p>
 

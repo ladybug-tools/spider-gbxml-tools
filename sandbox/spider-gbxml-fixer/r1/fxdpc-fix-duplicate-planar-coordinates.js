@@ -5,11 +5,38 @@
 /* jshint loopfunc:true */
 
 
-const FXDPC = { "release": "R1.0", "date": "2019-03-23" }
+const FXDPC = { "release": "1.0", "date": "2019-03-25" }
 
-FXDPC.description = `TBD`;
+FXDPC.description = `Identify two or more surfaces with the same planar coordinates`;
 
-FXDPC.currentStatus = `TBD`;
+FXDPC.currentStatus =
+	`
+		<h3>Fix Surfaces with duplicate planar coordinates (FXDPC) R${ FXDPC.release } ~ ${ FXDPC.date }</h3>
+
+		<p>
+			${ FXDPC.description }.
+		</p>
+
+		<p>
+			Wish List / To do:<br>
+			<ul>
+				<li>2019-03-25 ~ Add select and update multiple surfaces at once</li>
+				<li>2019-03-19 ~ Pre-select the correct surface to delete n the select type list box</li>
+			</ul>
+		</p>
+
+		<details>
+			<summary>Change log</summary>
+			<ul>
+				<li>2019-03-25 ~ F - Duplicate surface is deleted as expected / Upon deletion, repeats check</li>
+				<li>2019-03-25 ~ D - Pop-up help defined in detail</li>
+				<li>2019-03-25 ~ F - List errant surfaces by name with IDs as tool tips</li>
+				<li>2019-03-19 ~ First commit</li>
+			</ul>
+		</details>
+	`;
+
+
 
 FXDPC.getCheckDuplicatePlanarCoordinates = function() {
 
@@ -43,13 +70,16 @@ FXDPC.getCheckDuplicatePlanarCoordinates = function() {
 	} );
 	//console.log( 'duplicates', duplicates );
 
-	options = duplicates.map( ( arr, count ) => arr.map( index =>
+	const options = duplicates.map( ( arr, count ) => arr.map( index => {
 
-		`<option value="${ arr.join() }" style=background-color:${ count % 2 === 0 ? "#eee" : "" }; >
-			${ count + 1 } ${ SGT.surfaces[ index ].match( / id="(.*?)"/i )[ 1 ] }
+		const surface = SGT.surfaces[ index ];
+		return `<option value="${ arr.join() }" style=background-color:${ count % 2 === 0 ? "#eee" : "" };
+			title="${ surface.match( / id="(.*?)"/i )[ 1 ] }" >
+			${ count + 1 } ${ surface.match( /<Name>(.*?)<\/Name>/i )[ 1 ] }
 		</option>`
 
-		)
+		} )
+
 	);
 	//console.log( 'options', options );
 
@@ -66,14 +96,22 @@ FXDPC.getCheckDuplicatePlanarCoordinates = function() {
 			<p><i>Two surfaces with identical vertex coordinates for their planar geometry</i></p>
 
 			<p>
-				${ duplicates.length.toLocaleString() } sets duplicates found<br>
+				${ duplicates.length.toLocaleString() } sets duplicates found.  See tool tips for surface ID.<br>
 			</p>
 
 			<p>
-				<select onclick=FXDPC.setDuplData(this); size=5 >${ options }</select>
+				<select onclick=FXDPC.setDuplData(this); size=${ 2 * duplicates.length <= 10 ? 2 * duplicates.length : 10 } >${ options }</select>
 			</p>
 
 			<div id="FXDPCdivDuplData" >Click a surface ID above to view its details and delete if necessary</div>
+
+			<p>
+				<button onclick=FXDPCdivDuplicatePlanar.innerHTML=FXDPC.getCheckDuplicatePlanarCoordinates(); >Run check again</button>
+			</p>
+
+			<p>
+				Click 'Save file' button in File Menu to save changes to a file.
+			</p>
 
 			<p>Time to check: ${ ( performance.now() - timeStart ).toLocaleString() } ms</p>
 		`;
@@ -93,7 +131,6 @@ FXDPC.setDuplData = function( select ) {
 	console.log( '', items );
 
 	const htm =
-
 		`
 			${ SGT.getSurfacesAttributesByIndex( items[ 0 ] ) }
 
@@ -118,28 +155,18 @@ FXDPC.deleteSelectedSurface = function( index ) {
 
 	//console.log( 'select.value', select );
 
-	result = confirm(
-		`OK to delete\n`+
+	const result = confirm( `OK to delete surface?` );
 
-		`\nWork-in-progress. Could be working soon.`
-	);
+	if ( result === false ) { return; }
 
-	if ( result === true ) {
+	const surfaceText = SGT.surfaces[ index ];
 
-		//index = select.value;
+	SGT.text = SGT.text.replace( surfaceText, '' );
+	//console.log( 'len2', SGT.text.length );
 
-		//child = SGT.surfaceGroup.children.find( item => item.userData.index === index );
+	SGT.surfaces = SGT.text.match( /<Surface(.*?)<\/Surface>/gi );
+	//console.log( 'SGT.surfaces', SGT.surfaces.length );
 
-		//SGT.surfaceGroup.remove( child );
-
-		str = SGT.surfaces[ index ];
-		console.log( 'str', str );
-
-		reg = new RegExp( `${ str }`, 'i');
-
-		text = SGT.text.replace( reg, '' );
-		//console.log( 'text', text );
-
-	}
+	FXDPCdivDuplicatePlanar.innerHTML=FXDPC.getCheckDuplicatePlanarCoordinates();
 
 };

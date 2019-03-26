@@ -5,7 +5,7 @@
 
 
 
-const FXSTI = { "release": "R1.2", "date": "2019-03-23" };
+const FXSTI = { "release": "1.2", "date": "2019-03-23" };
 
 
 FXSTI.description =
@@ -28,6 +28,7 @@ FXSTI.currentStatus =
 		<p>
 			Wish List / To do:<br>
 			<ul>
+				<li>2019-03-25 ~ Add select and update multiple surfaces at once</li>
 				<li>2019-03-19 ~ Pre-select the correct surface type in the select type list box</li>
 			</ul>
 		</p>
@@ -35,6 +36,7 @@ FXSTI.currentStatus =
 		<details>
 			<summary>Change log</summary>
 			<ul>
+				<li>2019-03-25 ~ List errant surfaces by name with IDs as tool tips</li>
 				<li>2019-03-23 ~ Add help pop-up. Fix 'run again'</li>
 				<li>2019-03-19 ~ First commit</li>
 			</ul>
@@ -57,8 +59,13 @@ FXSTI.getCheckSurfaceTypeInvalid = function() {
 	//console.log( 'FXSTI.surfaceTypeInvalids', FXSTI.surfaceTypeInvalids );
 
 
-	const options = FXSTI.surfaceTypeInvalids.map( index =>
-		`<option value=${index } >${ SGT.surfaces[ index ].match( / id="(.*?)"/i )[ 1 ] }</option>` );
+	const options = FXSTI.surfaceTypeInvalids.map( index => {
+
+		const surface = SGT.surfaces[ index ];
+		//console.log( 'sf', surface );
+		return `<option value=${index } title="${ surface.match( / id="(.*?)"/i )[ 1 ] }" >${ surface.match( /<Name>(.*?)<\/Name>/i )[ 1 ] }</option>`;
+
+	} );
 	//console.log( 'options', options );
 
 	const help = `<a id=fxstiHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(fxstiHelp,FXSTI.currentStatus);" >&nbsp; ? &nbsp;</a>`;
@@ -72,20 +79,20 @@ FXSTI.getCheckSurfaceTypeInvalid = function() {
 	`
 		<p><i>A surface type was supplied that is not one of the following: ${ SGT.surfaceTypes.join( ', ' ) }</i></p>
 
-		<p>${ FXSTI.surfaceTypeInvalids.length.toLocaleString() } invalid surface types found</p>
+		<p>${ FXSTI.surfaceTypeInvalids.length.toLocaleString() } invalid surface types found. See tool tips for surface ID.</p>
 
 		<p>
 			<select onclick=FXSTI.setTypeInvalidData(this); size=5 style=min-width:8rem; >${ options }</select>
 		</p>
 
-		<div id="FXSTIdivTypeInvalidData" >Click a surface ID above to view its details and update its surface type</div>
+		<div id="FXSTIdivTypeInvalidData" >Click a surface in the list above to view its details and update its surface type</div>
 
 		<p>
 			<button onclick=FXSTIdivSurfaceTypeInvalid.innerHTML=FXSTI.getCheckSurfaceTypeInvalid(); >Run check again</button>
 		</p>
 
 		<p>
-			Click 'Save file' button in File menu to save changes to a file.
+			Click 'Save file' button in File Menu to save changes to a file.
 		</p>
 
 		<p>Time to check: ${ ( performance.now() - timeStart ).toLocaleString() } ms</p>

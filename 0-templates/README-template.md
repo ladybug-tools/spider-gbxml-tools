@@ -40,6 +40,21 @@ _<small>Spider gbXML Viewer ZZZZZ</small>_
 
 ## Change Log
 
+### Commit message prefixes
+
+From [The case for single character git commit message prefixes]( https://smalldata.tech/blog/2018/10/04/the-case-for-single-character-git-commit-message-prefixes )
+
+* B, indicates a bugfix.
+* F, indicates a feature or a change - this will most likely be the majority of the commits.
+* a, code formatting change.
+* c, comments and or documentation.
+* D, dependency updates.
+* R, code refactoring, note that this is different from r below.
+* r, proven code refactoring - this is the original meaning of the mathematical term refactoring, where it can be mathematically proven that the code change does not change any functionality.
+* T, test cases and/or test improvements
+* !, unknown - i.e. for when you really need to make that commit because there's a horde of zombies waiting outside.
+
+
 ### XXX
 
 * First commit

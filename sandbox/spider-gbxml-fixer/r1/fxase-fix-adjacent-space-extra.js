@@ -5,15 +5,39 @@
 
 
 
-const FXASE = { "release": "R1.0", "date": "2019-03-23" };
+const FXASE = { "release": "1.1", "date": "2019-03-25" };
 
 
 FXASE.description =
 	`
-		Checks for a surface type that is not one of the 15 valid gbXML surface types
+		Checks for a surface with more adjacent spaces and required
 	`;
 
-FXASE.currentStatus = 'tbd';
+FXASE.currentStatus =
+	`
+		<h3>Fix Surface Adjacent Space Extra (FXASE) R${ FXASE.release } ~ ${ FXASE.date }</h3>
+
+		<p>
+			${ FXASE.description }.
+		</p>
+
+		<p>
+			Wish List / To do:<br>
+			<ul>
+				<li>2019-03-25 ~ Add select and update multiple surfaces at once</li>
+				<li>2019-03-19 ~ Pre-select the correct surface type in the select type list box</li>
+			</ul>
+		</p>
+
+		<details>
+			<summary>Change log</summary>
+			<ul>
+				<li>2019-03-25 ~ F - Adjacent space is deleted as expected / Upon deletion, repeats check</li>
+				<li>2019-03-25 ~ F - List errant surfaces by name with IDs as tool tips</li>
+				<li>2019-03-19 ~ First commit</li>
+			</ul>
+		</details>
+	`;
 
 
 FXASE.getFixAdjacentSpaceExtra = function() {
@@ -50,12 +74,16 @@ FXASE.getFixAdjacentSpaceExtra = function() {
 
 	}
 
-	const options = invalidAdjacentSpaceExtra.map( index =>
-		`<option value=${index } >${ SGT.surfaces[ index ].match( / id="(.*?)"/i )[ 1 ] }</option>` );
+	const options = invalidAdjacentSpaceExtra.map( index => {
+
+		const surface = SGT.surfaces[ index ];
+		//console.log( 'sf', surface );
+		return `<option value=${index } title="${ surface.match( / id="(.*?)"/i )[ 1 ] }" >${ surface.match( /<Name>(.*?)<\/Name>/i )[ 1 ] }</option>`;
+
+	} );
 	//console.log( 'options', options );
 
 	const help = `<a id=fxaseHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(fxaseHelp,FXASE.currentStatus);" >&nbsp; ? &nbsp;</a>`;
-
 
 	FXASEsumSpaceExtra.innerHTML =
 		`Fix surfaces with an extra adjacent space ~ ${ invalidAdjacentSpaceExtra.length.toLocaleString() } found
@@ -64,34 +92,35 @@ FXASE.getFixAdjacentSpaceExtra = function() {
 
 	const aseHtm =
 		`
-
 			<p><i>Exterior surfaces that normally take a single adjacent space that are found to have two adjacent spaces.</i></p>
 
 			<p>
-				${ invalidAdjacentSpaceExtra.length.toLocaleString() } found
+				${ invalidAdjacentSpaceExtra.length.toLocaleString() } surface(s) with extra spaces found. See tool tips for surface ID.
 			</p>
 
 			<p>
-				<select id=FXASEselAdjacentSpaceExtra onclick=FXASE.setSpaceExtraData(this); size=5 >${ options }</select>
+				<select id=FXASEselAdjacentSpaceExtra onclick=FXASE.setSpaceExtraData(this); size=5 style=min-width:8rem; >${ options }</select>
 			</p>
 
 			<div id="FXASEdivSpaceExtraData" >Click a surface ID above to view its details and delete extra space.</div>
 
+			<!--
 			<p>
 				<button onclick=FXASEdivSpaceExtra.innerHTML=FXASE.getFixAdjacentSpaceExtra(); >Run check again</button>
 			</p>
+			-->
 
 			<p>
 				Click 'Save file' button in File menu to save changes to a file.
 			</p>
 
 			<p>Time to check: ${ ( performance.now() - timeStart ).toLocaleString() } ms</p>
-
 		`;
 
 	return aseHtm;
 
 };
+
 
 
 FXASE.setSpaceExtraData = function( select ) {
@@ -105,9 +134,11 @@ FXASE.setSpaceExtraData = function( select ) {
 	const adjacentSpaceArr = surfaceText.match( /spaceIdRef="(.*?)"/gi );
 	//console.log( 'adjacentSpaceArr', adjacentSpaceArr );
 
-	const spaceIds = adjacentSpaceArr.map( item => item.match( /spaceIdRef="(.*?)"/ )[ 1 ] );
+	const spaceId = adjacentSpaceArr.map( item => item.match( /spaceIdRef="(.*?)"/ )[ 1 ] )[ 0 ];
+	//console.log( 'spaceId', spaceId );
 
-	htm = spaceIds.reduce( ( text, id, index ) => text +
+	/*
+	const htm = spaceIds.reduce( ( text, id, index ) => text +
 		`
 			<p>
 				space <i>${ id }</i>:<br>
@@ -115,9 +146,20 @@ FXASE.setSpaceExtraData = function( select ) {
 			</p>
 		`,
 	"" );
+	*/
+
+	const htm =
+		`
+			<p>
+				space <i>${ spaceId }</i>:<br>
+				<button onclick=FXASE.adjacentSpaceDelete("${ spaceId }"); >delete reference</button>
+			</p>
+		`;
 
 	FXASEdivSpaceExtraData.innerHTML = SGT.getSurfacesAttributesByIndex( select.value ) + htm;
 
+	const detAdjSpace = FXASEdivSpaceExtraData.querySelectorAll( "details" )[ 0 ].open = true;
+	//console.log( 'detAdjSpace', detAdjSpace );
 
 };
 
@@ -125,7 +167,9 @@ FXASE.setSpaceExtraData = function( select ) {
 
 FXASE.adjacentSpaceDelete = function( spaceId ) {
 
-	//alert( `will delete space id ref ${ id }`)
+	result = confirm( `OK to delete space id ref ${ spaceId }` );
+
+	if ( result !== true ) { return; }
 
 	const surfaceIndex = FXASEselAdjacentSpaceExtra.value;
 
@@ -145,15 +189,10 @@ FXASE.adjacentSpaceDelete = function( spaceId ) {
 	//const adjacentSpaceId = surfaceTextNew.match( /<AdjacentSpaceId(.*?)>/gi );
 	//console.log( 'adjacentSpaceId', adjacentSpaceId);
 
-	const text = SGT.text.replace( surfaceTextCurrent, surfaceTextNew );
+	SGT.text = SGT.text.replace( surfaceTextCurrent, surfaceTextNew );
 
-	//const len = SGT.parseFile( text );
-	//console.log( 'len', len );
+	SGT.surfaces = SGT.text.match( /<Surface(.*?)<\/Surface>/gi );
 
-	//FXASEspnCount.innerHTML = '';
-	//FXASEbutAdjacentSpaceDuplicateShowHide.classList.remove( "active" );
-	//FXASEdivAdjacentSpaceExtra.innerHTML = 'None found';
-
-	//FXASEdetAdjacentSpaceExtra.open = false;
+	FXASEdivSpaceExtra.innerHTML = FXASE.getFixAdjacentSpaceExtra();
 
 };
