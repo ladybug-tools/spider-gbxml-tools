@@ -4,7 +4,7 @@
 /* jshint loopfunc:true */
 
 
-const FXASD = { "release": "1.0", "date": "2019-03-25" };
+const FXASD = { "release": "1.1", "date": "2019-03-26" };
 
 
 FXASD.description = `Fix air, InteriorWall, InteriorFloor, or Ceiling surfaces where both adjacent space IDs point to the same space`;
@@ -20,15 +20,14 @@ FXASD.currentStatus =
 		<details>
 			<summary>Wish List / To do</summary>
 			<ul>
-				<li>2019-03-25 ~ Add select and update multiple surfaces at once</li>
-				<li>2019-03-19 ~ Pre-select the correct surface type in the select type list box</li>
+				<li>2019-03-19 ~ Pre-select the correct adjacent spaces in the select type list box</li>
 			</ul>
 		</details>
 
 		<details>
 			<summary>Change log</summary>
 			<ul>
-				<li>2019-03-25 ~ F - Adjacent space is deleted as expected / Upon deletion, repeats check</li>
+				<li>2019-03-25 ~ F - Adjacent space is updated as expected / Upon deletion, repeats check</li>
 				<li>2019-03-25 ~ List errant surfaces by name with IDs as tool tips</li>
 				<li>2019-03-23 ~ Add help pop-up. Fix 'run again'</li>
 				<li>2019-03-19 ~ First commit</li>
@@ -89,7 +88,9 @@ FXASD.getFixAdjacentSpaceDuplicate = function() {
 				<select onclick=FXASD.setSpaceDuplicateData(this); size=5 style=min-width:8rem; >${ options }</select>
 			</p>
 
-			<div id="FXASDdivAdjacentSpaceDuplicateData" >Click a surface ID above to view its details and update its surface type</div>
+			<div id="FXASDdivAdjacentSpaceDuplicateData" >Click a surface name above to view its details and update its adjacent spaces</div>
+
+			<div id=FXASDdivCheckGbxml ></div>
 
 			<p>
 				<button onclick=FXASDdivSpaceDuplicate.innerHTML=FXASD.getFixAdjacentSpaceDuplicate(); >Run check again</button>
@@ -108,34 +109,43 @@ FXASD.getFixAdjacentSpaceDuplicate = function() {
 };
 
 
+
 FXASD.setSpaceDuplicateData = function( select ) {
 	//console.log( 'iv', select.value );
 
-	const options = SGT.spaces.map( (space, index ) => {
 
-		return `<option value=${index } title="${ space.match( / id="(.*?)"/i )[ 1 ] }" >${ space.match( /<Name>(.*?)<\/Name>/i )[ 1 ] }</option>`;
 
-	} );
-	//console.log( 'options', options );
-
-	surface = SGT.surfaces[ select.value ];
+	const surfaceText = SGT.surfaces[ select.value ];
 	//console.log( 'surface', surface );
 
-	adjacentSpaces = surface.match( /<AdjacentSpaceId (.*?)\/>/gi );
+	const adjacentSpaces = surfaceText.match( /<AdjacentSpaceId (.*?)\/>/gi );
 	//console.log( 'adjSpaces', adjSpaces );
 
 	const spaceIds = adjacentSpaces.map( item => item.match( /spaceIdRef="(.*?)"/ )[ 1 ] );
 	//console.log( 'spaceId', spaceId );
 
-	spaceText = SGT.spaces.find( item => item.includes( spaceIds[ 0 ] ) )
+	const spaceText = SGT.spaces.find( item => item.includes( spaceIds[ 0 ] ) );
 	//console.log( 'spaceText1', spaceText1 );
-	spaceName = spaceText.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
+	const spaceName = spaceText.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
 
-	const htm = spaceIds.reduce( ( text, id, index ) => text +
+
+	const options = SGT.spaces.map( (space, index ) => {
+
+		const id = space.match( / id="(.*?)"/i )[ 1 ];
+
+		selected = id === spaceIds[ 0 ] ? "selected" : "";
+
+		return `<option value=${ id } title="${ id }" ${ selected } >${ id } // ${ space.match( /<Name>(.*?)<\/Name>/i )[ 1 ] }</option>`;
+
+	} );
+	//console.log( 'options', options );
+
+	const htm = spaceIds.reduce( ( text, spaceId, index ) => text +
 		`
 			<p>
-				spaceIdRef ${ index + 1 }: from <span class=attributeValue >${ id } / ${ spaceName }</span> to <select>${ options }</select>
-				<button onclick=FXASD.adjacentSpaceUpdate("${ id }"); value=${ index } >update reference</button>
+				spaceIdRef ${ index + 1 }: from <span class=attributeValue >${ spaceId } / ${ spaceName }</span> to
+				<select id=FXASDselSpaceIdNew${ index } >${ options }</select>
+				<button onclick=FXASD.adjacentSpaceUpdate(${ index },${ select.value }); value=${ index } >update reference</button>
 			</p>
 		`,
 	"" );
@@ -147,6 +157,11 @@ FXASD.setSpaceDuplicateData = function( select ) {
 			${ attributes }
 
 			${ htm }
+
+			<p>
+				<button onclick=FXASD.showSurfaceGbxml(${ select.value }); >view gbXML text</button>
+			</p>
+
 		`;
 
 		detAdjSpace = FXASDdivAdjacentSpaceDuplicateData.querySelectorAll( "details" )[ 0 ].open = true;
@@ -155,8 +170,47 @@ FXASD.setSpaceDuplicateData = function( select ) {
 
 
 
-FXASD.adjacentSpaceUpdate = function() {
+FXASD.adjacentSpaceUpdate = function( index, surfaceId ) {
+
+	const spaceIdNew = document.body.querySelector( `#FXASDselSpaceIdNew${ index }` ).value;
+
+	console.log( 'spaceIdNew', spaceIdNew );
+
+	//console.log( 'index/id',index,  surfaceId );
+
+	const surfaceTextCurrent = SGT.surfaces[ surfaceId ];
+
+	const adjacentSpacesTextCurrent = surfaceTextCurrent.match( /<AdjacentSpaceId (.*?)\/>(.*?)<AdjacentSpaceId (.*?)\/>/ );
+
+	const adjacentSpaces = surfaceTextCurrent.match( /<AdjacentSpaceId (.*?)\/>/gi );
+	//console.log( 'adjacentSpaces', adjacentSpaces );
+
+	const spaceIdCurrent = adjacentSpaces[ index ].match( /<AdjacentSpaceId spaceIdRef="(.*?)"\/>/ )[ 1 ];
+
+	const newText = adjacentSpaces[ index ].replace( spaceIdCurrent, spaceIdNew )
+
+	adjacentSpaces[ index ] = newText;
+
+	const adjacentSpacesTextNew = adjacentSpaces.join( adjacentSpacesTextCurrent[ 2 ] );
+	console.log( 'adjacentSpacesTextNew', adjacentSpacesTextNew );
+
+	const surfaceTextNew = surfaceTextCurrent.replace( adjacentSpacesTextCurrent[ 0 ], adjacentSpacesTextNew )
+	console.log( 'surfaceTextNew', surfaceTextNew );
+
+	SGT.text =  SGT.text.replace( surfaceTextCurrent, surfaceTextNew )
+
+	SGT.surfaces = SGT.text.match( /<Surface(.*?)<\/Surface>/gi );
+
+	FXASDdivSpaceDuplicate.innerHTML = FXASD.getFixAdjacentSpaceDuplicate();
+
+};
 
 
+
+FXASD.showSurfaceGbxml = function( id ) {
+
+	const surfaceText = SGT.surfaces[ id ];
+
+	FXASDdivCheckGbxml.innerText = surfaceText;
 
 };

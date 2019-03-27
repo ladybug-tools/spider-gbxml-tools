@@ -1,6 +1,7 @@
 //Copyright 2019 Ladybug Tools authors. MIT License
 // jshint esversion: 6
-/* globals FIL, divContents */
+/* globals FIL, divContents, SGTdivFixThings, SGTh1FileName, FXsumStats */
+/* jshint loopfunc:true */
 
 const SGT = { release: "1.4", date: "2019-03-18" };
 
@@ -34,7 +35,7 @@ SGT.surfaceTypes = Object.keys( SGT.colors );
 
 SGT.init = function() {
 
-	divContents.innerHTML = thing.innerHTML;
+	divContents.innerHTML = SGTdivFixThings.innerHTML;
 
 	//console.log( 'FIL.text', FIL.text );
 
@@ -55,7 +56,7 @@ SGT.init = function() {
 
 SGT.runAll = function(){
 
-	details = divContents.querySelectorAll( 'details' );
+	const details = divContents.querySelectorAll( 'details' );
 
 	for ( let item of details ) { item.open = true; }
 
@@ -112,7 +113,7 @@ SGT.getStats = function() {
 
 			return coordinates;
 
-		};
+		}
 
 };
 
@@ -204,16 +205,16 @@ SGT.getAttributesHtml = function( obj ) {
 			//constructions = SGT.text.match( /<Construction(.*?)<\/Construction>/gi );
 
 			// silly way of doing things, but it's a start
-			parser = new DOMParser();
+			const parser = new DOMParser();
 			const campusXml = parser.parseFromString( SGT.text, "application/xml").documentElement;
 			//SGT.campusXml = campusXml;
 			//console.log( 'campusXml', campusXml.attributes );
 
-			constructions = Array.from( campusXml.getElementsByTagName( 'Construction' ) );
-			construction = constructions.find( item => item.id === attribute.value )
+			const constructions = Array.from( campusXml.getElementsByTagName( 'Construction' ) );
+			const construction = constructions.find( item => item.id === attribute.value );
 			//console.log( 'construction', construction);
 
-			xmlText = new XMLSerializer().serializeToString( construction );
+			const xmlText = new XMLSerializer().serializeToString( construction );
 			//console.log( 'xmlText', xmlText );
 
 			htm += `<textarea style=height:5rem;width:100%; >${ xmlText }</textarea>`;
@@ -285,13 +286,13 @@ SGT.getAttributesAdjacentSpace = function( surfaceXml ){
 		const spaceId1 = adjacentSpaceId[ 0 ].getAttribute( "spaceIdRef" );
 		const spaceId2 = adjacentSpaceId[ 1 ].getAttribute( "spaceIdRef" );
 
-		spaceText1 = SGT.spaces.find( item => item.includes( spaceId1 ) )
+		const spaceText1 = SGT.spaces.find( item => item.includes( spaceId1 ) );
 		//console.log( 'spaceText1', spaceText1 );
-		spaceName1 = spaceText1.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
+		const spaceName1 = spaceText1.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
 
-		spaceText2 = SGT.spaces.find( item => item.includes( spaceId2 ) )
+		const spaceText2 = SGT.spaces.find( item => item.includes( spaceId2 ) );
 		//console.log( 'spaceText2', spaceText2 );
-		spaceName2 = spaceText2.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
+		const spaceName2 = spaceText2.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
 
 		SGT.adjacentSpaceIds = [ spaceId1, spaceId2 ];
 
@@ -315,9 +316,9 @@ SGT.getAttributesAdjacentSpace = function( surfaceXml ){
 		const spaceId = adjacentSpaceId[ 0 ].getAttribute( "spaceIdRef" );
 		SGT.adjacentSpaceIds = [ spaceId ];
 
-		spaceText1 = SGT.spaces.find( item => item.includes( spaceId ) )
+		const spaceText1 = SGT.spaces.find( item => item.includes( spaceId ) );
 		//console.log( 'spaceText1', spaceText1 );
-		spaceName1 = spaceText1.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
+		const spaceName1 = spaceText1.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
 
 		SGT.setAttributesStoreyAndZone( spaceId );
 
@@ -340,7 +341,7 @@ SGT.setAttributesStoreyAndZone = function( spaceId ) {
 	const spaceText = SGT.spaces.find( item => item.includes( spaceId ) );
 	//console.log( 'spaceText', spaceText );
 
-	storeyId = spaceText.match ( /buildingStoreyIdRef="(.*?)"/ )
+	const storeyId = spaceText.match ( /buildingStoreyIdRef="(.*?)"/ );
 	//console.log( 'storeyId', SGT.storeyId[ 1 ] );
 
 	SGT.storeyId = storeyId ? storeyId[ 1 ] : [];

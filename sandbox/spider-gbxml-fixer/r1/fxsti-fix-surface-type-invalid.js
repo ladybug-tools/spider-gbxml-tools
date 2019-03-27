@@ -144,7 +144,7 @@ FXSTI.setSurfaceType = function( index ) {
 	const surfaceTextCurrent = SGT.surfaces[ FXSTI.surfaceTypeInvalids[ index ] ];
 	//console.log( 'surfaceTextCurrent', surfaceTextCurrent );
 
-	type = document.body.querySelector( `#selSurfaceType${ index }` ).value;
+	const type = document.body.querySelector( `#selSurfaceType${ index }` ).value;
 	//console.log( 'type', type );
 
 	const surfaceTextNew = surfaceTextCurrent.replace( /surfaceType="(.*)" /, `surfaceType="${ type }" ` );
