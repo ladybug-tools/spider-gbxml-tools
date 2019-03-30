@@ -41,7 +41,7 @@ FXASD.getFixAdjacentSpaceDuplicate = function() {
 
 	const timeStart = performance.now();
 	const twoSpaces = [ "Air", "InteriorWall", "InteriorFloor", "Ceiling" ];
-	const invalidAdjacentSpaceDuplicate = [];
+	let invalidAdjacentSpaceDuplicate = [];
 
 	SGT.surfaces.forEach( ( surface, index ) => {
 
@@ -64,6 +64,22 @@ FXASD.getFixAdjacentSpaceDuplicate = function() {
 	} );
 	//console.log( 'invalidAdjacentSpaceDuplicate', invalidAdjacentSpaceDuplicate );
 
+	if ( SGTinpIgnoreAirSurfaceType.checked === true ) {
+
+		invalidAdjacentSpaceDuplicate = invalidAdjacentSpaceDuplicate.filter( id => {
+
+			const surfaceText = SGT.surfaces[ id ];
+			//console.log( 'surfaceText', surfaceText );
+
+			const surfaceType = surfaceText.match( /surfaceType="(.*?)"/)[ 1 ];
+			//console.log( 'surfaceType', surfaceType );
+
+			return surfaceType !== "Air";
+
+		}) ;
+
+	}
+
 	const help = `<a id=fxasdHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(fxasdHelp,FXASD.currentStatus);" >&nbsp; ? &nbsp;</a>`;
 
 	FXASDsumSpaceDuplicate.innerHTML =
@@ -73,7 +89,13 @@ FXASD.getFixAdjacentSpaceDuplicate = function() {
 
 		const surface = SGT.surfaces[ index ];
 		//console.log( 'sf', surface );
-		return `<option value=${index } title="${ surface.match( / id="(.*?)"/i )[ 1 ] }" >${ surface.match( /<Name>(.*?)<\/Name>/i )[ 1 ] }</option>`;
+
+		const id = surface.match( / id="(.*?)"/i );
+		//console.log( 'id', id );
+
+		const name = surface.match( /<Name>(.*?)<\/Name>/i );
+
+		return `<option value=${ index } title="${ id ? id[ 1 ] : 44 }" >${ name ? name : "no name" }</option>`;
 
 	} );
 	//console.log( 'options', options );
@@ -112,8 +134,6 @@ FXASD.getFixAdjacentSpaceDuplicate = function() {
 
 FXASD.setSpaceDuplicateData = function( select ) {
 	//console.log( 'iv', select.value );
-
-
 
 	const surfaceText = SGT.surfaces[ select.value ];
 	//console.log( 'surface', surface );

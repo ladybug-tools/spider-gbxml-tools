@@ -194,6 +194,7 @@ ISASD.getMenuAdjacentSpaceDuplicate = function() {
 		<p>
 			Surfaces with two adjacent spaces that are identical
 		</p>
+
 		<p>
 			<button onclick=ISASD.surfaceArrayShowHide(this,ISASD.invalidAdjacentSpaceDuplicate); >
 				Show/hide adjacent space duplicate surfaces

@@ -17,9 +17,17 @@ FXDPC.currentStatus =
 			${ FXDPC.description }.
 		</p>
 
+		<details open>
+			<summary>Issues</summary>
+			<ul>
+				<li>2019-03-29 ~ Reporting false positives</li>
+			</ul>
+		</details>
+
 		<p>
 			Wish List / To do:<br>
 			<ul>
+				<li>2019-03-29 ~ Check for openings</li>
 				<li>2019-03-25 ~ Add select and update multiple surfaces at once</li>
 				<li>2019-03-19 ~ Pre-select the correct surface to delete n the select type list box</li>
 			</ul>
@@ -27,7 +35,9 @@ FXDPC.currentStatus =
 
 		<details>
 			<summary>Change log</summary>
+
 			<ul>
+				<li>2019-03-29 ~ F - Add FXDPC.showSelectedSurfaceGbxml() / B - incorrect space shown.</li>
 				<li>2019-03-25 ~ F - Duplicate surface is deleted as expected / Upon deletion, repeats check</li>
 				<li>2019-03-25 ~ D - Pop-up help defined in detail</li>
 				<li>2019-03-25 ~ F - List errant surfaces by name with IDs as tool tips</li>
@@ -95,6 +105,8 @@ FXDPC.getCheckDuplicatePlanarCoordinates = function() {
 	`
 			<p><i>Two surfaces with identical vertex coordinates for their planar geometry</i></p>
 
+
+		<p style=color:red; >Currently sometimes incorrectly reporting duplicates</p>
 			<p>
 				${ duplicates.length.toLocaleString() } sets duplicates found.  See tool tips for surface ID.<br>
 			</p>
@@ -108,6 +120,8 @@ FXDPC.getCheckDuplicatePlanarCoordinates = function() {
 			<p>
 				<button onclick=FXDPCdivDuplicatePlanar.innerHTML=FXDPC.getCheckDuplicatePlanarCoordinates(); >Run check again</button>
 			</p>
+
+			<div id=FXDPCdivSelectedSurface ></div>
 
 			<p>
 				Click 'Save file' button in File Menu to save changes to a file.
@@ -123,27 +137,33 @@ FXDPC.getCheckDuplicatePlanarCoordinates = function() {
 
 
 FXDPC.setDuplData = function( select ) {
-
 	//console.log( '', select.value );
 
 	items = select.value.split( ",");
-
-	console.log( '', items );
+	//console.log( '', items );
 
 	const htm =
 		`
 			${ SGT.getSurfacesAttributesByIndex( items[ 0 ] ) }
 
 			<p>
-				<button onclick=FXDPC.deleteSelectedSurface(${ items[ 1 ] }); >delete</button>
+				<button onclick=FXDPC.deleteSelectedSurface(${ items[ 0 ] }); >delete</button>
+
+				<button onclick=FXDPC.showSelectedSurfaceGbxml(${ items[ 0 ] },FXDPCdivSelectedSurface); >view gbXML text</button>
+
 			</p>
 
 			${ SGT.getSurfacesAttributesByIndex( items[ 1 ] ) }
 
 			<p>
-				<button onclick=FXDPC.deleteSelectedSurface(${ items[ 1 ] }); >delete</button>
+				<button onclick=FXDPC.deleteSelectedSurface(${ items[ 1 ] }); >Delete</button>
+
+				<button onclick=FXDPC.showSelectedSurfaceGbxml(${ items[ 1 ] },FXDPCdivSelectedSurface); >View gbXML text</button>
+
 			</p>
+
 		`;
+
 
 	FXDPCdivDuplData.innerHTML= htm;
 
@@ -152,7 +172,6 @@ FXDPC.setDuplData = function( select ) {
 
 
 FXDPC.deleteSelectedSurface = function( index ) {
-
 	//console.log( 'select.value', select );
 
 	const result = confirm( `OK to delete surface?` );
@@ -167,6 +186,14 @@ FXDPC.deleteSelectedSurface = function( index ) {
 	SGT.surfaces = SGT.text.match( /<Surface(.*?)<\/Surface>/gi );
 	//console.log( 'SGT.surfaces', SGT.surfaces.length );
 
-	FXDPCdivDuplicatePlanar.innerHTML=FXDPC.getCheckDuplicatePlanarCoordinates();
+	FXDPCdivDuplicatePlanar.innerHTML =FXDPC.getCheckDuplicatePlanarCoordinates();
+
+};
+
+
+
+FXDPC.showSelectedSurfaceGbxml = function( index, target ) {
+
+	target.innerText = SGT.surfaces[ index ];
 
 };

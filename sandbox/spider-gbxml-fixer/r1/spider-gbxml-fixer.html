@@ -5,8 +5,8 @@
 <meta name = "viewport" content= "width=device-width, initial-scale=1" >
 <meta name = "description" content = "This menu is a component of a basic html content management script with sliding menu, css theme selection, Markdown to HTML, drag and drop file reading capability, access to frequently used pages and more" >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
-<meta name = "date" content = "2019-03-25" >
-<meta name = "release" content = "1.4" >
+<meta name = "date" content = "2019-03-29" >
+<meta name = "release" content = "1.5" >
 <title>Spider gbXML Fixer 'Atrax'</title>
 <link rel="stylesheet" href="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/style.css">
 </head>
@@ -44,7 +44,7 @@
 
 //Copyright 2019 Ladybug Tools authors. MIT License
 
-// following belong lower but moved here to be easier to see amd update
+// following belongs lower but moved here to be easier to see amd update
 
 MNU.description =
 	`
@@ -102,7 +102,7 @@ MNU.currentStatusCore =
 OHC.uriDefaultFile = "../README.md";
 
 // useful when testing / un-comment
-OHC.uriDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/bristol-clifton-downs-broken.xml";
+//OHC.uriDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/bristol-clifton-downs-broken.xml";
 
 THM.themeUrlStorage = 'spider-gbxml-fixer-theme-url';
 THM.cssBasic = "https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/style.css";
@@ -228,6 +228,11 @@ OHC.urlGitHubPage = "";
 		<h2 id=SGTh1FileName >Check file: <script></script>decodeURI( FIL.name ) } </h2>
 
 		<p><button onclick=SGT.runAll(); >run all checks</button></p>
+
+
+		<p>
+			<input type=checkbox id=SGTinpIgnoreAirSurfaceType > Ignore Air surface type
+		</p>
 
 		<details ontoggle=FXdivStats.innerHTML=SGT.getStats();  >
 

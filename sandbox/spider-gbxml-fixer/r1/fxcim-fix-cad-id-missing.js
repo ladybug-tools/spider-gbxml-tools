@@ -1,10 +1,10 @@
 // Copyright 2019 Ladybug Tools authors. MIT License
-/* globals */
+/* globals SGT, FXCIMsumIdMissing, FXCIMinpCadId */
 /* jshint esversion: 6 */
 /* jshint loopfunc:true */
 
 
-const FXCIM = { "release": "1.1", "date": "2019-03-25" };
+const FXCIM = { "release": "1.2", "date": "2019-03-29" };
 
 FXCIM.description = `Fix surfaces with missing CAD object ID`;
 
@@ -27,6 +27,8 @@ FXCIM.currentStatus =
 		<details>
 			<summary>Change log</summary>
 			<ul>
+				<li>2019-03-29 ~ F - Add place holder value and update surface data / Pass through jsHint</li>
+				<li>2019-03-29 ~ Add - FXCIM.showSelectedSurfaceGbxml()</li>
 				<li>2019-03-25 ~ List errant surfaces by name with IDs as tool tips</li>
 				<li>2019-03-23 ~ Add help pop-up. Fix 'run again'</li>
 				<li>2019-03-19 ~ First commit</li>
@@ -45,10 +47,26 @@ FXCIM.getFixCadIdMissing = function() {
 
 		const cadId = surface.match( /<CADObjectId>(.*?)<\/CADObjectId>/);
 
-		if ( !cadId ){ noId.push( index ) }
+		if ( !cadId ){ noId.push( index ); }
 
 	} );
 
+	if ( SGTinpIgnoreAirSurfaceType.checked === true ) {
+
+		noId = noId.filter( id => {
+
+			const surfaceText = SGT.surfaces[ id ];
+			//console.log( 'surfaceText', surfaceText );
+
+			const surfaceType = surfaceText.match( /surfaceType="(.*?)"/)[ 1 ];
+			//console.log( 'surfaceType', surfaceType );
+
+			return surfaceType !== "Air";
+
+		}) ;
+
+	}
+	
 	const options = noId.map( index =>
 		`<option value=${index } >${ SGT.surfaces[ index ].match( / id="(.*?)"/i )[ 1 ] }</option>` );
 	//console.log( 'options', options );
@@ -67,11 +85,19 @@ FXCIM.getFixCadIdMissing = function() {
 
 			Surfaces with no CAD Object ID: ${ noId.length.toLocaleString() }<br>
 
+
 			<p>
-				<select onclick=FXCIMdivIdMissingData.innerHTML=FXCIM.getFixCim(this); size=5 style=min-width:8rem; >${ options }</select>
+				<select id=FXCIMselSurface onclick=FXCIMdivIdMissingData.innerHTML=FXCIM.getFixCim(this); size=5 style=min-width:8rem; >${ options }</select>
 			</p>
 
 			<div id="FXCIMdivIdMissingData" >Click a surface ID above to view its details and update its surface type</div>
+
+
+			<div id=FXCIMdivSelectedSurfaceGbXML></div>
+
+			<p>
+				<button onclick=FXCIMdivSelectedSurfaceGbXML.innerText=SGT.surfaces[FXCIMselSurface.value] >View gbXML text</button>
+			</p>
 
 			<p>
 				<button onclick=FXCIMdivIdMissing.innerHTML=FXCIM.getFixCadIdMissing(); >Run check again</button>
@@ -84,7 +110,6 @@ FXCIM.getFixCadIdMissing = function() {
 			<p>Time to check: ${ ( performance.now() - timeStart ).toLocaleString() } ms</p>
 
 		`;
-// 			${ htm.join( "" ) }
 
 	return cimHtm;
 
@@ -94,17 +119,43 @@ FXCIM.getFixCadIdMissing = function() {
 
 FXCIM.getFixCim = function( select ) {
 
-	const invalidData = SGT.getSurfacesAttributesByIndex(select.value );
+	const invalidData = SGT.getSurfacesAttributesByIndex( select.value );
+	//console.log( 'invalidData', invalidData );
+
+	const surfaceText = SGT.surfaces[ select.value ];
+	//console.log( 'surfaceText', surfaceText );
+
+	const surfaceType = surfaceText.match( /surfaceType="(.*?)"/)[ 1 ];
+
 	const htm =
 
 	`
 		${ invalidData }
-
 		<p>
-			CAD Object ID <input style=width:30rem; > <button onclick=alert("Coming-soon"); >update</button>
+			CAD Object ID <input id=FXCIMinpCadId value="Place holder: ${ surfaceType }" style=width:30rem; >
+
+			<button onclick=FXCIM.setCadData(FXASEselSurface); >UpdateCAD Object ID</button>
 		</p>
 	`;
 
 	return htm;
+
+};
+
+
+
+FXCIM.setCadData = function( select ) {
+	//console.log( '', 23 );
+
+	const surfaceTextCurrent = SGT.surfaces[ select.value ];
+	//console.log( 'surfaceTextCurrent', surfaceTextCurrent );
+
+	const cadId = FXCIMinpCadId.value ? FXCIMinpCadId.value : "";
+
+	const surfaceTextNew = surfaceTextCurrent.replace( /<Name>/, `<CADObjectId>${ cadId }</CADObjectId> </Name>` );
+
+	SGT.text =  SGT.text.replace( surfaceTextCurrent, surfaceTextNew );
+
+	SGT.surfaces = SGT.text.match( /<Surface(.*?)<\/Surface>/gi );
 
 };

@@ -1,11 +1,11 @@
 // Copyright 2019 Ladybug Tools authors. MIT License
-/* globals */
+/* globals SGT, FXASEselAdjacentSpaceExtra, FXASEsumSpaceExtra, FXASEdivSpaceExtraData, FXASEdivSpaceExtra  */
 /* jshint esversion: 6 */
-/* jshint loopfunc:true */
+/* jshint loopfunc: true */
 
 
 
-const FXASE = { "release": "1.1", "date": "2019-03-25" };
+const FXASE = { "release": "1.2", "date": "2019-03-29" };
 
 
 FXASE.description =
@@ -32,6 +32,7 @@ FXASE.currentStatus =
 		<details>
 			<summary>Change log</summary>
 			<ul>
+				<li>2019-03-29 ~ F - Add FXASE.showSelectedSurfaceGbxml() / Pass through jsHint</li>
 				<li>2019-03-25 ~ F - Adjacent space is deleted as expected / Upon deletion, repeats check</li>
 				<li>2019-03-25 ~ F - List errant surfaces by name with IDs as tool tips</li>
 				<li>2019-03-19 ~ First commit</li>
@@ -78,7 +79,7 @@ FXASE.getFixAdjacentSpaceExtra = function() {
 
 		const surface = SGT.surfaces[ index ];
 		//console.log( 'sf', surface );
-		return `<option value=${index } title="${ surface.match( / id="(.*?)"/i )[ 1 ] }" >${ surface.match( /<Name>(.*?)<\/Name>/i )[ 1 ] }</option>`;
+		return `<option value=${ index } title="${ surface.match( / id="(.*?)"/i )[ 1 ] }" >${ surface.match( /<Name>(.*?)<\/Name>/i )[ 1 ] }</option>`;
 
 	} );
 	//console.log( 'options', options );
@@ -104,11 +105,7 @@ FXASE.getFixAdjacentSpaceExtra = function() {
 
 			<div id="FXASEdivSpaceExtraData" >Click a surface ID above to view its details and delete extra space.</div>
 
-			<!--
-			<p>
-				<button onclick=FXASEdivSpaceExtra.innerHTML=FXASE.getFixAdjacentSpaceExtra(); >Run check again</button>
-			</p>
-			-->
+			<div id=FXASEdivSelectedSurfaceGbXML ></div>
 
 			<p>
 				Click 'Save file' button in File menu to save changes to a file.
@@ -124,12 +121,10 @@ FXASE.getFixAdjacentSpaceExtra = function() {
 
 
 FXASE.setSpaceExtraData = function( select ) {
+	//console.log( 'select.value', select.value );
 
-	const surfaceId = select.selectedOptions[ 0 ].innerHTML;
-	//console.log( 'id', id );
-
-	const surfaceText = SGT.surfaces.find( item => item.includes( surfaceId ) );
-	//console.log( 'surfaceIndex', surfaceIndex );
+	const surfaceText = SGT.surfaces[ select.value ];
+	//console.log( 'surfaceText', surfaceText );
 
 	const adjacentSpaceArr = surfaceText.match( /spaceIdRef="(.*?)"/gi );
 	//console.log( 'adjacentSpaceArr', adjacentSpaceArr );
@@ -137,62 +132,56 @@ FXASE.setSpaceExtraData = function( select ) {
 	const spaceId = adjacentSpaceArr.map( item => item.match( /spaceIdRef="(.*?)"/ )[ 1 ] )[ 0 ];
 	//console.log( 'spaceId', spaceId );
 
-	/*
-	const htm = spaceIds.reduce( ( text, id, index ) => text +
-		`
-			<p>
-				space <i>${ id }</i>:<br>
-				<button onclick=FXASE.adjacentSpaceDelete("${ id }"); value=${ index } >delete reference</button>
-			</p>
-		`,
-	"" );
-	*/
-
 	const htm =
 		`
 			<p>
 				space <i>${ spaceId }</i>:<br>
-				<button onclick=FXASE.adjacentSpaceDelete("${ spaceId }"); >delete reference</button>
+
+				<button onclick=FXASE.adjacentSpaceDelete("${ spaceId }"); >Delete reference</button>
+
+				<button onclick=FXASE.showSelectedSurfaceGbxml(${ select.value },FXASEdivSelectedSurfaceGbXML); >View gbXML text</button>
+
 			</p>
 		`;
 
 	FXASEdivSpaceExtraData.innerHTML = SGT.getSurfacesAttributesByIndex( select.value ) + htm;
-
-	const detAdjSpace = FXASEdivSpaceExtraData.querySelectorAll( "details" )[ 0 ].open = true;
-	//console.log( 'detAdjSpace', detAdjSpace );
 
 };
 
 
 
 FXASE.adjacentSpaceDelete = function( spaceId ) {
+	console.log( 'spaceId', spaceId );
 
-	result = confirm( `OK to delete space id ref ${ spaceId }` );
+	const result = confirm( `OK to delete space id ref ${ spaceId }?` );
 
 	if ( result !== true ) { return; }
 
 	const surfaceIndex = FXASEselAdjacentSpaceExtra.value;
+	//console.log( 'surfaceIndex', surfaceIndex );
 
 	const surfaceTextCurrent = SGT.surfaces[ surfaceIndex ];
-	//console.log( 'surfaceText', surfaceText );
+	//console.log( 'surfaceTextCurrent', surfaceTextCurrent );
 
-	//const adjacentSpaceId = surfaceTextCurrent.match( /<AdjacentSpaceId(.*?)>/gi );
-	//console.log( 'adjacentSpaceId', adjacentSpaceId);
-
-	const regex = new RegExp( `<AdjacentSpaceId spaceIdRef="${ spaceId }"\/>`, "gi" );
+	const regex = new RegExp( `<AdjacentSpaceId spaceIdRef="(.*?)"\/>`, "gi" );
 	const matches = surfaceTextCurrent.match ( regex );
-	//console.log( 'matches', matches[ 0 ] );
+	//console.log( 'matches', matches );
 
 	const surfaceTextNew = surfaceTextCurrent.replace( matches[ 0 ], '' );
 	//console.log( 'surfaceTextNew', surfaceTextNew );
-
-	//const adjacentSpaceId = surfaceTextNew.match( /<AdjacentSpaceId(.*?)>/gi );
-	//console.log( 'adjacentSpaceId', adjacentSpaceId);
 
 	SGT.text = SGT.text.replace( surfaceTextCurrent, surfaceTextNew );
 
 	SGT.surfaces = SGT.text.match( /<Surface(.*?)<\/Surface>/gi );
 
 	FXASEdivSpaceExtra.innerHTML = FXASE.getFixAdjacentSpaceExtra();
+
+};
+
+
+
+FXASE.showSelectedSurfaceGbxml = function( index, target ) {
+
+	target.innerText = SGT.surfaces[ index ];
 
 };

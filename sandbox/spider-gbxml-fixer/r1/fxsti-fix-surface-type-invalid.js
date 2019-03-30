@@ -1,11 +1,11 @@
 // Copyright 2019 Ladybug Tools authors. MIT License
-/* globals */
+/* globals SGT, FXSTIsumSurfaceTypeInvalid, FXSTIdivTypeInvalidData, FXSTIdivSelecteSurfaceTGbxml */
 /* jshint esversion: 6 */
 /* jshint loopfunc:true */
 
 
 
-const FXSTI = { "release": "1.2", "date": "2019-03-23" };
+const FXSTI = { "release": "1.3", "date": "2019-03-29" };
 
 
 FXSTI.description =
@@ -36,6 +36,7 @@ FXSTI.currentStatus =
 		<details>
 			<summary>Change log</summary>
 			<ul>
+				<li>2019-03-29 ~ Add - FXDPC.showSelectedSurfaceGbxml() / Pass through jsHint</li>
 				<li>2019-03-25 ~ List errant surfaces by name with IDs as tool tips</li>
 				<li>2019-03-23 ~ Add help pop-up. Fix 'run again'</li>
 				<li>2019-03-19 ~ First commit</li>
@@ -91,6 +92,8 @@ FXSTI.getCheckSurfaceTypeInvalid = function() {
 			<button onclick=FXSTIdivSurfaceTypeInvalid.innerHTML=FXSTI.getCheckSurfaceTypeInvalid(); >Run check again</button>
 		</p>
 
+		<div id=FXSTIdivSelecteSurfaceTGbxml ></div>
+
 		<p>
 			Click 'Save file' button in File Menu to save changes to a file.
 		</p>
@@ -115,7 +118,7 @@ FXSTI.setTypeInvalidData = function( select ) {
 
 	} ).join( "" );
 
-	index = 0;
+	let index = 0;
 
 	const htm =
 		`
@@ -125,10 +128,8 @@ FXSTI.setTypeInvalidData = function( select ) {
 
 			<p>
 				Select new surface type <select id=selSurfaceType${ index } >${ options }</select>
-				<button onclick=FXSTI.setSurfaceType(${ index }); >update data in memory</button>
-				<button onclick=FXSTI.showSurfaceGbxml(this,${ index }); >view gbXML text</button>
-				<div id=divSurfaceType${ index } ></div>
-
+				<button onclick=FXSTI.setSurfaceType(${ index }); >Update data in memory</button>
+				<button onclick=FXSTI.showSurfaceGbxml(${ index }); >View gbXML text</button>
 			</p>
 		`;
 
@@ -150,7 +151,7 @@ FXSTI.setSurfaceType = function( index ) {
 	const surfaceTextNew = surfaceTextCurrent.replace( /surfaceType="(.*)" /, `surfaceType="${ type }" ` );
 	//console.log( 'surfaceTextNew', surfaceTextNew );
 
-	SGT.text =  SGT.text.replace( surfaceTextCurrent, surfaceTextNew )
+	SGT.text =  SGT.text.replace( surfaceTextCurrent, surfaceTextNew );
 
 	SGT.surfaces = SGT.text.match( /<Surface(.*?)<\/Surface>/gi );
 
@@ -158,12 +159,12 @@ FXSTI.setSurfaceType = function( index ) {
 
 
 
-FXSTI.showSurfaceGbxml = function( button, index ) {
+FXSTI.showSurfaceGbxml = function( index ) {
 
 	const surfaceText = SGT.surfaces[ FXSTI.surfaceTypeInvalids[ index ] ];
 
-	div = document.body.querySelector( `#divSurfaceType${ index }` );
+	//const div = document.body.querySelector( `#divSurfaceType${ index }` );
 
-	div.innerText = surfaceText;
+	FXSTIdivSelecteSurfaceTGbxml.innerText = surfaceText;
 
 };

@@ -13,14 +13,18 @@ value="You are now in a GitHub web page view - Click this button to view this re
 _<small>Spider gbXML Fixer</small>_
 -->
 
-## Bookmark this link: [Spider gbXML Fixer]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-fixer/ )
+## Bookmark this link: https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-fixer/
+
+* Links to the latest most current revision
 
 ## [Sample test run]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-fixer/r1/spider-gbxml-fixer.html#https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/bristol-clifton-downs-broken.xml )
 
+* Loads and checks a sample file from the Spider gbXML sample files folder
 
-## Concept
 
-Many of the issues to be found in parsing gbXML files are clerical matters that can found using simple text search routines. Full 3D viewing of the errors is not needed and may actually slow things down. In future revisions new utilities will add replace capability so that all issues may be fixed and the corrected data saved.
+## Concept / the problem to be solved
+
+Many of the issues to be found in parsing gbXML files are clerical matters that may be identified using simple text search routines. Full 3D viewing of these types of errors is not needed and may actually slow things down.
 
 * Run basic checks on gbXML files and identify, report and fix any errors
 * The script is still at an early stage. Many more checks may be added.
@@ -79,6 +83,14 @@ From [The case for single character git commit message prefixes]( https://smalld
 * T, test cases and/or test improvements
 * !, unknown - i.e. for when you really need to make that commit because there's a horde of zombies waiting outside.
 
+
+### 2019-03-25 ~ Theo
+
+Spider gbXML Fixer 'Atrax' R1.5
+
+_Changes in JavaScript files_
+
+ * Many / See pop-ups
 
 ### 2019-03-25 ~ Theo
 
