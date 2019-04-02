@@ -1,32 +1,34 @@
 // Copyright 2019 Ladybug Tools authors. MIT License
 /* globals SGT, FXCIMsumIdMissing, FXCIMinpCadId */
 /* jshint esversion: 6 */
-/* jshint loopfunc:true */
+/* jshint loopfunc: true */
 
 
-const FXCIM = { "release": "1.2", "date": "2019-03-29" };
+const FXCIM = { "release": "1.3", "date": "2019-04-01" };
 
-FXCIM.description = `Fix surfaces with missing CAD object ID`;
+FXCIM.description = `Assign an ID to surfaces with a missing CAD object ID`;
 
 FXCIM.currentStatus =
 	`
-		<h3>Fix Surface CAD Objct ID Missing (FXCIM) R${ FXCIM.release } ~ ${ FXCIM.date }</h3>
+		<h3>Fix Surface CAD Object ID Missing (FXCIM) R${ FXCIM.release } ~ ${ FXCIM.date }</h3>
 
 		<p>
 			${ FXCIM.description }.
 		</p>
 
-		<p>
-			Wish List / To do:<br>
+		<details open>
+			<summary>Wish list / to do</summary>
 			<ul>
 				<li>2019-03-25 ~ Add select and update multiple surfaces at once</li>
-				<li>2019-03-19 ~ Pre-select the correct surface type in the select type list box</li>
+				<li>2019-03-19 ~ Set a correct CAD object ID in the input automatically</li>
 			</ul>
-		</p>
+		</details>
 
 		<details>
 			<summary>Change log</summary>
 			<ul>
+				<li>2019-04-01 ~ D - Update this pop-up</li>
+				<li>2019-04-01 ~ B - Fix missing CAD object is not updating / Show name not id in select</li>
 				<li>2019-03-29 ~ F - Add place holder value and update surface data / Pass through jsHint</li>
 				<li>2019-03-29 ~ Add - FXCIM.showSelectedSurfaceGbxml()</li>
 				<li>2019-03-25 ~ List errant surfaces by name with IDs as tool tips</li>
@@ -66,9 +68,27 @@ FXCIM.getFixCadIdMissing = function() {
 		}) ;
 
 	}
-	
-	const options = noId.map( index =>
-		`<option value=${index } >${ SGT.surfaces[ index ].match( / id="(.*?)"/i )[ 1 ] }</option>` );
+
+	//const options = noId.map( index =>
+	//	`<option value=${index } >${ SGT.surfaces[ index ].match( / id="(.*?)"/i )[ 1 ] }</option>` );
+	//console.log( 'options', options );
+
+	const options = noId.map( index => {
+
+		const surface = SGT.surfaces[ index ];
+		//console.log( 'sf', surface );
+
+		const id = surface.match( / id="(.*?)"/i )[ 1 ];
+
+		let name = surface.match( /<Name>(.*?)<\/Name>/gi );
+		//console.log( 'name', name );
+
+		name = name ? name.pop() : id;
+		//.pop();
+
+		return `<option value=${index } title="${ id }" >${ name }</option>`;
+
+	} );
 	//console.log( 'options', options );
 
 	const help = `<a id=fxcimHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(fxcimHelp,FXCIM.currentStatus);" >&nbsp; ? &nbsp;</a>`;
@@ -84,7 +104,6 @@ FXCIM.getFixCadIdMissing = function() {
 			<p><i>The CADObjectId Element is used to map unique CAD object identifiers to gbXML elements</i></p>
 
 			Surfaces with no CAD Object ID: ${ noId.length.toLocaleString() }<br>
-
 
 			<p>
 				<select id=FXCIMselSurface onclick=FXCIMdivIdMissingData.innerHTML=FXCIM.getFixCim(this); size=5 style=min-width:8rem; >${ options }</select>
@@ -119,7 +138,7 @@ FXCIM.getFixCadIdMissing = function() {
 
 FXCIM.getFixCim = function( select ) {
 
-	const invalidData = SGT.getSurfacesAttributesByIndex( select.value );
+	const invalidData = SGT.getSurfacesAttributesByIndex( select.value,  select.options[ select.selectedIndex ].innerText );
 	//console.log( 'invalidData', invalidData );
 
 	const surfaceText = SGT.surfaces[ select.value ];
@@ -134,7 +153,7 @@ FXCIM.getFixCim = function( select ) {
 		<p>
 			CAD Object ID <input id=FXCIMinpCadId value="Place holder: ${ surfaceType }" style=width:30rem; >
 
-			<button onclick=FXCIM.setCadData(FXASEselSurface); >UpdateCAD Object ID</button>
+			<button onclick=FXCIM.setCadData(FXCIMselSurface); >UpdateCAD Object ID</button>
 		</p>
 	`;
 
@@ -152,10 +171,20 @@ FXCIM.setCadData = function( select ) {
 
 	const cadId = FXCIMinpCadId.value ? FXCIMinpCadId.value : "";
 
-	const surfaceTextNew = surfaceTextCurrent.replace( /<Name>/, `<CADObjectId>${ cadId }</CADObjectId> </Name>` );
+	let surfaceTextNew = surfaceTextCurrent.replace( /<Name>/, `<CADObjectId>${ cadId }</CADObjectId> </Name>` );
+
+	//console.log( 'surfaceTextNew', surfaceTextNew );
+
+	if ( surfaceTextNew === surfaceTextCurrent ) {
+
+		surfaceTextNew = surfaceTextCurrent.replace( /<\/Surface>/, `<CADObjectId>${ cadId }</CADObjectId> </Surface>` );
+
+	}
 
 	SGT.text =  SGT.text.replace( surfaceTextCurrent, surfaceTextNew );
 
 	SGT.surfaces = SGT.text.match( /<Surface(.*?)<\/Surface>/gi );
+
+	FXCIMdivIdMissing.innerHTML=FXCIM.getFixCadIdMissing();
 
 };

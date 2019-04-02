@@ -58,6 +58,8 @@ SGT.runAll = function(){
 
 	const details = divContents.querySelectorAll( 'details' );
 
+	for ( let item of details ) { item.open = false; }
+
 	for ( let item of details ) { item.open = true; }
 
 };
@@ -119,19 +121,19 @@ SGT.getStats = function() {
 
 
 
-SGT.getSurfacesAttributesByIndex = function( indexes ) {
+SGT.getSurfacesAttributesByIndex = function( indexes, id = 1 ) {
 
 	indexes = Array.isArray( indexes ) ? indexes : [ indexes ];
 	//console.log( 'indexes', indexes );
 
 	const parser = new DOMParser();
 
-	const htmArray = indexes.map( ( index, count ) => {
+	const htmArray = indexes.map( ( index ) => {
 
 		const surfaceXml = parser.parseFromString( SGT.surfaces[ index ], "application/xml").documentElement;
 		//console.log( 'surfaceXml', surfaceXml );
 
-		const htmAttributes = SGT.getSurfaceAttributes( surfaceXml, count );
+		const htmAttributes = SGT.getSurfaceAttributes( surfaceXml, id );
 		//console.log( 'htmAttributes', htmAttributes );
 
 		return htmAttributes;
@@ -158,7 +160,8 @@ SGT.getSurfaceAttributes = function( surfaceXml, index ) {
 
 	const htm =
 	`
-		<div><b>Selected Surface #${ index + 1 }</b><br>Attributes:</div>
+		<div><b>Selected Surface: ${ index }</b><br>Attributes:</div>
+
 		${ htmSurface }
 
 		<details>
@@ -389,6 +392,8 @@ SGT.getAttributesPlanarGeometry = function( surfaceXml ) {
 
 	let htm = '';
 	for ( let i = 0; i < points.length; ) {
+
+		//console.log( 'points', points );
 
 		htm +=
 		`

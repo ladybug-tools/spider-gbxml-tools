@@ -4,7 +4,7 @@
 /* jshint loopfunc:true */
 
 
-const FXASD = { "release": "1.1", "date": "2019-03-26" };
+const FXASD = { "release": "1.2", "date": "2019-04-01" };
 
 
 FXASD.description = `Fix air, InteriorWall, InteriorFloor, or Ceiling surfaces where both adjacent space IDs point to the same space`;
@@ -27,6 +27,7 @@ FXASD.currentStatus =
 		<details>
 			<summary>Change log</summary>
 			<ul>
+				<li>2019-04-01 ~ B - Fix surface and opening names being conjoined</li>
 				<li>2019-03-25 ~ F - Adjacent space is updated as expected / Upon deletion, repeats check</li>
 				<li>2019-03-25 ~ List errant surfaces by name with IDs as tool tips</li>
 				<li>2019-03-23 ~ Add help pop-up. Fix 'run again'</li>
@@ -90,10 +91,12 @@ FXASD.getFixAdjacentSpaceDuplicate = function() {
 		const surface = SGT.surfaces[ index ];
 		//console.log( 'sf', surface );
 
-		const id = surface.match( / id="(.*?)"/i );
+		const id = surface.match( / id="(.*?)"/i )[ 1 ];
 		//console.log( 'id', id );
 
-		const name = surface.match( /<Name>(.*?)<\/Name>/i );
+		let name = surface.match( /<Name>(.*?)<\/Name>/gi )
+		name = name? name.pop() : id;
+		//console.log( 'name', name );
 
 		return `<option value=${ index } title="${ id ? id[ 1 ] : 44 }" >${ name ? name : "no name" }</option>`;
 
@@ -170,7 +173,7 @@ FXASD.setSpaceDuplicateData = function( select ) {
 		`,
 	"" );
 
-	const attributes = SGT.getSurfacesAttributesByIndex( select.value );
+	const attributes = SGT.getSurfacesAttributesByIndex( select.value,  select.options[ select.selectedIndex ].innerText );
 
 	FXASDdivAdjacentSpaceDuplicateData.innerHTML =
 		`
@@ -194,7 +197,7 @@ FXASD.adjacentSpaceUpdate = function( index, surfaceId ) {
 
 	const spaceIdNew = document.body.querySelector( `#FXASDselSpaceIdNew${ index }` ).value;
 
-	console.log( 'spaceIdNew', spaceIdNew );
+	//console.log( 'spaceIdNew', spaceIdNew );
 
 	//console.log( 'index/id',index,  surfaceId );
 
@@ -205,17 +208,19 @@ FXASD.adjacentSpaceUpdate = function( index, surfaceId ) {
 	const adjacentSpaces = surfaceTextCurrent.match( /<AdjacentSpaceId (.*?)\/>/gi );
 	//console.log( 'adjacentSpaces', adjacentSpaces );
 
-	const spaceIdCurrent = adjacentSpaces[ index ].match( /<AdjacentSpaceId spaceIdRef="(.*?)"\/>/ )[ 1 ];
+	let spaceIdCurrent = adjacentSpaces[ index ].match( /<AdjacentSpaceId spaceIdRef="(.*?)"(.*?)\/>/i )
+	//console.log( 'spaceIdCurrent', spaceIdCurrent );
+	spaceIdCurrent = spaceIdCurrent ? spaceIdCurrent[ 1 ] : spaceIdCurrent;
 
 	const newText = adjacentSpaces[ index ].replace( spaceIdCurrent, spaceIdNew )
 
 	adjacentSpaces[ index ] = newText;
 
 	const adjacentSpacesTextNew = adjacentSpaces.join( adjacentSpacesTextCurrent[ 2 ] );
-	console.log( 'adjacentSpacesTextNew', adjacentSpacesTextNew );
+	//console.log( 'adjacentSpacesTextNew', adjacentSpacesTextNew );
 
 	const surfaceTextNew = surfaceTextCurrent.replace( adjacentSpacesTextCurrent[ 0 ], adjacentSpacesTextNew )
-	console.log( 'surfaceTextNew', surfaceTextNew );
+	//console.log( 'surfaceTextNew', surfaceTextNew );
 
 	SGT.text =  SGT.text.replace( surfaceTextCurrent, surfaceTextNew )
 

@@ -86,6 +86,15 @@ From [The case for single character git commit message prefixes]( https://smalld
 
 ### 2019-03-25 ~ Theo
 
+Spider gbXML Fixer 'Atrax' R1.6
+
+_See changes in individual JavaScript files_
+
+ * Many / See pop-up help for individual checks
+ * Runs just about every sample file without errors
+
+### 2019-03-25 ~ Theo
+
 Spider gbXML Fixer 'Atrax' R1.5
 
 _Changes in JavaScript files_

@@ -22,13 +22,13 @@ SGT.getCheckGeneral = function() {
 	}
 
 	let area =  SGT.text.match( /<Area(> <|><|>0<?)\/Area>/gi );
-	area ? area.length : 0;
+	area = area ? area.length : 0;
 	//console.log( 'area', area );
 
 	htm +=
 	`
 		<p>
-			Area = 0: ${ area } found
+			Area = 0 or space or null: ${ area } found
 		</p>
 	`;
 
@@ -39,7 +39,7 @@ SGT.getCheckGeneral = function() {
 	htm  +=
 	`
 		<p>
-			Volume = 0: ${ vol } found
+			Volume = 0 or space or null: ${ vol } found
 		</p>
 	`;
 
@@ -56,8 +56,9 @@ SGT.getCheckGeneral = function() {
 	//divContents.innerHTML += htm;
 
 	const errors = area + vol + string;
+	//console.log( 'errors ', errors );
 
-	FXsumCheckGeneral.innerHTML = `Check for valid text and numbers ~ ${ errors } erors found`;
+	FXsumCheckGeneral.innerHTML = `Check for valid text and numbers ~ ${ errors } errors found`;
 
 	const generalHtm =
 		`
@@ -77,6 +78,7 @@ SGT.getCheckGeneral = function() {
 
 
 SGT.getCheckOffset = function() {
+	// move to own module / add pop-up etc
 
 	const timeStart = performance.now();
 	let max = 0;

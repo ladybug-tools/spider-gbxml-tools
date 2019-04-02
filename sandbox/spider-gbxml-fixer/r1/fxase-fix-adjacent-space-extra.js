@@ -5,13 +5,15 @@
 
 
 
-const FXASE = { "release": "1.2", "date": "2019-03-29" };
+const FXASE = { "release": "1.3", "date": "2019-04-01 ~ " };
 
 
 FXASE.description =
 	`
 		Checks for a surface with more adjacent spaces and required
 	`;
+
+
 
 FXASE.currentStatus =
 	`
@@ -32,6 +34,7 @@ FXASE.currentStatus =
 		<details>
 			<summary>Change log</summary>
 			<ul>
+				<li>2019-04-01 ~ F - Adjacent space details is open when a surface is selected</li>
 				<li>2019-03-29 ~ F - Add FXASE.showSelectedSurfaceGbxml() / Pass through jsHint</li>
 				<li>2019-03-25 ~ F - Adjacent space is deleted as expected / Upon deletion, repeats check</li>
 				<li>2019-03-25 ~ F - List errant surfaces by name with IDs as tool tips</li>
@@ -39,6 +42,7 @@ FXASE.currentStatus =
 			</ul>
 		</details>
 	`;
+
 
 
 FXASE.getFixAdjacentSpaceExtra = function() {
@@ -103,7 +107,7 @@ FXASE.getFixAdjacentSpaceExtra = function() {
 				<select id=FXASEselAdjacentSpaceExtra onclick=FXASE.setSpaceExtraData(this); size=5 style=min-width:8rem; >${ options }</select>
 			</p>
 
-			<div id="FXASEdivSpaceExtraData" >Click a surface ID above to view its details and delete extra space.</div>
+			<div id="FXASEdivSpaceExtraData" >Click a surface name above to view its details and delete extra space. Tool tip shows the ID of the surface.</div>
 
 			<div id=FXASEdivSelectedSurfaceGbXML ></div>
 
@@ -144,8 +148,10 @@ FXASE.setSpaceExtraData = function( select ) {
 			</p>
 		`;
 
-	FXASEdivSpaceExtraData.innerHTML = SGT.getSurfacesAttributesByIndex( select.value ) + htm;
+	FXASEdivSpaceExtraData.innerHTML = SGT.getSurfacesAttributesByIndex( select.value, select.options[ select.selectedIndex ].innerText ) + htm;
 
+	const det = FXASEdivSpaceExtraData.querySelectorAll( 'details');
+	det[0 ].open = true;
 };
 
 

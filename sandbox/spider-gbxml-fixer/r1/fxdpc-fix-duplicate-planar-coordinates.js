@@ -7,7 +7,7 @@
 
 const FXDPC = { "release": "1.0", "date": "2019-03-25" }
 
-FXDPC.description = `Identify two or more surfaces with the same planar coordinates`;
+FXDPC.description = `Identify two or more surfaces with the same planar geometry coordinates`;
 
 FXDPC.currentStatus =
 	`
@@ -71,7 +71,13 @@ FXDPC.getCheckDuplicatePlanarCoordinates = function() {
 
 			if ( plane1 === plane2 ) {
 
-				duplicates.push( [ index1, ( planes.length - planesRemainder.length ) ] );
+				//duplicates.push( [ index1, ( planes.length - planesRemainder.length ) ] );
+
+				duplicates.push( [ index1, ( index1 + index2 + 1) ] );
+				//p1 = plane1;
+				//p2 = plane2
+				//console.log( 'plane1', plane1 );
+				//console.log( 'plane2', plane2 );
 
 			}
 
@@ -103,10 +109,8 @@ FXDPC.getCheckDuplicatePlanarCoordinates = function() {
 
 	const htm =
 	`
-			<p><i>Two surfaces with identical vertex coordinates for their planar geometry</i></p>
+			<p><i>${ FXDPC.description }</i></p>
 
-
-		<p style=color:red; >Currently sometimes incorrectly reporting duplicates</p>
 			<p>
 				${ duplicates.length.toLocaleString() } sets duplicates found.  See tool tips for surface ID.<br>
 			</p>
@@ -144,7 +148,7 @@ FXDPC.setDuplData = function( select ) {
 
 	const htm =
 		`
-			${ SGT.getSurfacesAttributesByIndex( items[ 0 ] ) }
+			${ SGT.getSurfacesAttributesByIndex( items[ 0 ], 1 ) }
 
 			<p>
 				<button onclick=FXDPC.deleteSelectedSurface(${ items[ 0 ] }); >delete</button>
@@ -153,7 +157,7 @@ FXDPC.setDuplData = function( select ) {
 
 			</p>
 
-			${ SGT.getSurfacesAttributesByIndex( items[ 1 ] ) }
+			${ SGT.getSurfacesAttributesByIndex( items[ 1 ],  2 ) }
 
 			<p>
 				<button onclick=FXDPC.deleteSelectedSurface(${ items[ 1 ] }); >Delete</button>
@@ -164,8 +168,11 @@ FXDPC.setDuplData = function( select ) {
 
 		`;
 
-
 	FXDPCdivDuplData.innerHTML= htm;
+
+	const det = FXDPCdivDuplData.querySelectorAll( 'details' )
+	det[ 1 ].open = true;
+	det[ 4 ].open = true;
 
 };
 

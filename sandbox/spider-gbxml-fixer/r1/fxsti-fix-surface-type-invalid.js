@@ -59,7 +59,6 @@ FXSTI.getCheckSurfaceTypeInvalid = function() {
 		.map( surface => SGT.surfaces.indexOf( surface ) );
 	//console.log( 'FXSTI.surfaceTypeInvalids', FXSTI.surfaceTypeInvalids );
 
-
 	const options = FXSTI.surfaceTypeInvalids.map( index => {
 
 		const surface = SGT.surfaces[ index ];
@@ -109,7 +108,7 @@ FXSTI.getCheckSurfaceTypeInvalid = function() {
 
 FXSTI.setTypeInvalidData = function( select ) {
 
-	const invalidData = SGT.getSurfacesAttributesByIndex(select.value );
+	const invalidData = SGT.getSurfacesAttributesByIndex( select.value, select.options[ select.selectedIndex ].innerText );
 
 	const options = SGT.surfaceTypes.map( ( type, index ) => {
 
