@@ -32,7 +32,7 @@ Many of the issues to be found in parsing gbXML files are clerical matters that 
 ### Mission for Spider gbXML Fixer
 
 * Run basic text-based checks on gbXML files and uncover, identify, report and fix any errors or issues
-* Help you access scripts that work well in your practice, your workflow and your skill set so that
+* Help you access scripts that work well in your practice, your workflow and your skill set so that your projects are designed and built faster, cheaper and better
 
 ### Vision
 
