@@ -1,7 +1,8 @@
 // Copyright 2019 Ladybug Tools authors. MIT License
-/* globals */
+/* globals SGT, SGTinpIgnoreAirSurfaceType, FXASDsumSpaceDuplicate,
+	FXASDdivAdjacentSpaceDuplicateData, FXASDdivSpaceDuplicate, FXASDdivCheckGbxml */
 /* jshint esversion: 6 */
-/* jshint loopfunc:true */
+/* jshint loopfunc: true */
 
 
 const FXASD = { "release": "1.2", "date": "2019-04-01" };
@@ -27,6 +28,7 @@ FXASD.currentStatus =
 		<details>
 			<summary>Change log</summary>
 			<ul>
+				<li>2019-04-02 ~ B - Validate and fix with jsHint</li>
 				<li>2019-04-01 ~ B - Fix surface and opening names being conjoined</li>
 				<li>2019-03-25 ~ F - Adjacent space is updated as expected / Upon deletion, repeats check</li>
 				<li>2019-03-25 ~ List errant surfaces by name with IDs as tool tips</li>
@@ -94,7 +96,7 @@ FXASD.getFixAdjacentSpaceDuplicate = function() {
 		const id = surface.match( / id="(.*?)"/i )[ 1 ];
 		//console.log( 'id', id );
 
-		let name = surface.match( /<Name>(.*?)<\/Name>/gi )
+		let name = surface.match( /<Name>(.*?)<\/Name>/gi );
 		name = name? name.pop() : id;
 		//console.log( 'name', name );
 
@@ -156,7 +158,7 @@ FXASD.setSpaceDuplicateData = function( select ) {
 
 		const id = space.match( / id="(.*?)"/i )[ 1 ];
 
-		selected = id === spaceIds[ 0 ] ? "selected" : "";
+		const selected = id === spaceIds[ 0 ] ? "selected" : "";
 
 		return `<option value=${ id } title="${ id }" ${ selected } >${ id } // ${ space.match( /<Name>(.*?)<\/Name>/i )[ 1 ] }</option>`;
 
@@ -187,9 +189,9 @@ FXASD.setSpaceDuplicateData = function( select ) {
 
 		`;
 
-		detAdjSpace = FXASDdivAdjacentSpaceDuplicateData.querySelectorAll( "details" )[ 0 ].open = true;
-		//console.log( 'detAdjSpace', detAdjSpace );
-}
+		FXASDdivAdjacentSpaceDuplicateData.querySelectorAll( "details" )[ 0 ].open = true;
+
+};
 
 
 
@@ -208,21 +210,21 @@ FXASD.adjacentSpaceUpdate = function( index, surfaceId ) {
 	const adjacentSpaces = surfaceTextCurrent.match( /<AdjacentSpaceId (.*?)\/>/gi );
 	//console.log( 'adjacentSpaces', adjacentSpaces );
 
-	let spaceIdCurrent = adjacentSpaces[ index ].match( /<AdjacentSpaceId spaceIdRef="(.*?)"(.*?)\/>/i )
+	let spaceIdCurrent = adjacentSpaces[ index ].match( /<AdjacentSpaceId spaceIdRef="(.*?)"(.*?)\/>/i );
 	//console.log( 'spaceIdCurrent', spaceIdCurrent );
 	spaceIdCurrent = spaceIdCurrent ? spaceIdCurrent[ 1 ] : spaceIdCurrent;
 
-	const newText = adjacentSpaces[ index ].replace( spaceIdCurrent, spaceIdNew )
+	const newText = adjacentSpaces[ index ].replace( spaceIdCurrent, spaceIdNew );
 
 	adjacentSpaces[ index ] = newText;
 
 	const adjacentSpacesTextNew = adjacentSpaces.join( adjacentSpacesTextCurrent[ 2 ] );
 	//console.log( 'adjacentSpacesTextNew', adjacentSpacesTextNew );
 
-	const surfaceTextNew = surfaceTextCurrent.replace( adjacentSpacesTextCurrent[ 0 ], adjacentSpacesTextNew )
+	const surfaceTextNew = surfaceTextCurrent.replace( adjacentSpacesTextCurrent[ 0 ], adjacentSpacesTextNew );
 	//console.log( 'surfaceTextNew', surfaceTextNew );
 
-	SGT.text =  SGT.text.replace( surfaceTextCurrent, surfaceTextNew )
+	SGT.text =  SGT.text.replace( surfaceTextCurrent, surfaceTextNew );
 
 	SGT.surfaces = SGT.text.match( /<Surface(.*?)<\/Surface>/gi );
 

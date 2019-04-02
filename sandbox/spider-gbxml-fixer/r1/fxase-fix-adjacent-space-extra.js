@@ -5,7 +5,7 @@
 
 
 
-const FXASE = { "release": "1.3", "date": "2019-04-01 ~ " };
+const FXASE = { "release": "1.4", "date": "2019-04-02" };
 
 
 FXASE.description =
@@ -26,6 +26,7 @@ FXASE.currentStatus =
 		<p>
 			Wish List / To do:<br>
 			<ul>
+				<li>2019-04-02 ~ B - Validate and fix with jsHint</li>
 				<li>2019-03-25 ~ Add select and update multiple surfaces at once</li>
 				<li>2019-03-19 ~ Pre-select the correct surface type in the select type list box</li>
 			</ul>

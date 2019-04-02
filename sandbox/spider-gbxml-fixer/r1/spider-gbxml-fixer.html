@@ -5,8 +5,8 @@
 <meta name = "viewport" content= "width=device-width, initial-scale=1" >
 <meta name = "description" content = "This menu is a component of a basic html content management script with sliding menu, css theme selection, Markdown to HTML, drag and drop file reading capability, access to frequently used pages and more" >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
-<meta name = "date" content = "2019-04-01" >
-<meta name = "release" content = "1.6" >
+<meta name = "date" content = "2019-04-02" >
+<meta name = "release" content = "1.7" >
 <title>Spider gbXML Fixer 'Atrax'</title>
 <link rel="stylesheet" href="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/style.css">
 </head>
@@ -48,7 +48,7 @@
 
 MNU.description =
 	`
-		Mission: run a series of basics checks on gbXML files and identify, report and help you fix any errors
+		Mission: run a series of basics checks on <a href="https://gbXML.org" target="_blank">gbXML</a> files and identify, report and help you fix any errors
 	`;
 
 MNU.currentStatusCore =
@@ -150,7 +150,7 @@ OHC.urlGitHubPage = "";
 
 			<div id="MNUdivHeader" ></div>
 
-			<section class=navSubMenu >
+			<section class="navSubMenu" >
 				See also <a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">Schema GreenBuildingXML_Ver6.01.xsd </a>
 			</section>
 
@@ -158,9 +158,9 @@ OHC.urlGitHubPage = "";
 
 		<details class=navSubMenu open >
 
-			<section><i>May take a minute or more on files over 10MB or with many issues. This will be fixed.</i></section>
-
 			<summary class="sumMenuTitle" >File Menu</summary>
+
+			<section><i>May take a minute or more on files over 10MB or with many issues. This will be fixed.</i></section>
 
 			<section id="SFMsecPrototypes" ></section>
 
@@ -190,8 +190,8 @@ OHC.urlGitHubPage = "";
 		</footer>
 
 
-		<h1 onclick=navMenu.scrollTop=0; style=cursor:pointer;text-align:center; title="go to top of menu" >
-			<img src="https://ladybug.tools/artwork/icons_bugs/ico/spider.ico" height=18 >
+		<h1 onclick="navMenu.scrollTop=0;" style="cursor:pointer;text-align:center;" title="go to top of menu" >
+			<img alt="spider icon" src="https://ladybug.tools/artwork/icons_bugs/ico/spider.ico" height=18 >
 		</h1>
 
 	</nav>
@@ -227,23 +227,23 @@ OHC.urlGitHubPage = "";
 
 		<h2 id=SGTh1FileName >Check file: <script></script>decodeURI( FIL.name ) } </h2>
 
-		<p><button onclick=SGT.runAll(); >run all checks</button></p>
+		<p><button onclick=SGT.runAll(); >Run all checks</button></p>
 
 
 		<p>
 			<input type=checkbox id=SGTinpIgnoreAirSurfaceType > Ignore Air surface type
 		</p>
 
-		<details ontoggle=FXdivStats.innerHTML=SGT.getStats();  >
+		<details ontoggle="FXdivStats.innerHTML=SGT.getStats();" >
 
 			<summary id=FXsumStats class=sumHeader >Show gbXML file statistics</summary>
 
-			<div id=FXdivStats </div>
+			<div id=FXdivStats ></div>
 
 		</details>
 
 
-		<details ontoggle=FXdivCheckGeneral.innerHTML=SGT.getCheckGeneral();  >
+		<details ontoggle="FXdivCheckGeneral.innerHTML=SGT.getCheckGeneral();"  >
 
 			<summary id=FXsumCheckGeneral class=sumHeader >Check for valid text and numbers</summary>
 
@@ -252,7 +252,7 @@ OHC.urlGitHubPage = "";
 		</details>
 
 
-		<details ontoggle=FXdivCheckOffset.innerHTML=SGT.getCheckOffset();  >
+		<details ontoggle="FXdivCheckOffset.innerHTML=SGT.getCheckOffset();" >
 
 			<summary id=FXsumCheckOffset class=sumHeader >Check maximum offset distance from origin</summary>
 
@@ -261,7 +261,7 @@ OHC.urlGitHubPage = "";
 		</details>
 
 
-		<details ontoggle=FXAdivAttributes.innerHTML=FXA.checkAttributes();  >
+		<details ontoggle="FXAdivAttributes.innerHTML=FXA.checkAttributes();"  >
 
 			<summary id=FXAsumAtributes class=sumHeader >Fix missing required gbXML attributes</summary>
 
@@ -270,7 +270,7 @@ OHC.urlGitHubPage = "";
 		</details>
 
 
-		<details ontoggle=FXSTIdivSurfaceTypeInvalid.innerHTML=FXSTI.getCheckSurfaceTypeInvalid(); >
+		<details ontoggle="FXSTIdivSurfaceTypeInvalid.innerHTML=FXSTI.getCheckSurfaceTypeInvalid();" >
 
 			<summary id=FXSTIsumSurfaceTypeInvalid class=sumHeader >Fix surfaces with invalid surface type</summary>
 
@@ -279,7 +279,7 @@ OHC.urlGitHubPage = "";
 		</details>
 
 
-		<details ontoggle=FXDPCdivDuplicatePlanar.innerHTML=FXDPC.getCheckDuplicatePlanarCoordinates(); >
+		<details ontoggle="FXDPCdivDuplicatePlanar.innerHTML=FXDPC.getCheckDuplicatePlanarCoordinates();" >
 
 			<summary id=FXDPCsumDuplicatePlanar class=sumHeader >Fix surfaces with duplicate planar coordinates </summary>
 
@@ -288,7 +288,7 @@ OHC.urlGitHubPage = "";
 		</details>
 
 
-		<details ontoggle=FXASEdivSpaceExtra.innerHTML=FXASE.getFixAdjacentSpaceExtra(); >
+		<details ontoggle="FXASEdivSpaceExtra.innerHTML=FXASE.getFixAdjacentSpaceExtra();" >
 
 			<summary id=FXASEsumSpaceExtra class=sumHeader >Fix surfaces with extra adjacent spaces</summary>
 
@@ -298,7 +298,7 @@ OHC.urlGitHubPage = "";
 		</details>
 
 
-		<details ontoggle=FXASDdivSpaceDuplicate.innerHTML=FXASD.getFixAdjacentSpaceDuplicate(); >
+		<details ontoggle="FXASDdivSpaceDuplicate.innerHTML=FXASD.getFixAdjacentSpaceDuplicate();" >
 
 			<summary id=FXASDsumSpaceDuplicate class=sumHeader >Fix surfaces with duplicate adjacent spaces</summary>
 
@@ -307,7 +307,7 @@ OHC.urlGitHubPage = "";
 		</details>
 
 
-		<details ontoggle=FXCIMdivIdMissing.innerHTML=FXCIM.getFixCadIdMissing(); >
+		<details ontoggle="FXCIMdivIdMissing.innerHTML=FXCIM.getFixCadIdMissing();" >
 
 			<summary id=FXCIMsumIdMissing class=sumHeader >Fix surfaces with missing CAD object ID</summary>
 
@@ -319,8 +319,8 @@ OHC.urlGitHubPage = "";
 
 		<hr>
 
-		<h1 onclick=navMenu.scrollTop=0; style=cursor:pointer;text-align:center; title="go to top of menu" >
-			<img src="https://ladybug.tools/artwork/icons_bugs/ico/spider.ico" height=18 >
+		<h1 onclick="navMenu.scrollTop=0;" style="cursor:pointer;text-align:center;" title="go to top of menu" >
+			<img alt="spider icon" src="https://ladybug.tools/artwork/icons_bugs/ico/spider.ico" height=18 >
 		</h1>
 
 	</template>

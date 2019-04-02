@@ -24,40 +24,81 @@ _<small>Spider gbXML Fixer</small>_
 
 ## Concept / the problem to be solved
 
+The good people who create CAD and energy analysis applications are primarily software programmers. They have infrequent access to large numbers of actual building test cases nor can they simulate large varieties of practice-specific energy simulation workflows. The current frequently-repeated outcome is that building engineering practices devote much time to dealing with issues in transferring data back and forth between CAD applications and energy analysis programs - and thus losing time for creating better simulations
+
 Many of the issues to be found in parsing gbXML files are clerical matters that may be identified using simple text search routines. Full 3D viewing of these types of errors is not needed and may actually slow things down.
 
-* Run basic checks on gbXML files and identify, report and fix any errors
+
+### Mission for Spider gbXML Fixer
+
+* Run basic text-based checks on gbXML files and uncover, identify, report and fix any errors or issues
+* Help you access scripts that work well in your practice, your workflow and your skill set so that
+
+### Vision
+
+* All errors are fixed and changes saved with the click of a single button or just running the script of a server
+
+### Notes
+
+* Not all issues in gbXML files are simple, text-based issues. Some issues will require full a 3D visualization in order to be discovered and fixed. An intention is to make the workflow between a text-based fixer and full 3D fixer as seamless as possible.
+* If you identify a frequently occurring error in ggXML files and supply sample files that exhibit the error, The Spider team will build a module that identifies and fixes the issue
 * The script is still at an early stage. Many more checks may be added.
 
 
 ## To Do / Wish List
 
 * 2019-03-12 ~ Add as many tests currently in Spider gbXML Viewer as possible that do not require 3D
-* 2019-03-12 ~ Add fixing the issues where possible
+* 2019-03-12 ~ Add more and better fixing the issues where possible
 * 2019-03-12 ~ Add check for opening vertices greater then four
 * 2019-03-12 ~ Add check for openings larger or outside their parent surface
 
+
 ## Issues
 
-* 2019-03-12 ~ In some workflows an Air surface type with duplicate adjacent spaces is acceptable. You should be able to adjust the settings so an error is not issued.
+* 2019-04-02 ~ Toggling the display of a module and clicking the 'Run check again' perform thhe identical action. Would be nice to decide which is preferable
+* Once a change is effected, some modules re-run the check automatically and others do not. Would be nice to decide which behavior is preferable
 
 
-## Things you can do using this script
+## Usage / things you can do using this script
 
-Using the Script
+Opening files and saving changes
 * Click 'Choose file' and load a gbXML files or a ZIP file containing a gbXML file
-* Drag and dtop a gbXML or ZIP file to the area inside the dotted lines in the left menu
+* Drag & drop a gbXML or ZIP file to the area inside the dotted lines in the left menu
 * Click 'Open gbXML sample files' to access the Spider gbXML sample files
+	* Then click any of the buttons to a obtain a list of files you can open
+* Click on the 'Save file' to save any changes you have made to a new file
+	* You may save the changes either to an XML file or and XML file compressed into a ZIP file
+
+Checking and fixing errors
+* Once a file is opened a menu appears in the main content area that allows yo to identify and fix any issues found in the file
+* Clicking any of the titles displays the text and runs the checking routines
+	* Click 'Run all checks' to open all the modules' text and run all the checks. This may take quite a while on large files
+* There are a numbers of types of errors to be check and needs its own style of user interface
+	* Streamlining amd homogenizing the workflows of the modules is a work-in-progress. Please do report issues and insights
+* In some workflows an Air surface type with duplicate adjacent spaces is acceptable. You may adjust the settings so an error is not issued.
+
+Menu system
+* Click on any of the '?' links to see a pop-up menu at top right with
+	* Short description of the module
+	* Link to source code for the module
+	* Wish list / to do items
+	* Issues list
+	* Change log
 * Click the three bars( 'hamburger menu icon' ) to slide the menu in and out
 * Click the Octocat icon to view or edit the source code on GitHub
 * Click on title in the menu to reload the web page
+* Click on 'Select Them and choose a [Bootswatch]( https://bootswatch.com/ ) theme such as 'United'
+* Click on 'Footer / Help' to see the links to many support files
+
+Debugging
 * Press Control-U/Command-Option-U to view the source code
 * Press Control-Shift-J/Command-Option-J to see if the JavaScript console reports any errors
 
-Enhancing the Script
-
+Enhancing the script
 * Try adding a new menu module
 * Translate into another language
+
+
 
 ## Links of Interest
 
@@ -71,7 +112,7 @@ Enhancing the Script
 
 ### Commit message prefixes
 
-From [The case for single character git commit message prefixes]( https://smalldata.tech/blog/2018/10/04/the-case-for-single-character-git-commit-message-prefixes )
+From [The case for single character git commit message prefixes]( https://smalldata.tech/blog/2018/10/04/the-case-for-single-character-git-commit-message-prefixes ):
 
 * B, indicates a bugfix.
 * F, indicates a feature or a change - this will most likely be the majority of the commits.
@@ -83,6 +124,14 @@ From [The case for single character git commit message prefixes]( https://smalld
 * T, test cases and/or test improvements
 * !, unknown - i.e. for when you really need to make that commit because there's a horde of zombies waiting outside.
 
+
+### 2019-04-02 ~ Theo
+
+Spider gbXML Fixer 'Atrax' R1.7
+* B - Validate HTML with  https://validator.w3.org/nu / Fix all errors reported
+* D - Update this read me a lot
+
+_See also changes listed in individual JavaScript files_
 
 ### 2019-03-25 ~ Theo
 

@@ -1,11 +1,11 @@
 
 // Copyright 2019 Ladybug Tools authors. MIT License
-/* globals */
+/* globals SGT, FXDPCsumDuplicatePlanar, FXDPCdivDuplData, FXDPCdivDuplicatePlanar */
 /* jshint esversion: 6 */
 /* jshint loopfunc:true */
 
 
-const FXDPC = { "release": "1.0", "date": "2019-03-25" }
+const FXDPC = { "release": "1.1", "date": "2019-04-02" };
 
 FXDPC.description = `Identify two or more surfaces with the same planar geometry coordinates`;
 
@@ -37,6 +37,7 @@ FXDPC.currentStatus =
 			<summary>Change log</summary>
 
 			<ul>
+				<li>2019-04-02 ~ B - Validate and fix with jsHint</li>
 				<li>2019-03-29 ~ F - Add FXDPC.showSelectedSurfaceGbxml() / B - incorrect space shown.</li>
 				<li>2019-03-25 ~ F - Duplicate surface is deleted as expected / Upon deletion, repeats check</li>
 				<li>2019-03-25 ~ D - Pop-up help defined in detail</li>
@@ -92,7 +93,7 @@ FXDPC.getCheckDuplicatePlanarCoordinates = function() {
 		return `<option value="${ arr.join() }" style=background-color:${ count % 2 === 0 ? "#eee" : "" };
 			title="${ surface.match( / id="(.*?)"/i )[ 1 ] }" >
 			${ count + 1 } ${ surface.match( /<Name>(.*?)<\/Name>/i )[ 1 ] }
-		</option>`
+		</option>`;
 
 		} )
 
@@ -116,7 +117,7 @@ FXDPC.getCheckDuplicatePlanarCoordinates = function() {
 			</p>
 
 			<p>
-				<select onclick=FXDPC.setDuplData(this); size=${ 2 * duplicates.length <= 10 ? 2 * duplicates.length : 10 } >${ options }</select>
+				<select onclick=FXDPC.setDuplData(this); style=min-width:8rem; size=${ duplicates.length >= 5 &&  duplicates.length <= 20 ? 2 * duplicates.length : 10 } >${ options }</select>
 			</p>
 
 			<div id="FXDPCdivDuplData" >Click a surface ID above to view its details and delete if necessary</div>
@@ -143,7 +144,7 @@ FXDPC.getCheckDuplicatePlanarCoordinates = function() {
 FXDPC.setDuplData = function( select ) {
 	//console.log( '', select.value );
 
-	items = select.value.split( ",");
+	const items = select.value.split( ",");
 	//console.log( '', items );
 
 	const htm =
@@ -170,7 +171,7 @@ FXDPC.setDuplData = function( select ) {
 
 	FXDPCdivDuplData.innerHTML= htm;
 
-	const det = FXDPCdivDuplData.querySelectorAll( 'details' )
+	const det = FXDPCdivDuplData.querySelectorAll( 'details' );
 	det[ 1 ].open = true;
 	det[ 4 ].open = true;
 

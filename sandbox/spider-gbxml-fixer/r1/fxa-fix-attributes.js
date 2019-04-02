@@ -1,8 +1,9 @@
 // Copyright 2019 Ladybug Tools authors. MIT License
-/* globals */
+/* globals SGT, FXAsumAtributes, FXAdivMissingMeta, FXAtxtAttributesMissing, FXAdivInputs */
 /* jshint esversion: 6 */
+/* jshint loopfunc: true */
 
-const FXA = { "release": "R1.1", "date": "2019-03-23" };
+const FXA = { "release": "R1.2", "date": "2019-04-02" };
 
 FXA.description =
 	`
@@ -31,6 +32,7 @@ FXA.currentStatus =
 		<details>
 			<summary>Change log</summary>
 			<ul>
+				<li>2019-04-02 ~ B - Validate and fix with jsHint</li>
 				<li>2019-03-23 ~ 1.1 ~ Rename everything from 'metadata' to 'attributes.</li>
 				<li>2019-03-23 ~ 1.1 fix run again issues</li>
 				<li>2019-02-28 ~ R1.0 ~ First commit to Tester</li>
@@ -84,7 +86,7 @@ FXA.checkAttributes = function() {
 	FXAsumAtributes.innerHTML =
 	`Check for missing required gbXML attributes ~ ${FXA.attributesMissing.length} missing ${ help }`;
 
-	htm =
+	const htm =
 		`
 			<p><i>Seven types of attributes are required: ${ keys.join( ', ' ) }.</i></p>
 
@@ -100,6 +102,7 @@ FXA.checkAttributes = function() {
 
 
 	return htm;
+
 };
 
 
@@ -119,20 +122,19 @@ FXA.setMenuAttributes = function() {
 	} else {
 
 		htm =
-		`
-			<p>gbXML attributes provided:<br>
-				${ FXA.attributesProvided.map( ( item, index ) => `${ 1 + index }. ${ item }` ).join( '<br>' )}</p>
+			`
+				<p>gbXML attributes provided:<br>
+					${ FXA.attributesProvided.map( ( item, index ) => `${ 1 + index }. ${ item }` ).join( '<br>' )}</p>
 
-			<p>gbXML attributes missing:<br>
-				${FXA.attributesMissing.map( ( item, index ) => `${ 1 + index }. ${ item }` ).join( '<br>' )} </p>
+				<p>gbXML attributes missing:<br>
+					${FXA.attributesMissing.map( ( item, index ) => `${ 1 + index }. ${ item }` ).join( '<br>' )} </p>
 
-			<p>
-				<button onclick=FXA.setDivAttributesIssues(); >Add missing attributes</button>
-			</p>
+				<p>
+					<button onclick=FXA.setDivAttributesIssues(); >Add missing attributes</button>
+				</p>
 
-			<div id=FXAdivMissingMeta ></div>
-
-		`;
+				<div id=FXAdivMissingMeta ></div>
+			`;
 
 	}
 
@@ -159,35 +161,34 @@ FXA.setDivAttributesIssues = function() {
 	}
 
 	FXAdivMissingMeta.innerHTML =
+		`
+			<div id=FXAdivInputs >${ attributesMissing }</div>
 
-	`
-		<div id=FXAdivInputs >${ attributesMissing }</div>
+			<p>
+				<button onclick=FXA.setDivAttributesIssues(); >Reset changes</button>
+			</p>
 
-		<p>
-			<button onclick=FXA.setDivAttributesIssues(); >Reset changes</button>
-		</p>
+			<p>
+				<button onclick=onchange=FXAtxtAttributesMissing.value=FXA.setChangesAttributesIssues(); >Update the changes in gbXML file </button>
+			</p>
 
-		<p>
-			<button onclick=onchange=FXAtxtAttributesMissing.value=FXA.setChangesAttributesIssues(); >Update the changes in gbXML file </button>
-		</p>
+			<h3>Changes for missing attributes</h3>
 
-		<h3>Changes for missing attributes</h3>
+			<textArea id=FXAtxtAttributesMissing style="height:100px;width:100%;" ></textArea>
 
-		<textArea id=FXAtxtAttributesMissing style="height:100px;width:100%;" ></textArea>
+			<p>
+				<button onclick=FXA.addChangesToData(); >Add changes to data in memory</button>
 
-		<p>
-			<button onclick=FXA.addChangesToData(); >Add changes to data in memory</button>
+				<button onclick=FXAtxtAttributesMissing.value=SGT.text.slice(0,200); >view gbXML text</button>
 
-			<button onclick=FXAtxtAttributesMissing.value=SGT.text.slice(0,200); >view gbXML text</button>
+				<button onclick=FXAdivAttributes.innerHTML=FXA.checkAttributes(); >Run check again</button>
 
-			<button onclick=FXAdivAttributes.innerHTML=FXA.checkAttributes(); >Run check again</button>
+			</p>
 
-		</p>
-
-		<p>
-			Click 'Save file as' button in File menu to save changes to a file.
-		</p>
-	`;
+			<p>
+				Click 'Save file as' button in File menu to save changes to a file.
+			</p>
+		`;
 
 	FXAtxtAttributesMissing.value = FXA.setChangesAttributesIssues();
 
@@ -213,6 +214,7 @@ FXA.setChangesAttributesIssues = function() {
 };
 
 
+
 FXA.addChangesToData = function() {
 
 	//console.log( '', FXA.attributesNew );
@@ -221,6 +223,4 @@ FXA.addChangesToData = function() {
 
 	//detMenuEdit.open = false;
 
-
-
-}
+};

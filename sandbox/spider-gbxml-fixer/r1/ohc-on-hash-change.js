@@ -1,10 +1,9 @@
 // Copyright 2019 pushMe pullYou authors. MIT License
+/* globals showdown, divContents, FIL, OHCdivMenuItems, OHCdivBreadcrumbs, divPopUpData */
 // jshint esversion: 6
-/* globals showdown, navMenu, divContents, uriDefaultFile, urlGitHubPage, OHCdivMenuItems, OHCdivBreadcrumbs
+/* jshint loopfunc: true */
 
-*/
-
-const OHC = { "release": "R13.6", "date": "2019-01-19" };
+const OHC = { "release": "R1.1", "date": "2019-04-02" };
 
 
 OHC.uriDefaultFile = "README.md";
@@ -56,6 +55,7 @@ OHC.currentStatus =
 		<p>
 			Change log
 			<ul>
+				<li>2019-04-02 ~ B - Validate and fix with jsHint</li>
 				<li>2019-01-15 ~ Update OHC.description content and related code</li>
 				<li>2019-01-14 ~ Add text here and there / fix broken links</li>
 				<li>2019-01-13 ~ Add link to source code and more status content</li>
@@ -157,11 +157,11 @@ OHC.onHashChange = function() {
 
 	const ulc = url.toLowerCase();
 
-	const crumbs = url.slice( OHC.urlGitHubPage.length );
-	let pathCurrent = crumbs.lastIndexOf( '/' ) > 0 ? crumbs.slice( 0, crumbs.lastIndexOf( '/' ) ) : '';
+	//const crumbs = url.slice( OHC.urlGitHubPage.length );
+	//let pathCurrent = crumbs.lastIndexOf( '/' ) > 0 ? crumbs.slice( 0, crumbs.lastIndexOf( '/' ) ) : '';
 
 	FIL.name = url.split( '/').pop();
-	
+
 	// note two requests...
 
 	// if new !== old
@@ -225,7 +225,9 @@ OHC.callbackRateLimits = function( xhr ) {
 
 		`;
 
-}
+};
+
+
 
 OHC.callbackMarkdown = function( xhr ) {
 
@@ -325,7 +327,7 @@ OHC.getFoldersFromContents = function( items ) {
 
 	return htm;
 
-}
+};
 
 
 
@@ -364,8 +366,8 @@ OHC.getFilesFromContents = function( items ) {
 
 			// how to simplify
 			if ( ( !location.hash || location.hash.toLowerCase().endsWith( 'readme.md' ) )
-
-				&& ( item.name.toLowerCase() === 'readme.md' ) ) {
+				&& ( item.name.toLowerCase() === 'readme.md' )
+			) {
 
 				location.hash = OHC.urlGitHubPage + OHC.pathRepo + itemPath;
 

@@ -1,12 +1,17 @@
-  // Copyright 2018 Ladybug Tools authors. MIT License
+// Copyright 2019 Ladybug Tools authors. MIT License
 // jshint esversion: 6
-/* globals GBX, JSZip */
+/* jshint loopfunc: true */
+/* globals GBX, GBXdivStatsGbx, GBXdivStatsThr, JSZip, SGT, FILdetFileOpen, FILdivFileOpen, FILdivProgress, FILinpFilePath */
 
 
-const FIL = { "release": "r1.1", "date": "2019-03-23 ~ " };
+const FIL = { "release": "r1.2", "date": "2019-04-02" };
 
 
-FIL.description = `Open and save gbXML and ZIP files using location.hash, the operating system file dialog box or drag&drop.`
+FIL.description =
+	`
+		Open and save gbXML and ZIP files using location.hash,
+		the operating system file dialog box or drag&drop.
+	`;
 
 FIL.currentStatus =
 	`
@@ -25,7 +30,6 @@ FIL.currentStatus =
 
 			<ul>
 				<li>2019-03-23 ~ Handle more file types</li>
-
 			</ul>
 
 		</details>
@@ -33,8 +37,9 @@ FIL.currentStatus =
 		<details>
 
 			<summary>Change log</summary>
-			
+
 			<ul>
+  				<li>2019-04-02 ~ B - Validate and fix with jsHint</li>
   				<li>2019-03-23 ~ Fix source code link</li>
 				<li>2019-02-24 ~ Update source and file-open.md links</li>
 				<li>2018-12-29 ~ Add helpItem class</li>
@@ -96,6 +101,7 @@ FIL.getMenuFileOpen = function() {  // called from main HTML file
 
 			</details>
 
+			<!--
 			<details id=GBXdetStats >
 
 				<summary>gbXML parser statistics
@@ -109,6 +115,7 @@ FIL.getMenuFileOpen = function() {  // called from main HTML file
 				<hr>
 
 			</details>
+			-->
 
 		</details>
 	`;
@@ -121,34 +128,34 @@ FIL.getMenuFileOpen = function() {  // called from main HTML file
 
 FIL.getMenuFileSave = function() {
 
-	htm =
+	const htm =
 	`
-	<details>
+		<details>
 
-		<summary>Save file
-			<a id=filSav class=helpItem href="JavaScript:MNU.setPopupShowHide(filSav,FIL.currentStatus);" >&nbsp; ? &nbsp;</a>
-		</summary>
+			<summary>Save file
+				<a id=filSav class=helpItem href="JavaScript:MNU.setPopupShowHide(filSav,FIL.currentStatus);" >&nbsp; ? &nbsp;</a>
+			</summary>
 
-		<div id = "divSaveFile" >
+			<div id = "divSaveFile" >
 
-			<p>
-				<button onclick=FIL.butSaveFile(); >Save file as gbXML</button>
-			</p>
-			<p>
-				<button onclick=FIL.butSaveFileZip(); >Save file as gbXML in ZIP</button>
-			</p>
+				<p>
+					<button onclick=FIL.butSaveFile(); >Save file as gbXML</button>
+				</p>
+				<p>
+					<button onclick=FIL.butSaveFileZip(); >Save file as gbXML in ZIP</button>
+				</p>
 
-			<hr>
+				<hr>
 
-		</div>
+			</div>
 
-	</details>
+		</details>
 
 	`;
 
 	return htm;
 
-}
+};
 
 
 
@@ -157,8 +164,8 @@ FIL.onHashChange = function() {
 	const url = !location.hash ? FIL.urlDefaultFile : location.hash.slice( 1 );
 	//console.log( 'url', url );
 
-	GBXdivStatsGbx.innerHTML = '';
-	GBXdivStatsThr.innerHTML = '';
+	//GBXdivStatsGbx.innerHTML = '';
+	//GBXdivStatsThr.innerHTML = '';
 
 	FIL.name = url.split( '/').pop();
 
@@ -298,8 +305,8 @@ FIL.onInputFileOpen = function( files ) {
 
 	FIL.timeStart = performance.now();
 
-	GBXdivStatsGbx.innerHTML = '';
-	GBXdivStatsThr.innerHTML = '';
+	//GBXdivStatsGbx.innerHTML = '';
+	//GBXdivStatsThr.innerHTML = '';
 
 	const file = files.files[ 0 ];
 	const type = file.type;
@@ -331,8 +338,8 @@ FIL.drop = function( event ) {
 	const dropUrl = event.dataTransfer.getData( 'URL' );
 	//console.log( 'dropUrl', dropUrl );
 
-	GBXdivStatsGbx.innerHTML = '';
-	GBXdivStatsThr.innerHTML = '';
+	//GBXdivStatsGbx.innerHTML = '';
+	//GBXdivStatsThr.innerHTML = '';
 
 	if ( dropUrl ) {
 

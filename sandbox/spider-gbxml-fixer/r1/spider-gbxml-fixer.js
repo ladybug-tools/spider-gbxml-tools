@@ -1,7 +1,7 @@
 // Copyright 2019 Ladybug Tools authors. MIT License
 /* globals SGT, FIL, FXsumCheckGeneral, FXsumCheckOffset */
 /* jshint esversion: 6 */
-/* jshint loopfunc:true */
+/* jshint loopfunc: true */
 
 
 SGT.getCheckGeneral = function() {

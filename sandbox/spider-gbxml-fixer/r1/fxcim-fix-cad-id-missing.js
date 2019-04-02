@@ -1,5 +1,5 @@
 // Copyright 2019 Ladybug Tools authors. MIT License
-/* globals SGT, FXCIMsumIdMissing, FXCIMinpCadId */
+/* globals SGT, SGTinpIgnoreAirSurfaceType, FXCIMsumIdMissing, FXCIMinpCadId, FXCIMdivIdMissing */
 /* jshint esversion: 6 */
 /* jshint loopfunc: true */
 
