@@ -55,8 +55,8 @@ Many of the issues to be found in parsing gbXML files are clerical matters that 
 
 ## Issues
 
-* 2019-04-02 ~ Toggling the display of a module and clicking the 'Run check again' perform thhe identical action. Would be nice to decide which is preferable
-* Once a change is effected, some modules re-run the check automatically and others do not. Would be nice to decide which behavior is preferable
+* 2019-04-02 ~ Toggling the display of a module and clicking the 'Run check again' perform thhe identical action. It would be nice to decide which is preferable.
+* 2019-04-02 ~ Once a change is effected, some modules re-run the check automatically and others do not. It would be nice to decide which behavior is preferable.
 
 
 ## Usage / things you can do using this script
