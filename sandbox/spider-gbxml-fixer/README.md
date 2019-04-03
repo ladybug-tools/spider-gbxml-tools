@@ -13,40 +13,41 @@ value="You are now in a GitHub web page view - Click this button to view this re
 _<small>Spider gbXML Fixer</small>_
 -->
 
-## Bookmark this link: https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-fixer/
+## Bookmark this link:<br>https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-fixer/
 
-* Links to the latest most current revision
+* Always links to the current stable release
 
-## [Sample test run]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-fixer/r1/spider-gbxml-fixer.html#https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/bristol-clifton-downs-broken.xml )
+## Latest release with demo: [Sample test run]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-fixer/r1/spider-gbxml-fixer.html#https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/bristol-clifton-downs-broken.xml )
 
-* Loads and checks a sample file from the Spider gbXML sample files folder
+* Loads and checks a sample file from the [Spider gbXML sample files]( https://www.ladybug.tools/spider/#gbxml-sample-files/README.md ) folder
 
 
 ## Concept / the problem to be solved
 
-The good people who create CAD and energy analysis applications are primarily software programmers. They have infrequent access to large numbers of actual building test cases nor can they simulate large varieties of practice-specific energy simulation workflows. The current frequently-repeated outcome is that building engineering practices devote much time to dealing with issues in transferring data back and forth between CAD applications and energy analysis programs - and thus losing time for creating better simulations
+[GbXML]( http://www.gbxml.org/About_GreenBuildingXML_gbXML ) data files follow an industry-standard format and used to the transfer 3D building project data between computer aided design (CAD) program and energy analysis programs. The good people who create CAD and energy analysis applications are primarily software programmers. They have infrequent access to large numbers of actual building test cases nor can they simulate large varieties of practice-specific energy simulation workflows. The current often-repeated outcome is that building engineering practices devote much time to dealing with issues in transferring data back and forth between CAD applications and energy analysis programs - and thus losing time for creating better simulations.
 
 Many of the issues to be found in parsing gbXML files are clerical matters that may be identified using simple text search routines. Full 3D viewing of these types of errors is not needed and may actually slow things down.
 
 
-### Mission for Spider gbXML Fixer
+### Mission for Spider gbXML Fixer / currently
 
 * Run basic text-based checks on gbXML files and uncover, identify, report and fix any errors or issues
 * Help you access scripts that work well in your practice, your workflow and your skill set so that your projects are designed and built faster, cheaper and better
 
-### Vision
+### Vision / future
 
 * All errors are fixed and changes saved with the click of a single button or just running the script of a server
 
 ### Notes
 
 * Not all issues in gbXML files are simple, text-based issues. Some issues will require full a 3D visualization in order to be discovered and fixed. An intention is to make the workflow between a text-based fixer and full 3D fixer as seamless as possible.
-* If you identify a frequently occurring error in ggXML files and supply sample files that exhibit the error, The Spider team will build a module that identifies and fixes the issue
-* The script is still at an early stage. Many more checks may be added.
+* If you identify a frequently occurring error in ggXML files and supply sample files that exhibit the error, the Spider team will be pleased to build a an open-source module that identifies and fixes your issues
+* The script is still at an early stage. Many more checks may be added. The user interface needs streamlining. And so on.
 
 
 ## To Do / Wish List
 
+* 2019-04-03 ~ Identify surface edges with multiple vertices where two are sufficient
 * 2019-03-12 ~ Add as many tests currently in Spider gbXML Viewer as possible that do not require 3D
 * 2019-03-12 ~ Add more and better fixing the issues where possible
 * 2019-03-12 ~ Add check for opening vertices greater then four

@@ -5,7 +5,7 @@
 
 const SGT = { release: "1.4", date: "2019-03-18" };
 
-SGT.description = `Run basic checks on gbXML files and identify & report errors`;
+SGT.description = `Run basic checks on gbXML files and identify, report and fix issuess`;
 
 SGT.colorsDefault = {
 
@@ -89,6 +89,11 @@ SGT.getStats = function() {
 
 	const count = verticesCount.reduce( ( count, val, index ) => count + verticesCount[ index ].length, 0 );
 
+	SGT.openings = SGT.text.match( /<Opening(.*?)<\/Opening>/gi );
+
+	const constructions = SGT.text.match( /<Construction(.*?)<\/Construction>/gi );
+	SGT.constructions = constructions || 0;
+
 	FXsumStats.innerHTML = `Show gbXML file statistics ~ ${ SGT.surfaces.length.toLocaleString() } surfaces`;
 
 	const htm =
@@ -98,7 +103,9 @@ SGT.getStats = function() {
 			<p>Storeys: ${ SGT.storeys.length.toLocaleString() } </p>
 			<p>Zones: ${ SGT.zones.length.toLocaleString() } </p>
 			<p>Surfaces: ${ SGT.surfaces.length.toLocaleString() } </p>
+			<p>Openings in surfaces: ${ SGT.openings.length.toLocaleString() }</p>
 			<p>Coordinates in surfaces: ${ count.toLocaleString() } </p>
+			<p>Construction types: ${ SGT.constructions.length.toLocaleString() } </p>
 
 			<p>Time to check: ${ ( performance.now() - timeStart ).toLocaleString() } ms</p>
 		`;
