@@ -1,13 +1,51 @@
 //Copyright 2019 Ladybug Tools authors. MIT License
-// jshint esversion: 6
-/* globals FIL, divContents, SGTdivFixThings, SGTh1FileName, FXsumStats */
-/* jshint loopfunc:true */
+/* globals FIL, divContents, GGD, GCS, OCV, SGFh1FileName, */
+/* jshint esversion: 6 */
+/* jshint loopfunc: true */
 
-const SGT = { release: "1.4", date: "2019-03-18" };
+const SGF = { release: "2.0.0", date: "2019-04-03" };
 
-SGT.description = `Run basic checks on gbXML files and identify, report and fix issuess`;
+SGF.description = `Run basic checks on gbXML files and identify, report and fix issues`;
 
-SGT.colorsDefault = {
+
+SGF.divFixThings =
+	`
+		<br><br>
+
+		<h2 id=SGFh1FileName >Check file: <script></script>decodeURI( FIL.name ) } </h2>
+
+		<p><button onclick=SGF.runAll(); >Run all checks</button></p>
+
+		<p>
+			<input type=checkbox id=SGFinpIgnoreAirSurfaceType > Ignore Air surface type
+		</p>
+
+		<div id=GGDdivGetGbxmlData ></div>
+
+		<div id=GCSdivGetCheckStrings ></div>
+
+		<div id=GCOdivGetCheckOffset ></div>
+
+		<div id=OCVdivGetOpeningsCheckVertices ></div>
+
+		<div id=FXAdivGetFixAttributes ></div>
+
+		<div id=FXSTIdivGetSurfaceTypeInvalid ></div>
+
+		<div id=FXDPCdivGetDuplicatePlanar ></div>
+
+		<div id=FXASEdivSpaceExtra ></div>
+
+		<div id=FXASDdivSpaceDuplicate ></div>
+
+		<div id=FXCIMdivGetCadIdMissing ></div>
+
+		<div id=TMPdivGetTemplate ></div>
+
+	`;
+
+
+SGF.colorsDefault = {
 
 	InteriorWall: 0x008000,
 	ExteriorWall: 0xFFB400,
@@ -28,24 +66,42 @@ SGT.colorsDefault = {
 
 };
 
-SGT.colors = Object.assign( {}, SGT.colorsDefault ); // create working copy of default colors
+SGF.colors = Object.assign( {}, SGF.colorsDefault ); // create working copy of default colors
 
-SGT.surfaceTypes = Object.keys( SGT.colors );
+SGF.surfaceTypes = Object.keys( SGF.colors );
 
 
-SGT.init = function() {
+SGF.init = function() {
 
-	divContents.innerHTML = SGTdivFixThings.innerHTML;
+	divContents.innerHTML = SGF.divFixThings;
 
 	//console.log( 'FIL.text', FIL.text );
 
-	SGTh1FileName.innerHTML = `File: ${ decodeURI( FIL.name ) }`;
+	SGFh1FileName.innerHTML = `File: ${ decodeURI( FIL.name ) }`;
 
-	SGT.text = FIL.text.replace( /\r\n|\n/g, '' );
-	SGT.surfaces = SGT.text.match( /<Surface(.*?)<\/Surface>/gi );
-	//console.log( 'SGT.surfaces', SGT.surfaces );
+	GGD.getData();
 
-	SGT.getStats();
+	GGDdivGetGbxmlData.innerHTML = GGD.getGbxmlData();
+
+	GCSdivGetCheckStrings.innerHTML = GCS.getCheckStrings();
+
+	GCOdivGetCheckOffset.innerHTML = GCO.getCheckOffset();
+
+	OCVdivGetOpeningsCheckVertices.innerHTML = OCV.getOpeningsCheckVertices();
+
+	FXAdivGetFixAttributes.innerHTML = FXA.getFixAttributes();
+
+	FXSTIdivGetSurfaceTypeInvalid.innerHTML = FXSTI.getSurfaceTypeInvalid();
+
+	FXDPCdivGetDuplicatePlanar.innerHTML = FXDPC.getCheckDuplicatePlanarCoordinates();
+
+	FXASEdivSpaceExtra.innerHTML = FXASE.getFixAdjacentSpaceExtra();
+
+	FXASDdivSpaceDuplicate.innerHTML = FXASD.getFixAdjacentSpaceDuplicate();
+
+	FXCIMdivGetCadIdMissing.innerHTML = FXCIM.getCadIdMissing();
+
+	//TMPdivGetTemplate.innerHTML = TMP.getTemplate();
 
 };
 
@@ -54,7 +110,7 @@ SGT.init = function() {
 ////////// utilities
 
 
-SGT.runAll = function(){
+SGF.runAll = function(){
 
 	const details = divContents.querySelectorAll( 'details' );
 
@@ -66,69 +122,10 @@ SGT.runAll = function(){
 
 
 
-SGT.getStats = function() {
-
-	const timeStart = performance.now();
-
-	const reSpaces = /<Space(.*?)<\/Space>/gi;
-	SGT.spaces = SGT.text.match( reSpaces );
-	//console.log( 'spaces', SGT.spaces );
-
-	const reStoreys = /<BuildingStorey(.*?)<\/BuildingStorey>/gi;
-	SGT.storeys = SGT.text.match( reStoreys );
-	SGT.storeys = Array.isArray( SGT.storeys ) ? SGT.storeys : [];
-	//console.log( 'SGT.storeys', SGT.storeys );
-
-	const reZones = /<Zone(.*?)<\/Zone>/gi;
-	SGT.zones = SGT.text.match( reZones );
-	SGT.zones = Array.isArray( SGT.zones ) ? SGT.zones : [];
-	//console.log( 'SGT.zones', SGT.zones );
-
-	const verticesCount = SGT.surfaces.map( surfaces => getVertices( surfaces ) );
-	//console.log( 'vertices', vertices );
-
-	const count = verticesCount.reduce( ( count, val, index ) => count + verticesCount[ index ].length, 0 );
-
-	SGT.openings = SGT.text.match( /<Opening(.*?)<\/Opening>/gi );
-
-	const constructions = SGT.text.match( /<Construction(.*?)<\/Construction>/gi );
-	SGT.constructions = constructions || [];
-
-	FXsumStats.innerHTML = `Show gbXML file statistics ~ ${ SGT.surfaces.length.toLocaleString() } surfaces`;
-
-	const htm =
-		`
-			<p><i>gbXML elements statistics</i></p>
-			<p>Spaces: ${ SGT.spaces.length.toLocaleString() } </p>
-			<p>Storeys: ${ SGT.storeys.length.toLocaleString() } </p>
-			<p>Zones: ${ SGT.zones.length.toLocaleString() } </p>
-			<p>Surfaces: ${ SGT.surfaces.length.toLocaleString() } </p>
-			<p>Openings in surfaces: ${ SGT.openings.length.toLocaleString() }</p>
-			<p>Coordinates in surfaces: ${ count.toLocaleString() } </p>
-			<p>Construction types: ${ SGT.constructions.length.toLocaleString() } </p>
-
-			<p>Time to check: ${ ( performance.now() - timeStart ).toLocaleString() } ms</p>
-		`;
-
-	return htm;
-
-
-		function getVertices( surface ) {
-
-			const re = /<coordinate(.*?)<\/coordinate>/gi;
-			const coordinatesText = surface.match( re );
-			const coordinates = coordinatesText.map( coordinate => coordinate.replace(/<\/?coordinate>/gi, '' ) )
-				.map( txt => Number( txt ) );
-
-			return coordinates;
-
-		}
-
-};
 
 
 
-SGT.getSurfacesAttributesByIndex = function( indexes, id = 1 ) {
+SGF.getSurfacesAttributesByIndex = function( indexes, id = 1 ) {
 
 	indexes = Array.isArray( indexes ) ? indexes : [ indexes ];
 	//console.log( 'indexes', indexes );
@@ -137,10 +134,10 @@ SGT.getSurfacesAttributesByIndex = function( indexes, id = 1 ) {
 
 	const htmArray = indexes.map( ( index ) => {
 
-		const surfaceXml = parser.parseFromString( SGT.surfaces[ index ], "application/xml").documentElement;
+		const surfaceXml = parser.parseFromString( SGF.surfaces[ index ], "application/xml").documentElement;
 		//console.log( 'surfaceXml', surfaceXml );
 
-		const htmAttributes = SGT.getSurfaceAttributes( surfaceXml, id );
+		const htmAttributes = SGF.getSurfaceAttributes( surfaceXml, id );
 		//console.log( 'htmAttributes', htmAttributes );
 
 		return htmAttributes;
@@ -154,16 +151,16 @@ SGT.getSurfacesAttributesByIndex = function( indexes, id = 1 ) {
 
 
 
-SGT.getSurfaceAttributes = function( surfaceXml, index ) {
+SGF.getSurfaceAttributes = function( surfaceXml, index ) {
 	//console.log( 'surfaceXml', surfaceXml );
 
-	const htmSurface = SGT.getAttributesHtml( surfaceXml );
-	const htmAdjacentSpace = SGT.getAttributesAdjacentSpace( surfaceXml );
-	const htmPlanarGeometry = SGT.getAttributesPlanarGeometry( surfaceXml );
+	const htmSurface = SGF.getAttributesHtml( surfaceXml );
+	const htmAdjacentSpace = SGF.getAttributesAdjacentSpace( surfaceXml );
+	const htmPlanarGeometry = SGF.getAttributesPlanarGeometry( surfaceXml );
 
 	const rect = surfaceXml.getElementsByTagName( "RectangularGeometry" )[ 0 ];
 	//console.log( '', rect );
-	const htmRectangularGeometry = SGT.getAttributesHtml( rect );
+	const htmRectangularGeometry = SGF.getAttributesHtml( rect );
 
 	const htm =
 	`
@@ -193,7 +190,7 @@ SGT.getSurfaceAttributes = function( surfaceXml, index ) {
 
 
 
-SGT.getAttributesHtml = function( obj ) {
+SGF.getAttributesHtml = function( obj ) {
 	//console.log( 'obj', obj );
 
 	let htm ='';
@@ -212,12 +209,12 @@ SGT.getAttributesHtml = function( obj ) {
 
 			//console.log( 'attribute.value', attribute.value );
 
-			//constructions = SGT.text.match( /<Construction(.*?)<\/Construction>/gi );
+			//constructions = SGF.text.match( /<Construction(.*?)<\/Construction>/gi );
 
 			// silly way of doing things, but it's a start
 			const parser = new DOMParser();
-			const campusXml = parser.parseFromString( SGT.text, "application/xml").documentElement;
-			//SGT.campusXml = campusXml;
+			const campusXml = parser.parseFromString( SGF.text, "application/xml").documentElement;
+			//SGF.campusXml = campusXml;
 			//console.log( 'campusXml', campusXml.attributes );
 
 			const constructions = Array.from( campusXml.getElementsByTagName( 'Construction' ) );
@@ -274,7 +271,7 @@ SGT.getAttributesHtml = function( obj ) {
 
 
 
-SGT.getAttributesAdjacentSpace = function( surfaceXml ){
+SGF.getAttributesAdjacentSpace = function( surfaceXml ){
 
 	const adjacentSpaceId = surfaceXml.getElementsByTagName( "AdjacentSpaceId" );
 	//console.log( 'adjacentSpaceId', adjacentSpaceId );
@@ -284,8 +281,8 @@ SGT.getAttributesAdjacentSpace = function( surfaceXml ){
 
 	if ( adjacentSpaceId.length === 0 ) {
 
-		SGT.adjacentSpaceIds = [];
-		SGT.storey = '';
+		SGF.adjacentSpaceIds = [];
+		SGF.storey = '';
 
 		htm = 'No adjacent space';
 
@@ -296,17 +293,17 @@ SGT.getAttributesAdjacentSpace = function( surfaceXml ){
 		const spaceId1 = adjacentSpaceId[ 0 ].getAttribute( "spaceIdRef" );
 		const spaceId2 = adjacentSpaceId[ 1 ].getAttribute( "spaceIdRef" );
 
-		const spaceText1 = SGT.spaces.find( item => item.includes( spaceId1 ) );
+		const spaceText1 = SGF.spaces.find( item => item.includes( spaceId1 ) );
 		//console.log( 'spaceText1', spaceText1 );
 		const spaceName1 = spaceText1.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
 
-		const spaceText2 = SGT.spaces.find( item => item.includes( spaceId2 ) );
+		const spaceText2 = SGF.spaces.find( item => item.includes( spaceId2 ) );
 		//console.log( 'spaceText2', spaceText2 );
 		const spaceName2 = spaceText2.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
 
-		SGT.adjacentSpaceIds = [ spaceId1, spaceId2 ];
+		SGF.adjacentSpaceIds = [ spaceId1, spaceId2 ];
 
-		SGT.setAttributesStoreyAndZone( spaceId2 );
+		SGF.setAttributesStoreyAndZone( spaceId2 );
 
 		htm =
 		`<div>
@@ -324,13 +321,13 @@ SGT.getAttributesAdjacentSpace = function( surfaceXml ){
 		//console.log( 'obj.AdjacentSpaceId', obj.AdjacentSpaceId );
 
 		const spaceId = adjacentSpaceId[ 0 ].getAttribute( "spaceIdRef" );
-		SGT.adjacentSpaceIds = [ spaceId ];
+		SGF.adjacentSpaceIds = [ spaceId ];
 
-		const spaceText1 = SGT.spaces.find( item => item.includes( spaceId ) );
+		const spaceText1 = SGF.spaces.find( item => item.includes( spaceId ) );
 		//console.log( 'spaceText1', spaceText1 );
 		const spaceName1 = spaceText1.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
 
-		SGT.setAttributesStoreyAndZone( spaceId );
+		SGF.setAttributesStoreyAndZone( spaceId );
 
 		htm =
 		`<div>
@@ -346,41 +343,41 @@ SGT.getAttributesAdjacentSpace = function( surfaceXml ){
 
 
 
-SGT.setAttributesStoreyAndZone = function( spaceId ) {
+SGF.setAttributesStoreyAndZone = function( spaceId ) {
 
-	const spaceText = SGT.spaces.find( item => item.includes( spaceId ) );
+	const spaceText = SGF.spaces.find( item => item.includes( spaceId ) );
 	//console.log( 'spaceText', spaceText );
 
 	const storeyId = spaceText.match ( /buildingStoreyIdRef="(.*?)"/ );
-	//console.log( 'storeyId', SGT.storeyId[ 1 ] );
+	//console.log( 'storeyId', SGF.storeyId[ 1 ] );
 
-	SGT.storeyId = storeyId ? storeyId[ 1 ] : [];
-	//console.log( 'storeyId', SGT.storeyId[ 1 ] );
+	SGF.storeyId = storeyId ? storeyId[ 1 ] : [];
+	//console.log( 'storeyId', SGF.storeyId[ 1 ] );
 
-	const storeyText = SGT.storeys.find( item => item.includes( SGT.storeyId ) );
+	const storeyText = SGF.storeys.find( item => item.includes( SGF.storeyId ) );
 	//console.log( 'storeyText', storeyText );
 
 	const storeyName = storeyText ? storeyText.match ( '<Name>(.*?)</Name>' ) : "";
 
-	SGT.storeyName = storeyName ? storeyName[ 1 ] : "no storey name in file";
-	//console.log( 'SGT.storeyName', SGT.storeyName );
+	SGF.storeyName = storeyName ? storeyName[ 1 ] : "no storey name in file";
+	//console.log( 'SGF.storeyName', SGF.storeyName );
 
-	SGT.zoneId = spaceText.match ( /zoneIdRef="(.*?)"/ );
+	SGF.zoneId = spaceText.match ( /zoneIdRef="(.*?)"/ );
 
-	if ( SGT.zoneId ) {
+	if ( SGF.zoneId ) {
 
-		SGT.zoneId = SGT.zoneId[ 1 ];
-		//console.log( 'zoneId', SGT.zoneId[ 1 ] );
+		SGF.zoneId = SGF.zoneId[ 1 ];
+		//console.log( 'zoneId', SGF.zoneId[ 1 ] );
 
-		const zoneText = SGT.zones.find( item => item.includes( SGT.zoneId ) );
+		const zoneText = SGF.zones.find( item => item.includes( SGF.zoneId ) );
 		//console.log( 'storeyText', zoneText );
 
-		SGT.zoneName = zoneText.match ( '<Name>(.*?)</Name>' )[ 1 ];
-		//console.log( 'SGT.zoneName', SGT.zoneName );
+		SGF.zoneName = zoneText.match ( '<Name>(.*?)</Name>' )[ 1 ];
+		//console.log( 'SGF.zoneName', SGF.zoneName );
 
 	} else {
 
-		SGT.zoneName = "None";
+		SGF.zoneName = "None";
 
 	}
 
@@ -390,7 +387,7 @@ SGT.setAttributesStoreyAndZone = function( spaceId ) {
 
 
 
-SGT.getAttributesPlanarGeometry = function( surfaceXml ) {
+SGF.getAttributesPlanarGeometry = function( surfaceXml ) {
 
 	const plane = surfaceXml.getElementsByTagName( 'PlanarGeometry' );
 

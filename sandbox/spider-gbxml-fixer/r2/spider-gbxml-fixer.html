@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1" >
+<meta name = "description" content = "This menu is a component of a basic html content management script with sliding menu, css theme selection, Markdown to HTML, drag and drop file reading capability, access to frequently used pages and more" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2019-04-03" >
+<meta name = "release" content = "2.0.0" >
+<title>Spider gbXML Fixer 'Atrax'</title>
+<link rel="stylesheet" href="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/style.css">
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js" ></script>
+
+<!-- menus generally -->
+<script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/mnu-menu.js" ></script>
+<script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/sfm-selected-files-markdown.js" ></script>
+<script src="https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/r15/js-gbxml/gal-sample-files-gallery-gbxml.js" ></script>
+
+<!-- File menu panel -->
+<script src="ohc-on-hash-change.js" ></script>
+<script src="fil-file-open-xml-zip.js" ></script>
+<script src="tmp-template.js" ></script>
+
+
+<!-- Edit Menu -->
+<script src="ggd-get-gbxml-data.js" ></script>
+<script src="gcs-get-check-strings.js" ></script>
+<script src="gco-get-check-offset.js" ></script>
+<script src="ocv-openings-check-vertices.js" ></script>
+<script src="fxcim-fix-cad-id-missing.js" ></script>
+<script src="fxa-fix-attributes.js" ></script>
+<script src="fxsti-fix-surface-type-invalid.js" ></script>
+<script src="fxdpc-fix-duplicate-planar-coordinates.js" ></script>
+<script src="fxase-fix-adjacent-space-extra.js" ></script>
+<script src="fxasd-fix-adjacent-space-duplicate.js" ></script>
+
+<script src="spider-gbxml-fixer-core.js" ></script>
+
+<!--
+
+
+
+<script src="spider-gbxml-fixer.js" ></script>
+-->
+
+<!-- Settings menu -->
+<script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/thm-theme-select.js" ></script>
+<!--
+
+	<script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/tmp-template.js" ></script>
+-->
+
+<script>
+
+//Copyright 2019 Ladybug Tools authors. MIT License
+
+// following belongs lower but moved here to be easier to see amd update
+
+MNU.description =
+	`
+		Mission: run a series of basics checks on <a href="https://gbXML.org" target="_blank">gbXML</a> files and identify, report and help you fix any errors
+	`;
+
+MNU.currentStatusCore =
+	`
+		<h3>
+			Spider gbXML Fixer 'Atrax'
+			R${ document.head.querySelector( '[ name=release ]' ).content }
+			~
+			${ document.head.querySelector( '[ name=date ]' ).content }
+		</h3>
+
+		<p>
+			<a title="By Tirin at the English language Wikipedia, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=128531"
+				href="https://en.wikipedia.org/wiki/Sydney_funnel-web_spider">
+				<img width="256" alt="Sydney funnel-web spider" src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Atrax_robustus.jpg" ><br>
+				<i>Atrax robustus</i></a> - 'Atrax' is the code name for this release of the Ladybug Tools / Spider gbXML Fixer
+		</p>
+
+		<p>${ MNU.description }</p>
+
+		<p>
+			<a href="https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-fixer/" target="_blank">
+				Spider gbXML Fixer source code</a>
+		</p>
+
+		<details>
+
+			<summary>Change log</summary>
+
+			<ul>
+				<li>2019-03-23 ~ R1.3 ~ Code name: 'Atrax'</li>
+				<li>2019-03-22 ~ R1.2 ~ Much faster</li>
+				<li>2019-03-19 ~ R1.0 ~ First commit</li>
+			</ul>
+
+		</details>
+
+		<details>
+
+			<summary>TooToo Content Manager</summary>
+
+			<p>This web page is built with:</p>
+
+			${ MNU.descriptionTooToo }
+
+		</details>
+	`;
+
+
+
+OHC.uriDefaultFile = "../README.md";
+
+// useful when testing / un-comment
+//OHC.uriDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/bristol-clifton-downs-broken.xml";
+
+THM.themeUrlStorage = 'spider-gbxml-fixer-theme-url';
+THM.cssBasic = "https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/style.css";
+
+// For main menu header
+MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-fixer";
+
+MNU.homeText="<img src='https://ladybug.tools/artwork/icons_bugs/ico/ladybug.ico' height=24 >";
+MNU.homeTitle="Ladybug Tools: free computer applications that support environmental design and education";
+MNU.homeUrl="https://www.ladybug.tools";
+
+MNU.repoText="<img src='https://ladybug.tools/artwork/icons_bugs/ico/spider.ico' height=24 >";
+MNU.repoTitle="Spider: 3D interactive analysis in your browser mostly written around the Three.js JavaScript library";
+MNU.repoUrl="https://www.ladybug.tools/spider/";
+
+MNU.appText= "gbXML Tools";
+MNU.appTitle = "Tools to help you find, load, examine and edit gbXML files - in large numbers and sizes";
+MNU.appUrl = "https://www.ladybug.tools/spider-gbxml-tools/";
+
+//MNU.urlSourceCodeImage = "https://pushme-pullyou.github.io/github-mark-64.png";
+//MNU.urlSourceCodeIcon = `<img src="${ MNU.urlSourceCodeImage }" height=18 style=opacity:0.5 >`;
+
+MNU.footerUrl = "https://ladybug-tools.github.io/spider/#";
+MNU.footerTarget = "target=_blank";
+MNU.footerIssues = "https://github.com/ladybug-tools/spider-gbxml-tools/issues";
+
+// for parsing
+OHC.user = 'ladybug-tools';
+OHC.repo = 'spider-gbxml-tools';
+OHC.pathRepo = '';
+OHC.branch = '/master/';
+
+// When running in dev folder
+// OHC.urlGitHubPage = location.href.includes( OHC.repo ) ? '../' : 'https://' + OHC.repo + "/";
+// OHC.urlGitHubPage = `https://${ OHC.repo }/`;
+// When running in build repo
+OHC.urlGitHubPage = "";
+
+</script>
+
+
+	<nav id="navMenu" >
+
+		<header>
+
+			<div id="MNUdivHeader" ></div>
+
+			<section class="navSubMenu" >
+				See also <a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">Schema GreenBuildingXML_Ver6.01.xsd </a>
+			</section>
+
+		</header>
+
+		<details class=navSubMenu open >
+
+			<summary class="sumMenuTitle" >File Menu</summary>
+
+			<section><i>May take a minute or more on files over 10MB or with many issues. This will be fixed.</i></section>
+
+			<section id="SFMsecPrototypes" ></section>
+
+			<section id="GALdivSampleFilesGallery"></section>
+
+			<section id="FILdivFileOpen"></section>
+
+			<section id="FILdivFileSave"></section>
+
+		</details>
+
+		<details class=navSubMenu open >
+
+			<summary class=sumMenuTitle >Settings</summary>
+
+			<section id=THMsecMenuThemeSelect ></section>
+
+			<section id=TMPsecMenuTemplate ></section>
+
+		</details>
+
+
+		<footer class=navSubMenu >
+
+			<section id="MNUdivFooter" ></section>
+
+		</footer>
+
+
+		<h1 onclick="navMenu.scrollTop=0;" style="cursor:pointer;text-align:center;" title="go to top of menu" >
+			<img alt="spider icon" src="https://ladybug.tools/artwork/icons_bugs/ico/spider.ico" height=18 >
+		</h1>
+
+	</nav>
+
+
+	<div>
+
+		<button id="butHamburger" onclick=MNU.toggleNavLeft(); title="click here to hide this menu"> slide &#9776; </button>
+
+	</div>
+
+
+	<nav id="navPopUp" >
+
+		<div id="divPopUpData" ></div>
+
+		<div id="divMessage" ></div>
+
+	</nav>
+
+
+	<div id="divContainer" >
+
+		<div id="divContents" ></div>
+
+	</div>
+
+
+
+	<template id=SGFdivFixThings >
+
+		<br><br>
+
+		<h2 id=SGFh1FileName >Check file: <script></script>decodeURI( FIL.name ) } </h2>
+
+		<p><button onclick=SGF.runAll(); >Run all checks</button></p>
+
+
+		<p>
+			<input type=checkbox id=SGFinpIgnoreAirSurfaceType > Ignore Air surface type
+		</p>
+
+
+
+
+		<details ontoggle="FXdivCheckGeneral.innerHTML=SGF.getCheckGeneral();"  >
+
+			<summary id=FXsumCheckGeneral class=sumHeader >Check for valid text and numbers</summary>
+
+			<div id=FXdivCheckGeneral ></div>
+
+		</details>
+
+
+		<details ontoggle="FXdivCheckOffset.innerHTML=SGF.getCheckOffset();" >
+
+			<summary id=FXsumCheckOffset class=sumHeader >Check maximum offset distance from origin</summary>
+
+			<div id=FXdivCheckOffset ></div>
+
+		</details>
+
+
+		<details ontoggle="FXAdivAttributes.innerHTML=FXA.checkAttributes();"  >
+
+			<summary id=FXAsumAtributes class=sumHeader >Fix missing required gbXML attributes</summary>
+
+			<div id=FXAdivAttributes ></div>
+
+		</details>
+
+
+		<details ontoggle="FXSTIdivSurfaceTypeInvalid.innerHTML=FXSTI.getCheckSurfaceTypeInvalid();" >
+
+			<summary id=FXSTIsumSurfaceTypeInvalid class=sumHeader >Fix surfaces with invalid surface type</summary>
+
+			<div id=FXSTIdivSurfaceTypeInvalid></div>
+
+		</details>
+
+
+		<details ontoggle="FXDPCdivDuplicatePlanar.innerHTML=FXDPC.getCheckDuplicatePlanarCoordinates();" >
+
+			<summary id=FXDPCsumDuplicatePlanar class=sumHeader >Fix surfaces with duplicate planar coordinates </summary>
+
+			<div id=FXDPCdivDuplicatePlanar ></div>
+
+		</details>
+
+
+		<details ontoggle="FXASEdivSpaceExtra.innerHTML=FXASE.getFixAdjacentSpaceExtra();" >
+
+			<summary id=FXASEsumSpaceExtra class=sumHeader >Fix surfaces with extra adjacent spaces</summary>
+
+			<div id=FXASEdivSpaceExtra ></div>
+
+
+		</details>
+
+
+		<details ontoggle="FXASDdivSpaceDuplicate.innerHTML=FXASD.getFixAdjacentSpaceDuplicate();" >
+
+			<summary id=FXASDsumSpaceDuplicate class=sumHeader >Fix surfaces with duplicate adjacent spaces</summary>
+
+			<div id=FXASDdivSpaceDuplicate ></div>
+
+		</details>
+
+
+		<details ontoggle="FXCIMdivIdMissing.innerHTML=FXCIM.getFixCadIdMissing();" >
+
+			<summary id=FXCIMsumIdMissing class=sumHeader >Fix surfaces with missing CAD object ID</summary>
+
+			<div id=FXCIMdivIdMissing ></div>
+
+		</details>
+
+		<br>
+
+		<hr>
+
+		<h1 onclick="navMenu.scrollTop=0;" style="cursor:pointer;text-align:center;" title="go to top of menu" >
+			<img alt="spider icon" src="https://ladybug.tools/artwork/icons_bugs/ico/spider.ico" height=18 >
+		</h1>
+
+	</template>
+
+<script>
+
+
+init();
+
+
+function init() {
+
+	OHC.divContents = divContents;
+
+	MNUdivHeader.innerHTML = MNU.getNavHeader();
+
+	// File open menu
+	GALdivSampleFilesGallery.innerHTML=GAL.getMenuSampleFilesGallery();
+
+	FILdivFileOpen.innerHTML=FIL.getMenuFileOpen();
+
+	FILdivFileSave.innerHTML=FIL.getMenuFileSave();
+
+	// Settings menu
+	THMsecMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
+
+	MNUdivFooter.innerHTML = MNU.getNavFooter(); // not essential
+
+	THM.init();
+
+	OHC.onHashChange(); // checks location hash, if none set default file ( the read me ) to open
+
+	document.body.addEventListener( 'onXmlFileLoad', SGF.init, false ); // hash changed, file loaded so let's go
+
+}
+
+</script>
+</body>
+</html>

@@ -126,6 +126,13 @@ From [The case for single character git commit message prefixes]( https://smalld
 * !, unknown - i.e. for when you really need to make that commit because there's a horde of zombies waiting outside.
 
 
+### 2019-04-03 ~ Theo
+
+Spider gbXML Fixer 'Atrax' R2.0.0
+
+* All modules refactored / see dev-notes.md
+* Add module 'ocv-openings-check-vertices.js' / check openings with more than four vertices
+
 ### 2019-04-02 ~ Theo
 
 Spider gbXML Fixer 'Atrax' R1.7
