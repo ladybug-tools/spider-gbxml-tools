@@ -3,9 +3,34 @@
 /* jshint esversion: 6 */
 /* jshint loopfunc: true */
 
-const SGF = { release: "2.0.0", date: "2019-04-03" };
+const SGF = { release: "2.1.0", date: "2019-04-04" };
 
 SGF.description = `Run basic checks on gbXML files and identify, report and fix issues`;
+
+
+SGF.currentStatus =
+	`
+		<h3>Get Template(SGF) ${ SGF.release } status ${ SGF.date }</h3>
+
+		<p>${ SGF.description }</p>
+		<p>
+			<a href="https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/sandbox/spider-gbxml-fixer/r2/spider-gbxml-fixer-core.js" target="_blank">
+			spider-gbxml-fixer-core.js source code</a>
+		</p>
+		<details>
+			<summary>Wish List / To Do</summary>
+			<ul>
+				<li></li>
+			</ul>
+		</details>
+		<details>
+			<summary>Change log</summary>
+			<ul>
+				<li>2019-04-03 ~ D - Add pop-up help</li>
+  				<li>2019-04-03 ~ F - First commit</li>
+			</ul>
+		</details>
+	`;
 
 
 SGF.divFixThings =
@@ -14,7 +39,12 @@ SGF.divFixThings =
 
 		<h2 id=SGFh1FileName >Check file: <script></script>decodeURI( FIL.name ) } </h2>
 
-		<p><button onclick=SGF.runAll(); >Run all checks</button></p>
+		<p>
+			<button onclick=SGF.runAll(); >Run all checks</button>
+
+			<button onclick=SGF.closeAll(); >Close all checks</button>
+
+		</p>
 
 		<p>
 			<input type=checkbox id=SGFinpIgnoreAirSurfaceType > Ignore Air surface type
@@ -40,7 +70,7 @@ SGF.divFixThings =
 
 		<div id=FXCIMdivGetCadIdMissing ></div>
 
-		<div id=TMPdivGetTemplate ></div>
+		<div id=SGFdivGetTemplate ></div>
 
 	`;
 
@@ -79,9 +109,9 @@ SGF.init = function() {
 
 	SGFh1FileName.innerHTML = `File: ${ decodeURI( FIL.name ) }`;
 
-	GGD.getData();
+	GGD.getData( FIL.text );
 
-	GGDdivGetGbxmlData.innerHTML = GGD.getGbxmlData();
+	GGDdivGetGbxmlData.innerHTML = GGD.getGbxmlData( FIL.text );
 
 	GCSdivGetCheckStrings.innerHTML = GCS.getCheckStrings();
 
@@ -101,7 +131,7 @@ SGF.init = function() {
 
 	FXCIMdivGetCadIdMissing.innerHTML = FXCIM.getCadIdMissing();
 
-	//TMPdivGetTemplate.innerHTML = TMP.getTemplate();
+	//SGFdivGetTemplate.innerHTML = SGF.getTemplate();
 
 };
 
@@ -121,6 +151,13 @@ SGF.runAll = function(){
 };
 
 
+SGF.closeAll = function(){
+
+	const details = divContents.querySelectorAll( 'details' );
+
+	for ( let item of details ) { item.open = false; }
+
+};
 
 
 

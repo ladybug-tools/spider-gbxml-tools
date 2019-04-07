@@ -5,8 +5,8 @@
 <meta name = "viewport" content= "width=device-width, initial-scale=1" >
 <meta name = "description" content = "This menu is a component of a basic html content management script with sliding menu, css theme selection, Markdown to HTML, drag and drop file reading capability, access to frequently used pages and more" >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
-<meta name = "date" content = "2019-04-03" >
-<meta name = "release" content = "2.0.0" >
+<meta name = "date" content = "2019-04-04" >
+<meta name = "release" content = "2.1.0" >
 <title>Spider gbXML Fixer 'Atrax'</title>
 <link rel="stylesheet" href="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/style.css">
 </head>
@@ -15,8 +15,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js" ></script>
 
 <!-- menus generally -->
-<script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/mnu-menu.js" ></script>
-<script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-1/sfm-selected-files-markdown.js" ></script>
+<script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-2/mnu-menu.js" ></script>
+<script src="https://pushme-pullyou.github.io/tootoo13/js-tootoo13-2/sfm-selected-files-markdown.js" ></script>
 <script src="https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/r15/js-gbxml/gal-sample-files-gallery-gbxml.js" ></script>
 
 <!-- File menu panel -->
@@ -231,106 +231,6 @@ OHC.urlGitHubPage = "";
 		<div id="divContents" ></div>
 
 	</div>
-
-
-
-	<template id=SGFdivFixThings >
-
-		<br><br>
-
-		<h2 id=SGFh1FileName >Check file: <script></script>decodeURI( FIL.name ) } </h2>
-
-		<p><button onclick=SGF.runAll(); >Run all checks</button></p>
-
-
-		<p>
-			<input type=checkbox id=SGFinpIgnoreAirSurfaceType > Ignore Air surface type
-		</p>
-
-
-
-
-		<details ontoggle="FXdivCheckGeneral.innerHTML=SGF.getCheckGeneral();"  >
-
-			<summary id=FXsumCheckGeneral class=sumHeader >Check for valid text and numbers</summary>
-
-			<div id=FXdivCheckGeneral ></div>
-
-		</details>
-
-
-		<details ontoggle="FXdivCheckOffset.innerHTML=SGF.getCheckOffset();" >
-
-			<summary id=FXsumCheckOffset class=sumHeader >Check maximum offset distance from origin</summary>
-
-			<div id=FXdivCheckOffset ></div>
-
-		</details>
-
-
-		<details ontoggle="FXAdivAttributes.innerHTML=FXA.checkAttributes();"  >
-
-			<summary id=FXAsumAtributes class=sumHeader >Fix missing required gbXML attributes</summary>
-
-			<div id=FXAdivAttributes ></div>
-
-		</details>
-
-
-		<details ontoggle="FXSTIdivSurfaceTypeInvalid.innerHTML=FXSTI.getCheckSurfaceTypeInvalid();" >
-
-			<summary id=FXSTIsumSurfaceTypeInvalid class=sumHeader >Fix surfaces with invalid surface type</summary>
-
-			<div id=FXSTIdivSurfaceTypeInvalid></div>
-
-		</details>
-
-
-		<details ontoggle="FXDPCdivDuplicatePlanar.innerHTML=FXDPC.getCheckDuplicatePlanarCoordinates();" >
-
-			<summary id=FXDPCsumDuplicatePlanar class=sumHeader >Fix surfaces with duplicate planar coordinates </summary>
-
-			<div id=FXDPCdivDuplicatePlanar ></div>
-
-		</details>
-
-
-		<details ontoggle="FXASEdivSpaceExtra.innerHTML=FXASE.getFixAdjacentSpaceExtra();" >
-
-			<summary id=FXASEsumSpaceExtra class=sumHeader >Fix surfaces with extra adjacent spaces</summary>
-
-			<div id=FXASEdivSpaceExtra ></div>
-
-
-		</details>
-
-
-		<details ontoggle="FXASDdivSpaceDuplicate.innerHTML=FXASD.getFixAdjacentSpaceDuplicate();" >
-
-			<summary id=FXASDsumSpaceDuplicate class=sumHeader >Fix surfaces with duplicate adjacent spaces</summary>
-
-			<div id=FXASDdivSpaceDuplicate ></div>
-
-		</details>
-
-
-		<details ontoggle="FXCIMdivIdMissing.innerHTML=FXCIM.getFixCadIdMissing();" >
-
-			<summary id=FXCIMsumIdMissing class=sumHeader >Fix surfaces with missing CAD object ID</summary>
-
-			<div id=FXCIMdivIdMissing ></div>
-
-		</details>
-
-		<br>
-
-		<hr>
-
-		<h1 onclick="navMenu.scrollTop=0;" style="cursor:pointer;text-align:center;" title="go to top of menu" >
-			<img alt="spider icon" src="https://ladybug.tools/artwork/icons_bugs/ico/spider.ico" height=18 >
-		</h1>
-
-	</template>
 
 <script>
 

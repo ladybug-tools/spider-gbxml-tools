@@ -4,9 +4,9 @@
 /* jshint loopfunc: true */
 
 
-GCS = { release: "2.0.0", date: "2019-04-03" };
+GCS = { release: "2.0.1", date: "2019-04-04" };
 
-GCS.description = `Check strings`;
+GCS.description = `Check and report on elements with inappropriate null, zero or blank values values`;
 
 
 GCS.currentStatus =
@@ -14,6 +14,9 @@ GCS.currentStatus =
 		<h3>Get Get Strings(GCS) ${ GCS.release } status ${ GCS.date }</h3>
 
 		<p>${ GCS.description }</p>
+
+		<p><i>Another important check is to verify that your gbXML file loads properly
+			and is nicely formatted  in your browser. <a href="https://en.wikipedia.org/wiki/XML" target="_blank">XML</a> files are designed to be used across the Internet.</i></p>
 		<p>
 			<a href="https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/sandbox/spider-gbxml-fixer/r2/gcs-get-check-strings.js" target="_blank">
 			gcs-get-check-strings.js source code</a>
@@ -21,12 +24,18 @@ GCS.currentStatus =
 		<details>
 			<summary>Wish List / To Do</summary>
 			<ul>
-				<li></li>
+				<li>2019-04-04 ~ Invalid text does not seem to be an issue that occurs frequently.
+				Therefore, it is being given low-priority.
+				If you have a number of gbXML files with these sorts of issues, please let us know.
+				We should be able to fix errors like these quite easily.</li>
 			</ul>
+
 		</details>
 		<details>
 			<summary>Change log</summary>
 			<ul>
+				<li>2019-04-04 ~ D - Update text in script and pop-up</li>
+				<li>2019-04-04 ~ B - Fix help not appearing</li>
   				<li>2019-04-03 ~ F - First commit</li>
 			</ul>
 		</details>
@@ -36,12 +45,13 @@ GCS.currentStatus =
 
 GCS.getCheckStrings = function() {
 
+	GCS.help = `<a id=GCSSum class=helpItem href="JavaScript:MNU.setPopupShowHide(GCSSum,GCS.currentStatus);" >&nbsp; ? &nbsp;</a>`
 	const htm =
 		`
 			<details ontoggle="GCSdivCheckStrings.innerHTML=GCS.getData();" >
 
-			<summary id=GCSsumGetCheckStrings class=sumHeader >Check Strings
-				<a id=GCSSum class=helpItem href="JavaScript:MNU.setPopupShowHide(GCSSum,GCS.currentStatus);" >&nbsp; ? &nbsp;</a>
+			<summary id=GCSsumGetCheckStrings class=sumHeader >Check for valid text and numbers
+				${ GCS.help }
 			</summary>
 
 			<div id=GCSdivCheckStrings ></div>
@@ -109,7 +119,7 @@ GCS.getData = function() {
 	const errors = area + vol + string;
 	//console.log( 'errors ', errors );
 
-	GCSsumGetCheckStrings.innerHTML = `Check for valid text and numbers ~ ${ errors } errors found`;
+	GCSsumGetCheckStrings.innerHTML = `Check for valid text and numbers ~ ${ errors } errors found ${ GCS.help }`;
 
 	const generalHtm =
 		`

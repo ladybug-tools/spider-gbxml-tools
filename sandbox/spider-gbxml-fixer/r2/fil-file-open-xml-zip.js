@@ -183,6 +183,8 @@ FIL.onHashChange = function() {
 
 FIL.XhrRequestFileXml = function( url ) {
 
+	FIL.name = url.split( '/').pop();
+
 	FIL.timeStart = performance.now();
 
 	FIL.xhr = new XMLHttpRequest();
@@ -266,6 +268,8 @@ FIL.callbackUrlUtf16 = function( xhr ) {
 
 		}
 		//console.log( 'text', text );
+
+		//FIL.name = names[ 0 ]; // needed   ??
 
 		return text;
 

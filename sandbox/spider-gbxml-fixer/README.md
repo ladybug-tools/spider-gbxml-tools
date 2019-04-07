@@ -13,16 +13,16 @@ value="You are now in a GitHub web page view - Click this button to view this re
 _<small>Spider gbXML Fixer</small>_
 -->
 
-## Bookmark this link:<br>https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-fixer/
+### Bookmark this link:<br>https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-fixer/
 
 * Always links to the current stable release
 
-## Latest release with demo: [Sample test run]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-fixer/r1/spider-gbxml-fixer.html#https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/bristol-clifton-downs-broken.xml )
+### Latest release with demo: [Sample test run]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-fixer/#https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/bristol-clifton-downs-broken.xml )
 
 * Loads and checks a sample file from the [Spider gbXML sample files]( https://www.ladybug.tools/spider/#gbxml-sample-files/README.md ) folder
 
-
-## Concept / the problem to be solved
+<details>
+<summary class=sumHeader >Concept / the problem to be solved</summary>
 
 [GbXML]( http://www.gbxml.org/About_GreenBuildingXML_gbXML ) data files follow an industry-standard format and used to the transfer 3D building project data between computer aided design (CAD) program and energy analysis programs. The good people who create CAD and energy analysis applications are primarily software programmers. They have infrequent access to large numbers of actual building test cases nor can they simulate large varieties of practice-specific energy simulation workflows. The current often-repeated outcome is that building engineering practices devote much time to dealing with issues in transferring data back and forth between CAD applications and energy analysis programs - and thus losing time for creating better simulations.
 
@@ -44,8 +44,10 @@ Many of the issues to be found in parsing gbXML files are clerical matters that 
 * If you identify a frequently occurring error in ggXML files and supply sample files that exhibit the error, the Spider team will be pleased to build a an open-source module that identifies and fixes your issues
 * The script is still at an early stage. Many more checks may be added. The user interface needs streamlining. And so on.
 
+</details>
 
-## To Do / Wish List
+<details>
+<summary class=sumHeader >To Do / Wish List</summary>
 
 * 2019-04-03 ~ Identify surface edges with multiple vertices where two are sufficient
 * 2019-03-12 ~ Add as many tests currently in Spider gbXML Viewer as possible that do not require 3D
@@ -53,14 +55,18 @@ Many of the issues to be found in parsing gbXML files are clerical matters that 
 * 2019-03-12 ~ Add check for opening vertices greater then four
 * 2019-03-12 ~ Add check for openings larger or outside their parent surface
 
+</details>
 
-## Issues
+<details>
+<summary class=sumHeader >Issues</summary>
 
 * 2019-04-02 ~ Toggling the display of a module and clicking the 'Run check again' perform thhe identical action. It would be nice to decide which is preferable.
 * 2019-04-02 ~ Once a change is effected, some modules re-run the check automatically and others do not. It would be nice to decide which behavior is preferable.
 
+</details>
 
-## Usage / things you can do using this script
+<details>
+<summary class=sumHeader >Usage / things you can do using this script</summary>
 
 Opening files and saving changes
 * Click 'Choose file' and load a gbXML files or a ZIP file containing a gbXML file
@@ -99,9 +105,12 @@ Enhancing the script
 * Try adding a new menu module
 * Translate into another language
 
+</details>
+
+<details>
+<summary class=sumHeader >Links of Interest</summary>
 
 
-## Links of Interest
 
 ### _Atrax robustus_
 
@@ -109,7 +118,11 @@ Enhancing the script
 
 > The Sydney funnel-web spider (Atrax robustus) is a species of venomous mygalomorph spider native to eastern Australia, usually found within a 100 km (62 mi) radius of Sydney. It is a member of a group of spiders known as Australian funnel-web spiders. Its bite is capable of causing serious illness or death in humans if left untreated.
 
-## Change Log
+</details>
+
+<details>
+
+<summary class=sumHeader >Change Log</summary>
 
 ### Commit message prefixes
 
@@ -124,6 +137,16 @@ From [The case for single character git commit message prefixes]( https://smalld
 * r, proven code refactoring - this is the original meaning of the mathematical term refactoring, where it can be mathematically proven that the code change does not change any functionality.
 * T, test cases and/or test improvements
 * !, unknown - i.e. for when you really need to make that commit because there's a horde of zombies waiting outside.
+
+Semantic Versioning
+
+* https://semver.org/
+
+### 2019-04-04 ~ Theo
+
+Spider gbXML Fixer 'Atrax' R2.1.0
+
+* D - To js-tootoo13-2/mnu-menu.js/sfm-selected-files-markdown.js / checked other dependencies are OK
 
 
 ### 2019-04-03 ~ Theo
@@ -189,6 +212,7 @@ spider-gbxml-fixer.html/.js R1.0
 
 * First commit
 
+</details>
 
 ***
 

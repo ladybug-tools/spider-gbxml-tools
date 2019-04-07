@@ -4,12 +4,12 @@
 /* jshint loopfunc: true */
 
 
-const FXSTI = { "release": "2.0.0", "date": "2019-04-03" };
+const FXSTI = { "release": "2.1.0", "date": "2019-04-02" };
 
 
 FXSTI.description =
 	`
-		Checks for a surface type that is not one of the 15 valid gbXML surface types
+		type 2 Checks for a surface type that is not one of the 15 valid gbXML surface types
 	`;
 
 FXSTI.currentStatus =
@@ -35,7 +35,7 @@ FXSTI.currentStatus =
 		<details>
 			<summary>Change log</summary>
 			<ul>
-				<li>2019-03-29 ~ Add - FXDPC.showSelectedSurfaceGbxml() / Pass through jsHint</li>
+				<li>2019-03-29 ~ Add - FXSTI.showSelectedSurfaceGbxml() / Pass through jsHint</li>
 				<li>2019-03-25 ~ List errant surfaces by name with IDs as tool tips</li>
 				<li>2019-03-23 ~ Add help pop-up. Fix 'run again'</li>
 				<li>2019-03-19 ~ First commit</li>
@@ -55,7 +55,8 @@ FXSTI.getSurfaceTypeInvalid = function() {
 			<summary id=FXSTIsumSurfaceType class=sumHeader >Fix surfaces with invalid surface type
 				<a id=FXSTISum class=helpItem href="JavaScript:MNU.setPopupShowHide(FXSTISum,FXSTI.currentStatus);" >&nbsp; ? &nbsp;</a>
 			</summary>
-				<div id=FXSTIdivSurfaceType ></div>
+
+			<div id=FXSTIdivSurfaceType ></div>
 
 			</details>
 
@@ -71,30 +72,175 @@ FXSTI.getSurfaceType = function() {
 
 	const timeStart = performance.now();
 
-	FXSTI.surfaceTypeInvalids = SGF.surfaces.filter( surface => {
+	count = 0
 
-			let surfaceType = surface.match( /surfaceType="(.*?)"/);
-			surfaceType = surfaceType ? surfaceType[ 1 ] : [];
+	FXSTI.surfaceTypes = SGF.surfaces.map( surface => {
 
-			return SGF.surfaceTypes.includes( surfaceType ) === false;
+		let typeSource = surface.match( /surfaceType="(.*?)"/i )
+		typeSource = typeSource ? typeSource[ 1 ] : "";
 
-		} )
-		.map( surface => SGF.surfaces.indexOf( surface ) );
-	console.log( 'FXSTI.surfaceTypeInvalids', FXSTI.surfaceTypeInvalids );
+		let tilt = surface.match( /<Tilt>(.*?)<\/Tilt>/i )[ 1 ];
 
-	const options = FXSTI.surfaceTypeInvalids.map( index => {
+		let spaces = surface.match( /<AdjacentSpaceId(.*?)\/>/gi );
+		spaces = spaces ? spaces : [];
+		//console.log( '', spaces );
 
-		const surface = SGF.surfaces[ index ];
-		//console.log( 'sf', surface );
-		return `<option value=${index } title="${ surface.match( / id="(.*?)"/i )[ 1 ] }" >${ surface.match( /<Name>(.*?)<\/Name>/i )[ 1 ] }</option>`;
+		let exposedToSun = surface.match( /exposedToSun="(.*?)"/i );
+		//console.log( 'exposedToSun', exposedToSun );
+		exposedToSun = exposedToSun ? exposedToSun[ 1 ] : false;
 
-	} );
-	//console.log( 'options', options );
+		let type;
+
+		if ( tilt === "90" ) {
+
+				if ( spaces.length === 2 ) {
+
+				const id1 = spaces[ 0 ].match( /spaceIdRef="(.*?)"/i )[1 ];
+				const id2 = spaces[ 1 ].match( /spaceIdRef="(.*?)"/i )[1 ];
+				//console.log( '', id1, id2 );
+
+				if ( id1 !== id2) {
+
+					type = "InteriorWall";
+
+				} else {
+
+					type = "Air";
+
+				}
+
+				//type = "InteriorWall";
+
+
+
+			} else if ( spaces.length === 1 ) {
+
+				//console.log( '', exposedToSun );
+
+				if ( exposedToSun === "true" ) {
+
+					type = "ExteriorWall";
+
+				} else {
+
+					type = "UndergroundWall";
+
+				}
+
+
+			} else if ( spaces.length === 0 ) {
+
+				type = "Shade";
+
+			} else {
+
+				//console.log( 'typeSource', spaces );
+				//console.log( 'typeSource', typeSource );
+
+			}
+
+		} else if ( tilt === "0" ){
+
+				if ( spaces.length === 2 ) {
+
+				//type = "Ceiling";
+				type = "InteriorFloor";
+
+
+			} else if ( spaces.length === 1 ) {
+
+				type = "Roof"
+
+			} else {
+
+				type = "Shade";
+
+			}
+
+		} else if ( tilt === "180" ){
+
+			if ( spaces.length === 2 ) {
+
+				type = "InteriorFloor";
+
+			} else if ( spaces.length === 1 ) {
+
+				if ( exposedToSun === "true" ) {
+
+					type = "RaisedFloor";
+
+				} else {
+
+					type = "SlabOnGrade"
+
+				}
+
+			} else {
+
+				type = "Shade";
+
+			}
+
+		} else {
+
+			//console.log( 'tilt', tilt );
+
+			if ( spaces.length === 2 ) {
+
+				if ( Number( tilt ) > 45 && Number( tilt ) <=90 ) {
+
+					type = "InteriorWall";
+
+					} else {
+
+					type = "InteriorFloor";
+
+					}
+
+			} else if ( spaces.length === 1 ) {
+
+				if ( Number( tilt ) > 45 && Number( tilt ) <=90 ) {
+
+					//console.log( 'tilt', tilt );
+					type = "ExteriorWall";
+
+				} else {
+
+					type = "Roof";
+
+				}
+
+			} else {
+
+				type = "Shade";
+
+			}
+
+		}
+
+		if ( type !== typeSource ) {
+
+			if ( typeSource === "UndergroundSlab" && type === "SlabOnGrade" ) {
+
+			} else {
+
+				console.log( 'ff', typeSource, type, spaces, tilt );
+
+			}
+
+
+		}
+		return type;
+
+	} )
+
+	console.log( 'count', count );
+	//console.log( 'FXSTI.surfaceTypes', FXSTI.surfaceTypes );
 
 	const help = `<a id=fxstiHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(fxstiHelp,FXSTI.currentStatus);" >&nbsp; ? &nbsp;</a>`;
 
 	FXSTIsumSurfaceType.innerHTML =
-		`Fix surfaces with invalid surface type ~ ${ FXSTI.surfaceTypeInvalids.length.toLocaleString() } found
+		`Surface types ~ ${ FXSTI.surfaceTypes.length.toLocaleString() } found
 			${ help }
 		`;
 
@@ -102,23 +248,8 @@ FXSTI.getSurfaceType = function() {
 	`
 		<p><i>A surface type was supplied that is not one of the following: ${ SGF.surfaceTypes.join( ', ' ) }</i></p>
 
-		<p>${ FXSTI.surfaceTypeInvalids.length.toLocaleString() } invalid surface types found. See tool tips for surface ID.</p>
+		<p>${ FXSTI.surfaceTypes.length.toLocaleString() } surface types found. See tool tips for surface ID.</p>
 
-		<p>
-			<select onclick=FXSTI.setTypeInvalidData(this); size=5 style=min-width:8rem; >${ options }</select>
-		</p>
-
-		<div id="FXSTIdivTypeInvalidData" >Click a surface in the list above to view its details and update its surface type</div>
-
-		<p>
-			<button onclick=FXSTIdivSurfaceTypeInvalid.innerHTML=FXSTI.getCheckSurfaceTypeInvalid(); >Run check again</button>
-		</p>
-
-		<div id=FXSTIdivSelecteSurfaceTGbxml ></div>
-
-		<p>
-			Click 'Save file' button in File Menu to save changes to a file.
-		</p>
 
 		<p>Time to check: ${ ( performance.now() - timeStart ).toLocaleString() } ms</p>
 

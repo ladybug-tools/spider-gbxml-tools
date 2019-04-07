@@ -4,7 +4,7 @@
 /* jshint loopfunc: true */
 
 
-const GGD = { release: "2.0.0", date: "2019-04-03" };
+const GGD = { release: "2.1.0", date: "2019-04-05" };
 
 GGD.description = `Gather data to be used by other modules and report statistics`;
 
@@ -27,20 +27,24 @@ GGD.currentStatus =
 		<details>
 			<summary>Change log</summary>
 			<ul>
+				<li>2019-04-05 ~ r ~ make cookbook compatible </li>
   				<li>2019-04-03 ~ F - First commit</li>
 			</ul>
 		</details>
 	`;
 
+
+
 GGD.getGbxmlData = function() {
 
 	const htm =
 		`
-			<details ontoggle="GGDdivGbxmlData.innerHTML=GGD.getData();" >
+			<details ontoggle="GGDdivGbxmlData.innerHTML=GGD.getData(SGF.text);" >
 
 				<summary id=GGDsumGetGbxmlData class=sumHeader >Show gbXML file statistics
-				<a id=ggdSum class=helpItem href="JavaScript:MNU.setPopupShowHide(ggdSum,GGD.currentStatus);" >&nbsp; ? &nbsp;</a>
-			</summary>
+					<a id=ggdSum class=helpItem href="JavaScript:MNU.setPopupShowHide(ggdSum,GGD.currentStatus);" >&nbsp; ? &nbsp;</a>
+				</summary>
+
 				<div id=GGDdivGbxmlData ></div>
 
 			</details>
@@ -52,11 +56,11 @@ GGD.getGbxmlData = function() {
 };
 
 
-GGD.getData = function() {
+GGD.getData = function( dataFile ) {
 
 	const timeStart = performance.now();
 
-	SGF.text = FIL.text.replace( /\r\n|\n/g, '' );
+	SGF.text = dataFile.replace( /\r\n|\n/g, '' );
 	SGF.surfaces = SGF.text.match( /<Surface(.*?)<\/Surface>/gi );
 	//console.log( 'SGF.surfaces', SGF.surfaces );
 
@@ -79,7 +83,8 @@ GGD.getData = function() {
 
 	const count = verticesCount.reduce( ( count, val, index ) => count + verticesCount[ index ].length, 0 );
 
-	SGF.openings = SGF.text.match( /<Opening(.*?)<\/Opening>/gi );
+	const openings = SGF.text.match( /<Opening(.*?)<\/Opening>/gi );
+	SGF.openings = openings || [];
 
 	const constructions = SGF.text.match( /<Construction(.*?)<\/Construction>/gi );
 	SGF.constructions = constructions || [];
@@ -103,6 +108,7 @@ GGD.getData = function() {
 	`;
 
 	return htm;
+
 
 		function getVertices( surface ) {
 

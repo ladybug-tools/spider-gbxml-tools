@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1" >
+<meta name = "description" content = "Open files with FileReader() or XMLHttpRequest()" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2019-02-07" >
+<title></title>
+<style>
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	.sumMenuTitle { background-color: #ccc; color: #888; margin: 10px 0; text-align: center; }
+	.sumHeader { font-size:1.3rem; }
+
+	.dragDropArea { border: 1px dashed gray; box-sizing: border-box; margin: 10px; padding: 0 10px; }
+
+	#navMenu { background-color: #eee; left: 0; margin: 20px; max-width: 300px; padding: 0 10px;
+		position: fixed; top: 0; }
+
+	#navPopUp { background-color: #eee; border-radius: 8px; display: block; max-height: 95%; max-width: 25%;
+		opacity: 0.95; overflow: auto; padding: 0 5px 10px 5px; position: fixed;
+		resize: both; right: 1rem; top: 1rem; z-index: 10; };
+
+
+</style>
+</head>
+<body>
+<script src="https://rawgit.com/showdownjs/showdown/1.9.0/dist/showdown.min.js" ></script>
+
+<script src="orf-on-request-file.js" ></script>
+
+
+<script src="../spider-gbxml-fixer-core.js" ></script>
+<script src="../ggd-get-gbxml-data.js" ></script>
+<script src="fxsti-fix-surface-type-invalid-2.js" ></script>
+
+	<nav id="navMenu" >
+
+		<div id="divTitle" ></div>
+
+		<details class=navSubMenu open >
+
+			<summary class=sumMenuTitle >File Menu</summary>
+
+			<section id="OFRsecFileOpenBasic" ></section>
+
+		</details>
+
+		<details id=FILdetFileOpen >
+
+			<summary class=sumHeader >File open statistics</summary>
+
+			<div id=FILdivProgress ></div>
+
+		</details>
+
+		<p>
+			<button id=but onclick=OFR.onRequestFile(this.innerHTML); >README.md</button>
+		</p>
+
+		<p>
+			<button id=but onclick=OFR.onRequestFile(this.innerHTML); >../../../README.md</button>
+		</p>
+
+		<p>
+			<button id=but onclick=OFR.onRequestFile(this.innerHTML); >../../favicon.ico</button>
+		</p>
+
+		<p>
+			<button id=but onclick=OFR.onRequestFile(this.innerHTML); >../../index.html</button>
+		</p>
+
+		<p>
+			<button id=but onclick=OFR.onRequestFile(this.innerHTML); >one-room-with-surface-type-errors.xml</button>
+		</p>
+
+	</nav>
+
+	<nav id="navPopUp" >
+
+			<div id="divPopUpData" ></div>
+
+			<div id="divMessage" ></div>
+
+	</nav>
+
+	<div id="divContents" ></div>
+
+
+<script>
+
+const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-64.png";
+const urlSourceCode = "https://github.com/zzzzz/xxxxx.html";
+
+
+init();
+
+
+
+function init() {
+
+	divTitle.innerHTML = getTitle();
+
+	OFRsecFileOpenBasic.innerHTML = OFR.getMenuFileOpenBasic( divContents );
+
+	//window.addEventListener( "onRequestXml", requestXml );
+	//document.body.addEventListener( 'onXmlFileLoad', GGD.getData, false );
+
+	OFR.onRequestFile( "one-room-with-surface-type-errors.xml" );
+
+	//divContents.innerHTML = FXSTI.getSurfaceTypeInvalid();
+
+}
+
+
+const MNU = {};
+
+
+MNU.setPopupShowHide = function( id, text ) {
+	//console.log( 'id', id );
+
+	id.classList.toggle( "active" );
+
+	divPopUpData.innerHTML = id.classList.contains( 'active' ) ? text : '';
+
+};
+
+
+
+function setIt() {
+
+	divContents.innerHTML += `<p>${ ( performance.now() ) } - Howdy! </p>`;
+
+}
+
+
+
+function getTitle() {
+
+	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+
+	const htm =
+	`
+		<h2>
+			<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
+				<img src=${ urlSourceCodeIcon } height=18 >
+			</a>
+			<a href="" title="Click to reload this page" >${ document.title }</a>
+		</h2>
+
+		<p>
+			${ OFR.description }
+		</p>
+	`;
+
+	return htm;
+
+}
+
+</script>
+</body>
+</html>
