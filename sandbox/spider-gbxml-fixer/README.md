@@ -22,7 +22,7 @@ _<small>Spider gbXML Fixer</small>_
 * Loads and checks a sample file from the [Spider gbXML sample files]( https://www.ladybug.tools/spider/#gbxml-sample-files/README.md ) folder
 
 <details>
-<summary class=sumHeader >Concept / the problem to be solved</summary>
+<summary class=sumHeader title="Includes our mision and vision statements" >Concept / the problem to be solved</summary>
 
 [GbXML]( http://www.gbxml.org/About_GreenBuildingXML_gbXML ) data files follow an industry-standard format and used to the transfer 3D building project data between computer aided design (CAD) program and energy analysis programs. The good people who create CAD and energy analysis applications are primarily software programmers. They have infrequent access to large numbers of actual building test cases nor can they simulate large varieties of practice-specific energy simulation workflows. The current often-repeated outcome is that building engineering practices devote much time to dealing with issues in transferring data back and forth between CAD applications and energy analysis programs - and thus losing time for creating better simulations.
 
@@ -47,7 +47,7 @@ Many of the issues to be found in parsing gbXML files are clerical matters that 
 </details>
 
 <details>
-<summary class=sumHeader >To Do / Wish List</summary>
+<summary class=sumHeader title-"What you you really want?" >To Do / Wish List</summary>
 
 * 2019-04-03 ~ Identify surface edges with multiple vertices where two are sufficient
 * 2019-03-12 ~ Add as many tests currently in Spider gbXML Viewer as possible that do not require 3D
@@ -58,7 +58,7 @@ Many of the issues to be found in parsing gbXML files are clerical matters that 
 </details>
 
 <details>
-<summary class=sumHeader >Issues</summary>
+<summary class=sumHeader title="Bugs we know about already" >Issues</summary>
 
 * 2019-04-02 ~ Toggling the display of a module and clicking the 'Run check again' perform thhe identical action. It would be nice to decide which is preferable.
 * 2019-04-02 ~ Once a change is effected, some modules re-run the check automatically and others do not. It would be nice to decide which behavior is preferable.
@@ -108,7 +108,7 @@ Enhancing the script
 </details>
 
 <details>
-<summary class=sumHeader >Links of Interest</summary>
+<summary class=sumHeader title="The back story on things"  >Links of Interest</summary>
 
 
 
@@ -122,7 +122,7 @@ Enhancing the script
 
 <details>
 
-<summary class=sumHeader >Change Log</summary>
+<summary class=sumHeader title="Read about what's new here"  >Change Log</summary>
 
 ### Commit message prefixes
 
