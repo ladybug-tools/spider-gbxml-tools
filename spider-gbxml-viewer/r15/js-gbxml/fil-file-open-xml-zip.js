@@ -77,7 +77,6 @@ FIL.getMenuFileOpen = function() {  // called from main HTML file
 					<input id=FILinpFilePath onchange=FIL.updateDefaultFilePath(); style=width:95%; title='paste a file path or URL here then press Enter' >
 				</p>
 
-
 			</div>
 
 			<details open >
