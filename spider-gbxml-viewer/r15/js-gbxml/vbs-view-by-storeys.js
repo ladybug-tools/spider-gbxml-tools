@@ -148,6 +148,12 @@ VBS.selStoreys = function() {
 
 	THR.controls.enableKeys = false;
 
+	POP.intersected = null;
+
+	divPopUpData.innerHTML = '';
+
+	THR.scene.remove( POP.line, POP.particle );
+
 	VBS.surfacesFilteredByStorey = VBS.setSurfacesFilteredByStorey();
 
 	VBSdivReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( VBS.surfacesFilteredByStorey );

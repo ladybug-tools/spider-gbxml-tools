@@ -130,6 +130,12 @@ VBSP.selSpaces = function() {
 
 	THR.controls.enableKeys = false;
 
+	POP.intersected = null;
+
+	divPopUpData.innerHTML = '';
+
+	THR.scene.remove( POP.line, POP.particle );
+
 	VBSP.surfacesFilteredBySpace = VBSP.setSurfacesFilteredBySpace();
 
 	VBSPdivReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( VBSP.surfacesFilteredBySpace );

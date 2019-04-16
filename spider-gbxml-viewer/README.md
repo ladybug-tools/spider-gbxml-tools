@@ -81,11 +81,20 @@ Pop-up Viewer 'Maevia' R15
 
 * 2019-02-25 ~ Pop-up not showing when screen is touched with finger
 
-***
+<details>
+
+<summary>Wish list / to do</summary>
+
+* 2019-04-15 ~ Theo ~ Toggle edges
+* 2019-04-15 ~ Theo ~ load two models at same time & views diffs
+* 2019-04-15 ~ Theo ~ Add space/storey attributes to pop-up
+* 2019-04-15 ~ Theo ~ Add gbxml/openings/construction data to pop-up
+
+</details>
 
 <details>
 
-<summary>Change Log</summary>
+<summary style=font-size:1.3rem; >Change Log</summary>
 
 ### 2019-04-15 ~ Theo
 
@@ -93,7 +102,7 @@ Spider gbXML Viewer 'Maevia' R15.1.0
 
 * F ~ Add 'Show/hide by space' to View menu
 * B - Prevent right click from updating pop-up. Stop model scrolling when clicking in select boxes.
-* D - Update to semver numbering. Add link to Atrax in Edit menu<
+* D - Update to semver numbering. Add link to Atrax in Edit menu
 
 
 ### 2019-03-14 ~ Copied from Pop-up
