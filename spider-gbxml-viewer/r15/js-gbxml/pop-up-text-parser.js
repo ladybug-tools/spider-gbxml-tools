@@ -194,7 +194,9 @@ POP.onDocumentTouchStart = function( event ) {
 
 
 POP.onDocumentMouseDown = function( event ) {
-	//console.log( 'event', event );
+	//console.log( 'event', event.button );
+
+	if ( event.button === 2 ) { return ; }
 
 	event.preventDefault();
 

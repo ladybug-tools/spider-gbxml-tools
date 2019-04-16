@@ -33,7 +33,6 @@ VBS.currentStatus =
 		<details>
 			<summary>Wish list</summary>
 			<ul>
-				<li>2019-02-11 ~ Add to list of selected with right-clicks</li>
 				<li>2019-01-30 ~ Better interaction with edges and openings</li>
 				<li>2019-01-15 ~ Theo ~ faster operations on very large files</li>
 
@@ -146,6 +145,8 @@ VBS.showAllStoreys = function() {
 //////////
 
 VBS.selStoreys = function() {
+
+	THR.controls.enableKeys = false;
 
 	VBS.surfacesFilteredByStorey = VBS.setSurfacesFilteredByStorey();
 

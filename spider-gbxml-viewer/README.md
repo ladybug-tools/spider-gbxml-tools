@@ -87,6 +87,15 @@ Pop-up Viewer 'Maevia' R15
 
 <summary>Change Log</summary>
 
+### 2019-04-15 ~ Theo
+
+Spider gbXML Viewer 'Maevia' R15.1.0
+
+* F ~ Add 'Show/hide by space' to View menu
+* B - Prevent right click from updating pop-up. Stop model scrolling when clicking in select boxes.
+* D - Update to semver numbering. Add link to Atrax in Edit menu<
+
+
 ### 2019-03-14 ~ Copied from Pop-up
 
 * 2019-03-12 ~ R15.31 ~ ISAOIOEW & ISAOIOEF> Move more functions to ISRC. Select list box now handles multi-select. Add button to show/hide selected.

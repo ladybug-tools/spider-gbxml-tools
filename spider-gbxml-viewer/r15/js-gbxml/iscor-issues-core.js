@@ -66,7 +66,8 @@ ISCOR.getMenuIssues = function() {
 	document.body.addEventListener( 'onGbxParse', ISCOR.onGbxParse, false );
 
 	const htm =
-	`
+
+/* 	`
 		<p>
 			<button onclick=ISCOR.onClickAllIssues();
 				title="May take a while to calculate and open menu on large files" >
@@ -93,7 +94,13 @@ ISCOR.getMenuIssues = function() {
 
 		${ ISCOD.getMenuCadObjectId() }
 
-		<p>Not yet part of 'Check all...'</p>
+		<p>Not yet part of 'Check all...'</p> */
+
+		`
+
+		<p>
+			For checking and fixing gbXML syntax issues see <a href="https://www.ladybug.tools/spider-gbxml-fixer/" target="_blank">Spider gbXML Fixer 'Atrax'</a>
+		</p>
 
 		${ ISSOV.getMenuSurfaceOverlapVerticals() }
 
@@ -121,9 +128,7 @@ ISCOR.getMenuIssues = function() {
 
 ISCOR.onGbxParse = function() {
 
-	detMenuEdit.open = true;
-
-
+	detMenuEdit.open = false;
 
 	const issues = detMenuEdit.querySelectorAll( 'details' ); // agree with FIL!
 	//console.log( 'issues', issues );
