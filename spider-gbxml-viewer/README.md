@@ -96,6 +96,12 @@ Pop-up Viewer 'Maevia' R15
 
 <summary style=font-size:1.3rem; >Change Log</summary>
 
+### 2019-04-16 ~ Theo
+
+Spider gbXML Viewer 'Maevia' R15.1.1
+
+* F ~ Add shift camera target to currently selected surface
+
 ### 2019-04-15 ~ Theo
 
 Spider gbXML Viewer 'Maevia' R15.1.0

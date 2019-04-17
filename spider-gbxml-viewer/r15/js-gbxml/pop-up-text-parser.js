@@ -520,8 +520,6 @@ POP.getSurfaceAttributes = function( surfaceXml ) {
 
 
 
-
-
 POP.getAttributesAdjacentSpace = function( surfaceXml ){
 
 	const adjacentSpaceId = surfaceXml.getElementsByTagName( "AdjacentSpaceId" );
@@ -581,6 +579,8 @@ POP.getAttributesAdjacentSpace = function( surfaceXml ){
 	return htm;
 
 };
+
+
 
 POP.setAttributesStoreyAndZone = function( spaceId ) {
 
@@ -678,6 +678,22 @@ POP.toggleSurfaceFocus = function( button ) {
 
 		POP.intersected.visible = true;
 
+
+		const bbox = new THREE.Box3();
+		meshes = [ POP.intersected ];
+
+		meshes.forEach( mesh => bbox.expandByObject ( mesh ) );
+
+		const sphere = bbox.getBoundingSphere( new THREE.Sphere() );
+		const center = sphere.center;
+		//const radius = sphere.radius;
+		const radius = THRU.radius;
+		const vector = THR.camera.position.clone().sub( THR.controls.target );
+
+		THR.controls.target.copy( center );
+		THR.camera.position.copy( center.clone().add( vector ) );
+
+
 	} else {
 
 		GBX.surfaceGroup.children.forEach( child => child.visible = true );
@@ -687,6 +703,10 @@ POP.toggleSurfaceFocus = function( button ) {
 	//const surfaceJson = POP.intersected.userData.gbjson;
 
 	POPelementAttributes.innerHTML = POP.getSurfaceAttributes( POP.surfaceXml );
+
+
+
+
 
 };
 
