@@ -196,7 +196,7 @@ POP.onDocumentTouchStart = function( event ) {
 POP.onDocumentMouseDown = function( event ) {
 	//console.log( 'event', event.button );
 
-	if ( event.button === 2 ) { return ; }
+	if ( event.button !== 0 ) { return ; }
 
 	event.preventDefault();
 
@@ -368,10 +368,13 @@ POP.getAdjSpaceButtons = function() {
 
 		const spaceId = POP.adjacentSpaceId[ 0 ];
 
+
+		//console.log( 'space', space );
+
 		htm =
 		`
 			<button id=POPbutAdjacentSpace1 onclick=POP.toggleSpaceVisible(this,"${ spaceId }","");
-				title="id: ${ spaceId }" >space: ${ spaceId }</button>
+				title="id: ${ spaceId }" >space: ${ POP.spaceNames[ 0 ] }</button>
 			</div><div id=POPbutAdjacentSpace2 ></div>
 		`;
 
@@ -384,10 +387,10 @@ POP.getAdjSpaceButtons = function() {
 		htm =
 		`
 			<button id=POPbutAdjacentSpace1 onclick=POP.toggleSpaceVisible(this,"${ spaceId1 }","");
-				title="id: ${ spaceId1 }" >space: ${ spaceId1 }</button>
+				title="id: ${ spaceId1 }" >space: ${ POP.spaceNames[ 0 ] }</button>
 
 			<button id=POPbutAdjacentSpace2 onclick=POP.toggleSpaceVisible(this,"${ spaceId2 }","");
-				title="id: ${ spaceId2 }" >space: ${ spaceId2 }</button>
+				title="id: ${ spaceId2 }" >space: ${ POP.spaceNames[ 1 ] }</button>
 		`;
 	}
 
@@ -500,7 +503,7 @@ POP.getSurfaceAttributes = function( surfaceXml ) {
 
 		<details>
 			<summary> AdjacentSpace</summary>
-			<p> ${ htmAdjacentSpace }
+			${ htmAdjacentSpace }
 		</details>
 
 		<details>
@@ -523,7 +526,7 @@ POP.getSurfaceAttributes = function( surfaceXml ) {
 POP.getAttributesAdjacentSpace = function( surfaceXml ){
 
 	const adjacentSpaceId = surfaceXml.getElementsByTagName( "AdjacentSpaceId" );
-	//console.log( 'adjacentSpaceId', adjacentSpaceId );
+	console.log( 'adjacentSpaceId', adjacentSpaceId );
 	//a = adjacentSpaceId
 
 	let htm;
@@ -544,6 +547,14 @@ POP.getAttributesAdjacentSpace = function( surfaceXml ){
 
 		POP.adjacentSpaceId = [ space1, space2 ];
 
+		spaceText1 = GBX.spaces.find( space => space.includes( space1 ) )
+		spaceName1 = spaceText1.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
+
+
+		spaceText2 = GBX.spaces.find( space => space.includes( space2 ) )
+		spaceName2 = spaceText2.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
+
+		POP.spaceNames = [ spaceName1, spaceName2 ];
 		POP.setAttributesStoreyAndZone( space2 );
 
 		htm =
@@ -551,10 +562,17 @@ POP.getAttributesAdjacentSpace = function( surfaceXml ){
 			<div>
 				<span class=attributeTitle >spaceIdRef 1:</span>
 				<span class=attributeValue >${ space1 }</span>
+				<br>
+				<span class=attributeTitle >Name:</span>
+				<span class=attributeValue >${ spaceName1 }</span>
 			</div>
+			<br>
 			<div>
 				<span class=attributeTitle >spaceIdRef 2:</span>
 				<span class=attributeValue >${ space2 }</span>
+				<br>
+				<span class=attributeTitle >Name:</span>
+				<span class=attributeValue >${ spaceName2 }</span>
 			</div>
 		`;
 
@@ -565,6 +583,12 @@ POP.getAttributesAdjacentSpace = function( surfaceXml ){
 		const spaceId = adjacentSpaceId[ 0 ].getAttribute( "spaceIdRef" );
 		POP.adjacentSpaceId = [ spaceId];
 
+		const spaceText1 = GBX.spaces.find( space => space.includes( spaceId ) )
+		const spaceName1 = spaceText1.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
+
+
+		POP.spaceNames = [ spaceName1 ];
+
 		POP.setAttributesStoreyAndZone( spaceId );
 
 		htm =
@@ -572,6 +596,9 @@ POP.getAttributesAdjacentSpace = function( surfaceXml ){
 		`<div>
 			<span class=attributeTitle >spaceIdRef:</span>
 			<span class=attributeValue >${ spaceId }</span>
+			<br>
+			<span class=attributeTitle >Name:</span>
+			<span class=attributeValue >${ spaceName1 }</span>
 		</div>`;
 
 	}
@@ -680,7 +707,7 @@ POP.toggleSurfaceFocus = function( button ) {
 
 
 		const bbox = new THREE.Box3();
-		meshes = [ POP.intersected ];
+		const meshes = [ POP.intersected ];
 
 		meshes.forEach( mesh => bbox.expandByObject ( mesh ) );
 
@@ -703,10 +730,6 @@ POP.toggleSurfaceFocus = function( button ) {
 	//const surfaceJson = POP.intersected.userData.gbjson;
 
 	POPelementAttributes.innerHTML = POP.getSurfaceAttributes( POP.surfaceXml );
-
-
-
-
 
 };
 

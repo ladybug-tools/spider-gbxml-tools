@@ -62,7 +62,7 @@ summary { cursor: pointer; font-weight: bold; }
 
 #navPopUp { /* background-color: #eee; */ border-radius: 8px; display: block; max-height: 95%; max-width: 25%;
 	opacity: 0.95;  overflow: auto; padding: 0 5px 10px 5px; position: fixed; resize: both; right: 1rem;
-	top: 1rem; z-index: 10; };
+	top: 1rem; z-index: 10; }
 
 
 

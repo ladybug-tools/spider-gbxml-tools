@@ -102,10 +102,10 @@ VBS.getStoreysOptions = function() {
 	//console.log( 'storeyIds', storeyIds );
 
 	const storeyLevels = GBX.storeys.map( storey => storey.match( '<Level>(.*?)</Level>' )[ 1 ] );
-	console.log( 'storeyLevels', storeyLevels);
+	//console.log( 'storeyLevels', storeyLevels);
 
 	const storeyLevelsSorted = storeyLevels.slice().sort( (a, b) => b - a );
-	console.log( 'storeyLevelsSorted', storeyLevelsSorted );
+	//console.log( 'storeyLevelsSorted', storeyLevelsSorted );
 
 	const storeyNames = GBX.storeys.map( storey => {
 
@@ -151,6 +151,10 @@ VBS.selStoreys = function() {
 	POP.intersected = null;
 
 	divPopUpData.innerHTML = '';
+
+	// show storey data in pop-up
+	
+	//POPelementAttributes.innerHTML=POP.toggleStoreyVisible(this,"aim0250");
 
 	THR.scene.remove( POP.line, POP.particle );
 
