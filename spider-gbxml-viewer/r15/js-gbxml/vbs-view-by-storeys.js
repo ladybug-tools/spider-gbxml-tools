@@ -153,7 +153,7 @@ VBS.selStoreys = function() {
 	divPopUpData.innerHTML = '';
 
 	// show storey data in pop-up
-	
+
 	//POPelementAttributes.innerHTML=POP.toggleStoreyVisible(this,"aim0250");
 
 	THR.scene.remove( POP.line, POP.particle );

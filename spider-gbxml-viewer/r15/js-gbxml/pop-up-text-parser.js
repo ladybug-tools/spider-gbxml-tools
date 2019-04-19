@@ -420,7 +420,6 @@ POP.getAttributesHtml = function( obj ) {
 		if ( attribute.name === "constructionIdRef" ) {
 
 			//console.log( 'attribute.value', attribute.value );
-
 			//constructions = GBX.text.match( /<Construction(.*?)<\/Construction>/gi );
 
 			// silly way of doing things, but it's a start
@@ -436,7 +435,6 @@ POP.getAttributesHtml = function( obj ) {
 			//console.log( 'xmlText', xmlText );
 
 			htm += `<textarea style=height:5rem;width:100%; >${ xmlText }</textarea>`;
-
 
 		}
 
@@ -647,7 +645,6 @@ POP.setAttributesStoreyAndZone = function( spaceId ) {
 
 
 };
-
 
 
 
@@ -913,13 +910,11 @@ POP.toggleStoreyVisible = function( button, storeyId ) {
 
 
 
-
 POP.getToggleZoneVisible = function ( button, zoneIdRef ) {
 
 	button.classList.toggle( "active" );
 
 	const focus = button.classList.contains( "active" );
-
 	const children = GBX.surfaceGroup.children;
 
 	if ( focus === true ) {

@@ -4,7 +4,7 @@
 
 var GAL = { "release": "r11.0", "date": "2019-01-01"  };
 
-GAL.iconGitHubMark = 'https://status.github.com/images/invertocat.png';
+GAL.iconGitHubMark = 'https://pushme-pullyou.github.io/github-mark-64.png';
 
 GAL.iconInfo = `<img src=${GAL.iconGitHubMark} height=14 >`;
 
@@ -42,7 +42,7 @@ GAL.currentStatus =
 	`;
 
 
-	
+
 GAL.getMenuSampleFilesGallery = function( buttons, target ) {
 
 	const htm =

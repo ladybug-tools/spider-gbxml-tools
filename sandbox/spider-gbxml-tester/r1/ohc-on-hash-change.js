@@ -15,7 +15,7 @@ OHC.branch = '/master/';
 OHC.urlGitHubPage = "../../";
 
 OHC.urlSourceCode = `https://github.com/${ OHC.user}/${ OHC.repo }/`;
-OHC.urlSourceCodeImage = "https://status.github.com/images/invertocat.png";
+OHC.urlSourceCodeImage = "https://pushme-pullyou.github.io/github-mark-64.png";
 OHC.iconInfo = `<img src="${ OHC.urlSourceCodeImage }" height=18 >`;
 
 OHC.xhr = new XMLHttpRequest(); // declare now to load event listeners in other modules
@@ -161,7 +161,7 @@ OHC.onHashChange = function() {
 	let pathCurrent = crumbs.lastIndexOf( '/' ) > 0 ? crumbs.slice( 0, crumbs.lastIndexOf( '/' ) ) : '';
 
 	FIL.name = url.split( '/').pop();
-	
+
 	// note two requests...
 
 	// if new !== old

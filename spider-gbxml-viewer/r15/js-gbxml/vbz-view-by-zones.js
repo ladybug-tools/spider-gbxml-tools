@@ -56,7 +56,7 @@ VBZ.getMenuViewByZones = function() {
 		<details id=VBSPdetMenu ontoggle=VBZ.getZonesOptions(); >
 
 			<summary>Show/hide by zones
-				<a id=VBSPHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(VBSPHelp,VBZ.currentStatus);" >&nbsp; ? &nbsp;</a>
+				<a id=VBZHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(VBZHelp,VBZ.currentStatus);" >&nbsp; ? &nbsp;</a>
 			</summary>
 
 			<p>Display surfaces by zone. Default is all zones visible.</p>
@@ -132,6 +132,8 @@ VBZ.selZones = function() {
 
 	THR.controls.enableKeys = false;
 
+	POP.getToggleZoneVisible( VBSPselZone, VBSPselZone.value );
+/*
 	POP.intersected = null;
 
 	divPopUpData.innerHTML = '';
@@ -151,6 +153,7 @@ VBZ.selZones = function() {
 		}
 
 	} );
+*/
 
 };
 

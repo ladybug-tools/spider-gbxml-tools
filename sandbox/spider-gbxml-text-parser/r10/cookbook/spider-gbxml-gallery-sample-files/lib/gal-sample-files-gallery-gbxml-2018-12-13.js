@@ -4,7 +4,7 @@
 
 var GAL = { "release": "R10.0", "date": "2018-12-11"  };
 
-GAL.iconGitHubMark = 'https://status.github.com/images/invertocat.png';
+GAL.iconGitHubMark = 'https://pushme-pullyou.github.io/github-mark-64.png';
 
 GAL.threeDefaultFile = 'https://www.ladybug.tools/spider-gbxml-tools/gbxml-viewer-basic/';
 

@@ -1,9 +1,9 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
 // jshint esversion: 6
-/* globals VBS, GBX, VSTdivSurfaceType, VSTdivSurfaceType, VSTdivViewByFilters, VSTdivViewCurrentStats */
+/* globals VBS, GBX, VSTdivSurfaceType, VSTsecViewSurfaceType, VSTdivReportsLog, THRU, detReports, */
 
 
-const VST = { "release": "R15.4", "date": "2019-02-25" };
+const VST = { "release": "R15.5.0", "date": "2019-04-18" };
 
 VST.description =
 	`
@@ -21,21 +21,6 @@ VST.currentStatus =
 		<p>Concept
 			<ul>
 				<li>View selected surfaces in a gbXML file using a variety of filters</li>
-				<li>View various statistics about the gbXML file</li>
-			</ul>
-		</p>
-
-		<p>
-			Issues
-			<li>2019-02-13 ~ not all surface types in model are displayed when looking at multiple models << but getting better</li>
-		</p>
-
-		<p>Wish list
-			<ul>
-
-				<li>2019-02-07 ~ Better interaction with openings</li>
-				<li>Faster operations on very large files</li>
-
 			</ul>
 		</p>
 
@@ -45,9 +30,23 @@ VST.currentStatus =
 			</a>
 		</p>
 
+		<p>
+			Issues
+		</p>
+
+		<details>
+			<summary>Wish list</summary>
+			<ul>
+
+				<li>2019-02-07 ~ Better interaction with openings</li>
+				<li>Faster operations on very large files</li>
+			</ul>
+		</details>
+
 		<details>
 			<summary>Change log</summary>
 			<ul>
+				<li>2019-04-18 ~ 15.5 ~ New features on all the buttons</li>
 				<li>2019-02-25 ~ 15.4 ~ Fixes 'exposed to sun; button</li>
 				<li>2019-02-13 ~ Close menu when new file loaded. Reset vars</li>
 				<li>2019-02-11 ~ Pass through jsHint.com and make repairs</li>
@@ -77,10 +76,10 @@ VST.getMenuViewSurfaceTypes = function() {
 
 	const htm =
 	`
-		<details id=detReports ontoggle=VST.onToggle(); >
+		<details id=detReports ontoggle=VST.onToggleSurfaceTypes(); >
 
 			<summary>Show/hide by surface type
-				<a id=vstHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(vstHelp,VST.currentStatus);" >&nbsp; ? &nbsp;</a>
+				<a id=vstHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(vstHelp,VST.currentStatus);" >&nbsp;?&nbsp;</a>
 			</summary>
 
 			<p>
@@ -90,15 +89,13 @@ VST.getMenuViewSurfaceTypes = function() {
 			<div id="VSTdivSurfaceType" ></div>
 
 			<p>
-				<button id=butExterior onclick=VST.setSurfacesActiveByDefaults(this); >exterior surfaces</button>
+				<button onclick=VST.onToggleInteriorExterior(this) >show/hide interior/exterior</button>
 
-				<button id=butExposed onclick=VST.setSurfacesActiveByExposedToSun('exposedToSun="true"'); title="Does not update the buttons" >exposed to sun</button>
+				<button id=butExposed onclick=VST.setSurfacesActiveByFilter(this,'exposedToSun="true"'); >show/hide 'exposedToSun' </button>
 			</p>
 
 			<p>
-				<button onclick=VST.sendSurfacesToThreeJs(["Ceiling","InteriorFloor","SlabOnGrade","Roof","UndergroundSlab"],this); >horizontal</button>
-
-				<button onclick=VST.sendSurfacesToThreeJs(["ExteriorWall","InteriorWall","UndergroundWall"],this); >vertical</button>
+				<button onclick=VST.onToggleHorizontalVertical(this) >show/hide horizontal vertical</button>
 			</p>
 
 			<p>
@@ -117,17 +114,17 @@ VST.getMenuViewSurfaceTypes = function() {
 };
 
 
+
 VST.resetMenu = function() {
 
 	detReports.open = false;
 	VSTdivSurfaceType.innerHTML = "";
 
-
-
 };
 
 
-VST.onToggle = function() {
+
+VST.onToggleSurfaceTypes = function() {
 
 	if ( VSTdivSurfaceType.innerHTML === '' ) {
 
@@ -138,12 +135,14 @@ VST.onToggle = function() {
 		//console.log( 'col', colors );
 
 		const buttonSurfaceTypes = types.map( ( type, index ) =>
-			`<button onclick=VST.toggleSurfaceFiltered(this); style="background-color:#${ colors[ index ] };" > ${ type } </button>`
+			`
+			<button onclick=VST.toggleThisSurface("${ type}");  style=min-width:1.5rem;width:1rem;>o</button>
+			<button onclick=VST.toggleSurfaceByButtons(this); style="background-color:#${ colors[ index ] };" > ${ type } </button>`
 		);
 
 		VSTdivSurfaceType.innerHTML = buttonSurfaceTypes.join( '<br>' );
 
-		VSTdivViewCurrentStats.innerHTML = VST.getViewStats();
+		//VSTdivViewCurrentStats.innerHTML = VST.getViewStats();
 
 		VST.setSurfacesActiveByDefaults();
 
@@ -153,7 +152,7 @@ VST.onToggle = function() {
 
 
 
-VST.getViewStats = function() {
+VST.bbbbbgetViewStats = function() {
 
 	const reSpaces = /<Space(.*?)<\/Space>/gi;
 	GBX.spaces = GBX.text.match( reSpaces );
@@ -191,7 +190,6 @@ VST.getViewStats = function() {
 };
 
 
-
 VST.setSurfacesActiveByDefaults = function() {
 
 	const buttons = VSTdivSurfaceType.querySelectorAll( "button" );
@@ -206,11 +204,54 @@ VST.setSurfacesActiveByDefaults = function() {
 
 
 
-VST.setSurfacesActiveByExposedToSun = function( filter ) {
+VST.toggleThisSurface = function( type ) {
+
+	const buttonsActive = VSTsecViewSurfaceType.getElementsByClassName( "active" ); // collection
+
+	Array.from( buttonsActive ).forEach( button => button.classList.remove( "active" ) );
+
+	VST.sendSurfacesToThreeJs ( [ type ] );
+
+};
+
+
+
+VST.toggleSurfaceByButtons = function( button ) {
+
+	button.classList.toggle( "active" );
+
+	const buttonsActive = VSTdivSurfaceType.getElementsByClassName( "active" ); // collection
+
+	const filterArray = Array.from( buttonsActive ).map( button => button.innerText );
+
+	VST.sendSurfacesToThreeJs ( filterArray );
+
+};
+
+
+
+VST.setSurfacesActiveByFilter = function( button, filter ) {
 	// console.log( 'filter', filter );
 
-	surfacesFiltered = GBX.surfacesIndexed.filter( surface => surface.includes( `${ filter }` ) );
-	//console.log( 'surfacesFiltered', surfacesFiltered );
+	const buttonsActive = VSTsecViewSurfaceType.getElementsByClassName( "active" ); // collection
+
+	Array.from( buttonsActive ).forEach( button => button.classList.remove( "active" ) );
+
+
+	button.classList.toggle( "active" );
+
+	let surfacesFiltered;
+
+	if ( button.classList.contains( "active" ) ) {
+
+		surfacesFiltered = GBX.surfacesIndexed.filter( surface => surface.includes( `${ filter }` ) );
+		//console.log( 'surfacesFiltered', surfacesFiltered );
+
+	} else {
+
+		surfacesFiltered = GBX.surfacesIndexed.filter( surface => surface.includes( `${ filter }` ) === false );
+		//console.log( 'surfacesFiltered', surfacesFiltered );
+	}
 
 	VSTdivReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( surfacesFiltered );
 
@@ -220,21 +261,47 @@ VST.setSurfacesActiveByExposedToSun = function( filter ) {
 
 	THRU.groundHelper.visible = false;
 
-	//return VSTdivReportsLog.innerHTML;
+};
+
+
+
+VST.onToggleInteriorExterior = function( button ) {
+
+	const buttonsActive = VSTsecViewSurfaceType.getElementsByClassName( "active" ); // collection
+
+	Array.from( buttonsActive ).forEach( button => button.classList.remove( "active" ) );
+
+
+	button.classList.toggle( "active" );
+
+	const array = button.classList.contains( "active" ) ?
+
+		[ "ExposedFloor", "ExteriorWall", "RaisedFloor", "Roof" ]
+		:
+		[ "Ceiling","InteriorFloor", "InteriorWall", "SlabOnGrade", "UndergroundCeiling", "UndergroundSlab", "UndergroundWall" ];
+
+	VST.sendSurfacesToThreeJs( array );
 
 };
 
 
 
-VST.toggleSurfaceFiltered = function( button ) {
+VST.onToggleHorizontalVertical = function( button ) {
+
+	const buttonsActive = VSTsecViewSurfaceType.getElementsByClassName( "active" ); // collection
+
+	Array.from( buttonsActive ).forEach( button => button.classList.remove( "active" ) );
+
 
 	button.classList.toggle( "active" );
 
-	const buttonsActive = VSTdivSurfaceType.getElementsByClassName( "active" ); // collection
+	const array = button.classList.contains( "active" ) ?
 
-	const filterArray = Array.from( buttonsActive ).map( button => button.innerText );
+		["Ceiling","ExposedFloor", "InteriorFloor","RaisedFloor", "Roof","SlabOnGrade","UndergroundCeiling", "UndergroundSlab"]
+		:
+		[ "ExteriorWall","InteriorWall","UndergroundWall" ];
 
-	VST.sendSurfacesToThreeJs ( filterArray );
+	VST.sendSurfacesToThreeJs( array );
 
 };
 
@@ -255,7 +322,7 @@ VST.setShowAll = function() {
 VST.sendSurfacesToThreeJs = function( filters ) {
 
 	filters = Array.isArray( filters ) ? filters : [ filters ];
-	console.log( 'filters', filters );
+	//console.log( 'filters', filters );
 
 	const buttons = VSTdivSurfaceType.querySelectorAll( "button" );
 

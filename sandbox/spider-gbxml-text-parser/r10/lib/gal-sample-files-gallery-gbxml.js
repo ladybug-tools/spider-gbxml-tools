@@ -4,7 +4,7 @@
 
 var GAL = { "release": "r10.3", "date": "2018-12-29"  };
 
-GAL.iconGitHubMark = 'https://status.github.com/images/invertocat.png';
+GAL.iconGitHubMark = 'https://pushme-pullyou.github.io/github-mark-64.png';
 
 GAL.iconInfo = `<img src=${GAL.iconGitHubMark} height=14 >`;
 
