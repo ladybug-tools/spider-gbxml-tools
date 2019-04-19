@@ -99,7 +99,7 @@ ISCOR.getMenuIssues = function() {
 		`
 
 		<p>
-			For checking and fixing gbXML syntax issues see <a href="https://www.ladybug.tools/spider-gbxml-fixer/" target="_blank">Spider gbXML Fixer 'Atrax'</a>
+			For checking and fixing gbXML syntax issues see <a href="https://www.ladybug.tools/spider-gbxml-fixer/dev/" target="_blank">Spider gbXML Fixer 'Atrax'</a>
 		</p>
 
 		${ ISSOV.getMenuSurfaceOverlapVerticals() }

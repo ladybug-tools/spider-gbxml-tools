@@ -235,8 +235,7 @@ VST.setSurfacesActiveByFilter = function( button, filter ) {
 
 	const buttonsActive = VSTsecViewSurfaceType.getElementsByClassName( "active" ); // collection
 
-	Array.from( buttonsActive ).forEach( button => button.classList.remove( "active" ) );
-
+	Array.from( buttonsActive ).forEach( butt => { if ( butt !== button ) ( butt.classList.remove( "active" ) ); } );
 
 	button.classList.toggle( "active" );
 
@@ -269,8 +268,7 @@ VST.onToggleInteriorExterior = function( button ) {
 
 	const buttonsActive = VSTsecViewSurfaceType.getElementsByClassName( "active" ); // collection
 
-	Array.from( buttonsActive ).forEach( button => button.classList.remove( "active" ) );
-
+	Array.from( buttonsActive ).forEach( butt => { if ( butt !== button ) ( butt.classList.remove( "active" ) ); } );
 
 	button.classList.toggle( "active" );
 
@@ -290,8 +288,7 @@ VST.onToggleHorizontalVertical = function( button ) {
 
 	const buttonsActive = VSTsecViewSurfaceType.getElementsByClassName( "active" ); // collection
 
-	Array.from( buttonsActive ).forEach( button => button.classList.remove( "active" ) );
-
+	Array.from( buttonsActive ).forEach( butt => { if ( butt !== button ) ( butt.classList.remove( "active" ) ); } );
 
 	button.classList.toggle( "active" );
 
