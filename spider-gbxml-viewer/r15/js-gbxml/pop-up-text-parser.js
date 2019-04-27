@@ -524,7 +524,7 @@ POP.getSurfaceAttributes = function( surfaceXml ) {
 POP.getAttributesAdjacentSpace = function( surfaceXml ){
 
 	const adjacentSpaceId = surfaceXml.getElementsByTagName( "AdjacentSpaceId" );
-	console.log( 'adjacentSpaceId', adjacentSpaceId );
+	//console.log( 'adjacentSpaceId', adjacentSpaceId );
 	//a = adjacentSpaceId
 
 	let htm;

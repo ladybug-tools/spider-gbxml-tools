@@ -205,7 +205,6 @@ GBX.setSurfaceTypesVisible = function ( typesArray ) {
 GBX.sendSurfacesToThreeJs = function( surfacesText ) {
 	//console.log( 'surfacesText', surfacesText );
 
-
 	GBX.surfaceGroup.children.forEach( ( surface, index ) => {
 
 		surface.visible = false;

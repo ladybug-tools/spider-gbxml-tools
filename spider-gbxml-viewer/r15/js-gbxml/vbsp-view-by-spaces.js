@@ -104,7 +104,7 @@ VBSP.getSpacesOptions = function() {
 		const index = spaceNames.indexOf( space );
 		//console.log( 'indexUnsorted', indexUnsorted );
 
-		return `<option value=${ spaceIds[ index ] }>${ spaceNames[ index ] }</option>`
+		return `<option value=${ spaceIds[ index ] } title="${ spaceIds[ index ] }" >${ spaceNames[ index ] }</option>`
 
 	} );
 
@@ -189,6 +189,7 @@ VBSP.setSurfacesFilteredBySpace = function( surfaces ) {
 		const surfacesVisibleBySpace = spacesInSpaceIds.flatMap( spaceId =>
 			GBX.surfacesIndexed.filter( surface => surface.includes( `spaceIdRef="${ spaceId }"`  ) )
 		);
+
 		//console.log( 'surfacesVisibleBySpace', surfacesVisibleBySpace );
 /*
 		const buttonsActive = VSTdivSurfaceType.getElementsByClassName( "active" ); // collection

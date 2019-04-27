@@ -49,8 +49,8 @@ ISSOH.getMenuSurfaceOverlapHorizontals = function() {
 
 	`<details id="ISSOHdetSurfaceOverlapHorizontals" ontoggle=ISSOH.getSurfaceOverlapHorizontalsCheck(); >
 
-		<summary>Surface Overlap Horizntls<span id="ISSOHspnCount" ></span>
-			<a id=ISSOHsumHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(ISSOHsumHelp,ISSOH.currentStatus);" >&nbsp; ? &nbsp;</a>
+		<summary>Surface Overlap Horizontals<span id="ISSOHspnCount" ></span>
+			<a id=ISSOHsumHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(ISSOHsumHelp,ISSOH.currentStatus);" >? &nbsp;</a>
 		</summary>
 
 		<p>
