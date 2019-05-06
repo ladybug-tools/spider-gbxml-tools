@@ -2,7 +2,7 @@
 /* globals COR, butGalleryGbxml, butGallerySampleFiles, butGallerySamples2, butGalleryBuildWell, divMenuItems */
 /* jshint esversion: 6 */
 
-var GAL = { "release": "r15.0", "date": "2019-03-12"  };
+var GAL = { "release": "r15.1", "date": "2019-05-06"  };
 
 GAL.iconGitHubMark = "https://pushme-pullyou.github.io/github-mark-64.png"
 GAL.iconInfo = `<img src=${GAL.iconGitHubMark} height=14 style=opacity:0.5 >`;
@@ -14,17 +14,22 @@ var GALdetGallery, GALdivgallery;
 
 GAL.currentStatus =
 	`
-		<h3>GAL ${ GAL.release} status ${ GAL.date }</h3>
+		<h3>Sample Files Gallery GAL ${ GAL.release} status ${ GAL.date }</h3>
 
-		<p>Sample files gallery script.</p>
-
-		<p>This script is ready for testing. Generally it appears to be working well.</p>
+		<p>List, select and display the contents of a number of sample gbXML files from a variety of sources.</p>
 
 		<p>We are always looking for more sample files and more complete attributions.</p>
 
 		<p>
+			<a href="https://www.ladybug.tools/spider-gbxml-tools/#sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-gallery-sample-files/README.md" target="_blank">
+			gal-sample-files-gallery-gbxml.js Read Me file</a>
+		</p>
+
+		<details>
+			<summary>Change Log</summary>
 			<ul>
-				<li>2019-03-12 ~ Change cdb to jsdlivr.net</li>
+				<li>2019-05-06 ~ D - Update currentStatus text</li>
+				<li>2019-03-12 ~ Change cdn to jsDlivr.net</li>
 				<li>2018-12-29 ~ Add helpItem class</li>
 				<li>2018-12-28 ~ Move HTML from core script to gallery script</li>
 				<li>2018-12-28 ~ Move current status to Pop-Up</li>
@@ -32,12 +37,7 @@ GAL.currentStatus =
 				<li>2018-12-11 ~ Add ZIP file gallery button & menu</li>
 				<li>2018-12-11 ~ significant code refactor</li>
 			</ul>
-		</p>
-
-		<p>
-			<a href="https://www.ladybug.tools/spider-gbxml-tools/#sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-gallery-sample-files/README.md" target="_blank">
-			gal-sample-files-gallery-gbxml.js Read Me file</a>
-		</p>
+		</details>
 
 	`;
 
