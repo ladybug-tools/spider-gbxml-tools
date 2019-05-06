@@ -1,15 +1,13 @@
 // Copyright 2019 Ladybug Tools authors. MIT License
-/* globals COR, butGalleryGbxml, butGallerySampleFiles, butGallerySamples2, butGalleryBuildWell, divMenuItems */
+/* globals butGalleryZip, butGalleryGbxml, butGallerySampleFiles, butGallerySamples2, butGalleryBuildWell, butGalleryZip */
 /* jshint esversion: 6 */
 
-var GAL = { "release": "r15.1", "date": "2019-05-06"  };
+var GAL = { "release": "r15.2", "date": "2019-05-06"  };
 
-GAL.iconGitHubMark = "https://pushme-pullyou.github.io/github-mark-64.png"
+GAL.iconGitHubMark = "https://pushme-pullyou.github.io/github-mark-64.png";
 GAL.iconInfo = `<img src=${GAL.iconGitHubMark} height=14 style=opacity:0.5 >`;
 
 GAL.threeDefaultFile = 'https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/';
-
-var GALdetGallery, GALdivgallery;
 
 
 GAL.currentStatus =
@@ -28,6 +26,7 @@ GAL.currentStatus =
 		<details>
 			<summary>Change Log</summary>
 			<ul>
+				<li>2019-05-06 ~ B - pass through jsHint</li>
 				<li>2019-05-06 ~ D - Update currentStatus text</li>
 				<li>2019-03-12 ~ Change cdn to jsDlivr.net</li>
 				<li>2018-12-29 ~ Add helpItem class</li>
@@ -104,7 +103,7 @@ GAL.getMenuSampleFilesGallery = function( buttons, target ) {
 
 	return htm;
 
-}
+};
 
 
 
