@@ -53,7 +53,6 @@ FIL.getMenuFileOpen = function() {  // called from main HTML file
 
 	const htm =
 	`
-
 		<details id=FILdetFileOpen >
 
 			<summary>Open gbXML or ZIP file
@@ -63,7 +62,7 @@ FIL.getMenuFileOpen = function() {  // called from main HTML file
 			<div class="dragDropArea" >
 
 				<p>
-					<input type=file id=inpOpenFile onchange=FIL.onInputFileOpen(this); accept=".xml, .zip" >
+					<input type=file id=inpOpenFile onchange=FIL.onInputFileOpen(this); accept=".xml, .zip, .md" >
 				</p>
 				<p>
 					<button onclick=FIL.reloadFile(); >reload file</button>
@@ -167,6 +166,10 @@ FIL.onHashChange = function() {
 	} else if ( FIL.name.toLowerCase().endsWith( '.zip' )) {
 
 		FIL.XhrRequestFileZip( url, FIL.callbackUrlUtf16 );
+
+	} else 	if ( FIL.name.toLowerCase().endsWith( '.md' ) ) {
+
+		FIL.XhrRequestFileXml( url );
 
 	} else {
 
@@ -309,7 +312,7 @@ FIL.onInputFileOpen = function( files ) {
 	const file = files.files[ 0 ];
 
 	const type = file.type;
-	//console.log( 'type', type );
+	console.log( 'type', type );
 
 	if ( type === "text/xml" ) {
 
@@ -321,7 +324,7 @@ FIL.onInputFileOpen = function( files ) {
 
 	} else {
 
-		console.log( 'not supported', type );
+		FIL.onFileOpenText( files );
 
 	}
 
@@ -462,6 +465,44 @@ FIL.fileOpenZip = function( files ) {
 };
 
 
+
+FIL.onFileOpenText = function( files ) {
+	//console.log( 'files', files );
+
+	FIL.files = files;
+	FIL.timeStart = performance.now();
+
+	const file = files.files[ 0 ];
+	console.log( 'file', file );
+
+	FIL.reader.onload = function( event ) {
+		console.log( 'FIL.reader', FIL.reader );
+
+		const name = file.name.toLowerCase();
+		console.log( 'name', name );
+		if ( name.endsWith('.md' ) ) {
+
+			FIL.callbackMarkdown( FIL.reader.result );
+
+		} else {
+
+
+
+		}
+
+	}
+	FIL.reader.readAsText( file );
+};
+
+FIL.callbackMarkdown = function( text ) {
+
+	showdown.setFlavor('github');
+	//const converter = new showdown.Converter();
+	//const html = converter.makeHtml( xhr.target.response );
+
+	MNU.setPopupShowHide( text );
+
+};
 
 ////////// File Save
 

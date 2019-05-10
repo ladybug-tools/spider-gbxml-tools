@@ -88,9 +88,9 @@ GBX.onFileZipLoad = function() { GBX.parseFile( FIL.text ); };
 
 
 GBX.parseFile = function( gbxml )  {
-	//console.log( 'gbxml', gbxml );
 
-	if ( !gbxml ) { return; }
+	if ( !gbxml || gbxml.includes( "xmlns" ) === false ) { return; }
+	//console.log( 'gbxml', gbxml );
 
 	GBXdetStats.open = gbxml.length > 10000000 ? true : false;
 
