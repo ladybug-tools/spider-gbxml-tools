@@ -295,7 +295,7 @@ FIL.callbackUrlUtf16 = function( xhr ) {
 ////////// Handle OS file dialog events
 
 FIL.onInputFileOpen = function( files ) {
-	//console.log( 'files', files );
+	console.log( 'files', files );
 
 	FIL.files = files;
 	FIL.timeStart = performance.now();
@@ -492,7 +492,10 @@ FIL.onFileOpenText = function( files ) {
 
 	}
 	FIL.reader.readAsText( file );
+
 };
+
+
 
 FIL.callbackMarkdown = function( text ) {
 

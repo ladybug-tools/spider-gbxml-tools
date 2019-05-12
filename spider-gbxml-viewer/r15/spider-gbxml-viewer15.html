@@ -326,6 +326,7 @@ function init() {
 
 	VBOsecViewByOpenings.innerHTML = "Show/hide by openings: coming soon<hr>";
 
+
 	// Settings menu
 	THMsecMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
 
@@ -343,11 +344,9 @@ function init() {
 
 	FIL.urlDefaultFile=thrFilePath || urlDefaultFile;
 
-	if ( !location.hash ) { location.hash=FIL.urlDefaultFile; } else { FIL.onHashChange(); }
+	if ( !location.hash ) { location.hash = FIL.urlDefaultFile; } else { FIL.onHashChange(); }
 
-	//location.hash=urlDefaultFile;
-
-	//See OHC.onHashChange() for opening file process
+	//location.hash = urlDefaultFile;
 
 	THM.init();
 
