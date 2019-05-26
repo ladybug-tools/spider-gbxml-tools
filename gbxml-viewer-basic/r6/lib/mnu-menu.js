@@ -23,7 +23,7 @@ MNU.getNavHeader = function() {
 
 		<h2>
 			<a href=${ MNU.urlSourceCode } target="_top" title="Source code on GitHub" >
-				<img src="https://status.github.com/images/invertocat.png" height=18 >
+				<img src="https://pushme-pullyou.github.io/github-mark-64.png" height=18 >
 			</a>
 			<a href="" title="Click to reload this page" >${ document.title }</a>
 		</h2>

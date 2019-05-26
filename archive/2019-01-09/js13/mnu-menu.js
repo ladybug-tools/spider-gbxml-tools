@@ -62,7 +62,7 @@ MNU.appText = "appText";
 MNU.appTitle = "appTitle";
 MNU.appUrl = "";
 
-MNU.urlSourceCodeImage = "https://status.github.com/images/invertocat.png";
+MNU.urlSourceCodeImage = "https://pushme-pullyou.github.io/github-mark-64.png";
 MNU.urlSourceCodeIcon = `<img src="${ MNU.urlSourceCodeImage }" height=18 >`;
 MNU.urlSourceCodeUrl = "https://github.com/pushme-pullyou/pushme-pullyou.github.io/tree/master/tootoo-templates/hamburger-theme-cms";
 

@@ -12,7 +12,7 @@ OHC.regexHtml = /\.(htm?l)$/i;
 OHC.contentsCss = `box-sizing: border-box; border: 1px solid #888; height: ${ window.innerHeight - 4 }px; margin: 0; padding:0; width:100%;`;
 OHC.accessToken = '';
 
-OHC.urlSourceCodeImage = "https://status.github.com/images/invertocat.png";
+OHC.urlSourceCodeImage = "https://pushme-pullyou.github.io/github-mark-64.png";
 
 OHC.iconInfo = `<img src="${ OHC.urlSourceCodeImage }" height=18 >`;
 
