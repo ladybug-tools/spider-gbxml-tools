@@ -111,7 +111,6 @@ FIL.getMenuFileOpen = function() {  // called from main HTML file
 
 FIL.getMenuFileSave = function() {
 
-
 	htm =
 	`
 	<details>
@@ -152,7 +151,7 @@ FIL.onHashChange = function() {
 	GBXdivStatsThr.innerHTML = '';
 
 	detMenuEdit.open = false;
-	detMenuView.open = false;
+	detMenuView.open = true;
 	detSectionCut.open = false;
 	detSettings.open = false;
 	detMenuHelp.open = false;

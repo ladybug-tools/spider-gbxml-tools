@@ -96,6 +96,14 @@ Pop-up Viewer 'Maevia' R15
 
 <summary style=font-size:1.3rem; >Change Log</summary>
 
+### 2019-06-05 ~ Theo
+
+* F - VST.js: Add show/hide all surfaces toggle
+* R - VBSU.js: Creating and selecting options
+* F - VBSU.js: Select and display multiple surface
+* F - VBSU.js: Highlight selected surface immediately on input
+* B - VBSU.js: unhighlight select if no valid.option
+
 ### 2019-04-16 ~ Theo
 
 Spider gbXML Viewer 'Maevia' R15.1.1

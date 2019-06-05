@@ -3,10 +3,7 @@
 /* globals VBS, GBX, VSTdivSurfaceType, VSTsecViewSurfaceType, VSTdivReportsLog, THRU, detReports, */
 
 
-const VST = {
-	"release": "R15.5.1",
-	"date": "2019-06-05"
-};
+const VST = { "release": "R15.5.0", "date": "2019-04-18" };
 
 VST.description =
 	`
@@ -60,6 +57,9 @@ VST.currentStatus =
 				<li>2019-02-07 ~ Update pop-up text / variable names. Reposition stats.</li>
 				<li>buttons updated when hor/ver buttons pressed</li>
 				<li>2019-02-01 ~ First commit, Fork from vwsrf-view-surface-types.js. Big cleanup. </li>
+
+				<!-- <li></li>
+				-->
 			</ul>
 		</details>
 	`;
@@ -99,7 +99,7 @@ VST.getMenuViewSurfaceTypes = function() {
 			</p>
 
 			<p>
-				<button id=but onclick=VST.setShowAll(this); >show/hide all surfaces</button>
+				<button id=but onclick=VST.setShowAll(); >show all surfaces</button>
 			</p>
 
 			<div id="VSTdivReportsLog" ></div>
@@ -150,6 +150,44 @@ VST.onToggleSurfaceTypes = function() {
 
 };
 
+
+
+VST.bbbbbgetViewStats = function() {
+
+	const reSpaces = /<Space(.*?)<\/Space>/gi;
+	GBX.spaces = GBX.text.match( reSpaces );
+	//console.log( 'spaces', GBX.spaces );
+
+	const reStoreys = /<BuildingStorey(.*?)<\/BuildingStorey>/gi;
+	GBX.storeys = GBX.text.match( reStoreys );
+	GBX.storeys = Array.isArray( GBX.storeys ) ? GBX.storeys : [];
+	//console.log( 'GBX.storeys', GBX.storeys );
+
+	const reZones = /<Zone(.*?)<\/Zone>/gi;
+	GBX.zones = GBX.text.match( reZones );
+	GBX.zones = Array.isArray( GBX.zones ) ? GBX.zones : [];
+	//console.log( 'GBX.zones', GBX.zones );
+
+	const verticesCount = GBX.surfaces.map( surfaces => GBX.getVertices( surfaces ) );
+	//console.log( 'vertices', vertices );
+
+	const count = verticesCount.reduce( ( count, val, index ) => count + verticesCount[ index ].length, 0 );
+	const timeToLoad = performance.now() - GBX.timeStart;
+
+	const htm =
+	`
+		<b>Statistics</b>:
+		<div>time to parse: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
+		<div>spaces: ${ GBX.spaces.length.toLocaleString() } </div>
+		<div>storeys: ${ GBX.storeys.length.toLocaleString() } </div>
+		<div>zones: ${ GBX.zones.length.toLocaleString() } </div>
+		<div>surfaces: ${ GBX.surfaces.length.toLocaleString() } </div>
+		<div>coordinates: ${ count.toLocaleString() } </div>
+	`;
+
+	return htm;
+
+};
 
 
 VST.setSurfacesActiveByDefaults = function() {
@@ -266,26 +304,13 @@ VST.onToggleHorizontalVertical = function( button ) {
 
 
 
-VST.setShowAll = function( button ) {
+VST.setShowAll = function() {
 
 	const buttons = VSTdivSurfaceType.querySelectorAll( "button" );
-	let surfacesFiltered;
 
-	button.classList.toggle( "active" );
+	buttons.forEach( button => button.classList.add( "active" ) );
 
-	if ( button.classList.contains( "active" ) ) {
-
-		buttons.forEach( button => button.classList.add( "active" ) );
-		surfacesFiltered = GBX.surfacesIndexed;
-
-	} else {
-
-		buttons.forEach( button => button.classList.remove( "active" ) );
-		surfacesFiltered = [];
-
-	}
-
-	VSTdivReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( surfacesFiltered );
+	VSTdivReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( GBX.surfacesIndexed );
 
 };
 

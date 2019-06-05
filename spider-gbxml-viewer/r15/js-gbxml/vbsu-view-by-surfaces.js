@@ -3,7 +3,7 @@
 /* jshint esversion: 6 */
 
 
-const VBSU = { "release": "R15.0.0", "date": "2019-04-24" };
+const VBSU = { "release": "R15.0.0-1", "date": "2019-06-05" };
 
 VBSU.description =
 	`
@@ -13,7 +13,6 @@ VBSU.description =
 
 VBSU.currentStatus =
 	`
-
 		<summary>View by Surfaces VBSU ${ VBSU.release} ~ ${ VBSU.date }</summary>
 
 		<p>
@@ -42,7 +41,7 @@ VBSU.getMenuViewBySurfaces = function() {
 
 	const htm =
 
-	`<details id="VBSUdet" ontoggle=VBSU.getViewBySurfacesCheck(); >
+	`<details id="VBSUdet" ontoggle=VBSU.getViewBySurfacesSelectOptions(); >
 
 		<summary>Show/hide by surfaces<span id="VBSUspnCount" ></span>
 			<a id=VBSUsumHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(VBSUsumHelp,VBSU.currentStatus);" >&nbsp; ? &nbsp;</a>
@@ -53,13 +52,15 @@ VBSU.getMenuViewBySurfaces = function() {
 		</p>
 
 		<p>
-			<input id=VBSUinpSelectIndex oninput=VBSU.setSelectedIndex() >
+			<input id=VBSUinpSelectIndex oninput=VBSU.setSelectedIndex(this,VBSUselViewBySurfaces) >
 		</p>
 
 		<p>
-			<select id=VBSUselViewBySurfaces oninput=VBSU.selectedSurfacesFocus(this); style=width:100%; size=10 >
+			<select id=VBSUselViewBySurfaces oninput=VBSU.selectedSurfacesFocus(this); style=width:100%; size=10 multiple >
 			</select>
 		</p>
+
+		<p>Select multiple surfaces by pressing shift or control keys</p>
 
 		<p>
 			<button onclick=VBSU.setViewBySurfacesShowHide(this,VBSU.invalidTemplate); >
@@ -75,55 +76,75 @@ VBSU.getMenuViewBySurfaces = function() {
 
 
 
-VBSU.getViewBySurfacesCheck = function() {
+VBSU.getViewBySurfacesSelectOptions = function() {
 	//console.log( 'VBSUdetTemplate.open', VBSUdetTemplate.open );
 
 	if ( VBSUdet.open === false && ISCOR.runAll === false ) { return; }
 
 	if ( GBX.surfaces.length > ISCOR.surfaceCheckLimit ) { return; } // don't run test automatically on very large files
 
-	VBSU.surfaces = [];
-
-	const surfaces = GBX.surfaces;
-
-	// refactor to a reduce??
-	for ( let i = 0; i < surfaces.length; i++ ) {
-
-		const surface = surfaces[ i ];
-
-		const surfaceId = surface.match( /id="(.*?)"/)[ 1 ];
-
-		// bogus code - admits all surfaces
-		const invalidTemplate = GBX.surfaces.find( element => GBX.surfaceTypes.indexOf( surfaceId ) < 0 );
-		//console.log( 'invalidTemplate', invalidTemplate );
-
-		//if ( invalidTemplate ) {
-
-			VBSU.surfaces.push( i );
-
-		//}
-
-	}
-
 	let color;
 	let htmOptions = '';
+	let index = 0;
 
-	for ( let surfaceIndex of VBSU.surfaces ) {
+	for ( let surface of GBX.surfaces ) {
 
-		color = color === 'pink' ? '' : 'pink';
+		color = color === 'pink' ? '' : 'pink';;
 
-		const surfaceText = GBX.surfaces[ surfaceIndex ];
-
-		const id = surfaceText.match( 'id="(.*?)"' )[ 1 ];
+		const id = surface.match( 'id="(.*?)"' )[ 1 ];
 
 		htmOptions +=
-			`<option style=background-color:${ color } value=${ surfaceIndex } >${ id }</option>`;
+			`<option style=background-color:${ color } value=${ index++ } >${ id }</option>`;
+
 	}
 
 	VBSUselViewBySurfaces.innerHTML = htmOptions;
-	VBSUspnCount.innerHTML = `: ${ VBSU.surfaces.length } found`;
+	VBSUspnCount.innerHTML = `: ${ GBX.surfaces.length } found`;
 
-	return VBSU.surfaces.length;
+	return GBX.surfaces.length;
+
+};
+
+
+
+VBSU.setSelectedIndex = function( input, select ) {
+
+	const str = input.value.toLowerCase();
+
+	const option = Array.from( select.options ).find( option => option.innerHTML.includes( str ) );
+	console.log( 'option', option );
+
+	if ( option ) {
+
+		select.value = option.value;
+
+		VBSU.selectedSurfacesFocus( select );
+
+	} else {
+
+		select.value = "";
+	}
+
+};
+
+
+
+VBSU.selectedSurfacesFocus = function( select ) {
+
+	POP.intersected = GBX.surfaceGroup.children[ select.value ];
+
+	divPopUpData.innerHTML = POP.getIntersectedDataHtml();
+	//console.log( 'sel', select.value );
+
+	options = select.selectedOptions
+	//console.log( 'option', options );
+
+	indexes = Array.from( options ).map( option => Number( option.value ) );
+	//console.log( 'indexes', indexes );
+
+	const surfaces = GBX.surfacesIndexed.filter( ( surface, index ) => indexes.includes( index  ) );
+
+	GBX.sendSurfacesToThreeJs( surfaces );
 
 };
 
@@ -152,37 +173,4 @@ VBSU.setViewBySurfaceShowHide = function( button, surfaceArray ) {
 
 
 
-VBSU.selectedSurfacesFocus = function( select ) {
 
-	POP.intersected = GBX.surfaceGroup.children[ select.value ];
-
-	//POP.getIntersectedDataHtml();
-
-	divPopUpData.innerHTML = POP.getIntersectedDataHtml();
-	//console.log( 'sel', select.value );
-
-	const surfaces = GBX.surfacesIndexed[ select.value ]
-
-	GBX.sendSurfacesToThreeJs( [ surfaces] );
-
-};
-
-
-VBSU.setSelectedIndex = function( input, select ) {
-
-	const str = VBSUinpSelectIndex.value.toLowerCase();
-
-	// try using find
-	for ( let option of VBSUselViewBySurfaces.options ) {
-
-		if ( option.innerHTML.toLowerCase().includes( str ) ) {
-
-			VBSUselViewBySurfaces.value = option.value;
-
-			return;
-
-		}
-
-	}
-
-};
