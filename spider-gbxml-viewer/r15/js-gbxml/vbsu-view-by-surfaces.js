@@ -37,6 +37,7 @@ VBSU.currentStatus =
 	`;
 
 
+
 VBSU.getMenuViewBySurfaces = function() {
 
 	const htm =
@@ -63,7 +64,7 @@ VBSU.getMenuViewBySurfaces = function() {
 		<p>Select multiple surfaces by pressing shift or control keys</p>
 
 		<p>
-			<button onclick=VBSU.setViewBySurfacesShowHide(this,VBSU.invalidTemplate); >
+			<button onclick=VBSU.setViewBySurfaceShowHide(this,VBSU.surfaces); >
 				Show/hide by surfaces
 			</button>
 		</p>
@@ -86,6 +87,7 @@ VBSU.getViewBySurfacesSelectOptions = function() {
 	let color;
 	let htmOptions = '';
 	let index = 0;
+	VBSU.surfaces = GBX.surfaces.slice();
 
 	for ( let surface of GBX.surfaces ) {
 
@@ -101,6 +103,8 @@ VBSU.getViewBySurfacesSelectOptions = function() {
 	VBSUselViewBySurfaces.innerHTML = htmOptions;
 	VBSUspnCount.innerHTML = `: ${ GBX.surfaces.length } found`;
 
+	THR.controls.enableKeys = false;
+
 	return GBX.surfaces.length;
 
 };
@@ -112,7 +116,7 @@ VBSU.setSelectedIndex = function( input, select ) {
 	const str = input.value.toLowerCase();
 
 	const option = Array.from( select.options ).find( option => option.innerHTML.includes( str ) );
-	console.log( 'option', option );
+	//console.log( 'option', option );
 
 	if ( option ) {
 
@@ -136,15 +140,15 @@ VBSU.selectedSurfacesFocus = function( select ) {
 	divPopUpData.innerHTML = POP.getIntersectedDataHtml();
 	//console.log( 'sel', select.value );
 
-	options = select.selectedOptions
+	const options = select.selectedOptions
 	//console.log( 'option', options );
 
-	indexes = Array.from( options ).map( option => Number( option.value ) );
+	const indexes = Array.from( options ).map( option => Number( option.value ) );
 	//console.log( 'indexes', indexes );
 
-	const surfaces = GBX.surfacesIndexed.filter( ( surface, index ) => indexes.includes( index  ) );
+	VBSU.surfaces = GBX.surfacesIndexed.filter( ( surface, index ) => indexes.includes( index  ) );
 
-	GBX.sendSurfacesToThreeJs( surfaces );
+	GBX.sendSurfacesToThreeJs( VBSU.surfaces );
 
 };
 
@@ -159,9 +163,7 @@ VBSU.setViewBySurfaceShowHide = function( button, surfaceArray ) {
 
 	if ( button.classList.contains( 'active' ) && surfaceArray.length ) {
 
-		GBX.surfaceGroup.children.forEach( mesh => mesh.visible = false );
-
-		surfaceArray.forEach( surfaceId => GBX.surfaceGroup.children[ surfaceId ].visible = true );
+		GBX.sendSurfacesToThreeJs( surfaceArray );
 
 	} else {
 
@@ -170,7 +172,3 @@ VBSU.setViewBySurfaceShowHide = function( button, surfaceArray ) {
 	}
 
 };
-
-
-
-

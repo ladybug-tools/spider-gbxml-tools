@@ -3,7 +3,7 @@
 /* globals GBX, VST, THREE, VBSselStorey, VBSdivReportsLog, VSTdivSurfaceType */
 
 
-const VBS = {"release": "R15.6", "date": "2019-02-26" };
+const VBS = {"release": "R15.7", "date": "2019-06-05" };
 
 VBS.description =
 	`
@@ -82,7 +82,7 @@ VBS.getMenuViewByStoreys = function() {
 
 			<div id="VBSdivReportsLog" ></div>
 
-			<p><button onclick=VBS.showAllStoreys(); >show all storeys</button> </p>
+			<p><button onclick=VBS.setStoreyShowHide(); >show all storeys</button> </p>
 
 			<p>Select multiple storeys by pressing shift or control keys</p>
 
@@ -132,13 +132,6 @@ VBS.getStoreysOptions = function() {
 
 
 
-VBS.showAllStoreys = function() {
-
-	VBSselStorey.selectedIndex = -1;
-
-	VBS.selStoreys();
-
-};
 
 
 
@@ -231,5 +224,16 @@ VBS.setSurfacesFilteredByStorey = function( surfaces ) {
 	}
 
 	return surfacesFilteredByStory;
+
+};
+
+
+
+
+VBS.setStoreyShowHide = function() {
+
+	VBSselStorey.selectedIndex = -1;
+
+	VBS.selStoreys();
 
 };

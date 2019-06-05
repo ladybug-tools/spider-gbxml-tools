@@ -61,13 +61,17 @@ VBSP.getMenuViewBySpaces = function() {
 
 			<p>Display surfaces by space. Default is all spaces visible.</p>
 
+			<p>
+				<input id=VBSinpSelectIndex oninput=VBS.setSelectedIndex(this,VBSPselSpace) >
+			</p>
+
 			<div id="VBSPdivViewBySpaces" >
 				<select id=VBSPselSpace onchange=VBSP.selSpaces(); multiple style=min-width:15rem; ></select
 			</div>
 
 			<div id="VBSPdivReportsLog" ></div>
 
-			<p><button onclick=VBSP.showAllSpaces(); >show all spaces</button> </p>
+			<p><button onclick=VBSP.setViewBySurfaceShowHide(this,VBSP.surfacesFilteredBySpace); >Show/hide all spaces</button> </p>
 
 			<p>Select multiple spaces by pressing shift or control keys</p>
 
@@ -114,11 +118,24 @@ VBSP.getSpacesOptions = function() {
 
 
 
-VBSP.showAllSpaces = function() {
+VBS.setSelectedIndex = function( input, select ) {
 
-	VBSPselSpace.selectedIndex = -1;
+	const str = input.value.toLowerCase();
 
-	VBSP.selSpaces();
+	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
+	//console.log( 'option', option );
+
+	if ( option ) {
+
+		select.value = option.value;
+
+		VBSP.selSpaces();
+
+	} else {
+
+		select.value = "";
+
+	}
 
 };
 
@@ -210,5 +227,34 @@ VBSP.setSurfacesFilteredBySpace = function( surfaces ) {
 	}
 
 	return surfacesFilteredBySpace;
+
+};
+
+
+
+VBSP.setViewSpacesShowHide = function() {
+
+	VBSPselSpace.selectedIndex = -1;
+
+	VBSP.selSpaces();
+
+};
+
+
+
+VBSP.setViewBySurfaceShowHide = function( button, surfaceArray ) {
+	//console.log( 'surfaceArray', surfaceArray );
+
+	button.classList.toggle( "active" );
+
+	if ( button.classList.contains( 'active' ) && surfaceArray.length ) {
+
+
+		GBX.surfaceGroup.children.forEach( element => element.visible = true );
+	} else {
+
+		GBX.sendSurfacesToThreeJs( VBSP.surfacesFilteredBySpace );
+
+	}
 
 };

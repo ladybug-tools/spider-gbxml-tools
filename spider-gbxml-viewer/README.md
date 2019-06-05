@@ -103,6 +103,9 @@ Pop-up Viewer 'Maevia' R15
 * F - VBSU.js: Select and display multiple surface
 * F - VBSU.js: Highlight selected surface immediately on input
 * B - VBSU.js: unhighlight select if no valid.option
+* F - VBSU.js: Add show/hide elected surfaces
+* F - VBSP.js: Add select by text input
+* F - VBSP.js: Add Show/hide all spaces
 
 ### 2019-04-16 ~ Theo
 
