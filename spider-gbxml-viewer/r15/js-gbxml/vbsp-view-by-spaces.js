@@ -3,7 +3,7 @@
 /* globals GBX, VST, THREE, VBSPselSpace, VBSPdivReportsLog, VSTdivSurfaceType */
 
 
-const VBSP = {"release": "R15.0.0", "date": "2019-04-15" };
+const VBSP = {"release": "R15.0.1", "date": "2019-06-05" };
 
 VBSP.description =
 	`
