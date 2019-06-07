@@ -1,9 +1,12 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
 // jshint esversion: 6
-/* globals GBX, VST, THREE, VBSselStorey, VBSdivReportsLog, VSTdivSurfaceType */
+/* globals GBX, VST, THREE, THR, POP, divPopUpData, VBSdetMenu, VBSselStorey, VBSdivReportsLog, VSTdivSurfaceType */
 
 
-const VBS = {"release": "R15.7", "date": "2019-06-05" };
+const VBS = {
+	"release": "R15.8",
+	"date": "2019-06-06"
+};
 
 VBS.description =
 	`
@@ -76,13 +79,17 @@ VBS.getMenuViewByStoreys = function() {
 
 			<p>Display surfaces by storey. Default is all storeys visible.</p>
 
+			<p>
+				<input oninput=VBS.setSelectedIndex(this,VBSselStorey) >
+			</p>
+
 			<div id="VBSdivViewByStoreys" >
 				<select id=VBSselStorey onchange=VBS.selStoreys(); multiple style=min-width:15rem; ></select
 			</div>
 
 			<div id="VBSdivReportsLog" ></div>
 
-			<p><button onclick=VBS.setStoreyShowHide(); >show all storeys</button> </p>
+			<p><button onclick=VBS.setStoreyShowHide(this,VBS.surfacesFilteredByStorey); >show/hide all storeys</button> </p>
 
 			<p>Select multiple storeys by pressing shift or control keys</p>
 
@@ -111,7 +118,9 @@ VBS.getStoreysOptions = function() {
 
 		const storeyArr = storey.match( '<Name>(.*?)</Name>' );
 
-		return storeyName = storeyArr ? storeyArr[ 1 ] : "no storey name in file";
+		const storeyName = storeyArr ? storeyArr[ 1 ] : "no storey name in file";
+
+		return storeyName;
 
 	} );
 	//console.log( 'storeyNames', storeyNames);
@@ -122,7 +131,7 @@ VBS.getStoreysOptions = function() {
 		const index = storeyLevels.indexOf( level );
 		//console.log( 'indexUnsorted', indexUnsorted );
 
-		return `<option value=${ storeyIds[ index ] }>${ storeyNames[ index ] }</option>`
+		return `<option value=${ storeyIds[ index ] }>${ storeyNames[ index ] }</option>`;
 
 	} );
 
@@ -132,6 +141,26 @@ VBS.getStoreysOptions = function() {
 
 
 
+VBS.setSelectedIndex = function( input, select ) {
+
+	const str = input.value.toLowerCase();
+
+	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
+	//console.log( 'option', option );
+
+	if ( option ) {
+
+		select.value = option.value;
+
+		VBS.selStoreys();
+
+	} else {
+
+		select.value = "";
+
+	}
+
+};
 
 
 
@@ -230,10 +259,19 @@ VBS.setSurfacesFilteredByStorey = function( surfaces ) {
 
 
 
-VBS.setStoreyShowHide = function() {
+VBS.setStoreyShowHide = function( button, surfaceArray ) {
+	//console.log( 'surfaceArray', surfaceArray );
 
-	VBSselStorey.selectedIndex = -1;
+	button.classList.toggle( "active" );
 
-	VBS.selStoreys();
+	if ( button.classList.contains( 'active' ) && surfaceArray.length ) {
+
+		GBX.surfaceGroup.children.forEach( element => element.visible = true );
+
+	} else {
+
+		GBX.sendSurfacesToThreeJs( surfaceArray );
+
+	}
 
 };

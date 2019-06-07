@@ -96,6 +96,14 @@ Pop-up Viewer 'Maevia' R15
 
 <summary style=font-size:1.3rem; >Change Log</summary>
 
+### 2019-06-06 ~ Theo
+
+SGV R15.3.4
+
+* F - VBS.js: Add select by text input
+* F - VBS.js: Add Show/hide all spaces
+
+
 ### 2019-06-05 ~ Theo
 
 * F - VST.js: Add show/hide all surfaces toggle

@@ -1,6 +1,6 @@
 // Copyright 2019 Ladybug Tools authors. MIT License
 // jshint esversion: 6
-/* globals GBX, VST, THREE, VBSPselSpace, VBSPdivReportsLog, VSTdivSurfaceType */
+/* globals GBX, VST, THREE, THR, POP, VBSPdetMenu, divPopUpData, VBSPselSpace, VBSPdivReportsLog, VSTdivSurfaceType */
 
 
 const VBSP = {"release": "R15.0.1", "date": "2019-06-05" };
@@ -62,7 +62,7 @@ VBSP.getMenuViewBySpaces = function() {
 			<p>Display surfaces by space. Default is all spaces visible.</p>
 
 			<p>
-				<input id=VBSinpSelectIndex oninput=VBS.setSelectedIndex(this,VBSPselSpace) >
+				<input oninput=VBSP.setSelectedIndex(this,VBSPselSpace) >
 			</p>
 
 			<div id="VBSPdivViewBySpaces" >
@@ -94,7 +94,9 @@ VBSP.getSpacesOptions = function() {
 
 		const spaceArr = space.match( '<Name>(.*?)</Name>' );
 
-		return spaceName = spaceArr ? spaceArr[ 1 ] : "no space name in file";
+		const spaceName = spaceArr ? spaceArr[ 1 ] : "no space name in file";
+
+		return spaceName;
 
 	} );
 	//console.log( 'spaceNames', spaceNames);
@@ -108,7 +110,7 @@ VBSP.getSpacesOptions = function() {
 		const index = spaceNames.indexOf( space );
 		//console.log( 'indexUnsorted', indexUnsorted );
 
-		return `<option value=${ spaceIds[ index ] } title="${ spaceIds[ index ] }" >${ spaceNames[ index ] }</option>`
+		return `<option value=${ spaceIds[ index ] } title="${ spaceIds[ index ] }" >${ spaceNames[ index ] }</option>`;
 
 	} );
 
@@ -118,7 +120,7 @@ VBSP.getSpacesOptions = function() {
 
 
 
-VBS.setSelectedIndex = function( input, select ) {
+VBSP.setSelectedIndex = function( input, select ) {
 
 	const str = input.value.toLowerCase();
 
@@ -249,11 +251,11 @@ VBSP.setViewBySurfaceShowHide = function( button, surfaceArray ) {
 
 	if ( button.classList.contains( 'active' ) && surfaceArray.length ) {
 
-
 		GBX.surfaceGroup.children.forEach( element => element.visible = true );
+
 	} else {
 
-		GBX.sendSurfacesToThreeJs( VBSP.surfacesFilteredBySpace );
+		GBX.sendSurfacesToThreeJs( surfaceArray );
 
 	}
 
