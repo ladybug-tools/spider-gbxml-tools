@@ -20,6 +20,7 @@ THRU.setHelpers = function( radius = 50 ) {
 	THR.renderer.domElement.addEventListener( 'click', () => THR.controls.autoRotate=false, false );
 	THR.renderer.domElement.addEventListener( 'touchstart', () => THR.controls.autoRotate=false, false );
 
+	/*
 	if ( window.self === window.top ) { // don't rotate if in an iframe
 
 		THR.controls.autoRotate = true;
@@ -29,6 +30,7 @@ THRU.setHelpers = function( radius = 50 ) {
 		THR.controls.enableZoom = false;
 
 	}
+	*/
 
 };
 
