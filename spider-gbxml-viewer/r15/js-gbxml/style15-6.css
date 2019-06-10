@@ -77,7 +77,7 @@ summary { cursor: pointer; font-weight: bold; }
 }
 
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 810px) {
 
 	#navMenu { width: 0px; }
 	#butHamburger { left: 1rem; }
