@@ -1,0 +1,97 @@
+/* Copyright 2019 pushMe-pullYou authors. MIT License */
+/* Forked from TooToo14 2019-06-03 0.14.5 */
+/* Used by spider-gbxml-fixer, add-a-line */
+
+* { box-sizing: border-box; }
+
+:root { --mnu-width: 22rem; --screen-width: calc( 100vw ); --headerHeight: 6rem; }
+
+html { height: 100%; }
+
+/* font-family: 'inconsolata'; */
+
+body { background-color: #ffffff; color: #555;  font-size: 15px; font: 12pt monospace; height: 100%;
+	line-height: 18px; margin: 0px; /* overflow: hidden; */ }
+
+a { color: rgb(206, 33, 33); text-decoration: none; }
+a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+blockquote, pre { background-color: #ddd; padding: 5px; }
+
+button, input[ type=button ] { background-color: #ddd; border: 1px solid #ccc; border-radius: 2px;
+	color: #322; cursor: pointer; outline: none; padding: 3px 5px; }
+
+button:hover, input[ type=button ]:hover{ background: #ccc;
+	box-shadow: 5px 5px 5px rgba(0,0,0,0.3); color: #f00 }
+
+code { background-color: #ddd; }
+
+input[ type = range ] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 90%; }
+input[ type = range ]::-moz-range-thumb { background-color: rgb(228, 225, 225); border-radius: 0; width: 10px; }
+input[ type = range ]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }
+
+main { border: 0px; height: 100%; left: var( --mnu-width ); margin: 0; /* overflow: hidden; */
+	position: absolute; width: calc(100% - var( --mnu-width ) );  }
+
+
+summary { cursor: pointer; font-size: 1rem; font-weight: bold; outline: none; }
+
+
+#aViewSource { position: fixed; bottom: 20px; right: 20px; padding: 8px; color: #fff;
+	background-color: #555; opacity: 0.7; }
+
+#aViewSource:hover { cursor: pointer; opacity: 1; }
+
+
+#divContents { border: 0px solid red; margin: 0 auto; max-width: 40rem; }
+
+
+#expandButton { height: 32px; position: absolute; left: var( --mnu-width ); top: 0px; width: 32px; transition: left 0.5s; z-index: 1; }
+
+/* background: #fafafa; */
+
+#navPanel { height: 100%; left: 0px; overflow: auto; position: fixed;
+	transition: left 0.5s; width: var( --mnu-width ); z-index: 1; }
+
+#navPanel h1 { margin-top: 30px; margin-bottom: 5px; font-size: 25px; font-weight: normal; }
+
+#navPanel h2 { font-size: 20px; font-weight: normal; }
+
+
+
+#navPanel #secContent a { color: #2194CE; text-decoration: none; cursor: pointer; }
+
+#navPanel #secContent a:hover { text-decoration: underline; }
+
+#navPanel #secContent a:active, #navPanel #secContent a:focus { color: #ff0000; }
+
+
+.attributeTitle { font-style: italic; }
+.attributeValue { color: blue; }
+.butHelp { font-size: 0.7rem; padding: 0 0.5rem; float:right; z-index: 1; }
+.dragDropArea { border: 1px dashed gray; margin: 0.5rem  0; padding: 0 0.5rem; }
+.helpItem { float: right; clear: both; }
+.highlight {background-color: lightgreen }
+.navSubMenu { /* background-color: yellow; */ padding: 0 0.5rem; }
+.sumMenuTitle { background-color: #ccc; color: #888; margin: 10px 0; text-align: center; }
+
+.secContent { padding: 0px 8px 20px 20px; }
+.sumHeader { font-size:1.3rem; }
+
+#expandButton.collapsed { left: 0; }
+#navPanel.collapsed { left: calc( var( --mnu-width ) * -1 ); padding: 0; }
+#main.collapsed { left: 0; width: 100%; }
+
+
+#navPopup { background-color: #eee; border: 1px solid #aaa; border-radius: 8px;
+	max-height: 90%; max-width: 45%; opacity: 0.95;  overflow: auto;
+	padding: 0 1rem 1rem 1rem; position: fixed;
+	resize: both; left: 50%;  top: 8%; z-index: 10;
+	box-shadow: 10px 10px 25px rgba(0,0,0,0.3), 6px 6px 6px rgba(0,0,0,0.5); }
+
+
+@media all and ( max-width: 640px ) {
+
+	#main { left: 0; padding: 1rem; width: 100%; }
+
+}

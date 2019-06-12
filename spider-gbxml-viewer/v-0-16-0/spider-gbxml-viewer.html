@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+
+<meta charset = "utf-8">
+<meta name = "copyright" content ="PushMe-PullYou authors" >
+<meta name = "date" content = "2019-06-11" >
+<meta name = "description" content = "Basic TooToo HTML template" >
+<meta name = "keywords" content = "Three.js,WebGL,JavaScript,GitHub,FOSS" >
+<meta name = "version" content = "0.16.0-0dev" >
+<meta name = "viewport" content = "width=device-width, initial-scale=1" >
+
+<title>Spider gbXML Viewer</title>
+
+<link rel = "canonical" href = "www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/" />
+<link rel = "license" href = "https://creativecommons.org/licenses/by/4.0/">
+<link rel = "stylesheet" href = "https://fonts.googleapis.com/css?family=Inconsolata"  >
+<link rel = "stylesheet" href = "style.css" >
+
+<!--
+<base href="">
+<base href="https://github.com/pushme-pullyou/tootoo14/js-14-1/" /.
+-->
+<style>
+
+body { margin: 0; padding: 0; overflow: hidden; }
+
+#divContents { border: 1px solid red; height: 100%; max-width: 100%; }
+
+#navPanel { background-color: #eee; }
+
+#navPopup { display: block; left: auto; max-width: 25%; right: 1rem; top: 1rem; }
+
+
+#VSTdivSurfaceType button  { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;
+	padding: 2px 5px; min-width: 13.5rem; }
+
+#VSTdivSurfaceType button:hover { background: #ccc; color: #888 }
+
+button.active { border-color: black; font-style: italic; font-weight: bold; margin-left: 1rem;
+	box-shadow: 2px 2px #888; }
+
+</style>
+</head>
+
+<body>
+
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js" ></script>
+
+<!-- Three.js -->
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r105/build/three.min.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r105/examples/js/controls/OrbitControls.js" ></script>
+
+
+<!-- tootoo generally -->
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/mnu-menu/mnu-menu.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/gat-github-access-token/gat-github-access-token.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/fga-files-github-api/fga-files-github-api.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/fob-file-open-basic/fob-file-open-basic.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/thm-theme/thm-theme.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/tmp-template/tmp-template.js" ></script>
+
+<script src = "js/thr-threejs.js" ></script>
+<script src = "js/thru-threejs-utilities.js" ></script>
+<script src = "pop-up-text-parser.js" ></script>
+
+<!-- File menu panel -->
+<script src = "gff-github-folder-files/gff-github-folder-files.js" ></script>
+
+<script src = "gbx-gbxml-text-parser.js" ></script>
+<script src = "js/gbxu-gbxml-utilities.js" ></script>
+
+
+<!-- Edit Menu -->
+
+<!-- View menu -->
+<script src = "js/vst-view-surface-types.js" ></script>
+<script src = "js/vbsu-view-by-surfaces.js" ></script>
+<script src = "js/vbs-view-by-storeys.js" ></script>
+<script src = "js/vbsp-view-by-spaces.js" ></script>
+<script src = "js/vbz-view-by-zones.js" ></script>
+
+<!-- Settings menu -->
+<script src = "js/set-settings.js" ></script>
+<script src = "js/cut-section-cut.js"></script>
+
+
+
+	<button id="expandButton" onclick="toggleNavPanel();" >☰</button>
+
+	<nav id="navPanel" >
+
+		<section class="secContent" >
+
+			<header>
+
+				<div id="MNUdivHeader" ></div>
+
+			</header>
+
+			<details open>
+
+				<summary class=sumMenuTitle >GitHub Folders & Files</summary>
+
+				<div id=GFFdivGithubFoldersFiles ></div>
+
+				<div id=GFFdivFileInfo></div>
+
+			</details>
+
+			<details open >
+
+				<summary class="sumMenuTitle" >File menu</summary>
+
+				<div id=SFMsecPrototypes ></div>
+
+				<div id="FGAdivMenuRepoFilesFolders" ></div>
+
+				<div id="GATdivGithubAccessToken" ></div>
+
+				<div id=FOBdivFileOpenBasic ></div>
+
+				<div id=GBXdivStatsGbx ></div>
+
+				<div id=GBXdivStatsThr > </div>
+
+				<div id=FOBdivFileSaveBasic ></div>
+
+			</details>
+
+
+
+			<details id="detMenuView" >
+
+				<summary class=sumMenuTitle >View menu </summary>
+
+				<section id="VSTsecViewSurfaceType" ></section>
+
+				<section id="VBSUsecViewBySurfaces" ></section>
+
+				<section id="VBSsecViewByStoreys" ></section>
+
+				<section id="VBSPsecViewBySpaces" ></section>
+
+				<section id="VBZsecViewByZones" ></section>
+
+				<section id="VBOsecViewByOpenings" ></section>
+
+				<details id="detSettings" ontoggle="divSettings.innerHTML=SET.getSettingsMenu();" >
+
+					<summary>Scene display settings</summary>
+
+					<div id="divSettings" ></div>
+
+					<div id="divSettingsLog" ></div>
+
+				</details>
+
+
+				<details id=detSectionCut ontoggle="divSectionCut.innerHTML=CUT.getDetSectionViews();" >
+
+					<summary>Scene cut sections</summary>
+
+					<div id="divSectionCut"></div>
+
+				</details>
+
+			</details>
+
+
+			<details>
+
+				<summary class=sumMenuTitle >Settings menu</summary>
+
+				<div id=THMdivMenuThemeSelect ></div>
+
+				<div id=TMPdivTemplate ></div>
+
+			</details>
+
+
+			<footer>
+
+				<div id="MNUdivFooter" ></div>
+
+				<div id="MNUdivFooterPopup" ></div>
+
+				<h1 onclick="navPanel.scrollTop=0;" style="cursor:pointer;text-align:center;" title="go to top of menu" >
+					❦
+				</h1>
+
+			</footer>
+
+		</section>
+
+	</nav>
+
+
+	<main id=main >
+
+		<div id=divContents ></div>
+
+	</main>
+
+
+	<nav id="navPopup" >
+
+		<section class="secContent" >
+
+			<div id="MNUdivPopup" ></div>
+
+			<div id="divPopUpData" ></div>
+
+			<div id="divMessage" >ccc</div>
+
+		</section>
+
+	</nav>
+
+
+	<nav>
+
+		<a href="" id="aViewSource" target="_blank"; hidden >view source</a>
+
+	</nav>
+
+
+<script>
+
+THM.themeUrlStorage = 'maeviaThemeUrl'; // set for each instance in HTML file
+THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-1/style.css";
+//THM.cssBasic = "js-gbxml/style15-6.css";
+
+//FOB.urlDefaultFile = ""; //"README.md";
+FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
+//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/coventry-university-of-warwick-small.zip";
+//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/pittsburg-airport.zip";
+
+// For main menu header
+
+MNU.description =
+	`
+		Open, examine and edit very large <a href="http://gbxml.org" target="_blank"  title="Thank you, Stephen">gbXML</a> files in 3D
+	`;
+
+// For main menu header
+MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer";
+
+
+MNU.homeText="<img src='https://ladybug.tools/artwork/icons_bugs/ico/ladybug.ico' height=24 >";
+MNU.homeTitle="Ladybug Tools: free computer applications that support environmental design and education";
+MNU.homeUrl="https://www.ladybug.tools";
+
+MNU.repoText="<img src='https://ladybug.tools/artwork/icons_bugs/ico/spider.ico' height=24 >";
+MNU.repoTitle="Spider: 3D interactive analysis in your browser mostly written around the Three.js JavaScript library";
+MNU.repoUrl="https://www.ladybug.tools/spider/";
+
+MNU.appText= "gbXML Tools";
+MNU.appTitle = "Tools to help you find, load, examine and edit gbXML files - in large numbers and sizes";
+MNU.appUrl = "https://www.ladybug.tools/spider-gbxml-tools/";
+
+//MNU.urlSourceCodeImage="https://pushme-pullyou.github.io/github-mark-64.png";
+//MNU.urlSourceCodeIcon=`<img src = "${ MNU.urlSourceCodeImage }" height=18 >`;
+
+MNU.footerUrl = "https://ladybug-tools.github.io/spider/#";
+MNU.footerTarget = "target=_blank";
+MNU.footerIssues = "https://github.com/ladybug-tools/spider-gbxml-tools/issues";
+
+init();
+THR.animate();
+
+function init() {
+
+	if ( /(iPad|iPhone|iPod)/g.test( navigator.userAgent ) ) { /* I hate having to add this */
+
+		divContents.style.width = getComputedStyle( divContents ).width;
+		divContents.style.height = getComputedStyle( divContents ).height;
+		divContents.setAttribute( 'scrolling', 'no' );
+
+	}
+
+	THR.getThreejs();
+
+	THRU.setHelpers();
+
+	THRU.addSomeLights2();
+
+	//navPopup.innerHTML =
+
+	POP.getMenuHtmlPopUp();
+
+	// needs work
+	//THMdivMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
+	//THM.init();
+
+	MNUdivHeader.innerHTML = MNU.getNavHeader();
+
+	GFFdivGithubFoldersFiles.innerHTML=GFF.getMenuGithubFoldersFiles();
+
+	//FGAdivMenuRepoFilesFolders.innerHTML = FGA.getMenuFilesGithubApi();
+	//FGA.getFiles();
+
+	GATdivGithubAccessToken.innerHTML = GAT.getMenuGitHubAccessToken();
+
+	FOBdivFileOpenBasic.innerHTML = FOB.getMenuFileOpenBasic();
+
+	GBXdivStatsGbx.innerHTML=GBX.getDivMenuGbx();
+
+	//FOBdivFileSaveBasic.innerHTML = FOB.getMenuFileSaveBasic();
+
+	// View menu
+	VSTsecViewSurfaceType.innerHTML = VST.getMenuViewSurfaceTypes();
+
+	VBSUsecViewBySurfaces.innerHTML = VBSU.getMenuViewBySurfaces();
+
+	VBSsecViewByStoreys.innerHTML = VBS.getMenuViewByStoreys();
+
+	VBSPsecViewBySpaces.innerHTML = VBSP.getMenuViewBySpaces();
+
+	VBZsecViewByZones.innerHTML = VBZ.getMenuViewByZones();
+
+	VBOsecViewByOpenings.innerHTML = "Show/hide by openings: coming soon<hr>";
+
+
+
+	TMPdivTemplate.innerHTML = TMP.getMenuTemplate();
+
+	//MNUdivFooter.innerHTML = MNU.getNavFooter();
+
+	MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();
+
+	if ( !location.hash ) { location.hash=FOB.urlDefaultFile; } else { FOB.onHashChange(); }
+
+
+	document.body.addEventListener( 'FOBonXmlFileLoad', GBX.init, false ); // hash changed, file loaded so let's go
+
+	document.body.addEventListener( 'FOBonZipFileLoad', GBX.init, false );
+
+	document.body.addEventListener( 'onZipFileParse', GBX.init, false );
+
+	//mesh = THRU.getGeometry();
+	//THR.scene.add( mesh );
+
+	aViewSource.style.display = "block";
+	aViewSource.href = MNU.urlSourceCode;
+
+}
+
+
+
+function toggleNavPanel() {
+
+	expandButton.classList.toggle( 'collapsed' );
+	navPanel.classList.toggle( 'collapsed' );
+	main.classList.toggle( 'collapsed' );
+
+	THR.onWindowResize();
+
+}
+
+</script>
+</body>
+</html>
