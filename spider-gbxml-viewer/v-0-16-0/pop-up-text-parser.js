@@ -29,7 +29,7 @@ POP.getMenuHtmlPopUp = function() { // call from home page
 
 	const htm =
 	`
-		<div id = "divPopUpData" >
+		<div id = "MNUdivPopupData" >
 
 			<h3>Pop-Up menu</h3>
 			<p>
@@ -67,7 +67,9 @@ POP.getMenuHtmlPopUp = function() { // call from home page
 
 	`;
 
-	return htm;
+	//return htm;
+
+	//MNU.requestFile( "popup.md", MNUdivPopupData );
 
 };
 
@@ -88,7 +90,7 @@ POP.onClickZoomAll = function() {
 
 	const buildingXml = campusXml.getElementsByTagName( 'Building' )[ 0 ];
 
-	divPopUpData.innerHTML=
+	MNUdivPopupData.innerHTML=
 	`
 		<b>Campus Attributes</b>
 		<div>${ POP.getAttributesHtml( campusXml ) }</div>
@@ -180,13 +182,13 @@ POP.onDocumentMouseDown = function( event ) {
 
 		POP.getIntersectedVertexBufferGeometry( POP.intersects[ 0 ].point );
 
-		divPopUpData.innerHTML = POP.getIntersectedDataHtml();
+		MNUdivPopupData.innerHTML = POP.getIntersectedDataHtml();
 
 	} else {
 
 		POP.intersected = null;
 
-		divPopUpData.innerHTML = '';
+		MNUdivPopupData.innerHTML = '';
 
 		THR.scene.remove( POP.line, POP.particle );
 

@@ -82,7 +82,7 @@ VBSU.getViewBySurfacesSelectOptions = function() {
 
 	if ( VBSUdet.open === false && ISCOR.runAll === false ) { return; }
 
-	if ( GBX.surfaces.length > ISCOR.surfaceCheckLimit ) { return; } // don't run test automatically on very large files
+	//if ( GBX.surfaces.length > ISCOR.surfaceCheckLimit ) { return; } // don't run test automatically on very large files
 
 	let color;
 	let htmOptions = '';

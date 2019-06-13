@@ -251,7 +251,7 @@ MNU.description =
 		Open, examine and edit very large <a href="http://gbxml.org" target="_blank"  title="Thank you, Stephen">gbXML</a> files in 3D
 	`;
 
-// For main menu header
+MNU.helpFile = "popup.md"
 MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer";
 
 
@@ -294,8 +294,6 @@ function init() {
 
 	THRU.addSomeLights2();
 
-	//navPopup.innerHTML =
-
 	POP.getMenuHtmlPopUp();
 
 	// needs work
@@ -329,7 +327,6 @@ function init() {
 	VBZsecViewByZones.innerHTML = VBZ.getMenuViewByZones();
 
 	VBOsecViewByOpenings.innerHTML = "Show/hide by openings: coming soon<hr>";
-
 
 
 	TMPdivTemplate.innerHTML = TMP.getMenuTemplate();
