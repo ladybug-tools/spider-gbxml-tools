@@ -1,6 +1,6 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
 // jshint esversion: 6
-/* globals GBX, VST, THREE, THR, POP, divPopUpData, VBSdetMenu, VBSselStorey, VBSdivReportsLog, VSTdivSurfaceType */
+/* globals GBX, VST, THREE, THR, POP, MNUdivPopupData, VBSdetMenu, VBSselStorey, VBSdivReportsLog, VSTdivSurfaceType */
 
 
 const VBS = {
@@ -172,7 +172,7 @@ VBS.selStoreys = function() {
 
 	POP.intersected = null;
 
-	divPopUpData.innerHTML = '';
+	MNUdivPopupData.innerHTML = '';
 
 	// show storey data in pop-up
 

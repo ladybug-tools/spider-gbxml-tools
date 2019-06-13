@@ -136,7 +136,7 @@ VBZ.selZones = function() {
 /*
 	POP.intersected = null;
 
-	divPopUpData.innerHTML = '';
+	MNUdivPopupData.innerHTML = '';
 
 	THR.scene.remove( POP.line, POP.particle );
 

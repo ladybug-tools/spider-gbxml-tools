@@ -4,7 +4,7 @@
 
 <meta charset = "utf-8">
 <meta name = "copyright" content ="PushMe-PullYou authors" >
-<meta name = "date" content = "2019-06-11" >
+<meta name = "date" content = "2019-06-12" >
 <meta name = "description" content = "Basic TooToo HTML template" >
 <meta name = "keywords" content = "Three.js,WebGL,JavaScript,GitHub,FOSS" >
 <meta name = "version" content = "0.16.0-0dev" >
@@ -13,9 +13,9 @@
 <title>Spider gbXML Viewer</title>
 
 <link rel = "canonical" href = "www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/" />
-<link rel = "license" href = "https://creativecommons.org/licenses/by/4.0/">
+<link rel = "license" href = "https://creativecommons.org/licenses/by/4.0/" >
 <link rel = "stylesheet" href = "https://fonts.googleapis.com/css?family=Inconsolata"  >
-<link rel = "stylesheet" href = "style.css" >
+<link rel = "stylesheet" href = "https://pushme-pullyou.github.io/tootoo14/js-14-1/style.css" >
 
 <!--
 <base href="">
@@ -30,6 +30,7 @@ body { margin: 0; padding: 0; overflow: hidden; }
 #navPanel { background-color: #eee; }
 
 #navPopup { display: block; left: auto; max-width: 25%; right: 1rem; top: 1rem; }
+/* #navPopup { background-color: #eee; } */
 
 
 #VSTdivSurfaceType button  { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;
@@ -56,8 +57,14 @@ button.active { border-color: black; font-style: italic; font-weight: bold; marg
 <!-- tootoo generally -->
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/mnu-menu/mnu-menu.js" ></script>
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/gat-github-access-token/gat-github-access-token.js" ></script>
+
+<!-- File menu panel -->
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/fga-files-github-api/fga-files-github-api.js" ></script>
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/fob-file-open-basic/fob-file-open-basic.js" ></script>
+
+<!-- Edit Menu -->
+
+<!-- Settings menu -->
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/thm-theme/thm-theme.js" ></script>
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/tmp-template/tmp-template.js" ></script>
 
@@ -210,9 +217,9 @@ button.active { border-color: black; font-style: italic; font-weight: bold; marg
 
 			<div id="MNUdivPopup" ></div>
 
-			<div id="divPopUpData" ></div>
+			<div id="divPopupData" ></div>
 
-			<div id="divMessage" >ccc</div>
+			<div id="divMessage" ></div>
 
 		</section>
 
@@ -266,6 +273,7 @@ MNU.appUrl = "https://www.ladybug.tools/spider-gbxml-tools/";
 MNU.footerUrl = "https://ladybug-tools.github.io/spider/#";
 MNU.footerTarget = "target=_blank";
 MNU.footerIssues = "https://github.com/ladybug-tools/spider-gbxml-tools/issues";
+
 
 init();
 THR.animate();
@@ -330,6 +338,8 @@ function init() {
 
 	MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();
 
+	MNUdivPopup.innerHTML = MNU.getDivPopup();
+
 	if ( !location.hash ) { location.hash=FOB.urlDefaultFile; } else { FOB.onHashChange(); }
 
 
@@ -344,6 +354,8 @@ function init() {
 
 	aViewSource.style.display = "block";
 	aViewSource.href = MNU.urlSourceCode;
+
+	MNU.requestFile( "popup.md", MNUdivPopupData );
 
 }
 

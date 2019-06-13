@@ -1,6 +1,6 @@
 // Copyright 2019 Ladybug Tools authors. MIT License
 // jshint esversion: 6
-/* globals GBX, VST, THREE, THR, POP, VBSPdetMenu, divPopUpData, VBSPselSpace, VBSPdivReportsLog, VSTdivSurfaceType */
+/* globals GBX, VST, THREE, THR, POP, VBSPdetMenu, MNUdivPopupData, VBSPselSpace, VBSPdivReportsLog, VSTdivSurfaceType */
 
 
 const VBSP = {"release": "R15.0.1", "date": "2019-06-05" };
@@ -151,7 +151,7 @@ VBSP.selSpaces = function() {
 
 	POP.intersected = null;
 
-	divPopUpData.innerHTML = '';
+	MNUdivPopupData.innerHTML = '';
 
 	THR.scene.remove( POP.line, POP.particle );
 

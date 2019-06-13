@@ -1,5 +1,5 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
-/* globals GBX, POP, ISCOR, divPopUpData */
+/* globals GBX, POP, ISCOR, MNUdivPopupData */
 /* jshint esversion: 6 */
 
 
@@ -137,7 +137,7 @@ VBSU.selectedSurfacesFocus = function( select ) {
 
 	POP.intersected = GBX.surfaceGroup.children[ select.value ];
 
-	divPopUpData.innerHTML = POP.getIntersectedDataHtml();
+	MNUdivPopupData.innerHTML = POP.getIntersectedDataHtml();
 	//console.log( 'sel', select.value );
 
 	const options = select.selectedOptions

@@ -1,4 +1,4 @@
-/* global THREE, THR, THRU, GBX, divPopUpData, POPdivShowHide, POPelementAttributes, POPbutAdjacentSpace1, POPbutAdjacentSpace2 */
+/* global THREE, THR, THRU, GBX, MNUdivPopupData, POPdivShowHide, POPelementAttributes, POPbutAdjacentSpace1, POPbutAdjacentSpace2 */
 // jshint esversion: 6
 
 // Copyright 2019 Ladybug Tools authors. MIT License.
@@ -76,7 +76,7 @@ POP.getMenuHtmlPopUp = function() { // call from home page
 
 	const htm =
 	`
-		<div id = "divPopUpData" >
+		<div id = "MNUdivPopupData" >
 
 			<h3>Pop-Up menu</h3>
 			<p>
@@ -133,7 +133,7 @@ POP.onClickZoomAll = function() {
 
 	const buildingXml = campusXml.getElementsByTagName( 'Building' )[ 0 ];
 
-	divPopUpData.innerHTML=
+	MNUdivPopupData.innerHTML=
 	`
 		<b>Campus Attributes</b>
 		<div>${ POP.getAttributesHtml( campusXml ) }</div>
@@ -225,13 +225,13 @@ POP.onDocumentMouseDown = function( event ) {
 
 		POP.getIntersectedVertexBufferGeometry( POP.intersects[ 0 ].point );
 
-		divPopUpData.innerHTML = POP.getIntersectedDataHtml();
+		MNUdivPopupData.innerHTML = POP.getIntersectedDataHtml();
 
 	} else {
 
 		POP.intersected = null;
 
-		divPopUpData.innerHTML = '';
+		MNUdivPopupData.innerHTML = '';
 
 		THR.scene.remove( POP.line, POP.particle );
 
