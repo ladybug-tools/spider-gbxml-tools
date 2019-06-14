@@ -169,6 +169,8 @@ VBSP.selSpaces = function() {
 
 	} );
 
+	VBSP.getSpaceAttributes( VBSPselSpace.value );
+
 };
 
 
@@ -260,3 +262,24 @@ VBSP.setViewBySurfaceShowHide = function( button, surfaceArray ) {
 	}
 
 };
+
+
+
+VBSP.getSpaceAttributes = function( spaceId ) {
+
+	const spaceTxt = GBX.spaces.find( item => item.includes( ` id="${ spaceId }"` ) );
+
+	const spaceXml = POP.parser.parseFromString( spaceTxt, "application/xml").documentElement;
+	//console.log( 'spaceXml ', spaceXml );
+
+	const htmSpace = POP.getAttributesHtml( spaceXml );
+
+	const htm =
+	`
+		<b>Selected Space Attributes</b>
+		${ htmSpace }
+	`;
+
+	MNUdivPopupData.innerHTML = htm;
+
+}

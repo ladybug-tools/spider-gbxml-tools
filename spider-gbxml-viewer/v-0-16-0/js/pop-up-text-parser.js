@@ -1,58 +1,11 @@
-/* global THREE, THR, THRU, GBX, MNUdivPopupData, POPdivShowHide, POPelementAttributes, POPbutAdjacentSpace1, POPbutAdjacentSpace2 */
+/* global THREE, THR, THRU, GBX, divPopUpData, POPdivShowHide, POPelementAttributes, POPbutAdjacentSpace1, POPbutAdjacentSpace2 */
 // jshint esversion: 6
 
 // Copyright 2019 Ladybug Tools authors. MIT License.
 
-var POP = { "release": "R15.2", "date": "2019-02-26" };
+var POP = { "version": "0.16.0-0", "date": "2019-06-11" };
 
 POP.urlSource = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-pop-up";
-
-POP.currentStatus =
-	`
-
-		<h3>Pop-Up menu (POP) ${ POP.release }</h3>
-
-		<p>
-			Elements and attributes identified according to <a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">gbXML Schema.</a>
-		</p>
-		<p>
-			Beginning to operate as expected.
-		</p>
-		<p>
-			wish-list<br>
-			&bull; Better memory of recently applied filters / prevent reloading entire model unless absolutely required
-			&bull; 2018-11-13 ~ buttons should be in same place between clicks
-		</p>
-
-		<p>
-			What buttons should be addd or dropped here? What tool tips should appear and where?
-		</p>
-
-		<details>
-			<summary>Change log ~ ${ POP.date }</summary>
-
-			<ul>
-				<li>2019-02-26 ~ R15.2 ~ Add check for no storey name</li>
-				<li>2019-02-22 ~ Pass through jsHint and make fixes</li>
-				<li>2019-02-13 ~ Fix issues when no zone. Update current status</li>
-				<!-- <li></li>
-				-->
-		</ul>
-		<!--
-
-		<p>
-			To add to wish list and get things fixed see <a href="../../spider-gbxml-viewer-issues/index.html" target="_blank">issues module</a>
-		</p>
-		<p>Status: Getting to be stable. Needs more testing. Wishlists items welcome.</p>
-
-		<p>Toggling focus or visibility and identifying are two different things. As we design, let us try to keep these actions separate.</p>
-
-		<p>If you are in a module, then you should never have to leave the module in order to complete the tasks assigned to that module</p>
-
-		-->
-
-	`;
-
 
 
 	////////// Inits
@@ -74,45 +27,7 @@ POP.getMenuHtmlPopUp = function() { // call from home page
 	THR.renderer.domElement.addEventListener( 'touchstart', POP.onDocumentTouchStart, false ); // for mobile
 
 
-	const htm =
-	`
-		<div id = "MNUdivPopupData" >
 
-			<h3>Pop-Up menu</h3>
-			<p>
-				Click on the model and surface attributes appear here.
-			</p>
-			<p>
-				Press spacebar: to stop model rotating
-			</p>
-			<p>
-				Use one|two|three fingers to rotate|zoom|pan display in 3D.
-				Or left|scroll|right with your pointing device.
-			</p>
-			<p>
-				Press Control-Shift-J|Command-Option-J to see if the JavaScript console reports any errors
-			</p>
-			<p>
-				Axes: Red/Green/Blue = X/Y/Z directions
-			</p>
-
-		</div>
-
-
-		<div id=POPfooter >
-
-			<p style=text-align:right; >
-				<a id=popFoot class=helpItem href="JavaScript:MNU.setPopupShowHide(popFoot,POP.currentStatus);" title="View the read me file for the pop-up module" >&nbsp; ? &nbsp;</a>
-				<br>
-				<button onclick=POP.onClickZoomAll(); title="Show entire campus & display attributes" >zoom all +</button>
-				<button onclick=SET.toggleOpenings(); >toggle openings</button>
-				</p>
-
-		</div>
-
-	`;
-
-	return htm;
 
 };
 
@@ -209,7 +124,7 @@ POP.onDocumentMouseDown = function( event ) {
 	const y = event.offsetY == undefined ? event.layerY : event.offsetY;
 	//console.log( 'x', x );
 
-	const size = THR.renderer.getSize();
+	const size = THR.renderer.getSize( new THREE.Vector2() );
 
 	POP.mouse.x = ( x / size.width ) * 2 - 1;
 	POP.mouse.y = - ( y / size.height ) * 2 + 1;
@@ -226,6 +141,14 @@ POP.onDocumentMouseDown = function( event ) {
 		POP.getIntersectedVertexBufferGeometry( POP.intersects[ 0 ].point );
 
 		MNUdivPopupData.innerHTML = POP.getIntersectedDataHtml();
+
+		MNUdivMessage.innerHTML =
+		`
+			<p style=text-align:right; >
+				<button onclick=POP.onClickZoomAll(); title="Show entire campus & display attributes" >zoom all +</button>
+				<button onclick=SET.toggleOpenings(); >toggle openings</button>
+			</p>
+		`;
 
 	} else {
 
@@ -296,6 +219,8 @@ POP.getIntersectedDataHtml = function() {
 				<button id=POPbutSurfaceVisible onclick=POP.toggleSurfaceVisible();
 					title="Show or hide selected surface" > &#x1f441; </button>
 				<button onclick=POP.setSurfaceZoom(); title="Zoom into selected surface" > ⌕ </button>
+
+				<button onclick=POP.toggleSurfaceNeighbors(); title="Show adjacent surfaces" > # </button>
 			</p>
 
 			<p>
@@ -1009,5 +934,36 @@ POP.setSurfaceZoom = function() {
 	const surfaceMesh = POP.intersected;
 
 	POP.setCameraControls( [ surfaceMesh ] );
+
+};
+
+
+POP.toggleSurfaceNeighbors = function() {
+
+	const surfaceMesh = POP.intersected;
+
+	surfaceText  = GBX.surfaces[ POP.intersected.userData.index ]
+	//console.log( 'surfaceText', surfaceText );
+
+	cartesianPoints = [];
+
+	planarGeometry = surfaceText.match( /<PlanarGeometry(.*?)<\/PlanarGeometry>/gi )[ 0 ];
+	//console.log( 'planarGeometry', planarGeometry );
+
+	cartesianPoints = planarGeometry.match( /<CartesianPoint(.*?)<\/CartesianPoint>/gi );
+	//console.log( 'cartesianPoints', cartesianPoints );
+
+	surfaces = [];
+	GBX.surfacesIndexed.forEach( ( surface, index ) => {
+
+		ss = cartesianPoints.filter( point => surface.includes( point ) )
+
+		if ( ss.length > 0 ) { surfaces.push( surface ) };
+
+	} );
+
+	//console.log( '', surfaces );
+
+	GBX.sendSurfacesToThreeJs( surfaces );
 
 };

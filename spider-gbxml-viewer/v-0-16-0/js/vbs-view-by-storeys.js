@@ -194,6 +194,8 @@ VBS.selStoreys = function() {
 
 	} );
 
+	VBS.getStoreyAttributes( VBSselStorey.value );
+	
 };
 
 
@@ -273,5 +275,26 @@ VBS.setStoreyShowHide = function( button, surfaceArray ) {
 		GBX.sendSurfacesToThreeJs( surfaceArray );
 
 	}
+
+};
+
+
+
+VBS.getStoreyAttributes = function ( storeyId ) {
+
+	const storeyTxt = GBX.storeys.find( item => item.includes( ` id="${ storeyId }"` ) );
+
+	const storeyXml = POP.parser.parseFromString( storeyTxt, "application/xml").documentElement;
+	//console.log( 'spaceXml ', spaceXml );
+
+	const htmStorey = POP.getAttributesHtml( storeyXml );
+
+	const htm =
+	`
+		<b>Selected Storey Attributes</b>
+		${ htmStorey }
+	`;
+
+	MNUdivPopupData.innerHTML = htm;
 
 };

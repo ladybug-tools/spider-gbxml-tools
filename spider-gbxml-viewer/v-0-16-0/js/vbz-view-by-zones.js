@@ -1,6 +1,6 @@
 // Copyright 2019 Ladybug Tools authors. MIT License
 // jshint esversion: 6
-/* globals GBX, VST, THREE, VBSPselZone, VBSPdivReportsLog, VSTdivSurfaceType */
+/* globals GBX, VST, THREE, VBZselZone, VBZdivReportsLog, VSTdivSurfaceType */
 
 
 const VBZ = {"release": "R15.0.0", "date": "2019-04-15" };
@@ -49,11 +49,11 @@ VBZ.currentStatus =
 
 VBZ.getMenuViewByZones = function() {
 
-	document.body.addEventListener( 'onGbxParse', function(){ VBSPdetMenu.open = false; }, false );
+	document.body.addEventListener( 'onGbxParse', function(){ VBZdetMenu.open = false; }, false );
 
 	const htm =
 	`
-		<details id=VBSPdetMenu ontoggle=VBZ.getZonesOptions(); >
+		<details id=VBZdetMenu ontoggle=VBZ.getZonesOptions(); >
 
 			<summary>Show/hide by zones
 				<a id=VBZHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(VBZHelp,VBZ.currentStatus);" >&nbsp; ? &nbsp;</a>
@@ -63,11 +63,11 @@ VBZ.getMenuViewByZones = function() {
 
 			<p><mark>Should be working properly soon</mark></p>
 
-			<div id="VBSPdivViewByZones" >
-				<select id=VBSPselZone onchange=VBZ.selZones(); multiple style=min-width:15rem; ></select
+			<div id="VBZdivViewByZones" >
+				<select id=VBZselZone onchange=VBZ.selZones(); multiple style=min-width:15rem; ></select
 			</div>
 
-			<div id="VBSPdivReportsLog" ></div>
+			<div id="VBZdivReportsLog" ></div>
 
 			<p><button onclick=VBZ.showAllZones(); >show all zones</button> </p>
 
@@ -83,7 +83,7 @@ VBZ.getMenuViewByZones = function() {
 
 VBZ.getZonesOptions = function() {
 
-	VBSPselZone.size = GBX.zones.length > 10 ? 10 : GBX.zones.length;
+	VBZselZone.size = GBX.zones.length > 10 ? 10 : GBX.zones.length;
 
 	const zoneIds = GBX.zones.map( zone => zone.match( 'id="(.*?)">')[ 1 ] );
 	//console.log( 'zoneIds', zoneIds );
@@ -110,7 +110,7 @@ VBZ.getZonesOptions = function() {
 
 	} );
 
-	VBSPselZone.innerHTML = options;
+	VBZselZone.innerHTML = options;
 
 };
 
@@ -118,7 +118,7 @@ VBZ.getZonesOptions = function() {
 
 VBZ.showAllZones = function() {
 
-	VBSPselZone.selectedIndex = -1;
+	VBZselZone.selectedIndex = -1;
 
 	VBZ.selZones();
 
@@ -132,7 +132,7 @@ VBZ.selZones = function() {
 
 	THR.controls.enableKeys = false;
 
-	POP.getToggleZoneVisible( VBSPselZone, VBSPselZone.value );
+	POP.getToggleZoneVisible( VBZselZone, VBZselZone.value );
 /*
 	POP.intersected = null;
 
@@ -142,7 +142,7 @@ VBZ.selZones = function() {
 
 	VBZ.surfacesFilteredByZone = VBZ.setSurfacesFilteredByZone();
 
-	VBSPdivReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( VBZ.surfacesFilteredByZone );
+	VBZdivReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( VBZ.surfacesFilteredByZone );
 
 	GBX.surfaceOpenings.traverse( function ( child ) {
 
@@ -155,13 +155,15 @@ VBZ.selZones = function() {
 	} );
 */
 
+	VBZ.getZoneAttributes( VBZselZone.value )
+
 };
 
 
 
 VBZ.setSurfacesFilteredByZone = function( surfaces ) {
 
-	const zoneIds = VBSPselZone.selectedOptions;
+	const zoneIds = VBZselZone.selectedOptions;
 	//console.log( 'zoneIds', zoneIds );
 
 	if ( zoneIds.length === 0 ) {
@@ -214,5 +216,38 @@ VBZ.setSurfacesFilteredByZone = function( surfaces ) {
 	}
 
 	return surfacesFilteredByZone;
+
+};
+
+
+VBZ.getZoneAttributes = function( zoneIdRef ) {
+
+
+	const zoneTxt = GBX.zones.find( item => item.includes( ` id="${ zoneIdRef }"` ) );
+
+	const zoneXml = POP.parser.parseFromString( zoneTxt, "application/xml").documentElement;
+	//console.log( 'spaceXml ', spaceXml );
+
+	const htmZone = POP.getAttributesHtml( zoneXml );
+
+	GBX.surfaceOpenings.traverse( function ( child ) {
+
+		if ( child instanceof THREE.Line ) {
+
+			child.visible = false;
+
+		}
+
+	} );
+
+	const htm =
+	`
+		<b>Selected Zone Attributes</b>
+		${ htmZone }
+	`;
+
+	MNUdivPopupData.innerHTML = htm;
+
+
 
 };
