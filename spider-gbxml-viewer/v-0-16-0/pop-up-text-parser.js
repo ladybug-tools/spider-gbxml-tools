@@ -27,49 +27,7 @@ POP.getMenuHtmlPopUp = function() { // call from home page
 	THR.renderer.domElement.addEventListener( 'touchstart', POP.onDocumentTouchStart, false ); // for mobile
 
 
-	const htm =
-	`
-		<div id = "MNUdivPopupData" >
 
-			<h3>Pop-Up menu</h3>
-			<p>
-				Click on the model and surface attributes appear here.
-			</p>
-			<p>
-				Press spacebar: to stop model rotating
-			</p>
-			<p>
-				Use one|two|three fingers to rotate|zoom|pan display in 3D.
-				Or left|scroll|right with your pointing device.
-			</p>
-			<p>
-				Press Control-Shift-J|Command-Option-J to see if the JavaScript console reports any errors
-			</p>
-			<p>
-				Axes: Red/Green/Blue = X/Y/Z directions
-			</p>
-
-		</div>
-	`;
-
-	divMessage.innerHTML =
-	`
-		<div id=POPfooter >
-
-			<p style=text-align:right; >
-				<a id=popFoot class=helpItem href="JavaScript:MNU.setPopupShowHide(popFoot,POP.currentStatus);" title="View the read me file for the pop-up module" >&nbsp; ? &nbsp;</a>
-				<br>
-				<button onclick=POP.onClickZoomAll(); title="Show entire campus & display attributes" >zoom all +</button>
-				<button onclick=SET.toggleOpenings(); >toggle openings</button>
-				</p>
-
-		</div>
-
-	`;
-
-	//return htm;
-
-	//MNU.requestFile( "popup.md", MNUdivPopupData );
 
 };
 
@@ -183,6 +141,14 @@ POP.onDocumentMouseDown = function( event ) {
 		POP.getIntersectedVertexBufferGeometry( POP.intersects[ 0 ].point );
 
 		MNUdivPopupData.innerHTML = POP.getIntersectedDataHtml();
+
+		MNUdivMessage.innerHTML =
+		`
+			<p style=text-align:right; >
+				<button onclick=POP.onClickZoomAll(); title="Show entire campus & display attributes" >zoom all +</button>
+				<button onclick=SET.toggleOpenings(); >toggle openings</button>
+			</p>
+		`;
 
 	} else {
 

@@ -29,7 +29,7 @@ body { margin: 0; padding: 0; overflow: hidden; }
 
 #navPanel { background-color: #eee; }
 
-#navPopup { display: block; left: auto; max-width: 25%; right: 1rem; top: 1rem; }
+#navPopup { left: auto; max-width: 25%; right: 1rem; top: 1rem; }
 /* #navPopup { background-color: #eee; } */
 
 
@@ -211,20 +211,15 @@ button.active { border-color: black; font-style: italic; font-weight: bold; marg
 	</main>
 
 
-	<nav id="navPopup" >
+	<nav id="navPopup" hidden >
 
 		<section class="secContent" >
 
 			<div id="MNUdivPopup" ></div>
 
-			<div id="divPopupData" ></div>
-
-			<div id="divMessage" ></div>
-
 		</section>
 
 	</nav>
-
 
 	<nav>
 
@@ -304,9 +299,6 @@ function init() {
 
 	GFFdivGithubFoldersFiles.innerHTML=GFF.getMenuGithubFoldersFiles();
 
-	//FGAdivMenuRepoFilesFolders.innerHTML = FGA.getMenuFilesGithubApi();
-	//FGA.getFiles();
-
 	GATdivGithubAccessToken.innerHTML = GAT.getMenuGitHubAccessToken();
 
 	FOBdivFileOpenBasic.innerHTML = FOB.getMenuFileOpenBasic();
@@ -328,14 +320,12 @@ function init() {
 
 	VBOsecViewByOpenings.innerHTML = "Show/hide by openings: coming soon<hr>";
 
-
 	TMPdivTemplate.innerHTML = TMP.getMenuTemplate();
 
 	//MNUdivFooter.innerHTML = MNU.getNavFooter();
 
 	MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();
 
-	MNUdivPopup.innerHTML = MNU.getDivPopup();
 
 	if ( !location.hash ) { location.hash=FOB.urlDefaultFile; } else { FOB.onHashChange(); }
 
@@ -352,7 +342,7 @@ function init() {
 	aViewSource.style.display = "block";
 	aViewSource.href = MNU.urlSourceCode;
 
-	MNU.requestFile( "popup.md", MNUdivPopupData );
+	MNU.setPopupShowHide( butTitle, MNU.helpFile );
 
 }
 
