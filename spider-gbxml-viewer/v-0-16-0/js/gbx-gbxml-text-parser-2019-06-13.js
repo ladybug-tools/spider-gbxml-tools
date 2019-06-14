@@ -1,8 +1,31 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
 // jshint esversion: 6
-/* globals THREE, THR, THRU, FOB, GBXU */
+/* globals THREE, THR, THRU, FIL, GBXU */
 
-var GBX = { "version": "0.16.0", "date": "2019-06-11" };
+var GBX = { "release": "R15.1", "date": "2019-02-12" };
+
+GBX.currentStatus =
+`
+<h3>GBX ${ GBX.release } status ${ GBX.date }</h3>
+
+	<p>gbXML parser</p>
+
+	<p>The code that parses a given txt files of gbXML data and creates a 3D view using Three.js</p>
+
+	<p>
+		Change log
+		<ul>
+			<li>2019-02-12 ~ Update no surfaces visible display/text</li>
+			<li>2019-01-31 ~ reversed the normal of second triangle in quads</li>
+			<li>2018-12-29 ~ Add helpItem class</li>
+			<li>2018-12-29 ~ Fix read me links</li>
+		</ul>
+	</p>
+
+	<p><a href="https://www.ladybug.tools/spider-gbxml-tools/#sandbox/spider-gbxml-text-parser/r10/cookbook/spider-gbxml-parser/README.md" target="_blank">Spider gbXML Parser Read Me</a></p>
+
+`;
+
 
 GBX.filtersDefault = [ "Roof", "ExteriorWall", "ExposedFloor", "Air", "Shade" ];
 
@@ -45,8 +68,8 @@ GBX.triangle = new THREE.Triangle(); // used by GBX.getPlane
 GBX.getDivMenuGbx = function() {
 
 	//change to custom event with data passing via event details
-	FOB.xhr.addEventListener( 'load', GBX.onXhrResponse, false );
-	FOB.reader.addEventListener( 'load', GBX.onReaderResult, false );
+	FIL.xhr.addEventListener( 'load', GBX.onXhrResponse, false );
+	FIL.reader.addEventListener( 'load', GBX.onReaderResult, false );
 	document.body.addEventListener( 'onZipFileParse', GBX.onFileZipLoad, false );
 
 	GBXU.init();
@@ -58,9 +81,9 @@ GBX.getDivMenuGbx = function() {
 
 GBX.onXhrResponse = function( event ) { GBX.parseFile( event.target.response  ); };
 
-GBX.onReaderResult = function() { GBX.parseFile( FOB.reader.result ); };
+GBX.onReaderResult = function() { GBX.parseFile( FIL.reader.result ); };
 
-GBX.onFileZipLoad = function() { GBX.parseFile( FOB.text ); };
+GBX.onFileZipLoad = function() { GBX.parseFile( FIL.text ); };
 
 
 
@@ -69,7 +92,7 @@ GBX.parseFile = function( gbxml )  {
 	if ( !gbxml || gbxml.includes( "xmlns" ) === false ) { return; }
 	//console.log( 'gbxml', gbxml );
 
-	//GBXdetStats.open = gbxml.length > 10000000 ? true : false;
+	GBXdetStats.open = gbxml.length > 10000000 ? true : false;
 
 	GBXdivStatsGbx.innerHTML = '';
 	GBXdivStatsThr.innerHTML = '';
@@ -267,7 +290,7 @@ GBX.sendSurfacesToThreeJs = function( surfacesText ) {
 			time to render: ${ delta.toLocaleString() } ms<br>
 			took too long: ${ misses }<br>
 			time allocated frame: ${ deltaLimit } ms<br>
-			total time elapsed: ${ ( performance.now() - FOB.timeStart ).toLocaleString() } ms
+			total time elapsed: ${ ( performance.now() - FIL.timeStart ).toLocaleString() } ms
 		`;
 
 		requestAnimationFrame( GBX.addMeshes );
