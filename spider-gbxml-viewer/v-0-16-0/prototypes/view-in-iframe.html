@@ -52,7 +52,7 @@
 
 		<div style="height:30rem;overflow:auto;/* needed */ resize: both;width: 100%" >
 
-			<iframe id=ifr src=data-file.html style=height:100%;width:100%; ></iframe>
+			<iframe id=iframe src=spider-gbxml-viewer-iframe-dev.html style=height:100%;width:100%; ></iframe>
 
 		</div>
 
@@ -61,6 +61,8 @@
 
 
 <script>
+
+let ifr;
 
 const urlSourceCode = "https://github.com/zzzzz/xxxxx.html";
 const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-64.png";
@@ -73,6 +75,9 @@ function init() {
 
 	divContents.innerHTML += `${ ( new Date ) }<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>`;
 
+	ifr = iframe.contentWindow;
+
+	ifr.onload = () => { console.log( '', ifr.location.hash );}
 }
 
 
@@ -80,6 +85,12 @@ function init() {
 function setIt() {
 
 	divContents.innerHTML += `<p>${ ( performance.now() ) } - Howdy! </p>`;
+
+	//console.log( '', ifr.GBX.surfaces );
+
+	ifr.POP.intersected = ifr.GBX.surfaceGroup.children[ 23];
+
+	console.log( 'ifr.POP.intersected', ifr.POP.intersected );
 
 }
 
