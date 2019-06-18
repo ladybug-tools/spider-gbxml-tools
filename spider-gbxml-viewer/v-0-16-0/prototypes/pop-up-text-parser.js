@@ -8,7 +8,7 @@ var POP = { "version": "0.16.0-0", "date": "2019-06-11" };
 POP.urlSource = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-pop-up";
 
 
-	////////// Inits
+////////// Inits
 
 POP.getMenuHtmlPopUp = function() { // call from home page
 
@@ -26,8 +26,104 @@ POP.getMenuHtmlPopUp = function() { // call from home page
 	THR.renderer.domElement.addEventListener( 'mousedown', POP.onDocumentMouseDown, false );
 	THR.renderer.domElement.addEventListener( 'touchstart', POP.onDocumentTouchStart, false ); // for mobile
 
+	const version = document.head.querySelector( '[ name=version ]' ).content;
+
+	const date = document.head.querySelector( '[ name=date ]' ).content;
+
+	const htm =
+	`
+		<div style=text-align:right; ><button id=butPopClose onclick="POP.setPopupShowHide();" >×</button></div>
+
+		<div id="POPdivPopupData" ></div>
+
+		<div id="POPdivMessage" ><p>R ${ version } - ${ date }</p></div>
+	`;
+
+	return htm;
+
 };
 
+
+
+
+POP.setPopupShowHide = function( id = POP.popupId, text = "" ) {
+	//console.log( 'id', id );
+
+		POP.popupId = id;
+
+		POP.popupId.classList.toggle( "active" );
+
+
+	if ( POP.popupId.classList.contains( 'active' ) ) {
+
+		if ( POPdivPopup.innerHTML === "" ) { POPdivPopup.innerHTML = POP.getDivPopup(); }
+
+		if ( text &&  text.toLowerCase().endsWith( ".md" ) ) {
+
+			POP.requestFile( text, POPdivPopupData );
+
+		} else {
+
+			POPdivPopupData.innerHTML = text;
+			navPopup.hidden = false;
+
+		}
+
+		divContents.addEventListener( 'click', POP.onClickClose, false );
+		divContents.addEventListener( 'touchstart', POP.onClickClose, false );
+
+	} else {
+
+		POP.onClickClose();
+
+	}
+
+};
+
+
+
+POP.onClickClose = function() {
+
+	if ( POP.popupId.classList.contains( 'active' ) === false ) {
+
+		navPopup.hidden = true;
+		POP.popupId.classList.remove( "active" );
+		POPdivPopupData.innerHTML = "";
+		divContents.removeEventListener( 'click', POP.onClickClose, false );
+		divContents.removeEventListener( 'touchstart', POP.onClickClose, false );
+
+	}
+
+};
+
+
+POP.requestFile = function( url, target ) {
+
+	const xhr = new XMLHttpRequest();
+	xhr.open( 'GET', url, true );
+	xhr.onload = ( xhr ) => POP.callbackMarkdown( xhr.target.response, target );
+	xhr.send( null );
+
+};
+
+
+
+
+POP.callbackMarkdown = function( markdown, target ) {
+	//console.log( '', markdown );
+
+	showdown.setFlavor('github');
+	const converter = new showdown.Converter();
+	const html = converter.makeHtml( markdown );
+
+	target.innerHTML = html;
+	//console.log( '', html );
+
+	//window.scrollTo( 0, 0 );
+
+	navPopup.hidden = false;
+
+};
 
 ////////// Events
 
@@ -45,7 +141,7 @@ POP.onClickZoomAll = function() {
 
 	const buildingXml = campusXml.getElementsByTagName( 'Building' )[ 0 ];
 
-	MNUdivPopupData.innerHTML=
+	POPdivPopupData.innerHTML=
 	`
 		<b>Campus Attributes</b>
 		<div>${ POP.getAttributesHtml( campusXml ) }</div>
@@ -137,9 +233,11 @@ POP.onDocumentMouseDown = function( event ) {
 
 		POP.getIntersectedVertexBufferGeometry( POP.intersects[ 0 ].point );
 
-		MNUdivPopupData.innerHTML = POP.getIntersectedDataHtml();
+		navPopup.hidden = false;
 
-		MNUdivMessage.innerHTML =
+		POPdivPopupData.innerHTML = POP.getIntersectedDataHtml();
+
+		POPdivMessage.innerHTML =
 		`
 			<p style=text-align:right; >
 				<button onclick=POP.onClickZoomAll(); title="Show entire campus & display attributes" >zoom all +</button>
@@ -151,7 +249,7 @@ POP.onDocumentMouseDown = function( event ) {
 
 		POP.intersected = null;
 
-		MNUdivPopupData.innerHTML = '';
+		POPdivPopupData.innerHTML = '';
 
 		THR.scene.remove( POP.line, POP.particle );
 

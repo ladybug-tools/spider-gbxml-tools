@@ -8,7 +8,7 @@ const GBXU = { "release": "R15.0", "date": "2019-02-14" };
 
 Change Log
 
-2019-02-14 ~ Lowered elevation of grounf helper to reduce Moire effect
+2019-02-14 ~ Lowered elevation of ground helper to reduce Moire effect
 
 */
 

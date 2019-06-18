@@ -42,7 +42,7 @@ GBX.referenceObject = new THREE.Object3D();
 GBX.triangle = new THREE.Triangle(); // used by GBX.getPlane
 
 
-GBX.getDivMenuGbx = function() {
+GBX.init = function() {
 
 	//change to custom event with data passing via event details
 	FOB.xhr.addEventListener( 'load', GBX.onXhrResponse, false );
@@ -56,7 +56,7 @@ GBX.getDivMenuGbx = function() {
 
 
 
-GBX.onXhrResponse = function( event ) { GBX.parseFile( event.target.response  ); };
+GBX.onXhrResponse = function( event ) { GBX.parseFile( event.target.response ); };
 
 GBX.onReaderResult = function() { GBX.parseFile( FOB.reader.result ); };
 
@@ -70,7 +70,6 @@ GBX.parseFile = function( gbxml )  {
 	//console.log( 'gbxml', gbxml );
 
 	//GBXdetStats.open = gbxml.length > 10000000 ? true : false;
-
 	//GBXdivStatsGbx.innerHTML = '';
 	//GBXdivStatsThr.innerHTML = '';
 
