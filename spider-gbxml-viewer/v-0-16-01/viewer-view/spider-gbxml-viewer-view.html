@@ -3,42 +3,42 @@
 <head>
 
 <meta charset = "utf-8">
-<meta name = "copyright" content ="PushMe-PullYou authors" >
-<meta name = "date" content = "2019-06-12" >
-<meta name = "description" content = "Basic TooToo HTML template" >
-<meta name = "keywords" content = "Three.js,WebGL,JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.16.0-0dev" >
+<meta name = "copyright" content ="Ladybug Tools authors" >
+<meta name = "date" content = "2019-06-18" >
+<meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
+<meta name = "keywords" content = "gbXML,JavaScript,GitHub,FOSS" >
+<meta name = "version" content = "0.16.01-0" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
-<title>Spider gbXML Viewer</title>
+<title>Spider gbXML Viewer View</title>
 
-<link rel = "canonical" href = "www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/" />
-<link rel = "license" href = "https://creativecommons.org/licenses/by/4.0/" >
+<link rel = "canonical" href = "https://pushme-pullyou.github.io" />
+<link rel = "license" href = "https://creativecommons.org/licenses/by/4.0/">
 <link rel = "stylesheet" href = "https://fonts.googleapis.com/css?family=Inconsolata"  >
 <link rel = "stylesheet" href = "https://pushme-pullyou.github.io/tootoo14/js-14-1/style.css" >
 
-
 <style>
 
-body { margin: 0; padding: 0; overflow: hidden; }
+	body { margin: 0; padding: 0; overflow: hidden; }
 
-#divContents { border: 1px solid red; height: 100%; max-width: 100%; }
+	#divContents { border: 0px solid red; height: 100%; max-width: 100%; }
 
-#navPanel { background-color: #eee; }
+	#navPanel { background-color: #eee; }
 
-#navPopup { left: auto; max-width: 25%; right: 1rem; top: 1rem; }
-/* #navPopup { background-color: #eee; } */
+	#navPopup { left: auto; max-width: 25%; right: 1rem; top: 1rem; }
+	/* #navPopup { background-color: #eee; } */
 
 
-#VSTdivSurfaceType button  { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;
-	padding: 2px 5px; min-width: 13.5rem; }
+	#VSTdivSurfaceType button  { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;
+		padding: 2px 5px; min-width: 13.5rem; }
 
-#VSTdivSurfaceType button:hover { background: #ccc; color: #888 }
+	#VSTdivSurfaceType button:hover { background: #ccc; color: #888 }
 
-button.active { border-color: black; font-style: italic; font-weight: bold; margin-left: 1rem;
-	box-shadow: 2px 2px #888; }
+	button.active { border-color: black; font-style: italic; font-weight: bold; margin-left: 1rem;
+		box-shadow: 2px 2px #888; }
 
 </style>
+
 </head>
 
 <body>
@@ -50,46 +50,36 @@ button.active { border-color: black; font-style: italic; font-weight: bold; marg
 <script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r105/build/three.min.js" ></script>
 <script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r105/examples/js/controls/OrbitControls.js" ></script>
 
-
-<!-- tootoo generally -->
+<script src = "../js-core/thr-threejs.js" ></script>
+<script src = "../js-core/thru-threejs-utilities.js" ></script>
+<script src = "../js-core/pop-up-text-parser.js" ></script>
+<!-- menus generally -->
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/mnu-menu/mnu-menu.js" ></script>
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/gat-github-access-token/gat-github-access-token.js" ></script>
 
 <!-- File menu panel -->
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/fga-files-github-api/fga-files-github-api.js" ></script>
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/fob-file-open-basic/fob-file-open-basic.js" ></script>
+<script src = "../js-menu/gff-github-folder-files.js" ></script>
+<script src = "../js-core/fob-file-open-basic.js" ></script>
 
-<!-- Edit Menu -->
+<script src = "../js-core/gbx-gbxml-text-parser.js" ></script>
+<script src = "../js-core/gbxu-gbxml-utilities.js" ></script>
+
+
+<!-- View menu -->
+<script src = "../js-view/vst-view-surface-types.js" ></script>
+<script src = "../js-view/vbsu-view-by-surfaces.js" ></script>
+<script src = "../js-view/vbs-view-by-storeys.js" ></script>
+<script src = "../js-view/vbsp-view-by-spaces.js" ></script>
+<script src = "../js-view/vbz-view-by-zones.js" ></script>
+
+<!-- Settings menu -->
+<script src = "../js-view/set-settings.js" ></script>
+<script src = "../js-view/cut-section-cut.js"></script>
+
 
 <!-- Settings menu -->
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/thm-theme/thm-theme.js" ></script>
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/tmp-template/tmp-template.js" ></script>
-
-<script src = "js/thr-threejs.js" ></script>
-<script src = "js/thru-threejs-utilities.js" ></script>
-<script src = "js/pop-up-text-parser.js" ></script>
-
-<!-- File menu panel -->
-<script src = "js/gff-github-folder-files/gff-github-folder-files.js" ></script>
-
-<script src = "js/gbx-gbxml-text-parser.js" ></script>
-<script src = "js/gbxu-gbxml-utilities.js" ></script>
-
-
-<!-- Edit Menu -->
-
-<!-- View menu -->
-<script src = "js/vst-view-surface-types.js" ></script>
-<script src = "js/vbsu-view-by-surfaces.js" ></script>
-<script src = "js/vbs-view-by-storeys.js" ></script>
-<script src = "js/vbsp-view-by-spaces.js" ></script>
-<script src = "js/vbz-view-by-zones.js" ></script>
-
-<!-- Settings menu -->
-<script src = "js/set-settings.js" ></script>
-<script src = "js/cut-section-cut.js"></script>
-
-
 
 	<button id="expandButton" onclick="toggleNavPanel();" >☰</button>
 
@@ -103,6 +93,18 @@ button.active { border-color: black; font-style: italic; font-weight: bold; marg
 
 			</header>
 
+			<div >
+
+				<p>
+					See <a href="http://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/" target="_blank">Spider gbXML Viewer 'Maevia'</a>
+				</p>
+
+				<p>
+					See <a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">Schema GreenBuildingXML_Ver6.01.xsd </a>
+				</p>
+
+			</div>
+
 			<details open>
 
 				<summary class=sumMenuTitle >GitHub Folders & Files</summary>
@@ -113,27 +115,19 @@ button.active { border-color: black; font-style: italic; font-weight: bold; marg
 
 			</details>
 
+
 			<details open >
 
 				<summary class="sumMenuTitle" >File menu</summary>
 
-				<div id=SFMsecPrototypes ></div>
+				<div id="GALdivSampleFilesGallery"></div>
 
-				<div id="FGAdivMenuRepoFilesFolders" ></div>
-
-				<div id="GATdivGithubAccessToken" ></div>
 
 				<div id=FOBdivFileOpenBasic ></div>
-
-				<div id=GBXdivStatsGbx ></div>
-
-				<div id=GBXdivStatsThr > </div>
 
 				<div id=FOBdivFileSaveBasic ></div>
 
 			</details>
-
-
 
 			<details id="detMenuView" >
 
@@ -172,7 +166,6 @@ button.active { border-color: black; font-style: italic; font-weight: bold; marg
 
 			</details>
 
-
 			<details>
 
 				<summary class=sumMenuTitle >Settings menu</summary>
@@ -191,7 +184,7 @@ button.active { border-color: black; font-style: italic; font-weight: bold; marg
 				<div id="MNUdivFooterPopup" ></div>
 
 				<h1 onclick="navPanel.scrollTop=0;" style="cursor:pointer;text-align:center;" title="go to top of menu" >
-					❦
+					<img alt="spider icon" src = "https://ladybug.tools/artwork/icons_bugs/ico/spider.ico" height=18 >
 				</h1>
 
 			</footer>
@@ -212,11 +205,12 @@ button.active { border-color: black; font-style: italic; font-weight: bold; marg
 
 		<section class="secContent" >
 
-			<div id="MNUdivPopup" ></div>
+			<div id="POPdivPopup" ></div>
 
 		</section>
 
 	</nav>
+
 
 	<nav>
 
@@ -227,44 +221,42 @@ button.active { border-color: black; font-style: italic; font-weight: bold; marg
 
 <script>
 
-THM.themeUrlStorage = 'maeviaThemeUrl'; // set for each instance in HTML file
+THM.themeUrlStorage = 'spider-gbxml-fixer-theme-url';
 THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-1/style.css";
-//THM.cssBasic = "js-gbxml/style15-6.css";
 
-//FOB.urlDefaultFile = ""; //"README.md";
+// useful when testing / un-comment
 FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/coventry-university-of-warwick-small.zip";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/pittsburg-airport.zip";
 
-// For main menu header
 
+//MNU.description = document.head.querySelector( '[ name=description ]' ).content;
 MNU.description =
 	`
-		Open, examine and edit very large <a href="http://gbxml.org" target="_blank"  title="Thank you, Stephen">gbXML</a> files in 3D
+		Mission: run a series of basics checks on <a href="https://gbXML.org" target="_blank">gbXML</a> files to identify, report and help you fix any errors
 	`;
 
-MNU.helpFile = "popup.md"
-MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer";
+// For main menu header
+MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-fixer";
 
-
-MNU.homeText="<img src='https://ladybug.tools/artwork/icons_bugs/ico/ladybug.ico' height=24 >";
+MNU.homeText = "<img src = 'https://ladybug.tools/artwork/icons_bugs/ico/ladybug.ico' height=24 >";
 MNU.homeTitle="Ladybug Tools: free computer applications that support environmental design and education";
-MNU.homeUrl="https://www.ladybug.tools";
+MNU.homeUrl  ="https://www.ladybug.tools";
 
-MNU.repoText="<img src='https://ladybug.tools/artwork/icons_bugs/ico/spider.ico' height=24 >";
+MNU.repoText ="<img src = 'https://ladybug.tools/artwork/icons_bugs/ico/spider.ico' height=24 >";
 MNU.repoTitle="Spider: 3D interactive analysis in your browser mostly written around the Three.js JavaScript library";
-MNU.repoUrl="https://www.ladybug.tools/spider/";
+MNU.repoUrl  ="https://www.ladybug.tools/spider/";
 
-MNU.appText= "gbXML Tools";
-MNU.appTitle = "Tools to help you find, load, examine and edit gbXML files - in large numbers and sizes";
-MNU.appUrl = "https://www.ladybug.tools/spider-gbxml-tools/";
+MNU.appText  = ""; // "gbXML Tools";
+MNU.appTitle = ""; // "Tools to help you find, load, examine and edit gbXML files - in large numbers and sizes";
+MNU.appUrl   = ""; // "https://www.ladybug.tools/spider-gbxml-tools/";
 
-//MNU.urlSourceCodeImage="https://pushme-pullyou.github.io/github-mark-64.png";
-//MNU.urlSourceCodeIcon=`<img src = "${ MNU.urlSourceCodeImage }" height=18 >`;
-
-MNU.footerUrl = "https://ladybug-tools.github.io/spider/#";
+MNU.footerPopupUrl = "https://www.ladybug.tools/spider/";
 MNU.footerTarget = "target=_blank";
-MNU.footerIssues = "https://github.com/ladybug-tools/spider-gbxml-tools/issues";
+MNU.footerIssues = "https://github.com/ladybug-tools/spider-gbxml-fixer/issues";
+
+//GBX.viewer = "https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/"
+
 
 
 init();
@@ -286,9 +278,11 @@ function init() {
 
 	THRU.addSomeLights2();
 
-	POP.getMenuHtmlPopUp();
+	POPdivPopup.innerHTML = POP.getMenuHtmlPopUp();
 
-	// needs work
+	//const mesh = THRU.getGeometry();
+	//THR.scene.add( mesh );
+
 	//THMdivMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
 	//THM.init();
 
@@ -296,13 +290,9 @@ function init() {
 
 	GFFdivGithubFoldersFiles.innerHTML=GFF.getMenuGithubFoldersFiles();
 
-	GATdivGithubAccessToken.innerHTML = GAT.getMenuGitHubAccessToken();
-
 	FOBdivFileOpenBasic.innerHTML = FOB.getMenuFileOpenBasic();
 
-	GBXdivStatsGbx.innerHTML=GBX.getDivMenuGbx(); // gets things going
-
-	//FOBdivFileSaveBasic.innerHTML = FOB.getMenuFileSaveBasic();
+	FOBdivFileSaveBasic.innerHTML = FOB.getMenuFileSaveBasic();
 
 	// View menu
 	VSTsecViewSurfaceType.innerHTML = VST.getMenuViewSurfaceTypes();
@@ -317,29 +307,14 @@ function init() {
 
 	VBOsecViewByOpenings.innerHTML = "Show/hide by openings: coming soon<hr>";
 
-	TMPdivTemplate.innerHTML = TMP.getMenuTemplate();
+	MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();11
 
-	//MNUdivFooter.innerHTML = MNU.getNavFooter();
-
-	MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();
-
+	GBX.init(); // gets things going
 
 	if ( !location.hash ) { location.hash=FOB.urlDefaultFile; } else { FOB.onHashChange(); }
 
-
-	document.body.addEventListener( 'FOBonXmlFileLoad', GBX.init, false ); // hash changed, file loaded so let's go
-
-	document.body.addEventListener( 'FOBonZipFileLoad', GBX.init, false );
-
-	document.body.addEventListener( 'onZipFileParse', GBX.init, false );
-
-	//mesh = THRU.getGeometry();
-	//THR.scene.add( mesh );
-
 	aViewSource.style.display = "block";
 	aViewSource.href = MNU.urlSourceCode;
-
-	MNU.setPopupShowHide( butTitle, MNU.helpFile );
 
 }
 
@@ -350,8 +325,6 @@ function toggleNavPanel() {
 	expandButton.classList.toggle( 'collapsed' );
 	navPanel.classList.toggle( 'collapsed' );
 	main.classList.toggle( 'collapsed' );
-
-	THR.onWindowResize();
 
 }
 
