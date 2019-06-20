@@ -79,7 +79,7 @@ VST.getMenuViewSurfaceTypes = function() {
 		<details id=detReports ontoggle=VST.onToggleSurfaceTypes(); >
 
 			<summary>Show/hide by surface type
-				<a id=vstHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(vstHelp,VST.currentStatus);" >&nbsp; ? &nbsp;</a>
+				<a id=vstHelp class=helpItem href="JavaScript:POP.setPopupShowHide(vstHelp,VST.currentStatus);" >&nbsp; ? &nbsp;</a>
 			</summary>
 
 			<p>

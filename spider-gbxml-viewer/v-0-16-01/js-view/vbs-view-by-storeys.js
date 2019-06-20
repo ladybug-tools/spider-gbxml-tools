@@ -74,7 +74,7 @@ VBS.getMenuViewByStoreys = function() {
 		<details id=VBSdetMenu ontoggle=VBS.getStoreysOptions(); >
 
 			<summary>Show/hide by storeys
-				<a id=VBSHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(VBSHelp,VBS.currentStatus);" >&nbsp; ? &nbsp;</a>
+				<a id=VBSHelp class=helpItem href="JavaScript:POP.setPopupShowHide(VBSHelp,VBS.currentStatus);" >&nbsp; ? &nbsp;</a>
 			</summary>
 
 			<p>Display surfaces by storey. Default is all storeys visible.</p>

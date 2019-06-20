@@ -45,7 +45,7 @@ VBSU.getMenuViewBySurfaces = function() {
 	`<details id="VBSUdet" ontoggle=VBSU.getViewBySurfacesSelectOptions(); >
 
 		<summary>Show/hide by surfaces<span id="VBSUspnCount" ></span>
-			<a id=VBSUsumHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(VBSUsumHelp,VBSU.currentStatus);" >&nbsp; ? &nbsp;</a>
+			<a id=VBSUsumHelp class=helpItem href="JavaScript:POPsetPopupShowHide(VBSUsumHelp,VBSU.currentStatus);" >&nbsp; ? &nbsp;</a>
 		</summary>
 
 		<p>

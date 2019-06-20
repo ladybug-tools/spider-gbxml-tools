@@ -56,7 +56,7 @@ VBSP.getMenuViewBySpaces = function() {
 		<details id=VBSPdetMenu ontoggle=VBSP.getSpacesOptions(); >
 
 			<summary>Show/hide by spaces
-				<a id=VBSPHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(VBSPHelp,VBSP.currentStatus);" >&nbsp; ? &nbsp;</a>
+				<a id=VBSPHelp class=helpItem href="JavaScript:POP.setPopupShowHide(VBSPHelp,VBSP.currentStatus);" >&nbsp; ? &nbsp;</a>
 			</summary>
 
 			<p>Display surfaces by space. Default is all spaces visible.</p>

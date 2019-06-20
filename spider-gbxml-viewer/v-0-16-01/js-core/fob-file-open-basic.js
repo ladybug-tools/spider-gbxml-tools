@@ -46,7 +46,7 @@ FOB.getMenuFileOpenBasic = function( target = divContents ) {  // called from ma
 		<details id=FOBdetFileOpen class=detSubMenu open >
 
 			<summary>Open file
-				<button id=butFOB class=butHelp onclick="MNU.setPopupShowHide(butFOB,FOB.helpFile);" >?</button>
+				<button id=butFOB class=butHelp onclick="POP.setPopupShowHide(butFOB,FOB.helpFile);" >?</button>
 			</summary>
 
 			<div class="dragDropArea" >
@@ -92,7 +92,7 @@ FOB.getMenuFileSaveBasic = function() {
 	<details>
 
 		<summary>Save file
-			<button id=butFILSave class=butHelp onclick="MNU.setPopupShowHide(butFILSave,FOB.helpFile);" >?</button>
+			<button id=butFILSave class=butHelp onclick="POP.setPopupShowHide(butFILSave,FOB.helpFile);" >?</button>
 		</summary>
 
 		<p>

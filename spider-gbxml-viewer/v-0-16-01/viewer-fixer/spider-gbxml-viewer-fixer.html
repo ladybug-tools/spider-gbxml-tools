@@ -10,7 +10,7 @@
 <meta name = "version" content = "0.16.01-0" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
-<title>Spider gbXML Viewer View</title>
+<title>Spider gbXML Viewer Fixer</title>
 
 <link rel = "canonical" href = "https://pushme-pullyou.github.io" />
 <link rel = "license" href = "https://creativecommons.org/licenses/by/4.0/">
@@ -21,7 +21,12 @@
 
 	body { margin: 0; padding: 0; overflow: hidden; }
 
-	#divContents { border: 0px solid red; height: 100%; max-width: 100%; }
+	#divContents { border: 0px solid red; height: 100%; max-width: 100%; overflow: auto; }
+
+	#divThreejs { border: 1px solid lightgray; height: 40%; margin: 0; max-width: 100%; overflow: auto; /* needed */
+		padding: 0; resize: both; }
+
+	#divFixer { margin: 0 auto; max-width: 50rem; }
 
 	#navPanel { background-color: #eee; }
 
@@ -53,6 +58,7 @@
 <script src = "../js-core/thr-threejs.js" ></script>
 <script src = "../js-core/thru-threejs-utilities.js" ></script>
 <script src = "../js-core/pop-up-text-parser.js" ></script>
+
 <!-- menus generally -->
 <script src = "../js-menu/mnu-menu.js" ></script>
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/gat-github-access-token/gat-github-access-token.js" ></script>
@@ -71,8 +77,6 @@
 <script src = "../js-view/vbs-view-by-storeys.js" ></script>
 <script src = "../js-view/vbsp-view-by-spaces.js" ></script>
 <script src = "../js-view/vbz-view-by-zones.js" ></script>
-
-<!-- Settings menu -->
 <script src = "../js-view/set-settings.js" ></script>
 <script src = "../js-view/cut-section-cut.js"></script>
 
@@ -80,6 +84,31 @@
 <!-- Settings menu -->
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/thm-theme/thm-theme.js" ></script>
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/tmp-template/tmp-template.js" ></script>
+
+
+<!-- Fixer Menu -->
+<script src = "../js-fixer/gbxf-gbxml-fixer.js" ></script>
+<script src = "../js-fixer/gsa-get-surface-attributes/gsa-get-surface-attributes.js" ></script>
+
+<script src = "../js-fixer/ggd-get-gbxml-data/ggd-get-gbxml-data.js" ></script>
+<script src = "../js-fixer/gss-get-surface-statistics/gss-get-surface-statistics.js" ></script>
+<script src = "../js-fixer/gcs-get-check-strings/gcs-get-check-strings.js" ></script>
+<script src = "../js-fixer/gco-get-check-offset/gco-get-check-offset.js" ></script>
+<script src = "../js-fixer/ocv-openings-check-vertices/ocv-openings-check-vertices.js" ></script>
+<script src = "../js-fixer/ocs-openings-check-size/ocs-openings-check-size.js" ></script>
+<script src = "../js-fixer/gwv-get-watertight-vertices/gwv-get-watertight-vertices.js" ></script>
+<script src = "../js-fixer/gws-get-watertight-spaces/gws-get-watertight-spaces.js" ></script>
+
+<script src = "../js-fixer/fxa-fix-xml-attributes/fxa-fix-xml-attributes.js" ></script>
+<script src = "../js-fixer/fstn-fix-surface-type-name/fstn-fix-surface-type-name.js" ></script>
+<script src = "../js-fixer/fets-fix-exposed-to-sun/fets-fix-exposed-to-sun.js" ></script>
+<script src = "../js-fixer/fdpc-fix-duplicate-planar-coordinates/fdpc-fix-duplicate-planar-coordinates.js" ></script>
+<script src = "../js-fixer/fasst-fix-adjacent-space-surface-type/fasst-fix-adjacent-space-surface-type.js" ></script>
+<script src = "../js-fixer/fase-fix-adjacent-space-extra/fase-fix-adjacent-space-extra.js" ></script>
+<script src = "../js-fixer/fasd-fix-adjacent-space-duplicate/fasd-fix-adjacent-space-duplicate.js" ></script>
+<script src = "../js-fixer/fasa-fix-air-single-adjacent/fasa-fix-air-single-adjacent.js" ></script>
+<script src = "../js-fixer/fcim-fix-cad-id-missing/fcim-fix-cad-id-missing.js" ></script>
+
 
 	<button id="expandButton" onclick="toggleNavPanel();" >☰</button>
 
@@ -196,7 +225,15 @@
 
 	<main id=main >
 
-		<div id=divContents ></div>
+		<div id="divContents" >
+
+
+			<div id="divThreejs" ></div>
+			<div style=text-align:right; title="Click to update size of 3D view after adjusting window size" ><button onclick=THR.onWindowResize(divThreejs); >resize window</button></div>
+			<div id="divFixer" >bbbb</div>
+
+		</div>
+
 
 	</main>
 
@@ -272,7 +309,7 @@ function init() {
 
 	}
 
-	THR.getThreejs();
+	THR.getThreejs( divThreejs );
 
 	THRU.setHelpers();
 
@@ -310,6 +347,8 @@ function init() {
 	MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();11
 
 	GBX.init(); // gets things going
+
+	GBXF.init();
 
 	if ( !location.hash ) { location.hash=FOB.urlDefaultFile; } else { FOB.onHashChange(); }
 

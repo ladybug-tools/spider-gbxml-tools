@@ -6,14 +6,14 @@
 var THR = { release: "R7.1", date: "2018-11-18" };
 
 
-THR.getThreejs = function( target = divContents ) {
+THR.getThreejs = function( target ) {
 
 	THR.renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true } );
 	THR.renderer.setPixelRatio( window.devicePixelRatio );
-	THR.renderer.setSize( target.clientWidth, target.clientHeight );
-	target.appendChild( THR.renderer.domElement );
+	THR.renderer.setSize( divContents.clientWidth, divContents.clientHeight );
+	divContents.appendChild( THR.renderer.domElement );
 
-	THR.camera = new THREE.PerspectiveCamera( 40, target.clientWidth / target.clientHeight, 0.1, 1000 );
+	THR.camera = new THREE.PerspectiveCamera( 40, divContents.clientWidth / divContents.clientHeight, 0.1, 1000 );
 	THR.camera.position.set( - 100, - 100, 100 );
 	THR.camera.up.set( 0, 0, 1 );
 
@@ -21,21 +21,21 @@ THR.getThreejs = function( target = divContents ) {
 
 	THR.scene = new THREE.Scene();
 
-	window.addEventListener( 'resize', () => THR.onWindowResize( target ), false );
-	window.addEventListener( 'orientationchange', () => THR.onWindowResize( target ), false );
+	window.addEventListener( 'resize', THR.onWindowResize, false );
+	window.addEventListener( 'orientationchange', THR.onWindowResize, false );
 
 }
 
 
 
-THR.onWindowResize = function( target = divContents ) {
+THR.onWindowResize = function() {
 
-	THR.camera.aspect = target.clientWidth / target.clientHeight;
+	THR.camera.aspect = divContents.clientWidth / divContents.clientHeight;
 	THR.camera.updateProjectionMatrix();
-	THR.renderer.setSize( target.clientWidth, target.clientHeight );
+	THR.renderer.setSize( divContents.clientWidth, divContents.clientHeight );
 	//THR.controls.handleResize(); // trackball only
 
-	console.log( 'onWindowResize  target.innerWidth', target.innerWidth );
+	//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
 
 };
 
