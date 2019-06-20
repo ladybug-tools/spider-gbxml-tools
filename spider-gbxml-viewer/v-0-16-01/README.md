@@ -1,2 +1,2 @@
-# Spider gbXML Viewer Rea Me
+# Spider gbXML Viewer Read Me
 
