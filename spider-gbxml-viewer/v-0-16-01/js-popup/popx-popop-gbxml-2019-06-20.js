@@ -1,133 +1,38 @@
-/* global THREE, THR, THRU, GBX, divPopUpData, POPdivShowHide, POPelementAttributes, POPbutAdjacentSpace1, POPbutAdjacentSpace2 */
+/* global THREE, THR, THRU, GBX, divPopUpData, POPXdivShowHide, POPXelementAttributes, POPXbutAdjacentSpace1, POPXbutAdjacentSpace2 */
 // jshint esversion: 6
 
 // Copyright 2019 Ladybug Tools authors. MIT License.
 
-var POP = { "version": "0.16.0-0", "date": "2019-06-11" };
+var POPX = { "version": "0.16.0-0", "date": "2019-06-11" };
 
-POP.urlSource = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-pop-up";
+POPX.urlSource = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-pop-up";
 
 
 ////////// Inits
 
-POP.getMenuHtmlPopUp = function() { // call from home page
+POPX.init = function() { // call from home page
 
-	POP.mouse = new THREE.Vector2();
-	POP.raycaster = new THREE.Raycaster();
-	POP.intersected = undefined;
-	POP.parser = new DOMParser();
+	POPX.mouse = new THREE.Vector2();
+	POPX.raycaster = new THREE.Raycaster();
+	POPX.intersected = undefined;
+	POPX.parser = new DOMParser();
 
-	POP.particleMaterial = new THREE.SpriteMaterial( { color: 0xff0000 } );
-	POP.particle = new THREE.Sprite( POP.particleMaterial );
-	POP.line = undefined;
+	POPX.particleMaterial = new THREE.SpriteMaterial( { color: 0xff0000 } );
+	POPX.particle = new THREE.Sprite( POPX.particleMaterial );
+	POPX.line = undefined;
 
-	POP.getArray = item => Array.isArray( item ) ? item : ( item ? [ item ] : [] );
+	POPX.getArray = item => Array.isArray( item ) ? item : ( item ? [ item ] : [] );
 
-	THR.renderer.domElement.addEventListener( 'mousedown', POP.onDocumentMouseDown, false );
-	THR.renderer.domElement.addEventListener( 'touchstart', POP.onDocumentTouchStart, false ); // for mobile
-
-	const version = document.head.querySelector( '[ name=version ]' ).content;
-
-	const date = document.head.querySelector( '[ name=date ]' ).content;
-
-	const htm =
-	`
-		<div style=text-align:right; ><button id=butPopClose onclick="POP.setPopupShowHide();" >×</button></div>
-
-		<div id="POPdivPopupData" ></div>
-
-		<div id="POPdivMessage" ><p>R ${ version } - ${ date }</p></div>
-	`;
-
-	return htm;
+	THR.renderer.domElement.addEventListener( 'mousedown', POPX.onDocumentMouseDown, false );
+	THR.renderer.domElement.addEventListener( 'touchstart', POPX.onDocumentTouchStart, false ); // for mobile
 
 };
 
 
-
-
-POP.setPopupShowHide = function( id = POP.popupId, text = "" ) {
-	//console.log( 'id', id );
-
-		POP.popupId = id;
-
-		POP.popupId.classList.toggle( "active" );
-
-
-	if ( POP.popupId.classList.contains( 'active' ) ) {
-
-		if ( POPdivPopup.innerHTML === "" ) { POPdivPopup.innerHTML = POP.getDivPopup(); }
-
-		if ( text &&  text.toLowerCase().endsWith( ".md" ) ) {
-
-			POP.requestFile( text, POPdivPopupData );
-
-		} else {
-
-			POPdivPopupData.innerHTML = text;
-			navPopup.hidden = false;
-
-		}
-
-		divContents.addEventListener( 'click', POP.onClickClose, false );
-		divContents.addEventListener( 'touchstart', POP.onClickClose, false );
-
-	} else {
-
-		POP.onClickClose();
-
-	}
-
-};
-
-
-
-POP.onClickClose = function() {
-
-	if ( POP.popupId.classList.contains( 'active' ) === false ) {
-
-		navPopup.hidden = true;
-		POP.popupId.classList.remove( "active" );
-		POPdivPopupData.innerHTML = "";
-		divContents.removeEventListener( 'click', POP.onClickClose, false );
-		divContents.removeEventListener( 'touchstart', POP.onClickClose, false );
-
-	}
-
-};
-
-
-POP.requestFile = function( url, target ) {
-
-	const xhr = new XMLHttpRequest();
-	xhr.open( 'GET', url, true );
-	xhr.onload = ( xhr ) => POP.callbackMarkdown( xhr.target.response, target );
-	xhr.send( null );
-
-};
-
-
-
-
-POP.callbackMarkdown = function( markdown, target ) {
-	//console.log( '', markdown );
-
-	showdown.setFlavor('github');
-	const converter = new showdown.Converter();
-	const html = converter.makeHtml( markdown );
-
-	target.innerHTML = html;
-	//console.log( '', html );
-
-	//window.scrollTo( 0, 0 );
-
-	navPopup.hidden = false;
-
-};
 
 ////////// Events
 
-POP.onClickZoomAll = function() {
+POPX.onClickZoomAll = function() {
 
 	GBX.surfaceGroup.children.forEach( child => child.visible = true );
 
@@ -135,8 +40,8 @@ POP.onClickZoomAll = function() {
 
 	const time = performance.now();
 
-	const campusXml = POP.parser.parseFromString( GBX.text, "application/xml").documentElement;
-	POP.campusXml = campusXml;
+	const campusXml = POPX.parser.parseFromString( GBX.text, "application/xml").documentElement;
+	POPX.campusXml = campusXml;
 	//console.log( 'campusXml', campusXml.attributes );
 
 	const buildingXml = campusXml.getElementsByTagName( 'Building' )[ 0 ];
@@ -144,10 +49,10 @@ POP.onClickZoomAll = function() {
 	POPdivPopupData.innerHTML=
 	`
 		<b>Campus Attributes</b>
-		<div>${ POP.getAttributesHtml( campusXml ) }</div>
+		<div>${ POPX.getAttributesHtml( campusXml ) }</div>
 		<br>
 		<b>Building Attributes</b>
-		<div>${ POP.getAttributesHtml( buildingXml ) }</div>
+		<div>${ POPX.getAttributesHtml( buildingXml ) }</div>
 
 	`;
 
@@ -156,18 +61,18 @@ POP.onClickZoomAll = function() {
 
 
 
-POP.setAllVisibleZoom = function() {
+POPX.setAllVisibleZoom = function() {
 
 	const meshes = GBX.surfaceGroup.children.filter( mesh => mesh.visible === true );
 	//console.log( 'meshes', meshes );
 
-	POP.setCameraControls( meshes );
+	POPX.setCameraControls( meshes );
 
 };
 
 
 
-POP.setCameraControls = function( meshes ) {
+POPX.setCameraControls = function( meshes ) {
 
 	const bbox = new THREE.Box3();
 	meshes.forEach( mesh => bbox.expandByObject ( mesh ) );
@@ -186,7 +91,7 @@ POP.setCameraControls = function( meshes ) {
 
 /////
 
-POP.onDocumentTouchStart = function( event ) {
+POPX.onDocumentTouchStart = function( event ) {
 
 	event.preventDefault();
 
@@ -195,13 +100,13 @@ POP.onDocumentTouchStart = function( event ) {
 	event.clientX = event.touches[0].clientX;
 	event.clientY = event.touches[0].clientY;
 
-	POP.onDocumentMouseDown( event );
+	POPX.onDocumentMouseDown( event );
 
 };
 
 
 
-POP.onDocumentMouseDown = function( event ) {
+POPX.onDocumentMouseDown = function( event ) {
 	//console.log( 'event', event.button );
 
 	if ( event.button !== 0 ) { return ; }
@@ -209,8 +114,8 @@ POP.onDocumentMouseDown = function( event ) {
 	event.preventDefault();
 
 	/*
-	POP.mouse.x = ( event.clientX / size.width ) * 2 - 1;
-	POP.mouse.y = - ( event.clientY / size.height ) * 2 + 1;
+	POPX.mouse.x = ( event.clientX / size.width ) * 2 - 1;
+	POPX.mouse.y = - ( event.clientY / size.height ) * 2 + 1;
 	*/
 
 	const x = event.offsetX == undefined ? event.layerX : event.offsetX;
@@ -219,39 +124,39 @@ POP.onDocumentMouseDown = function( event ) {
 
 	const size = THR.renderer.getSize( new THREE.Vector2() );
 
-	POP.mouse.x = ( x / size.width ) * 2 - 1;
-	POP.mouse.y = - ( y / size.height ) * 2 + 1;
+	POPX.mouse.x = ( x / size.width ) * 2 - 1;
+	POPX.mouse.y = - ( y / size.height ) * 2 + 1;
 
-	POP.raycaster.setFromCamera( POP.mouse, THR.camera );
+	POPX.raycaster.setFromCamera( POPX.mouse, THR.camera );
 
-	POP.intersects = POP.raycaster.intersectObjects( GBX.surfaceGroup.children );
-	//console.log( 'POP.intersects', POP.intersects );
+	POPX.intersects = POPX.raycaster.intersectObjects( GBX.surfaceGroup.children );
+	//console.log( 'POPX.intersects', POPX.intersects );
 
-	if ( POP.intersects.length > 0 ) {
+	if ( POPX.intersects.length > 0 ) {
 
-		POP.intersected = POP.intersects[ 0 ].object;
+		POPX.intersected = POPX.intersects[ 0 ].object;
 
-		POP.getIntersectedVertexBufferGeometry( POP.intersects[ 0 ].point );
+		POPX.getIntersectedVertexBufferGeometry( POPX.intersects[ 0 ].point );
 
 		navPopup.hidden = false;
 
-		POPdivPopupData.innerHTML = POP.getIntersectedDataHtml();
+		POPdivPopupData.innerHTML = POPX.getIntersectedDataHtml();
 
 		POPdivMessage.innerHTML =
 		`
 			<p style=text-align:right; >
-				<button onclick=POP.onClickZoomAll(); title="Show entire campus & display attributes" >zoom all +</button>
+				<button onclick=POPX.onClickZoomAll(); title="Show entire campus & display attributes" >zoom all +</button>
 				<button onclick=SET.toggleOpenings(); >toggle openings</button>
 			</p>
 		`;
 
 	} else {
 
-		POP.intersected = null;
+		POPX.intersected = null;
 
 		POPdivPopupData.innerHTML = '';
 
-		THR.scene.remove( POP.line, POP.particle );
+		THR.scene.remove( POPX.line, POPX.particle );
 
 	}
 
@@ -259,63 +164,64 @@ POP.onDocumentMouseDown = function( event ) {
 
 
 
-POP.getIntersectedVertexBufferGeometry = function( point ) {
+POPX.getIntersectedVertexBufferGeometry = function( point ) {
 	//console.log( 'point', point );
 
-	THR.scene.remove( POP.particle );
+	THR.scene.remove( POPX.particle );
 
 	const distance = THR.camera.position.distanceTo( THR.controls.target );
 
-	POP.particle.scale.x = POP.particle.scale.y = 0.01 * distance;
-	POP.particle.position.copy( point );
+	POPX.particle.scale.x = POPX.particle.scale.y = 0.01 * distance;
+	POPX.particle.position.copy( point );
 
-	THR.scene.add( POP.particle );
+	THR.scene.add( POPX.particle );
 
 };
 
 
 
-POP.getIntersectedDataHtml = function() {
-	console.log( 'POP.intersected', POP.intersected );
+POPX.getIntersectedDataHtml = function() {
+	console.log( 'POPX.intersected', POPX.intersected );
 
-	const index = POP.intersected.userData.index;
+	const index = POPX.intersected.userData.index;
 
 	const surfaceIndexed = GBX.surfacesIndexed[ index ];
 
 	const surfaceText = surfaceIndexed.slice( surfaceIndexed.indexOf( '"<' ) + 1 );
 
-	const surfaceXml = POP.parser.parseFromString( surfaceText, "application/xml").documentElement;
-	POP.surfaceXml = surfaceXml;
+	const surfaceXml = POPX.parser.parseFromString( surfaceText, "application/xml").documentElement;
+	POPX.surfaceXml = surfaceXml;
 	//console.log( 'surfaceXml', surfaceXml.attributes );
 
-	POP.drawBorder( surfaceXml );
+	POPX.drawBorder( surfaceXml );
 
-	const htmAttributes = POP.getSurfaceAttributes( surfaceXml );
+	const htmAttributes = GSA.getSurfaceAttributes( surfaceXml );
+	//console.log( 'htmAttributes', htmAttributes );
 
-	POP.surfaceId = surfaceXml.attributes.id.value;
+	POPX.surfaceId = surfaceXml.attributes.id.value;
 
-	POP.surfaceType = surfaceXml.attributes.surfaceType ? surfaceXml.attributes.surfaceType.value : '';
+	POPX.surfaceType = surfaceXml.attributes.surfaceType ? surfaceXml.attributes.surfaceType.value : '';
 
-	const adjSpaceButtons = POP.getAdjSpaceButtons();
+	const adjSpaceButtons = POPX.getAdjSpaceButtons();
 
-	const storeyButton = POP.storeyId ? `<button id=POPbutStoreyVisible onclick=POPelementAttributes.innerHTML=POP.toggleStoreyVisible(this,"${ POP.storeyId }"); title="id: ${ POP.storeyId }" >storey: ${ POP.storeyName}</button>` : `<div id=POPbutStoreyVisible ></div>`;
+	const storeyButton = POPX.storeyId ? `<button id=POPXbutStoreyVisible onclick=POPXelementAttributes.innerHTML=POPX.toggleStoreyVisible(this,"${ POPX.storeyId }"); title="id: ${ POPX.storeyId }" >storey: ${ POPX.storeyName}</button>` : `<div id=POPXbutStoreyVisible ></div>`;
 
-	const zoneButton = POP.zoneId ? `<button id=POPbutZoneVisible onclick=POPelementAttributes.innerHTML=POP.getToggleZoneVisible(this,"${ POP.zoneId }"); title="id: ${ POP.zoneId }" >zone: ${ POP.zoneName }</button> &nbsp;` : `<span id=POPbutZoneVisible >None</span>`;
+	const zoneButton = POPX.zoneId ? `<button id=POPXbutZoneVisible onclick=POPXelementAttributes.innerHTML=POPX.getToggleZoneVisible(this,"${ POPX.zoneId }"); title="id: ${ POPX.zoneId }" >zone: ${ POPX.zoneName }</button> &nbsp;` : `<span id=POPXbutZoneVisible >None</span>`;
 
 	const htm =
 	`
 		<p><b>Visibility</b> - show/hide elements</p>
 
-		<div id=POPdivShowHide >
+		<div id=POPXdivShowHide >
 
 			<p>
-				<button id=POPbutSurfaceFocus onclick=POP.toggleSurfaceFocus(this);
-					title="${ POP.surfaceType }" > surface: ${POP.surfaceId } </button>
-				<button id=POPbutSurfaceVisible onclick=POP.toggleSurfaceVisible();
+				<button id=POPXbutSurfaceFocus onclick=POPX.toggleSurfaceFocus(this);
+					title="${ POPX.surfaceType }" > surface: ${POPX.surfaceId } </button>
+				<button id=POPXbutSurfaceVisible onclick=POPX.toggleSurfaceVisible();
 					title="Show or hide selected surface" > &#x1f441; </button>
-				<button onclick=POP.setSurfaceZoom(); title="Zoom into selected surface" > ⌕ </button>
+				<button onclick=POPX.setSurfaceZoom(); title="Zoom into selected surface" > ⌕ </button>
 
-				<button onclick=POP.toggleSurfaceNeighbors(); title="Show adjacent surfaces" > # </button>
+				<button onclick=POPX.toggleSurfaceNeighbors(); title="Show adjacent surfaces" > # </button>
 			</p>
 
 			<p>
@@ -325,18 +231,18 @@ POP.getIntersectedDataHtml = function() {
 			<p>
 				${ storeyButton } ${ zoneButton }
 
-				<button onclick=POP.setAllVisibleZoom(); title="Zoom whatever is visible" >⌕</button>
+				<button onclick=POPX.setAllVisibleZoom(); title="Zoom whatever is visible" >⌕</button>
 			</p>
 
 		</div>
 
-		<div id=POPelementAttributes >
+		<div id=POPXelementAttributes >
 			${ htmAttributes }
 		</div>
 		<hr>
 
 	`;
-	// to do <button onclick=POP.toggleVertexPlacards(); title="Display vertex numbers" > # </button>
+	// to do <button onclick=POPX.toggleVertexPlacards(); title="Display vertex numbers" > # </button>
 
 	return htm;
 
@@ -344,9 +250,9 @@ POP.getIntersectedDataHtml = function() {
 
 
 
-POP.drawBorder = function( surfaceXml ) {
+POPX.drawBorder = function( surfaceXml ) {
 
-	THR.scene.remove( POP.line );
+	THR.scene.remove( POPX.line );
 
 	const planar = surfaceXml.getElementsByTagName( 'PlanarGeometry' )[ 0 ];
 
@@ -368,49 +274,49 @@ POP.drawBorder = function( surfaceXml ) {
 
 	const material = new THREE.LineBasicMaterial( { color: 0xff00ff, linewidth: 2, transparent: true } );
 
-	POP.line = new THREE.LineLoop( geometry, material );
+	POPX.line = new THREE.LineLoop( geometry, material );
 
-	THR.scene.add( POP.line );
+	THR.scene.add( POPX.line );
 
 };
 
 
 
-POP.getAdjSpaceButtons = function() {
+POPX.getAdjSpaceButtons = function() {
 
 	let htm;
 
-	if ( POP.adjacentSpaceId.length === 0 ) {
+	if ( GSA.adjacentSpaceIds.length === 0 ) {
 
 		htm = "";
 
-	} else if ( POP.adjacentSpaceId.length === 1 ) {
+	} else if ( GSA.adjacentSpaceIds.length === 1 ) {
 
-		const spaceId = POP.adjacentSpaceId[ 0 ];
+		const spaceId = GSA.adjacentSpaceIds[ 0 ];
 
 
 		//console.log( 'space', space );
 
 		htm =
 		`
-			<button id=POPbutAdjacentSpace1 onclick=POP.toggleSpaceVisible(this,"${ spaceId }","");
-				title="id: ${ spaceId }" >space: ${ POP.spaceNames[ 0 ] }</button>
-			</div><div id=POPbutAdjacentSpace2 ></div>
+			<button id=POPXbutAdjacentSpace1 onclick=POPX.toggleSpaceVisible(this,"${ spaceId }","");
+				title="id: ${ spaceId }" >space: ${ POPX.spaceNames[ 0 ] }</button>
+			</div><div id=POPXbutAdjacentSpace2 ></div>
 		`;
 
 
-	} else if ( POP.adjacentSpaceId.length === 2 ) {
+	} else if ( GSA.adjacentSpaceIds.length === 2 ) {
 
-		const spaceId1 = POP.adjacentSpaceId[ 0 ];
-		const spaceId2 = POP.adjacentSpaceId[ 1 ];
+		const spaceId1 = GSA.adjacentSpaceIds[ 0 ];
+		const spaceId2 = GSA.adjacentSpaceIds[ 1 ];
 
 		htm =
 		`
-			<button id=POPbutAdjacentSpace1 onclick=POP.toggleSpaceVisible(this,"${ spaceId1 }","");
-				title="id: ${ spaceId1 }" >space: ${ POP.spaceNames[ 0 ] }</button>
+			<button id=POPXbutAdjacentSpace1 onclick=POPX.toggleSpaceVisible(this,"${ spaceId1 }","");
+				title="id: ${ spaceId1 }" >space: ${ POPX.spaceNames[ 0 ] }</button>
 
-			<button id=POPbutAdjacentSpace2 onclick=POP.toggleSpaceVisible(this,"${ spaceId2 }","");
-				title="id: ${ spaceId2 }" >space: ${ POP.spaceNames[ 1 ] }</button>
+			<button id=POPXbutAdjacentSpace2 onclick=POPX.toggleSpaceVisible(this,"${ spaceId2 }","");
+				title="id: ${ spaceId2 }" >space: ${ POPX.spaceNames[ 1 ] }</button>
 		`;
 	}
 
@@ -422,7 +328,47 @@ POP.getAdjSpaceButtons = function() {
 
 //////////
 
-POP.getAttributesHtml = function( obj ) {
+POPX.xxxgetSurfaceAttributes = function( surfaceXml ) {
+	//console.log( 'surfaceXml', surfaceXml );
+
+	const htmSurface = POPX.getAttributesHtml( surfaceXml );
+	const htmAdjacentSpace = POPX.getAttributesAdjacentSpace( surfaceXml );
+	const htmPlanarGeometry = POPX.getAttributesPlanarGeometry( surfaceXml );
+
+	const rect = surfaceXml.getElementsByTagName( "RectangularGeometry" )[ 0 ];
+	//console.log( '', rect );
+	const htmRectangularGeometry = POPX.getAttributesHtml( rect );
+
+	const htm =
+	`
+		<p>
+			<div><b>Selected Surface Attributes</b></div>
+			${ htmSurface }
+		</p>
+
+		<details>
+			<summary> AdjacentSpace</summary>
+			${ htmAdjacentSpace }
+		</details>
+
+		<details>
+			<summary> Planar Geometry </summary>
+			${ htmPlanarGeometry }
+		</details>
+
+		<details>
+			<summary> Rectangular Geometry </summary>
+			<div>${ htmRectangularGeometry } </div>
+		</details>
+	`;
+
+	return htm;
+
+};
+
+
+
+POPX.xxxgetAttributesHtml = function( obj ) {
 	//console.log( 'obj', obj );
 
 	let htm ='';
@@ -443,8 +389,8 @@ POP.getAttributesHtml = function( obj ) {
 			//constructions = GBX.text.match( /<Construction(.*?)<\/Construction>/gi );
 
 			// silly way of doing things, but it's a start
-			const campusXml = POP.parser.parseFromString( GBX.text, "application/xml").documentElement;
-			//POP.campusXml = campusXml;
+			const campusXml = POPX.parser.parseFromString( GBX.text, "application/xml").documentElement;
+			//POPX.campusXml = campusXml;
 			//console.log( 'campusXml', campusXml.attributes );
 
 			constructions = Array.from( campusXml.getElementsByTagName( 'Construction' ) );
@@ -500,48 +446,7 @@ POP.getAttributesHtml = function( obj ) {
 
 
 
-POP.getSurfaceAttributes = function( surfaceXml ) {
-	//console.log( 'surfaceXml', surfaceXml );
-	//s = surfaceXml;
-
-	const htmSurface = POP.getAttributesHtml( surfaceXml );
-	const htmAdjacentSpace = POP.getAttributesAdjacentSpace( surfaceXml );
-	const htmPlanarGeometry = POP.getAttributesPlanarGeometry( surfaceXml );
-
-	const rect = surfaceXml.getElementsByTagName( "RectangularGeometry" )[ 0 ];
-	//console.log( '', rect );
-	const htmRectangularGeometry = POP.getAttributesHtml( rect );
-
-	const htm =
-	`
-		<p>
-			<div><b>Selected Surface Attributes</b></div>
-			${ htmSurface }
-		</p>
-
-		<details>
-			<summary> AdjacentSpace</summary>
-			${ htmAdjacentSpace }
-		</details>
-
-		<details>
-			<summary> Planar Geometry </summary>
-			${ htmPlanarGeometry }
-		</details>
-
-		<details>
-			<summary> Rectangular Geometry </summary>
-			<div>${ htmRectangularGeometry } </div>
-		</details>
-	`;
-
-	return htm;
-
-};
-
-
-
-POP.getAttributesAdjacentSpace = function( surfaceXml ){
+POPX.getAttributesAdjacentSpace = function( surfaceXml ){
 
 	const adjacentSpaceId = surfaceXml.getElementsByTagName( "AdjacentSpaceId" );
 	//console.log( 'adjacentSpaceId', adjacentSpaceId );
@@ -551,8 +456,8 @@ POP.getAttributesAdjacentSpace = function( surfaceXml ){
 
 	if ( adjacentSpaceId.length === 0 ) {
 
-		POP.adjacentSpaceId = [];
-		POP.storey = '';
+		GSA.adjacentSpaceIds = [];
+		POPX.storey = '';
 
 		htm = 'No adjacent space';
 
@@ -563,7 +468,7 @@ POP.getAttributesAdjacentSpace = function( surfaceXml ){
 		const space1 = adjacentSpaceId[ 0 ].getAttribute( "spaceIdRef" );
 		const space2 = adjacentSpaceId[ 1 ].getAttribute( "spaceIdRef" );
 
-		POP.adjacentSpaceId = [ space1, space2 ];
+		GSA.adjacentSpaceIds = [ space1, space2 ];
 
 		spaceText1 = GBX.spaces.find( space => space.includes( space1 ) )
 		spaceName1 = spaceText1.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
@@ -572,8 +477,8 @@ POP.getAttributesAdjacentSpace = function( surfaceXml ){
 		spaceText2 = GBX.spaces.find( space => space.includes( space2 ) )
 		spaceName2 = spaceText2.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
 
-		POP.spaceNames = [ spaceName1, spaceName2 ];
-		POP.setAttributesStoreyAndZone( space2 );
+		POPX.spaceNames = [ spaceName1, spaceName2 ];
+		POPX.setAttributesStoreyAndZone( space2 );
 
 		htm =
 		`
@@ -599,15 +504,15 @@ POP.getAttributesAdjacentSpace = function( surfaceXml ){
 		//console.log( 'obj.AdjacentSpaceId', obj.AdjacentSpaceId );
 
 		const spaceId = adjacentSpaceId[ 0 ].getAttribute( "spaceIdRef" );
-		POP.adjacentSpaceId = [ spaceId];
+		GSA.adjacentSpaceIds = [ spaceId];
 
 		const spaceText1 = GBX.spaces.find( space => space.includes( spaceId ) )
 		const spaceName1 = spaceText1.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
 
 
-		POP.spaceNames = [ spaceName1 ];
+		POPX.spaceNames = [ spaceName1 ];
 
-		POP.setAttributesStoreyAndZone( spaceId );
+		POPX.setAttributesStoreyAndZone( spaceId );
 
 		htm =
 
@@ -627,39 +532,39 @@ POP.getAttributesAdjacentSpace = function( surfaceXml ){
 
 
 
-POP.setAttributesStoreyAndZone = function( spaceId ) {
+POPX.setAttributesStoreyAndZone = function( spaceId ) {
 
 	const spaceText = GBX.spaces.find( item => item.includes( spaceId ) );
 	//console.log( 'spaceText', spaceText );
 
-	POP.storeyId = spaceText.match ( /buildingStoreyIdRef="(.*?)"/ )[ 1 ];
-	//console.log( 'storeyId', POP.storeyId[ 1 ] );
+	POPX.storeyId = spaceText.match ( /buildingStoreyIdRef="(.*?)"/ )[ 1 ];
+	//console.log( 'storeyId', POPX.storeyId[ 1 ] );
 
-	const storeyText = GBX.storeys.find( item => item.includes( POP.storeyId ) );
+	const storeyText = GBX.storeys.find( item => item.includes( POPX.storeyId ) );
 	//console.log( 'storeyText', storeyText );
 
 	const storeyName = storeyText.match ( '<Name>(.*?)</Name>' );
 
-	POP.storeyName = storeyName ? storeyName[ 1 ] : "no storey name in file";
-	//console.log( 'POP.storeyName', POP.storeyName );
+	POPX.storeyName = storeyName ? storeyName[ 1 ] : "no storey name in file";
+	//console.log( 'POPX.storeyName', POPX.storeyName );
 
-	POP.zoneId = spaceText.match ( /zoneIdRef="(.*?)"/ );
+	POPX.zoneId = spaceText.match ( /zoneIdRef="(.*?)"/ );
 
-	if ( POP.zoneId ) {
+	if ( POPX.zoneId ) {
 
-		POP.zoneId = POP.zoneId[ 1 ];
-		//console.log( 'zoneId', POP.zoneId[ 1 ] );
+		POPX.zoneId = POPX.zoneId[ 1 ];
+		//console.log( 'zoneId', POPX.zoneId[ 1 ] );
 
-		const zoneText = GBX.zones.find( item => item.includes( POP.zoneId ) );
+		const zoneText = GBX.zones.find( item => item.includes( POPX.zoneId ) );
 		//console.log( 'storeyText', zoneText );
 
-		POP.zoneName = zoneText.match ( '<Name>(.*?)</Name>' )[ 1 ];
-		//console.log( 'POP.zoneName', POP.zoneName );
+		POPX.zoneName = zoneText.match ( '<Name>(.*?)</Name>' )[ 1 ];
+		//console.log( 'POPX.zoneName', POPX.zoneName );
 
 
 	} else {
 
-		POP.zoneName = "None";
+		POPX.zoneName = "None";
 
 	}
 
@@ -668,7 +573,7 @@ POP.setAttributesStoreyAndZone = function( spaceId ) {
 
 
 
-POP.getAttributesPlanarGeometry = function( surfaceXml ) {
+POPX.getAttributesPlanarGeometry = function( surfaceXml ) {
 
 	const plane = surfaceXml.getElementsByTagName( 'PlanarGeometry' );
 
@@ -696,9 +601,9 @@ POP.getAttributesPlanarGeometry = function( surfaceXml ) {
 
 //////////
 
-POP.setOneButtonActive = function( button ) {
+POPX.setOneButtonActive = function( button ) {
 
-	const buttons = POPdivShowHide.querySelectorAll( "button" );
+	const buttons = POPXdivShowHide.querySelectorAll( "button" );
 
 	Array.from( buttons ).forEach( butt => { if ( butt !== button ) ( button.classList.remove( "active" ) ); } );
 
@@ -708,11 +613,11 @@ POP.setOneButtonActive = function( button ) {
 
 
 
-POP.toggleSurfaceFocus = function( button ) {
+POPX.toggleSurfaceFocus = function( button ) {
 
 	button.classList.toggle( "active" );
 
-	//POP.setOneButtonActive( button );
+	//POPX.setOneButtonActive( button );
 
 	const focus = button.classList.contains( "active" );
 
@@ -720,11 +625,11 @@ POP.toggleSurfaceFocus = function( button ) {
 
 		GBX.surfaceGroup.children.forEach( child => child.visible = false );
 
-		POP.intersected.visible = true;
+		POPX.intersected.visible = true;
 
 
 		const bbox = new THREE.Box3();
-		const meshes = [ POP.intersected ];
+		const meshes = [ POPX.intersected ];
 
 		meshes.forEach( mesh => bbox.expandByObject ( mesh ) );
 
@@ -744,25 +649,25 @@ POP.toggleSurfaceFocus = function( button ) {
 
 	}
 
-	//const surfaceJson = POP.intersected.userData.gbjson;
+	//const surfaceJson = POPX.intersected.userData.gbjson;
 
-	POPelementAttributes.innerHTML = POP.getSurfaceAttributes( POP.surfaceXml );
-
-};
-
-
-
-POP.toggleSurfaceVisible = function() {
-
-	POP.intersected.visible = !POP.intersected.visible;
+	POPXelementAttributes.innerHTML = POPX.getSurfaceAttributes( POPX.surfaceXml );
 
 };
 
 
 
-POP.toggleVertexPlacards = function() {
+POPX.toggleSurfaceVisible = function() {
 
-	const vertices = POP.intersected.userData.gbjson.PlanarGeometry.PolyLoop.CartesianPoint
+	POPX.intersected.visible = !POPX.intersected.visible;
+
+};
+
+
+
+POPX.toggleVertexPlacards = function() {
+
+	const vertices = POPX.intersected.userData.gbjson.PlanarGeometry.PolyLoop.CartesianPoint
 		.map( point => new THREE.Vector3().fromArray( point.Coordinate.map( point => Number( point ) )  ) );
 
 	console.log( 'vvv', vertices );
@@ -774,21 +679,21 @@ POP.toggleVertexPlacards = function() {
 	);
 
 	console.log( '', placards );
-	POP.line.add( ...placards );
+	POPX.line.add( ...placards );
 
 };
 
 
 
-POP.toggleSpaceVisible = function( button, spaceId ) {
+POPX.toggleSpaceVisible = function( button, spaceId ) {
 
 	button.classList.toggle( "active" );
 
-	const visible1 = POPbutAdjacentSpace1.classList.contains( "active" );
-	const spaceId1 = POPbutAdjacentSpace1.innerHTML.slice( 7 );
+	const visible1 = POPXbutAdjacentSpace1.classList.contains( "active" );
+	const spaceId1 = POPXbutAdjacentSpace1.innerHTML.slice( 7 );
 
-	const visible2 = POPbutAdjacentSpace2.classList.contains( "active" );
-	const spaceId2 = POPbutAdjacentSpace2.innerHTML.slice( 7 );
+	const visible2 = POPXbutAdjacentSpace2.classList.contains( "active" );
+	const spaceId2 = POPXbutAdjacentSpace2.innerHTML.slice( 7 );
 	//console.log( 'adj space vis', visible1, visible2 );
 
 	const children =  GBX.surfaceGroup.children;
@@ -834,10 +739,10 @@ POP.toggleSpaceVisible = function( button, spaceId ) {
 
 	const spaceTxt = GBX.spaces.find( item => item.includes( ` id="${ spaceId }"` ) );
 
-	const spaceXml = POP.parser.parseFromString( spaceTxt, "application/xml").documentElement;
+	const spaceXml = POPX.parser.parseFromString( spaceTxt, "application/xml").documentElement;
 	//console.log( 'spaceXml ', spaceXml );
 
-	const htmSpace = POP.getAttributesHtml( spaceXml );
+	const htmSpace = POPX.getAttributesHtml( spaceXml );
 
 	const htm =
 	`
@@ -845,13 +750,13 @@ POP.toggleSpaceVisible = function( button, spaceId ) {
 		${ htmSpace }
 	`;
 
-	POPelementAttributes.innerHTML = htm;
+	POPXelementAttributes.innerHTML = htm;
 
 };
 
 
 
-POP.toggleStoreyVisible = function( button, storeyId ) {
+POPX.toggleStoreyVisible = function( button, storeyId ) {
 
 	button.classList.toggle( "active" );
 
@@ -865,7 +770,7 @@ POP.toggleStoreyVisible = function( button, storeyId ) {
 
 		const spaces = GBX.spaces;
 
-		//const spaceIdRef = POP.adjacentSpaceId.length === 1 ? POP.adjacentSpaceId[ 0 ] : POP.adjacentSpaceId[ 1 ];
+		//const spaceIdRef = GSA.adjacentSpaceIds.length === 1 ? GSA.adjacentSpaceIds[ 0 ] : GSA.adjacentSpaceIds[ 1 ];
 
 		const spaceIdsInStory = [];
 
@@ -913,10 +818,10 @@ POP.toggleStoreyVisible = function( button, storeyId ) {
 
 	const storeyTxt = GBX.storeys.find( item => item.includes( ` id="${ storeyId }"` ) );
 
-	const storeyXml = POP.parser.parseFromString( storeyTxt, "application/xml").documentElement;
+	const storeyXml = POPX.parser.parseFromString( storeyTxt, "application/xml").documentElement;
 	//console.log( 'spaceXml ', spaceXml );
 
-	const htmStorey = POP.getAttributesHtml( storeyXml );
+	const htmStorey = POPX.getAttributesHtml( storeyXml );
 
 	const htm =
 	`
@@ -930,7 +835,7 @@ POP.toggleStoreyVisible = function( button, storeyId ) {
 
 
 
-POP.getToggleZoneVisible = function ( button, zoneIdRef ) {
+POPX.getToggleZoneVisible = function ( button, zoneIdRef ) {
 
 	button.classList.toggle( "active" );
 
@@ -943,7 +848,7 @@ POP.getToggleZoneVisible = function ( button, zoneIdRef ) {
 
 		const spaces = GBX.spaces;
 
-		//const spaceIdRef = POP.adjacentSpaceId.length === 1 ? POP.adjacentSpaceId[ 0 ] : POP.adjacentSpaceId[ 1 ];
+		//const spaceIdRef = GSA.adjacentSpaceIds.length === 1 ? GSA.adjacentSpaceIds[ 0 ] : GSA.adjacentSpaceIds[ 1 ];
 
 		const spaceIdsInZone = [];
 
@@ -995,10 +900,10 @@ POP.getToggleZoneVisible = function ( button, zoneIdRef ) {
 
 	const zoneTxt = GBX.zones.find( item => item.includes( ` id="${ zoneIdRef }"` ) );
 
-	const zoneXml = POP.parser.parseFromString( zoneTxt, "application/xml").documentElement;
+	const zoneXml = POPX.parser.parseFromString( zoneTxt, "application/xml").documentElement;
 	//console.log( 'spaceXml ', spaceXml );
 
-	const htmZone = POP.getAttributesHtml( zoneXml );
+	const htmZone = POPX.getAttributesHtml( zoneXml );
 
 	GBX.surfaceOpenings.traverse( function ( child ) {
 
@@ -1024,20 +929,20 @@ POP.getToggleZoneVisible = function ( button, zoneIdRef ) {
 
 //////////
 
-POP.setSurfaceZoom = function() {
+POPX.setSurfaceZoom = function() {
 
-	const surfaceMesh = POP.intersected;
+	const surfaceMesh = POPX.intersected;
 
-	POP.setCameraControls( [ surfaceMesh ] );
+	POPX.setCameraControls( [ surfaceMesh ] );
 
 };
 
 
-POP.toggleSurfaceNeighbors = function() {
+POPX.toggleSurfaceNeighbors = function() {
 
-	const surfaceMesh = POP.intersected;
+	const surfaceMesh = POPX.intersected;
 
-	surfaceText  = GBX.surfaces[ POP.intersected.userData.index ]
+	surfaceText  = GBX.surfaces[ POPX.intersected.userData.index ]
 	//console.log( 'surfaceText', surfaceText );
 
 	cartesianPoints = [];

@@ -48,6 +48,7 @@
 
 <body>
 
+<!-- utility libraries -->
 <script src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
 <script src = "https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js" ></script>
 
@@ -55,21 +56,28 @@
 <script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r105/build/three.min.js" ></script>
 <script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r105/examples/js/controls/OrbitControls.js" ></script>
 
-<script src = "../js-core/thr-threejs.js" ></script>
-<script src = "../js-core/thru-threejs-utilities.js" ></script>
-<script src = "../js-core/pop-up-text-parser.js" ></script>
+<!-- Tootoo -->
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-02/thm-theme/thm-theme.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-02/gat-github-access-token/gat-github-access-token.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-02/tmp-template/tmp-template.js" ></script>
 
-<!-- menus generally -->
-<script src = "../js-menu/mnu-menu.js" ></script>
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/gat-github-access-token/gat-github-access-token.js" ></script>
-
-<!-- File menu panel -->
+<!-- Tootoo forks  https://github.com/pushme-pullyou/tootoo14 -->
+<script src = "../js-core-tootoo/fob-file-open-basic.js" ></script>
 <script src = "../js-menu/gff-github-folder-files.js" ></script>
-<script src = "../js-core/fob-file-open-basic.js" ></script>
+<script src = "../js-menu/mnu-menu.js" ></script>
+<script src = "../js-popup/pop-popup.js" ></script>
 
-<script src = "../js-core/gbx-gbxml-text-parser.js" ></script>
-<script src = "../js-core/gbxu-gbxml-utilities.js" ></script>
+<!-- Spider forks -->
+<script src = "../js-core-spider/thr-threejs.js" ></script>
+<script src = "../js-core-spider/thru-threejs-utilities.js" ></script>
 
+<!-- Spider gbXML forks -->
+<script src = "../js-core-spider/gbx-gbxml-text-parser.js" ></script>
+<script src = "../js-core-spider/gbxu-gbxml-utilities.js" ></script>
+
+<!-- popup menu -->
+<script src = "../js-popup/popx-popop-gbxml.js" ></script>
+<script src = "../js-popup/gsa-gbxml-surface-attributes.js" ></script>
 
 <!-- View menu -->
 <script src = "../js-view/vst-view-surface-types.js" ></script>
@@ -81,14 +89,13 @@
 <script src = "../js-view/cut-section-cut.js"></script>
 
 
-<!-- Settings menu -->
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/thm-theme/thm-theme.js" ></script>
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/tmp-template/tmp-template.js" ></script>
-
-
 <!-- Fixer Menu -->
 <script src = "../js-fixer/gbxf-gbxml-fixer.js" ></script>
-<script src = "../js-fixer/gsa-get-surface-attributes/gsa-get-surface-attributes.js" ></script>
+<!--
+
+	<script src = "../js-fixer/gsa-get-surface-attributes/gsa-get-surface-attributes.js" ></script>
+
+-->
 
 <script src = "../js-fixer/ggd-get-gbxml-data/ggd-get-gbxml-data.js" ></script>
 <script src = "../js-fixer/gss-get-surface-statistics/gss-get-surface-statistics.js" ></script>
@@ -151,9 +158,10 @@
 
 				<div id="GALdivSampleFilesGallery"></div>
 
-
 				<div id=FOBdivFileOpenBasic ></div>
 
+				<div id=GBXUdivStatsGbx ></div>
+				
 				<div id=FOBdivFileSaveBasic ></div>
 
 			</details>
@@ -264,6 +272,7 @@ THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-1/style.css";
 // useful when testing / un-comment
 FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/coventry-university-of-warwick-small.zip";
+FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/annapolis-md-single-family-residential-2016.xml"
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/pittsburg-airport.zip";
 
 
@@ -315,7 +324,8 @@ function init() {
 
 	THRU.addSomeLights2();
 
-	POPdivPopup.innerHTML = POP.getMenuHtmlPopUp();
+	POPdivPopup.innerHTML = POP.getMenuDivPopup();
+	POPX.init();
 
 	//const mesh = THRU.getGeometry();
 	//THR.scene.add( mesh );
@@ -354,6 +364,8 @@ function init() {
 
 	aViewSource.style.display = "block";
 	aViewSource.href = MNU.urlSourceCode;
+
+	POP.setPopupShowHide( butPopClose, "../popup.md" );
 
 }
 

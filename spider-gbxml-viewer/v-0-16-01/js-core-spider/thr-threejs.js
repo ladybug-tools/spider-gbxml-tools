@@ -35,7 +35,7 @@ THR.onWindowResize = function( target = divContents ) {
 	THR.renderer.setSize( target.clientWidth, target.clientHeight );
 	//THR.controls.handleResize(); // trackball only
 
-	console.log( 'onWindowResize  target.innerWidth', target.innerWidth );
+	//console.log( 'onWindowResize  target.innerWidth', target.innerWidth );
 
 };
 

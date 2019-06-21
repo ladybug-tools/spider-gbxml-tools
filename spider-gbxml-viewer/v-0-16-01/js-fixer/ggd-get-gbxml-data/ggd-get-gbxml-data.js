@@ -63,14 +63,12 @@ GGD.getData = function( dataFile ) {
 
 	const count = verticesCount.reduce( ( count, val, index ) => count + verticesCount[ index ].length, 0 );
 
-	const openings = GBX.text.match( /<Opening(.*?)<\/Opening>/gi );
-	GBX.openings = openings || [];
+	GBX.openings = GBX.text.match( /<Opening(.*?)<\/Opening>/gi ) || [];
 
-	const constructions = GBX.text.match( /<Construction(.*?)<\/Construction>/gi );
-	GBX.constructions = constructions || [];
+	GBX.constructions = GBX.text.match( /<Construction(.*?)<\/Construction>/gi ) || [];
 
-	const materials = GBX.text.match( /<material(.*?)<\/material>/gi );
-	GBX.materials = materials || [];
+	GBX.materials = GBX.text.match( /<material(.*?)<\/material>/gi ) || [];
+
 
 	const htm =
 	`

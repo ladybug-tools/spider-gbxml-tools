@@ -77,6 +77,10 @@ GBXU.setStats = function() {
 	const count = verticesCount.reduce( ( count, val, index ) => count + verticesCount[ index ].length, 0 );
 	const timeToLoad = performance.now() - GBX.timeStart;
 
+	GBX.constructions = GBX.text.match( /<Construction(.*?)<\/Construction>/gi ) || [];
+
+	GBX.materials = GBX.text.match( /<material(.*?)<\/material>/gi ) || [];
+
 	const htm =
 	`
 		<div>time to parse: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
@@ -85,9 +89,12 @@ GBXU.setStats = function() {
 		<div>zones: ${ GBX.zones.length.toLocaleString() } </div>
 		<div>surfaces: ${ GBX.surfaces.length.toLocaleString() } </div>
 		<div>coordinates: ${ count.toLocaleString() } </div>
+		<div>constructions: ${ GBX.constructions.length.toLocaleString() } </div>
 	`;
 
-	//GBXdivStatsGbx.innerHTML = htm;
+	const tag = document.body.querySelectorAll( "#GBXUdivStatsGbx" );
+
+	if ( tag.length ) { tag[ 0 ].innerHTML = htm; }
 
 };
 

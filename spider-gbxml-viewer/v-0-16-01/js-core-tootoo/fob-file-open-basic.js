@@ -5,10 +5,10 @@
 const FOB = {
 
 	"copyright": "Copyright 2019 pushMe pullYou authors. MIT License",
-	"date": "2019-06-03",
+	"date": "2019-06-20",
 	"helpFile": "https://pushme-pullyou.github.io/tootoo14/js-14-1/fob-file-open-basic/README.md",
-	"version": "0.14.1-5",
-	"urlSourceCode": "https://github.com/pushme-pullyou/tootoo14/blob/master/js-14-1/fob-file-open-basic/fob-file-open-basic.js",
+	"version": "0.14.1-6",
+	"urlSourceCode": "https://github.com/pushme-pullyou/tootoo14/blob/master/js-14-2/fob-file-open-basic/fob-file-open-basic.js",
 	"users": ["spider-gbxml-fixer", "add-a-line-bookmarks"]
 };
 
@@ -302,6 +302,11 @@ FOB.onDrop = function( event ) {
 
 FOB.onProgress = function( size = 0, note = '' ) {
 
+	const targetProgress = document.body.querySelectorAll( "#FOBdivProgress" )
+	//console.log( 'targetProgress', targetProgress);
+
+	if ( targetProgress.length === 0 ) { return; }
+
 	const timeToLoad = ( performance.now() - FOB.timeStart ).toLocaleString();
 
 	let htm =
@@ -314,8 +319,9 @@ FOB.onProgress = function( size = 0, note = '' ) {
 			${ note }
 		</div>
 	`;
+	//console.log( 'htm', htm );
 
-	//FOBdivProgress.innerHTML = htm;
+	targetProgress[ 0 ].innerHTML = htm;
 
 };
 

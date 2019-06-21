@@ -73,7 +73,6 @@ GBX.parseFile = function( gbxml )  {
 	//GBXdivStatsGbx.innerHTML = '';
 	//GBXdivStatsThr.innerHTML = '';
 
-
 	THRU.setSceneDispose( [ GBX.surfaceMeshes, GBX.surfaceOpenings, GBX.surfaceEdgesThreejs, GBX.boundingBox, THRU.helperNormalsFaces, THRU.groundHelper ] );
 
 	//THR.scene.remove( GBX.surfaceOpenings, GBX.surfaceEdgesThreejs );
@@ -503,6 +502,3 @@ GBX.getPlane = function( points, start = 0 ) {
 	return GBX.triangle.getPlane( new THREE.Plane() );
 
 };
-
-
-

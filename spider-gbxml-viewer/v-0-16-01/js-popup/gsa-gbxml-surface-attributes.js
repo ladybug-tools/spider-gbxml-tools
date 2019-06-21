@@ -14,7 +14,7 @@ const GSA = {
 
 
 
-GSA.getSurfacesAttributesByIndex = function( indexes, id = 1 ) {
+GSA.getSurfacesAttributesByIndex = function ( indexes, id = 1 ) {
 
 	indexes = Array.isArray( indexes ) ? indexes : [ indexes ];
 	//console.log( 'indexes', indexes );
@@ -28,7 +28,7 @@ GSA.getSurfacesAttributesByIndex = function( indexes, id = 1 ) {
 		const surfaceXml = parser.parseFromString( GBX.surfaces[ index ], "application/xml" ).documentElement;
 		//console.log( 'surfaceXml', surfaceXml );
 
-		const htmAttributes = GSA.getSurfaceAttributes( surfaceXml, id, index );
+		const htmAttributes = GSA.getSurfaceAttributes( surfaceXml, id, indexes[ 0 ] );
 		//console.log( 'htmAttributes', htmAttributes );
 
 		return htmAttributes;
@@ -43,16 +43,10 @@ GSA.getSurfacesAttributesByIndex = function( indexes, id = 1 ) {
 
 GSA.selectedSurfacesFocus = function( index ) {
 
-	POP.intersected = GBX.surfaceGroup.children[ index ];
+	POPX.intersected = GBX.surfaceGroup.children[ index ];
+	//console.log( 'POPX.intersected', POPX.intersected );
 
-	POPdivPopupData.innerHTML = POP.getIntersectedDataHtml();
-	//console.log( 'sel', select.value );
-
-	//const options = select.selectedOptions
-	//console.log( 'option', options );
-
-	//const indexes = Array.from( options ).map( option => Number( option.value ) );
-	//console.log( 'indexes', indexes );
+	POPdivPopupData.innerHTML = POPX.getIntersectedDataHtml();
 
 	surface = GBX.surfacesIndexed[ index ];
 
@@ -63,7 +57,7 @@ GSA.selectedSurfacesFocus = function( index ) {
 
 
 GSA.getSurfaceAttributes = function( surfaceXml, id, index ) {
-	//console.log( 'surfaceXml', surfaceXml );
+	//console.log( 'surfaceXml', surfaceXml, id, index );
 
 	const htmSurface = GSA.getAttributesHtml( surfaceXml );
 	const htmAdjacentSpace = GSA.getAttributesAdjacentSpace( surfaceXml );
@@ -71,7 +65,14 @@ GSA.getSurfaceAttributes = function( surfaceXml, id, index ) {
 
 	const rect = surfaceXml.getElementsByTagName( "RectangularGeometry" )[ 0 ];
 	//console.log( '', rect );
+
 	const htmRectangularGeometry = GSA.getAttributesHtml( rect );
+
+	const htmConstruction = GSA.getAttributesConstruction( surfaceXml );
+
+	//console.log( 'GBX.surfaces[ index ]', GBX.surfaces[ index ] );
+
+	const htmOpenings = GSA.getAttributesOpenings( surfaceXml );
 
 	const htm =
 	`
@@ -96,11 +97,19 @@ GSA.getSurfaceAttributes = function( surfaceXml, id, index ) {
 			<div>${ htmRectangularGeometry } </div>
 		</details>
 
-		<!-- add CADObjectId?? -->
+		<details>
+			<summary> Openings ${ GSA.openings.length }</summary>
+			<div>${ htmOpenings } </div>
+		</details>
+
+		<details>
+			<summary> Construction </summary>
+			<div>${ htmConstruction } </div>
+		</details>
 
 		<details>
 			<summary> gbXML Text </summary>
-			<textarea style=height:15rem;width:100% value="${ GBX.surfaces[ index ] }"></textarea>
+			<textarea style=height:15rem;width:100%; >${ GBX.surfaces[ index ] }</textarea>
 		</details>
 
 	`;
@@ -114,45 +123,18 @@ GSA.getSurfaceAttributes = function( surfaceXml, id, index ) {
 GSA.getAttributesHtml = function( obj ) {
 	//console.log( 'obj', obj );
 
-	let htm ='';
+	let htm = "";
 
-	if ( !obj.attributes ) { return htm; }  //////////  make more forgiving
+	if ( !obj ) { return htm; }
 
 	for ( let attribute of obj.attributes ) {
+		//console.log( 'attribute', attribute );
 
 		htm +=
 		`<div>
 			<span class=attributeTitle >${ attribute.name }</span>:
 			<span class=attributeValue >${ attribute.value }</span>
 		</div>`;
-
-		if ( attribute.name === "constructionIdRef" ) {
-
-			//console.log( 'attribute.value', attribute.value );
-
-			//constructions = GSA.text.match( /<Construction(.*?)<\/Construction>/gi );
-
-			// silly way of doing things, but it's a start
-			const parser = new DOMParser();
-			const campusXml = parser.parseFromString( GSA.text, "application/xml").documentElement;
-			//GSA.campusXml = campusXml;
-			//console.log( 'campusXml', campusXml.attributes );
-
-			const constructions = Array.from( campusXml.getElementsByTagName( 'Construction' ) );
-			//console.log( 'constructions', constructions);
-
-			const construction = constructions.find( item => item.id === attribute.value );
-
-			if ( construction ) {
-
-				const xmlText = new XMLSerializer().serializeToString( construction );
-				//console.log( 'xmlText', xmlText );
-
-				htm += `<textarea style=height:5rem;width:100%; >${ xmlText }</textarea>`;
-
-			}
-
-		}
 
 	}
 
@@ -190,13 +172,15 @@ GSA.getAttributesHtml = function( obj ) {
 
 	}
 
+
+
 	return htm;
 
 };
 
 
 
-GSA.getAttributesAdjacentSpace = function( surfaceXml ){
+GSA.getAttributesAdjacentSpace = function ( surfaceXml ){
 
 	const adjacentSpaceId = surfaceXml.getElementsByTagName( "AdjacentSpaceId" );
 	//console.log( 'adjacentSpaceId', adjacentSpaceId );
@@ -208,6 +192,7 @@ GSA.getAttributesAdjacentSpace = function( surfaceXml ){
 
 		GSA.adjacentSpaceIds = [];
 		GSA.storey = '';
+		GSA.spaceNames = [];
 
 		htm = 'No adjacent space';
 
@@ -231,6 +216,7 @@ GSA.getAttributesAdjacentSpace = function( surfaceXml ){
 		const spaceName2 = spaceText2.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
 
 		GSA.adjacentSpaceIds = [ spaceId1, spaceId2 ];
+		GSA.spaceNames = [ spaceName1, spaceName2 ];
 
 		GSA.setAttributesStoreyAndZone( spaceId2 );
 
@@ -260,6 +246,7 @@ GSA.getAttributesAdjacentSpace = function( surfaceXml ){
 		let spaceName1 = spaceText1.match( /<Name>(.*?)<\/Name>/i );
 		spaceName1 = spaceName1 ? spaceName1[ 1 ] : "";
 
+		GSA.spaceNames = [ spaceName1 ];
 		GSA.setAttributesStoreyAndZone( spaceId );
 
 		htm =
@@ -276,7 +263,7 @@ GSA.getAttributesAdjacentSpace = function( surfaceXml ){
 
 
 
-GSA.setAttributesStoreyAndZone = function( spaceId ) {
+GSA.setAttributesStoreyAndZone = function ( spaceId ) {
 
 	const spaceText = GBX.spaces.find( item => item.includes( spaceId ) );
 	//console.log( 'spaceText', spaceText );
@@ -319,7 +306,7 @@ GSA.setAttributesStoreyAndZone = function( spaceId ) {
 
 
 
-GSA.getAttributesPlanarGeometry = function( surfaceXml ) {
+GSA.getAttributesPlanarGeometry = function ( surfaceXml ) {
 
 	const plane = surfaceXml.getElementsByTagName( 'PlanarGeometry' );
 
@@ -341,6 +328,50 @@ GSA.getAttributesPlanarGeometry = function( surfaceXml ) {
 		`;
 
 	}
+
+	return htm;
+
+};
+
+
+
+GSA.getAttributesOpenings = function ( surfaceXml ) {
+
+	GSA.openings = surfaceXml.getElementsByTagName( "Opening" );
+	// console.log( 'openings', openings );
+
+	let htm = ``;
+
+	for ( let opening of GSA.openings ) {
+
+		htm += GSA.getAttributesHtml( opening );
+
+	}
+
+	return htm;
+
+};
+
+
+
+GSA.getAttributesConstruction = function ( surfaceXml ) {
+	//console.log( 'surfaceXml', surfaceXml );
+
+	const constructionId = surfaceXml.getAttribute( "constructionIdRef" );
+	//console.log( 'constructionId', constructionId );
+
+	// silly way of doing things, but it's a start
+	const parser = new DOMParser();
+	const campusXml = parser.parseFromString( GBX.text, "application/xml" ).documentElement;
+	//console.log( 'campusXml', campusXml.attributes );
+
+	const constructions = Array.from( campusXml.getElementsByTagName( 'Construction' ) );
+	//console.log( 'constructions', constructions);
+
+	const construction = constructions.find( item => item.id === constructionId );
+	//console.log( 'construction', construction );
+
+	const htm = GSA.getAttributesHtml( construction );
 
 	return htm;
 
