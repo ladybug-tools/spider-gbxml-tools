@@ -31,7 +31,7 @@ GWS.getMenuWatertightSpaces = function() {
 		`
 			<details id=GWSdet ontoggle="GWSdivSurface.innerHTML=GWS.getSurfaceData();" >
 
-				<summary id=GWSsumSurfaces >Check for non-watertight spaceRefs
+				<summary id=GWSsumSurfaces >Check for non-watertight spaces
 					${ GWS.help }
 				</summary>
 

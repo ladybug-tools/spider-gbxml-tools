@@ -68,9 +68,8 @@ GSA.getSurfaceAttributes = function( surfaceXml, id, index ) {
 
 	const htmRectangularGeometry = GSA.getAttributesHtml( rect );
 
-	const htmConstruction = GSA.getAttributesConstruction( surfaceXml );
+	GSA.htmConstruction = GSA.getAttributesConstruction( surfaceXml );
 
-	//console.log( 'GBX.surfaces[ index ]', GBX.surfaces[ index ] );
 
 	const htmOpenings = GSA.getAttributesOpenings( surfaceXml );
 
@@ -83,32 +82,32 @@ GSA.getSurfaceAttributes = function( surfaceXml, id, index ) {
 		</p>
 
 		<details>
-			<summary> AdjacentSpace</summary>
+			<summary>AdjacentSpace ${ GSA.adjacentSpaceIds.length }</summary>
 			${ htmAdjacentSpace }
 		</details>
 
 		<details>
-			<summary> Planar Geometry </summary>
+			<summary>Planar Geometry </summary>
 			${ htmPlanarGeometry }
 		</details>
 
 		<details>
-			<summary> Rectangular Geometry </summary>
+			<summary>Rectangular Geometry </summary>
 			<div>${ htmRectangularGeometry } </div>
 		</details>
 
 		<details>
-			<summary> Openings ${ GSA.openings.length }</summary>
+			<summary>Openings ${ GSA.openings.length }</summary>
 			<div>${ htmOpenings } </div>
 		</details>
 
 		<details>
-			<summary> Construction </summary>
-			<div>${ htmConstruction } </div>
+			<summary>Construction (${ GSA.htmConstruction ? "yes" : "none" })</summary>
+			<div>${ GSA.htmConstruction } </div>
 		</details>
 
 		<details>
-			<summary> gbXML Text </summary>
+			<summary>gbXML Text </summary>
 			<textarea style=height:15rem;width:100%; >${ GBX.surfaces[ index ] }</textarea>
 		</details>
 
@@ -344,7 +343,7 @@ GSA.getAttributesOpenings = function ( surfaceXml ) {
 
 	for ( let opening of GSA.openings ) {
 
-		htm += GSA.getAttributesHtml( opening );
+		htm += `<p>${ GSA.getAttributesHtml( opening ) }</p>`;
 
 	}
 
