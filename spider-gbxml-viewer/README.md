@@ -6,20 +6,20 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 <br>
 
-# [Spider gbXML Viewer 'Maevia' R15 Read Me]( #spider-gbxml-viewer/README.md )
+# [Spider gbXML Viewer 'Maevia'Read Me]( #spider-gbxml-viewer/README.md )
 
 
 <iframe src=https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/index.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
-_<small>Spider gbXML Viewer 'Maevia' R15</small>_
+_<small>Spider gbXML Viewer 'Maevia'</small>_
 
-## Full Screen: [Spider gbXML Viewer 'Maevia' R15]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/index.html )
+## Full Screen: [Spider gbXML Viewer 'Maevia' ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-16-01/viewer-view/spider-gbxml-viewer-view.html )
 
 Or copy this link: https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/
 
-## Dev: [Spider gbXML Viewer 'Maevia' R16]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/dev/index.html )
+## Fixer: [Spider gbXML Fixer 'Atrax']( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-16-01/viewer-fixer/spider-gbxml-viewer-fixer.html )
+
 ***
 
-## Local version: https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/r15/spider-gbxml-viewer15-local.html
 
 
 Download this file ( Chrome context menu > 'Save link as...' ) to your desktop or wherever, follow guidelines for loading local files here [Opening and loading files with gbXML Viewer]( https://www.ladybug.tools/spider/#pages/file-open.md ) in order to embed the Viewer in a local workflow and avoid CORS issues.
