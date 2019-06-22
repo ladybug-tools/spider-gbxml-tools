@@ -86,16 +86,26 @@ Pop-up Viewer 'Maevia' R15
 
 <summary>Wish list / to do</summary>
 
-* 2019-04-15 ~ Theo ~ Toggle edges
+* 2019-06-21 ~ Theo ~ Add core JavaScript file with version, date etc
+* 2019-06-21 ~ Theo ~ Add construction etc data to left menu - with data showing in popup menu
+* 2019-06-21 ~ Theo ~ UPdate GGD so it works in either left menu, popup or main areas
+* 2019-06-21 ~ Theo ~ Add surfaces with openings
 * 2019-04-15 ~ Theo ~ load two models at same time & views diffs
-* 2019-04-15 ~ Theo ~ Add space/storey attributes to pop-up
-* 2019-04-15 ~ Theo ~ Add gbxml/openings/construction data to pop-up
 
 </details>
 
 <details>
 
 <summary style=font-size:1.3rem; >Change Log</summary>
+
+### 2019-06-21 ~ Theo
+
+SGV V 0.16.01-2
+
+Dealt with
+* 2019-04-15 ~ Theo ~ Toggle edges
+* 2019-04-15 ~ Theo ~ Add space/storey attributes to pop-up
+* 2019-04-15 ~ Theo ~ Add gbxml/openings/construction data to pop-up
 
 ### 2019-06-06 ~ Theo
 
