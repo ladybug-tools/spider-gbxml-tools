@@ -1,14 +1,14 @@
-/* globals FIL, divContents, GGD, GCS, OCV, GSAh1FileName, */
+/* globals GBX, POPX, POPdivPopupData */
 /* jshint esversion: 6 */
 /* jshint loopfunc: true */
 
 const GSA = {
 
 	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-05-30",
+	"date": "2019-06-21",
 	"description": "Display all possible data for a surface",
 	"helpFile": "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/gsa-get-surface-attributes/README.md",
-	"version": "0.4.0-1"
+	"version": "0.16.01-2"
 
 };
 
@@ -48,7 +48,7 @@ GSA.selectedSurfacesFocus = function( index ) {
 
 	POPdivPopupData.innerHTML = POPX.getIntersectedDataHtml();
 
-	surface = GBX.surfacesIndexed[ index ];
+	const surface = GBX.surfacesIndexed[ index ];
 
 	GBX.sendSurfacesToThreeJs( [ surface ] );
 
@@ -300,7 +300,6 @@ GSA.setAttributesStoreyAndZone = function ( spaceId ) {
 
 	}
 
-
 };
 
 
@@ -341,11 +340,16 @@ GSA.getAttributesOpenings = function ( surfaceXml ) {
 
 	let htm = ``;
 
-	for ( let opening of GSA.openings ) {
+	Array.from( GSA.openings ).forEach( (opening, index ) => {
 
-		htm += `<p>${ GSA.getAttributesHtml( opening ) }</p>`;
+		const rect = opening.getElementsByTagName( "RectangularGeometry" )[ 0 ];
+		//console.log( '', rect );
 
-	}
+		const htmRectangularGeometry = GSA.getAttributesHtml( rect );
+
+		htm += `${ index + 1 } ${ GSA.getAttributesHtml( opening )} ${ htmRectangularGeometry }`;
+
+	} );
 
 	return htm;
 
