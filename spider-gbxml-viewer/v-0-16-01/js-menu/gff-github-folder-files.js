@@ -103,7 +103,9 @@ GFF.getGithubFoldersFiles = function( index ) {
 	const item = GFF.items[ index ];
 
 	item.urlGitHubApiContents = 'https://api.github.com/repos/' + item.user + item.repo + '/contents/' + item.pathRepo;
-	item.urlGitHubPage = 'https://rawgit.com/' + item.user + item.repo + '/master/' + item.pathRepo;
+	//item.urlGitHubPage = 'https://rawgit.com/' + item.user + item.repo + '/master/' + item.pathRepo;
+	item.urlGitHubPage = 'https://cdn.jsdelivr.net/gh/' + item.user + item.repo + '@master/' + item.pathRepo;
+
 	item.urlGitHubSource = 'https://github.com/' + item.user + item.repo + '/blob/master/' + item.pathRepo;
 	GFF.index = index;
 

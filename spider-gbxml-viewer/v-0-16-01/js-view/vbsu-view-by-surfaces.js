@@ -1,9 +1,9 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
-/* globals GBX, POP, ISCOR, POPdivPopupData*/
+/* globals GBX, POPX, ISCOR, POPdivPopupData*/
 /* jshint esversion: 6 */
 
 
-const VBSU = { "release": "R15.0.0-1", "date": "2019-06-05" };
+const VBSU = { "version": ".0.16.01-1", "date": "2019-06-21" };
 
 VBSU.description =
 	`
@@ -13,7 +13,7 @@ VBSU.description =
 
 VBSU.currentStatus =
 	`
-		<summary>View by Surfaces VBSU ${ VBSU.release} ~ ${ VBSU.date }</summary>
+		<summary>View by Surfaces VBSU ${ VBSU.version } ~ ${ VBSU.date }</summary>
 
 		<p>
 			${ VBSU.description }
@@ -135,9 +135,9 @@ VBSU.setSelectedIndex = function( input, select ) {
 
 VBSU.selectedSurfacesFocus = function( select ) {
 
-	POP.intersected = GBX.surfaceGroup.children[ select.value ];
+	POPX.intersected = GBX.surfaceGroup.children[ select.value ];
 
-	POPdivPopupData.innerHTML = POP.getIntersectedDataHtml();
+	POPdivPopupData.innerHTML = POPX.getIntersectedDataHtml();
 	//console.log( 'sel', select.value );
 
 	const options = select.selectedOptions
@@ -156,8 +156,6 @@ VBSU.selectedSurfacesFocus = function( select ) {
 
 VBSU.setViewBySurfaceShowHide = function( button, surfaceArray ) {
 	//console.log( 'surfaceArray', surfaceArray );
-
-	//THR.scene.remove( POP.line, POP.particle );
 
 	button.classList.toggle( "active" );
 

@@ -284,10 +284,10 @@ VBS.getStoreyAttributes = function ( storeyId ) {
 
 	const storeyTxt = GBX.storeys.find( item => item.includes( ` id="${ storeyId }"` ) );
 
-	const storeyXml = POP.parser.parseFromString( storeyTxt, "application/xml").documentElement;
+	const storeyXml = POPX.parser.parseFromString( storeyTxt, "application/xml").documentElement;
 	//console.log( 'spaceXml ', spaceXml );
 
-	const htmStorey = POP.getAttributesHtml( storeyXml );
+	const htmStorey = GSA.getAttributesHtml( storeyXml );
 
 	const htm =
 	`

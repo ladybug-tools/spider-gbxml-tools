@@ -186,4 +186,3 @@ CUT.updateCLipZ = function() {
 	//console.log( '', CUT.localClip2.constant );
 
 };
-

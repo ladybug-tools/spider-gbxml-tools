@@ -132,7 +132,7 @@ VBZ.selZones = function() {
 
 	THR.controls.enableKeys = false;
 
-	POP.getToggleZoneVisible( VBZselZone, VBZselZone.value );
+	POPX.getToggleZoneVisible( VBZselZone, VBZselZone.value );
 /*
 	POP.intersected = null;
 
@@ -225,10 +225,10 @@ VBZ.getZoneAttributes = function( zoneIdRef ) {
 
 	const zoneTxt = GBX.zones.find( item => item.includes( ` id="${ zoneIdRef }"` ) );
 
-	const zoneXml = POP.parser.parseFromString( zoneTxt, "application/xml").documentElement;
+	const zoneXml = POPX.parser.parseFromString( zoneTxt, "application/xml").documentElement;
 	//console.log( 'spaceXml ', spaceXml );
 
-	const htmZone = POP.getAttributesHtml( zoneXml );
+	const htmZone = GSA.getAttributesHtml( zoneXml );
 
 	GBX.surfaceOpenings.traverse( function ( child ) {
 

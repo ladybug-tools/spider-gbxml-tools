@@ -80,6 +80,7 @@
 <script src = "../js-view/vbs-view-by-storeys.js" ></script>
 <script src = "../js-view/vbsp-view-by-spaces.js" ></script>
 <script src = "../js-view/vbz-view-by-zones.js" ></script>
+<script src = "../js-view/vbo-view-by-openings.js" ></script>
 <script src = "../js-view/set-settings.js" ></script>
 <script src = "../js-view/cut-section-cut.js"></script>
 
@@ -137,9 +138,9 @@
 
 			</details>
 
-			<details id="detMenuView" >
+			<details id="detMenuView" open>
 
-				<summary class=sumMenuTitle >View menu </summary>
+				<summary class=sumMenuTitle>View menu </summary>
 
 				<section id="VSTsecViewSurfaceType" ></section>
 
@@ -245,7 +246,7 @@ MNU.description =
 		Mission: run a series of basics checks on <a href="https://gbXML.org" target="_blank">gbXML</a> files to identify, report and help you fix any errors
 	`;
 
-// For main menu header
+// For main menu header // move to menu js
 MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer";
 
 MNU.homeText = "<img src = 'https://ladybug.tools/artwork/icons_bugs/ico/ladybug.ico' height=24 >";
@@ -315,7 +316,7 @@ function init() {
 
 	VBZsecViewByZones.innerHTML = VBZ.getMenuViewByZones();
 
-	VBOsecViewByOpenings.innerHTML = "Show/hide by openings: coming soon<hr>";
+	VBOsecViewByOpenings.innerHTML = VBO.getMenuViewByOpenings();
 
 	MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();11
 

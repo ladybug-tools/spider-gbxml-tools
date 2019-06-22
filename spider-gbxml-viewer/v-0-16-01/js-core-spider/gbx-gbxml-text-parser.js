@@ -51,7 +51,6 @@ GBX.init = function() {
 
 	GBXU.init();
 
-
 };
 
 

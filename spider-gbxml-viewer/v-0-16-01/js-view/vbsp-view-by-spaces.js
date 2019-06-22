@@ -269,10 +269,10 @@ VBSP.getSpaceAttributes = function( spaceId ) {
 
 	const spaceTxt = GBX.spaces.find( item => item.includes( ` id="${ spaceId }"` ) );
 
-	const spaceXml = POP.parser.parseFromString( spaceTxt, "application/xml").documentElement;
+	const spaceXml = POPX.parser.parseFromString( spaceTxt, "application/xml").documentElement;
 	//console.log( 'spaceXml ', spaceXml );
 
-	const htmSpace = POP.getAttributesHtml( spaceXml );
+	const htmSpace = GSA.getAttributesHtml( spaceXml );
 
 	const htm =
 	`
@@ -282,4 +282,4 @@ VBSP.getSpaceAttributes = function( spaceId ) {
 
 	POPdivPopupData.innerHTML = htm;
 
-}
+};

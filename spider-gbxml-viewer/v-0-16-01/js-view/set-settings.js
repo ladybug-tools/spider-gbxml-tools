@@ -137,7 +137,3 @@ SET.toggleEdgesThreejs = function() {
 	} );
 
 };
-
-
-
-
