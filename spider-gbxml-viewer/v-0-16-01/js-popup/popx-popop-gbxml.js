@@ -26,6 +26,8 @@ POPX.init = function() { // call from home page
 	THR.renderer.domElement.addEventListener( 'mousedown', POPX.onDocumentMouseDown, false );
 	THR.renderer.domElement.addEventListener( 'touchstart', POPX.onDocumentTouchStart, false ); // for mobile
 
+	//window.addEventListener( 'touchstart', POPX.onDocumentTouchStart, false ); // for mobile
+
 };
 
 
@@ -99,6 +101,10 @@ POPX.onDocumentTouchStart = function( event ) {
 
 	event.clientX = event.touches[0].clientX;
 	event.clientY = event.touches[0].clientY;
+	console.log( 'event.clientX', event.clientX );
+
+	event.layerX = event.touches[0].clientX - main.offsetLeft;
+	event.layerY = event.touches[0].clientY;
 
 	POPX.onDocumentMouseDown( event );
 
@@ -107,25 +113,24 @@ POPX.onDocumentTouchStart = function( event ) {
 
 
 POPX.onDocumentMouseDown = function( event ) {
-	//console.log( 'event', event.button );
+	console.log( 'event', event );
 
-	if ( event.button !== 0 ) { return ; }
+	//if ( event.button && event.button !== 0 ) { return ; }
 
 	event.preventDefault();
 
-	/*
-	POPX.mouse.x = ( event.clientX / size.width ) * 2 - 1;
-	POPX.mouse.y = - ( event.clientY / size.height ) * 2 + 1;
-	*/
 
 	const x = event.offsetX == undefined ? event.layerX : event.offsetX;
 	const y = event.offsetY == undefined ? event.layerY : event.offsetY;
-	//console.log( 'x', x );
+	console.log( 'x', x );
 
-	const size = THR.renderer.getSize( new THREE.Vector2() );
+	size = THR.renderer.getSize( new THREE.Vector2() );
 
 	POPX.mouse.x = ( x / size.width ) * 2 - 1;
 	POPX.mouse.y = - ( y / size.height ) * 2 + 1;
+
+	//POPX.mouse.x = +( ( event.targetTouches[0].pageX - main.offsetLeft )/ size.width) * 2 + -1;
+	//POPX.mouse.y = -(event.targetTouches[0].pageY / size.height) * 2 + 1;
 
 	POPX.raycaster.setFromCamera( POPX.mouse, THR.camera );
 
