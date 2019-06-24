@@ -1,45 +1,51 @@
-// Copyright 2018 Ladybug Tools authors. MIT License
-/* globals GBX, POPX, ISCOR, POPdivPopupData*/
-/* jshint esversion: 6 */
+/* globals GBX */
+// jshint esversion: 6
+/* jshint loopfunc: true */
 
+const VBO = {
 
-const VBO = { "version": ".0.16.01-1", "date": "2019-06-21" };
+	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
+	"date": "2019-06-24",
+	"description": "View by Surfaces (VBO) provides HTML and JavaScript to view individual openings.",
+	"helpFile": "../js-view/vbo-view-by-opening.md",
+	"version": "0.16-01-1vbo",
+	"urlSourceCode": "https://github.com/pushme-pullyou/tootoo14/blob/master/js-14-2/fob-file-open-basic/fob-file-open-basic.js",
 
-VBO.description =
-	`
-		View by Surfaces (VBO) provides HTML and JavaScript to view individual openings.
-
-	`;
+};
 
 
 
 VBO.getMenuViewByOpenings = function() {
 
+	const foot = `v${ VBO.version} - ${ VBO.date }`;
+
+	const help = `<button id="butVBOsum" class="butHelp" onclick="POP.setPopupShowHide(butVBOsum,VBO.helpFile,'${foot}');" >?</button>`;
+	//help = `<a id=VBOsumHelp class=helpItem href="JavaScript:POP.setPopupShowHide(VBOsumHelp,VBO.description);" >&nbsp; ? &nbsp;</a>`;
+
 	const htm =
 
 	`<details id="VBOdet" ontoggle=VBO.getViewByOpeningsSelectOptions(); >
 
-		<summary>Show/hide by openings <span id="VBOspnCount" ></span>
-			<a id=VBOsumHelp class=helpItem href="JavaScript:POP.setPopupShowHide(VBOsumHelp,VBO.description);" >&nbsp; ? &nbsp;</a>
-		</summary>
+		<summary>Show/hide by openings <span id="VBOspnCount" ></span> ${ help }</summary>
 
 		<p>
 			View by openings
 		</p>
 
 		<p>
-			<input id=VBOinpSelectIndex oninput=VBO.setSelectedIndex(this,VBOselViewByOpenings) placeholder="enter an id" >
+			<input id=VBOinpSelectIndex oninput=VBO.setSelectIndex(this,VBOselViewByOpenings) placeholder="enter an id" >
 		</p>
 
 		<p>
-			<select id=VBOselViewByOpenings oninput=VBO.selectedOpeningsFocus(this); style=width:100%; size=10 multiple >
+			<select id=VBOselViewByOpenings oninput=VBO.selectedOpeningsFocus(this);
+				style=width:100%; size=10 multiple >p
 			</select>
 		</p>
 
 		<p>Select multiple openings by pressing shift or control keys</p>
 
 		<p>
-			<button onclick=VBO.setViewByOpeningsShowHide(this,VBO.openings); >
+			<button onclick=VBO.setViewByOpeningsShowHide(this,VBO.surfaceWithOpenings); >
 				Show/hide by surfaces
 			</button>
 		</p>
@@ -54,7 +60,7 @@ VBO.getMenuViewByOpenings = function() {
 
 VBO.getViewByOpeningsSelectOptions = function() {
 
-	if ( VBOdet.open === false && ISCOR.runAll === false ) { return; }
+	if ( VBOdet.open === false ) { return; }
 
 	//if ( GBX.surfaces.length > ISCOR.surfaceCheckLimit ) { return; } // don't run test automatically on very large files
 
@@ -63,30 +69,30 @@ VBO.getViewByOpeningsSelectOptions = function() {
 	let indexSurface = 0;
 	VBO.openings = []; //GBX.surfaces.slice();
 
-	for ( let surface of GBX.surfaces ) {
+	GBX.surfaces.forEach( (surface, surfaceIndex ) => {
 
-		const id = surface.match( 'id="(.*?)"' )[ 1 ];
+		const surfaceId = surface.match( 'id="(.*?)"' )[ 1 ];
 
 		const openings = surface.match( /<Opening(.*?)<\/Opening>/gi ) || [];
 
 		color = openings.length > 1 ? 'pink' : '';
 
-		openings.forEach( ( opening, index )  => {
+		openings.forEach( ( opening, openingInSurface )  => {
 
 			//console.log( '', openings  );
 
-			idOpening = opening.match( 'id="(.*?)"' )[ 1 ];
+			openingId = opening.match( 'id="(.*?)"' )[ 1 ];
 
-			VBO.openings.push( { "idSurface": id, "idOpening": idOpening, "indexOpening": index } );
+			VBO.openings.push( { surfaceId, surfaceIndex, openingId, "openingIndex": VBO.openings.length, openingInSurface } );
 
 			htmOptions +=
-				`<option style=background-color:${ color } value=${ indexSurface} >surf:${ id + " / open:" + idOpening }</option>`;
+				`<option style=background-color:${ color } value=${ VBO.openings.length - 1 } >surf:${ surfaceId + " / open:" + openingId }</option>`;
 
 		} );
 
 		indexSurface ++;
 
-	}
+	} );
 	//console.log( 'VBO.openings', VBO.openings );
 
 	VBOselViewByOpenings.innerHTML = htmOptions;
@@ -100,7 +106,7 @@ VBO.getViewByOpeningsSelectOptions = function() {
 
 
 
-VBO.setSelectedIndex = function( input, select ) {
+VBO.setSelectIndex = function( input, select ) {
 
 	const str = input.value.toLowerCase();
 
@@ -108,7 +114,7 @@ VBO.setSelectedIndex = function( input, select ) {
 	//console.log( 'option', option );
 
 	select.value = option ? option.value : "";
-	
+
 	if ( option ) { VBO.selectedOpeningsFocus( select ); }
 
 };
@@ -117,20 +123,58 @@ VBO.setSelectedIndex = function( input, select ) {
 
 VBO.selectedOpeningsFocus = function( select ) {
 
-	POPX.intersected = GBX.surfaceGroup.children[ select.value ];
+	const opening = VBO.openings[ select.value ];
+	//console.log( 'opening', opening );
+
+	POPX.intersected = GBX.surfaceGroup.children[ opening.surfaceIndex ];
 
 	POPdivPopupData.innerHTML = POPX.getIntersectedDataHtml();
-	//console.log( 'sel', select.value );
 
 	const options = select.selectedOptions
-	//console.log( 'option', options );
+	//console.log( 'options', options );
 
-	const indexes = Array.from( options ).map( option => Number( option.value ) );
-	//console.log( 'indexes', indexes );
+	const openingIndexes = Array.from( options ).map( option => Number( option.value ) );
+	//console.log( 'openingIndexes', openingIndexes );
 
-	VBO.openings = GBX.surfacesIndexed.filter( ( surface, index ) => indexes.includes( index  ) );
+	openings = openingIndexes.map( index => VBO.openings[ index ] );
+	//console.log( 'openings', openings );
 
-	GBX.sendSurfacesToThreeJs( VBO.openings );
+	VBO.surfaceWithOpenings = openings.map( opening => GBX.surfacesIndexed[ opening.surfaceIndex ] );
+
+	GBX.sendSurfacesToThreeJs( VBO.surfaceWithOpenings );
+
+	VBO.setOpeningShowHide( select );
+
+};
+
+
+VBO.setOpeningShowHide = function( select ) {
+
+	index = select.value;
+
+	opening = VBO.openings[ index ];
+	//console.log( '', opening );
+
+	GBX.surfaceOpenings.traverse( function ( child ) {
+
+		if ( child instanceof THREE.Line ) {
+
+			child.visible = false;
+
+		}
+
+	} );
+
+	GBX.surfaceOpenings.children[ opening.openingIndex ].visible = true;
+
+	GSAdetOpenings.open = true;
+
+	openingDivs = Array.from( GSAdetOpenings.querySelectorAll( "div" ) );
+	//console.log( 'openingDivs', openingDivs );
+
+	theDiv = openingDivs.find( item => item.id === "GSAdivOpening" + opening.openingInSurface );
+
+	theDiv.style.backgroundColor = 'pink';
 
 };
 

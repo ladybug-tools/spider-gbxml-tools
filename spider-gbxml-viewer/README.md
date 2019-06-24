@@ -89,7 +89,7 @@ Pop-up Viewer 'Maevia' R15
 * 2019-06-21 ~ Theo ~ Menu header data in menu.js
 * 2019-06-21 ~ Theo ~ Add core JavaScript file with version, date etc
 * 2019-06-21 ~ Theo ~ Add construction etc data to left menu - with data showing in popup menu
-* 2019-06-21 ~ Theo ~ UPdate GGD so it works in either left menu, popup or main areas
+* 2019-06-21 ~ Theo ~ Update GGD so it works in either left menu, popup or main areas
 * 2019-06-21 ~ Theo ~ Add surfaces with openings
 * 2019-04-15 ~ Theo ~ load two models at same time & views diffs
 

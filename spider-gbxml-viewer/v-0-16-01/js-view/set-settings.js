@@ -76,7 +76,6 @@ SET.toggleShadows = function() {
 
 
 SET.toggleOpenings = function() {
-	//console.log( '', 22 );
 
 	if ( GBX.surfaceOpenings && GBX.surfaceOpenings.length === 0 ) {
 

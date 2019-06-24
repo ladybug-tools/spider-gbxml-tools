@@ -5,11 +5,11 @@
 
 const POP = {
 	"copyright": "Copyright 2019 pushMe-pullYou authors. MIT License",
-	"date": "2019-06-19",
+	"date": "2019-06-23",
 	"description": "TooToo Menu (POP) generates standard HTML TooToo menu code and content and code that works on computers, tablets and phones",
 	"helpFile": "README.md",
-	"version": "0.14.02-0",
-	"urlSourceCode": "https://github.com/pushme-pullyou/tootoo14/tree/master/js-14-02/pop-popup"
+	"version": "0.16.01-1pop",
+	"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-16-01/js-popup/pop-popup.js"
 };
 
 
@@ -17,9 +17,11 @@ const POP = {
 
 POP.getMenuDivPopup = function() {
 
-	const version = document.head.querySelector( '[ name=version ]' ).content;
+	POP.appVersion = document.head.querySelector( '[ name=version ]' ).content;
 
-	const date = document.head.querySelector( '[ name=date ]' ).content;
+	POP.appDate = document.head.querySelector( '[ name=date ]' ).content;
+
+	POP.footer = `v${ POP.appVersion } - ${ POP.appDate }`;
 
 	const htm =
 	`
@@ -27,7 +29,7 @@ POP.getMenuDivPopup = function() {
 
 		<div id="POPdivPopupData" ></div>
 
-		<div id="POPdivMessage" ><p>R${ version } - ${ date }</p></div>
+		<div id="POPdivMessage" ></div>
 	`;
 
 	return htm;
@@ -36,7 +38,7 @@ POP.getMenuDivPopup = function() {
 
 
 
-POP.setPopupShowHide = function( id = POP.popupId, text = "" ) {
+POP.setPopupShowHide = function( id = POP.popupId, text = "", footer = "" ) {
 	//console.log( 'id', id );
 
 	//if ( id ) {
@@ -50,11 +52,12 @@ POP.setPopupShowHide = function( id = POP.popupId, text = "" ) {
 
 	if ( POP.popupId.classList.contains( 'active' ) ) {
 
-		if ( POPdivPopup.innerHTML === "" ) { POPdivPopup.innerHTML = POP.getDivPopup(); }
+		if ( POPdivPopup.innerHTML === "" ) { POPdivPopup.innerHTML = POP.getMenuDivPopup(); }
 
 		if ( text &&  text.toLowerCase().endsWith( ".md" ) ) {
 
 			POP.requestFile( text, POPdivPopupData );
+			navPopup.hidden = false;
 
 		} else {
 
@@ -62,6 +65,8 @@ POP.setPopupShowHide = function( id = POP.popupId, text = "" ) {
 			navPopup.hidden = false;
 
 		}
+
+		POPdivMessage.innerHTML = footer || POP.footer;
 
 		divContents.addEventListener( 'click', POP.onClickClose, false );
 		divContents.addEventListener( 'touchstart', POP.onClickClose, false );
@@ -117,6 +122,6 @@ POP.callbackMarkdown = function( markdown, target ) {
 
 	//window.scrollTo( 0, 0 );
 
-	navPopup.hidden = false;
+
 
 };

@@ -5,10 +5,10 @@
 
 const MNU = {
 	"copyright": "Copyright 2019 pushMe-pullYou authors. MIT License",
-	"date": "2019-06-03",
+	"date": "2019-06-22",
 	"description": "TooToo Menu (MNU) generates standard HTML TooToo menu code and content and code that works on computers, tablets and phones",
 	"helpFile": "../README.md",
-	"version": "0.14.1-2",
+	"version": "0.14.1-3",
 	"urlSourceCode": "https://github.com/pushme-pullyou/tootoo14/tree/master/js-14-1/mnu-menu"
 };
 

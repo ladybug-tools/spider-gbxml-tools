@@ -96,7 +96,7 @@ GSA.getSurfaceAttributes = function( surfaceXml, id, index ) {
 			<div>${ htmRectangularGeometry } </div>
 		</details>
 
-		<details>
+		<details id=GSAdetOpenings >
 			<summary>Openings ${ GSA.openings.length }</summary>
 			<div>${ htmOpenings } </div>
 		</details>
@@ -347,7 +347,10 @@ GSA.getAttributesOpenings = function ( surfaceXml ) {
 
 		const htmRectangularGeometry = GSA.getAttributesHtml( rect );
 
-		htm += `${ index + 1 } ${ GSA.getAttributesHtml( opening )} ${ htmRectangularGeometry }`;
+		htm +=
+		`<div id=GSAdivOpening${ index } >
+			${ index + 1 } ${ GSA.getAttributesHtml( opening )} ${ htmRectangularGeometry }
+		</div>`;
 
 	} );
 

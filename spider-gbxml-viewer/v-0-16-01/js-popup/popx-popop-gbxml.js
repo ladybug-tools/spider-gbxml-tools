@@ -119,12 +119,11 @@ POPX.onDocumentMouseDown = function( event ) {
 
 	event.preventDefault();
 
-
 	const x = event.offsetX == undefined ? event.layerX : event.offsetX;
 	const y = event.offsetY == undefined ? event.layerY : event.offsetY;
-	console.log( 'x', x );
+	//console.log( 'x', x );
 
-	size = THR.renderer.getSize( new THREE.Vector2() );
+	const size = THR.renderer.getSize( new THREE.Vector2() );
 
 	POPX.mouse.x = ( x / size.width ) * 2 - 1;
 	POPX.mouse.y = - ( y / size.height ) * 2 + 1;
@@ -186,7 +185,7 @@ POPX.getIntersectedVertexBufferGeometry = function( point ) {
 
 
 POPX.getIntersectedDataHtml = function() {
-	console.log( 'POPX.intersected', POPX.intersected );
+	//console.log( 'POPX.intersected', POPX.intersected );
 
 	const index = POPX.intersected.userData.index;
 
