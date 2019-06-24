@@ -6,7 +6,7 @@
 
 <summary>Concept</summary>
 
-View by Surfaces (VBO) provides HTML and JavaScript to view individual openings
+View by Surfaces (VBO) provides HTML and JavaScript to view individual openings and their attributes
 
 </details>
 
@@ -14,12 +14,11 @@ View by Surfaces (VBO) provides HTML and JavaScript to view individual openings
 
 <summary>To Do / Wish List</summary>
 
-* 2019-06-24 ~ 
 
 </details>
 
 <details>
-*
+
 <summary>Issues</summary>
 
 
@@ -33,7 +32,7 @@ View by Surfaces (VBO) provides HTML and JavaScript to view individual openings
 
 * F - VBO.js: Add display of opening border
 * B - VBO.js: VBO.openings reused in error
-* F - VBO.js: Open and highlight selected opening in pop
+* F - VBO.js: Open and highlight selected opening in popup
 * F - VBO.md: First commit of readme
 
 </details>
