@@ -4,18 +4,19 @@
 
 <meta charset = "utf-8">
 <meta name = "copyright" content ="Ladybug Tools authors" >
-<meta name = "date" content = "2019-06-18" >
+<meta name = "date" content = "2019-06-24" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
-<meta name = "keywords" content = "gbXML,JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.16.01-0" >
+<meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
+<meta name = "version" content = "0.16.01-3" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
 <title>Spider gbXML Fixer 'Atrax'</title>
 
-<link rel = "canonical" href = "https://pushme-pullyou.github.io" />
+<link rel = "canonical" href = "www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/" />
 <link rel = "license" href = "https://creativecommons.org/licenses/by/4.0/">
+<link rel = "license" href = "https://opensource.org/licenses/MIT" >
 <link rel = "stylesheet" href = "https://fonts.googleapis.com/css?family=Inconsolata"  >
-<link rel = "stylesheet" href = "https://pushme-pullyou.github.io/tootoo14/js-14-1/style.css" >
+<link rel = "stylesheet" href = "https://pushme-pullyou.github.io/tootoo14/js-14-03/style.css" >
 
 <style>
 
@@ -85,6 +86,7 @@
 <script src = "../js-view/vbs-view-by-storeys.js" ></script>
 <script src = "../js-view/vbsp-view-by-spaces.js" ></script>
 <script src = "../js-view/vbz-view-by-zones.js" ></script>
+<script src = "../js-view/vbo-view-by-openings.js" ></script>
 <script src = "../js-view/set-settings.js" ></script>
 <script src = "../js-view/cut-section-cut.js"></script>
 
@@ -141,13 +143,15 @@
 
 			</div>
 
-			<details open>
+			<details open >
 
 				<summary class=sumMenuTitle >GitHub Folders & Files</summary>
 
 				<div id=GFFdivGithubFoldersFiles ></div>
 
 				<div id=GFFdivFileInfo></div>
+
+				<div id="GATdivGithubAccessToken" ></div>
 
 			</details>
 
@@ -202,17 +206,19 @@
 				</details>
 
 			</details>
+<!--
 
-			<details>
+	<details>
 
-				<summary class=sumMenuTitle >Settings menu</summary>
+		<summary class=sumMenuTitle >Settings menu</summary>
 
-				<div id=THMdivMenuThemeSelect ></div>
+		<div id=THMdivMenuThemeSelect ></div>
 
-				<div id=TMPdivTemplate ></div>
+		<div id=TMPdivTemplate ></div>
 
-			</details>
+	</details>
 
+-->
 
 			<footer>
 
@@ -238,7 +244,7 @@
 
 			<div id="divThreejs" ></div>
 			<div style=text-align:right; title="Click to update size of 3D view after adjusting window size" ><button onclick=THR.onWindowResize(divThreejs); >resize window</button></div>
-			<div id="divFixer" >bbbb</div>
+			<div id="divFixer" ></div>
 
 		</div>
 
@@ -248,7 +254,7 @@
 
 	<nav id="navPopup" hidden >
 
-		<section class="secContent" >
+		<section class="secPOP" >
 
 			<div id="POPdivPopup" ></div>
 
@@ -272,9 +278,9 @@ THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-1/style.css";
 // useful when testing / un-comment
 FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/coventry-university-of-warwick-small.zip";
-FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/annapolis-md-single-family-residential-2016.xml"
+//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/annapolis-md-single-family-residential-2016.xml"
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/pittsburg-airport.zip";
-
+//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/GreenBuildingXML/Sample-gbXML-Files@master/gbXML_TRK.xml";
 
 //MNU.description = document.head.querySelector( '[ name=description ]' ).content;
 MNU.description =
@@ -335,7 +341,9 @@ function init() {
 
 	MNUdivHeader.innerHTML = MNU.getNavHeader();
 
-	GFFdivGithubFoldersFiles.innerHTML=GFF.getMenuGithubFoldersFiles();
+	GFFdivGithubFoldersFiles.innerHTML = GFF.getMenuGithubFoldersFiles();
+
+	GATdivGithubAccessToken.innerHTML = GAT.getMenuGitHubAccessToken();
 
 	FOBdivFileOpenBasic.innerHTML = FOB.getMenuFileOpenBasic();
 
@@ -352,13 +360,11 @@ function init() {
 
 	VBZsecViewByZones.innerHTML = VBZ.getMenuViewByZones();
 
-	VBOsecViewByOpenings.innerHTML = "Show/hide by openings: coming soon<hr>";
+	VBOsecViewByOpenings.innerHTML = VBO.getMenuViewByOpenings();
 
-	MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();11
+	MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();
 
 	GBX.init(); // gets things going
-
-	GBXF.init();
 
 	if ( !location.hash ) { location.hash=FOB.urlDefaultFile; } else { FOB.onHashChange(); }
 
