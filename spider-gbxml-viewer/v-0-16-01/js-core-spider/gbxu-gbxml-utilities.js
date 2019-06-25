@@ -216,6 +216,23 @@ GBX.toggleOpenings = function() {
 };
 
 
+GBX.setOpeningsVisible = function( visible = true ) {
+
+	GBX.surfaceOpenings.traverse( function ( child ) {
+
+		if ( child instanceof THREE.Line ) {
+
+			child.visible = visible;
+
+		}
+
+	} );
+
+}
+
+
+//////////
+
 GBX.toggleEdgesThreejs = function() {
 
 	if ( GBX.surfaceEdgesThreejs && GBX.surfaceEdgesThreejs.length === 0 ) {

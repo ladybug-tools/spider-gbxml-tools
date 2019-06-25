@@ -14,6 +14,7 @@ View by Surfaces (VBO) provides HTML and JavaScript to view individual openings 
 
 <summary>To Do / Wish List</summary>
 
+* 2019-06-24 ~ Theo ~ Better ways of coloring options in select element
 
 </details>
 

@@ -40,12 +40,14 @@ VBSU.currentStatus =
 
 VBSU.getMenuViewBySurfaces = function() {
 
+	document.body.addEventListener( 'onGbxParse', function(){ VBSUdet.open = false; }, false );
+
 	const htm =
 
 	`<details id="VBSUdet" ontoggle=VBSU.getViewBySurfacesSelectOptions(); >
 
 		<summary>Show/hide by surfaces<span id="VBSUspnCount" ></span>
-			<a id=VBSUsumHelp class=helpItem href="JavaScript:POPsetPopupShowHide(VBSUsumHelp,VBSU.currentStatus);" >&nbsp; ? &nbsp;</a>
+			<a id=VBSUsumHelp class=helpItem href="JavaScript:POP.setPopupShowHide(VBSUsumHelp,VBSU.currentStatus);" >&nbsp; ? &nbsp;</a>
 		</summary>
 
 		<p>
@@ -80,7 +82,7 @@ VBSU.getMenuViewBySurfaces = function() {
 VBSU.getViewBySurfacesSelectOptions = function() {
 	//console.log( 'VBSUdetTemplate.open', VBSUdetTemplate.open );
 
-	if ( VBSUdet.open === false && ISCOR.runAll === false ) { return; }
+	if ( VBSUdet.open === false ) { return; }
 
 	//if ( GBX.surfaces.length > ISCOR.surfaceCheckLimit ) { return; } // don't run test automatically on very large files
 

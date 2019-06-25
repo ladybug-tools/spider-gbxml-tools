@@ -1,49 +1,18 @@
-// Copyright 2019 Ladybug Tools authors. MIT License
-// jshint esversion: 6
 /* globals GBX, VST, THREE, VBZselZone, VBZdivReportsLog, VSTdivSurfaceType */
+// jshint esversion: 6
+/* jshint loopfunc: true */
 
 
-const VBZ = {"release": "R15.0.0", "date": "2019-04-15" };
+const VBZ = {
 
-VBZ.description =
-	`
-		View the surfaces in a gbXML file by selecting one or more zones from a list of all zones
-	`;
+	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
+	"date": "2019-06-24",
+	"description": "View the surfaces in a gbXML file by selecting one or more zones from a list of all zones",
+	"helpFile": "../js-view/vbz-view-by-zones.md",
+	"version": "0.16-01-1vbz",
+	"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-16-01/js-view/vbz-view-by-zones.js",
 
-
-VBZ.currentStatus =
-	`
-		<h3>View by Zones (VBZ) ${ VBZ.release } ~ ${ VBZ.date }</h3>
-
-		<p>
-			${ VBZ.description }
-		</p>
-
-		<p>Notes
-			<ul>
-				<li>Select multiple Zones by pressing shift or control keys</li>
-			</ul>
-		</p>
-		<p>
-			<a href="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/r15/js-gbxml/vbsP-view-by-zones" target="_blank" >
-				VBZ View by Zones Source
-			</a>
-		</p>
-
-		<details>
-			<summary>Wish list</summary>
-			<ul>
-			</ul>
-		</details>
-
-		<details>
-			<summary>Change log</summary>
-			<ul>
-				<li>2019-04-15 ~ F ~ R15.0.0 - first commit</li>
-			</ul>
-		</details>
-	`;
-
+};
 
 
 
@@ -51,20 +20,21 @@ VBZ.getMenuViewByZones = function() {
 
 	document.body.addEventListener( 'onGbxParse', function(){ VBZdetMenu.open = false; }, false );
 
+	const foot = `v${ VBO.version} - ${ VBO.date }`;
+
+	const help = `<button id="butVBZsum" class="butHelp" onclick="POP.setPopupShowHide(butVBZsum,VBZ.helpFile,'${foot}');" >?</button>`;
+
+
 	const htm =
 	`
 		<details id=VBZdetMenu ontoggle=VBZ.getZonesOptions(); >
 
-			<summary>Show/hide by zones
-				<a id=VBZHelp class=helpItem href="JavaScript:POP.setPopupShowHide(VBZHelp,VBZ.currentStatus);" >&nbsp; ? &nbsp;</a>
-			</summary>
+			<summary>Show/hide by zones <span id="VBZspnCount" ></span> ${ help }</summary>
 
 			<p>Display surfaces by zone. Default is all zones visible.</p>
 
-			<p><mark>Should be working properly soon</mark></p>
-
 			<div id="VBZdivViewByZones" >
-				<select id=VBZselZone onchange=VBZ.selZones(); multiple style=min-width:15rem; ></select
+				<select id=VBZselZone onchange=VBZ.selectZoneFocus(this); multiple style=min-width:100%; ></select
 			</div>
 
 			<div id="VBZdivReportsLog" ></div>
@@ -85,32 +55,151 @@ VBZ.getZonesOptions = function() {
 
 	VBZselZone.size = GBX.zones.length > 10 ? 10 : GBX.zones.length;
 
-	const zoneIds = GBX.zones.map( zone => zone.match( 'id="(.*?)">')[ 1 ] );
+	//const zoneIds = GBX.zones.map( zone => zone.match( 'id="(.*?)">')[ 1 ] );
 	//console.log( 'zoneIds', zoneIds );
 
-	const zoneNames = GBX.zones.map( zone => {
+	const zoneNameArray = GBX.zones.map( zone => {
 
 		const zoneArr = zone.match( '<Name>(.*?)</Name>' );
 
-		return zoneName = zoneArr ? zoneArr[ 1 ] : "no zone name in file";
+		return zoneArr ? zoneArr[ 1 ] : "no zone name in file";
 
 	} );
 	//console.log( 'zoneNames', zoneNames);
 
-	const zonesSorted = zoneNames.slice().sort( (a, b) => b - a );
-	//console.log( 'zonesSorted', zonesSorted );
+	zoneNames = zoneNameArray.sort( (a, b) => b - a );
+	//console.log( 'zoneNames', zoneNames );
 
-	const options = zonesSorted.map( zone => {
-		//console.log( 'level', level );
+	VBZ.zones = zoneNames.map( zoneName => {
 
-		const index = zoneNames.indexOf( zone );
-		//console.log( 'indexUnsorted', indexUnsorted );
+		zone = GBX.zones.find( zone => zone.includes( zoneName ) );
 
-		return `<option value=${ zoneIds[ index ] }>${ zoneNames[ index ] }</option>`
+		zoneId = zone.match( 'id="(.*?)">')[ 1 ];
 
-	} );
+		return { zoneName, zoneId };
+
+	} )
+	//console.log( 'VBZ.zones', VBZ.zones );
+
+	const options = VBZ.zones.map( ( zone, index ) =>
+
+		`<option value=${ index } title="${ zone.zoneId }"; >${ zone.zoneId } / ${ zone.zoneName }</option>`
+
+	);
 
 	VBZselZone.innerHTML = options;
+
+	VBZspnCount.innerHTML = `: ${ VBZ.zones.length } found`;
+
+};
+
+
+
+VBZ.selectZoneFocus = function( select ) {
+
+	THR.controls.enableKeys = false;
+
+	const zone = VBZ.zones[ select.value ];
+	//console.log( 'zone', zone );
+
+
+	POPdivPopupData.innerHTML = VBZ.getAttributes( zone.zoneId );
+
+	const options = select.selectedOptions
+	console.log( 'options', options );
+
+	GBX.surfaceGroup.children.forEach( element => element.visible = false );
+
+	Array.from( options ).forEach( option =>
+
+		VBZ.setZoneVisible( option.title )
+
+	);
+
+}
+
+
+VBZ.getAttributes = function( zoneIdRef ) {
+
+	const zoneTxt = GBX.zones.find( item => item.includes( ` id="${ zoneIdRef }"` ) );
+
+	const zoneXml = POPX.parser.parseFromString( zoneTxt, "application/xml").documentElement;
+	//console.log( 'spaceXml ', spaceXml );
+
+	const htmZone = GSA.getAttributesHtml( zoneXml );
+
+	const htm =
+	`
+		<b>${ zoneIdRef } Attributes</b>
+
+		<p>${ htmZone }</p>
+
+		<details>
+
+			<summary>gbXML data</summary>
+
+			<textarea style=width:100%; >${ zoneTxt }</textarea>
+
+		</details>
+
+		<hr>
+	`;
+
+	return htm;
+
+};
+
+
+
+VBZ.setZoneVisible = function ( zoneIdRef ) {
+
+	const children = GBX.surfaceGroup.children;
+
+	const spaces = GBX.spaces;
+
+	//const spaceIdRef = GSA.adjacentSpaceIds.length === 1 ? GSA.adjacentSpaceIds[ 0 ] : GSA.adjacentSpaceIds[ 1 ];
+
+	const spaceIdsInZone = [];
+
+	for ( let space of spaces ) {
+
+		const spaceZoneId = space.match( /zoneIdRef="(.*?)"/ );
+
+		if ( spaceZoneId && spaceZoneId[ 1 ] === zoneIdRef ) {
+			//console.log( 'spaceZoneId', spaceZoneId[ 1 ] );
+
+			const spaceId = space.match( ` id="(.*?)"` )[ 1 ];
+			//console.log( 'spaceId', spaceId );
+
+			spaceIdsInZone.push( spaceId );
+
+		}
+
+	}
+	//console.log( 'spaceIdsInZone', spaceIdsInZone );
+
+
+	for ( let child of children ) {
+
+		const id = child.userData.index;
+		const surface = GBX.surfaces[ id ];
+		const spacesArr = surface.match( / spaceIdRef="(.*?)"/g );
+		//console.log( 'spacesArr', spacesArr );
+
+		if ( spacesArr ) {
+
+			const spacesIdsArr = spacesArr.map( space => space.match( `="(.*?)"` )[ 1 ] );
+			//console.log( 'spacesIdsArr', spacesIdsArr );
+
+			for ( let spaceId of spaceIdsInZone ) {
+
+				child.visible = spacesIdsArr.includes( spaceId ) ? true : child.visible;
+
+			}
+
+		}
+
+	}
 
 };
 
@@ -126,13 +215,32 @@ VBZ.showAllZones = function() {
 
 
 
+VBZ.setViewByZoneShowHide = function( button, surfaceArray ) {
+	//console.log( 'surfaceArray', surfaceArray );
+
+	button.classList.toggle( "active" );
+
+	if ( button.classList.contains( 'active' ) && surfaceArray.length ) {
+
+		GBX.sendSurfacesToThreeJs( surfaceArray );
+
+	} else {
+
+		GBX.surfaceGroup.children.forEach( element => element.visible = true );
+
+	}
+
+};
+
+
 //////////
 
 VBZ.selZones = function() {
 
 	THR.controls.enableKeys = false;
 
-	POPX.getToggleZoneVisible( VBZselZone, VBZselZone.value );
+	POPdivPopupData.innerHTML = POPX.getToggleZoneVisible( VBZselZone, VBZselZone.value );
+
 /*
 	POP.intersected = null;
 
@@ -144,18 +252,11 @@ VBZ.selZones = function() {
 
 	VBZdivReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( VBZ.surfacesFilteredByZone );
 
-	GBX.surfaceOpenings.traverse( function ( child ) {
 
-		if ( child instanceof THREE.Line ) {
+	*/
 
-			child.visible = false;
-
-		}
-
-	} );
-*/
-
-	VBZ.getZoneAttributes( VBZselZone.value )
+	//GBX.setOpeningsVisible( false );
+	//VBZ.getZoneAttributes( VBZselZone.value )
 
 };
 
@@ -222,7 +323,6 @@ VBZ.setSurfacesFilteredByZone = function( surfaces ) {
 
 VBZ.getZoneAttributes = function( zoneIdRef ) {
 
-
 	const zoneTxt = GBX.zones.find( item => item.includes( ` id="${ zoneIdRef }"` ) );
 
 	const zoneXml = POPX.parser.parseFromString( zoneTxt, "application/xml").documentElement;
@@ -230,24 +330,25 @@ VBZ.getZoneAttributes = function( zoneIdRef ) {
 
 	const htmZone = GSA.getAttributesHtml( zoneXml );
 
-	GBX.surfaceOpenings.traverse( function ( child ) {
 
-		if ( child instanceof THREE.Line ) {
-
-			child.visible = false;
-
-		}
-
-	} );
 
 	const htm =
 	`
-		<b>Selected Zone Attributes</b>
-		${ htmZone }
+		<b>${ zoneIdRef } Attributes</b>
+
+		<p>${ htmZone }</p>
+
+		<details>
+
+			<summary>gbXML data</summary>
+
+			<textarea>${ zoneTxt }</textarea>
+
+			</details>
 	`;
 
 	POPdivPopupData.innerHTML = htm;
 
-
-
 };
+
+

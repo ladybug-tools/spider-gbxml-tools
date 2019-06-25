@@ -17,6 +17,8 @@ const VBO = {
 
 VBO.getMenuViewByOpenings = function() {
 
+	document.body.addEventListener( 'onGbxParse', function(){ VBOdetMenu.open = false; }, false );
+
 	const foot = `v${ VBO.version} - ${ VBO.date }`;
 
 	const help = `<button id="butVBOsum" class="butHelp" onclick="POP.setPopupShowHide(butVBOsum,VBO.helpFile,'${foot}');" >?</button>`;
@@ -24,12 +26,12 @@ VBO.getMenuViewByOpenings = function() {
 
 	const htm =
 
-	`<details id="VBOdet" ontoggle=VBO.getViewByOpeningsSelectOptions(); >
+	`<details id="VBOdetMenu" ontoggle=VBO.getViewByOpeningsSelectOptions(); >
 
 		<summary>Show/hide by openings <span id="VBOspnCount" ></span> ${ help }</summary>
 
 		<p>
-			View by openings
+			View by openings. Surfaces with multiple openings in pink
 		</p>
 
 		<p>
@@ -60,7 +62,7 @@ VBO.getMenuViewByOpenings = function() {
 
 VBO.getViewByOpeningsSelectOptions = function() {
 
-	if ( VBOdet.open === false ) { return; }
+	if ( VBOdetMenu.open === false ) { return; }
 
 	//if ( GBX.surfaces.length > ISCOR.surfaceCheckLimit ) { return; } // don't run test automatically on very large files
 
@@ -146,6 +148,7 @@ VBO.selectedOpeningsFocus = function( select ) {
 	VBO.setOpeningShowHide( select );
 
 };
+
 
 
 VBO.setOpeningShowHide = function( select ) {

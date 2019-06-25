@@ -627,6 +627,8 @@ POPX.getToggleZoneVisible = function ( button, zoneIdRef ) {
 
 	}
 
+	GBX.setOpeningsVisible( false );
+
 	const zoneTxt = GBX.zones.find( item => item.includes( ` id="${ zoneIdRef }"` ) );
 
 	const zoneXml = POPX.parser.parseFromString( zoneTxt, "application/xml").documentElement;
@@ -634,20 +636,21 @@ POPX.getToggleZoneVisible = function ( button, zoneIdRef ) {
 
 	const htmZone = GSA.getAttributesHtml( zoneXml );
 
-	GBX.surfaceOpenings.traverse( function ( child ) {
-
-		if ( child instanceof THREE.Line ) {
-
-			child.visible = false;
-
-		}
-
-	} );
-
 	const htm =
 	`
-		<b>Selected Zone Attributes</b>
-		${ htmZone }
+		<b>${ zoneIdRef } Attributes</b>
+
+		<p>${ htmZone }</p>
+
+		<details>
+
+			<summary>gbXML data</summary>
+
+			<textarea style=width:100%; >${ zoneTxt }</textarea>
+
+		</details>
+
+		<hr>
 	`;
 
 	return htm;
