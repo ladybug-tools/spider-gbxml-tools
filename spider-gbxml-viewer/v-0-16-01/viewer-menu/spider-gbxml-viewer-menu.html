@@ -53,10 +53,11 @@
 <script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r105/build/three.min.js" ></script>
 <script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r105/examples/js/controls/OrbitControls.js" ></script>
 
-<!-- Tootoo -->
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-02/thm-theme/thm-theme.js" ></script>
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-02/gat-github-access-token/gat-github-access-token.js" ></script>
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-02/tmp-template/tmp-template.js" ></script>
+<!-- Tootoo
+	<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-03/thm-theme/thm-theme.js" ></script>
+-->
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-03/gat-github-access-token/gat-github-access-token.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-03/tmp-template/tmp-template.js" ></script>
 
 <!-- Tootoo forks  https://github.com/pushme-pullyou/tootoo14 -->
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-03/fob-file-open-basic/fob-file-open-basic.js" ></script>
@@ -83,6 +84,7 @@
 <script src = "../js-popup/popx-popop-gbxml.js" ></script>
 <script src = "../js-popup/gsa-gbxml-surface-attributes.js" ></script>
 
+<script src = "../js-menu/cor-core.js" ></script>
 
 	<button id="expandButton" onclick="toggleNavPanel();" >☰</button>
 
@@ -110,7 +112,7 @@
 
 			<details open >
 
-				<summary class=sumMenuTitle >GitHub Folders & Files</summary>
+				<summary class="sumMenuTitle" >GitHub folders & files</summary>
 
 				<div id=GFFdivGithubFoldersFiles ></div>
 
@@ -168,7 +170,7 @@
 					<div id="MNUdivFooterPopup" ></div>
 
 				</details>
-				
+
 				<h1 onclick="navPanel.scrollTop=0;" style="cursor:pointer;text-align:center;" title="go to top of menu" >
 					<img alt="spider icon" src = "https://ladybug.tools/artwork/icons_bugs/ico/spider.ico" height=18 >
 				</h1>
@@ -180,9 +182,9 @@
 	</nav>
 
 
-	<main id=main >
+	<main id="main" >
 
-		<div id=divContents ></div>
+		<div id="divContents" >
 
 	</main>
 
@@ -207,8 +209,8 @@
 
 <script>
 
-THM.themeUrlStorage = 'spider-gbxml-fixer-theme-url';
-THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-03/style.css";
+//THM.themeUrlStorage = 'spider-gbxml-view-theme-url';
+//THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-03/style.css";
 
 
 FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
@@ -217,30 +219,10 @@ FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristo
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/pittsburg-airport.zip";
 FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/GreenBuildingXML/Sample-gbXML-Files@master/gbXML_TRK.xml";
 
-//MNU.description = document.head.querySelector( '[ name=description ]' ).content;
 MNU.description =
 	`
-		Mission: run a series of basics checks on <a href="https://gbXML.org" target="_blank">gbXML</a> files to identify, report and help you fix any errors
+		Display the basic left side menu
 	`;
-
-// For main menu header // move to menu js
-MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer";
-
-MNU.homeText = "<img src = 'https://ladybug.tools/artwork/icons_bugs/ico/ladybug.ico' height=24 >";
-MNU.homeTitle="Ladybug Tools: free computer applications that support environmental design and education";
-MNU.homeUrl  ="https://www.ladybug.tools";
-
-MNU.repoText ="<img src = 'https://ladybug.tools/artwork/icons_bugs/ico/spider.ico' height=24 >";
-MNU.repoTitle="Spider: 3D interactive analysis in your browser mostly written around the Three.js JavaScript library";
-MNU.repoUrl  ="https://www.ladybug.tools/spider/";
-
-MNU.appText  = "gbXML Tools";
-MNU.appTitle = "Tools to help you find, load, examine and edit gbXML files - in large numbers and sizes";
-MNU.appUrl   = "https://www.ladybug.tools/spider-gbxml-tools/";
-
-MNU.footerPopupUrl = "https://www.ladybug.tools/spider/";
-MNU.footerTarget = "target=_blank";
-MNU.footerIssues = "https://github.com/ladybug-tools/spider-gbxml-fixer/issues";
 
 
 
@@ -286,6 +268,7 @@ function init() {
 
 	GBX.init(); // gets things going
 
+	// let's go / FOB to load default and fire onload events
 	if ( !location.hash ) { location.hash=FOB.urlDefaultFile; } else { FOB.onHashChange(); }
 
 	aViewSource.style.display = "block";
@@ -302,6 +285,8 @@ function toggleNavPanel() {
 	expandButton.classList.toggle( 'collapsed' );
 	navPanel.classList.toggle( 'collapsed' );
 	main.classList.toggle( 'collapsed' );
+
+	THR.onWindowResize();
 
 }
 

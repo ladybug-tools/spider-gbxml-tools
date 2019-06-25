@@ -28,7 +28,7 @@ THR.getThreejs = function( target = divContents ) {
 
 
 
-THR.onWindowResize = function( target = divContents ) {
+THR.onWindowResize = function( target = main ) {
 
 	THR.camera.aspect = target.clientWidth / target.clientHeight;
 	THR.camera.updateProjectionMatrix();
