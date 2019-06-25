@@ -12,7 +12,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 <iframe src=https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/index.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
 _<small>Spider gbXML Viewer 'Maevia'</small>_
 
-## Full Screen: [Spider gbXML Viewer 'Maevia' ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-16-01/viewer-view/spider-gbxml-viewer-view.html )
+## Full Screen: [Spider gbXML Viewer 'Maevia' ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/ )
 
 Or copy this link: https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/
 

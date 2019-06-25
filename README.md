@@ -19,7 +19,7 @@ _<small>Spider gbXML Viewer ~ [Iframe Carousel]( https://www.ladybug.tools/spide
 ## Welcome <a href="https://www.rtcevents.com/bilt/eur18/" title="Hi Michal! Hi Ljubljana!" style=color:red; target="_blank">BILT EUR 2018</a> attendees!
 -->
 
-### Latest pre-release viewer: [Spider gbXML Viewer 'Maevia' R15 ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/ "this one is hot" )
+### Latest pre-release viewer: [Spider gbXML Viewer 'Maevia' ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/ "this one is hot" )
 
 
 <br>
