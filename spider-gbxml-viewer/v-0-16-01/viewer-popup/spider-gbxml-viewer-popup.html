@@ -4,7 +4,7 @@
 
 <meta charset = "utf-8">
 <meta name = "copyright" content ="Ladybug Tools authors" >
-<meta name = "date" content = "2019-06-24" >
+<meta name = "date" content = "2019-06-25" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
 <meta name = "version" content = "0.16.01-2popup" >
@@ -26,7 +26,7 @@ body { font: 11pt monospace; height:100%; margin: 0; overflow: hidden; }
 
 #navPopup { background-color: #eee; border: 1px solid #aaa; border-radius: 8px;
 	max-height: 90%; max-width: 45%; opacity: 0.95;  overflow: auto;
-	padding: 0 1rem 1rem 1rem; position: fixed;
+	padding: 0 1rem 0 1rem; position: fixed;
 	resize: both; left: 50%;  top: 8%; z-index: 10;
 	box-shadow: 10px 10px 25px rgba(0,0,0,0.3), 6px 6px 6px rgba(0,0,0,0.5); }
 
@@ -44,9 +44,12 @@ body { font: 11pt monospace; height:100%; margin: 0; overflow: hidden; }
 <script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r105/build/three.min.js" ></script>
 <script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r105/examples/js/controls/OrbitControls.js" ></script>
 
-<!-- Tootoo forks  https://github.com/pushme-pullyou/tootoo14 -->
-<script src = "../js-core-tootoo/fob-file-open-basic.js" ></script>
-<script src = "../js-popup/pop-popup.js" ></script>
+<!-- Tootoo forks  https://github.com/pushme-pullyou/tootoo14
+
+	<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-03/pop-popup/pop-popup.js" ></script>
+-->
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-03/fob-file-open-basic/fob-file-open-basic.js" ></script>
+<script src = "../js-core-tootoo/pop-popup.js" ></script>
 
 <!-- Spider forks -->
 <script src = "../js-core-spider/thr-threejs.js" ></script>
@@ -61,7 +64,11 @@ body { font: 11pt monospace; height:100%; margin: 0; overflow: hidden; }
 <script src = "../js-popup/gsa-gbxml-surface-attributes.js" ></script>
 
 
-	<div id=divContents ></div>
+	<main id=main >
+
+		<div id=divContents ></div>
+
+	</main>
 
 
 	<nav id="navPopup"  >

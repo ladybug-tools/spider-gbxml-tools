@@ -4,10 +4,10 @@
 
 <meta charset = "utf-8">
 <meta name = "copyright" content ="Ladybug Tools authors" >
-<meta name = "date" content = "2019-06-24" >
+<meta name = "date" content = "2019-06-25" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.16.01-2" >
+<meta name = "version" content = "0.16.01-4" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
 <title>Spider gbXML Viewer Menu</title>
@@ -59,10 +59,17 @@
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-02/tmp-template/tmp-template.js" ></script>
 
 <!-- Tootoo forks  https://github.com/pushme-pullyou/tootoo14 -->
-<script src = "../js-core-tootoo/fob-file-open-basic.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-03/fob-file-open-basic/fob-file-open-basic.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-03/pop-popup/pop-popup.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-03/mnu-menu/mnu-menu.js" ></script>
+<!--
+
+	<script src = "../js-core-tootoo/pop-popup.js" ></script>
+	<script src = "../js-core-tootoo/fob-file-open-basic.js" ></script>
+	<script src = "../js-core-tootoo/mnu-menu.js" ></script>
+
+-->
 <script src = "../js-menu/gff-github-folder-files.js" ></script>
-<script src = "../js-menu/mnu-menu.js" ></script>
-<script src = "../js-popup/pop-popup.js" ></script>
 
 <!-- Spider forks -->
 <script src = "../js-core-spider/thr-threejs.js" ></script>
@@ -101,7 +108,7 @@
 
 			</div>
 
-			<details open>
+			<details open >
 
 				<summary class=sumMenuTitle >GitHub Folders & Files</summary>
 
@@ -154,10 +161,14 @@
 
 			<footer>
 
-				<div id="MNUdivFooter" ></div>
+				<details>
 
-				<div id="MNUdivFooterPopup" ></div>
+					<summary class=sumMenuTitle >Help menu</summary>
 
+					<div id="MNUdivFooterPopup" ></div>
+
+				</details>
+				
 				<h1 onclick="navPanel.scrollTop=0;" style="cursor:pointer;text-align:center;" title="go to top of menu" >
 					<img alt="spider icon" src = "https://ladybug.tools/artwork/icons_bugs/ico/spider.ico" height=18 >
 				</h1>
@@ -197,7 +208,7 @@
 <script>
 
 THM.themeUrlStorage = 'spider-gbxml-fixer-theme-url';
-THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-1/style.css";
+THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-03/style.css";
 
 
 FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
@@ -230,8 +241,6 @@ MNU.appUrl   = "https://www.ladybug.tools/spider-gbxml-tools/";
 MNU.footerPopupUrl = "https://www.ladybug.tools/spider/";
 MNU.footerTarget = "target=_blank";
 MNU.footerIssues = "https://github.com/ladybug-tools/spider-gbxml-fixer/issues";
-
-//GBX.viewer = "https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/"
 
 
 

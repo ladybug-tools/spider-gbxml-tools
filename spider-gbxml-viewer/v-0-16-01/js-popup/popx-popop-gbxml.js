@@ -26,7 +26,6 @@ POPX.init = function() { // call from home page
 	THR.renderer.domElement.addEventListener( 'mousedown', POPX.onDocumentMouseDown, false );
 	THR.renderer.domElement.addEventListener( 'touchstart', POPX.onDocumentTouchStart, false ); // for mobile
 
-	//window.addEventListener( 'touchstart', POPX.onDocumentTouchStart, false ); // for mobile
 
 };
 
@@ -97,6 +96,9 @@ POPX.onDocumentTouchStart = function( event ) {
 
 	event.preventDefault();
 
+	main.removeEventListener( 'click', POP.onClickClose );
+	main.removeEventListener( 'touchstart', POP.onClickClose );
+
 	//console.log( 'event', event );
 
 	event.clientX = event.touches[0].clientX;
@@ -113,11 +115,14 @@ POPX.onDocumentTouchStart = function( event ) {
 
 
 POPX.onDocumentMouseDown = function( event ) {
+	event.preventDefault();
 	console.log( 'event', event );
 
 	//if ( event.button && event.button !== 0 ) { return ; }
 
-	event.preventDefault();
+
+	main.removeEventListener( 'click', POP.onClickClose );
+	main.removeEventListener( 'touchstart', POP.onClickClose );
 
 	const x = event.offsetX == undefined ? event.layerX : event.offsetX;
 	const y = event.offsetY == undefined ? event.layerY : event.offsetY;

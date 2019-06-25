@@ -4,16 +4,16 @@
 
 <meta charset = "utf-8">
 <meta name = "copyright" content ="Ladybug Tools authors" >
-<meta name = "date" content = "2019-06-24" >
+<meta name = "date" content = "2019-06-25" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.16.01-3" >
+<meta name = "version" content = "0.16.01-4" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
 <title>Spider gbXML Fixer 'Atrax'</title>
 
 <link rel = "canonical" href = "www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/" />
-<link rel = "license" href = "https://creativecommons.org/licenses/by/4.0/">
+<link rel = "license" href = "https://creativecommons.org/licenses/by/4.0/" >
 <link rel = "license" href = "https://opensource.org/licenses/MIT" >
 <link rel = "stylesheet" href = "https://fonts.googleapis.com/css?family=Inconsolata"  >
 <link rel = "stylesheet" href = "https://pushme-pullyou.github.io/tootoo14/js-14-03/style.css" >
@@ -49,6 +49,7 @@
 
 <body>
 
+
 <!-- utility libraries -->
 <script src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
 <script src = "https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js" ></script>
@@ -63,10 +64,17 @@
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-02/tmp-template/tmp-template.js" ></script>
 
 <!-- Tootoo forks  https://github.com/pushme-pullyou/tootoo14 -->
-<script src = "../js-core-tootoo/fob-file-open-basic.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-03/fob-file-open-basic/fob-file-open-basic.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-03/pop-popup/pop-popup.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-03/mnu-menu/mnu-menu.js" ></script>
+<!--
+
+	<script src = "../js-core-tootoo/pop-popup.js" ></script>
+	<script src = "../js-core-tootoo/fob-file-open-basic.js" ></script>
+	<script src = "../js-core-tootoo/mnu-menu.js" ></script>
+
+-->
 <script src = "../js-menu/gff-github-folder-files.js" ></script>
-<script src = "../js-menu/mnu-menu.js" ></script>
-<script src = "../js-popup/pop-popup.js" ></script>
 
 <!-- Spider forks -->
 <script src = "../js-core-spider/thr-threejs.js" ></script>
@@ -145,7 +153,7 @@
 
 			<details open >
 
-				<summary class=sumMenuTitle >GitHub Folders & Files</summary>
+				<summary class="sumMenuTitle" >GitHub folders & files</summary>
 
 				<div id=GFFdivGithubFoldersFiles ></div>
 
@@ -222,9 +230,13 @@
 
 			<footer>
 
-				<div id="MNUdivFooter" ></div>
+				<details>
 
-				<div id="MNUdivFooterPopup" ></div>
+					<summary class=sumMenuTitle >Help menu</summary>
+
+					<div id="MNUdivFooterPopup" ></div>
+
+				</details>
 
 				<h1 onclick="navPanel.scrollTop=0;" style="cursor:pointer;text-align:center;" title="go to top of menu" >
 					<img alt="spider icon" src = "https://ladybug.tools/artwork/icons_bugs/ico/spider.ico" height=18 >
@@ -237,7 +249,7 @@
 	</nav>
 
 
-	<main id=main >
+	<main id="main" >
 
 		<div id="divContents" >
 
@@ -275,7 +287,7 @@
 THM.themeUrlStorage = 'spider-gbxml-fixer-theme-url';
 THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-1/style.css";
 
-// useful when testing / un-comment
+
 FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/coventry-university-of-warwick-small.zip";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/annapolis-md-single-family-residential-2016.xml"
@@ -366,6 +378,9 @@ function init() {
 
 	GBX.init(); // gets things going
 
+	GBXF.init(); // fixer
+
+	// let's go / FOB to load default and fire onload events
 	if ( !location.hash ) { location.hash=FOB.urlDefaultFile; } else { FOB.onHashChange(); }
 
 	aViewSource.style.display = "block";
