@@ -20,7 +20,7 @@ VBZ.getMenuViewByZones = function() {
 
 	document.body.addEventListener( 'onGbxParse', function(){ VBZdetMenu.open = false; }, false );
 
-	const foot = `v${ VBO.version} - ${ VBO.date }`;
+	const foot = `v${ VBZ.version} - ${ VBZ.date }`;
 
 	const help = `<button id="butVBZsum" class="butHelp" onclick="POP.setPopupShowHide(butVBZsum,VBZ.helpFile,'${foot}');" >?</button>`;
 

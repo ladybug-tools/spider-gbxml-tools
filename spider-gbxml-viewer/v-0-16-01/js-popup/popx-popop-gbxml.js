@@ -649,8 +649,6 @@ POPX.getToggleZoneVisible = function ( button, zoneIdRef ) {
 			<textarea style=width:100%; >${ zoneTxt }</textarea>
 
 		</details>
-
-		<hr>
 	`;
 
 	return htm;
