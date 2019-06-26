@@ -93,7 +93,7 @@ VBSU.getViewBySurfacesSelectOptions = function() {
 
 	for ( let surface of GBX.surfaces ) {
 
-		color = color === 'pink' ? '' : 'pink';;
+		color = color === 'pink' ? '' : 'pink';
 
 		const id = surface.match( 'id="(.*?)"' )[ 1 ];
 

@@ -31,7 +31,7 @@ VBZ.getMenuViewByZones = function() {
 
 			<summary>Show/hide by zones <span id="VBZspnCount" ></span> ${ help }</summary>
 
-			<p>Display surfaces by zone. Default is all zones visible.</p>
+			<p>Display surfaces by zone. Default is all zones visible.<mark>Reload model to reset colors.</mark></p>
 
 			<div id="VBZdivViewByZones" >
 				<select id=VBZselZone onchange=VBZ.selectZoneFocus(this); multiple style=min-width:100%; ></select
@@ -51,11 +51,26 @@ VBZ.getMenuViewByZones = function() {
 
 
 
+VBZ.setColorByHeat = function() {
+
+
+
+	temps = GBX.zones.map( zone => zone.match( /<DesignHeatT unit="C">(.*?)<\/DesignHeatT>/i)[ 1 ] );
+
+	temps = temps.sort( (a, b) => a - b );
+	temps = [...new Set( temps )];
+	console.log( 'temps', temps );
+
+};
+
+
+
+
 VBZ.getZonesOptions = function() {
 
 	VBZselZone.size = GBX.zones.length > 10 ? 10 : GBX.zones.length;
 
-	//const zoneIds = GBX.zones.map( zone => zone.match( 'id="(.*?)">')[ 1 ] );
+	//const zoneIds = GBX.zones.map( zone => zone.match( 'id="(.*?)" ')[ 1 ] );
 	//console.log( 'zoneIds', zoneIds );
 
 	const zoneNameArray = GBX.zones.map( zone => {
@@ -74,9 +89,53 @@ VBZ.getZonesOptions = function() {
 
 		zone = GBX.zones.find( zone => zone.includes( zoneName ) );
 
-		zoneId = zone.match( 'id="(.*?)">')[ 1 ];
+		zoneId = zone.match( 'id="(.*?)"')[ 1 ];
 
-		return { zoneName, zoneId };
+		tempHeat = Number( zone.match( /<DesignHeatT unit="C">(.*?)<\/DesignHeatT>/i)[ 1 ] );
+
+		const colors = [ 0x38b8a, 0x71ccc6, 0xaae0dd, 0xe2f4f3, 0xfae2e8, 0xf1aaba, 0xe7718d, 0xde385, 0xd50032 ];
+
+		let color;
+
+		if ( tempHeat < 6 ) {
+
+			color = colors[ 0 ];
+
+		} else if ( tempHeat < 16 ) {
+
+			color = colors[ 1 ];
+
+		} else if ( tempHeat < 19 ) {
+
+			color = colors[ 2 ];
+
+		} else if ( tempHeat < 21 ) {
+
+			color = colors[ 3 ];
+
+		} else if ( tempHeat < 23 ) {
+
+			color = colors[ 4 ];
+
+		} else if ( tempHeat < 24 ) {
+
+			color = colors[ 5 ];
+
+		} else if ( tempHeat < 27 ) {
+
+			color = colors[ 6 ];
+
+		} else if ( tempHeat < 36 ) {
+
+			color = colors[ 7 ];
+
+		} else {
+
+			color = colors[ 8 ];
+
+		}
+
+		return { zoneName, zoneId, tempHeat, color };
 
 	} )
 	//console.log( 'VBZ.zones', VBZ.zones );
@@ -122,6 +181,18 @@ VBZ.selectZoneFocus = function( select ) {
 };
 
 
+VBZ.setColorByHeat = function() {
+
+	const colors = ["#38b8a", "71ccc6", "aae0dd", "e2f4f3", "fae2e8", "f1aaba", "e7718d", "de385", "d50032" ]
+
+	temps = GBX.zones.map( zone => zone.match( /<DesignHeatT unit="C">(.*?)<\/DesignHeatT>/i)[ 1 ] );
+
+	temps = temps.sort( (a, b) => a - b );
+	temps = [...new Set( temps )];
+	console.log( 'temps', temps );
+
+};
+
 
 VBZ.setZoneVisible = function ( zoneIdRef ) {
 
@@ -165,7 +236,19 @@ VBZ.setZoneVisible = function ( zoneIdRef ) {
 
 			for ( let spaceId of spaceIdsInZone ) {
 
+				spaceText = GBX.spaces.find( space => space.includes( spaceId ) );
+				zoneId = spaceText.match( /zoneIdRef="(.*?)"/i )[ 1 ];
+				console.log( '', zoneId );
+
+				zoneData = VBZ.zones.find( zone => zone.zoneId === zoneId )
+				console.log( 'zoneData', zoneData );
+				console.log( '', zoneData.tempHeat );
+
 				child.visible = spacesIdsArr.includes( spaceId ) ? true : child.visible;
+
+				//console.log( 'child', child );
+
+				child.material.color.setHex( zoneData.color ); // new THREE.MeshPhongMaterial( { color: 0xff0000, side: 2 } );
 
 			}
 

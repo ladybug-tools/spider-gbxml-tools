@@ -6,7 +6,7 @@ const VBO = {
 
 	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
 	"date": "2019-06-24",
-	"description": "View by Surfaces (VBO) provides HTML and JavaScript to view individual openings.",
+	"description": "View by openings (VBO) provides HTML and JavaScript to view individual openings.",
 	"helpFile": "../js-view/vbo-view-by-opening.md",
 	"version": "0.16-01-1vbo",
 	"urlSourceCode": "https://github.com/pushme-pullyou/tootoo14/blob/master/js-14-2/fob-file-open-basic/fob-file-open-basic.js",

@@ -489,6 +489,7 @@ POPX.toggleSpaceVisible = function( button, spaceId ) {
 };
 
 
+
 POPX.getSpaceAttributes = function( spaceId ) {
 
 	const spaceTxt = GBX.spaces.find( item => item.includes( ` id="${ spaceId }"` ) );
@@ -516,7 +517,6 @@ POPX.getSpaceAttributes = function( spaceId ) {
 	return htm;
 
 };
-
 
 
 
