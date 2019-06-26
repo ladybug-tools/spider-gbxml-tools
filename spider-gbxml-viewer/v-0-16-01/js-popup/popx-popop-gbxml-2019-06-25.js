@@ -1,25 +1,12 @@
-/* global Stats, POPbutRateLimits, navPopup, POPdivPopupData, main, showdown */
-/* jshint esversion: 6 */
-/* jshint loopfunc: true */
+/* global THREE, THR, THRU, GBX, divPopUpData, POPXdivShowHide, POPXelementAttributes, POPXbutAdjacentSpace1, POPXbutAdjacentSpace2 */
+// jshint esversion: 6
 
+// Copyright 2019 Ladybug Tools authors. MIT License.
 
-const POPX = {
-	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-06-25",
-	"description": "TooToo Menu (POP) generates standard HTML popup menu code and content and code that works on computers, tablets and phones",
-	"helpFile": "js-popup/pop-popup.md",
-	"version": "0.16.01-1popx",
-	"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-pop-up"
-};
+var POPX = { "version": "0.16.0-0", "date": "2019-06-11" };
 
-POPX.footer =
-	`
-		<p style=text-align:right; >
-			<button onclick=POPX.onClickZoomAll(); title="Show entire campus & display attributes" >zoom all +</button>
-			<button onclick=SET.toggleOpenings(); >toggle openings</button>
-			<button onclick=SET.toggleEdgesThreejs(); >toggle edges</button>
-		</p>
-	`;
+POPX.urlSource = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-pop-up";
+
 
 ////////// Inits
 
@@ -114,9 +101,9 @@ POPX.onDocumentTouchStart = function( event ) {
 
 	//console.log( 'event', event );
 
-	//event.clientX = event.touches[0].clientX - main.offsetLeft;
-	//event.clientY = event.touches[0].clientY;
-	//console.log( 'event.clientX', event.clientX );
+	event.clientX = event.touches[0].clientX;
+	event.clientY = event.touches[0].clientY;
+	console.log( 'event.clientX', event.clientX );
 
 	event.layerX = event.touches[0].clientX - main.offsetLeft;
 	event.layerY = event.touches[0].clientY;
@@ -133,6 +120,7 @@ POPX.onDocumentMouseDown = function( event ) {
 
 	//if ( event.button && event.button !== 0 ) { return ; }
 
+
 	main.removeEventListener( 'click', POP.onClickClose );
 	main.removeEventListener( 'touchstart', POP.onClickClose );
 
@@ -145,6 +133,9 @@ POPX.onDocumentMouseDown = function( event ) {
 	POPX.mouse.x = ( x / size.width ) * 2 - 1;
 	POPX.mouse.y = - ( y / size.height ) * 2 + 1;
 
+	//POPX.mouse.x = +( ( event.targetTouches[0].pageX - main.offsetLeft )/ size.width) * 2 + -1;
+	//POPX.mouse.y = -(event.targetTouches[0].pageY / size.height) * 2 + 1;
+
 	POPX.raycaster.setFromCamera( POPX.mouse, THR.camera );
 
 	POPX.intersects = POPX.raycaster.intersectObjects( GBX.surfaceGroup.children );
@@ -154,13 +145,19 @@ POPX.onDocumentMouseDown = function( event ) {
 
 		POPX.intersected = POPX.intersects[ 0 ].object;
 
-		POPX.setIntersectedParticleAtPoint( POPX.intersects[ 0 ].point );
+		POPX.getIntersectedVertexBufferGeometry( POPX.intersects[ 0 ].point );
+
+		navPopup.hidden = false;
 
 		POPdivPopupData.innerHTML = POPX.getIntersectedDataHtml();
 
-		POPdivMessage.innerHTML = POPX.footer;
-
-		navPopup.hidden = false;
+		POPdivMessage.innerHTML =
+		`
+			<p style=text-align:right; >
+				<button onclick=POPX.onClickZoomAll(); title="Show entire campus & display attributes" >zoom all +</button>
+				<button onclick=SET.toggleOpenings(); >toggle openings</button>
+			</p>
+		`;
 
 	} else {
 
@@ -176,7 +173,7 @@ POPX.onDocumentMouseDown = function( event ) {
 
 
 
-POPX.setIntersectedParticleAtPoint = function( point ) {
+POPX.getIntersectedVertexBufferGeometry = function( point ) {
 	//console.log( 'point', point );
 
 	THR.scene.remove( POPX.particle );
@@ -234,7 +231,6 @@ POPX.getIntersectedDataHtml = function() {
 				<button onclick=POPX.setSurfaceZoom(); title="Zoom into selected surface" > ⌕ </button>
 
 				<button onclick=POPX.toggleSurfaceNeighbors(); title="Show surfaces with shared vertexes" > # </button>
-				<button onclick=POPX.toggleVertexPlacards(); title="Display vertex numbers" > * </button>
 			</p>
 
 			<p>
@@ -252,7 +248,6 @@ POPX.getIntersectedDataHtml = function() {
 		<div id=POPXelementAttributes >
 			${ htmAttributes }
 		</div>
-
 		<hr>
 
 	`;
@@ -268,7 +263,6 @@ POPX.drawBorder = function( surfaceXml ) {
 
 	THR.scene.remove( POPX.line );
 
-	// or get attributes or vertices from shape
 	const planar = surfaceXml.getElementsByTagName( 'PlanarGeometry' )[ 0 ];
 
 	const points = Array.from( planar.getElementsByTagName( 'CartesianPoint' ) );
@@ -300,8 +294,6 @@ POPX.drawBorder = function( surfaceXml ) {
 POPX.getAdjSpaceButtons = function() {
 
 	let htm;
-
-	// or turn into a for loop
 
 	if ( GSA.adjacentSpaceIds.length === 0 ) {
 
@@ -369,6 +361,7 @@ POPX.toggleSurfaceFocus = function( button ) {
 
 		POPX.intersected.visible = true;
 
+
 		const bbox = new THREE.Box3();
 		const meshes = [ POPX.intersected ];
 
@@ -408,10 +401,8 @@ POPX.toggleSurfaceVisible = function() {
 
 POPX.toggleVertexPlacards = function() {
 
-	//const vertices = POPX.intersected.userData.gbjson.PlanarGeometry.PolyLoop.CartesianPoint
-	//	.map( point => new THREE.Vector3().fromArray( point.Coordinate.map( point => Number( point ) )  ) );
-
-	vertices = POPX.line.geometry.vertices;
+	const vertices = POPX.intersected.userData.gbjson.PlanarGeometry.PolyLoop.CartesianPoint
+		.map( point => new THREE.Vector3().fromArray( point.Coordinate.map( point => Number( point ) )  ) );
 
 	console.log( 'vvv', vertices );
 
@@ -443,7 +434,7 @@ POPX.toggleSpaceVisible = function( button, spaceId ) {
 
 	if ( visible1 === false && visible2 === false ) {
 
-		children.forEach( child => child.visible = false );
+		children.forEach( child => child.visible = true );
 
 	} else if ( ( visible1 === true && visible2 === false ) || ( visible1 === false && visible2 === true ) ) {
 
@@ -479,8 +470,6 @@ POPX.toggleSpaceVisible = function( button, spaceId ) {
 		}
 
 	}
-
-	POPX.intersected.visible = true;
 
 	const spaceTxt = GBX.spaces.find( item => item.includes( ` id="${ spaceId }"` ) );
 
@@ -535,6 +524,7 @@ POPX.toggleStoreyVisible = function( button, storeyId ) {
 		}
 		//console.log( 'spaceIdsInStory', spaceIdsInStory );
 
+
 		for ( let child of children ) {
 
 			const id = child.userData.index;
@@ -557,10 +547,8 @@ POPX.toggleStoreyVisible = function( button, storeyId ) {
 
 	} else {
 
-		children.forEach( child => child.visible = false );
+		children.forEach( child => child.visible = true );
 	}
-
-	POPX.intersected.visible = true;
 
 	const storeyTxt = GBX.storeys.find( item => item.includes( ` id="${ storeyId }"` ) );
 
@@ -640,11 +628,11 @@ POPX.getToggleZoneVisible = function ( button, zoneIdRef ) {
 
 	} else {
 
-		children.forEach( child => child.visible = false );
+		children.forEach( child => child.visible = true );
 
 	}
 
-	POPX.intersected.visible = true;
+	GBX.setOpeningsVisible( false );
 
 	const zoneTxt = GBX.zones.find( item => item.includes( ` id="${ zoneIdRef }"` ) );
 
@@ -688,23 +676,25 @@ POPX.setSurfaceZoom = function() {
 
 POPX.toggleSurfaceNeighbors = function() {
 
+	const surfaceMesh = POPX.intersected;
 
-	const surfaceText  = GBX.surfaces[ POPX.intersected.userData.index ]
+	surfaceText  = GBX.surfaces[ POPX.intersected.userData.index ]
 	//console.log( 'surfaceText', surfaceText );
 
+	cartesianPoints = [];
 
-	const planarGeometry = surfaceText.match( /<PlanarGeometry(.*?)<\/PlanarGeometry>/gi )[ 0 ];
+	planarGeometry = surfaceText.match( /<PlanarGeometry(.*?)<\/PlanarGeometry>/gi )[ 0 ];
 	//console.log( 'planarGeometry', planarGeometry );
 
-	const cartesianPoints = planarGeometry.match( /<CartesianPoint(.*?)<\/CartesianPoint>/gi );
+	cartesianPoints = planarGeometry.match( /<CartesianPoint(.*?)<\/CartesianPoint>/gi );
 	//console.log( 'cartesianPoints', cartesianPoints );
 
-	const surfaces = [];
+	surfaces = [];
 	GBX.surfacesIndexed.forEach( ( surface, index ) => {
 
-		const points = cartesianPoints.filter( point => surface.includes( point ) )
+		ss = cartesianPoints.filter( point => surface.includes( point ) )
 
-		if ( points.length > 0 ) { surfaces.push( surface ) };
+		if ( ss.length > 0 ) { surfaces.push( surface ) };
 
 	} );
 

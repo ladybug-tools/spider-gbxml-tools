@@ -318,7 +318,7 @@ GSA.getAttributesPlanarGeometry = function ( surfaceXml ) {
 
 		htm +=
 		`
-			<div><span class=attributeTitle >CartesianPoint:</span></div>
+			<div>${ 1 + i / 3 }. <span class=attributeTitle >CartesianPoint:</span></div>
 			&nbsp;
 			<span class=attributeTitle >x:</span> <span class=attributeValue >${ Number( points[ i++ ].innerHTML ).toLocaleString() }</span>
 			<span class=attributeTitle >y:</span> <span class=attributeValue >${ Number( points[ i++ ].innerHTML ).toLocaleString() }</span>

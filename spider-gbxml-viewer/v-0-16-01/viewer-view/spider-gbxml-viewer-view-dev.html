@@ -53,9 +53,9 @@
 <script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r105/build/three.min.js" ></script>
 <script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r105/examples/js/controls/OrbitControls.js" ></script>
 
-<!-- Tootoo
+<!-- Tootoo -->
 	<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-03/thm-theme/thm-theme.js" ></script>
--->
+
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-03/gat-github-access-token/gat-github-access-token.js" ></script>
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-03/tmp-template/tmp-template.js" ></script>
 
@@ -184,19 +184,17 @@
 				</details>
 
 			</details>
-<!--
 
-	<details>
 
-		<summary class=sumMenuTitle >Settings menu</summary>
+			<details>
 
-		<div id=THMdivMenuThemeSelect ></div>
+				<summary class=sumMenuTitle >Settings menu</summary>
 
-		<div id=TMPdivTemplate ></div>
+				<div id=THMdivMenuThemeSelect ></div>
 
-	</details>
+				<div id=TMPdivTemplate ></div>
 
--->
+			</details>
 
 			<footer>
 
@@ -246,8 +244,8 @@
 
 <script>
 
-//THM.themeUrlStorage = 'spider-gbxml-view-theme-url';
-//THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-03/style.css";
+THM.themeUrlStorage = 'spider-gbxml-view-theme-url';
+THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-03/style.css";
 
 
 FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
@@ -288,7 +286,7 @@ function init() {
 	//const mesh = THRU.getGeometry();
 	//THR.scene.add( mesh );
 
-	//THMdivMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
+	THMdivMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
 	//THM.init();
 
 	MNUdivHeader.innerHTML = MNU.getNavHeader();

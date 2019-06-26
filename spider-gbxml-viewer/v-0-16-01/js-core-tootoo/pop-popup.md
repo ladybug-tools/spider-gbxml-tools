@@ -13,6 +13,7 @@
 
 <summary>To Do / Wish List</summary>
 
+* 2019-06-25 ~ Theo ~ rename divMessage to divFooter
 
 </details>
 
@@ -20,13 +21,18 @@
 
 <summary>Issues</summary>
 
-* 2019-06-24 ~ not closing properly
+
 
 </details>
 
 <details>
 
 <summary>Change Log</summary>
+
+## 2019-06-25 ~ Theo
+
+deal with?
+* 2019-06-24 ~ not closing properly
 
 ## 2019-06-24 ~ Theo
 
