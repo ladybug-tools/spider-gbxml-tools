@@ -13,7 +13,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 _<small>Spider gbXML Iframe Carousel: multiple interactive 3D models in a single space on any web page</small>_
 
 
-## Full Screen: [Spider gbXML Iframe Carousel]( https://www.ladybug.tools/spider-gbxml-tools/cookbook/spider-gbxml-iframe-carousel/r7/spider-gbxml-iframe-carousel.html )
+## Full Screen: [Spider gbXML Iframe Carousel]( https://www.ladybug.tools/spider-gbxml-tools/cookbook/spider-gbxml-iframe-carousel/index.html )
 
 
 ## Concept
