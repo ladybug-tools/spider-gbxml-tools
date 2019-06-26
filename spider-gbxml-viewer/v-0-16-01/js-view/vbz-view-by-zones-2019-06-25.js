@@ -39,7 +39,7 @@ VBZ.getMenuViewByZones = function() {
 
 			<div id="VBZdivReportsLog" ></div>
 
-			<p><button onclick=VBZ.toggleZones(this); >show all zones</button> </p>
+			<p><button onclick=VBZ.showAllZones(); >show all zones</button> </p>
 
 			<p>Select multiple zones by pressing shift or control keys</p>
 
@@ -99,17 +99,13 @@ VBZ.selectZoneFocus = function( select ) {
 
 	THR.controls.enableKeys = false;
 
-	//POPX.intersected = null;
-
-	THR.scene.remove( POPX.line, POPX.particle );
-
 	const zone = VBZ.zones[ select.value ];
 	//console.log( 'zone', zone );
 
 	POPdivPopupData.innerHTML = POPX.getZoneAttributes( zone.zoneId );
 
 	const options = select.selectedOptions
-	//console.log( 'options', options );
+	console.log( 'options', options );
 
 	GBX.surfaceGroup.children.forEach( element => element.visible = false );
 
@@ -176,37 +172,63 @@ VBZ.setZoneVisible = function ( zoneIdRef ) {
 };
 
 
-//////////
+
+VBZ.showAllZones = function() {
+
+	VBZselZone.selectedIndex = -1;
+
+	VBZ.selZones();
+
+};
 
 
-VBZ.toggleZones = function( button ) {
+
+VBZ.setViewByZoneShowHide = function( button, surfaceArray ) {
+	//console.log( 'surfaceArray', surfaceArray );
 
 	button.classList.toggle( "active" );
 
-	const focus = button.classList.contains( "active" );
+	if ( button.classList.contains( 'active' ) && surfaceArray.length ) {
 
-	if ( focus === true ) {
-
-		GBX.surfaceGroup.children.forEach( element => element.visible = true );
+		GBX.sendSurfacesToThreeJs( surfaceArray );
 
 	} else {
 
-		GBX.surfaceGroup.children.forEach( element => element.visible = false );
+		GBX.surfaceGroup.children.forEach( element => element.visible = true );
 
-		const options = VBZselZone.selectedOptions
-		console.log( 'options', options );
-
-		Array.from( options ).forEach( option =>
-
-			VBZ.setZoneVisible( option.title )
-
-		);
 	}
 
 };
 
 
-////////// looks at surface types
+//////////
+
+VBZ.selZones = function() {
+
+	THR.controls.enableKeys = false;
+
+	POPdivPopupData.innerHTML = POPX.getToggleZoneVisible( VBZselZone, VBZselZone.value );
+
+/*
+	POP.intersected = null;
+
+	POPdivPopupData.innerHTML = '';
+
+	THR.scene.remove( POP.line, POP.particle );
+
+	VBZ.surfacesFilteredByZone = VBZ.setSurfacesFilteredByZone();
+
+	VBZdivReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( VBZ.surfacesFilteredByZone );
+
+
+	*/
+
+	//GBX.setOpeningsVisible( false );
+	//VBZ.getZoneAttributes( VBZselZone.value )
+
+};
+
+
 
 VBZ.setSurfacesFilteredByZone = function( surfaces ) {
 
@@ -265,3 +287,36 @@ VBZ.setSurfacesFilteredByZone = function( surfaces ) {
 	return surfacesFilteredByZone;
 
 };
+
+
+VBZ.getZoneAttributes = function( zoneIdRef ) {
+
+	const zoneTxt = GBX.zones.find( item => item.includes( ` id="${ zoneIdRef }"` ) );
+
+	const zoneXml = POPX.parser.parseFromString( zoneTxt, "application/xml").documentElement;
+	//console.log( 'spaceXml ', spaceXml );
+
+	const htmZone = GSA.getAttributesHtml( zoneXml );
+
+
+
+	const htm =
+	`
+		<b>${ zoneIdRef } Attributes</b>
+
+		<p>${ htmZone }</p>
+
+		<details>
+
+			<summary>gbXML data</summary>
+
+			<textarea>${ zoneTxt }</textarea>
+
+			</details>
+	`;
+
+	POPdivPopupData.innerHTML = htm;
+
+};
+
+

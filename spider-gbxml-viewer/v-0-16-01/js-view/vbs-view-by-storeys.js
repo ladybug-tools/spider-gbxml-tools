@@ -1,6 +1,6 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
 // jshint esversion: 6
-/* globals GBX, VST, THREE, THR, POP, POPdivPopupData, VBSdetMenu, VBSselStorey, VBSdivReportsLog, VSTdivSurfaceType */
+/* globals GBX, VST, THREE, THR, POPX, POPdivPopupData, VBSdetMenu, VBSselStorey, VBSdivReportsLog, VSTdivSurfaceType */
 
 
 const VBS = {
@@ -77,7 +77,7 @@ VBS.getMenuViewByStoreys = function() {
 				<a id=VBSHelp class=helpItem href="JavaScript:POP.setPopupShowHide(VBSHelp,VBS.currentStatus);" >&nbsp; ? &nbsp;</a>
 			</summary>
 
-			<p>Display surfaces by storey. Default is all storeys visible.</p>
+			<p>Display surfaces by storey. Default is all storeys visible. Operates in conjunction with surface type settings.</p>
 
 			<p>
 				<input oninput=VBS.setSelectedIndex(this,VBSselStorey) >
@@ -170,15 +170,15 @@ VBS.selStoreys = function() {
 
 	THR.controls.enableKeys = false;
 
-	POP.intersected = null;
+	POPX.intersected = null;
 
 	POPdivPopupData.innerHTML = '';
 
-	// show storey data in pop-up
+	// show storey data in POPX-up
 
-	//POPelementAttributes.innerHTML=POP.toggleStoreyVisible(this,"aim0250");
+	//POPelementAttributes.innerHTML=POPX.toggleStoreyVisible(this,"aim0250");
 
-	THR.scene.remove( POP.line, POP.particle );
+	THR.scene.remove( POPX.line, POPX.particle );
 
 	VBS.surfacesFilteredByStorey = VBS.setSurfacesFilteredByStorey();
 
@@ -194,7 +194,8 @@ VBS.selStoreys = function() {
 
 	} );
 
-	VBS.getStoreyAttributes( VBSselStorey.value );
+
+	POPdivPopupData.innerHTML = POPX.getStoreyAttributes( VBSselStorey.value );
 
 };
 
@@ -280,21 +281,3 @@ VBS.setStoreyShowHide = function( button, surfaceArray ) {
 
 
 
-VBS.getStoreyAttributes = function ( storeyId ) {
-
-	const storeyTxt = GBX.storeys.find( item => item.includes( ` id="${ storeyId }"` ) );
-
-	const storeyXml = POPX.parser.parseFromString( storeyTxt, "application/xml").documentElement;
-	//console.log( 'spaceXml ', spaceXml );
-
-	const htmStorey = GSA.getAttributesHtml( storeyXml );
-
-	const htm =
-	`
-		<b>Selected Storey Attributes</b>
-		${ htmStorey }
-	`;
-
-	POPdivPopupData.innerHTML = htm;
-
-};

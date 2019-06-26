@@ -482,6 +482,15 @@ POPX.toggleSpaceVisible = function( button, spaceId ) {
 
 	POPX.intersected.visible = true;
 
+	const htm = POPX.getSpaceAttributes( spaceId );
+
+	POPXelementAttributes.innerHTML = htm;
+
+};
+
+
+POPX.getSpaceAttributes = function( spaceId ) {
+
 	const spaceTxt = GBX.spaces.find( item => item.includes( ` id="${ spaceId }"` ) );
 
 	const spaceXml = POPX.parser.parseFromString( spaceTxt, "application/xml").documentElement;
@@ -491,13 +500,23 @@ POPX.toggleSpaceVisible = function( button, spaceId ) {
 
 	const htm =
 	`
-		<b>Selected Space Attributes</b>
-		${ htmSpace }
-	`;
+		<b>${ spaceId } Space Attributes</b>
 
-	POPXelementAttributes.innerHTML = htm;
+		<p>${ htmSpace }</p>
+
+		<details>
+
+			<summary>gbXML data</summary>
+
+			<textarea style=width:100%; >${ spaceTxt }</textarea>
+
+		</details>
+		`;
+
+	return htm;
 
 };
+
 
 
 
@@ -562,6 +581,15 @@ POPX.toggleStoreyVisible = function( button, storeyId ) {
 
 	POPX.intersected.visible = true;
 
+	const htm = POPX.getStoreyAttributes( storeyId )
+	return htm;
+
+};
+
+
+
+POPX.getStoreyAttributes = function ( storeyId ) {
+
 	const storeyTxt = GBX.storeys.find( item => item.includes( ` id="${ storeyId }"` ) );
 
 	const storeyXml = POPX.parser.parseFromString( storeyTxt, "application/xml").documentElement;
@@ -571,9 +599,18 @@ POPX.toggleStoreyVisible = function( button, storeyId ) {
 
 	const htm =
 	`
-		<b>Selected Storey Attributes</b>
-		${ htmStorey }
-	`;
+		<b>${ storeyId } Storey Attributes</b>
+
+		<p>${ htmStorey }</p>
+
+		<details>
+
+			<summary>gbXML data</summary>
+
+			<textarea style=width:100%; >${ storeyTxt }</textarea>
+
+		</details>
+		`;
 
 	return htm;
 
@@ -645,6 +682,16 @@ POPX.getToggleZoneVisible = function ( button, zoneIdRef ) {
 	}
 
 	POPX.intersected.visible = true;
+
+	const htm = POPX.getZoneAttributes( zoneIdRef );
+
+	return htm;
+
+};
+
+
+
+POPX.getZoneAttributes = function( zoneIdRef ) {
 
 	const zoneTxt = GBX.zones.find( item => item.includes( ` id="${ zoneIdRef }"` ) );
 

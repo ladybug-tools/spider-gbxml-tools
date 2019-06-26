@@ -1,6 +1,6 @@
 // Copyright 2019 Ladybug Tools authors. MIT License
 // jshint esversion: 6
-/* globals GBX, VST, THREE, THR, POP, VBSPdetMenu, POPdivPopupData, VBSPselSpace, VBSPdivReportsLog, VSTdivSurfaceType */
+/* globals GBX, VST, THREE, THR, POPX, VBSPdetMenu, POPdivPopupData, VBSPselSpace, VBSPdivReportsLog, VSTdivSurfaceType */
 
 
 const VBSP = {"release": "R15.0.1", "date": "2019-06-05" };
@@ -87,7 +87,7 @@ VBSP.getSpacesOptions = function() {
 
 	VBSPselSpace.size = GBX.spaces.length > 10 ? 10 : GBX.spaces.length;
 
-	const spaceIds = GBX.spaces.map( space => space.match( 'id="(.*?)">')[ 1 ] );
+	const spaceIds = GBX.spaces.map( space => space.match( 'id="(.*?)"' )[ 1 ] );
 	//console.log( 'spaceIds', spaceIds );
 
 	const spaceNames = GBX.spaces.map( space => {
@@ -110,6 +110,7 @@ VBSP.getSpacesOptions = function() {
 		const index = spaceNames.indexOf( space );
 		//console.log( 'indexUnsorted', indexUnsorted );
 
+		//console.log( 'spaceIds[ index ]', spaceIds[ index ]  );
 		return `<option value=${ spaceIds[ index ] } title="${ spaceIds[ index ] }" >${ spaceNames[ index ] }</option>`;
 
 	} );
@@ -149,86 +150,36 @@ VBSP.selSpaces = function() {
 
 	THR.controls.enableKeys = false;
 
-	POP.intersected = null;
+	POPX.intersected = null;
 
-	POPdivPopupData.innerHTML = '';
+	THR.scene.remove( POPX.line, POPX.particle );
 
-	THR.scene.remove( POP.line, POP.particle );
-
-	VBSP.surfacesFilteredBySpace = VBSP.setSurfacesFilteredBySpace();
+	VBSP.surfacesFilteredBySpace = VBSP.getSurfacesFilteredBySpace();
 
 	VBSPdivReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( VBSP.surfacesFilteredBySpace );
 
-	GBX.surfaceOpenings.traverse( function ( child ) {
-
-		if ( child instanceof THREE.Line ) {
-
-			child.visible = false;
-
-		}
-
-	} );
-
-	VBSP.getSpaceAttributes( VBSPselSpace.value );
+	POPdivPopupData.innerHTML = POPX.getSpaceAttributes( VBSPselSpace.value );
 
 };
 
 
 
-VBSP.setSurfacesFilteredBySpace = function( surfaces ) {
+VBSP.getSurfacesFilteredBySpace = function(  ) {
 
 	const spaceIds = VBSPselSpace.selectedOptions;
-	//console.log( 'spaceIds', spaceIds );
 
-	if ( spaceIds.length === 0 ) {
-
-		const buttonsActive = VSTdivSurfaceType.getElementsByClassName( "active" ); // collection
-
-		let filterArray = Array.from( buttonsActive ).map( button => button.innerText );
-
-		filterArray = filterArray.length > 0 ? filterArray : VST.filtersDefault;
-		//console.log( 'filterArray', filterArray );
-
-		surfaces = filterArray.flatMap( filter =>
-
-			GBX.surfacesIndexed.filter( surface => surface.includes( `"${ filter }"` ) )
-
-		);
-
-	}
-
-	const surfacesFilteredBySpace = surfaces ? surfaces : [];
+	const surfacesFilteredBySpace = [];
 
 	for ( let spaceId of spaceIds ) {
+		//console.log( 'spaceId', spaceId );
 
-		const spacesFiltered = GBX.spaces.filter( space => space.includes( ` id="${ spaceId.value }"` ) );
-		//console.log( 'spacesFiltered', spacesFiltered );
-
-		const spacesInSpaceIds = spacesFiltered.map( space => space.match( ' id="(.*?)"' )[ 1 ] );
-		//console.log( 'spacesInSpaceIds', spacesInSpaceIds );
-
-		const surfacesVisibleBySpace = spacesInSpaceIds.flatMap( spaceId =>
-			GBX.surfacesIndexed.filter( surface => surface.includes( `spaceIdRef="${ spaceId }"`  ) )
-		);
-
+		surfacesVisibleBySpace = GBX.surfacesIndexed.filter( surface => surface.includes( `spaceIdRef="${ spaceId.value }"`  ) )
 		//console.log( 'surfacesVisibleBySpace', surfacesVisibleBySpace );
-/*
-		const buttonsActive = VSTdivSurfaceType.getElementsByClassName( "active" ); // collection
 
-		let filterArr = Array.from( buttonsActive ).map( button => button.innerText );
-
-		filterArr = filterArr.length > 0 ? filterArr : VST.filtersDefault;
-
-		const surfacesFiltered = filterArr.flatMap( filter =>
-
-			surfacesVisibleBySpace.filter( surface => surface.includes( `"${ filter }"` ) )
-
-		);
-*/
 		surfacesFilteredBySpace.push( ...surfacesVisibleBySpace );
-		//console.log( 'GBX.surfacesFiltered',  GBX.surfacesFiltered );
 
 	}
+	//console.log( 'surfacesFilteredBySpace', surfacesFilteredBySpace );
 
 	return surfacesFilteredBySpace;
 
@@ -260,26 +211,5 @@ VBSP.setViewBySurfaceShowHide = function( button, surfaceArray ) {
 		GBX.sendSurfacesToThreeJs( surfaceArray );
 
 	}
-
-};
-
-
-
-VBSP.getSpaceAttributes = function( spaceId ) {
-
-	const spaceTxt = GBX.spaces.find( item => item.includes( ` id="${ spaceId }"` ) );
-
-	const spaceXml = POPX.parser.parseFromString( spaceTxt, "application/xml").documentElement;
-	//console.log( 'spaceXml ', spaceXml );
-
-	const htmSpace = GSA.getAttributesHtml( spaceXml );
-
-	const htm =
-	`
-		<b>Selected Space Attributes</b>
-		${ htmSpace }
-	`;
-
-	POPdivPopupData.innerHTML = htm;
 
 };
