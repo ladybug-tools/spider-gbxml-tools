@@ -413,7 +413,7 @@ POPX.toggleVertexPlacards = function() {
 
 	vertices = POPX.line.geometry.vertices;
 
-	console.log( 'vvv', vertices );
+	//console.log( 'vvv', vertices );
 
 	const distance = THR.camera.position.distanceTo( THR.controls.target );
 	const scale = 0.01;
@@ -421,7 +421,7 @@ POPX.toggleVertexPlacards = function() {
 		THRU.drawPlacard( '#' + ( 1 + index ), 0.0003 * distance, 0x00ff00, vertex.x + scale * distance, vertex.y + scale * distance, vertex.z + scale * distance )
 	);
 
-	console.log( '', placards );
+	//console.log( '', placards );
 	POPX.line.add( ...placards );
 
 };
