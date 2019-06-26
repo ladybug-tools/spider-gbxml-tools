@@ -75,14 +75,20 @@ GBXU.setStats = function() {
 	//console.log( 'vertices', vertices );
 
 	const count = verticesCount.reduce( ( count, val, index ) => count + verticesCount[ index ].length, 0 );
-	const timeToLoad = performance.now() - GBX.timeStart;
 
 	GBX.constructions = GBX.text.match( /<Construction(.*?)<\/Construction>/gi ) || [];
 
-	GBX.materials = GBX.text.match( /<material(.*?)<\/material>/gi ) || [];
+	GBX.materials = GBX.text.match( /<Material(.*?)<\/Material>/gi ) || [];
 
+	GBX.layers = GBX.text.match( /<Layer(.*?)<\/Layer>/gi ) || [];
+
+	GBX.windowTypes = GBX.text.match( /<WindowType(.*?)<\/WindowType>/gi ) || [];
+
+	const timeToLoad = performance.now() - GBX.timeStart;
+	
 	const htm =
 	`
+		<div><b>gbML statistics</b></div>
 		<div>time to parse: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
 		<div>spaces: ${ GBX.spaces.length.toLocaleString() } </div>
 		<div>storeys: ${ GBX.storeys.length.toLocaleString() } </div>
@@ -90,11 +96,16 @@ GBXU.setStats = function() {
 		<div>surfaces: ${ GBX.surfaces.length.toLocaleString() } </div>
 		<div>coordinates: ${ count.toLocaleString() } </div>
 		<div>constructions: ${ GBX.constructions.length.toLocaleString() } </div>
+		<div>materials: ${ GBX.materials.length.toLocaleString() } </div>
+		<div>layers: ${ GBX.layers.length.toLocaleString() } </div>
+		<div>window-types: ${ GBX.windowTypes.length.toLocaleString() } </div>
+
+		<p>Need more? Just ask...</p>
 	`;
 
-	const tag = document.body.querySelectorAll( "#GBXUdivStatsGbx" );
+	tag = document.body.querySelectorAll( "#FOBdivAppStats" );
 
-	if ( tag.length ) { tag[ 0 ].innerHTML = htm; }
+	if ( tag.length > 0 ) { tag[ 0 ].innerHTML = htm; }
 
 };
 

@@ -6,17 +6,17 @@
 const GWV = {
 
 	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-06-07",
-	"description": "Check for surfaces with vertices unconnected to other vertices",
-	"helpFile": "gwv-get-watertight-vertices/README.md",
-	"version": "0.4.0-0"
+	"date": "2019-06-26",
+	"description": "Check for surfaces with vertices unconnected to other vertices. Ignore all \"Shade\" surface types.",
+	"helpFile": "../js-fixer/gwv-get-watertight-vertices/README.md",
+	"version": "0.16.01-1gwv"
 
 };
 
 
-GWV.types = [
+GWV.typesNoShade = [
 
-	"InteriorWall", "ExteriorWall", "Roof", "InteriorFloor", "ExposedFloor", "Shade", "UndergroundWall",
+	"InteriorWall", "ExteriorWall", "Roof", "InteriorFloor", "ExposedFloor", "UndergroundWall",
 	"UndergroundSlab", "Ceiling", "Air", "UndergroundCeiling", "RaisedFloor", "SlabOnGrade",
 	"FreestandingColumn", "EmbeddedColumn"
 ];
@@ -35,7 +35,7 @@ GWV.getMenuWatertightVertices = function() {
 					${ GWV.help }
 				</summary>
 
-				<p>${ GWV.description }</p>
+				<p>${ GWV.description } See ?/read me for more details.</p>
 
 				<div id=GWVdivSurface ></div>
 
@@ -53,9 +53,7 @@ GWV.getSurfacesTight = function() {
 
 	const timeStart = performance.now();
 
-	GWV.surfacesTight = [];
-
-	GWV.surfacesTight = GBX.surfaces.filter( ( surface, index ) => {
+	GWV.surfacesNoShade = GBX.surfaces.filter( ( surface, index ) => {
 
 		const id = surface.match( / id="(.*?)"/i )[ 1 ];
 
@@ -63,16 +61,16 @@ GWV.getSurfacesTight = function() {
 		typeSource = typeSource ? typeSource[ 1 ] : "";
 		//console.log( '', typeSource );
 
-		return typeSource !== "Shade";
+		return GWV.typesNoShade.includes( typeSource ) === true;
 
 	} );
-	//console.log( 'GWV.surfacesTight', GWV.surfacesTight );
+	//console.log( 'GWV.surfacesNoShade', GWV.surfacesNoShade );
 
 	GWV.cartesianPoints = [];
 
-	GWV.surfacesTight.forEach ( surface => {
+	GWV.surfacesNoShade.forEach ( surface => {
 
-		planarGeometry = surface.match( /<PlanarGeometry(.*?)<\/PlanarGeometry>/gi )[ 0 ];
+		planarGeometry = surface.match( /<PlanarGeometry(.*?)<\/PlanarGeometry>/gi )[ 0 ]; // [ 0] is for surface - others are openings
 		//console.log( 'planarGeometry', planarGeometry );
 
 		cartesianPoints = planarGeometry.match( /<CartesianPoint(.*?)<\/CartesianPoint>/gi );
@@ -89,7 +87,7 @@ GWV.getSurfacesTight = function() {
 	GWV.pointCount = Array.from( { length: GWV.uniquePoints.length }, () => 0 )
 	//console.log( 'pointCount', pointCount );
 
-	for ( let surface of GWV.surfacesTight ) {
+	for ( let surface of GWV.surfacesNoShade ) {
 
 		const cartesianPoints = surface.match( /<CartesianPoint(.*?)<\/CartesianPoint>/gi );
 		//console.log( 'cartesianPoints', cartesianPoints.length );
@@ -117,7 +115,7 @@ GWV.getSurfacesTight = function() {
 		if ( point < 2 ) {
 			//console.log( 'point', point, index );
 
-			const surfaces = GWV.surfacesTight.filter( ( surface ) => surface.includes( GWV.uniquePoints[ index ] ) );
+			const surfaces = GWV.surfacesNoShade.filter( ( surface ) => surface.includes( GWV.uniquePoints[ index ] ) );
 			//console.log( 'surfaces', surfaces );
 
 			GWV.surfaceUniques.push( surfaces[ 0 ] );
@@ -174,7 +172,7 @@ GWV.getSurfacesTight = function() {
 
 GWV.setSurfaceData = function( select ) {
 
-	//const surface = GWV.surfacesTight[ select.selectedIndex ];
+	//const surface = GWV.surfacesNoShade[ select.selectedIndex ];
 	//console.log( 'surface', surface );
 
 	const htm =

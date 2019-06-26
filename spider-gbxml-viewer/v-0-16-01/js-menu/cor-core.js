@@ -22,7 +22,7 @@ FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristo
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/GreenBuildingXML/Sample-gbXML-Files@master/gbXML_TRK.xml";
 
 // For main menu header
-MNU.helpFile = "../README.md";
+MNU.helpFile = "../../README.md";
 
 //MNU.description = document.head.querySelector( '[ name=description ]' ).content;
 //MNU.description = `Tools to help you find, load, examine and edit gbXML files - in large numbers and size`;

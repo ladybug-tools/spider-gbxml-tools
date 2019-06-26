@@ -1,6 +1,6 @@
-# gwv-get-watertight-vertices Read Me
+# GVW Get Watertight Vertices v0.16.01-1gwv Read Me
 
-[Source code]( https://github.com/ladybug-tools/spider-gbxml-fixer/tree/master/r0-4-0/gwv-get-watertight-vertices )
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-16-01/js-fixer/gwv-get-watertight-vertices )
 
 <details open>
 
@@ -40,10 +40,14 @@ The appearance of just two identical coordinates occurs from time to time. These
 
 </details>
 
-<details>
+<details open >
 
 <summary>Issues</summary>
 
+### test case
+
+bristol-clifton-downs-broken.xml includes surface 'aim14466' which is an Air surface duplicate of a Shade surface.
+Because Shade type surfaces are ignored, the vertices of the Air surface are found to be unique and are flagged.
 
 </details>
 
@@ -51,8 +55,15 @@ The appearance of just two identical coordinates occurs from time to time. These
 
 <summary>Change Log</summary>
 
-### 2019-06-07 ~ Theo
+### 2019-06-26 ~ Theo
 
+gwv-get-watertight-vertices
+B - GWV.js: checks for inclusion in list of valid surfaces
+C - GVW: update readme
+R - GVW.js: cleanup
+
+
+### 2019-06-07 ~ Theo
 
 * F - GWV.js: First commit
 
