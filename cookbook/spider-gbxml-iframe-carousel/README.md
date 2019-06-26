@@ -33,7 +33,7 @@ Web page carousel displays multiple interactive 3D models in a single space on a
 
 ## Issues
 
-* What is best time delay
+* What is best time delay?
 
 ## Links of Interest
 
@@ -45,6 +45,13 @@ Use of carousels
 
 ## Change Log
 
+
+### 2019-06-26 ~ Theo
+
+spider-gbxml-iframe-carousel R1.3
+
+* D - Link to R16
+* F - Add call to built-in menu slide function
 
 ### 2019-01-23 ~ Theo
 
