@@ -4,7 +4,7 @@
 
 <meta charset = "utf-8">
 <meta name = "copyright" content ="Ladybug Tools authors" >
-<meta name = "date" content = "2019-06-26" >
+<meta name = "date" content = "2019-06-27" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
 <meta name = "version" content = "0.16.01-5" >
@@ -144,8 +144,6 @@
 
 				<div id=FOBdivFileOpenBasic ></div>
 
-				<div id=GBXUdivStatsGbx ></div>
-
 				<div id=FOBdivFileSaveBasic ></div>
 
 			</details>
@@ -227,7 +225,7 @@
 
 	<main id="main" >
 
-		<div id="divContents" >
+		<div id="divContents" ></div>
 
 	</main>
 
@@ -322,9 +320,10 @@ function init() {
 
 	VBCsecViewByConstruction.innerHTML = VBC.getMenuViewByConstruction();
 
-	MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();
+	//MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();
 
 	GBX.init(); // gets things going
+	COR.init();
 
 	// let's go / FOB to load default and fire onload events
 	if ( !location.hash ) { location.hash=FOB.urlDefaultFile; } else { FOB.onHashChange(); }

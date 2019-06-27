@@ -168,7 +168,7 @@ POPX.onDocumentMouseDown = function( event ) {
 
 		POPdivPopupData.innerHTML = POPX.getIntersectedDataHtml();
 
-		POPdivMessage.innerHTML = POPX.footer;
+		POPdivFooter.innerHTML = POPX.footer;
 
 		navPopup.hidden = false;
 
@@ -195,7 +195,7 @@ POPX.setPrevious = function() {
 
 	POPdivPopupData.innerHTML = POPX.getIntersectedDataHtml();
 
-	POPdivMessage.innerHTML = POPX.footer;
+	POPdivFooter.innerHTML = POPX.footer;
 
 	navPopup.hidden = false;
 
