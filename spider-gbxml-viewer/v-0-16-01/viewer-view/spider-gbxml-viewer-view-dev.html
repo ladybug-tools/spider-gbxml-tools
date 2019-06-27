@@ -47,11 +47,9 @@
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-03/pop-popup/pop-popup.js" ></script>
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-03/mnu-menu/mnu-menu.js" ></script>
 <!--
-
 	<script src = "../js-core-tootoo/pop-popup.js" ></script>
 	<script src = "../js-core-tootoo/fob-file-open-basic.js" ></script>
 	<script src = "../js-core-tootoo/mnu-menu.js" ></script>
-
 -->
 <script src = "../js-menu/gff-github-folder-files.js" ></script>
 
@@ -106,7 +104,7 @@
 
 			</div>
 
-			<details open >
+			<details >
 
 				<summary class="sumMenuTitle" >GitHub folders & files</summary>
 
@@ -119,7 +117,7 @@
 			</details>
 
 
-			<details open >
+			<details>
 
 				<summary class="sumMenuTitle" >File menu</summary>
 
@@ -297,8 +295,9 @@ function init() {
 
 	VBCsecViewByConstruction.innerHTML = VBC.getMenuViewByConstruction();
 
-	GBX.init(); // gets things going
 	COR.init();
+
+	GBX.init(); // gets things going
 
 	// let's go / FOB to load default and fire onload events
 	if ( !location.hash ) { location.hash=FOB.urlDefaultFile; } else { FOB.onHashChange(); }

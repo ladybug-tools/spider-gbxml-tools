@@ -2,11 +2,23 @@
 // jshint esversion: 6
 /* globals THREE, THR, THRU, timeStart, divLog2 */
 
-const GBXU = { "release": "R15.0", "date": "2019-02-14" };
+/* globals THREE, THR, THRU, FOB, GBXU */
+
+var GBXU = {
+
+	"script": {
+
+		"date": "2019-06-27",
+		"version": "0.16.01-1gbxu"
+	}
+};
+
 
 /*
 
 Change Log
+
+2019-06-27 ~ F- GBXU.js: Add event to turn off ground on load
 
 2019-02-14 ~ Lowered elevation of ground helper to reduce Moire effect
 
@@ -45,6 +57,11 @@ GBXU.toggleGroundHelper = function() {
 
 		THRU.groundHelper.visible = false;
 
+		window.addEventListener( 'keyup', GBXU.onLoad, false );
+		THR.renderer.domElement.addEventListener( 'click', GBXU.onLoad, false );
+		THR.renderer.domElement.addEventListener( 'touchstart', GBXU.onLoad, false );
+
+
 		return;
 
 	}
@@ -53,6 +70,17 @@ GBXU.toggleGroundHelper = function() {
 
 };
 
+
+GBXU.onLoad = function() {
+
+
+	THRU.groundHelper.visible = false;
+
+	window.removeEventListener( 'keyup', GBXU.onLoad );
+	THR.renderer.domElement.removeEventListener( 'click', GBXU.onLoad );
+	THR.renderer.domElement.removeEventListener( 'touchstart', GBXU.onLoad );
+
+}
 
 
 GBXU.setStats = function() {
@@ -85,7 +113,7 @@ GBXU.setStats = function() {
 	GBX.windowTypes = GBX.text.match( /<WindowType(.*?)<\/WindowType>/gi ) || [];
 
 	const timeToLoad = performance.now() - GBX.timeStart;
-	
+
 	const htm =
 	`
 		<div><b>gbML statistics</b></div>

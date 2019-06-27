@@ -16,7 +16,7 @@ THRU.setHelpers = function( radius = 50 ) {
 
 	THRU.toggleAxesHelper();
 
-	window.addEventListener( 'keyup', () => THRU.sceneRotation = 0, false );
+	window.addEventListener( 'keyup', () => THR.controls.autoRotate=false, false );
 	THR.renderer.domElement.addEventListener( 'click', () => THR.controls.autoRotate=false, false );
 	THR.renderer.domElement.addEventListener( 'touchstart', () => THR.controls.autoRotate=false, false );
 
