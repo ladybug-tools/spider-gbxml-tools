@@ -8,6 +8,8 @@
 
 Check for surfaces with vertices unconnected to other vertices
 
+2019-06-26 ~ Generally seems to be working well
+
 ### Rationale
 
 A typical junction of surfaces - such as an external wall / roof corner - has at least three identical corner points or vertices.

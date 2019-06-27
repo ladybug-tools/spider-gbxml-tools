@@ -1,10 +1,12 @@
-# ZZZZZ Read Me
+# GWS Get Watertight Spaces Read Me
 
 [Source code]()
 
 <details>
 
 <summary>Concept</summary>
+
+WIP. At very early stage
 
 </details>
 

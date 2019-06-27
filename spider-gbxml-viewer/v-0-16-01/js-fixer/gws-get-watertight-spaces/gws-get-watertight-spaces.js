@@ -6,10 +6,10 @@
 const GWS = {
 
 	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-05-30",
-	"description": "template for checking surfaces",
+	"date": "2019-06-26",
+	"description": "Checking for water-tight spaces",
 	"helpFile": "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/tmp-template/README.md",
-	"version": "0.4.0-3"
+	"version": "0.16.01-1gws"
 
 };
 
@@ -233,7 +233,11 @@ GWS.getSurfaceData = function() {
 
 	const htm =
 	`
-		<p>${ GWS.spaceRefs.length.toLocaleString() } spaces with possible manifold issues found. This is a work-in-progress. A number of false positives are likely to be found.</p>
+		<p>
+			${ GWS.spaceRefs.length.toLocaleString() } spaces with possible manifold issues found.
+			This is a work-in-progress. A number of false positives are likely to be found.
+			<mark>Space in 3D view is not being displayed.</mark>
+		</p>
 
 		<p>
 			<select id=GWSselSurfaces onclick=GWS.setSurfaceData(this); size=5 style=min-width:8rem; >
