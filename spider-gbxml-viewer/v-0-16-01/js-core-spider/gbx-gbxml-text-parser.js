@@ -35,6 +35,7 @@ GBX.colorsDefault = {
 };
 
 GBX.colors = Object.assign( {}, GBX.colorsDefault ); // create working copy of default colors
+GBX.opacity = 0.85;
 
 GBX.surfaceTypes = Object.keys( GBX.colors );
 
@@ -416,7 +417,7 @@ GBX.getBufferGeometry = function( vertices, color ) {
 	geometry.setFromPoints( vertices );
 
 	geometry.computeVertexNormals();
-	const material = new GBX.materialType( { color: color, opacity: 0.85, side: 2, transparent: true });
+	const material = new GBX.materialType( { color: color, opacity: GBX.opacity, side: 2, transparent: true });
 
 	const mesh = new THREE.Mesh( geometry, material );
 
@@ -476,7 +477,7 @@ GBX.setPolygon = function( vertices, color, holes = [] ) {
 	geometry.setFromPoints( verticesTriangles );
 	geometry.computeVertexNormals();
 
-	const material = new GBX.materialType( { color: color, opacity: 0.85, side: 2, transparent: true } );
+	const material = new GBX.materialType( { color: color, opacity: GBX.opacity, side: 2, transparent: true } );
 
 	const mesh = new THREE.Mesh( geometry, material );
 	mesh.lookAt( plane.normal );

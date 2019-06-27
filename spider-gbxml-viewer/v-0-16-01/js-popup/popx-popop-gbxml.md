@@ -1,4 +1,4 @@
-# POPX gbXML Popoup Read Me
+# POPX gbXML Popoup v0.16.01-2popx Read Me
 
 [Source code](  )
 
@@ -27,6 +27,17 @@
 <details>
 
 <summary>Change Log</summary>
+
+## 2019-06-26 ~ Theo
+
+0.16.01-2popx
+
+* F - POPX.js: add previous button
+* F - POPX.js: Add better button tggles
+* F - POPX.js: View two spaces at once
+* F - POPX.js: Add update surface opacity
+* F - POPX.js: Reset opacity on zoom all
+
 
 ## 2019-06-25 ~ Theo
 

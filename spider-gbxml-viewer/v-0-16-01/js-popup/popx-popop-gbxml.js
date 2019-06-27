@@ -5,10 +5,10 @@
 
 const POPX = {
 	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-06-25",
+	"date": "2019-06-26",
 	"description": "TooToo Menu (POP) generates standard HTML popup menu code and content and code that works on computers, tablets and phones",
 	"helpFile": "js-popup/pop-popup.md",
-	"version": "0.16.01-1popx",
+	"version": "0.16.01-2popx",
 	"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-pop-up"
 };
 
@@ -16,12 +16,14 @@ POPX.footer =
 	`
 		<p style=text-align:right; >
 			<button onclick=POPX.onClickZoomAll(); title="Show entire campus & display attributes" >zoom all +</button>
-			<button onclick=SET.toggleOpenings(); >toggle openings</button>
-			<button onclick=SET.toggleEdgesThreejs(); >toggle edges</button>
+			<button onclick=SET.toggleOpenings(); title="show/hide" >openings</button>
+			<button onclick=SET.toggleEdgesThreejs(); title="show/hide" >edges</button>
+			<button onclick=POPX.setPrevious(); style=background:yellow; >previous</button>
 		</p>
 	`;
 
 ////////// Inits
+
 
 POPX.init = function() { // call from home page
 
@@ -48,7 +50,12 @@ POPX.init = function() { // call from home page
 
 POPX.onClickZoomAll = function() {
 
-	GBX.surfaceGroup.children.forEach( child => child.visible = true );
+	GBX.surfaceGroup.children.forEach( child => {
+
+		child.visible = true;
+		child.material.opacity = GBX.opacity;
+
+	} );
 
 	THRU.zoomObjectBoundingSphere( GBX.boundingBox );
 
@@ -128,8 +135,7 @@ POPX.onDocumentTouchStart = function( event ) {
 
 
 POPX.onDocumentMouseDown = function( event ) {
-	event.preventDefault();
-	console.log( 'event', event );
+	//console.log( 'event', event );
 
 	//if ( event.button && event.button !== 0 ) { return ; }
 
@@ -154,6 +160,10 @@ POPX.onDocumentMouseDown = function( event ) {
 
 		POPX.intersected = POPX.intersects[ 0 ].object;
 
+		POPX.intersected.material.opacity = 1;
+
+		POPX.intersectedLast = POPX.intersected;
+
 		POPX.setIntersectedParticleAtPoint( POPX.intersects[ 0 ].point );
 
 		POPdivPopupData.innerHTML = POPX.getIntersectedDataHtml();
@@ -176,6 +186,23 @@ POPX.onDocumentMouseDown = function( event ) {
 
 
 
+
+POPX.setPrevious = function() {
+
+	POPX.intersected = POPX.intersectedLast;
+
+	POPX.intersected.material.opacity = 1;
+
+	POPdivPopupData.innerHTML = POPX.getIntersectedDataHtml();
+
+	POPdivMessage.innerHTML = POPX.footer;
+
+	navPopup.hidden = false;
+
+};
+
+
+
 POPX.setIntersectedParticleAtPoint = function( point ) {
 	//console.log( 'point', point );
 
@@ -193,7 +220,7 @@ POPX.setIntersectedParticleAtPoint = function( point ) {
 
 
 POPX.getIntersectedDataHtml = function() {
-	//console.log( 'POPX.intersected', POPX.intersected );
+	console.log( 'POPX.intersected', POPX.intersected );
 
 	const index = POPX.intersected.userData.index;
 
@@ -233,8 +260,8 @@ POPX.getIntersectedDataHtml = function() {
 					title="Show or hide selected surface" > &#x1f441; </button>
 				<button onclick=POPX.setSurfaceZoom(); title="Zoom into selected surface" > ⌕ </button>
 
-				<button onclick=POPX.toggleSurfaceNeighbors(); title="Show surfaces with shared vertexes" > # </button>
-				<button onclick=POPX.toggleVertexPlacards(); title="Display vertex numbers" > * </button>
+				<button style=background:yellow; onclick=POPX.toggleSurfaceNeighbors(); title="Show surfaces with vertexes shared with this surface" > # </button>
+				<button style=background:yellow; onclick=POPX.toggleVertexPlacards(); title="Display vertex numbers" > * </button>
 			</p>
 
 			<p>
@@ -256,7 +283,6 @@ POPX.getIntersectedDataHtml = function() {
 		<hr>
 
 	`;
-	// to do <button onclick=POPX.toggleVertexPlacards(); title="Display vertex numbers" > # </button>
 
 	return htm;
 
@@ -305,7 +331,7 @@ POPX.getAdjSpaceButtons = function() {
 
 	if ( GSA.adjacentSpaceIds.length === 0 ) {
 
-		htm = "";
+		htm = "<div id=POPXbutAdjacentSpace1 ></div><div id=POPXbutAdjacentSpace2 ></div>";
 
 	} else if ( GSA.adjacentSpaceIds.length === 1 ) {
 
@@ -315,7 +341,7 @@ POPX.getAdjSpaceButtons = function() {
 		htm =
 		`
 			<button id=POPXbutAdjacentSpace1 onclick=POPX.toggleSpaceVisible(this,"${ spaceId }","");
-				title="id: ${ spaceId }" >space: ${ GSA.spaceNames[ 0 ] }</button>
+				value="${ spaceId }" title="id: ${ spaceId }" >space: ${ GSA.spaceNames[ 0 ] }</button>
 			</div><div id=POPXbutAdjacentSpace2 ></div>
 		`;
 
@@ -328,10 +354,10 @@ POPX.getAdjSpaceButtons = function() {
 		htm =
 		`
 			<button id=POPXbutAdjacentSpace1 onclick=POPX.toggleSpaceVisible(this,"${ spaceId1 }","");
-				title="id: ${ spaceId1 }" >space: ${ GSA.spaceNames[ 0 ] }</button>
+			value="${ spaceId1 }" title="id: ${ spaceId1 }" >space: ${ GSA.spaceNames[ 0 ] }</button>
 
 			<button id=POPXbutAdjacentSpace2 onclick=POPX.toggleSpaceVisible(this,"${ spaceId2 }","");
-				title="id: ${ spaceId2 }" >space: ${ GSA.spaceNames[ 1 ] }</button>
+			value="${ spaceId2 }" title="id: ${ spaceId2 }" >space: ${ GSA.spaceNames[ 1 ] }</button>
 		`;
 	}
 
@@ -349,7 +375,7 @@ POPX.setOneButtonActive = function( button ) {
 
 	Array.from( buttons ).forEach( butt => { if ( butt !== button ) ( button.classList.remove( "active" ) ); } );
 
-	//button.classList.add( "active" );
+	button.classList.add( "active" );
 
 };
 
@@ -360,16 +386,26 @@ POPX.toggleSurfaceFocus = function( button ) {
 	button.classList.toggle( "active" );
 
 	//POPX.setOneButtonActive( button );
+	POPXbutAdjacentSpace1.classList.remove( "active" );
+	POPXbutAdjacentSpace2.classList.remove( "active" );
+	POPXbutStoreyVisible.classList.remove( "active" );
+	POPXbutZoneVisible.classList.remove( "active" );
 
 	const focus = button.classList.contains( "active" );
 
 	if ( focus === true ) {
 
-		GBX.surfaceGroup.children.forEach( child => child.visible = false );
+		GBX.surfaceGroup.children.forEach( child => {
+
+			child.visible = false;
+			child.material.opacity = 0.3;
+
+		} );
 
 		POPX.intersected.visible = true;
+		POPX.intersected.material.opacity = 1;
 
-		const bbox = new THREE.Box3();
+/* 		const bbox = new THREE.Box3();
 		const meshes = [ POPX.intersected ];
 
 		meshes.forEach( mesh => bbox.expandByObject ( mesh ) );
@@ -382,17 +418,16 @@ POPX.toggleSurfaceFocus = function( button ) {
 
 		THR.controls.target.copy( center );
 		THR.camera.position.copy( center.clone().add( vector ) );
-
+*/
 
 	} else {
 
 		GBX.surfaceGroup.children.forEach( child => child.visible = true );
 
 	}
-
 	//const surfaceJson = POPX.intersected.userData.gbjson;
 
-	POPXelementAttributes.innerHTML = GSA.getSurfaceAttributes( POPX.surfaceXml );
+	POPXelementAttributes.innerHTML = GSA.getSurfaceAttributes( POPX.surfaceXml, POPX.surfaceId, POPX.intersected.userData.index );
 
 };
 
@@ -408,20 +443,16 @@ POPX.toggleSurfaceVisible = function() {
 
 POPX.toggleVertexPlacards = function() {
 
-	//const vertices = POPX.intersected.userData.gbjson.PlanarGeometry.PolyLoop.CartesianPoint
-	//	.map( point => new THREE.Vector3().fromArray( point.Coordinate.map( point => Number( point ) )  ) );
-
-	vertices = POPX.line.geometry.vertices;
-
-	//console.log( 'vvv', vertices );
+	const vertices = POPX.line.geometry.vertices;
+	//console.log( 'vertices', vertices );
 
 	const distance = THR.camera.position.distanceTo( THR.controls.target );
 	const scale = 0.01;
 	const placards = vertices.map( ( vertex, index ) =>
 		THRU.drawPlacard( '#' + ( 1 + index ), 0.0003 * distance, 0x00ff00, vertex.x + scale * distance, vertex.y + scale * distance, vertex.z + scale * distance )
 	);
-
 	//console.log( '', placards );
+
 	POPX.line.add( ...placards );
 
 };
@@ -432,12 +463,16 @@ POPX.toggleSpaceVisible = function( button, spaceId ) {
 
 	button.classList.toggle( "active" );
 
+	POPXbutSurfaceFocus.classList.remove( "active" );
+	POPXbutStoreyVisible.classList.remove( "active" );
+	POPXbutZoneVisible.classList.remove( "active" );
+
 	const visible1 = POPXbutAdjacentSpace1.classList.contains( "active" );
-	const spaceId1 = POPXbutAdjacentSpace1.innerHTML.slice( 7 );
+	const spaceId1 = POPXbutAdjacentSpace1.value;
 
 	const visible2 = POPXbutAdjacentSpace2.classList.contains( "active" );
-	const spaceId2 = POPXbutAdjacentSpace2.innerHTML.slice( 7 );
-	//console.log( 'adj space vis', visible1, visible2 );
+	const spaceId2 = POPXbutAdjacentSpace2.value;
+
 
 	const children =  GBX.surfaceGroup.children;
 
@@ -464,19 +499,29 @@ POPX.toggleSpaceVisible = function( button, spaceId ) {
 
 	} else if ( visible1 === true && visible2 === true ) {
 
-		children.forEach( child => child.visible = false );
-
+ 		children.forEach( child => child.visible = false );
+/*
 		for ( let child of children )  {
 
 			const id = child.userData.index;
 			const surface = GBX.surfaces[ id ];
 			const arr = surface.match( / spaceIdRef="(.*?)"/g );
-
+			console.log( 'arr', arr );
 			if ( !arr ) { break; }
 
 			arr.forEach( item => child.visible = item.includes( spaceId1 ) || item.includes( spaceId2 ) ? true : child.visible );
 
-		}
+		} */
+
+		console.log( 'adj space vis', spaceId1, visible1, spaceId2, visible2 );
+		GBX.surfaces.forEach( ( surface, index ) => {
+			//console.log( 'index', index );
+
+			if ( surface.includes( spaceId1 ) || surface.includes( spaceId2 ) ) {
+				children[ index ].visible = true;
+
+			}
+		} );
 
 	}
 
@@ -523,6 +568,11 @@ POPX.getSpaceAttributes = function( spaceId ) {
 POPX.toggleStoreyVisible = function( button, storeyId ) {
 
 	button.classList.toggle( "active" );
+
+	POPXbutSurfaceFocus.classList.remove( "active" );
+	POPXbutAdjacentSpace1.classList.remove( "active" );
+	POPXbutAdjacentSpace2.classList.remove( "active" );
+	POPXbutZoneVisible.classList.remove( "active" );
 
 	const focus = button.classList.contains( "active" );
 
@@ -621,6 +671,11 @@ POPX.getStoreyAttributes = function ( storeyId ) {
 POPX.getToggleZoneVisible = function ( button, zoneIdRef ) {
 
 	button.classList.toggle( "active" );
+
+	POPXbutSurfaceFocus.classList.remove( "active" );
+	POPXbutAdjacentSpace1.classList.remove( "active" );
+	POPXbutAdjacentSpace2.classList.remove( "active" );
+	POPXbutStoreyVisible.classList.remove( "active" );
 
 	const focus = button.classList.contains( "active" );
 	const children = GBX.surfaceGroup.children;
@@ -726,6 +781,20 @@ POPX.getZoneAttributes = function( zoneIdRef ) {
 POPX.setSurfaceZoom = function() {
 
 	const surfaceMesh = POPX.intersected;
+
+	const bbox = new THREE.Box3();
+	const meshes = [ POPX.intersected ];
+
+	meshes.forEach( mesh => bbox.expandByObject ( mesh ) );
+
+	const sphere = bbox.getBoundingSphere( new THREE.Sphere() );
+	const center = sphere.center;
+	//const radius = sphere.radius;
+	const radius = THRU.radius;
+	const vector = THR.camera.position.clone().sub( THR.controls.target );
+
+	THR.controls.target.copy( center );
+	THR.camera.position.copy( center.clone().add( vector ) );
 
 	POPX.setCameraControls( [ surfaceMesh ] );
 
