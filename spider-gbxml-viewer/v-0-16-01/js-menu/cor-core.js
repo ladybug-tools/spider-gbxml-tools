@@ -34,6 +34,10 @@ MNU.helpFile = "../../README.md";
 
 //MNU.description = document.head.querySelector( '[ name=description ]' ).content;
 //MNU.description = `Tools to help you find, load, examine and edit gbXML files - in large numbers and size`;
+MNU.description =
+	`
+		Mission: run a series of basics checks on <a href="https://gbXML.org" target="_blank">gbXML</a> files to identify, report and help you fix any errors
+	`;
 
 MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/";
 
@@ -53,9 +57,32 @@ MNU.footerPopupUrl = "https://www.ladybug.tools/spider/";
 MNU.footerTarget = "target=_blank";
 MNU.footerIssues = "https://github.com/ladybug-tools/spider-gbxml-fixer/issues";
 
+
 COR.init = function() {
 
 	COR.css = document.body.appendChild( document.createElement('style') );
-	COR.css.innerHTML = "#POPdivFooter { color: #f00; }";
+	COR.css.innerHTML =
+		`
+		#POPdivFooter { color: #f00; }
+
+		body { margin: 0; padding: 0; overflow: hidden; }
+
+		#divContents { border: 0px solid red; height: 100%; max-width: 100%; }
+
+		#navPanel { background-color: #eee; }
+
+		#navPopup { left: auto; max-width: 25%; right: 1rem; top: 1rem; }
+		/* #navPopup { background-color: #eee; } */
+
+
+		#VSTdivSurfaceType button  { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;
+			padding: 2px 5px; min-width: 13.5rem; }
+
+		#VSTdivSurfaceType button:hover { background: #ccc; color: #888 }
+
+		button.active { border-color: black; font-style: italic; font-weight: bold; margin-left: 1rem;
+			box-shadow: 2px 2px #888; }
+
+		`;
 
 };

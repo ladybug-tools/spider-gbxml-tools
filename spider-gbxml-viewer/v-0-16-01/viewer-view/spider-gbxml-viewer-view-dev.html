@@ -20,30 +20,13 @@
 
 <style>
 
-	body { margin: 0; padding: 0; overflow: hidden; }
-
-	#divContents { border: 0px solid red; height: 100%; max-width: 100%; }
-
-	#navPanel { background-color: #eee; }
-
-	#navPopup { left: auto; max-width: 25%; right: 1rem; top: 1rem; }
-	/* #navPopup { background-color: #eee; } */
-
-
-	#VSTdivSurfaceType button  { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;
-		padding: 2px 5px; min-width: 13.5rem; }
-
-	#VSTdivSurfaceType button:hover { background: #ccc; color: #888 }
-
-	button.active { border-color: black; font-style: italic; font-weight: bold; margin-left: 1rem;
-		box-shadow: 2px 2px #888; }
+	#divContents { height: 100%; max-width: 100%; }
 
 </style>
 
 </head>
 
 <body>
-
 
 <!-- utility libraries -->
 <script src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
@@ -53,9 +36,9 @@
 <script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r105/build/three.min.js" ></script>
 <script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r105/examples/js/controls/OrbitControls.js" ></script>
 
-<!-- Tootoo -->
+<!-- Tootoo
 	<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-03/thm-theme/thm-theme.js" ></script>
-
+ -->
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-03/gat-github-access-token/gat-github-access-token.js" ></script>
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-03/tmp-template/tmp-template.js" ></script>
 
@@ -250,8 +233,8 @@
 
 <script>
 
-THM.themeUrlStorage = 'spider-gbxml-view-theme-url';
-THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-03/style.css";
+//THM.themeUrlStorage = 'spider-gbxml-view-theme-url';
+//THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-03/style.css";
 
 
 //FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
@@ -259,12 +242,6 @@ THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-03/style.css";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/annapolis-md-single-family-residential-2016.xml"
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/pittsburg-airport.zip";
 FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/GreenBuildingXML/Sample-gbXML-Files@master/gbXML_TRK.xml";
-
-MNU.description =
-	`
-		Mission: run a series of basics checks on <a href="https://gbXML.org" target="_blank">gbXML</a> files to identify, report and help you fix any errors
-	`;
-
 
 
 init();
@@ -292,7 +269,7 @@ function init() {
 	//const mesh = THRU.getGeometry();
 	//THR.scene.add( mesh );
 
-	THMdivMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
+	//THMdivMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
 	//THM.init();
 
 	MNUdivHeader.innerHTML = MNU.getNavHeader();
@@ -319,8 +296,6 @@ function init() {
 	VBOsecViewByOpenings.innerHTML = VBO.getMenuViewByOpenings();
 
 	VBCsecViewByConstruction.innerHTML = VBC.getMenuViewByConstruction();
-
-	//MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();
 
 	GBX.init(); // gets things going
 	COR.init();
