@@ -1,4 +1,3 @@
-// Copyright 2019 Ladybug Tools authors. MIT License
 // jshint esversion: 6
 /* globals GBX, VST, THREE, THR, POPX, VBSPdetMenu, POPdivPopupData, VBSPselSpace, VBSPdivReportsLog, VSTdivSurfaceType */
 

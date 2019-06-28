@@ -1,16 +1,17 @@
-// Copyright 2018 Ladybug Tools authors. MIT License
-/* globals GBX, POPX, ISCOR, POPdivPopupData*/
-/* jshint esversion: 6 */
+/* globals THR, GBX, POPX, POPdivPopupData, VBSUdet, VBSUselAttribute, VBSUselViewBySurfaces, VBSUspnCount */
+// jshint esversion: 6
+// jshint loopfunc: true
 
 const VBSU = {
 
 	"script": {
+
 		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-		"date": "2019-06-27",
+		"date": "2019-06-28",
 		"description": "View by Surfaces (VBSU) provides HTML and JavaScript to view individual surfaces.",
 		"helpFile": "../js-view/vbsu-view-by-surfaces.md",
-		"version": "0.16-01-2vbsu",
 		"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-16-01/js-view",
+		"version": "0.16-01-3vbsu"
 
 	}
 
@@ -24,7 +25,8 @@ VBSU.getMenuViewBySurfaces = function() {
 
 	const help = `<button id="butVBSUsum" class="butHelp" onclick="POP.setPopupShowHide(butVBSUsum,VBSU.script.helpFile);" >?</button>`;
 
-	const selectOptions = ["id", "CADObjectId", "constructionIdRef", "Name"].map( option => `<option>${ option }</option>`)
+	const selectOptions = [ "id", "CADObjectId", "constructionIdRef", "Name" ]
+		.map( option => `<option>${ option }</option>`);
 
 	const htm =
 
@@ -33,12 +35,11 @@ VBSU.getMenuViewBySurfaces = function() {
 		<summary>Surfaces individually<span id="VBSUspnCount" ></span> ${ help }</summary>
 
 		<p>
-			View surfaces one at a time
+			View surfaces one at a time.
 		</p>
 
 		<p>
 			<input id=VBSUinpSelectIndex oninput=VBSU.setSelectedIndex(this,VBSUselViewBySurfaces) placeholder="Enter an attribute" >
-
 		</p>
 
 		<p>
@@ -46,7 +47,8 @@ VBSU.getMenuViewBySurfaces = function() {
 			</select>
 		</p>
 
-		<p>Attribute to show: <select id=VBSUselAttribute oninput=VBSU.setViewBySurfacesSelectOptions(); >${ selectOptions }</select></p>
+		<p>Attribute to show:
+			<select id=VBSUselAttribute oninput=VBSU.setViewBySurfacesSelectOptions(); >${ selectOptions }</select></p>
 
 		<p>Select multiple surfaces by pressing shift or control keys</p>
 
@@ -63,6 +65,7 @@ VBSU.getMenuViewBySurfaces = function() {
 };
 
 
+
 VBSU.setViewBySurfacesSelectOptions = function() {
 
 	if ( VBSUdet.open === false ) { return; }
@@ -72,7 +75,7 @@ VBSU.setViewBySurfacesSelectOptions = function() {
 
 	let color, text;
 
-	htmOptions = GBX.surfaces.map( (surface, index ) => {
+	const htmOptions = GBX.surfaces.map( (surface, index ) => {
 
 		color = color === 'pink' ? '' : 'pink';
 
@@ -82,17 +85,11 @@ VBSU.setViewBySurfacesSelectOptions = function() {
 			text = text ? text[ 1 ] : "";
 			//console.log( 'text', text );
 
-		} else if ( attribute === "Name" ) {
+		} else if ( [ "Name", "CADObjectId" ].includes( attribute ) ) {
 
-			text = surface.match( /<Name>(.*?)<\/Name>/i );
-			//console.log( 'text', text );
+			text = surface.match( `<${ attribute }>(.*?)<\/${ attribute }>` );
 			text = text ? text[ 1 ] : "";
-
-		} else if ( attribute === "CADObjectId" ) {
-
-			text = surface.match( /<CADObjectId>(.*?)<\/CADObjectId>/gi );
 			//console.log( 'text', text );
-			text = text ? text.pop() : "";
 
 		}
 
@@ -115,7 +112,7 @@ VBSU.setSelectedIndex = function( input, select ) {
 
 	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
 
-	select.value =  option ? option.value : "";
+	select.selectedIndex =  str ? option.value : -1;
 
 };
 
@@ -128,13 +125,15 @@ VBSU.selectedSurfacesFocus = function( select ) {
 	POPdivPopupData.innerHTML = POPX.getIntersectedDataHtml();
 	//console.log( 'sel', select.value );
 
-	const options = select.selectedOptions
+	const options = select.selectedOptions;
 	//console.log( 'option', options );
 
 	const indexes = Array.from( options ).map( option => Number( option.value ) );
 	//console.log( 'indexes', indexes );
 
-	VBSU.surfaces = GBX.surfacesIndexed.filter( ( surface, index ) => indexes.includes( index  ) );
+	//VBSU.surfaces = GBX.surfacesIndexed.filter( ( surface, index ) => indexes.includes( index  ) );
+
+	VBSU.surfaces = indexes.map( index => GBX.surfacesIndexed[ index ] );
 
 	GBX.sendSurfacesToThreeJs( VBSU.surfaces );
 

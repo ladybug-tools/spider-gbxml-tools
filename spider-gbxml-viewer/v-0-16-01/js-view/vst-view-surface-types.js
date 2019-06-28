@@ -1,68 +1,21 @@
-// Copyright 2018 Ladybug Tools authors. MIT License
-// jshint esversion: 6
 /* globals VBS, GBX, VSTdivSurfaceType, VSTsecViewSurfaceType, VSTdivReportsLog, THRU, detReports, */
-
+// jshint esversion: 6
+// jshint loopfunc: true
 
 const VST = {
-	"release": "R15.5.1",
-	"date": "2019-06-05"
+	"script": {
+
+		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",	"date": "2019-06-28",
+		"date": "2019-06-28",
+		"description": "Show or hide the surfaces (VST) in a gbXML file by surface type.",
+		"helpFile": "../js-view/vst-view-surface-types.md",
+		"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-16-01/js-view/vst-view-surface-types.js",
+		"version": "0.16.01-1vst"
+
+	}
+
 };
 
-VST.description =
-	`
-		Show or hide the surfaces in a gbXML file by surface type.
-	`;
-
-VST.currentStatus =
-	`
-		<h3> View Surface Type (VST) ${ VST.release } ~ ${ VST.date }</h3>
-
-		<p>
-			${ VST.description }
-		</p>
-
-		<p>Concept
-			<ul>
-				<li>View selected surfaces in a gbXML file using a variety of filters</li>
-			</ul>
-		</p>
-
-		<p>
-			<a href="https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/r15/js-gbxml/vst-view-surface-types.js" target="_blank" >
-				View Surface Type Source code
-			</a>
-		</p>
-
-		<p>
-			Issues
-		</p>
-
-		<details>
-			<summary>Wish list</summary>
-			<ul>
-
-				<li>2019-02-07 ~ Better interaction with openings</li>
-				<li>Faster operations on very large files</li>
-			</ul>
-		</details>
-
-		<details>
-			<summary>Change log</summary>
-			<ul>
-				<li>2019-04-18 ~ 15.5 ~ New features on all the buttons</li>
-				<li>2019-02-25 ~ 15.4 ~ Fixes 'exposed to sun; button</li>
-				<li>2019-02-13 ~ Close menu when new file loaded. Reset vars</li>
-				<li>2019-02-11 ~ Pass through jsHint.com and make repairs</li>
-				<li>2019-02-11 ~ Code cleanup. Drop 'reset surfaces' button/code as being redundant</li>
-				<li>2019-02-11 ~ Add log of surfaces currently visible</li>
-				<li>2019-02-08 ~ Working on types/storeys integration</li>
-				<li>2019-02-07 ~ Refactor/simplify code a lot. Improve filtering for roof/shade etc. Add 'reset surfaces' and 'Show all' buttons. Add surface types and storeys connections. </li>
-				<li>2019-02-07 ~ Update pop-up text / variable names. Reposition stats.</li>
-				<li>buttons updated when hor/ver buttons pressed</li>
-				<li>2019-02-01 ~ First commit, Fork from vwsrf-view-surface-types.js. Big cleanup. </li>
-			</ul>
-		</details>
-	`;
 
 
 
@@ -74,13 +27,16 @@ VST.getMenuViewSurfaceTypes = function() {
 
 	document.body.addEventListener( 'onGbxParse', VST.resetMenu, false );
 
+	document.body.addEventListener( 'onGbxParse', function(){ VBSUdet.open = false; }, false );
+
+	const help = `<button id="butVSTsum" class="butHelp" onclick="POP.setPopupShowHide(butVSTsum,VST.script.helpFile);" >?</button>`;
+
+
 	const htm =
 	`
 		<details id=detReports ontoggle=VST.onToggleSurfaceTypes(); >
 
-			<summary>Show/hide by surface type
-				<a id=vstHelp class=helpItem href="JavaScript:POP.setPopupShowHide(vstHelp,VST.currentStatus);" >&nbsp; ? &nbsp;</a>
-			</summary>
+			<summary>Show/hide by surface type ${ help }</summary>
 
 			<p>
 				Show by surface type. Default is exterior surfaces only.
