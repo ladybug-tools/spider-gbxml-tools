@@ -77,7 +77,11 @@
 
 
 <script src = "../js-view/vbo-view-by-openings.js" ></script>
+<script src = "../js-view/vbw-view-by-window-types.js" ></script>
+
 <script src = "../js-view/vbc-view-by-construction.js"></script>
+<script src = "../js-view/vbl-view-by-layers.js" ></script>
+<script src = "../js-view/vbm-view-by-materials.js" ></script>
 
 
 <script src = "../js-menu/cor-core.js" ></script>
@@ -176,9 +180,9 @@
 
 				<section id="VBCsecViewByConstruction" ></section>
 
-				<section id="VBCsecViewByLayer" ></section>
+				<section id="VBLsecViewByLayers" ></section>
 
-				<section id="VBCsecViewByMaterial" ></section>
+				<section id="VBMsecViewByMaterials" ></section>
 
 			</details>
 
@@ -305,7 +309,13 @@ function init() {
 
 	VBOsecViewByOpenings.innerHTML = VBO.getMenuViewByOpenings();
 
+	VBWsecViewByWindowTypes.innerHTML = VBW.getMenuViewByWindowTypes();
+
 	VBCsecViewByConstruction.innerHTML = VBC.getMenuViewByConstruction();
+
+	VBLsecViewByLayers.innerHTML = VBL.getMenuViewByLayers();
+
+	VBMsecViewByMaterials.innerHTML = VBM.getMenuViewByMaterials();
 
 	COR.init();
 
