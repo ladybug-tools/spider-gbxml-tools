@@ -73,6 +73,9 @@
 <script src = "../js-view/vbs-view-by-storeys.js" ></script>
 <script src = "../js-view/vbsp-view-by-spaces.js" ></script>
 <script src = "../js-view/vbz-view-by-zones.js" ></script>
+<script src = "../js-view/vbco-view-by-cad-object-id.js" ></script>
+
+
 <script src = "../js-view/vbo-view-by-openings.js" ></script>
 <script src = "../js-view/vbc-view-by-construction.js"></script>
 
@@ -165,10 +168,17 @@
 
 				<section id="VBZsecViewByZones" ></section>
 
+				<section id="VBCOsecViewByCadObjectId" ></section>
+
 				<section id="VBOsecViewByOpenings" ></section>
+
+				<section id="VBWsecViewByWindowTypes" ></section>
 
 				<section id="VBCsecViewByConstruction" ></section>
 
+				<section id="VBCsecViewByLayer" ></section>
+
+				<section id="VBCsecViewByMaterial" ></section>
 
 			</details>
 
@@ -290,6 +300,8 @@ function init() {
 	VBSPsecViewBySpaces.innerHTML = VBSP.getMenuViewBySpaces();
 
 	VBZsecViewByZones.innerHTML = VBZ.getMenuViewByZones();
+
+	VBCOsecViewByCadObjectId.innerHTML = VBCO.getMenuViewByCadObjectId()
 
 	VBOsecViewByOpenings.innerHTML = VBO.getMenuViewByOpenings();
 

@@ -68,8 +68,7 @@ VBSU.setViewBySurfacesSelectOptions = function() {
 	if ( VBSUdet.open === false ) { return; }
 
 	const attribute = VBSUselAttribute.value;
-
-	console.log( 'attribute', attribute );
+	//console.log( 'attribute', attribute );
 
 	let color, text;
 
@@ -115,7 +114,6 @@ VBSU.setSelectedIndex = function( input, select ) {
 	const str = input.value.toLowerCase();
 
 	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
-
 
 	select.value =  option ? option.value : "";
 
