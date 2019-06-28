@@ -1,4 +1,4 @@
-/* globals GBX */
+/* globals THR, GBX, POPX, GSA, VBCdetMenu, VBCselViewByConstruction, POPdivPopupData*/
 // jshint esversion: 6
 /* jshint loopfunc: true */
 
@@ -64,27 +64,27 @@ VBC.getViewByConstructionSelectOptions = function() {
 
 	//VBO.constructions = []; //GBX.surfaces.slice();
 
-	constructions = GBX.surfaces.map( (surface, surfaceIndex ) => {
+	let constructions = GBX.surfaces.map( (surface, surfaceIndex ) => {
 
-		construction = surface.match( /constructionIdRef="(.*?)"/i )|| [];
+		const construction = surface.match( /constructionIdRef="(.*?)"/i )|| [];
 
 		return construction.length > 0 ? construction[ 1 ] : "";
 
-	} )
+	} );
 
 	constructions = [...new Set( constructions )];
 	VBC.constructionRefs = constructions.sort();
-	console.log( '', VBC.constructionRefs );
+	//console.log( '', VBC.constructionRefs );
 
 	let color;
 
-	htmOptions = VBC.constructionRefs.map( construction => {
+	const htmOptions = VBC.constructionRefs.map( construction => {
 
 		color = color === 'pink' ? '' : 'pink';
 
 		return `<option style=background-color:${ color }  >${ construction }</option>`;
 
-	} )
+	} );
 
 	VBCselViewByConstruction.innerHTML = htmOptions;
 
@@ -100,7 +100,7 @@ VBC.selectedConstructionFocus = function( button ) {
 
 	THR.scene.remove( POPX.line, POPX.particle );
 
-	constructionId = button.value;
+	const constructionId = button.value;
 	//console.log( 'constructionId', constructionId );
 
 	const surfaces = GBX.surfacesIndexed.filter( (surface, surfaceIndex ) => {
@@ -123,13 +123,14 @@ VBC.getConstruction = function( constructionId ) {
 
 	//console.log( 'VBC.constructions', VBC.constructions );
 
-	construction = VBC.constructions.find( construction => construction.includes( constructionId ) );
+	const construction = VBC.constructions.find( construction => construction.includes( constructionId ) );
 
 	const parser = new DOMParser();
 	const constructionXml = parser.parseFromString( construction, "application/xml" ).documentElement;
 
 	const atts = GSA.getAttributesHtml( constructionXml );
-	attributesHTM =
+
+	const attributesHTM =
 	`
 		<b>${ constructionId } construction</b>
 

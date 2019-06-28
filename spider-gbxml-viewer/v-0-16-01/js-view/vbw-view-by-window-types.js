@@ -6,11 +6,11 @@ const VBW = {
 
 	"script": {
 		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-		"date": "2019-06-27",
+		"date": "2019-06-28",
 		"description": "View by Surfaces (VBW) provides HTML and JavaScript to view individual surfaces.",
-		"helpFile": "../js-view/vbsu-view-by-surfaces.md",
-		"version": "0.16-01-2vbsu",
-		"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-16-01/js-view",
+		"helpFile": "../js-view/vbw-view-by-window-types.md",
+		"version": "0.16-01-2vbw",
+		"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-16-01/js-view/vbw-view-by-window-types.js",
 
 	}
 
@@ -37,12 +37,11 @@ VBW.getMenuViewByWindowTypes = function() {
 		</p>
 
 		<p>
-			<input id=VBWinpSelectIndex oninput=VBW.setSelectedIndex(this,VBWselViewBySurfaces) placeholder="Enter an attribute" >
-
+			<input id=VBWinpSelectIndex oninput=VBW.setSelectedIndex(this,VBWselViewByWindowTypes) placeholder="Enter an attribute" >
 		</p>
 
 		<p>
-			<select id=VBWselViewByWindowTypes oninput=VBW.selWindowTypes(this); style=width:100%; size=10 multiple >
+			<select id=VBWselViewByWindowTypes oninput=VBW.selWindowTypesFocus(this); style=width:100%; size=10 multiple >
 			</select>
 		</p>
 
@@ -52,8 +51,8 @@ VBW.getMenuViewByWindowTypes = function() {
 
 		<p>
 			<button onclick=VBW.setViewBySurfaceShowHide(this,VBW.surfaces); >
-				Show/hide by surfaces
-			</button> <mark>What would be useful here?</mark>
+				Show/hide surfaces
+			</button>
 		</p>
 
 	</details>`;
@@ -134,7 +133,7 @@ VBW.setSelectedIndex = function( input, select ) {
 
 
 
-VBW.selWindowTypes = function() {
+VBW.selWindowTypesFocus = function( select ) {
 
 	THR.controls.enableKeys = false;
 
@@ -142,39 +141,101 @@ VBW.selWindowTypes = function() {
 
 	THR.scene.remove( POPX.line, POPX.particle );
 
+	POPdivPopupData.innerHTML = VBW.getWindowTypesAttributes( VBWselViewByWindowTypes.value );
+
 	VBW.surfacesFilteredByWindowType = VBW.getSurfacesFilteredByWindowType();
 
-	VBWdivReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( VBW.surfacesFilteredByWindowType );
+	//VBWdivReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( VBW.surfacesFilteredByWindowType );
 
-	POPdivPopupData.innerHTML = POPX.getWindowTypesAttributes( VBWselViewByWindowTypes.value );
 
 };
 
+
+
+VBW.getWindowTypesAttributes = function( index ) {
+
+	const typeTxt = GBX.windowTypes[ index ];
+
+	const typeId = typeTxt.match( ` id="(.*?)"` )[ 1 ];
+
+	const typeXml = POPX.parser.parseFromString( typeTxt, "application/xml").documentElement;
+	//console.log( 'typeXml ', typeXml );
+
+	const htmType = GSA.getAttributesHtml( typeXml );
+
+	const htm =
+	`
+		<b>${ typeId } Attributes</b>
+
+		<p>${ htmType }</p>
+
+		<details>
+
+			<summary>gbXML data</summary>
+
+			<textarea style=width:100%; >${ typeTxt }</textarea>
+
+		</details>
+	`;
+
+	return htm;
+
+};
 
 
 VBW.getSurfacesFilteredByWindowType = function(  ) {
 
-	const typeIds = VBWselViewByWindowTypes.selectedOptions;
+	const options = VBWselViewByWindowTypes.selectedOptions;
 
-	const surfacesFilteredByWindowTypes = [];
+	VBW.setOpenings();
 
-	for ( let typeId of typeIds ) {
+	for ( let option of options ) {
+		console.log( 'option', option );
+
+		const typeTxt = GBX.windowTypes[ Number( option.value ) ];
+
+		const typeId = typeTxt.match( ` id="(.*?)"` )[ 1 ];
 		//console.log( 'typeId', typeId );
 
-		surfacesVisibleByWindowType = GBX.surfacesIndexed.filter( surface => surface.includes( `spaceIdRef="${ spaceId.value }"`  ) )
-		//console.log( 'surfacesVisibleBySpace', surfacesVisibleBySpace );
+		VBW.openings.forEach( ( opening, index ) => {
 
-		surfacesFilteredByWindowTypes.push( ...surfacesVisibleBySpace );
+			let windowTypeIdRef = opening.match( / windowTypeIdRef="(.*?)"/ )
+			windowTypeIdRef = windowTypeIdRef ? windowTypeIdRef[ 1 ] : "";
+
+			GBX.surfaceOpenings.children[ index ].visible = windowTypeIdRef === typeId ? true : false;
+
+		} );
 
 	}
-	//console.log( 'surfacesFilteredByWindowTypes', surfacesFilteredByWindowTypes );
 
-	return surfacesFilteredByWindowTypes;
+
+//	return surfacesFilteredByWindowTypes;
 
 };
 
 
 
+
+VBW.setOpenings = function() {
+
+	VBW.openings = [];
+
+	GBX.surfaces.forEach( (surface, surfaceIndex ) => {
+
+		const openings = surface.match( /<Opening(.*?)<\/Opening>/gi ) || [];
+
+		openings.forEach( ( opening, openingInSurface )  => {
+
+			VBW.openings.push(  opening );
+
+		} );
+
+	} );
+}
+
+
+
+//console.log( 'VBO.openings', VBO.openings );
 //////////
 
 VBW.cccccselectedSurfacesFocus = function( select ) {
@@ -199,14 +260,13 @@ VBW.cccccselectedSurfacesFocus = function( select ) {
 
 
 
-VBW.setViewBySurfaceShowHide = function( button, surfaceArray ) {
-	//console.log( 'surfaceArray', surfaceArray );
+VBW.setViewBySurfaceShowHide = function( button ) {
 
 	button.classList.toggle( "active" );
 
-	if ( button.classList.contains( 'active' ) && surfaceArray.length ) {
+	if ( button.classList.contains( 'active' ) ) {
 
-		GBX.sendSurfacesToThreeJs( surfaceArray );
+		GBX.surfaceGroup.children.forEach( element => element.visible = false );
 
 	} else {
 

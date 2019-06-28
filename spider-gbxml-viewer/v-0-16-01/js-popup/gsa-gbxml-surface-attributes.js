@@ -70,7 +70,6 @@ GSA.getSurfaceAttributes = function( surfaceXml, id, index ) {
 
 	GSA.htmConstruction = GSA.getAttributesConstruction( surfaceXml );
 
-
 	const htmOpenings = GSA.getAttributesOpenings( surfaceXml );
 
 	const htm =

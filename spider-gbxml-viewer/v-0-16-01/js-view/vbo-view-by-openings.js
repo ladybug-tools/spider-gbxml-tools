@@ -77,8 +77,6 @@ VBO.getViewByOpeningsSelectOptions = function() {
 
 		const openings = surface.match( /<Opening(.*?)<\/Opening>/gi ) || [];
 
-
-
 		openings.forEach( ( opening, openingInSurface )  => {
 
 			//console.log( '', openings  );
