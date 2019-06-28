@@ -21,7 +21,7 @@ const VBSU = {
 
 VBSU.getMenuViewBySurfaces = function() {
 
-	document.body.addEventListener( 'onGbxParse', function(){ VBSUdet.open = false; }, false );
+	document.body.addEventListener( 'onGbxParse', () => {VBSUdet.open = false; }, false );
 
 	const help = `<button id="butVBSUsum" class="butHelp" onclick="POP.setPopupShowHide(butVBSUsum,VBSU.script.helpFile);" >?</button>`;
 
@@ -32,10 +32,10 @@ VBSU.getMenuViewBySurfaces = function() {
 
 	`<details id="VBSUdet" ontoggle=VBSU.setViewBySurfacesSelectOptions(); >
 
-		<summary>Surfaces individually<span id="VBSUspnCount" ></span> ${ help }</summary>
+		<summary>Surfaces ${ help }</summary>
 
 		<p>
-			View surfaces one at a time.
+			View surfaces one at a time. <span id="VBSUspnCount" ></span>
 		</p>
 
 		<p>
@@ -98,7 +98,7 @@ VBSU.setViewBySurfacesSelectOptions = function() {
 	} );
 
 	VBSUselViewBySurfaces.innerHTML = htmOptions;
-	VBSUspnCount.innerHTML = `: ${ GBX.surfaces.length } found`;
+	VBSUspnCount.innerHTML = `${ GBX.surfaces.length } found`;
 
 	THR.controls.enableKeys = false;
 

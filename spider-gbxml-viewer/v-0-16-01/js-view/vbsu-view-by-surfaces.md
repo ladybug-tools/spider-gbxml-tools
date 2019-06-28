@@ -1,10 +1,11 @@
-# VBSU View by surfaces Read Me
+# VBSU View by surfaces 0.16-01-3vbsu Read Me
 
 [Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-16-01/js-view/vbsu-view-by-surfaces.js )
 
 <details open >
 
 <summary>Concept</summary>
+
 View by Surfaces (VBSU) provides HTML and JavaScript to view individual surfaces.
 
 </details>
@@ -27,7 +28,14 @@ View by Surfaces (VBSU) provides HTML and JavaScript to view individual surfaces
 
 <summary>Change Log</summary>
 
-## 2019-06-27 ~ The
+### 2019-06-28 ~ Theo
+
+VBSU 0.16-01-3vbsu
+
+* R - VBSU: streamline VBSU.setSelectedIndex()
+* C - VBSU.js: Update script params
+
+### 2019-06-27 ~ The
 
 VBSU 0.16-01-2vbsu
 

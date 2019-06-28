@@ -6,6 +6,7 @@
 
 <summary>Concept</summary>
 
+Show or hide the surfaces (VST) in a gbXML file by surface type.
 
 </details>
 
@@ -20,6 +21,7 @@
 
 <summary>Issues</summary>
 
+* 2019-06-28 ~ Theo ~ toggling function may be a bit awkward/non-standard
 
 </details>
 

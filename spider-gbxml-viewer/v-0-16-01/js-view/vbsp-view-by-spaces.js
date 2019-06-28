@@ -1,67 +1,43 @@
-// jshint esversion: 6
 /* globals GBX, VST, THREE, THR, POPX, VBSPdetMenu, POPdivPopupData, VBSPselSpace, VBSPdivReportsLog, VSTdivSurfaceType */
+// jshint esversion: 6
+// jshint loopfunc: true
 
+const VBSP = {
 
-const VBSP = {"release": "R15.0.1", "date": "2019-06-05" };
+	"script": {
 
-VBSP.description =
-	`
-		View the surfaces in a gbXML file by selecting one or more spaces from a list of all spaces
-	`;
+		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
+		"date": "2019-06-28",
+		"description": "View the surfaces in a gbXML file by selecting one or more spaces from a list of all spaces",
+		"helpFile": "../js-view/vbsp-view-by-spaces.md",
+		"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-16-01/js-view/vbsp-view-by-spaces.js",
+		"version": "0.16-01-1vbsp"
 
+	}
 
-VBSP.currentStatus =
-	`
-		<h3>View by Spaces (VBSP) ${ VBSP.release } ~ ${ VBSP.date }</h3>
-
-		<p>
-			${ VBSP.description }
-		</p>
-
-		<p>Notes
-			<ul>
-				<li>Select multiple Spaces by pressing shift or control keys</li>
-			</ul>
-		</p>
-		<p>
-			<a href="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/r15/js-gbxml/vbsP-view-by-spaces" target="_blank" >
-				VBSP View by Spaces Source
-			</a>
-		</p>
-
-		<details>
-			<summary>Wish list</summary>
-			<ul>
-			</ul>
-		</details>
-
-		<details>
-			<summary>Change log</summary>
-			<ul>
-				<li>2019-04-15 ~ F ~ R15.0.0 - first commit</li>
-			</ul>
-		</details>
-	`;
+};
 
 
 
 
 VBSP.getMenuViewBySpaces = function() {
 
-	document.body.addEventListener( 'onGbxParse', function(){ VBSPdetMenu.open = false; }, false );
+	document.body.addEventListener( 'onGbxParse', () => VBSPdetMenu.open = false, false );
+
+	const help = `<button id="butVBSPsum" class="butHelp" onclick="POP.setPopupShowHide(butVBSPsum,VBSP.script.helpFile);" >?</button>`;
+
+	const selectOptions = [ "id", "CADObjectId", "spaceType", "Name" ].map( option => `<option>${ option }</option>`);
 
 	const htm =
 	`
-		<details id=VBSPdetMenu ontoggle=VBSP.getSpacesOptions(); >
+		<details id=VBSPdetMenu ontoggle=VBSP.setViewBySpacesOptions(); >
 
-			<summary>Show/hide by spaces
-				<a id=VBSPHelp class=helpItem href="JavaScript:POP.setPopupShowHide(VBSPHelp,VBSP.currentStatus);" >&nbsp; ? &nbsp;</a>
-			</summary>
+			<summary>Spaces ${ help }</summary>
 
 			<p>Display surfaces by space. Default is all spaces visible.</p>
 
 			<p>
-				<input oninput=VBSP.setSelectedIndex(this,VBSPselSpace) >
+				<input oninput=VBSP.setSelectedIndex(this,VBSPselSpace) placeholder="Enter an attribute" >
 			</p>
 
 			<div id="VBSPdivViewBySpaces" >
@@ -70,9 +46,13 @@ VBSP.getMenuViewBySpaces = function() {
 
 			<div id="VBSPdivReportsLog" ></div>
 
-			<p><button onclick=VBSP.setViewBySurfaceShowHide(this,VBSP.surfacesFilteredBySpace); >Show/hide all spaces</button> </p>
+			<p>Attribute to show:
+				<select id=VBSPselAttribute oninput=VBSP.setViewBySpacesOptions(); >${ selectOptions }</select></p>
 
 			<p>Select multiple spaces by pressing shift or control keys</p>
+
+			<p><button onclick=VBSP.setViewBySurfaceShowHide(this,VBSP.surfacesFilteredBySpace); >Show/hide all spaces</button> </p>
+
 
 		</details>
 	`;
@@ -82,23 +62,45 @@ VBSP.getMenuViewBySpaces = function() {
 
 
 
-VBSP.getSpacesOptions = function() {
+VBSP.setViewBySpacesOptions = function() {
+
+	if ( VBSPdetMenu.open === false ) { return; }
 
 	VBSPselSpace.size = GBX.spaces.length > 10 ? 10 : GBX.spaces.length;
+
+	const attribute = VBSPselAttribute.value;
+	//console.log( 'attribute', attribute );
 
 	const spaceIds = GBX.spaces.map( space => space.match( 'id="(.*?)"' )[ 1 ] );
 	//console.log( 'spaceIds', spaceIds );
 
+	let text;
+
 	const spaceNames = GBX.spaces.map( space => {
 
-		const spaceArr = space.match( '<Name>(.*?)</Name>' );
 
-		const spaceName = spaceArr ? spaceArr[ 1 ] : "no space name in file";
+		if ( [ "id", "spaceType" ].includes( attribute ) ) {
+
+			text = space.match( `${ attribute }="(.*?)"` );
+			text = text ? text[ 1 ] : "";
+			//console.log( 'text', text );
+
+		} else if ( [ "Name", "CADObjectId" ].includes( attribute ) ) {
+
+			text = space.match( `<${ attribute }>(.*?)<\/${ attribute }>` );
+			text = text ? text[ 1 ] : "";
+			//console.log( 'text', text );
+
+		}
+
+		const spaceName = text ? text : "no space name in file";
 
 		return spaceName;
 
 	} );
 	//console.log( 'spaceNames', spaceNames);
+
+	let color;
 
 	const spacesSorted = spaceNames.slice().sort( (a, b) => b - a );
 	//console.log( 'spacesSorted', spacesSorted );
@@ -106,11 +108,13 @@ VBSP.getSpacesOptions = function() {
 	const options = spacesSorted.map( space => {
 		//console.log( 'level', level );
 
+		color = color === 'pink' ? '' : 'pink';
+
 		const index = spaceNames.indexOf( space );
 		//console.log( 'indexUnsorted', indexUnsorted );
 
 		//console.log( 'spaceIds[ index ]', spaceIds[ index ]  );
-		return `<option value=${ spaceIds[ index ] } title="${ spaceIds[ index ] }" >${ spaceNames[ index ] }</option>`;
+		return `<option style=background-color:${ color } value=${ spaceIds[ index ] } title="${ spaceIds[ index ] }" >${ spaceNames[ index ] }</option>`;
 
 	} );
 

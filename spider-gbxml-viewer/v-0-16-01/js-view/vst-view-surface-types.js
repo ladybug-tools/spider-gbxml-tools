@@ -27,16 +27,16 @@ VST.getMenuViewSurfaceTypes = function() {
 
 	document.body.addEventListener( 'onGbxParse', VST.resetMenu, false );
 
-	document.body.addEventListener( 'onGbxParse', function(){ VBSUdet.open = false; }, false );
+	//document.body.addEventListener( 'onGbxParse', function(){ VSTdet.open = false; }, false );
 
 	const help = `<button id="butVSTsum" class="butHelp" onclick="POP.setPopupShowHide(butVSTsum,VST.script.helpFile);" >?</button>`;
 
 
 	const htm =
 	`
-		<details id=detReports ontoggle=VST.onToggleSurfaceTypes(); >
+		<details id=VSTdet ontoggle=VST.onToggleSurfaceTypes(); >
 
-			<summary>Show/hide by surface type ${ help }</summary>
+			<summary>Surfaces by type ${ help }</summary>
 
 			<p>
 				Show by surface type. Default is exterior surfaces only.
@@ -73,7 +73,7 @@ VST.getMenuViewSurfaceTypes = function() {
 
 VST.resetMenu = function() {
 
-	detReports.open = false;
+	VSTdet.open = false;
 	VSTdivSurfaceType.innerHTML = "";
 
 };

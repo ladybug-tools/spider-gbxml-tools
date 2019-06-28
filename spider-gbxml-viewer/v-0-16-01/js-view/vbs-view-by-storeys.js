@@ -1,67 +1,21 @@
-// Copyright 2018 Ladybug Tools authors. MIT License
-// jshint esversion: 6
 /* globals GBX, VST, THREE, THR, POPX, POPdivPopupData, VBSdetMenu, VBSselStorey, VBSdivReportsLog, VSTdivSurfaceType */
-
+// jshint esversion: 6
+// jshint loopfunc: true
 
 const VBS = {
-	"release": "R15.8",
-	"date": "2019-06-06"
+
+	"script": {
+
+		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
+		"date": "2019-06-28",
+		"description": "View the surfaces in a gbXML file by selecting one or more storeys from a list of all storeys",
+		"helpFile": "../js-view/vbs-view-by-storeys.md",
+		"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-16-01/js-view",
+		"version": "0.16-01-2vbs"
+
+	}
+
 };
-
-VBS.description =
-	`
-		View the surfaces in a gbXML file by selecting one or more storeys from a list of all storeys
-	`;
-
-
-VBS.currentStatus =
-	`
-		<h3>View by Storeys (VBS) ${ VBS.release } ~ ${ VBS.date }</h3>
-
-		<p>
-			${ VBS.description }
-		</p>
-
-		<p>Notes
-			<ul>
-				<li>Select multiple storeys by pressing shift or control keys</li>
-			</ul>
-		</p>
-		<p>
-			<a href="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/r15/js-gbxml/vbs-view-by-storeys" target="_blank" >
-				VBS View by Storeys Source
-			</a>
-		</p>
-
-		<details>
-			<summary>Wish list</summary>
-			<ul>
-				<li>2019-01-30 ~ Better interaction with edges and openings</li>
-				<li>2019-01-15 ~ Theo ~ faster operations on very large files</li>
-
-			</ul>
-		</details>
-
-		<details>
-			<summary>Change log</summary>
-			<ul>
-				<li>2019-02-26 ~ R15.6 ~ Add check for no storey name</li>
-				<li>2019-02-20 ~ Add display storey level names in elevation order </li>
-				<li>2019-02-13 ~ Close menu when new file loaded</li>
-				<li>2019-02-11 ~ Update text content. Code cleanup.</li>
-				<li>2019-02-11 ~ Better types/storeys integration on show all storeys</li>
-				<li>2019-02-08 ~ Working on types/storeys integration</li>
-				<li>2019-02-07 ~ Update pop-up text</li>
-				<li>2019-02-01 ~ Better interaction with currently visible surface types</li>
-				<li>2019-01-30 ~ First commit ~ forked from repl-view-by-level.js</li>
-				<li>See <a href="https://github.com/ladybug-tools/spider-gbxml-tools/issues/18" target="_blank">Issue 18</a></li>
-				<li>Description and current status much updated</li>
-				<!-- <li></li>
-				-->
-			</ul>
-		</details>
-	`;
-
 
 
 
@@ -69,18 +23,20 @@ VBS.getMenuViewByStoreys = function() {
 
 	document.body.addEventListener( 'onGbxParse', function(){ VBSdetMenu.open = false; }, false );
 
+	const help = `<button id="butVBSsum" class="butHelp" onclick="POP.setPopupShowHide(butVBSsum,VBS.script.helpFile);" >?</button>`;
+
+	const selectOptions = [ "id", "Level", "Name" ].map( option => `<option ${ option === "Name" ? "selected" : "" }>${ option }</option>`);
+
 	const htm =
 	`
-		<details id=VBSdetMenu ontoggle=VBS.getStoreysOptions(); >
+		<details id=VBSdetMenu ontoggle=VBS.setViewByStoreysOptions(); >
 
-			<summary>Show/hide by storeys
-				<a id=VBSHelp class=helpItem href="JavaScript:POP.setPopupShowHide(VBSHelp,VBS.currentStatus);" >&nbsp; ? &nbsp;</a>
-			</summary>
+			<summary>Storeys ${help } </summary>
 
 			<p>Display surfaces by storey. Default is all storeys visible. Operates in conjunction with surface type settings.</p>
 
 			<p>
-				<input oninput=VBS.setSelectedIndex(this,VBSselStorey) >
+				<input oninput=VBS.setSelectedIndex(this,VBSselStorey) placeholder="Enter an attribute" >
 			</p>
 
 			<div id="VBSdivViewByStoreys" >
@@ -88,6 +44,9 @@ VBS.getMenuViewByStoreys = function() {
 			</div>
 
 			<div id="VBSdivReportsLog" ></div>
+
+			<p>Attribute to show:
+				<select id=VBSselAttribute oninput=VBS.setViewByStoreysOptions(); >${ selectOptions }</select></p>
 
 			<p><button onclick=VBS.setStoreyShowHide(this,VBS.surfacesFilteredByStorey); >show/hide all storeys</button> </p>
 
@@ -101,9 +60,12 @@ VBS.getMenuViewByStoreys = function() {
 
 
 
-VBS.getStoreysOptions = function() {
+VBS.setViewByStoreysOptions = function() {
 
 	VBSselStorey.size = GBX.storeys.length > 10 ? 10 : GBX.storeys.length;
+
+	const attribute = VBSselAttribute.value;
+	//console.log( 'attribute', attribute );
 
 	const storeyIds = GBX.storeys.map( storey => storey.match( 'id="(.*?)">')[ 1 ] );
 	//console.log( 'storeyIds', storeyIds );
@@ -116,9 +78,21 @@ VBS.getStoreysOptions = function() {
 
 	const storeyNames = GBX.storeys.map( storey => {
 
-		const storeyArr = storey.match( '<Name>(.*?)</Name>' );
+		if ( [ "id" ].includes( attribute ) ) {
 
-		const storeyName = storeyArr ? storeyArr[ 1 ] : "no storey name in file";
+			text = storey.match( `${ attribute }="(.*?)"` );
+			text = text ? text[ 1 ] : "";
+			//console.log( 'text', text );
+
+		} else if ( [ "Name", "Level" ].includes( attribute ) ) {
+
+			text = storey.match( `<${ attribute }>(.*?)<\/${ attribute }>` );
+			text = text ? text[ 1 ] : "";
+			//console.log( 'text', text );
+
+		}
+
+		const storeyName = text ? text : "no storey name in file";
 
 		return storeyName;
 
@@ -182,18 +156,7 @@ VBS.selStoreys = function() {
 
 	VBS.surfacesFilteredByStorey = VBS.setSurfacesFilteredByStorey();
 
-	VBSdivReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( VBS.surfacesFilteredByStorey );
-
-	GBX.surfaceOpenings.traverse( function ( child ) {
-
-		if ( child instanceof THREE.Line ) {
-
-			child.visible = false;
-
-		}
-
-	} );
-
+	VBSdivReportsLog.innerHTML = `<p>${ GBX.sendSurfacesToThreeJs( VBS.surfacesFilteredByStorey ) }</p>`;
 
 	POPdivPopupData.innerHTML = POPX.getStoreyAttributes( VBSselStorey.value );
 
@@ -278,6 +241,3 @@ VBS.setStoreyShowHide = function( button, surfaceArray ) {
 	}
 
 };
-
-
-
