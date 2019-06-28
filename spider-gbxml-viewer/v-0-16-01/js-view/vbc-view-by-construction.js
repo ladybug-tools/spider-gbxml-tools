@@ -23,6 +23,9 @@ VBC.getMenuViewByConstruction = function() {
 
 	const help = `<button id="butVBCsum" class="butHelp" onclick="POP.setPopupShowHide(butVBCsum,VBC.helpFile,'${foot}');" >?</button>`;
 
+	const selectOptions = [ "id", "layerIdRef", "Name" ]
+		.map( option => `<option ${ option === "Name" ? "selected" : "" } >${ option }</option>`);
+
 	const htm =
 
 	`<details id="VBCdetMenu" ontoggle=VBC.getViewByConstructionSelectOptions(); >
@@ -42,6 +45,9 @@ VBC.getMenuViewByConstruction = function() {
 				style=width:100%; size=10 multiple >p
 			</select>
 		</p>
+
+		<p>Attribute to show:
+			<select id=VBCselAttribute oninput=VBC.getViewByConstructionSelectOptions(); >${ selectOptions }</select></p>
 
 		<p>Select multiple Constructions by pressing shift or control keys</p>
 <!--
@@ -64,7 +70,14 @@ VBC.getViewByConstructionSelectOptions = function() {
 
 	//VBO.constructions = []; //GBX.surfaces.slice();
 
-	let constructions = GBX.surfaces.map( (surface, surfaceIndex ) => {
+	if ( VBCdetMenu.open === false ) { return; }
+
+	//VBCselSpace.size = GBX.spaces.length > 10 ? 10 : GBX.spaces.length;
+
+	const attribute = VBCselAttribute.value;
+	//console.log( 'attribute', attribute );
+
+	let constructionRefs = GBX.surfaces.map( (surface, surfaceIndex ) => {
 
 		const construction = surface.match( /constructionIdRef="(.*?)"/i )|| [];
 
@@ -72,21 +85,53 @@ VBC.getViewByConstructionSelectOptions = function() {
 
 	} );
 
-	constructions = [...new Set( constructions )];
-	VBC.constructionRefs = constructions.sort();
+	constructionRefs = [...new Set( constructionRefs )];
+	VBC.constructionRefs = constructionRefs.sort();
 	//console.log( '', VBC.constructionRefs );
 
 	let color;
 
-	const htmOptions = VBC.constructionRefs.map( construction => {
+	const htmOptions = VBC.constructionRefs.map( ( constructionRef, index ) => {
 
 		color = color === 'pink' ? '' : 'pink';
 
-		return `<option style=background-color:${ color }  >${ construction }</option>`;
+		construction = GBX.constructions.find( construction => construction.includes( constructionRef ) );
+
+		if ( [ "id", "layerIdRef" ].includes( attribute ) ) {
+
+			text = construction.match( `${ attribute }="(.*?)"` );
+			text = text ? text[ 1 ] : "";
+			//console.log( 'text', text );
+
+		} else if ( [ "Name" ].includes( attribute ) ) {
+
+			text = construction.match( `<${ attribute }>(.*?)<\/${ attribute }>` );
+			text = text ? text[ 1 ] : "";
+			//console.log( 'text', text );
+
+		}
+
+		const constructionText = text ? text : "no space name in file";
+
+
+		return `<option style=background-color:${ color } value=${ index } >${ constructionText }</option>`;
 
 	} );
 
 	VBCselViewByConstruction.innerHTML = htmOptions;
+
+};
+
+
+
+VBC.setSelectIndex = function( input, select ) {
+
+	const str = input.value.toLowerCase();
+
+	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
+	console.log( 'option', option.value );
+
+	select.selectedIndex =  str && option ? option.value : -1;
 
 };
 

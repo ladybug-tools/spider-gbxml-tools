@@ -148,7 +148,8 @@ VBZ.getZonesOptions = function() {
 
 	const options = VBZ.zones.map( ( zone, index ) =>
 
-		`<option style=background-color:#${ zone.color.toString(16) } value=${ index } title="${ zone.zoneId }"; >${ zone.zoneId } / ${ zone.zoneName }</option>`
+		`<option style=background-color:#${ zone.color.toString(16) } value=${ index } title="${ zone.zoneId }"; >
+		${ zone.zoneId } / ${ zone.zoneName }</option>`
 
 	);
 

@@ -26,7 +26,8 @@ VBSP.getMenuViewBySpaces = function() {
 
 	const help = `<button id="butVBSPsum" class="butHelp" onclick="POP.setPopupShowHide(butVBSPsum,VBSP.script.helpFile);" >?</button>`;
 
-	const selectOptions = [ "id", "CADObjectId", "spaceType", "Name" ].map( option => `<option>${ option }</option>`);
+	const selectOptions = [ "id", "CADObjectId", "spaceType", "Name" ]
+		.map( option => `<option ${ option === "Name" ? "selected" : "" } >${ option }</option>`);
 
 	const htm =
 	`

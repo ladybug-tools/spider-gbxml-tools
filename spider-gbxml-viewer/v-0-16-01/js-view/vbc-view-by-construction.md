@@ -32,6 +32,8 @@ View by construction (VBC) provides HTML and JavaScript to view individual const
 
 VBC 0.16-01-2vbc
 
+* F - VBC.js: Add select by attributes
+* V - VBC.js: Fix input search
 * F - First commit of read me
 
 </details>
