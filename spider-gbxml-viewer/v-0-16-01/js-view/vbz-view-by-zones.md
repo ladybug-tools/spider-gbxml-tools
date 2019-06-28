@@ -34,9 +34,16 @@ View the surfaces in a gbXML file by selecting one or more zones from a list of 
 
 <summary>Change Log</summary>
 
+### 2019-06-28 ~ Theo
+
+VBZ 0.16-01-2vbz
+
+* C - VBZ.js: move number found out of title
+
 ### 2019-06-27 ~ Theo
 
 VBZ 0.16-01-2vbz
+
 * F - VBZ.js: Add show more attributes
 * F - VBZ.js: Add select by attributes
 * F - VBZ.js: Add reset colors button

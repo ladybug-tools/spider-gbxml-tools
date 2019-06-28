@@ -1,4 +1,4 @@
-# VBSP view-by-spaces Read Me
+# VBSP view by spaces 0.16-01-1vbsp Read Me
 
 [Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-16-01/js-view/vbsp-view-by-spaces.js )
 

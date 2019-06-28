@@ -6,10 +6,10 @@
 const VBZ = {
 
 	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-06-27",
+	"date": "2019-06-28",
 	"description": "View the surfaces in a gbXML file by selecting one or more zones from a list of all zones",
 	"helpFile": "../js-view/vbz-view-by-zones.md",
-	"version": "0.16-01-2vbz",
+	"version": "0.16-01-3vbz",
 	"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-16-01/js-view/vbz-view-by-zones.js",
 
 };
@@ -30,10 +30,12 @@ VBZ.getMenuViewByZones = function() {
 	`
 		<details id=VBZdetMenu ontoggle=VBZ.getZonesOptions(); >
 
-			<summary>Show/hide by zones <span id="VBZspnCount" ></span> ${ help }</summary>
+			<summary>Zones  ${ help }</summary>
 
-			<p>Display surfaces by zone. Default is all zones visible. Legends viewble in ?/read me file,
-			<mark>Currently only displays colors for DesignHeatT. More options on way.</mark></p>
+			<p>Display surfaces by zone. Default is all zones visible. Legends viewable in ?/read me file.
+			<span id="VBZspnCount" ></span></p>
+
+			<p><mark>Currently only displays colors for DesignHeatT. More options on way.</mark></p>
 
 			<div id="VBZdivViewByZones" >
 				<select id=VBZselZone onchange=VBZ.selectZoneFocus(this); multiple style=min-width:100%; ></select
@@ -152,7 +154,7 @@ VBZ.getZonesOptions = function() {
 
 	VBZselZone.innerHTML = options;
 
-	VBZspnCount.innerHTML = `: ${ VBZ.zones.length } found`;
+	VBZspnCount.innerHTML = `: ${ VBZ.zones.length } zones found`;
 
 };
 
@@ -278,6 +280,9 @@ VBZ.resetColors = function( ) {
 	} );
 
 }
+
+
+
 VBZ.toggleZones = function( button ) {
 
 	button.classList.toggle( "active" );
@@ -359,6 +364,7 @@ VBZ.setSurfacesFilteredByZone = function( surfaces ) {
 		);
 */
 		surfacesFilteredByZone.push( ...surfacesVisibleByZone );
+
 		console.log( 'GBX.surfacesFiltered',  GBX.surfacesFiltered );
 
 	}
