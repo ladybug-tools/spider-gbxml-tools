@@ -27,7 +27,7 @@ FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristo
 MNU.urlSourceCode = `https://github.com/pushme-pullyou/tootoo14/tree/master/js-14-03/`;
 
 MNU.title = document.title;
-POP.version = MNU.version = "0.16.01-6"; //document.head.querySelector( '[ name=version ]' ).content || "";
+POP.version = MNU.version = "0.16.01-7"; //document.head.querySelector( '[ name=version ]' ).content || "";
 POP.date = MNU.date = "2019-06-27";
 
 MNU.helpFile = "../../README.md";

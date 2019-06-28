@@ -7,9 +7,9 @@ const VBCO = {
 	"script": {
 		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
 		"date": "2019-06-27",
-		"description": "View by CAD  (VBCO) provides HTML and JavaScript to view individual surfaces.",
+		"description": "View by CAD Object ID (VBCO) provides HTML and JavaScript to view individual surfaces.",
 		"helpFile": "../js-view/vbco-view-by-cad-object-id.md",
-		"version": "0.16-01-2vbsu",
+		"version": "0.16-01-0vbco",
 		"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-16-01/js-view",
 
 	}
@@ -71,8 +71,10 @@ VBCO.setViewOptions = function() {
 
 	GBX.surfaces.forEach( (surface, index ) => {
 
-		let text = surface.match( /<CADObjectId>(.*?)<\/CADObjectId>/gi ).pop()
-		text = text.match( /<CADObjectId>(.*?)<\/CADObjectId>/i )[ 1 ].replace( /\[(.*)\]/, "");
+		let text = surface.match( /<CADObjectId>(.*?)<\/CADObjectId>/gi )
+		text = text ? text.pop() : "";
+		text = text.match( /<CADObjectId>(.*?)<\/CADObjectId>/i )
+		text = text ? text[ 1 ].replace( /\[(.*)\]/, "") : "";
 		//console.log( 'text', cadObjects.indexOf( text ) < 0 );
 
 		if ( cadObjects.indexOf( text ) < 0 ) {
