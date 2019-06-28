@@ -112,7 +112,7 @@ VBSU.setSelectedIndex = function( input, select ) {
 
 	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
 
-	select.selectedIndex =  str ? option.value : -1;
+	select.selectedIndex =  str && option ? option.value : -1;
 
 };
 

@@ -5,11 +5,11 @@
 const VBC = {
 
 	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-06-24",
-	"description": "View by openings (VBC) provides HTML and JavaScript to view individual openings.",
-	"helpFile": "../js-view/vbo-view-by-opening.md",
-	"version": "0.16-01-1vbo",
-	"urlSourceCode": "https://github.com/pushme-pullyou/tootoo14/blob/master/js-14-2/fob-file-open-basic/fob-file-open-basic.js",
+	"date": "2019-06-28",
+	"description": "View by construction (VBC) provides HTML and JavaScript to view individual construction details.",
+	"helpFile": "../js-view/vbc-view-by-construction.md",
+	"version": "0.16-01-2vbc",
+	"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-16-01/js-view/vbc-view-by-construction.js",
 
 };
 
@@ -27,10 +27,10 @@ VBC.getMenuViewByConstruction = function() {
 
 	`<details id="VBCdetMenu" ontoggle=VBC.getViewByConstructionSelectOptions(); >
 
-		<summary>Show/hide by construction <span id="VBCspnCount" ></span> ${ help }</summary>
+		<summary>Construction  ${ help }</summary>
 
 		<p>
-			View by construction.
+			View by construction. <span id="VBCspnCount" ></span>
 		</p>
 
 		<p>
@@ -114,6 +114,7 @@ VBC.selectedConstructionFocus = function( button ) {
 	VBC.getConstruction( constructionId );
 
 };
+
 
 
 VBC.getConstruction = function( constructionId ) {

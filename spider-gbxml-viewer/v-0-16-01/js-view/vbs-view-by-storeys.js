@@ -122,17 +122,7 @@ VBS.setSelectedIndex = function( input, select ) {
 	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
 	//console.log( 'option', option );
 
-	if ( option ) {
-
-		select.value = option.value;
-
-		VBS.selStoreys();
-
-	} else {
-
-		select.value = "";
-
-	}
+	select.selectedIndex =  str && option ? option.value : -1;
 
 };
 

@@ -24,16 +24,16 @@ VBW.getMenuViewByWindowTypes = function() {
 
 	const help = `<button id="butVBWsum" class="butHelp" onclick="POP.setPopupShowHide(butVBWsum,VBW.script.helpFile);" >?</button>`;
 
-	const selectOptions = ["id", "Name", "Description", "U-value", "SolarHeatGainCoeff ", "Transmittance" ].map( option => `<option>${ option }</option>`)
+	const selectOptions = [ "id", "Name", "Description", "U-value", "SolarHeatGainCoeff", "Transmittance" ].map( option => `<option>${ option }</option>`)
 
 	const htm =
 
 	`<details id="VBWdet" ontoggle=VBW.setViewBySurfacesSelectOptions(); >
 
-		<summary>Window Types<span id="VBWspnCount" ></span> ${ help }</summary>
+		<summary>Window types ${ help }</summary>
 
 		<p>
-			View surfaces one at a time
+			View surfaces one at a time. <span id="VBWspnCount" ></span>
 		</p>
 
 		<p>
@@ -42,7 +42,7 @@ VBW.getMenuViewByWindowTypes = function() {
 		</p>
 
 		<p>
-			<select id=VBWselViewBySurfaces oninput=VBW.selectedSurfacesFocus(this); style=width:100%; size=10 multiple >
+			<select id=VBWselViewByWindowTypes oninput=VBW.selWindowTypes(this); style=width:100%; size=10 multiple >
 			</select>
 		</p>
 
@@ -113,8 +113,8 @@ VBW.setViewBySurfacesSelectOptions = function() {
 
 	} );
 
-	VBWselViewBySurfaces.innerHTML = htmOptions;
-	VBWspnCount.innerHTML = `: ${ GBX.windowTypes.length } found`;
+	VBWselViewByWindowTypes.innerHTML = htmOptions;
+	VBWspnCount.innerHTML = `${ GBX.windowTypes.length } types found`;
 
 	THR.controls.enableKeys = false;
 
@@ -128,17 +128,57 @@ VBW.setSelectedIndex = function( input, select ) {
 
 	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
 
-	select.value =  option ? option.value : "";
+	select.selectedIndex =  str && option ? option.value : -1;
 
 };
 
 
 
-VBW.selectedSurfacesFocus = function( select ) {
+VBW.selWindowTypes = function() {
 
-	alert( "coming soon")
+	THR.controls.enableKeys = false;
 
-	return;
+	POPX.intersected = null;
+
+	THR.scene.remove( POPX.line, POPX.particle );
+
+	VBW.surfacesFilteredByWindowType = VBW.getSurfacesFilteredByWindowType();
+
+	VBWdivReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( VBW.surfacesFilteredByWindowType );
+
+	POPdivPopupData.innerHTML = POPX.getWindowTypesAttributes( VBWselViewByWindowTypes.value );
+
+};
+
+
+
+VBW.getSurfacesFilteredByWindowType = function(  ) {
+
+	const typeIds = VBWselViewByWindowTypes.selectedOptions;
+
+	const surfacesFilteredByWindowTypes = [];
+
+	for ( let typeId of typeIds ) {
+		//console.log( 'typeId', typeId );
+
+		surfacesVisibleByWindowType = GBX.surfacesIndexed.filter( surface => surface.includes( `spaceIdRef="${ spaceId.value }"`  ) )
+		//console.log( 'surfacesVisibleBySpace', surfacesVisibleBySpace );
+
+		surfacesFilteredByWindowTypes.push( ...surfacesVisibleBySpace );
+
+	}
+	//console.log( 'surfacesFilteredByWindowTypes', surfacesFilteredByWindowTypes );
+
+	return surfacesFilteredByWindowTypes;
+
+};
+
+
+
+//////////
+
+VBW.cccccselectedSurfacesFocus = function( select ) {
+
 
 	POPX.intersected = GBX.surfaceGroup.children[ select.value ];
 

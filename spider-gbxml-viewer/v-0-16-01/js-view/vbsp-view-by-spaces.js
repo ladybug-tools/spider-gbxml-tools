@@ -1,4 +1,4 @@
-/* globals GBX, VST, THREE, THR, POPX, VBSPdetMenu, POPdivPopupData, VBSPselSpace, VBSPdivReportsLog, VSTdivSurfaceType */
+/* globals GBX, THR, POPX, VBSPdetMenu, POPdivPopupData, VBSPselSpace, VBSPdivReportsLog, VBSPselAttribute */
 // jshint esversion: 6
 // jshint loopfunc: true
 
@@ -41,7 +41,7 @@ VBSP.getMenuViewBySpaces = function() {
 			</p>
 
 			<div id="VBSPdivViewBySpaces" >
-				<select id=VBSPselSpace onchange=VBSP.selSpaces(); multiple style=min-width:15rem; ></select
+				<select id=VBSPselSpace onchange=VBSP.selSpacesFocus(); multiple style=min-width:15rem; ></select
 			</div>
 
 			<div id="VBSPdivReportsLog" ></div>
@@ -131,17 +131,7 @@ VBSP.setSelectedIndex = function( input, select ) {
 	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
 	//console.log( 'option', option );
 
-	if ( option ) {
-
-		select.value = option.value;
-
-		VBSP.selSpaces();
-
-	} else {
-
-		select.value = "";
-
-	}
+	select.selectedIndex =  str && option ? option.value : -1;
 
 };
 
@@ -149,7 +139,7 @@ VBSP.setSelectedIndex = function( input, select ) {
 
 //////////
 
-VBSP.selSpaces = function() {
+VBSP.selSpacesFocus = function() {
 
 	THR.controls.enableKeys = false;
 
@@ -176,7 +166,8 @@ VBSP.getSurfacesFilteredBySpace = function(  ) {
 	for ( let spaceId of spaceIds ) {
 		//console.log( 'spaceId', spaceId );
 
-		surfacesVisibleBySpace = GBX.surfacesIndexed.filter( surface => surface.includes( `spaceIdRef="${ spaceId.value }"`  ) )
+		const surfacesVisibleBySpace = GBX.surfacesIndexed.filter( surface =>
+				surface.includes( `spaceIdRef="${ spaceId.value }"`  ) );
 		//console.log( 'surfacesVisibleBySpace', surfacesVisibleBySpace );
 
 		surfacesFilteredBySpace.push( ...surfacesVisibleBySpace );
@@ -194,7 +185,7 @@ VBSP.setViewSpacesShowHide = function() {
 
 	VBSPselSpace.selectedIndex = -1;
 
-	VBSP.selSpaces();
+	VBSP.selSpacesFocus();
 
 };
 

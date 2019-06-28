@@ -30,7 +30,7 @@ VBCO.getMenuViewByCadObjectId = function() {
 
 	`<details id="VBCOdet" ontoggle=VBCO.setViewOptions(); >
 
-		<summary>CAD Object ID groups <span id="VBCOspnCount" ></span> ${ help }</summary>
+		<summary>CAD object id groups <span id="VBCOspnCount" ></span> ${ help }</summary>
 
 		<p>
 			View surfaces by groups of CAD object IDs. For individual CAD Object IDs see 'Surfaces individually'.
@@ -90,7 +90,7 @@ VBCO.setViewOptions = function() {
 	options = cadObjects.map( ( item, index ) => {
 
 		color = color === 'pink' ? '' : 'pink';
-		return `<option style=background-color:${ color } >${ item }</option>`;
+		return `<option style=background-color:${ color } value=${ index } >${ item }</option>`;
 
 	} );
 
@@ -107,13 +107,11 @@ VBCO.setViewOptions = function() {
 
 VBCO.setSelectedIndex = function( input, select ) {
 
-	select.selectedIndex = -1;
-
 	const str = input.value.toLowerCase();
 
 	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
 
-	select.value =  option ? option.value : "";
+	select.selectedIndex =  str && option ? option.value : -1;
 
 };
 

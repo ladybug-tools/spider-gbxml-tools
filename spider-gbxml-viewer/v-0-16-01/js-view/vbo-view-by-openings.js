@@ -28,10 +28,10 @@ VBO.getMenuViewByOpenings = function() {
 
 	`<details id="VBOdetMenu" ontoggle=VBO.getViewByOpeningsSelectOptions(); >
 
-		<summary>Show/hide by openings <span id="VBOspnCount" ></span> ${ help }</summary>
+		<summary>Openings ${ help }</summary>
 
 		<p>
-			View by openings. Surfaces with multiple openings in pink
+			View by openings. Surfaces with multiple openings in pink. <span id="VBOspnCount" ></span>
 		</p>
 
 		<p>
@@ -77,11 +77,13 @@ VBO.getViewByOpeningsSelectOptions = function() {
 
 		const openings = surface.match( /<Opening(.*?)<\/Opening>/gi ) || [];
 
-		color = openings.length > 1 ? 'pink' : '';
+
 
 		openings.forEach( ( opening, openingInSurface )  => {
 
 			//console.log( '', openings  );
+
+			color = color === 'pink' ? '' : 'pink';
 
 			openingId = opening.match( 'id="(.*?)"' )[ 1 ];
 
@@ -98,7 +100,7 @@ VBO.getViewByOpeningsSelectOptions = function() {
 	//console.log( 'VBO.openings', VBO.openings );
 
 	VBOselViewByOpenings.innerHTML = htmOptions;
-	VBOspnCount.innerHTML = `: ${ VBO.openings.length } found`;
+	VBOspnCount.innerHTML = `${ VBO.openings.length } openings found`;
 
 	THR.controls.enableKeys = false;
 

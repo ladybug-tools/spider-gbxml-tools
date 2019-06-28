@@ -32,6 +32,7 @@ View the surfaces in a gbXML file by selecting one or more spaces from a list of
 
 VBSP 0.16-01-1vbsp
 
+* B - VBSP.js: Pass through jsHint
 * C - VBSP.js: add script params
 * C - VBSP.js: add new help
 * F = VBSP.js: add select by attributes
