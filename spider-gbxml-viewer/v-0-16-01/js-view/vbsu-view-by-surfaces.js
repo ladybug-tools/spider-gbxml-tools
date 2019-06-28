@@ -37,7 +37,7 @@ VBSU.getMenuViewBySurfaces = function() {
 		</p>
 
 		<p>
-			<input id=VBSUinpSelectIndex oninput=VBSU.setSelectedIndex(this,VBSUselViewBySurfaces) >
+			<input id=VBSUinpSelectIndex oninput=VBSU.setSelectedIndex(this,VBSUselViewBySurfaces) placeholder="Enter an attribute" >
 
 		</p>
 
@@ -46,7 +46,7 @@ VBSU.getMenuViewBySurfaces = function() {
 			</select>
 		</p>
 
-		<p>Attribute to show: <select id=SBSUselAttribute oninput=VBSU.setViewBySurfacesSelectOptions(); >${ selectOptions }</select></p>
+		<p>Attribute to show: <select id=VBSUselAttribute oninput=VBSU.setViewBySurfacesSelectOptions(); >${ selectOptions }</select></p>
 
 		<p>Select multiple surfaces by pressing shift or control keys</p>
 
@@ -67,7 +67,7 @@ VBSU.setViewBySurfacesSelectOptions = function() {
 
 	if ( VBSUdet.open === false ) { return; }
 
-	const attribute = SBSUselAttribute.value;
+	const attribute = VBSUselAttribute.value;
 
 	console.log( 'attribute', attribute );
 
