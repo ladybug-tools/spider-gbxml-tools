@@ -20,7 +20,6 @@ VBZ.getMenuViewByZones = function() {
 
 	document.body.addEventListener( 'onGbxParse', function(){ VBZdetMenu.open = false; }, false );
 
-
 	const help = `<button id="butVBZsum" class="butHelp" onclick="POP.setPopupShowHide(butVBZsum,VBZ.helpFile);" >?</button>`;
 
 	VBZ.selectOptions = ["id", "airChangesSchedIdRef", "coolSchedIdRef", "fanSchedIdRef", "fanTempSchedIdRef",
@@ -33,7 +32,8 @@ VBZ.getMenuViewByZones = function() {
 
 			<summary>Show/hide by zones <span id="VBZspnCount" ></span> ${ help }</summary>
 
-			<p>Display surfaces by zone. Default is all zones visible.</p>
+			<p>Display surfaces by zone. Default is all zones visible. Legends viewble in ?/read me file,
+			<mark>Currently only displays colors for DesignHeatT. More options on way.</mark></p>
 
 			<div id="VBZdivViewByZones" >
 				<select id=VBZselZone onchange=VBZ.selectZoneFocus(this); multiple style=min-width:100%; ></select
