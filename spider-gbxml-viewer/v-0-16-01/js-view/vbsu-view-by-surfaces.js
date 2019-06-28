@@ -2,39 +2,19 @@
 /* globals GBX, POPX, ISCOR, POPdivPopupData*/
 /* jshint esversion: 6 */
 
+const VBSU = {
 
-const VBSU = { "version": ".0.16.01-1", "date": "2019-06-21" };
+	"script": {
+		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
+		"date": "2019-06-27",
+		"description": "View by Surfaces (VBSU) provides HTML and JavaScript to view individual surfaces.",
+		"helpFile": "../js-view/vbsu-view-by-surfaces.md",
+		"version": "0.16-01-2vbsu",
+		"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-16-01/js-view",
 
-VBSU.description =
-	`
-		View by Surfaces (VBSU) provides HTML and JavaScript to view individual surfaces.
+	}
 
-	`;
-
-VBSU.currentStatus =
-	`
-		<summary>View by Surfaces VBSU ${ VBSU.version } ~ ${ VBSU.date }</summary>
-
-		<p>
-			${ VBSU.description }
-		</p>
-		<details>
-			<summary>Concept</summary>
-			<ul>
-			</ul>
-		</details>
-		<p>
-			<a href="https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/r15/js-gbxml/VBSU-view-by-surfaces.js: target="_blank" >
-				View by Surfaces source code
-			</a>
-		</p>
-		<details>
-			<summary>Change log</summary>
-			<ul>
-				<li>2019-04-24 ~ F - first commit</li>
-			</ul>
-		</details>
-	`;
+};
 
 
 
@@ -42,20 +22,23 @@ VBSU.getMenuViewBySurfaces = function() {
 
 	document.body.addEventListener( 'onGbxParse', function(){ VBSUdet.open = false; }, false );
 
+	const help = `<button id="butVBSUsum" class="butHelp" onclick="POP.setPopupShowHide(butVBSUsum,VBSU.script.helpFile);" >?</button>`;
+
+	const selectOptions = ["id", "CADObjectId", "constructionIdRef", "Name"].map( option => `<option>${ option }</option>`)
+
 	const htm =
 
-	`<details id="VBSUdet" ontoggle=VBSU.getViewBySurfacesSelectOptions(); >
+	`<details id="VBSUdet" ontoggle=VBSU.setViewBySurfacesSelectOptions(); >
 
-		<summary>Show/hide by surfaces<span id="VBSUspnCount" ></span>
-			<a id=VBSUsumHelp class=helpItem href="JavaScript:POP.setPopupShowHide(VBSUsumHelp,VBSU.currentStatus);" >&nbsp; ? &nbsp;</a>
-		</summary>
+		<summary>Surfaces individually<span id="VBSUspnCount" ></span> ${ help }</summary>
 
 		<p>
-			View by surfaces text
+			View surfaces one at a time
 		</p>
 
 		<p>
 			<input id=VBSUinpSelectIndex oninput=VBSU.setSelectedIndex(this,VBSUselViewBySurfaces) >
+
 		</p>
 
 		<p>
@@ -63,12 +46,14 @@ VBSU.getMenuViewBySurfaces = function() {
 			</select>
 		</p>
 
+		<p>Attribute to show: <select id=SBSUselAttribute oninput=VBSU.setViewBySurfacesSelectOptions(); >${ selectOptions }</select></p>
+
 		<p>Select multiple surfaces by pressing shift or control keys</p>
 
 		<p>
 			<button onclick=VBSU.setViewBySurfaceShowHide(this,VBSU.surfaces); >
 				Show/hide by surfaces
-			</button>
+			</button> <mark>What would be useful here?</mark>
 		</p>
 
 	</details>`;
@@ -78,36 +63,48 @@ VBSU.getMenuViewBySurfaces = function() {
 };
 
 
-
-VBSU.getViewBySurfacesSelectOptions = function() {
-	//console.log( 'VBSUdetTemplate.open', VBSUdetTemplate.open );
+VBSU.setViewBySurfacesSelectOptions = function() {
 
 	if ( VBSUdet.open === false ) { return; }
 
-	//if ( GBX.surfaces.length > ISCOR.surfaceCheckLimit ) { return; } // don't run test automatically on very large files
+	const attribute = SBSUselAttribute.value;
 
-	let color;
-	let htmOptions = '';
-	let index = 0;
-	VBSU.surfaces = GBX.surfaces.slice();
+	console.log( 'attribute', attribute );
 
-	for ( let surface of GBX.surfaces ) {
+	let color, text;
+
+	htmOptions = GBX.surfaces.map( (surface, index ) => {
 
 		color = color === 'pink' ? '' : 'pink';
 
-		const id = surface.match( 'id="(.*?)"' )[ 1 ];
+		if ( [ "id", "constructionIdRef" ].includes( attribute ) ) {
 
-		htmOptions +=
-			`<option style=background-color:${ color } value=${ index++ } >${ id }</option>`;
+			text = surface.match( `${ attribute }="(.*?)"` );
+			text = text ? text[ 1 ] : "";
+			//console.log( 'text', text );
 
-	}
+		} else if ( attribute === "Name" ) {
+
+			text = surface.match( /<Name>(.*?)<\/Name>/i );
+			//console.log( 'text', text );
+			text = text ? text[ 1 ] : "";
+
+		} else if ( attribute === "CADObjectId" ) {
+
+			text = surface.match( /<CADObjectId>(.*?)<\/CADObjectId>/gi );
+			//console.log( 'text', text );
+			text = text ? text.pop() : "";
+
+		}
+
+		return `<option style=background-color:${ color } value=${ index } >${ text }</option>`;
+
+	} );
 
 	VBSUselViewBySurfaces.innerHTML = htmOptions;
 	VBSUspnCount.innerHTML = `: ${ GBX.surfaces.length } found`;
 
 	THR.controls.enableKeys = false;
-
-	return GBX.surfaces.length;
 
 };
 
@@ -117,19 +114,10 @@ VBSU.setSelectedIndex = function( input, select ) {
 
 	const str = input.value.toLowerCase();
 
-	const option = Array.from( select.options ).find( option => option.innerHTML.includes( str ) );
-	//console.log( 'option', option );
+	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
 
-	if ( option ) {
 
-		select.value = option.value;
-
-		VBSU.selectedSurfacesFocus( select );
-
-	} else {
-
-		select.value = "";
-	}
+	select.value =  option ? option.value : "";
 
 };
 
