@@ -34,6 +34,7 @@ View by Surfaces (VBO) provides HTML and JavaScript to view individual openings 
 * F - VBO.js: Add display of opening border
 * B - VBO.js: VBO.openings reused in error
 * F - VBO.js: Open and highlight selected opening in popup
+* F - VBO.js: Ad select opening by attributes
 * F - VBO.md: First commit of readme
 
 </details>

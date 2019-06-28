@@ -19,14 +19,14 @@ VBO.getMenuViewByOpenings = function() {
 
 	document.body.addEventListener( 'onGbxParse', function(){ VBOdetMenu.open = false; }, false );
 
-	const foot = `v${ VBO.version} - ${ VBO.date }`;
+	const help = `<button id="butVBOsum" class="butHelp" onclick="POP.setPopupShowHide(butVBOsum,VBO.helpFile);" >?</button>`;
 
-	const help = `<button id="butVBOsum" class="butHelp" onclick="POP.setPopupShowHide(butVBOsum,VBO.helpFile,'${foot}');" >?</button>`;
-	//help = `<a id=VBOsumHelp class=helpItem href="JavaScript:POP.setPopupShowHide(VBOsumHelp,VBO.description);" >&nbsp; ? &nbsp;</a>`;
+	const selectOptions = [ "id", "openingType", "windowTypeIdRef", "CADObjectId", "Name" ]
+	.map( option => `<option>${ option }</option>`);
 
 	const htm =
 
-	`<details id="VBOdetMenu" ontoggle=VBO.getViewByOpeningsSelectOptions(); >
+	`<details id="VBOdetMenu" ontoggle=VBO.setViewByOpeningsSelectOptions(); >
 
 		<summary>Openings ${ help }</summary>
 
@@ -44,6 +44,9 @@ VBO.getMenuViewByOpenings = function() {
 			</select>
 		</p>
 
+		<p>Attribute to show:
+			<select id=VBOselAttribute oninput=VBO.setViewByOpeningsSelectOptions(); >${ selectOptions }</select></p>
+
 		<p>Select multiple openings by pressing shift or control keys</p>
 
 		<p>
@@ -60,11 +63,14 @@ VBO.getMenuViewByOpenings = function() {
 
 
 
-VBO.getViewByOpeningsSelectOptions = function() {
+VBO.setViewByOpeningsSelectOptions = function() {
 
 	if ( VBOdetMenu.open === false ) { return; }
 
 	//if ( GBX.surfaces.length > ISCOR.surfaceCheckLimit ) { return; } // don't run test automatically on very large files
+
+	const attribute = VBOselAttribute.value;
+	//console.log( 'attribute', attribute );
 
 	let color;
 	let htmOptions = '';
@@ -82,13 +88,28 @@ VBO.getViewByOpeningsSelectOptions = function() {
 			//console.log( '', openings  );
 
 			color = color === 'pink' ? '' : 'pink';
+			let openingId;
 
-			openingId = opening.match( 'id="(.*?)"' )[ 1 ];
+			if ( [ "id", "openingType", "windowTypeIdRef" ].includes( attribute ) ) {
+
+				openingId = opening.match( `${ attribute }="(.*?)"` );
+				openingId = openingId ? openingId[ 1 ] : "";
+				//console.log( 'openingId', openingId );
+
+			} else if ( [ "Name", "CADObjectId" ].includes( attribute ) ) {
+
+				openingId = opening.match( `<${ attribute }>(.*?)<\/${ attribute }>` );
+				openingId = openingId ? openingId[ 1 ] : "";
+				//console.log( 'openingId', openingId );
+
+			}
+
+			//openingId = opening.match( 'id="(.*?)"' )[ 1 ];
 
 			VBO.openings.push( { surfaceId, surfaceIndex, openingId, "openingIndex": VBO.openings.length, openingInSurface } );
 
 			htmOptions +=
-				`<option style=background-color:${ color } value=${ VBO.openings.length - 1 } >surf:${ surfaceId + " / open:" + openingId }</option>`;
+				`<option style=background-color:${ color } value=${ VBO.openings.length - 1 } >${ openingId }</option>`;
 
 		} );
 
