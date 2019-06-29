@@ -106,11 +106,11 @@ GBXU.setStats = function() {
 
 	GBX.constructions = GBX.text.match( /<Construction(.*?)<\/Construction>/gi ) || [];
 
-	GBX.materials = GBX.text.match( /<Material(.*?)<\/Material>/gi ) || [];
+	GBX.layers = GBX.text.match( /<Layer (.*?)<\/Layer>/gi ) || [];
 
-	GBX.layers = GBX.text.match( /<Layer(.*?)<\/Layer>/gi ) || [];
+	GBX.materials = GBX.text.match( /<Material (.*?)<\/Material>/gi ) || [];
 
-	GBX.windowTypes = GBX.text.match( /<WindowType(.*?)<\/WindowType>/gi ) || [];
+	GBX.windowTypes = GBX.text.match( /<WindowType (.*?)<\/WindowType>/gi ) || [];
 
 	const timeToLoad = performance.now() - GBX.timeStart;
 

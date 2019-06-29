@@ -6,11 +6,11 @@ const VBL = {
 
 	"script": {
 		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-		"date": "2019-06-27",
-		"description": "View by Surfaces (VBL) provides HTML and JavaScript to view individual surfaces.",
-		"helpFile": "../js-view/vbsu-view-by-surfaces.md",
-		"version": "0.16-01-2vbsu",
-		"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-16-01/js-view",
+		"date": "2019-06-28",
+		"description": "View by layers (VBL) provides HTML and JavaScript to view individual surfaces.",
+		"helpFile": "../js-view/vbl-view-by-layers.md",
+		"version": "0.16-01-1vbl",
+		"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-16-01/js-view/vbl-view-by-layers.js",
 
 	}
 
@@ -24,25 +24,24 @@ VBL.getMenuViewByLayers = function() {
 
 	const help = `<button id="butVBLsum" class="butHelp" onclick="POP.setPopupShowHide(butVBLsum,VBL.script.helpFile);" >?</button>`;
 
-	const selectOptions = ["id", "CADObjectId", "constructionIdRef", "Name"].map( option => `<option>${ option }</option>`)
+	const selectOptions = ["id" ].map( option => `<option>${ option }</option>`)
 
 	const htm =
 
-	`<details id="VBLdet" ontoggle=VBL.setViewBySurfacesSelectOptions(); >
+	`<details id="VBLdet" ontoggle=VBL.setViewByLayersSelectOptions(); >
 
-		<summary>Layers<span id="VBLspnCount" ></span> ${ help }</summary>
+		<summary>Layers ${ help }</summary>
 
 		<p>
-			View layers
+			View layers. <span id="VBLspnCount" ></span>
 		</p>
 
 		<p>
 			<input id=VBLinpSelectIndex oninput=VBL.setSelectedIndex(this,VBLselViewBySurfaces) placeholder="Enter an attribute" >
-
 		</p>
 
 		<p>
-			<select id=VBLselViewBySurfaces oninput=VBL.selectedSurfacesFocus(this); style=width:100%; size=10 multiple >
+			<select id=VBLselViewByLayers oninput=VBL.selLayersFocus(this); style=width:100%; size=10 multiple >
 			</select>
 		</p>
 
@@ -63,7 +62,8 @@ VBL.getMenuViewByLayers = function() {
 };
 
 
-VBL.setViewBySurfacesSelectOptions = function() {
+
+VBL.setViewByLayersSelectOptions = function() {
 
 	if ( VBLdet.open === false ) { return; }
 
@@ -72,25 +72,25 @@ VBL.setViewBySurfacesSelectOptions = function() {
 
 	let color, text;
 
-	htmOptions = GBX.surfaces.map( (surface, index ) => {
+	htmOptions = GBX.layers.map( (layer, index ) => {
 
 		color = color === 'pink' ? '' : 'pink';
 
 		if ( [ "id", "constructionIdRef" ].includes( attribute ) ) {
 
-			text = surface.match( `${ attribute }="(.*?)"` );
+			text = layer.match( `${ attribute }="(.*?)"` );
 			text = text ? text[ 1 ] : "";
 			//console.log( 'text', text );
 
 		} else if ( attribute === "Name" ) {
 
-			text = surface.match( /<Name>(.*?)<\/Name>/i );
+			text = layer.match( /<Name>(.*?)<\/Name>/i );
 			//console.log( 'text', text );
 			text = text ? text[ 1 ] : "";
 
 		} else if ( attribute === "CADObjectId" ) {
 
-			text = surface.match( /<CADObjectId>(.*?)<\/CADObjectId>/gi );
+			text = layer.match( /<CADObjectId>(.*?)<\/CADObjectId>/gi );
 			//console.log( 'text', text );
 			text = text ? text.pop() : "";
 
@@ -100,8 +100,8 @@ VBL.setViewBySurfacesSelectOptions = function() {
 
 	} );
 
-	VBLselViewBySurfaces.innerHTML = htmOptions;
-	VBLspnCount.innerHTML = `: ${ GBX.surfaces.length } found`;
+	VBLselViewByLayers.innerHTML = htmOptions;
+	VBLspnCount.innerHTML = `: ${ GBX.layers.length } found`;
 
 	THR.controls.enableKeys = false;
 
@@ -121,26 +121,87 @@ VBL.setSelectedIndex = function( input, select ) {
 
 
 
-VBL.selectedSurfacesFocus = function( select ) {
 
-	alert( "coming soon")
+VBL.selLayersFocus = function( select ) {
 
-	return;
+	THR.controls.enableKeys = false;
 
-	POPX.intersected = GBX.surfaceGroup.children[ select.value ];
+	POPX.intersected = null;
 
-	POPdivPopupData.innerHTML = POPX.getIntersectedDataHtml();
-	//console.log( 'sel', select.value );
+	THR.scene.remove( POPX.line, POPX.particle );
 
-	const options = select.selectedOptions
-	//console.log( 'option', options );
+	POPdivPopupData.innerHTML = VBL.getLayersAttributes( select.value );
 
-	const indexes = Array.from( options ).map( option => Number( option.value ) );
-	//console.log( 'indexes', indexes );
+	//VBL.surfacesFilteredBySpace = VBL.getSurfacesFilteredBySpace();
 
-	VBL.surfaces = GBX.surfacesIndexed.filter( ( surface, index ) => indexes.includes( index  ) );
+	//VBLdivReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( VBL.surfacesFilteredBySpace );
 
-	GBX.sendSurfacesToThreeJs( VBL.surfaces );
+
+};
+
+
+
+VBL.getLayersAttributes = function( index ) {
+
+	const typeTxt = GBX.layers[ index ];
+
+	const typeId = typeTxt.match( ` id="(.*?)"` )[ 1 ];
+
+	const typeXml = POPX.parser.parseFromString( typeTxt, "application/xml").documentElement;
+	//console.log( 'typeXml ', typeXml );
+
+	const htmType = GSA.getAttributesHtml( typeXml );
+
+	const htm =
+	`
+		<b>${ typeId } Attributes</b>
+
+		<p>${ htmType }</p>
+
+		<details open >
+
+			<summary>gbXML data</summary>
+
+			<textarea style=height:10rem;width:100%; >${ typeTxt }</textarea>
+
+		</details>
+	`;
+
+	return htm;
+
+};
+
+
+
+VBL.getSurfacesFilteredBySpace = function(  ) {
+
+	const spaceIds = VBLselSpace.selectedOptions;
+
+	const surfacesFilteredBySpace = [];
+
+	for ( let spaceId of spaceIds ) {
+		//console.log( 'spaceId', spaceId );
+
+		const surfacesVisibleBySpace = GBX.surfacesIndexed.filter( surface =>
+				surface.includes( `spaceIdRef="${ spaceId.value }"`  ) );
+		//console.log( 'surfacesVisibleBySpace', surfacesVisibleBySpace );
+
+		surfacesFilteredBySpace.push( ...surfacesVisibleBySpace );
+
+	}
+	//console.log( 'surfacesFilteredBySpace', surfacesFilteredBySpace );
+
+	return surfacesFilteredBySpace;
+
+};
+
+
+
+VBL.setViewSpacesShowHide = function() {
+
+	VBLselSpace.selectedIndex = -1;
+
+	VBL.selSpacesFocus();
 
 };
 
@@ -153,11 +214,11 @@ VBL.setViewBySurfaceShowHide = function( button, surfaceArray ) {
 
 	if ( button.classList.contains( 'active' ) && surfaceArray.length ) {
 
-		GBX.sendSurfacesToThreeJs( surfaceArray );
+		GBX.surfaceGroup.children.forEach( element => element.visible = true );
 
 	} else {
 
-		GBX.surfaceGroup.children.forEach( element => element.visible = true );
+		GBX.sendSurfacesToThreeJs( surfaceArray );
 
 	}
 

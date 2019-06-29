@@ -1,16 +1,16 @@
-// Copyright 2018 Ladybug Tools authors. MIT License
 /* globals GBX, POPX, ISCOR, POPdivPopupData*/
-/* jshint esversion: 6 */
+// jshint esversion: 6
+// jshint loopfunc: true
 
 const VBM = {
 
 	"script": {
 		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-		"date": "2019-06-27",
-		"description": "View by Surfaces (VBM) provides HTML and JavaScript to view individual surfaces.",
-		"helpFile": "../js-view/vbsu-view-by-surfaces.md",
-		"version": "0.16-01-2vbsu",
-		"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-16-01/js-view",
+		"date": "2019-06-28",
+		"description": "View by materials (VBM)",
+		"helpFile": "../js-view/vbm-view-by-materials.md",
+		"version": "0.16-01-1vbm",
+		"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-16-01/js-view/vbm-view-by-materials.js",
 
 	}
 
@@ -24,36 +24,36 @@ VBM.getMenuViewByMaterials = function() {
 
 	const help = `<button id="butVBMsum" class="butHelp" onclick="POP.setPopupShowHide(butVBMsum,VBM.script.helpFile);" >?</button>`;
 
-	const selectOptions = ["id", "CADObjectId", "constructionIdRef", "Name"].map( option => `<option>${ option }</option>`)
+	const selectOptions = ["id", "Name"]
+		.map( option => `<option ${ option === "Name" ? "selected" : "" } >${ option }</option>`)
 
 	const htm =
 
-	`<details id="VBMdet" ontoggle=VBM.setViewBySurfacesSelectOptions(); >
+	`<details id="VBMdet" ontoggle=VBM.setViewByMaterialsSelectOptions(); >
 
-		<summary>Materials<span id="VBMspnCount" ></span> ${ help }</summary>
+		<summary>Materials ${ help }</summary>
 
 		<p>
-			View materials
+			View materials. <span id="VBMspnCount" ></span>
 		</p>
 
 		<p>
 			<input id=VBMinpSelectIndex oninput=VBM.setSelectedIndex(this,VBMselViewBySurfaces) placeholder="Enter an attribute" >
-
 		</p>
 
 		<p>
-			<select id=VBMselViewBySurfaces oninput=VBM.selectedSurfacesFocus(this); style=width:100%; size=10 multiple >
+			<select id=VBMselViewBySurfaces oninput=VBM.selMaterialsFocus(this); style=width:100%; size=10 multiple >
 			</select>
 		</p>
 
-		<p>Attribute to show: <select id=VBMselAttribute oninput=VBM.setViewBySurfacesSelectOptions(); >${ selectOptions }</select></p>
+		<p>Attribute to show: <select id=VBMselAttribute oninput=VBM.setViewByMaterialsSelectOptions(); >${ selectOptions }</select></p>
 
-		<p>Select multiple surfaces by pressing shift or control keys</p>
+		<p>TBD: viewing surfaces by material</p>
 
 		<p>
 			<button onclick=VBM.setViewBySurfaceShowHide(this,VBM.surfaces); >
 				Show/hide by surfaces
-			</button> <mark>What would be useful here?</mark>
+			</button>
 		</p>
 
 	</details>`;
@@ -63,7 +63,7 @@ VBM.getMenuViewByMaterials = function() {
 };
 
 
-VBM.setViewBySurfacesSelectOptions = function() {
+VBM.setViewByMaterialsSelectOptions = function() {
 
 	if ( VBMdet.open === false ) { return; }
 
@@ -72,11 +72,11 @@ VBM.setViewBySurfacesSelectOptions = function() {
 
 	let color, text;
 
-	htmOptions = GBX.surfaces.map( (surface, index ) => {
+	htmOptions = GBX.materials.map( (surface, index ) => {
 
 		color = color === 'pink' ? '' : 'pink';
 
-		if ( [ "id", "constructionIdRef" ].includes( attribute ) ) {
+		if ( [ "id" ].includes( attribute ) ) {
 
 			text = surface.match( `${ attribute }="(.*?)"` );
 			text = text ? text[ 1 ] : "";
@@ -88,12 +88,6 @@ VBM.setViewBySurfacesSelectOptions = function() {
 			//console.log( 'text', text );
 			text = text ? text[ 1 ] : "";
 
-		} else if ( attribute === "CADObjectId" ) {
-
-			text = surface.match( /<CADObjectId>(.*?)<\/CADObjectId>/gi );
-			//console.log( 'text', text );
-			text = text ? text.pop() : "";
-
 		}
 
 		return `<option style=background-color:${ color } value=${ index } >${ text }</option>`;
@@ -101,7 +95,7 @@ VBM.setViewBySurfacesSelectOptions = function() {
 	} );
 
 	VBMselViewBySurfaces.innerHTML = htmOptions;
-	VBMspnCount.innerHTML = `: ${ GBX.surfaces.length } found`;
+	VBMspnCount.innerHTML = `: ${ GBX.materials.length } found`;
 
 	THR.controls.enableKeys = false;
 
@@ -120,45 +114,51 @@ VBM.setSelectedIndex = function( input, select ) {
 };
 
 
+VBM.selMaterialsFocus = function( select ) {
 
-VBM.selectedSurfacesFocus = function( select ) {
+	THR.controls.enableKeys = false;
 
-	alert( "coming soon")
+	POPX.intersected = null;
 
-	return;
+	THR.scene.remove( POPX.line, POPX.particle );
 
-	POPX.intersected = GBX.surfaceGroup.children[ select.value ];
+	POPdivPopupData.innerHTML = VBM.getMaterialsAttributes( select.value );
 
-	POPdivPopupData.innerHTML = POPX.getIntersectedDataHtml();
-	//console.log( 'sel', select.value );
+	//VBM.surfacesFilteredBySpace = VBM.getSurfacesFilteredBySpace();
 
-	const options = select.selectedOptions
-	//console.log( 'option', options );
+	//VBMdivReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( VBM.surfacesFilteredBySpace );
 
-	const indexes = Array.from( options ).map( option => Number( option.value ) );
-	//console.log( 'indexes', indexes );
-
-	VBM.surfaces = GBX.surfacesIndexed.filter( ( surface, index ) => indexes.includes( index  ) );
-
-	GBX.sendSurfacesToThreeJs( VBM.surfaces );
 
 };
 
 
 
-VBM.setViewBySurfaceShowHide = function( button, surfaceArray ) {
-	//console.log( 'surfaceArray', surfaceArray );
+VBM.getMaterialsAttributes = function( index ) {
 
-	button.classList.toggle( "active" );
+	const typeTxt = GBX.materials[ index ];
 
-	if ( button.classList.contains( 'active' ) && surfaceArray.length ) {
+	const typeId = typeTxt.match( ` id="(.*?)"` )[ 1 ];
 
-		GBX.sendSurfacesToThreeJs( surfaceArray );
+	const typeXml = POPX.parser.parseFromString( typeTxt, "application/xml").documentElement;
+	//console.log( 'typeXml ', typeXml );
 
-	} else {
+	const htmType = GSA.getAttributesHtml( typeXml );
 
-		GBX.surfaceGroup.children.forEach( element => element.visible = true );
+	const htm =
+	`
+		<b>${ typeId } Attributes</b>
 
-	}
+		<p>${ htmType }</p>
+
+		<details open >
+
+			<summary>gbXML data</summary>
+
+			<textarea style=height:10rem;width:100%; >${ typeTxt }</textarea>
+
+		</details>
+	`;
+
+	return htm;
 
 };

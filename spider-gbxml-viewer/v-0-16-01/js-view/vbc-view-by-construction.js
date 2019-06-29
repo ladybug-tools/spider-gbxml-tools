@@ -114,7 +114,7 @@ VBC.getViewByConstructionSelectOptions = function() {
 		const constructionText = text ? text : "no space name in file";
 
 
-		return `<option style=background-color:${ color } value=${ index } >${ constructionText }</option>`;
+		return `<option style=background-color:${ color } value=${ constructionRef } >${ constructionText }</option>`;
 
 	} );
 
@@ -137,15 +137,15 @@ VBC.setSelectIndex = function( input, select ) {
 
 
 
-VBC.selectedConstructionFocus = function( button ) {
+VBC.selectedConstructionFocus = function( select ) {
 
 	THR.controls.enableKeys = false;
 
-	//POPX.intersected = null;
+	POPX.intersected = null;
 
 	THR.scene.remove( POPX.line, POPX.particle );
 
-	const constructionId = button.value;
+	const constructionId = select.value;
 	//console.log( 'constructionId', constructionId );
 
 	const surfaces = GBX.surfacesIndexed.filter( (surface, surfaceIndex ) => {
