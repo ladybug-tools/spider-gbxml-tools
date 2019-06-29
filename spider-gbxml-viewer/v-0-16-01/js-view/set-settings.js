@@ -10,8 +10,8 @@ SET.getSettingsMenu = function() {
 	const htm =
 	`
 		<p><i>Update display parameters</i>
-			<a title="View the Three.js Utilities Read Me" href="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-viewer-threejs-utilities/" target="_blank">?</a><
-			/p>
+			<a title="View the Three.js Utilities Read Me" href="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-viewer-threejs-utilities/" target="_blank">?</a>
+		</p>
 
 		<p>
 			<button onclick="THR.controls.autoRotate = !THR.controls.autoRotate;" >toggle rotation</button>

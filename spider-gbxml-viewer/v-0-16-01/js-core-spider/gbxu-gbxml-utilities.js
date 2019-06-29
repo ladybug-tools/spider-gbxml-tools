@@ -85,6 +85,16 @@ GBXU.onLoad = function() {
 
 GBXU.setStats = function() {
 
+	GBX.openings = [];
+
+	GBX.surfaces.forEach( surface => {
+
+		const openings = surface.match( /<Opening(.*?)<\/Opening>/gi ) || [];
+
+		openings.forEach( opening  => GBX.openings.push(  opening ) );
+
+	} );
+
 	const reSpaces = /<Space(.*?)<\/Space>/gi;
 	GBX.spaces = GBX.text.match( reSpaces );
 	//console.log( 'spaces', GBX.spaces );
@@ -114,26 +124,33 @@ GBXU.setStats = function() {
 
 	const timeToLoad = performance.now() - GBX.timeStart;
 
-	const htm =
-	`
-		<div><b>gbML statistics</b></div>
-		<div>time to parse: ${ parseInt( timeToLoad, 10 ).toLocaleString() } ms</div>
-		<div>spaces: ${ GBX.spaces.length.toLocaleString() } </div>
-		<div>storeys: ${ GBX.storeys.length.toLocaleString() } </div>
-		<div>zones: ${ GBX.zones.length.toLocaleString() } </div>
-		<div>surfaces: ${ GBX.surfaces.length.toLocaleString() } </div>
-		<div>coordinates: ${ count.toLocaleString() } </div>
-		<div>constructions: ${ GBX.constructions.length.toLocaleString() } </div>
-		<div>materials: ${ GBX.materials.length.toLocaleString() } </div>
-		<div>layers: ${ GBX.layers.length.toLocaleString() } </div>
-		<div>window-types: ${ GBX.windowTypes.length.toLocaleString() } </div>
+	items = {
+		"Space:": GBX.spaces.length,
+		"Storeys": GBX.storeys.length,
+		"Zones": GBX.zones.length,
+		"Surfaces": GBX.surfaces.length,
+		"Openings": GBX.openings.length,
+		"count": GBX.constructions.length,
+		"Materials": GBX.materials.length,
+		"Layers": GBX.layers.length,
+		"Window Types": GBX.windowTypes.length
+	}
 
-		<p>Need more? Just ask...</p>
-	`;
+	keys = Object.keys( items )
+	//console.log( 'keys', keys );
+
+	GBXU.stats =
+		`<b>gbXML Statistics</b>` +
+		keys.map( key =>
+		`<div>
+			<span class=attributeTitle >${ key }</span>:
+			<span class=attributeValue > ${ items[ key ].toLocaleString() }</span>
+		</div>`
+	).join( "");
 
 	tag = document.body.querySelectorAll( "#FOBdivAppStats" );
 
-	if ( tag.length > 0 ) { tag[ 0 ].innerHTML = htm; }
+	if ( tag.length > 0 ) { tag[ 0 ].innerHTML = GBXU.stats; }
 
 };
 

@@ -4,10 +4,10 @@
 
 <meta charset = "utf-8">
 <meta name = "copyright" content ="Ladybug Tools authors" >
-<meta name = "date" content = "2019-06-27" >
+<meta name = "date" content = "2019-06-28" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.16.01-5" >
+<meta name = "version" content = "0.16.01-6" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
 <title>Spider gbXML Viewer 'Maevia'</title>
@@ -64,12 +64,14 @@
 <script src = "../js-core-spider/gbxu-gbxml-utilities.js" ></script>
 
 <!-- popup menu -->
-<script src = "../js-popup/popx-popop-gbxml.js" ></script>
+<script src = "../js-popup/popx-popup-gbxml.js" ></script>
+<script src = "../js-popup/popf-popup-footer.js" ></script>
 <script src = "../js-popup/gsa-gbxml-surface-attributes.js" ></script>
 
 <!-- View menu -->
 <script src = "../js-view/set-settings.js" ></script>
 <script src = "../js-view/cut-section-cut.js"></script>
+<script src = "../js-view/vg-view-gbxml.js" ></script>
 <script src = "../js-view/vst-view-surface-types.js" ></script>
 <script src = "../js-view/vbsu-view-by-surfaces.js" ></script>
 <script src = "../js-view/vbs-view-by-storeys.js" ></script>
@@ -163,6 +165,8 @@
 				</details>
 
 				<hr>
+
+				<section id="VGsecViewGbxml" ></section>
 
 				<section id="VSTsecViewSurfaceType" ></section>
 
@@ -297,6 +301,9 @@ function init() {
 	FOBdivFileSaveBasic.innerHTML = FOB.getMenuFileSaveBasic();
 
 	// View menu
+
+	VGsecViewGbxml.innerHTML = VG.getMenuViewGbxml();
+
 	VSTsecViewSurfaceType.innerHTML = VST.getMenuViewSurfaceTypes();
 
 	VBSUsecViewBySurfaces.innerHTML = VBSU.getMenuViewBySurfaces();

@@ -17,8 +17,6 @@ const VST = {
 };
 
 
-
-
 VST.filtersDefault = [ "Air", "ExposedFloor", "ExteriorWall", "Roof", "Shade" ];
 
 
@@ -124,7 +122,7 @@ VST.setSurfacesActiveByDefaults = function() {
 
 VST.toggleThisSurface = function( type ) {
 
-	const buttonsActive = VSTsecViewSurfaceType.getElementsByClassName( "active" ); // collection
+	const buttonsActive = VSTdet.getElementsByClassName( "active" ); // collection
 
 	Array.from( buttonsActive ).forEach( button => button.classList.remove( "active" ) );
 
@@ -184,7 +182,7 @@ VST.setSurfacesActiveByFilter = function( button, filter ) {
 
 VST.onToggleInteriorExterior = function( button ) {
 
-	const buttonsActive = VSTsecViewSurfaceType.getElementsByClassName( "active" ); // collection
+	const buttonsActive = VSTdet.getElementsByClassName( "active" ); // collection
 
 	Array.from( buttonsActive ).forEach( butt => { if ( butt !== button ) ( butt.classList.remove( "active" ) ); } );
 

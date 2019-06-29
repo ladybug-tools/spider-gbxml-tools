@@ -220,17 +220,14 @@ VBW.setOpenings = function() {
 
 	VBW.openings = [];
 
-	GBX.surfaces.forEach( (surface, surfaceIndex ) => {
+	GBX.surfaces.forEach( surface => {
 
 		const openings = surface.match( /<Opening(.*?)<\/Opening>/gi ) || [];
 
-		openings.forEach( ( opening, openingInSurface )  => {
-
-			VBW.openings.push(  opening );
-
-		} );
+		openings.forEach( opening  => VBW.openings.push(  opening ) );
 
 	} );
+	
 }
 
 
