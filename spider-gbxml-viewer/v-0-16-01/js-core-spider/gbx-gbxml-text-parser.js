@@ -48,7 +48,7 @@ GBX.init = function() {
 	//change to custom event with data passing via event details
 	FOB.xhr.addEventListener( 'load', GBX.onXhrResponse, false );
 	FOB.reader.addEventListener( 'load', GBX.onReaderResult, false );
-	document.body.addEventListener( 'onZipFileParse', GBX.onFileZipLoad, false );
+	document.body.addEventListener( 'FOBonZipFileLoad', GBX.onFileZipLoad, false );
 
 	GBXU.init();
 
@@ -60,7 +60,7 @@ GBX.onXhrResponse = function( event ) { GBX.parseFile( event.target.response ); 
 
 GBX.onReaderResult = function() { GBX.parseFile( FOB.reader.result ); };
 
-GBX.onFileZipLoad = function() { GBX.parseFile( FOB.text ); };
+GBX.onFileZipLoad = function() { console.log( '', 23 );GBX.parseFile( FOB.text ); };
 
 
 

@@ -1,17 +1,19 @@
 /* globals FOB, MNU, POP */
-/* jshint esversion: 6 */
-/* jshint loopfunc: true */
+// jshint esversion: 6
+// jshint loopfunc: true
 
 const COR = {
 	"script": {
 		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-		"date": "2019-06-27",
+		"date": "2019-06-28",
 		"description": "core - contains local overrides",
 		"helpFile": "cor-core/README.md",
-		"release": "0.16.01-1cor",
+		"version": "0.16.01-2cor",
 	}
 };
 
+POP.date = MNU.date = "2019-06-28";
+POP.version = MNU.version = "0.16.01-8"; //document.head.querySelector( '[ name=version ]' ).content || "";
 
 //THM.themeUrlStorage = 'spider-gbxml-menu-theme-url';// set for each instance in HTML file
 //THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-03/style.css";
@@ -27,8 +29,7 @@ FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristo
 MNU.urlSourceCode = `https://github.com/pushme-pullyou/tootoo14/tree/master/js-14-03/`;
 
 MNU.title = document.title;
-POP.version = MNU.version = "0.16.01-7"; //document.head.querySelector( '[ name=version ]' ).content || "";
-POP.date = MNU.date = "2019-06-27";
+
 
 MNU.helpFile = "../../README.md";
 
