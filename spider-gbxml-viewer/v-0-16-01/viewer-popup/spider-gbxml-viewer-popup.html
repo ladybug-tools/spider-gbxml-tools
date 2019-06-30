@@ -124,6 +124,7 @@ function init() {
 	GBX.init();
 
 	POPdivPopup.innerHTML = POP.getMenuDivPopup();
+
 	POPX.init();
 
 	//const mesh = THRU.getGeometry();
@@ -135,7 +136,15 @@ function init() {
 
 	FOB.onHashChange();
 
-	POP.setPopupShowHide( butPopClose, "../popup.md" );
+	POP.setPopupShowHide( butPopupClose, "../popup.md" );
+
+	POPdivHeader.addEventListener( "touchstart", POP.dragStart, false );
+	POPdivHeader.addEventListener( "touchend", POP.dragEnd, false );
+	POPdivHeader.addEventListener( "touchmove", POP.drag, false );
+
+	POPdivHeader.addEventListener( "mousedown", POP.dragStart, false );
+	POPdivHeader.addEventListener( "mouseup", POP.dragEnd, false );
+	POPdivHeader.addEventListener( "mousemove", POP.drag, false );
 
 }
 

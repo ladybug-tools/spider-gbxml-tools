@@ -1,4 +1,4 @@
-/* global Stats, POPbutRateLimits, navPopup, POPdivPopupData, main, showdown */
+/* global Stats, POPbutRateLimits, navPopup, POPdivMain, main, showdown */
 /* jshint esversion: 6 */
 /* jshint loopfunc: true */
 
@@ -26,7 +26,7 @@ POPX.footer =
 
 POPF.setScreen2 = function() {
 
-	POPdivPopupData.innerHTML = SET.getSettingsMenu();
+	POPdivMain.innerHTML = SET.getSettingsMenu();
 
 };
 
@@ -46,7 +46,7 @@ POPF.setScreen1 = function() {
 	);
 
 
-	POPdivPopupData.innerHTML =
+	POPdivMain.innerHTML =
 		`<table><tr>
 		<td>${ buttonSurfaceTypes.join( '<br>' ) }</td>
 		<td><button onclick=POPF.toggleInteriorExterior(this); style="width:8rem;" >interior/exterior</button></td>
@@ -57,7 +57,7 @@ POPF.setScreen1 = function() {
 
 POPF.toggleThisSurface = function( type ) {
 
-	const buttonsActive = POPdivPopupData.getElementsByClassName( "active" ); // collection
+	const buttonsActive = POPdivMain.getElementsByClassName( "active" ); // collection
 
 	Array.from( buttonsActive ).forEach( button => button.classList.remove( "active" ) );
 
@@ -71,7 +71,7 @@ POPF.toggleSurfaceByButtons = function( button ) {
 
 	button.classList.toggle( "active" );
 
-	const buttonsActive = POPdivPopupData.getElementsByClassName( "active" ); // collection
+	const buttonsActive = POPdivMain.getElementsByClassName( "active" ); // collection
 
 	const filterArray = Array.from( buttonsActive ).map( button => button.innerText );
 
@@ -110,7 +110,7 @@ POPF.sendSurfacesToThreeJs = function( filters ) {
 
 POPF.toggleInteriorExterior = function( button ) {
 
-	const buttonsActive = POPdivPopupData.getElementsByClassName( "active" ); // collection
+	const buttonsActive = POPdivMain.getElementsByClassName( "active" ); // collection
 
 	Array.from( buttonsActive ).forEach( butt => { if ( butt !== button ) ( butt.classList.remove( "active" ) ); } );
 
