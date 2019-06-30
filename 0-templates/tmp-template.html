@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+
+<meta charset = "utf-8" >
+<meta name = "copyright" content ="PushMe-PullYou authors" >
+<meta name = "date" content = "2019-06-12" >
+<meta name = "description" content = "Basic TooToo HTML template" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "version" content = "0.14.1-6" >
+<meta name = "viewport" content = "width=device-width, initial-scale=1" >
+
+<title>TooToo</title>
+
+<link rel = "canonical" href = "https://pushme-pullyou.github.io" / >
+<link rel = "license" href = "https://creativecommons.org/licenses/by/4.0/" >
+<link rel = "stylesheet" href = "https://fonts.googleapis.com/css?family=Inconsolata"  >
+<link rel = "stylesheet" href = "https://pushme-pullyou.github.io/tootoo14/js-14-1/style.css" >
+
+</head>
+
+<body>
+
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js" ></script>
+
+<!-- menus generally -->
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/mnu-menu/mnu-menu.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/gat-github-access-token/gat-github-access-token.js" ></script>
+
+<!-- File menu panel -->
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/fga-files-github-api/fga-files-github-api.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/fob-file-open-basic/fob-file-open-basic.js" ></script>
+
+<!-- Edit Menu -->
+
+<!-- Settings menu -->
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/thm-theme/thm-theme.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-1/tmp-template/tmp-template.js" ></script>
+
+	<button id="expandButton" onclick="toggleNavPanel();" >☰</button>
+
+	<nav id="navPanel" >
+
+		<section class="secContent" >
+
+			<header>
+
+				<div id="MNUdivHeader" ></div>
+
+			</header>
+
+
+			<details open >
+
+				<summary class="sumMenuTitle" >File menu</summary>
+
+				<div id=SFMsecPrototypes ></div>
+
+				<div id="FGAdivMenuRepoFilesFolders" ></div>
+
+				<div id="GATdivGithubAccessToken" ></div>
+
+				<div id=FOBdivFileOpenBasic ></div>
+
+				<div id=FOBdivFileSaveBasic ></div>
+
+			</details>
+
+
+			<details>
+
+				<summary class=sumMenuTitle >Settings menu</summary>
+
+				<div id=THMdivMenuThemeSelect ></div>
+
+				<div id=TMPdivTemplate ></div>
+
+			</details>
+
+
+			<footer>
+
+				<div id="MNUdivFooter" ></div>
+
+				<div id="MNUdivFooterPopup" ></div>
+
+				<h1 onclick="navPanel.scrollTop=0;" style="cursor:pointer;text-align:center;" title="go to top of menu" >
+					❦
+				</h1>
+
+			</footer>
+
+		</section>
+
+	</nav>
+
+
+	<main id=main >
+
+		<div id=divContents ></div>
+
+	</main>
+
+
+	<nav id="navPopup" hidden >
+
+		<section class="secContent" >
+
+			<div id="MNUdivPopup" ></div>
+
+		</section>
+
+	</nav>
+
+
+	<nav>
+
+		<a href="" id="aViewSource" target="_blank"; hidden >view source</a>
+
+	</nav>
+
+
+<script>
+
+THM.themeUrlStorage = 'tootoo14ThemeUrlTemplate'; // set for each instance in HTML file
+THM.cssBasic = "../style.css"; // set in HTML file
+THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-1/style.css";
+FOB.urlDefaultFile = '../../js-14-1/tmp-template/README.md';
+FOB.urlDefaultFile = "README.md";
+TMP.helpFile = "README.md";
+FGA.urlGitHubPage = "https://pushme-pullyou.github.io/tootoo14/";
+FGA.urlGitHubPage = "../../";
+
+// For main menu header
+MNU.urlSourceCode = "https://github.com/pushme-pullyou/tootoo14/";
+
+MNU.homeText  = "pushMe-pullYou";
+MNU.homeTitle = "Very simple JavaScript files to help you explore and build new tools on GitHub.";
+MNU.homeUrl   = "https://pushme-pullyou.github.io";
+
+MNU.repoText  = "TooToo14";
+MNU.repoTitle = "Basic html templates with sliding menu, css selection, markdown capability and frequently used pages";
+MNU.repoUrl   = "https://pushme-pullyou.github.io/tootoo14";
+
+MNU.appText  = ""; // "CMS";
+MNU.appTitle = ""; //"Basic html content management script with sliding menu, css theme selection, Markdown to HTML, drag and drop file reading capability, access to frequently used pages and more";
+MNU.appUrl   = ""; //"https://pushme-pullyou.github.io/#tootoo-templates/hamburger-theme-cms/README.md";
+
+MNU.footerPopupUrl	= "https://pushme-pullyou.github.io/";
+MNU.footerTarget = "target=_blank";
+MNU.footerIssues = "https://github.com/pushme-pullyou.github.io/tootoo14/issues";
+
+
+init();
+
+
+function init() {
+
+	if ( /(iPad|iPhone|iPod)/g.test( navigator.userAgent ) ) { /* I hate having to add this */
+
+		divContents.style.width = getComputedStyle( divContents ).width;
+		divContents.style.height = getComputedStyle( divContents ).height;
+		divContents.setAttribute( 'scrolling', 'no' );
+
+	}
+
+	THMdivMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
+	THM.init();
+
+	MNUdivHeader.innerHTML = MNU.getNavHeader();
+
+	FGAdivMenuRepoFilesFolders.innerHTML = FGA.getMenuFilesGithubApi();
+
+	FGA.getFiles();
+
+	GATdivGithubAccessToken.innerHTML = GAT.getMenuGitHubAccessToken();
+
+	FOBdivFileOpenBasic.innerHTML = FOB.getMenuFileOpenBasic();
+
+	FOBdivFileSaveBasic.innerHTML = FOB.getMenuFileSaveBasic();
+
+	TMPdivTemplate.innerHTML = TMP.getMenuTemplate();
+
+	//MNUdivFooter.innerHTML = MNU.getNavFooter();
+
+	MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();
+
+	if ( !location.hash ) { location.hash=FOB.urlDefaultFile; } else { FOB.onHashChange(); }
+
+	aViewSource.style.display = "block";
+	aViewSource.href = MNU.urlSourceCode;
+
+}
+
+
+
+function toggleNavPanel() {
+
+	expandButton.classList.toggle( 'collapsed' );
+	navPanel.classList.toggle( 'collapsed' );
+	main.classList.toggle( 'collapsed' );
+
+}
+
+</script>
+</body>
+</html>

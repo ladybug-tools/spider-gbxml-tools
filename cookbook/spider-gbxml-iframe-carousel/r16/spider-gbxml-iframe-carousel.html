@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1">
+<meta name = "description" content = "Web page carousel displays multiple interactive 3D models in a single space on any HTML page" >
+<meta name = "keywords" content = "JavaScript, GitHub, FOSS, 3D, STEM" >
+<meta name = "date" content = "2019-06-26" >
+<title>Spider Tools Iframe Carousel R1.3</title>
+<style>
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	iframe { border: none; margin: 0; }
+	iframe {
+		display: block;
+		border: 0;
+		-moz-transition:    all 1.9s;
+		-webkit-transition: all 1.9s;
+		-ms-transition:     all 1.9s;
+		-o-transition:      all 1.9s;
+		transition:         all 1.9s;
+		opacity: 1;
+
+	}
+	iframe.fade-out { opacity: 0; }
+	iframe.fade-in { opacity: 1; }
+
+</style>
+</head>
+<body>
+
+	<div id = "header" >
+		<div id = "title" ></div>
+		<div id = "contents" >
+		</div>
+	</div>
+
+	<iframe id=ifr width=100% height=480px ></iframe>
+
+<script>
+
+	const path = "../../../spider-gbxml-viewer/v-0-16-01/viewer-view/spider-gbxml-viewer-view-dev.html";
+	const folder = "../../../../spider/gbxml-sample-files/";
+
+	//const path = "https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/r15/spider-gbxml-viewer15.html";
+	//const folder = "https://www.ladybug.tools/spider/gbxml-sample-files/";
+
+	const sites = [
+
+		{ fileName: 'bristol-clifton-downs-fixed.xml', title: 'Bristol' },
+		{ fileName: 'boston-ma-urban-house-mep.xml', title: 'Boston' },
+		{ fileName: 'annapolis-md-single-family-residential-2016.xml', title: 'Annapolis' },
+		{ fileName: 'columbia-sc-two-story-education-trane.xml', title: 'Columbia' },
+		{ fileName: 'golden-co-open-studio-seb.xml', title: "Golden" },
+		{ fileName: 'london-office.xml', title: 'London' },
+		{ fileName: 'omha-nb-zneth.xml', title: 'Omaha' }
+
+	];
+
+	let timer;
+	let index = Math.floor( Math.random() * sites.length );
+
+	init();
+
+	function init() {
+
+		ifr.src = path;
+
+		ifr.onload = function() {
+
+			ifr.className = 'fade-in';
+/*
+			const width = ifr.contentWindow.navPanel.getBoundingClientRect().width;
+
+			ifr.contentWindow.navPanel.style.left = `-${ width }px`;
+			ifr.contentWindow.expandButton.style.left = '10px';
+*/
+
+			ifr.contentWindow.THR.controls.autoRotate = true;
+			ifr.contentWindow.THR.controls.enableZoom = false;
+
+			ifr.contentWindow.POPdivPopupData.innerHTML = '';
+
+			ifr.contentWindow.toggleNavPanel();
+
+		}
+
+		clearInterval( timer );
+
+		displayNext();
+
+		timer = setInterval( displayNext, 8000 );
+
+	}
+
+
+	function displayNext() {
+
+		//console.log( 'sites[ index ].fileName', folder, sites[ index ].fileName );
+
+		//setTimeout( function(){ ifr.className = 'fade-out'; }, 8000 );
+
+		ifr.contentWindow.location.hash = folder + sites[ index ].fileName;
+
+		//history.replaceState( '', document.title, window.location.pathname );
+
+		index++;
+		index = index >= sites.length ? 0 : index;
+
+	}
+
+
+</script>
+</body>
+</html>

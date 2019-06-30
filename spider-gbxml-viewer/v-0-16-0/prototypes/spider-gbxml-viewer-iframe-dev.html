@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+
+<meta charset = "utf-8">
+<meta name = "copyright" content ="ladybug Tools authors" >
+<meta name = "date" content = "2019-06-16" >
+<meta name = "description" content = "Basic TooToo HTML template" >
+<meta name = "keywords" content = "Three.js,WebGL,JavaScript,GitHub,FOSS" >
+<meta name = "version" content = "0.16.0-0prototype" >
+<meta name = "viewport" content = "width=device-width, initial-scale=1" >
+
+<title>Spider gbXML Viewer</title>
+
+<link rel = "canonical" href = "www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/" />
+<link rel = "license" href = "https://creativecommons.org/licenses/by/4.0/" >
+
+<style>
+
+body { font: 11pt monospace; height:100%; margin: 0; overflow: hidden; }
+
+.active { color: red; }
+
+#divContents { height:100vh; width: 100%; }
+
+#navPopup { background-color: #eee; border: 1px solid #aaa; border-radius: 8px;
+	max-height: 90%; max-width: 45%; opacity: 0.95;  overflow: auto;
+	padding: 0 1rem 1rem 1rem; position: fixed;
+	resize: both; left: 50%;  top: 8%; z-index: 10;
+	box-shadow: 10px 10px 25px rgba(0,0,0,0.3), 6px 6px 6px rgba(0,0,0,0.5); }
+
+
+</style>
+</head>
+
+<body>
+
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js" ></script>
+
+<!-- Three.js -->
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r105/build/three.min.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r105/examples/js/controls/OrbitControls.js" ></script>
+
+<!-- File menu panel -->
+<script src = "fob-file-open-basic.js" ></script>
+
+<!-- Edit Menu -->
+
+<script src = "../js/thr-threejs.js" ></script>
+<script src = "../js/thru-threejs-utilities.js" ></script>
+<script src = "pop-up-text-parser.js" ></script>
+
+
+<script src = "gbx-gbxml-text-parser.js" ></script>
+<script src = "gbxu-gbxml-utilities.js" ></script>
+
+
+<!-- Popup -->
+<script src = "../js/vst-view-surface-types.js" ></script>
+<script src = "../js/vbsu-view-by-surfaces.js" ></script>
+<script src = "../js/vbs-view-by-storeys.js" ></script>
+<script src = "../js/vbsp-view-by-spaces.js" ></script>
+<script src = "../js/vbz-view-by-zones.js" ></script>
+
+<!-- Settings menu -->
+<script src = "../js/set-settings.js" ></script>
+<script src = "../js/cut-section-cut.js"></script>
+
+
+	<div id=divContents ></div>
+
+
+	<nav id="navPopup"  >
+
+		<section class="secContent" >
+
+			<div id="POPdivPopup" >
+
+			<div id="POPdivPopupData" ></div>
+
+			<div id="POPdivMessage" ></div>
+
+			</div>
+
+		</section>
+
+	</nav>
+
+
+
+<script>
+
+
+FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
+//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/coventry-university-of-warwick-small.zip";
+//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/pittsburg-airport.zip";
+
+
+init();
+THR.animate();
+
+function init() {
+
+	if ( /(iPad|iPhone|iPod)/g.test( navigator.userAgent ) ) { /* I hate having to add this */
+
+		divContents.style.width = getComputedStyle( divContents ).width;
+		divContents.style.height = getComputedStyle( divContents ).height;
+		divContents.setAttribute( 'scrolling', 'no' );
+
+	}
+
+	THR.getThreejs();
+
+	THRU.setHelpers();
+
+	THRU.addSomeLights2();
+
+	GBX.init();
+
+	POPdivPopup.innerHTML = POP.getMenuHtmlPopUp();
+
+	//mesh = THRU.getGeometry();
+	//THR.scene.add( mesh );
+
+	window.addEventListener ( 'hashchange', FOB.onHashChange, false );
+
+	if ( !parent.location.hash ) { parent.location.hash=FOB.urlDefaultFile; }
+
+	FOB.onHashChange();
+
+
+	POP.setPopupShowHide( butPopClose, "../popup.md" );
+
+}
+
+</script>
+</body>
+</html>

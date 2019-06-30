@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+
+<meta charset="utf-8">
+<meta name = "copyright" content ="Ladybug Tools authors" >
+<meta name = "date" content = "2019-06-03" >
+<meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "version" content = "0.4.17" >
+<meta name = "viewport" content = "width=device-width, initial-scale=1" >
+
+<title>Spider gbXML Fixer "Atrax" FOB</title>
+
+<link rel = "canonical" href = "https://www.ladybug.tools/spider-gbxml-fixer/" >
+<link rel = "license" href="https://creativecommons.org/licenses/by/4.0/" >
+<link rel = "stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata"  >
+<link rel = "stylesheet" href="https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/style.css" >
+
+</head>
+
+<body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js" ></script>
+
+<!-- menus generally -->
+<script src="https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/mnu-menu/mnu-menu.js" ></script>
+<script src="https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/gbx-gbxml-core-dev.js" ></script>
+<script src="https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/gsa-get-surface-attributes/gsa-get-surface-attributes.js" ></script>
+
+<!-- File menu panel -->
+<script src="https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/gff-github-folder-files/gff-github-folder-files.js" ></script>
+<script src="https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/fob-file-open-basic/fob-file-open-basic.js" ></script>
+
+<!-- Edit Menu -->
+<script src="https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/ggd-get-gbxml-data/ggd-get-gbxml-data.js" ></script>
+<script src="https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/gss-get-surface-statistics/gss-get-surface-statistics.js" ></script>
+<script src="https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/gcs-get-check-strings/gcs-get-check-strings.js" ></script>
+<script src="https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/gco-get-check-offset/gco-get-check-offset.js" ></script>
+<script src="https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/ocv-openings-check-vertices/ocv-openings-check-vertices.js" ></script>
+<script src="https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/fxa-fix-xml-attributes/fxa-fix-xml-attributes.js" ></script>
+
+<script src="https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/fstn-fix-surface-type-name/fstn-fix-surface-type-name.js" ></script>
+<script src="https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/fets-fix-exposed-to-sun/fets-fix-exposed-to-sun.js" ></script>
+<script src="https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/fdpc-fix-duplicate-planar-coordinates/fdpc-fix-duplicate-planar-coordinates.js" ></script>
+<script src="https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/fasst-fix-adjacent-space-surface-type/fasst-fix-adjacent-space-surface-type.js" ></script>
+<script src="https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/fase-fix-adjacent-space-extra/fase-fix-adjacent-space-extra.js" ></script>
+<script src="https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/fasd-fix-adjacent-space-duplicate/fasd-fix-adjacent-space-duplicate.js" ></script>
+<script src="https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/fasa-fix-air-single-adjacent/fasa-fix-air-single-adjacent.js" ></script>
+<script src="https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/fcim-fix-cad-id-missing/fcim-fix-cad-id-missing.js" ></script>
+
+<!-- Settings menu -->
+<script src="https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/thm-theme/thm-theme.js" ></script>
+
+
+	<button id="expandButton" onclick="toggleNavPanel();" >☰</button>
+
+	<nav id="navPanel" >
+
+		<section class="secContent" >
+
+			<header>
+
+				<div id="MNUdivHeader" ></div>
+
+			</header>
+
+			<div >
+
+				<p>
+					See <a href="http://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/" target="_blank">Spider gbXML Viewer 'Maevia'</a>
+				</p>
+
+				<p>
+					See <a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">Schema GreenBuildingXML_Ver6.01.xsd </a>
+				</p>
+
+			</div>
+
+			<details open>
+
+				<summary class=sumMenuTitle >GitHub Folders & Files</summary>
+
+				<div id=GFFdivGithubFoldersFiles ></div>
+
+				<div id=GFFdivFileInfo></div>
+
+			</details>
+
+
+			<details open >
+
+				<summary class="sumMenuTitle" >File menu</summary>
+
+				<div id="GALdivSampleFilesGallery"></div>
+
+				<div id="FILdivFileOpen"></div>
+
+				<div id="FILdivFileSave"></div>
+
+				<div id=FOBdivFileOpenBasic ></div>
+
+				<div id=FOBdivFileSaveBasic ></div>
+
+			</details>
+
+
+			<details>
+
+				<summary class=sumMenuTitle >Settings menu</summary>
+
+				<div id=THMdivMenuThemeSelect ></div>
+
+				<div id=TMPdivTemplate ></div>
+
+			</details>
+
+
+			<footer>
+
+				<div id="MNUdivFooter" ></div>
+
+				<div id="MNUdivFooterPopup" ></div>
+
+				<h1 onclick="navPanel.scrollTop=0;" style="cursor:pointer;text-align:center;" title="go to top of menu" >
+					<img alt="spider icon" src="https://ladybug.tools/artwork/icons_bugs/ico/spider.ico" height=18 >
+				</h1>
+
+			</footer>
+
+		</section>
+
+	</nav>
+
+
+	<main id=main >
+
+		<div id=divContents ></div>
+
+	</main>
+
+
+	<nav id="navPopup" hidden >
+
+		<section class="secContent" >
+
+			<div id="MNUdivPopup" ></div>
+
+		</section>
+
+	</nav>
+
+
+	<nav>
+
+		<a href="" id="aViewSource" target=_blank; hidden >view source</a>
+
+	</nav>
+
+
+<script>
+
+THM.themeUrlStorage = 'spider-gbxml-fixer-theme-url';
+THM.cssBasic = "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/style.css";
+
+// useful when testing / un-comment
+//FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
+//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/coventry-university-of-warwick-small.zip";
+FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/pittsburg-airport.zip";
+
+//MNU.description = document.head.querySelector( '[ name=description ]' ).content;
+MNU.description =
+	`
+		Mission: run a series of basics checks on <a href="https://gbXML.org" target="_blank">gbXML</a> files to identify, report and help you fix any errors
+	`;
+
+// put into menu.js ??
+MNU.homeText ="<img src='https://ladybug.tools/artwork/icons_bugs/ico/ladybug.ico' height=24 >";
+MNU.homeTitle="Ladybug Tools: free computer applications that support environmental design and education";
+MNU.homeUrl  ="https://www.ladybug.tools";
+
+MNU.repoText ="<img src='https://ladybug.tools/artwork/icons_bugs/ico/spider.ico' height=24 >";
+MNU.repoTitle="Spider: 3D interactive analysis in your browser mostly written around the Three.js JavaScript library";
+MNU.repoUrl  ="https://www.ladybug.tools/spider/";
+
+MNU.appText  = ""; // "gbXML Tools";
+MNU.appTitle = ""; // "Tools to help you find, load, examine and edit gbXML files - in large numbers and sizes";
+MNU.appUrl   = ""; // "https://www.ladybug.tools/spider-gbxml-tools/";
+
+MNU.footerPopupUrl = "https://www.ladybug.tools/spider/";
+MNU.footerTarget = "target=_blank";
+MNU.footerIssues = "https://github.com/ladybug-tools/spider-gbxml-fixer/issues";
+
+GBX.viewer = "https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/"
+
+
+
+init();
+
+
+function init() {
+
+	if ( /(iPad|iPhone|iPod)/g.test( navigator.userAgent ) ) { /* I hate having to add this */
+
+		divContents.style.width = getComputedStyle( divContents ).width;
+		divContents.style.height = getComputedStyle( divContents ).height;
+		divContents.setAttribute( 'scrolling', 'no' );
+
+	}
+
+	THMdivMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
+	THM.init();
+
+	MNUdivHeader.innerHTML = MNU.getNavHeader();
+
+	GFFdivGithubFoldersFiles.innerHTML=GFF.getMenuGithubFoldersFiles();
+
+	//GALdivSampleFilesGallery.innerHTML = GAL.getMenuSampleFilesGallery();
+
+	FOBdivFileOpenBasic.innerHTML = FOB.getMenuFileOpenBasic();
+
+	//FILdivFileOpen.innerHTML = FIL.getMenuFileOpen();
+
+	FOBdivFileSaveBasic.innerHTML = FOB.getMenuFileSaveBasic();
+
+	MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();
+
+	//FIL.onHashChange(); // checks location hash, if none set default file ( the read me ) to open
+
+	if ( !location.hash ) { location.hash=FOB.urlDefaultFile; } else { FOB.onHashChange(); }
+
+	document.body.addEventListener( 'FOBonXmlFileLoad', GBX.init, false ); // hash changed, file loaded so let's go
+
+	document.body.addEventListener( 'FOBonZipFileLoad', GBX.init, false );
+
+	document.body.addEventListener( 'onZipFileParse', GBX.init, false );
+
+	aViewSource.style.display = "block";
+	aViewSource.href = MNU.urlSourceCode;
+
+}
+
+
+
+function toggleNavPanel() {
+
+	expandButton.classList.toggle( 'collapsed' );
+	navPanel.classList.toggle( 'collapsed' );
+	main.classList.toggle( 'collapsed' );
+
+}
+
+</script>
+</body>
+</html>

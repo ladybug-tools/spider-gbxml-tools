@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+
+<meta charset = "utf-8">
+<meta name = "copyright" content ="Ladybug Tools authors" >
+<meta name = "date" content = "2019-06-25" >
+<meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
+<meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
+<meta name = "version" content = "0.16.0-2" >
+<meta name = "viewport" content = "width=device-width, initial-scale=1" >
+
+<title>Spider gbXML Viewer Core</title>
+
+<link rel = "canonical" href = "www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/" />
+<link rel = "license" href = "https://creativecommons.org/licenses/by/4.0/" >
+<link rel = "license" href = "https://opensource.org/licenses/MIT" >
+
+<style>
+
+	body { margin: 0; padding: 0; overflow: hidden; }
+
+#divContents { height:100vh; width: 100%; }
+
+</style>
+</head>
+
+<body>
+
+<!-- utility libraries -->
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js" ></script>
+
+<!-- Three.js -->
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r105/build/three.min.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r105/examples/js/controls/OrbitControls.js" ></script>
+
+<!-- Tootoo forks  https://github.com/pushme-pullyou/tootoo14 -->
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-03/fob-file-open-basic/fob-file-open-basic.js" ></script>
+
+<!-- Spider forks -->
+<script src = "../js-core-spider/thr-threejs.js" ></script>
+<script src = "../js-core-spider/thru-threejs-utilities.js" ></script>
+
+<!-- Spider gbXML forks -->
+<script src = "../js-core-spider/gbx-gbxml-text-parser.js" ></script>
+<script src = "../js-core-spider/gbxu-gbxml-utilities.js" ></script>
+
+
+
+	<div id=divContents ></div>
+
+
+<script>
+
+
+FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
+//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/coventry-university-of-warwick-small.zip";
+FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/annapolis-md-single-family-residential-2016.xml"
+//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/pittsburg-airport.zip";
+FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/GreenBuildingXML/Sample-gbXML-Files@master/gbXML_TRK.xml";
+
+
+init();
+THR.animate();
+
+function init() {
+
+	if ( /(iPad|iPhone|iPod)/g.test( navigator.userAgent ) ) { /* I hate having to add this */
+
+		divContents.style.width = getComputedStyle( divContents ).width;
+		divContents.style.height = getComputedStyle( divContents ).height;
+		divContents.setAttribute( 'scrolling', 'no' );
+
+	}
+
+	THR.getThreejs();
+
+	THRU.setHelpers();
+
+	THRU.addSomeLights2();
+
+	GBX.init();
+
+	//const mesh = THRU.getGeometry();
+	//THR.scene.add( mesh );
+
+	window.addEventListener ( 'hashchange', FOB.onHashChange, false );
+
+	if ( !parent.location.hash ) { parent.location.hash=FOB.urlDefaultFile; }
+
+	FOB.onHashChange();
+
+}
+
+</script>
+</body>
+</html>
