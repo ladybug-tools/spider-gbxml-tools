@@ -80,6 +80,8 @@ ISTMP.currentStatus =
 
 	};
 
+
+	
 ISTMP.getTemplateCheck = function() {
 	//console.log( 'ISTMPdetTemplate.open', ISTMPdetTemplate.open );
 

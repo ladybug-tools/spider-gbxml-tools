@@ -13,7 +13,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 _<small>Spider gbXML Iframe Carousel: multiple interactive 3D models in a single space on any web page</small>_
 
 
-## Full Screen: [Spider gbXML Iframe Carousel]( https://www.ladybug.tools/spider-gbxml-tools/cookbook/spider-gbxml-iframe-carousel/r7/spider-gbxml-iframe-carousel.html )
+## Full Screen: [Spider gbXML Iframe Carousel]( https://www.ladybug.tools/spider-gbxml-tools/cookbook/spider-gbxml-iframe-carousel/index.html )
 
 
 ## Concept
@@ -33,7 +33,7 @@ Web page carousel displays multiple interactive 3D models in a single space on a
 
 ## Issues
 
-* What is best time delay
+* What is best time delay?
 
 ## Links of Interest
 
@@ -45,6 +45,13 @@ Use of carousels
 
 ## Change Log
 
+
+### 2019-06-26 ~ Theo
+
+spider-gbxml-iframe-carousel R1.3
+
+* D - Link to R16
+* F - Add call to built-in menu slide function
 
 ### 2019-01-23 ~ Theo
 

@@ -267,7 +267,6 @@ VBZ.setZoneVisible = function ( zoneIdRef ) {
 };
 
 
-
 //////////
 
 VBZ.resetColors = function( ) {

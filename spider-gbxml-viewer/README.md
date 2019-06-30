@@ -6,19 +6,20 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 <br>
 
-# [Spider gbXML Viewer 'Maevia' R15 Read Me]( #spider-gbxml-viewer/README.md )
+# [Spider gbXML Viewer 'Maevia'Read Me]( #spider-gbxml-viewer/README.md )
 
 
 <iframe src=https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/index.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
-_<small>Spider gbXML Viewer 'Maevia' R15</small>_
+_<small>Spider gbXML Viewer 'Maevia'</small>_
 
-## Full Screen: [Spider gbXML Viewer 'Maevia' R15]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/index.html )
+## Viewer: [Spider gbXML Viewer 'Maevia' ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/ )
 
 Or copy this link: https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/
 
+## Fixer: [Spider gbXML Fixer 'Atrax']( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/fix/ )
+
 ***
 
-## Local version: https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/r15/spider-gbxml-viewer15-local.html
 
 
 Download this file ( Chrome context menu > 'Save link as...' ) to your desktop or wherever, follow guidelines for loading local files here [Opening and loading files with gbXML Viewer]( https://www.ladybug.tools/spider/#pages/file-open.md ) in order to embed the Viewer in a local workflow and avoid CORS issues.
@@ -85,16 +86,27 @@ Pop-up Viewer 'Maevia' R15
 
 <summary>Wish list / to do</summary>
 
-* 2019-04-15 ~ Theo ~ Toggle edges
+* 2019-06-21 ~ Theo ~ Menu header data in menu.js
+* 2019-06-21 ~ Theo ~ Add core JavaScript file with version, date etc
+* 2019-06-21 ~ Theo ~ Add construction etc data to left menu - with data showing in popup menu
+* 2019-06-21 ~ Theo ~ Update GGD so it works in either left menu, popup or main areas
+* 2019-06-21 ~ Theo ~ Add surfaces with openings
 * 2019-04-15 ~ Theo ~ load two models at same time & views diffs
-* 2019-04-15 ~ Theo ~ Add space/storey attributes to pop-up
-* 2019-04-15 ~ Theo ~ Add gbxml/openings/construction data to pop-up
 
 </details>
 
 <details>
 
 <summary style=font-size:1.3rem; >Change Log</summary>
+
+### 2019-06-21 ~ Theo
+
+SGV V 0.16.01-2
+
+Dealt with
+* 2019-04-15 ~ Theo ~ Toggle edges
+* 2019-04-15 ~ Theo ~ Add space/storey attributes to pop-up
+* 2019-04-15 ~ Theo ~ Add gbxml/openings/construction data to pop-up
 
 ### 2019-06-06 ~ Theo
 
