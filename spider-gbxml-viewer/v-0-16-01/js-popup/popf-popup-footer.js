@@ -5,23 +5,67 @@
 
 const POPF = {
 	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-06-26",
+	"date": "2019-06-29",
 	"description": "TooToo Menu (POP) generates standard HTML popup menu code and content and code that works on computers, tablets and phones",
 	"helpFile": "js-popup/pop-popup.md",
-	"version": "0.16.01-2popx",
-	"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-pop-up"
+	"version": "0.16.01-3popx",
+	"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-pop-up",
+
+	page: 0
 };
 
 
 POPX.footer =
 	`
-		<p style=text-align:right; >
-			<button onclick=POPX.onClickZoomAll(); title="Show entire campus & display attributes" >zoom all +</button>
-			<button onclick=POPF.setScreen1(); style=background:#fdd; title="show/hide" >surfaces</button>
-			<button onclick=POPF.setScreen2(); title="show/hide" >display</button>
-			<button onclick=POPX.setPrevious(); style=background:yellow; >previous</button>
-		</p>
-	`;
+		<div style=text-align:right; >
+			<button onclick=POPX.onClickZoomAll(); title="Show entire campus & display attributes" >zoom all</button>
+
+
+			<div style=display:inline-block; >
+			<button onclick=POPF.setNextPopup(-1); style=width:2rem;background:#ebb; > &laquo; </button>&nbsp;<button onclick=POPF.setNextPopup(0); style=width:2rem;background:#ceb; >&#x2302;</button>&nbsp;<button onclick=POPF.setNextPopup(); style=width:2rem;background:#abe; >&raquo;</button>
+			</div>
+
+			</div>
+			`;
+
+//<button onclick=POPX.setPrevious(); style=background:yellow; >previous</button>
+
+POPF.setNextPopup = function( x = 1 ){
+
+	let url;
+
+	if ( x === 0 ) {
+
+		POPX.setPrevious();
+
+	} else {
+
+		const pages = [ POPF.setScreen2, POPF.setScreen1, POPF.setScreen3, POPF.setScreen4 ];
+		POPF.page += x;
+		POPF.page = POPF.page >= pages.length ? 0 : POPF.page;
+		POPF.page = POPF.page < 0 ? pages.length - 1 : POPF.page;
+
+		pages[ POPF.page ]();
+
+	}
+
+};
+
+
+
+POPF.setScreen4 = function() {
+
+	VEX.setDetExplodedViews( POPdivMain );
+
+};
+
+POPF.setScreen3 = function() {
+
+	POPdivMain.innerHTML=CUT.getDetSectionViews();
+
+};
+
+
 
 
 POPF.setScreen2 = function() {
@@ -41,16 +85,17 @@ POPF.setScreen1 = function() {
 
 	const buttonSurfaceTypes = types.map( ( type, index ) =>
 		`
-		<button onclick=POPF.toggleThisSurface("${ type}");  style=min-width:1.5rem;width:1rem;>o</button>
-		<button onclick=POPF.toggleSurfaceByButtons(this); style="background-color:#${ colors[ index ] };width:8rem;" > ${ type } </button> `
+		<div style=margin:0.5rem 0; >
+		<button onclick=POPF.toggleThisSurface("${ type}");  style=min-width:2rem;width:1rem;>o</button>
+		<button onclick=POPF.toggleSurfaceByButtons(this); style="background-color:#${ colors[ index ] };width:10rem;" > ${ type } </button>
+		</div>`
 	);
 
 
 	POPdivMain.innerHTML =
-		`<table><tr>
-		<td>${ buttonSurfaceTypes.join( '<br>' ) }</td>
-		<td><button onclick=POPF.toggleInteriorExterior(this); style="width:8rem;" >interior/exterior</button></td>
-		</tr></table>
+		`
+			<h4>Show or hide surface types</h4>
+			${ buttonSurfaceTypes.join( '' ) }
 		`;
 }
 

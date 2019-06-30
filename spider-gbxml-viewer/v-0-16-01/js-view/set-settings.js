@@ -3,26 +3,26 @@
 /* globals THREE, THR, THRU, timeStart, divSettingss */
 
 
-const SET = {"release": "R15.1", "date": "2019-01-31" };
+const SET = {"release": "R15.1", "date": "2019-06-29" };
 
 SET.getSettingsMenu = function() {
 
 	const htm =
 	`
-		<p><i>Update display parameters</i>
-			<a title="View the Three.js Utilities Read Me" href="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-viewer-threejs-utilities/" target="_blank">?</a>
-		</p>
+		<h4>Update display parameters</h4>
 
 		<p>
 			<button onclick="THR.controls.autoRotate = !THR.controls.autoRotate;" >toggle rotation</button>
 
 			<button onclick=THRU.toggleAxesHelper(); >toggle axes</button>
+		<p>
 
 			<button onclick=GBX.boundingBox.visible=!GBX.boundingBox.visible; >toggle bounding box</button>
 
 			<button onclick=GBXU.toggleGroundHelper(); >toggle ground</button>
-
+<!--
 			<button onclick=SET.toggleShadows(); >toggle shadows</button>
+-->
 		</p>
 
 		<p>
@@ -30,6 +30,7 @@ SET.getSettingsMenu = function() {
 
 			<button onclick=SET.toggleOpenings(); >toggle openings</button>
 
+		<p>
 			<button onclick=SET.toggleEdgesThreejs(); >toggle edges three.js</button>
 		</p>
 

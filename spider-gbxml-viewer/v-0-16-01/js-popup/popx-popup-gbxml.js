@@ -280,8 +280,6 @@ POPX.getIntersectedDataHtml = function() {
 			${ htmAttributes }
 		</div>
 
-		<hr>
-
 	`;
 
 	return htm;
@@ -554,7 +552,7 @@ POPX.getSpaceAttributes = function( spaceId ) {
 
 			<summary>gbXML data</summary>
 
-			<textarea style=width:100%; >${ spaceTxt }</textarea>
+			<textarea style=height:10rem;width:100%; >${ spaceTxt }</textarea>
 
 		</details>
 		`;
@@ -657,7 +655,7 @@ POPX.getStoreyAttributes = function ( storeyId ) {
 
 			<summary>gbXML data</summary>
 
-			<textarea style=width:100%; >${ storeyTxt }</textarea>
+			<textarea style=height:10rem;width:100%; >${ storeyTxt }</textarea>
 
 		</details>
 		`;
@@ -765,7 +763,7 @@ POPX.getZoneAttributes = function( zoneIdRef ) {
 
 			<summary>gbXML data</summary>
 
-			<textarea style=width:100%; >${ zoneTxt }</textarea>
+			<textarea style=height:10rem;width:100%; >${ zoneTxt }</textarea>
 
 		</details>
 	`;
