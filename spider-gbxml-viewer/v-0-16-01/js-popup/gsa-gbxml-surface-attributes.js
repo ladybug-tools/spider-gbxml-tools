@@ -1,4 +1,4 @@
-/* globals GBX, POPX, POPdivPopupData */
+/* globals GBX, POPX, POPdivMain */
 /* jshint esversion: 6 */
 /* jshint loopfunc: true */
 
@@ -46,7 +46,7 @@ GSA.selectedSurfacesFocus = function( index ) {
 	POPX.intersected = GBX.surfaceGroup.children[ index ];
 	//console.log( 'POPX.intersected', POPX.intersected );
 
-	POPdivPopupData.innerHTML = POPX.getIntersectedDataHtml();
+	POPdivMain.innerHTML = POPX.getIntersectedDataHtml();
 
 	const surface = GBX.surfacesIndexed[ index ];
 

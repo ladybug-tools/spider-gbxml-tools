@@ -1,4 +1,4 @@
-/* globals THR, GBX, POPX, GSA, VBCdetMenu, VBCselViewByConstruction, POPdivPopupData*/
+/* globals THR, GBX, POPX, GSA, VBCdetMenu, VBCselViewByConstruction, POPdivMain*/
 // jshint esversion: 6
 /* jshint loopfunc: true */
 
@@ -193,7 +193,7 @@ VBC.getConstruction = function( constructionId ) {
 
 	//console.log( 'attributesHTM', attributesHTM );
 
-	POPdivPopupData.innerHTML = attributesHTM;
+	POPdivMain.innerHTML = attributesHTM;
 
 
 };

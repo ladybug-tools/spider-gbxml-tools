@@ -151,7 +151,7 @@ VBO.selectedOpeningsFocus = function( select ) {
 
 	POPX.intersected = GBX.surfaceGroup.children[ opening.surfaceIndex ];
 
-	POPdivPopupData.innerHTML = POPX.getIntersectedDataHtml();
+	POPdivMain.innerHTML = POPX.getIntersectedDataHtml();
 
 	const options = select.selectedOptions
 	//console.log( 'options', options );

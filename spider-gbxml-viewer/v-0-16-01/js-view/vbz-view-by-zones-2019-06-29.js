@@ -16,43 +16,15 @@ const VBZ = {
 
 
 
-
-VBZ.temperatureZones = [
-	"#38b8a", "#38b8a","#38b8a", "#38b8a", "#38b8a", // 0 -5
-	"#71ccc6", "#71ccc6", "#71ccc6", "#71ccc6", "#71ccc6", "#71ccc6", "#71ccc6", "#71ccc6", "#71ccc6", "#71ccc6",
-	"#aae0dd", "#aae0dd", "#aae0dd",
-	"#e2f4f3", "#e2f4f3",
-	"#fae2e8", "#fae2e8",
-	"#f1aaba", "#f1aaba",
-	"#e7718d", "#e7718d","#e7718d",
-	"#de385", "#de385", "#de385", "#de385", "#de385", "#de385", "#d=e385", "#de385",
-	"#d50032", "#d50032", "#d50032", "#d50032", "#d50032",  "#d50032",  "#d50032",  "#d50032"
-];
-
 VBZ.getMenuViewByZones = function() {
 
 	document.body.addEventListener( 'onGbxParse', function(){ VBZdetMenu.open = false; }, false );
 
 	const help = `<button id="butVBZsum" class="butHelp" onclick="POP.setPopupShowHide(butVBZsum,VBZ.helpFile);" >?</button>`;
 
-	// VBZ.selectOptions = [
-	// 	"id", "airChangesSchedIdRef", "coolSchedIdRef", "fanSchedIdRef", "fanTempSchedIdRef",
-	// 	"heatSchedIdRef", "outAirSchedIdRef", "AirChangesPerHour", "OAFlowPerPerson", "DesignHeatT",
-	// 	"DesignCoolT", "CADObjectId", "Name", "TypeCode"
-	// ].map( option => `<option>${ option }</option>`);
-
-	VBZ.selectAttribute = [
-
-		"id", "CADObjectId", "Name", "TypeCode"
-
-	].map( option => `<option  ${ option === "Name" ? "selected" : "" } >${ option }</option>`);
-
-	// VBZ.selectElement = [
-	// 	"airChangesSchedIdRef", "coolSchedIdRef", "fanSchedIdRef", "fanTempSchedIdRef", "heatSchedIdRef",
-	// 	"outAirSchedIdRef", "AirChangesPerHour", "OAFlowPerPerson", "DesignHeatT", "DesignCoolT"
-	// ].map( option => `<option>${ option }</option>`);
-
-	VBZ.selectElement = [ "DesignHeatT", "DesignCoolT" ].map( option => `<option>${ option }</option>`);
+	VBZ.selectOptions = ["id", "airChangesSchedIdRef", "coolSchedIdRef", "fanSchedIdRef", "fanTempSchedIdRef",
+	"heatSchedIdRef", "outAirSchedIdRef", "AirChangesPerHour", "OAFlowPerPerson", "DesignHeatT", "DesignCoolT",
+	"CADObjectId", "Name", "TypeCode"].map( option => `<option>${ option }</option>`)
 
 	const htm =
 	`
@@ -60,22 +32,23 @@ VBZ.getMenuViewByZones = function() {
 
 			<summary>Zones  ${ help }</summary>
 
-			<p>Display surfaces by zone. Default is all zones visible. Legends viewable in
-			<button id="butVBZtxt" onclick="POP.setPopupShowHide(butVBZtxt,VBZ.helpFile);">? / read me</button>.
-			<span id="VBZspnCount" ></span>. Very slow on large files. Will speed things up.</p>
+			<p>Display surfaces by zone. Default is all zones visible. Legends viewable in ?/read me file.
+			<span id="VBZspnCount" ></span></p>
 
+			<p><mark>Currently only displays colors for DesignHeatT. More options on way.</mark></p>
 
-			<div>
-				<select id=VBZselZone onchange=VBZ.selectZoneFocus(this); style=width:100%; ></select
+			<div id="VBZdivViewByZones" >
+				<select id=VBZselZone onchange=VBZ.selectZoneFocus(this); multiple style=min-width:100%; ></select
 			</div>
 
 			<div id="VBZdivReportsLog" ></div>
 
-			<p>Attribute to show: <select id=VBZselAttribute oninput=VBZ.getZonesOptions(); >${ VBZ.selectAttribute }</select></p>
+			<p>Attribute to show: <select id=VBZselAttribute oninput=VBZ.getZonesOptions(); >${ VBZ.selectOptions.slice() }</select></p>
 
-			<p>Value to show: <select id=VBZselElement oninput=VBZ.getZonesOptions(); >${ VBZ.selectElement }</select></p>
+			<p>Select multiple zones by pressing shift or control keys</p>
 
 			<p><button onclick=VBZ.resetColors(); >reset colors</button> </p>
+
 
 		</details>
 	`;
@@ -89,58 +62,100 @@ VBZ.getZonesOptions = function() {
 
 	VBZselZone.size = GBX.zones.length > 10 ? 10 : GBX.zones.length;
 
+
 	const attribute = VBZselAttribute.value;
 	//console.log( 'attribute', attribute );
 
 	let zoneArr;
 
-	zoneAttributes = GBX.zones.map( zone => {
+	const zoneNameArray = GBX.zones.map( zone => {
 
-		if ( ["CADObjectId", "Name", "TypeCode" ].includes( attribute )) {
+		if ( ["AirChangesPerHour","CADObjectId", "OAFlowPerPerson", "DesignHeatT", "DesignCoolT", "Name", "TypeCode" ].includes( attribute )) {
 
 			zoneArr = zone.match( `<${ attribute }(.*?)>(.*?)</${ attribute }>` );
-			zoneArr = zoneArr ? zoneArr[ 2 ] : "";
+			zoneArr = zoneArr ? zoneArr[ 2 ] : ""
 			//console.log( '', zoneArr );
 
-		} else if ( ["id" ].includes( attribute ) ) {
+		} else if ( ["id", "airChangesSchedIdRef", "coolSchedIdRef", "fanSchedIdRef", "fanTempSchedIdRef", "heatSchedIdRef"].includes( attribute ) ) {
 
-			zoneArr = zone.match( ` ${ attribute }="(.*?)"` );
-			zoneArr = zoneArr ? zoneArr[ 1 ] : "";
+			zoneArr = zone.match( ` id="(.*?)"` );
+			zoneArr = zoneArr ? zoneArr[ 1 ] : "no zone name in file";
 
 		}
 
-		return zoneArr;
+		return zoneArr
 
 	} );
-	//console.log( 'zoneAttributes', zoneAttributes);
+	//console.log( 'zoneNames', zoneNames);
 
-	zoneAttributes = zoneAttributes.sort( (a, b) => b - a );
-	//console.log( 'zoneAttributes', zoneAttributes );
+	zoneNames = zoneNameArray.sort( (a, b) => b - a );
+	//console.log( 'zoneNames', zoneNames );
 
-	if ( !zoneAttributes ){ alert( "none of this attribute. Try another" ); return; }
+	VBZ.zones = zoneNames.map( zoneName => {
 
-	const zoneOptions = zoneAttributes.map( zoneAttribute => {
+		zone = GBX.zones.find( zone => zone.includes( zoneName ) );
 
-		const zone = GBX.zones.find( zone => zone.includes( zoneAttribute ) );
+		zoneId = zone.match( 'id="(.*?)"')[ 1 ];
 
-		const zoneArr = zone.match( ' id="(.*?)"');
-		const zoneId = zoneArr ? zoneArr[ 1 ] : `no ${ zoneAttribute }`;
+		tempHeat = Number( zone.match( /<DesignHeatT(.*?)>(.*?)<\/DesignHeatT>/i)[ 2 ] );
 
-		const element = VBZselElement.value;
+		colors = [ 0x38b8a, 0x71ccc6, 0xaae0dd, 0xe2f4f3, 0xfae2e8, 0xf1aaba, 0xe7718d, 0xde385, 0xd50032 ];
 
-		const tempArr = zone.match( `<${ element }(.*?)>(.*?)<\/${ element }>` );
-		const temp = tempArr ? tempArr[ 2 ] : 20;
+		let color;
 
-		const color = VBZ.temperatureZones[ parseInt( temp ) ];
+		if ( tempHeat < 6 ) {
 
-		return `<option style=background-color:${ color} value=${ zoneId } title="id: ${ zoneId }"; >
-			${ zoneAttribute || zoneId }</option>`;
+			color = colors[ 0 ];
 
-	} );
+		} else if ( tempHeat < 16 ) {
 
-	VBZselZone.innerHTML = zoneOptions;
+			color = colors[ 1 ];
 
-	VBZspnCount.innerHTML = `${ zoneAttributes.length } zones found`;
+		} else if ( tempHeat < 19 ) {
+
+			color = colors[ 2 ];
+
+		} else if ( tempHeat < 21 ) {
+
+			color = colors[ 3 ];
+
+		} else if ( tempHeat < 23 ) {
+
+			color = colors[ 4 ];
+
+		} else if ( tempHeat < 24 ) {
+
+			color = colors[ 5 ];
+
+		} else if ( tempHeat < 27 ) {
+
+			color = colors[ 6 ];
+
+		} else if ( tempHeat < 36 ) {
+
+			color = colors[ 7 ];
+
+		} else {
+
+			color = colors[ 8 ];
+
+		}
+
+		return { zoneName, zoneId, tempHeat, color };
+
+	} )
+	//console.log( 'VBZ.zones', VBZ.zones );
+
+	const options = VBZ.zones.map( ( zone, index ) =>
+
+		`<option style=background-color:#${ zone.color.toString(16) } value=${ index } title="${ zone.zoneId }"; >
+		${ zone.zoneId } / ${ zone.zoneName }</option>`
+
+	);
+
+	VBZselZone.innerHTML = options;
+
+	VBZspnCount.innerHTML = `: ${ VBZ.zones.length } zones found`;
 
 };
 
@@ -150,14 +165,14 @@ VBZ.selectZoneFocus = function( select ) {
 
 	THR.controls.enableKeys = false;
 
-	POPX.intersected = null;
+	//POPX.intersected = null;
 
 	THR.scene.remove( POPX.line, POPX.particle );
 
-	const zoneId = select.value;
-	//console.log( 'zoneId', zoneId );
+	const zone = VBZ.zones[ select.value ];
+	//console.log( 'zone', zone );
 
-	POPdivMain.innerHTML = POPX.getZoneAttributes( zoneId );
+	POPdivPopupData.innerHTML = POPX.getZoneAttributes( zone.zoneId );
 
 	const options = select.selectedOptions
 	//console.log( 'options', options );
@@ -166,21 +181,34 @@ VBZ.selectZoneFocus = function( select ) {
 
 	Array.from( options ).forEach( option =>
 
-		VBZ.setZoneVisible( option.value )
+		VBZ.setZoneVisible( option.title )
 
 	);
 
 };
 
 
+VBZ.setColorByHeat = function() {
 
-VBZ.setZoneVisible = function ( zoneId ) {
+	const colors = ["#38b8a", "71ccc6", "aae0dd", "e2f4f3", "fae2e8", "f1aaba", "e7718d", "de385", "d50032" ]
 
-	//console.log( 'zoneId', zoneId );
+	temps = GBX.zones.map( zone => zone.match( /<DesignHeatT unit="C">(.*?)<\/DesignHeatT>/i)[ 1 ] );
+
+	temps = temps.sort( (a, b) => a - b );
+	temps = [...new Set( temps )];
+	console.log( 'temps', temps );
+
+};
+
+
+
+VBZ.setZoneVisible = function ( zoneIdRef ) {
 
 	const children = GBX.surfaceGroup.children;
 
 	const spaces = GBX.spaces;
+
+	//const spaceIdRef = GSA.adjacentSpaceIds.length === 1 ? GSA.adjacentSpaceIds[ 0 ] : GSA.adjacentSpaceIds[ 1 ];
 
 	const spaceIdsInZone = [];
 
@@ -188,7 +216,7 @@ VBZ.setZoneVisible = function ( zoneId ) {
 
 		const spaceZoneId = space.match( /zoneIdRef="(.*?)"/ );
 
-		if ( spaceZoneId && spaceZoneId[ 1 ] === zoneId ) {
+		if ( spaceZoneId && spaceZoneId[ 1 ] === zoneIdRef ) {
 			//console.log( 'spaceZoneId', spaceZoneId[ 1 ] );
 
 			const spaceId = space.match( ` id="(.*?)"` )[ 1 ];
@@ -217,10 +245,10 @@ VBZ.setZoneVisible = function ( zoneId ) {
 			for ( let spaceId of spaceIdsInZone ) {
 
 				spaceText = GBX.spaces.find( space => space.includes( spaceId ) );
-				zoneIdRef = spaceText.match( /zoneIdRef="(.*?)"/i )[ 1 ];
+				zoneId = spaceText.match( /zoneIdRef="(.*?)"/i )[ 1 ];
 				//console.log( '', zoneId );
 
-				//zoneData = VBZ.zones.find( zone => zone.includes( zoneId ) )
+				zoneData = VBZ.zones.find( zone => zone.zoneId === zoneId )
 				//console.log( 'zoneData', zoneData );
 				//console.log( '', zoneData.tempHeat );
 
@@ -228,7 +256,7 @@ VBZ.setZoneVisible = function ( zoneId ) {
 
 				//console.log( 'child', child );
 
-				//child.material.color.setHex( zoneData.color ); // new THREE.MeshPhongMaterial( { color: 0xff0000, side: 2 } );
+				child.material.color.setHex( zoneData.color ); // new THREE.MeshPhongMaterial( { color: 0xff0000, side: 2 } );
 
 			}
 
