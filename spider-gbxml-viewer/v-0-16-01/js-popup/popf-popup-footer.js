@@ -59,10 +59,13 @@ POPF.setScreen4 = function() {
 
 };
 
+
+
 POPF.setScreen3 = function() {
 
-	POPdivMain.innerHTML=CUT.getDetSectionViews();
+	POPdivMain.innerHTML = CUT.getDetSectionViews();
 
+	CUT.toggleSectionViewX();
 };
 
 
@@ -73,6 +76,7 @@ POPF.setScreen2 = function() {
 	POPdivMain.innerHTML = SET.getSettingsMenu();
 
 };
+
 
 
 POPF.setScreen1 = function() {
@@ -88,7 +92,8 @@ POPF.setScreen1 = function() {
 		<div style=margin:0.5rem 0; >
 		<button onclick=POPF.toggleThisSurface("${ type}");  style=min-width:2rem;width:1rem;>o</button>
 		<button onclick=POPF.toggleSurfaceByButtons(this); style="background-color:#${ colors[ index ] };width:10rem;" > ${ type } </button>
-		</div>`
+		</div>
+		`
 	);
 
 
@@ -96,8 +101,10 @@ POPF.setScreen1 = function() {
 		`
 			<h4>Show or hide surface types</h4>
 			${ buttonSurfaceTypes.join( '' ) }
+			<p><button onclick="GBX.surfaceGroup.children.forEach(it=>it.visible=true);" >all visible</button></p>
 		`;
-}
+};
+
 
 
 POPF.toggleThisSurface = function( type ) {

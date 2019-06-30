@@ -1,4 +1,4 @@
-### Pop-Up menu
+### 'Maevia' pop-Up menu & splash screen
 
 Click on the model and surface attributes appear here.
 
