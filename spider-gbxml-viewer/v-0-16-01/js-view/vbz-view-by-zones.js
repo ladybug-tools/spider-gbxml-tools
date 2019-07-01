@@ -171,7 +171,7 @@ VBZ.selectZoneFocus = function( select ) {
 	const options = select.selectedOptions
 	//console.log( 'options', options );
 
-	//GBX.surfaceGroup.children.forEach( element => element.visible = false );
+	GBX.surfaceGroup.children.forEach( element => element.visible = false );
 
 	Array.from( options ).forEach( option => VBZ.setZoneVisible( option.value ) );
 
