@@ -56,7 +56,7 @@ MNU.appUrl   = "https://www.ladybug.tools/spider-gbxml-tools/";
 
 MNU.footerPopupUrl = "https://www.ladybug.tools/spider/";
 MNU.footerTarget = "target=_blank";
-MNU.footerIssues = "https://github.com/ladybug-tools/spider-gbxml-fixer/issues";
+MNU.footerIssues = "https://github.com/ladybug-tools/spider-gbxml-tools/issues";
 
 
 COR.init = function() {
