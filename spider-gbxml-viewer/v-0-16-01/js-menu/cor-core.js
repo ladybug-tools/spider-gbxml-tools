@@ -72,9 +72,7 @@ COR.init = function() {
 
 		#navPanel { background-color: #eee; }
 
-		#navPopup { left: auto; max-width: 25%; right: 1rem; top: 1rem; }
-
-
+		#navPopup { width: 25%; right: 1rem; top: 1rem; }
 
 		#VSTdivSurfaceType button  { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;
 			padding: 2px 5px; min-width: 13.5rem; }

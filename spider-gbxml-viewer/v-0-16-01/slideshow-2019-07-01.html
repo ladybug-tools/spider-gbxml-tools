@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1" >
+<meta name = "description" content = "Basic TooToo HTML template" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2019-06-30" >
+<meta name = "version" content = "01" >
+<title></title>
+<style>
+
+	* { box-sizing: border-box; }
+
+	:root { --mnu-width: 22rem; --screen-width: calc( 100vw ); --headerHeight: 6rem; }
+
+	html { height: 100%; }
+
+	body { font: 12pt monospace; margin: 0 auto; height: 100%; }
+
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus, a:active { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	main { height: 30rem; overflow: hidden; resize: both; }
+
+	#divCon { border: 0px solid maroon; height: 100%; position: relative; width: 100% }
+
+	#divGraphics { border: 0px solid maroon; bottom: 0; position: relative;
+	 text-align: center; top: 50%; transform: translateY( -50% );}
+
+	#divButtons { position: absolute; bottom: 1rem; left: 0; margin: auto; right: 0; text-align: center; }
+
+	.red { color: red; }
+	.green { color: green; }
+	.blue { color: blue; }
+
+	.rem1 { font-size: 3rem }
+	.rem2 { font-size: 4rem; }
+	.rem3 { font-size: 5rem; }
+
+	/*
+
+	#navMenu { background-color: #eee; left: 0; margin: 0; padding: 0 1rem;
+		position: absolute; top: 0; width: var( --mnu-width ); }
+	*/
+
+</style>
+</head>
+<body>
+
+
+	<div id=divCon >
+
+		<div id=divGraphics class="blue rem1" >Welcome to<br>Ladybug Tools / Spider<br>gbXML Viewer v0.16.0<br><br>Enjoy the show!</div>
+
+		<div id=divButtons >
+			<button onclick=TTS.index=0;TTS.showSlide(); >show slides</button>
+			<button onclick=TTS.synth.pause(); >pause</button>
+			<button onclick=TTS.synth.resume(); >resume</button>
+			<button onclick=TTS.index=999;TTS.synth.cancel(); >stop</button>
+		</div>
+
+	</div>
+
+
+<script>
+
+const urlSourceCode = "https://github.com/zzzzz/xxxxx.html";
+const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-64.png";
+
+
+const TTS = {
+
+	"synth": window.speechSynthesis,
+	"voices": [],
+	"index": 1000,
+	"slides": [
+		{ "utterance": "", "text": "", "classes": "red rem1" },
+		{ "utterance": "Hello! My name is 'Mayvia'. I will be informing you about my latest updates",
+			"text": "Latest release / months in the making / lessons learned", "classes": "red rem1"},
+		{ "utterance": "In tests, we open a 700 megabyte file in about one minute.",
+		"text": "Opens very large gbXML,files, very quickly", "classes": "green rem2"},
+		{ "utterance": "I open, display and save gbXML files just about any way you can think of",
+			"text": "gbXML and ZIP file open and save<br>Local files and files on servers", "classes": "blue rem2"},
+		{ "utterance": "",
+			"text": ".", "classes": "red rem1"},
+		{ "utterance": "My motto is: mobile first! I'm available to you - on constructions sites or in bed - by tablet or phone",
+			"text": "Mobile first: <br>continue providing better finger touch support<br>phone/tablet/laptop", "classes": "green rem3"},
+		{ "utterance": "Popup menu has many new features",
+			"text": "New buttons<br>View gbXML source for every surface", "classes": "blue rem2"},
+		{ "utterance": "My User Experience is stream lined - left brain / right brain - text and numbers versus touching and seeing",
+			"text": "Left menu for investigatingfiles and their data<br>Right menu for interacting with 3D model", "classes": "red rem3"},
+		{ "utterance": "For about a year we have been trying to help you find and fix errors in files. Guess what? We can fix them faster than you can",
+			"text": "Add fixers that identify, list and fix common errors in gbXML files", "classes": "green rem1"},
+		{ "utterance": "We want to let you know about every nook and cranny in your project ",
+			"text": "Add reports for window types, construction, layers and materials ", "classes": "blue rem2"},
+		{ "utterance": "And, very soon, you should start playing with me",
+			"text": "Written in easy-peasy plain vanilla JavaScript", "classes": "red rem2"},
+
+	]
+
+};
+
+
+TTS.showSlide = function() {
+
+	console.log( 'TTS.index', TTS.index );
+
+	if ( TTS.index < TTS.slides.length ) {
+
+		const slide = TTS.slides[ TTS.index ];
+
+		TTS.sayThis( slide.utterance );
+		divGraphics.innerHTML = slide.text;
+		divGraphics.className = slide.classes;
+
+		TTS.index++;
+
+	} else {
+
+		divGraphics.className = "blue rem3";
+		divGraphics.innerHTML = "the end<br>& a new beginning?";
+		TTS.index = 999;
+	}
+
+}
+
+
+TTS.sayThis = function( text ) {
+
+	TTS.synth.cancel();
+
+	TTS.utterThis = new SpeechSynthesisUtterance( text );
+
+	TTS.voices = TTS.voices.length ? TTS.voices : window.speechSynthesis.getVoices();
+
+	if ( TTS.voices.length > 0 ) {
+
+		TTS.utterThis.voice = TTS.voices[ 1 ];
+
+	}
+
+	TTS.utterThis.onend = TTS.showSlide;
+
+	TTS.synth.speak( TTS.utterThis );
+
+};
+
+
+function getTitle() {
+
+	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+	const version = document.head.querySelector( "[ name=version ]" ).content;
+
+	const htm =
+	`
+		<h2>
+			<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
+				<img src=${ urlSourceCodeIcon } height=18 style=opacity:0.5; >
+			</a>
+			<a href="" title="Click to reload this page" >${ document.title } ${ version }</a>
+		</h2>
+
+		<p>
+			${ document.head.querySelector( "[ name=description ]" ).content }
+		</p>
+	`;
+
+	return htm;
+
+}
+
+</script>
+</body>
+</html>
