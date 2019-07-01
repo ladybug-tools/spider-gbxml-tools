@@ -5,15 +5,15 @@
 const COR = {
 	"script": {
 		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-		"date": "2019-06-28",
+		"date": "2019-07-01",
 		"description": "core - contains local overrides",
 		"helpFile": "cor-core/README.md",
-		"version": "0.16.01-2cor",
+		"version": "0.16.01-3cor",
 	}
 };
 
-POP.date = MNU.date = "2019-06-28";
-POP.version = MNU.version = "0.16.01-8"; //document.head.querySelector( '[ name=version ]' ).content || "";
+POP.date = MNU.date = "2019-07-01";
+POP.version = MNU.version = "0.16.01-9"; //document.head.querySelector( '[ name=version ]' ).content || "";
 
 //THM.themeUrlStorage = 'spider-gbxml-menu-theme-url';// set for each instance in HTML file
 //THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-03/style.css";

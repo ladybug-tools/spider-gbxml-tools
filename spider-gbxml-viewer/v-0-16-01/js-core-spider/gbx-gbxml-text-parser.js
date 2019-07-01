@@ -199,8 +199,8 @@ GBX.sendSurfacesToThreeJs = function( surfacesText ) {
 	deltaLimit = 20;
 	lastTimestamp = performance.now();
 
-	GBX.addMeshes( performance.now() );
-
+	GBX.addMeshes(  );
+	//performance.now()
 	//console.log( 'ttt', ( performance.now() - timeStart) );
 
 	if ( !GBX.boundingBox ) {

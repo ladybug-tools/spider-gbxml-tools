@@ -6,10 +6,10 @@ const VBCO = {
 
 	"script": {
 		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-		"date": "2019-06-27",
+		"date": "2019-07-01",
 		"description": "View by CAD Object ID (VBCO) provides HTML and JavaScript to view individual surfaces.",
 		"helpFile": "../js-view/vbco-view-by-cad-object-id.md",
-		"version": "0.16-01-0vbco",
+		"version": "0.16-01-1vbco",
 		"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-16-01/js-view",
 
 	}
@@ -90,7 +90,7 @@ VBCO.setViewOptions = function() {
 	options = cadObjects.map( ( item, index ) => {
 
 		color = color === 'pink' ? '' : 'pink';
-		return `<option style=background-color:${ color } value=${ index } >${ item }</option>`;
+		return `<option style=background-color:${ color } value=${ item } >${ item }</option>`;
 
 	} );
 
@@ -119,10 +119,17 @@ VBCO.setSelectedIndex = function( input, select ) {
 
 VBCO.selectedSurfacesFocus = function( select ) {
 
-	VBCO.surfaces = GBX.surfacesIndexed.filter( surface => surface.includes( select.value ) );
+	VBCO.surfaces = []
+
+	Array.from( select.selectedOptions ).forEach( option => {
+
+		const surfaces = GBX.surfacesIndexed.filter( surface => surface.includes( option.innerText ) );
+
+		VBCO.surfaces.push( ...surfaces );
+
+	} );
 
 	GBX.sendSurfacesToThreeJs( VBCO.surfaces );
-
 
 };
 
