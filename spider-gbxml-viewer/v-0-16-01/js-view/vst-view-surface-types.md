@@ -1,4 +1,4 @@
-# VST view surface types 0.16.01-1vst Read Me
+# VST view surface types 0.16.01-2vst Read Me
 
 [Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-16-01/js-view/vst-view-surface-types.js )
 
@@ -28,6 +28,12 @@ Show or hide the surfaces (VST) in a gbXML file by surface type.
 <details>
 
 <summary>Change Log</summary>
+
+### 2019-07-01 ~ Theo
+
+VST 0.16.01-2vst
+
+* B - VST.js: updated internal/external arrays
 
 ## 2019-06-28 ~ Theo
 

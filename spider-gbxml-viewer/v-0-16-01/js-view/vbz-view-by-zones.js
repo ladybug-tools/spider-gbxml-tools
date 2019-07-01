@@ -6,14 +6,13 @@
 const VBZ = {
 
 	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-06-28",
+	"date": "2019-07-01",
 	"description": "View the surfaces in a gbXML file by selecting one or more zones from a list of all zones",
 	"helpFile": "../js-view/vbz-view-by-zones.md",
-	"version": "0.16-01-3vbz",
+	"version": "0.16-01-4vbz",
 	"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-16-01/js-view/vbz-view-by-zones.js",
 
 };
-
 
 
 
@@ -28,6 +27,8 @@ VBZ.temperatureZones = [
 	"#de385", "#de385", "#de385", "#de385", "#de385", "#de385", "#d=e385", "#de385",
 	"#d50032", "#d50032", "#d50032", "#d50032", "#d50032",  "#d50032",  "#d50032",  "#d50032"
 ];
+
+
 
 VBZ.getMenuViewByZones = function() {
 
@@ -66,7 +67,7 @@ VBZ.getMenuViewByZones = function() {
 
 
 			<div>
-				<select id=VBZselZone onchange=VBZ.selectZoneFocus(this); style=width:100%; ></select
+				<select id=VBZselZone oninput=VBZ.selectZoneFocus(this); style=width:100%; ></select
 			</div>
 
 			<div id="VBZdivReportsLog" ></div>
@@ -119,7 +120,7 @@ VBZ.getZonesOptions = function() {
 
 	if ( !zoneAttributes ){ alert( "none of this attribute. Try another" ); return; }
 
-	const zoneOptions = zoneAttributes.map( zoneAttribute => {
+	let zoneOptions = zoneAttributes.map( zoneAttribute => {
 
 		const zone = GBX.zones.find( zone => zone.includes( zoneAttribute ) );
 
@@ -138,6 +139,12 @@ VBZ.getZonesOptions = function() {
 
 	} );
 
+	if ( zoneAttributes.length === 1 ) {
+
+		zoneOptions = `<option placeholder="" >select an option</option> ${ zoneOptions }`;
+
+	}
+
 	VBZselZone.innerHTML = zoneOptions;
 
 	VBZspnCount.innerHTML = `${ zoneAttributes.length } zones found`;
@@ -147,6 +154,8 @@ VBZ.getZonesOptions = function() {
 
 
 VBZ.selectZoneFocus = function( select ) {
+
+	console.log( '', 23 );
 
 	THR.controls.enableKeys = false;
 
@@ -162,13 +171,9 @@ VBZ.selectZoneFocus = function( select ) {
 	const options = select.selectedOptions
 	//console.log( 'options', options );
 
-	GBX.surfaceGroup.children.forEach( element => element.visible = false );
+	//GBX.surfaceGroup.children.forEach( element => element.visible = false );
 
-	Array.from( options ).forEach( option =>
-
-		VBZ.setZoneVisible( option.value )
-
-	);
+	Array.from( options ).forEach( option => VBZ.setZoneVisible( option.value ) );
 
 };
 
@@ -200,7 +205,6 @@ VBZ.setZoneVisible = function ( zoneId ) {
 
 	}
 	//console.log( 'spaceIdsInZone', spaceIdsInZone );
-
 
 	for ( let child of children ) {
 

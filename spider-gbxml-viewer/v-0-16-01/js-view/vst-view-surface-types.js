@@ -6,11 +6,11 @@ const VST = {
 	"script": {
 
 		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",	"date": "2019-06-28",
-		"date": "2019-06-28",
+		"date": "2019-07-01",
 		"description": "Show or hide the surfaces (VST) in a gbXML file by surface type.",
 		"helpFile": "../js-view/vst-view-surface-types.md",
 		"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-16-01/js-view/vst-view-surface-types.js",
-		"version": "0.16.01-1vst"
+		"version": "0.16.01-2vst"
 
 	}
 
@@ -190,9 +190,9 @@ VST.onToggleInteriorExterior = function( button ) {
 
 	const array = button.classList.contains( "active" ) ?
 
-		[ "ExposedFloor", "ExteriorWall", "RaisedFloor", "Roof" ]
+		[ "ExposedFloor", "ExteriorWall", "RaisedFloor", "Roof", "SlabOnGrade", "UndergroundSlab", "UndergroundWall" ]
 		:
-		[ "Ceiling","InteriorFloor", "InteriorWall", "SlabOnGrade", "UndergroundCeiling", "UndergroundSlab", "UndergroundWall" ];
+		[ "Ceiling","InteriorFloor", "InteriorWall", "UndergroundCeiling" ];
 
 	VST.sendSurfacesToThreeJs( array );
 
