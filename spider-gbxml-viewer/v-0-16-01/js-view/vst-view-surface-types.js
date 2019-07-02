@@ -190,7 +190,7 @@ VST.onToggleInteriorExterior = function( button ) {
 
 	const array = button.classList.contains( "active" ) ?
 
-		[ "ExposedFloor", "ExteriorWall", "RaisedFloor", "Roof", "SlabOnGrade", "UndergroundSlab", "UndergroundWall" ]
+		[ "ExposedFloor", "ExteriorWall", "RaisedFloor", "Roof", "Shade", "SlabOnGrade", "UndergroundSlab", "UndergroundWall" ]
 		:
 		[ "Ceiling","InteriorFloor", "InteriorWall", "UndergroundCeiling" ];
 

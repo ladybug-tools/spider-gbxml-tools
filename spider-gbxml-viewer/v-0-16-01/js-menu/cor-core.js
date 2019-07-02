@@ -12,8 +12,8 @@ const COR = {
 	}
 };
 
-POP.date = MNU.date = "2019-07-01";
-POP.version = MNU.version = "0.16.01-9"; //document.head.querySelector( '[ name=version ]' ).content || "";
+POP.date = MNU.date = "2019-07-02";
+POP.version = MNU.version = "0.16.01-10"; //document.head.querySelector( '[ name=version ]' ).content || "";
 
 //THM.themeUrlStorage = 'spider-gbxml-menu-theme-url';// set for each instance in HTML file
 //THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-03/style.css";
@@ -72,7 +72,7 @@ COR.init = function() {
 
 		#navPanel { background-color: #eee; }
 
-		#navPopup { top: 1rem; }
+		#navPopup { background-color: #efe; top: 1rem;  }
 
 		#VSTdivSurfaceType button  { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;
 			padding: 2px 5px; min-width: 13.5rem; }

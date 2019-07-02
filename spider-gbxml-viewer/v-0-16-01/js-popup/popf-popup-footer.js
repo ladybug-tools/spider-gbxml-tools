@@ -18,15 +18,18 @@ const POPF = {
 POPX.footer =
 	`
 		<div style=text-align:right; >
+
 			<button onclick=POPX.onClickZoomAll(); title="Show entire campus & display attributes" >zoom all</button>
 
-
+			<button onclick="POPF.onToggleInteriorExterior(this)" class="">in/ex</button>
+			<button onclick="SET.toggleEdgesThreejs();">edges</button>
+			<button onclick="SET.toggleOpenings();">openings</button>
 			<div style=display:inline-block; >
-			<button onclick=POPF.setNextPopup(-1); style=width:2rem;background:#ebb; > &laquo; </button>&nbsp;<button onclick=POPF.setNextPopup(0); style=width:2rem;background:#ceb; >&#x2302;</button>&nbsp;<button onclick=POPF.setNextPopup(); style=width:2rem;background:#abe; >&raquo;</button>
+				<button onclick=POPF.setNextPopup(-1); style=width:2rem;background:#ebb; > &laquo; </button>&nbsp;<button onclick=POPF.setNextPopup(0); style=width:2rem;background:#ceb; >&#x2302;</button>&nbsp;<button onclick=POPF.setNextPopup(); style=width:2rem;background:#abe; >&raquo;</button>
 			</div>
 
-			</div>
-			`;
+		</div>
+		`;
 
 //<button onclick=POPX.setPrevious(); style=background:yellow; >previous</button>
 
@@ -52,6 +55,29 @@ POPF.setNextPopup = function( x = 1 ){
 };
 
 
+POPF.onToggleInteriorExterior = function( button ) {
+
+	button.classList.toggle( "active" );
+
+	const array = button.classList.contains( "active" ) ?
+
+		[ "Ceiling","InteriorFloor", "InteriorWall", "UndergroundCeiling" ]
+		:
+		[ "ExposedFloor", "ExteriorWall", "RaisedFloor", "Roof", "Shade", "SlabOnGrade", "UndergroundSlab", "UndergroundWall" ]
+	;
+
+
+		const surfaces = GBX.surfacesIndexed;
+
+		const surfacesFiltered = array.flatMap( filter =>
+
+			surfaces.filter( surface => surface.includes( `"${ filter }"` ) )
+
+		);
+
+	GBX.sendSurfacesToThreeJs( surfacesFiltered );
+
+};
 
 POPF.setScreen4 = function() {
 
