@@ -5,47 +5,50 @@
 <meta name = "viewport" content= "width=device-width, initial-scale=1" >
 <meta name = "description" content = "Basic TooToo HTML template" >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
-<meta name = "date" content = "" >
+<meta name = "date" content = "2019-06-30" >
 <meta name = "version" content = "01" >
 <title></title>
 <style>
 
-	* { box-sizing: border-box; }
+* { box-sizing: border-box; }
 
-	:root { --mnu-width: 22rem; --screen-width: calc( 100vw ); --headerHeight: 6rem; }
+:root { --mnu-width: 22rem; --screen-width: calc( 100vw ); --headerHeight: 6rem; }
 
-	html { height: 100%; }
+html { height: 100%; }
 
-	body { font: 12pt monospace; margin: 0 auto; height: 100%; }
+body { font: 12pt monospace; margin: 0 auto; height: 100%; }
 
-	a { color: crimson; text-decoration: none; }
-	a:hover, a:focus, a:active { background-color: yellow; color: #aaa; text-decoration: underline }
+a { color: crimson; text-decoration: none; }
+a:hover, a:focus, a:active { background-color: yellow; color: #aaa; text-decoration: underline }
 
-	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
-	button:hover { background: #ccc; color: #fff }
+button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+button:hover { background: #ccc; color: #fff }
 
-	main { border: 0px solid maroon; height: 30rem; overflow: hidden; position: relative; resize: both; }
+main { border: 10px solid maroon; height: 100%; overflow: hidden; position: relative; resize: both; }
 
-	#divContents { height: 100%;  width: 100%; }
+#divContents { height: 100%;  width: 100%; }
 
-	#divGraphics { border: 0px solid maroon; bottom: 0; position: relative;
-	 text-align: center; top: 50%; transform: translateY( -50% );}
+#divGraphics { border: 0px solid maroon; bottom: 0; position: relative;
+	text-align: center; top: 50%; transform: translateY( -50% ); }
 
-	#divButtons { position: absolute; bottom: 1rem; left: 0; margin: auto; right: 0; text-align: center; }
 
-	.red { color: red; }
-	.green { color: green; }
-	.blue { color: blue; }
+#divButtons { position: absolute; bottom: 1rem; left: 0; margin: auto; right: 0; text-align: center; }
 
-	.rem1 { font-size: 5vw; }
-	.rem2 { font-size: 8vw; }
-	.rem3 { font-size: 8vw; }
+.red { color: red; }
+.green { color: green; }
+.blue { color: blue; }
 
-	/*
+.rem1 { font-size: 5vw; }
+.rem2 { font-size: 8vw; }
+.rem3 { font-size: 10vw; }
 
-	#navMenu { background-color: #eee; left: 0; margin: 0; padding: 0 1rem;
-		position: absolute; top: 0; width: var( --mnu-width ); }
-	*/
+
+
+
+@media all and ( max-width: 640px ) {
+
+}
+
 
 </style>
 </head>

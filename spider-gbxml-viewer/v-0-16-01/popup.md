@@ -11,4 +11,4 @@ Press Control-Shift-J|Command-Option-J to see if the JavaScript console reports 
 
 Axes: Red/Green/Blue = X/Y/Z directions
 
-<button onclick="navPopup.style='width:50%;left:40%;';POPdivMain.innerHTML='<iframe id=ifr frameBorder=0 src=../slideshow-2019-07-02.html style=height:480px;width:43vw; ></iframe>';" >&#x1f508; View the 'tooToo' slide show</button>
+<button onclick="navPopup.style='width:50%;left:40%;';POPdivMain.innerHTML='<iframe id=ifr frameBorder=0 src=../slideshow-2019-07-02.html style=height:480px;width:43vw; ></iframe>';" >&#x1f508; View the 'Maevia' slide show</button>
