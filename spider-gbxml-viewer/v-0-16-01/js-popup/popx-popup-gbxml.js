@@ -1,4 +1,4 @@
-/* global Stats, POPbutRateLimits, navPopup, POPdivMain, main, showdown */
+/* global Stats, POPbutRateLimits, navPopup, divDragMoveContent, main, showdown */
 /* jshint esversion: 6 */
 /* jshint loopfunc: true */
 
@@ -67,7 +67,7 @@ POPX.onClickZoomAll = function() {
 
 	const buildingXml = campusXml.getElementsByTagName( 'Building' )[ 0 ];
 
-	POPdivMain.innerHTML=
+	divDragMoveContent.innerHTML=
 	`
 		<b>Campus Attributes</b>
 		<div>${ GSA.getAttributesHtml( campusXml ) }</div>
@@ -166,9 +166,9 @@ POPX.onDocumentMouseDown = function( event ) {
 
 		POPX.setIntersectedParticleAtPoint( POPX.intersects[ 0 ].point );
 
-		POPdivMain.innerHTML = POPX.getIntersectedDataHtml();
+		divDragMoveContent.innerHTML = POPX.getIntersectedDataHtml();
 
-		POPdivFooter.innerHTML = POPX.footer;
+		divDragMoveFooter.innerHTML = POPX.footer;
 
 		navPopup.hidden = false;
 
@@ -176,7 +176,7 @@ POPX.onDocumentMouseDown = function( event ) {
 
 		POPX.intersected = null;
 
-		POPdivMain.innerHTML = '';
+		divDragMoveContent.innerHTML = '';
 
 		THR.scene.remove( POPX.line, POPX.particle );
 
@@ -193,7 +193,7 @@ POPX.setPrevious = function() {
 
 	POPX.intersected.material.opacity = 1;
 
-	POPdivMain.innerHTML = POPX.getIntersectedDataHtml();
+	divDragMoveContent.innerHTML = POPX.getIntersectedDataHtml();
 
 	POPdivFooter.innerHTML = POPX.footer;
 
