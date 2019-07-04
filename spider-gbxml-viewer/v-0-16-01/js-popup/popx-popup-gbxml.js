@@ -1,4 +1,4 @@
-/* global Stats, POPbutRateLimits, navPopup, divDragMoveContent, main, showdown */
+/* global Stats, POPbutRateLimits, navDragMove, divDragMoveContent, main, showdown */
 /* jshint esversion: 6 */
 /* jshint loopfunc: true */
 
@@ -170,11 +170,13 @@ POPX.onDocumentMouseDown = function( event ) {
 
 		divDragMoveFooter.innerHTML = POPX.footer;
 
-		navPopup.hidden = false;
+		navDragMove.hidden = false;
 
 	} else {
 
 		POPX.intersected = null;
+
+		navDragMove.hidden = true;
 
 		divDragMoveContent.innerHTML = '';
 
@@ -197,7 +199,7 @@ POPX.setPrevious = function() {
 
 	POPdivFooter.innerHTML = POPX.footer;
 
-	navPopup.hidden = false;
+	navDragMove.hidden = false;
 
 };
 

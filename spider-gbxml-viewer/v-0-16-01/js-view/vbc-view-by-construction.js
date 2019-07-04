@@ -97,6 +97,10 @@ VBC.getViewByConstructionSelectOptions = function() {
 
 		construction = GBX.constructions.find( construction => construction.includes( constructionRef ) );
 
+		if ( !construction ) { return; }
+		
+		let text;
+
 		if ( [ "id", "layerIdRef" ].includes( attribute ) ) {
 
 			text = construction.match( `${ attribute }="(.*?)"` );

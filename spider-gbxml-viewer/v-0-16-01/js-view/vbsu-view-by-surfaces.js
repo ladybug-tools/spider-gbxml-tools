@@ -1,4 +1,4 @@
-/* globals THR, GBX, POPX, POPdivMain, VBSUdet, VBSUselAttribute, VBSUselViewBySurfaces, VBSUspnCount */
+/* globals THR, GBX, POPX, divDragMoveContent, VBSUdet, VBSUselAttribute, VBSUselViewBySurfaces, VBSUspnCount */
 // jshint esversion: 6
 // jshint loopfunc: true
 
@@ -122,7 +122,7 @@ VBSU.selectedSurfacesFocus = function( select ) {
 
 	POPX.intersected = GBX.surfaceGroup.children[ select.value ];
 
-	POPdivMain.innerHTML = POPX.getIntersectedDataHtml();
+	divDragMoveContent.innerHTML = POPX.getIntersectedDataHtml();
 	//console.log( 'sel', select.value );
 
 	const options = select.selectedOptions;

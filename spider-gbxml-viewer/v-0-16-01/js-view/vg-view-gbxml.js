@@ -1,4 +1,4 @@
-/* globals THR, GBX, POPX, POPdivMain, VGdet */
+/* globals THR, GBX, POPX, divDragMoveContent, VGdet */
 // jshint esversion: 6
 // jshint loopfunc: true
 
@@ -57,7 +57,7 @@ VG.setViewGbxml = function() {
 
 	console.log( '', latitude, longitude );
 
-	POPdivMain.innerHTML=
+	divDragMoveContent.innerHTML=
 	`
 		<b>Campus Attributes</b>
 		<div>${ GSA.getAttributesHtml( campusXml ) }</div>

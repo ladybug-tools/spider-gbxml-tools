@@ -1,4 +1,4 @@
-/* globals GBX, VST, THREE, THR, POPX, POPdivMain, VBSdetMenu, VBSselStorey, VBSdivReportsLog, VSTdivSurfaceType */
+/* globals GBX, VST, THREE, THR, POPX, divDragMoveContent, VBSdetMenu, VBSselStorey, VBSdivReportsLog, VSTdivSurfaceType */
 // jshint esversion: 6
 // jshint loopfunc: true
 
@@ -136,8 +136,6 @@ VBS.selStoreys = function() {
 
 	POPX.intersected = null;
 
-	POPdivMain.innerHTML = '';
-
 	// show storey data in POPX-up
 
 	//POPelementAttributes.innerHTML=POPX.toggleStoreyVisible(this,"aim0250");
@@ -148,7 +146,7 @@ VBS.selStoreys = function() {
 
 	VBSdivReportsLog.innerHTML = `<p>${ GBX.sendSurfacesToThreeJs( VBS.surfacesFilteredByStorey ) }</p>`;
 
-	POPdivMain.innerHTML = POPX.getStoreyAttributes( VBSselStorey.value );
+	divDragMoveContent.innerHTML = POPX.getStoreyAttributes( VBSselStorey.value );
 
 };
 

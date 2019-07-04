@@ -1,4 +1,4 @@
-/* globals GBX, VST, THREE, VBZselZone, VBZdivReportsLog, VSTdivSurfaceType */
+/* globals GBX, VST, THREE, divDragMoveContent, VBZselZone, VBZdivReportsLog, VSTdivSurfaceType */
 // jshint esversion: 6
 /* jshint loopfunc: true */
 
@@ -166,7 +166,7 @@ VBZ.selectZoneFocus = function( select ) {
 	const zoneId = select.value;
 	//console.log( 'zoneId', zoneId );
 
-	POPdivMain.innerHTML = POPX.getZoneAttributes( zoneId );
+	divDragMoveContent.innerHTML = POPX.getZoneAttributes( zoneId );
 
 	const options = select.selectedOptions
 	//console.log( 'options', options );

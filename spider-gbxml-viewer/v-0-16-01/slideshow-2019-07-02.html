@@ -24,7 +24,7 @@ a:hover, a:focus, a:active { background-color: yellow; color: #aaa; text-decorat
 button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
 button:hover { background: #ccc; color: #fff }
 
-main { border: 10px solid maroon; height: 100%; overflow: hidden; position: relative; resize: both; }
+main { border: 0px solid maroon; height: 100%; overflow: hidden; position: relative; resize: both; }
 
 #divContents { height: 100%;  width: 100%; }
 
@@ -38,11 +38,9 @@ main { border: 10px solid maroon; height: 100%; overflow: hidden; position: rela
 .green { color: green; }
 .blue { color: blue; }
 
-.rem1 { font-size: 5vw; }
-.rem2 { font-size: 8vw; }
-.rem3 { font-size: 10vw; }
-
-
+.rem1 { font-size: 8vw; }
+.rem2 { font-size: 10vw; }
+.rem3 { font-size: 12vw; }
 
 
 @media all and ( max-width: 640px ) {
@@ -84,8 +82,6 @@ main { border: 10px solid maroon; height: 100%; overflow: hidden; position: rela
 
 <script>
 
-const urlSourceCode = "https://github.com/zzzzz/xxxxx.html";
-const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-64.png";
 
 
 const TTS = {
@@ -96,7 +92,7 @@ const TTS = {
 	"playing": false,
 	"slides": [
 		{ "utterance": "",
-			"text": "Enjoy the 90 seconds show!", "classes": "red rem2" },
+			"text": "Enjoy the 90 second 'Maevia' overview!", "classes": "red rem2" },
 		{ "utterance": "Hello! My name is 'Mayvia'. I am here to inform you about my latest updates and all the newest hot stuff",
 			"text": "Latest release / months in the making / many lessons learned / <br>&diams; almost good to go!", "classes": "red rem1"},
 		{ "utterance": "In tests, I opened a 700 megabyte file in about one minute. Yes, three quarters of a ghigabyte viewable in your browser just like that",
@@ -109,19 +105,18 @@ const TTS = {
 			"text": "Right side popup menu<br>New buttons to expose new data reports<br>Many new screens<br>View gbXML source for every surface<br>", "classes": "blue rem1"},
 		{ "utterance": "My user experience is more streamlined. Think left brain / right brain working together. Text and numbers on the left versus touching and seeing on the right",
 			"text": "Left menu for investigating files and their data<br>Right menu for interacting with 3D models", "classes": "red rem1"},
-		{ "utterance": "I am here to help you. I do my best to you know about every nook and cranny in your project. ",
+		{ "utterance": "Do remember that I am here to help you. I do my best to you know about every nook and cranny in your project - no matter how big or complex. ",
 			"text": "New reports for window types, construction, layers and materials and more", "classes": "blue rem2"},
 		{ "utterance": "For about a year I have been trying to help you find and fix errors in your files. Guess what? Ta Daaaa! I can fix the issues in your files faster than you can.",
 			"text": "New error-fixing modules<br>Identify, list and fix common errors in gbXML files", "classes": "green rem1"},
 		{ "utterance": "And, very soon, you should consider playing with me",
 			"text": "All code written in easy-peasy plain vanilla, free open-source JavaScript", "classes": "red rem2"},
-		{ "utterance": "Thank you. And thank you Tayo and Mickh Al and your friends for all good efforts in making me faster, better and easier. Bye for now!",
+		{ "utterance": "Finally, I'd to give a thank you Tayo and Mickh Al and our friends for all the good efforts in making me faster, better and easier. And thank you for listening. Bye. for now!",
 			"text": "the end<br><span style=font-size:3vw;color:gray; >& a new beginning?</span>", "classes": "red rem2"},
-
-
 	]
 
 };
+
 
 
 TTS.playSlides = function() {
@@ -143,7 +138,7 @@ TTS.playSlides = function() {
 		TTS.playing = false;
 	}
 
-}
+};
 
 
 TTS.showSlide = function( index = 1 ) {
@@ -170,7 +165,7 @@ TTS.sayThis = function( text ) {
 
 		const voice = TTS.voices.find( item => item.name === "Google UK English Female" );
 
-		theDefault =  TTS.voices.find( item => item.default === true );
+		const theDefault =  TTS.voices.find( item => item.default === true );
 
 		//console.log( '', voice );
 
@@ -197,7 +192,8 @@ TTS.sayThis = function( text ) {
 };
 
 
-TTS.showSlide( 0 )
+TTS.showSlide( 0 );
+
 </script>
 </body>
 </html>

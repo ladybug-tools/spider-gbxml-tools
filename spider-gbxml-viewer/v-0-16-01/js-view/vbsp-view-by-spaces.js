@@ -1,4 +1,4 @@
-/* globals GBX, THR, POPX, VBSPdetMenu, POPdivMain, VBSPselSpace, VBSPdivReportsLog, VBSPselAttribute */
+/* globals GBX, THR, POPX, VBSPdetMenu, divDragMoveContent, VBSPselSpace, VBSPdivReportsLog, VBSPselAttribute */
 // jshint esversion: 6
 // jshint loopfunc: true
 
@@ -152,7 +152,7 @@ VBSP.selSpacesFocus = function() {
 
 	VBSPdivReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( VBSP.surfacesFilteredBySpace );
 
-	POPdivMain.innerHTML = POPX.getSpaceAttributes( VBSPselSpace.value );
+	divDragMoveContent.innerHTML = POPX.getSpaceAttributes( VBSPselSpace.value );
 
 };
 

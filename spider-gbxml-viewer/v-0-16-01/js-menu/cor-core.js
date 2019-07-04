@@ -12,8 +12,8 @@ const COR = {
 	}
 };
 
-POP.date = MNU.date = "2019-07-02";
-POP.version = MNU.version = "0.16.01-10"; //document.head.querySelector( '[ name=version ]' ).content || "";
+POP.date = MNU.date = "2019-07-03";
+POP.version = MNU.version = "0.16.01-11"; //document.head.querySelector( '[ name=version ]' ).content || "";
 
 //THM.themeUrlStorage = 'spider-gbxml-menu-theme-url';// set for each instance in HTML file
 //THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-03/style.css";

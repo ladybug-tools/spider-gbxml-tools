@@ -20,7 +20,7 @@
 
 <style>
 
-	#divContents { height: 100%; max-width: 100%; }
+		#divContents { height: 100%; max-width: 100%; }
 
 </style>
 
@@ -125,8 +125,6 @@
 
 				<div id=GFFdivGithubFoldersFiles ></div>
 
-				<div id=GFFdivFileInfo></div>
-
 				<div id="GATdivGithubAccessToken" ></div>
 
 			</details>
@@ -141,6 +139,8 @@
 				<div id=FOBdivFileOpenBasic ></div>
 
 				<div id=FOBdivFileSaveBasic ></div>
+
+				<div id=GFFdivFileInfo > </div>
 
 			</details>
 
@@ -207,6 +207,7 @@
 
 			</details>
 
+
 			<footer>
 
 				<details>
@@ -235,33 +236,23 @@
 	</main>
 
 
-	<nav id="navPopup" hidden >
+	<nav id="navDragMove"  >
 
-		<section class="secPOP" >
+		<section id="secDragMove" >
 
-			<div id="POPdivPopup" ></div>
+			<div id=divDragMoveHeader >
+				<span title="Move and resize me" >&#x2766;</span>
+					<div style=float:right; ><button id=butPopupClose onclick="POP.setPopupShowHide(butPopupClose);" >&times;</button></div>
+			</div>
+
+			<div id="divDragMoveContent" ></div>
+
+			<div id="divDragMoveFooter" ></div>
 
 		</section>
 
 	</nav>
 
-
-	<nav id="navDragMove"  >
-
-			<section id="secDragMove" >
-
-				<div id=divDragMoveHeader >
-					<span title="Move and resize me" >&#x2766;</span>
-						<div style=float:right; ><button id=butPopupClose onclick="POP.setPopupShowHide(butPopupClose);" >&times;</button></div>
-				</div>
-
-				<div id="divDragMoveContent" ></div>
-
-				<div id="divDragMoveFooter" ></div>
-
-			</section>
-
-		</nav>
 
 	<nav>
 
@@ -302,7 +293,7 @@ function init() {
 
 	THRU.addSomeLights2();
 
-	POPdivPopup.innerHTML = POP.getMenuDivPopup();
+	//POPdivPopup.innerHTML = POP.getMenuDivPopup();
 	POPX.init();
 
 	//const mesh = THRU.getGeometry();
@@ -348,6 +339,8 @@ function init() {
 	VBMsecViewByMaterials.innerHTML = VBM.getMenuViewByMaterials();
 
 	MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();
+
+	divDragMoveContent.innerHTML = POP.getMenuDivPopup();
 
 	COR.init();
 

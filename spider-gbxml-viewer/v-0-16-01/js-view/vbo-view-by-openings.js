@@ -1,4 +1,4 @@
-/* globals GBX */
+/* globals GBX, divDragMoveContent */
 // jshint esversion: 6
 /* jshint loopfunc: true */
 
@@ -151,7 +151,7 @@ VBO.selectedOpeningsFocus = function( select ) {
 
 	POPX.intersected = GBX.surfaceGroup.children[ opening.surfaceIndex ];
 
-	POPdivMain.innerHTML = POPX.getIntersectedDataHtml();
+	divDragMoveContent.innerHTML = POPX.getIntersectedDataHtml();
 
 	const options = select.selectedOptions
 	//console.log( 'options', options );
