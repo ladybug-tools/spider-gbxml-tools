@@ -35,18 +35,19 @@ VBL.getMenuViewByLayers = function() {
 		<p>
 			View layers. <span id="VBLspnCount" ></span>
 		</p>
-
+<!--
 		<p>
 			<input id=VBLinpSelectIndex oninput=VBL.setSelectedIndex(this,VBLselViewBySurfaces) placeholder="Enter an attribute" >
 		</p>
-
+-->
 		<p>
 			<select id=VBLselViewByLayers oninput=VBL.selLayersFocus(this); style=width:100%; size=10 multiple >
 			</select>
 		</p>
 
-		<p>Attribute to show: <select id=VBLselAttribute oninput=VBL.setViewBySurfacesSelectOptions(); >${ selectOptions }</select></p>
 
+		<p>Attribute to show: <select id=VBLselAttribute oninput=VBL.setViewBySurfacesSelectOptions(); >${ selectOptions }</select></p>
+<!--
 		<p>Select multiple surfaces by pressing shift or control keys</p>
 
 		<p>
@@ -54,6 +55,7 @@ VBL.getMenuViewByLayers = function() {
 				Show/hide by surfaces
 			</button> <mark>What would be useful here?</mark>
 		</p>
+-->
 
 	</details>`;
 
@@ -69,6 +71,8 @@ VBL.setViewByLayersSelectOptions = function() {
 
 	const attribute = VBLselAttribute.value;
 	//console.log( 'attribute', attribute );
+
+	//VBLinpSelectIndex.value = "";
 
 	let color, text;
 
@@ -115,7 +119,7 @@ VBL.setSelectedIndex = function( input, select ) {
 
 	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
 
-	select.value =  option ? option.value : "";
+	select.value =  option ? option.index : "";
 
 };
 

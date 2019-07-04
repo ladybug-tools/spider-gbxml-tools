@@ -79,8 +79,8 @@ COR.init = function() {
 
 		#VSTdivSurfaceType button:hover { background: #ccc; color: #888 }
 
-		button.active { border-color: black; font-style: italic; font-weight: bold; margin-left: 0.1rem;
-			box-shadow: 2px 2px #888; }
+		button.active { border-color: black; font-style: oblique; font-weight: bold; margin-left: 0.3rem;
+			box-shadow: 10px 2px #888; }
 
 		`;
 

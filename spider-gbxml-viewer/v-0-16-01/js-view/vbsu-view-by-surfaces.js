@@ -73,6 +73,8 @@ VBSU.setViewBySurfacesSelectOptions = function() {
 	const attribute = VBSUselAttribute.value;
 	//console.log( 'attribute', attribute );
 
+	VBSUinpSelectIndex.value = "";
+
 	let color, text;
 
 	const htmOptions = GBX.surfaces.map( (surface, index ) => {
@@ -112,7 +114,7 @@ VBSU.setSelectedIndex = function( input, select ) {
 
 	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
 
-	select.selectedIndex =  str && option ? option.value : -1;
+	select.selectedIndex =  str && option ? option.index : -1;
 
 };
 

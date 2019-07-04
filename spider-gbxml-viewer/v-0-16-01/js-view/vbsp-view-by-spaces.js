@@ -19,7 +19,6 @@ const VBSP = {
 
 
 
-
 VBSP.getMenuViewBySpaces = function() {
 
 	document.body.addEventListener( 'onGbxParse', () => VBSPdetMenu.open = false, false );
@@ -38,7 +37,7 @@ VBSP.getMenuViewBySpaces = function() {
 			<p>Display surfaces by space. Default is all spaces visible.</p>
 
 			<p>
-				<input oninput=VBSP.setSelectedIndex(this,VBSPselSpace) placeholder="Enter an attribute" >
+				<input id=VBSPinpAttribute oninput=VBSP.setSelectedIndex(this,VBSPselSpace) placeholder="Enter an attribute" >
 			</p>
 
 			<div id="VBSPdivViewBySpaces" >
@@ -63,6 +62,19 @@ VBSP.getMenuViewBySpaces = function() {
 
 
 
+VBSP.setSelectedIndex = function( input, select ) {
+
+	const str = input.value.toLowerCase();
+
+	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
+	//console.log( 'option', option );
+
+	select.selectedIndex =  str && option ? option.index : -1;
+
+};
+
+
+
 VBSP.setViewBySpacesOptions = function() {
 
 	if ( VBSPdetMenu.open === false ) { return; }
@@ -71,6 +83,8 @@ VBSP.setViewBySpacesOptions = function() {
 
 	const attribute = VBSPselAttribute.value;
 	//console.log( 'attribute', attribute );
+
+	VBSPinpAttribute.value = "";
 
 	const spaceIds = GBX.spaces.map( space => space.match( 'id="(.*?)"' )[ 1 ] );
 	//console.log( 'spaceIds', spaceIds );
@@ -124,17 +138,6 @@ VBSP.setViewBySpacesOptions = function() {
 };
 
 
-
-VBSP.setSelectedIndex = function( input, select ) {
-
-	const str = input.value.toLowerCase();
-
-	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
-	//console.log( 'option', option );
-
-	select.selectedIndex =  str && option ? option.value : -1;
-
-};
 
 
 

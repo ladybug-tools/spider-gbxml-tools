@@ -63,6 +63,19 @@ VBO.getMenuViewByOpenings = function() {
 
 
 
+VBO.setSelectIndex = function( input, select ) {
+
+	const str = input.value.toLowerCase();
+
+	const option = Array.from( select.options ).find( option => option.innerHTML.includes( str ) );
+	//console.log( 'option', option );
+
+	select.selectedIndex = str && option ? option.index : -1;
+
+};
+
+
+
 VBO.setViewByOpeningsSelectOptions = function() {
 
 	if ( VBOdetMenu.open === false ) { return; }
@@ -71,6 +84,8 @@ VBO.setViewByOpeningsSelectOptions = function() {
 
 	const attribute = VBOselAttribute.value;
 	//console.log( 'attribute', attribute );
+
+	VBOinpSelectIndex.value = "";
 
 	let color;
 	let htmOptions = '';
@@ -124,21 +139,6 @@ VBO.setViewByOpeningsSelectOptions = function() {
 	THR.controls.enableKeys = false;
 
 	return VBO.openings.length;
-
-};
-
-
-
-VBO.setSelectIndex = function( input, select ) {
-
-	const str = input.value.toLowerCase();
-
-	const option = Array.from( select.options ).find( option => option.innerHTML.includes( str ) );
-	//console.log( 'option', option );
-
-	select.value = option ? option.value : "";
-
-	if ( option ) { VBO.selectedOpeningsFocus( select ); }
 
 };
 

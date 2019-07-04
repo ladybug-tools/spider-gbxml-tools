@@ -62,12 +62,27 @@ VBW.getMenuViewByWindowTypes = function() {
 };
 
 
+
+VBW.setSelectedIndex = function( input, select ) {
+
+	const str = input.value.toLowerCase();
+
+	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
+
+	select.selectedIndex =  str && option ? option.index : -1;
+
+};
+
+
+
 VBW.setViewBySurfacesSelectOptions = function() {
 
 	if ( VBWdet.open === false ) { return; }
 
 	const attribute = VBWselAttribute.value;
 	//console.log( 'attribute', attribute );
+
+	VBWinpSelectIndex.value = "";
 
 	let color, text;
 
@@ -116,18 +131,6 @@ VBW.setViewBySurfacesSelectOptions = function() {
 	VBWspnCount.innerHTML = `${ GBX.windowTypes.length } types found`;
 
 	THR.controls.enableKeys = false;
-
-};
-
-
-
-VBW.setSelectedIndex = function( input, select ) {
-
-	const str = input.value.toLowerCase();
-
-	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
-
-	select.selectedIndex =  str && option ? option.value : -1;
 
 };
 

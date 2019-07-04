@@ -111,7 +111,7 @@ VBCO.setSelectedIndex = function( input, select ) {
 
 	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
 
-	select.selectedIndex =  str && option ? option.value : -1;
+	select.selectedIndex =  str && option ? option.index : -1;
 
 };
 
@@ -119,7 +119,7 @@ VBCO.setSelectedIndex = function( input, select ) {
 
 VBCO.selectedSurfacesFocus = function( select ) {
 
-	VBCO.surfaces = []
+	VBCO.surfaces = [];
 
 	Array.from( select.selectedOptions ).forEach( option => {
 

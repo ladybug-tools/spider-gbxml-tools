@@ -70,6 +70,8 @@ VBM.setViewByMaterialsSelectOptions = function() {
 	const attribute = VBMselAttribute.value;
 	//console.log( 'attribute', attribute );
 
+	VBMinpSelectIndex.value = ""
+
 	let color, text;
 
 	htmOptions = GBX.materials.map( (surface, index ) => {
@@ -109,7 +111,7 @@ VBM.setSelectedIndex = function( input, select ) {
 
 	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
 
-	select.value =  option ? option.value : "";
+	select.value =  option ? option.index : "";
 
 };
 

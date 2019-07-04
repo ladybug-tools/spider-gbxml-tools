@@ -65,6 +65,18 @@ VBC.getMenuViewByConstruction = function() {
 
 
 
+VBC.setSelectIndex = function( input, select ) {
+
+	const str = input.value.toLowerCase();
+
+	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
+	console.log( 'option', option.value );
+
+	select.selectedIndex =  str && option ? option.index : -1;
+
+};
+
+
 
 VBC.getViewByConstructionSelectOptions = function() {
 
@@ -77,6 +89,8 @@ VBC.getViewByConstructionSelectOptions = function() {
 	const attribute = VBCselAttribute.value;
 	//console.log( 'attribute', attribute );
 
+	VBCinpSelectIndex.value = "";
+	
 	let constructionRefs = GBX.surfaces.map( (surface, surfaceIndex ) => {
 
 		const construction = surface.match( /constructionIdRef="(.*?)"/i )|| [];
@@ -123,19 +137,6 @@ VBC.getViewByConstructionSelectOptions = function() {
 	} );
 
 	VBCselViewByConstruction.innerHTML = htmOptions;
-
-};
-
-
-
-VBC.setSelectIndex = function( input, select ) {
-
-	const str = input.value.toLowerCase();
-
-	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
-	console.log( 'option', option.value );
-
-	select.selectedIndex =  str && option ? option.value : -1;
 
 };
 

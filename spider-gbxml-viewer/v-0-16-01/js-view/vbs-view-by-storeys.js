@@ -36,7 +36,7 @@ VBS.getMenuViewByStoreys = function() {
 			<p>Display surfaces by storey. Default is all storeys visible. Operates in conjunction with surface type settings.</p>
 
 			<p>
-				<input oninput=VBS.setSelectedIndex(this,VBSselStorey) placeholder="Enter an attribute" >
+				<input id=VBSinpAttribute oninput=VBS.setSelectedIndex(this,VBSselStorey) placeholder="Enter an attribute" >
 			</p>
 
 			<div id="VBSdivViewByStoreys" >
@@ -66,6 +66,8 @@ VBS.setViewByStoreysOptions = function() {
 
 	const attribute = VBSselAttribute.value;
 	//console.log( 'attribute', attribute );
+
+	VBSinpAttribute.value = "";
 
 	const storeyIds = GBX.storeys.map( storey => storey.match( 'id="(.*?)">')[ 1 ] );
 	//console.log( 'storeyIds', storeyIds );
@@ -118,11 +120,12 @@ VBS.setViewByStoreysOptions = function() {
 VBS.setSelectedIndex = function( input, select ) {
 
 	const str = input.value.toLowerCase();
+	console.log( 'str', str );
 
-	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
-	//console.log( 'option', option );
+option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
+	console.log( 'option', option );
 
-	select.selectedIndex =  str && option ? option.value : -1;
+	select.selectedIndex =  str && option ? option.index : -1;
 
 };
 
