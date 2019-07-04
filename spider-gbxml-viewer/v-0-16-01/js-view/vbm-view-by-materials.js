@@ -1,4 +1,4 @@
-/* globals GBX, POPX, ISCOR, POPdivMain*/
+/* globals GBX, POPX, ISCOR, divDragMoveContent*/
 // jshint esversion: 6
 // jshint loopfunc: true
 
@@ -122,7 +122,7 @@ VBM.selMaterialsFocus = function( select ) {
 
 	THR.scene.remove( POPX.line, POPX.particle );
 
-	POPdivMain.innerHTML = VBM.getMaterialsAttributes( select.value );
+	divDragMoveContent.innerHTML = VBM.getMaterialsAttributes( select.value );
 
 	//VBM.surfacesFilteredBySpace = VBM.getSurfacesFilteredBySpace();
 

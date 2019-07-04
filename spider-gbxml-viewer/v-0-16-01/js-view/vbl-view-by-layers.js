@@ -1,5 +1,5 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
-/* globals GBX, POPX, ISCOR, POPdivMain*/
+/* globals GBX, POPX, ISCOR, divDragMoveContent*/
 /* jshint esversion: 6 */
 
 const VBL = {
@@ -130,7 +130,7 @@ VBL.selLayersFocus = function( select ) {
 
 	THR.scene.remove( POPX.line, POPX.particle );
 
-	POPdivMain.innerHTML = VBL.getLayersAttributes( select.value );
+	divDragMoveContent.innerHTML = VBL.getLayersAttributes( select.value );
 
 	//VBL.surfacesFilteredBySpace = VBL.getSurfacesFilteredBySpace();
 

@@ -1,5 +1,5 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
-/* globals GBX, POPX, ISCOR, POPdivMain*/
+/* globals GBX, POPX, ISCOR, divDragMoveContent*/
 /* jshint esversion: 6 */
 
 const VBW = {
@@ -141,7 +141,7 @@ VBW.selWindowTypesFocus = function( select ) {
 
 	THR.scene.remove( POPX.line, POPX.particle );
 
-	POPdivMain.innerHTML = VBW.getWindowTypesAttributes( VBWselViewByWindowTypes.value );
+	divDragMoveContent.innerHTML = VBW.getWindowTypesAttributes( VBWselViewByWindowTypes.value );
 
 	VBW.surfacesFilteredByWindowType = VBW.getSurfacesFilteredByWindowType();
 
@@ -240,7 +240,7 @@ VBW.cccccselectedSurfacesFocus = function( select ) {
 
 	POPX.intersected = GBX.surfaceGroup.children[ select.value ];
 
-	POPdivMain.innerHTML = POPX.getIntersectedDataHtml();
+	divDragMoveContent.innerHTML = POPX.getIntersectedDataHtml();
 	//console.log( 'sel', select.value );
 
 	const options = select.selectedOptions

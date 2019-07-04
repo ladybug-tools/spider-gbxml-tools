@@ -1,4 +1,4 @@
-/* globals THR, GBX, POPX, GSA, VBCdetMenu, VBCselViewByConstruction, POPdivMain*/
+/* globals THR, GBX, POPX, GSA, VBCdetMenu, VBCselViewByConstruction, divDragMoveContent*/
 // jshint esversion: 6
 /* jshint loopfunc: true */
 
@@ -98,7 +98,7 @@ VBC.getViewByConstructionSelectOptions = function() {
 		construction = GBX.constructions.find( construction => construction.includes( constructionRef ) );
 
 		if ( !construction ) { return; }
-		
+
 		let text;
 
 		if ( [ "id", "layerIdRef" ].includes( attribute ) ) {
@@ -197,7 +197,7 @@ VBC.getConstruction = function( constructionId ) {
 
 	//console.log( 'attributesHTM', attributesHTM );
 
-	POPdivMain.innerHTML = attributesHTM;
+	divDragMoveContent.innerHTML = attributesHTM;
 
 
 };
