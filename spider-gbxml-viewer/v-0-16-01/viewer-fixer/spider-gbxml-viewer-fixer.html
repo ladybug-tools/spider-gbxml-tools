@@ -4,10 +4,10 @@
 
 <meta charset = "utf-8">
 <meta name = "copyright" content ="Ladybug Tools authors" >
-<meta name = "date" content = "2019-06-28" >
+<meta name = "date" content = "2019-07-03" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.16.01-6" >
+<meta name = "version" content = "0.16.01-7" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
 <title>Spider gbXML Fixer 'Atrax'</title>
@@ -16,7 +16,7 @@
 <link rel = "license" href = "https://creativecommons.org/licenses/by/4.0/" >
 <link rel = "license" href = "https://opensource.org/licenses/MIT" >
 <link rel = "stylesheet" href = "https://fonts.googleapis.com/css?family=Inconsolata"  >
-<link rel = "stylesheet" href = "https://pushme-pullyou.github.io/tootoo14/js-14-03/style.css" >
+<link rel = "stylesheet" href = "https://pushme-pullyou.github.io/tootoo14/js-14-04/style.css" >
 
 <style>
 
@@ -34,7 +34,6 @@
 
 <body>
 
-
 <!-- utility libraries -->
 <script src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
 <script src = "https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js" ></script>
@@ -44,15 +43,15 @@
 <script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r105/examples/js/controls/OrbitControls.js" ></script>
 
 <!-- Tootoo
-	<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-03/thm-theme/thm-theme.js" ></script>
+	<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-04/thm-theme/thm-theme.js" ></script>
  -->
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-03/gat-github-access-token/gat-github-access-token.js" ></script>
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-03/tmp-template/tmp-template.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-04/gat-github-access-token/gat-github-access-token.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-04/tmp-template/tmp-template.js" ></script>
 
 <!-- Tootoo forks  https://github.com/pushme-pullyou/tootoo14 -->
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-03/fob-file-open-basic/fob-file-open-basic.js" ></script>
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-03/pop-popup/pop-popup.js" ></script>
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-03/mnu-menu/mnu-menu.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-04/pop-popup/pop-popup.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-04/mnu-menu/mnu-menu.js" ></script>
 <!--
 	<script src = "../../../../pushme-pullyou-tootoo14/js-14-03/fob-file-open-basic/fob-file-open-basic.js" ></script>
 	<script src = "../js-core-tootoo/pop-popup.js" ></script>
@@ -128,25 +127,32 @@
 
 		<section class="secContent" >
 
-			<header>
+			<details open >
 
-				<div id="MNUdivHeader" ></div>
+				<summary  class="sumMenuTitle" >Menu  header </summary>
 
-			</header>
+				<header>
 
-			<div >
+					<div id="MNUdivHeader" ></div>
 
-				<p>
+				</header>
+
+				<div >
+
+					<p>
 					See <a href="https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-16-01/viewer-view/spider-gbxml-viewer-view-dev.html" target="_blank">Spider gbXML Viewer 'Maevia'</a>
-				</p>
+					</p>
 
-				<p>
-					See <a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">Schema GreenBuildingXML_Ver6.01.xsd </a>
-				</p>
+					<p>
+						See <a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">Schema GreenBuildingXML_Ver6.01.xsd </a>
+					</p>
 
-			</div>
+				</div>
 
-			<details>
+			</details>
+
+
+			<details open >
 
 				<summary class="sumMenuTitle" >GitHub folders & files</summary>
 
@@ -159,7 +165,7 @@
 			</details>
 
 
-			<details >
+			<details open >
 
 				<summary class="sumMenuTitle" >File menu</summary>
 
@@ -168,6 +174,8 @@
 				<div id=FOBdivFileOpenBasic ></div>
 
 				<div id=FOBdivFileSaveBasic ></div>
+
+				<div id=GFFdivFileInfo > </div>
 
 			</details>
 
@@ -234,6 +242,7 @@
 
 			</details>
 
+
 			<footer>
 
 				<details>
@@ -269,11 +278,18 @@
 	</main>
 
 
-	<nav id="navPopup" hidden >
+	<nav id="navDragMove"  >
 
-		<section class="secPOP" >
+		<section id="secDragMove" >
 
-			<div id="POPdivPopup" ></div>
+			<div id=divDragMoveHeader >
+				<span title="Move and resize me" >&#x2766;</span>
+					<div style=float:right; ><button id=butPopupClose onclick="POP.setPopupShowHide(butPopupClose);" >&times;</button></div>
+			</div>
+
+			<div id="divDragMoveContent" ></div>
+
+			<div id="divDragMoveFooter" ></div>
 
 		</section>
 
@@ -320,7 +336,7 @@ function init() {
 
 	THRU.addSomeLights2();
 
-	POPdivPopup.innerHTML = POP.getMenuDivPopup();
+	//POPdivPopup.innerHTML = POP.getMenuDivPopup();
 	POPX.init();
 
 	//const mesh = THRU.getGeometry();
@@ -367,12 +383,13 @@ function init() {
 
 	MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();
 
+	divDragMoveContent.innerHTML = POP.getMenuDivPopup();
+
+	COR.init();
 
 	GBX.init(); // gets things going
 
 	GBXF.init(); // fixer
-
-	COR.init();
 
 	// let's go / FOB to load default and fire onload events
 	if ( !location.hash ) { location.hash=FOB.urlDefaultFile; } else { FOB.onHashChange(); }
