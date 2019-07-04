@@ -29,7 +29,7 @@ POPX.footer =
 		<button onclick="POPF.setScreen2();" title="Sisplay parameters" >💡</button>
 		<button onclick="POPF.setScreen3();" title="Cut sections" >🔪</button>
 		<button onclick="POPF.setScreen4();" title="Exploded views" >🧨</button>
-		<button onclick="POPX.setPrevious();" title="Previously selected surface" >📌</button>
+		<button onclick="navDragMove.style.height='60%';POPX.setPrevious();" title="Previously selected surface" >📌</button>
 
 
 	</div>
