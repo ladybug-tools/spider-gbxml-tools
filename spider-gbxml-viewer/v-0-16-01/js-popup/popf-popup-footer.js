@@ -1,4 +1,4 @@
-/* global Stats, POPbutRateLimits, navPopup, POPdivMain, main, showdown */
+/* global Stats, POPbutRateLimits, navPopup, divDragMoveContent, main, showdown */
 /* jshint esversion: 6 */
 /* jshint loopfunc: true */
 
@@ -17,21 +17,24 @@ const POPF = {
 
 POPX.footer =
 	`
-		<div style=text-align:right; >
+	<div style=text-align:right; >
 
-			<button onclick=POPX.onClickZoomAll(); title="Show entire campus & display attributes" >zoom all</button>
+		<button onclick=POPX.onClickZoomAll(); title="Show entire campus & display attributes" >🔍</button>
 
-			<button onclick="POPF.onToggleInteriorExterior(this)" class="">in/ex</button>
-			<button onclick="SET.toggleEdgesThreejs();">edges</button>
-			<button onclick="SET.toggleOpenings();">openings</button>
-			<div style=display:inline-block; >
-				<button onclick=POPF.setNextPopup(-1); style=width:2rem;background:#ebb; > &laquo; </button>&nbsp;<button onclick=POPF.setNextPopup(0); style=width:2rem;background:#ceb; >&#x2302;</button>&nbsp;<button onclick=POPF.setNextPopup(); style=width:2rem;background:#abe; >&raquo;</button>
-			</div>
+		<button onclick="POPF.onToggleInteriorExterior(this)" title="Exterior or interior surfaces">☂️</button>
+		<button onclick="SET.toggleEdgesThreejs();" title="Display edges" >📏</button>
+		<button onclick="SET.toggleOpenings();" title="Display openings" >🚪</button>
+		<button onclick="POPF.setScreen1();" title="Surface types" >🥪</button>
 
-		</div>
-		`;
+		<button onclick="POPF.setScreen2();" title="Sisplay parameters" >💡</button>
+		<button onclick="POPF.setScreen3();" title="Cut sections" >🔪</button>
+		<button onclick="POPF.setScreen4();" title="Exploded views" >🧨</button>
+		<button onclick="POPX.setPrevious();" title="Previously selected surface" >📌</button>
 
-//<button onclick=POPX.setPrevious(); style=background:yellow; >previous</button>
+
+	</div>
+	`;
+
 
 POPF.setNextPopup = function( x = 1 ){
 
@@ -57,6 +60,9 @@ POPF.setNextPopup = function( x = 1 ){
 
 POPF.onToggleInteriorExterior = function( button ) {
 
+
+	THR.scene.remove( POPX.line, POPX.particle );
+
 	button.classList.toggle( "active" );
 
 	const array = button.classList.contains( "active" ) ?
@@ -81,7 +87,7 @@ POPF.onToggleInteriorExterior = function( button ) {
 
 POPF.setScreen4 = function() {
 
-	VEX.setDetExplodedViews( POPdivMain );
+	VEX.setDetExplodedViews( divDragMoveContent );
 
 };
 
@@ -89,7 +95,7 @@ POPF.setScreen4 = function() {
 
 POPF.setScreen3 = function() {
 
-	POPdivMain.innerHTML = CUT.getDetSectionViews();
+	divDragMoveContent.innerHTML = CUT.getDetSectionViews();
 
 	CUT.toggleSectionViewX();
 };
@@ -99,13 +105,15 @@ POPF.setScreen3 = function() {
 
 POPF.setScreen2 = function() {
 
-	POPdivMain.innerHTML = SET.getSettingsMenu();
+	divDragMoveContent.innerHTML = SET.getSettingsMenu();
 
 };
 
 
 
 POPF.setScreen1 = function() {
+
+	THR.scene.remove( POPX.line, POPX.particle );
 
 	const types = GBX.surfaceTypes.filter( type => GBX.surfaces.find( surface => surface.includes( `"${ type }"` ) ) );
 
@@ -123,7 +131,7 @@ POPF.setScreen1 = function() {
 	);
 
 
-	POPdivMain.innerHTML =
+	divDragMoveContent.innerHTML =
 		`
 			<h4>Show or hide surface types</h4>
 			${ buttonSurfaceTypes.join( '' ) }
@@ -135,7 +143,7 @@ POPF.setScreen1 = function() {
 
 POPF.toggleThisSurface = function( type ) {
 
-	const buttonsActive = POPdivMain.getElementsByClassName( "active" ); // collection
+	const buttonsActive = divDragMoveContent.getElementsByClassName( "active" ); // collection
 
 	Array.from( buttonsActive ).forEach( button => button.classList.remove( "active" ) );
 
@@ -149,7 +157,7 @@ POPF.toggleSurfaceByButtons = function( button ) {
 
 	button.classList.toggle( "active" );
 
-	const buttonsActive = POPdivMain.getElementsByClassName( "active" ); // collection
+	const buttonsActive = divDragMoveContent.getElementsByClassName( "active" ); // collection
 
 	const filterArray = Array.from( buttonsActive ).map( button => button.innerText );
 
@@ -188,7 +196,7 @@ POPF.sendSurfacesToThreeJs = function( filters ) {
 
 POPF.toggleInteriorExterior = function( button ) {
 
-	const buttonsActive = POPdivMain.getElementsByClassName( "active" ); // collection
+	const buttonsActive = divDragMoveContent.getElementsByClassName( "active" ); // collection
 
 	Array.from( buttonsActive ).forEach( butt => { if ( butt !== button ) ( butt.classList.remove( "active" ) ); } );
 

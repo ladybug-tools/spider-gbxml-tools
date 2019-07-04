@@ -166,6 +166,8 @@ POPX.onDocumentMouseDown = function( event ) {
 
 		POPX.setIntersectedParticleAtPoint( POPX.intersects[ 0 ].point );
 
+		navDragMove.style.height = "60%";
+
 		divDragMoveContent.innerHTML = POPX.getIntersectedDataHtml();
 
 		divDragMoveFooter.innerHTML = POPX.footer;
@@ -176,7 +178,7 @@ POPX.onDocumentMouseDown = function( event ) {
 
 		POPX.intersected = null;
 
-		navDragMove.hidden = true;
+		navDragMove.style.height = "6rem";
 
 		divDragMoveContent.innerHTML = '';
 
@@ -197,7 +199,7 @@ POPX.setPrevious = function() {
 
 	divDragMoveContent.innerHTML = POPX.getIntersectedDataHtml();
 
-	POPdivFooter.innerHTML = POPX.footer;
+	divDragMoveFooter.innerHTML = POPX.footer;
 
 	navDragMove.hidden = false;
 

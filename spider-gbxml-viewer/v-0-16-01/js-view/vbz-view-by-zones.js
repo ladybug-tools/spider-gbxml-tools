@@ -155,7 +155,7 @@ VBZ.getZonesOptions = function() {
 
 VBZ.selectZoneFocus = function( select ) {
 
-	console.log( '', 23 );
+	//console.log( '', 23 );
 
 	THR.controls.enableKeys = false;
 
