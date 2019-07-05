@@ -1,8 +1,8 @@
-### Ladybug Tools / Spider gbXML Viewer 'Maevia'
+### [Ladybug Tools]( https://www.ladybug.tools/ ) / [Spider]( https://www.ladybug.tools/spider-gbxml-tools/ ) gbXML Viewer '[Maevia]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-16-01/viewer-popup/spider-gbxml-viewer-popup.html )'
 
 Click on the model and surface attributes appear here.
 
-Press spacebar: to stop model rotating
+Press space bar: to stop model rotating
 
 Use one|two|three fingers to rotate|zoom|pan display in 3D.
 Or left|scroll|right with your pointing device.
