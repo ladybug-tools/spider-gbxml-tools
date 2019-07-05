@@ -18,9 +18,10 @@ Or copy this link: https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-vie
 
 ## Fixer: [Spider gbXML Fixer 'Atrax']( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/fix/ )
 
+## Popup: [Spider gbXML Viewer Popup ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/fix/ )
+
+
 ***
-
-
 
 Download this file ( Chrome context menu > 'Save link as...' ) to your desktop or wherever, follow guidelines for loading local files here [Opening and loading files with gbXML Viewer]( https://www.ladybug.tools/spider/#pages/file-open.md ) in order to embed the Viewer in a local workflow and avoid CORS issues.
 
