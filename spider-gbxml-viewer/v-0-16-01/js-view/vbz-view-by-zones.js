@@ -65,10 +65,13 @@ VBZ.getMenuViewByZones = function() {
 			<button id="butVBZtxt" onclick="POP.setPopupShowHide(butVBZtxt,VBZ.helpFile);">? / read me</button>.
 			<span id="VBZspnCount" ></span>. Very slow on large files. Will speed things up.</p>
 
+			<p>
+				<input id=VBZinpSelectIndex oninput=VBZ.setSelectedIndex(this,VBZselZone) placeholder="Enter an attribute" >
+			</p>
 
-			<div>
+			<p>
 				<select id=VBZselZone oninput=VBZ.selectZoneFocus(this); style=width:100%; ></select
-			</div>
+			</p>
 
 			<div id="VBZdivReportsLog" ></div>
 
@@ -92,6 +95,8 @@ VBZ.getZonesOptions = function() {
 
 	const attribute = VBZselAttribute.value;
 	//console.log( 'attribute', attribute );
+
+	VBZinpSelectIndex.value = "";
 
 	let zoneArr;
 
@@ -151,6 +156,17 @@ VBZ.getZonesOptions = function() {
 
 };
 
+
+
+VBZ.setSelectedIndex = function( input, select ) {
+
+	const str = input.value.toLowerCase();
+
+	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
+
+	select.selectedIndex =  str && option ? option.index : -1;
+
+};
 
 
 VBZ.selectZoneFocus = function( select ) {

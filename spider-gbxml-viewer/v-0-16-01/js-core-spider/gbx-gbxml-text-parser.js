@@ -4,7 +4,8 @@
 
 var GBX = { "version": "0.16.1", "date": "2019-06-18" };
 
-GBX.filtersDefault = [ "Air", "ExposedFloor", "ExteriorWall", "RaisedFloor", "Roof",  "Shade", "SlabOnGrade", "UndergroundWall", "UndergroundSlab" ];
+GBX.filtersDefault = [ "Air", "ExposedFloor", "ExteriorWall", "RaisedFloor", "Roof",  "Shade",
+	"SlabOnGrade", "UndergroundWall", "UndergroundSlab" ];
 
 let step = 1000;
 let count = 0;

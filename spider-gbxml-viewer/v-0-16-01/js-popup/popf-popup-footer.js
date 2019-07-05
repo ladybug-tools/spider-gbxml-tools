@@ -24,9 +24,9 @@ POPX.footer =
 		<button onclick="POPF.onToggleInteriorExterior(this)" title="Exterior or interior surfaces">☂️</button>
 		<button onclick="SET.toggleEdgesThreejs();" title="Display edges" >📏</button>
 		<button onclick="SET.toggleOpenings();" title="Display openings" >🚪</button>
-		<button onclick="POPF.setScreen1();" title="Surface types" >🥪</button>
+		<button onclick="POPF.setScreen1();" title="Surface types" >💡</button>
 
-		<button onclick="POPF.setScreen2();" title="Sisplay parameters" >💡</button>
+		<button onclick="POPF.setScreen2();" title="Display parameters" >👁️</button>
 		<button onclick="POPF.setScreen3();" title="Cut sections" >🔪</button>
 		<button onclick="POPF.setScreen4();" title="Exploded views" >🧨</button>
 		<button onclick="navDragMove.style.height='60%';POPX.setPrevious();" title="Previously selected surface" >📌</button>
