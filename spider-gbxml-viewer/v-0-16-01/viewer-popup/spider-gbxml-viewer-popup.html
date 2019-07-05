@@ -123,7 +123,7 @@ function init() {
 
 	GBX.init();
 
-	//POPdivPopup.innerHTML = POP.getMenuDivPopup();
+	POP.getMenuDivPopup();
 
 	POPX.init();
 
@@ -138,13 +138,13 @@ function init() {
 
 	POP.setPopupShowHide( butPopupClose, "../popup.md" );
 
-	POPdivHeader.addEventListener( "touchstart", POP.dragStart, false );
-	POPdivHeader.addEventListener( "touchend", POP.dragEnd, false );
-	POPdivHeader.addEventListener( "touchmove", POP.drag, false );
+	// POPdivHeader.addEventListener( "touchstart", POP.dragStart, false );
+	// POPdivHeader.addEventListener( "touchend", POP.dragEnd, false );
+	// POPdivHeader.addEventListener( "touchmove", POP.drag, false );
 
-	POPdivHeader.addEventListener( "mousedown", POP.dragStart, false );
-	POPdivHeader.addEventListener( "mouseup", POP.dragEnd, false );
-	POPdivHeader.addEventListener( "mousemove", POP.drag, false );
+	// POPdivHeader.addEventListener( "mousedown", POP.dragStart, false );
+	// POPdivHeader.addEventListener( "mouseup", POP.dragEnd, false );
+	// POPdivHeader.addEventListener( "mousemove", POP.drag, false );
 
 }
 
