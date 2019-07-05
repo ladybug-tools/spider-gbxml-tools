@@ -12,7 +12,7 @@ const POPX = {
 	"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-gbxml-viewer-pop-up"
 };
 
-POPX.footer =
+POPX.cccfooter =
 	`
 		<p style=text-align:right; >
 			<button onclick=POPX.onClickZoomAll(); title="Show entire campus & display attributes" >zoom all +</button>

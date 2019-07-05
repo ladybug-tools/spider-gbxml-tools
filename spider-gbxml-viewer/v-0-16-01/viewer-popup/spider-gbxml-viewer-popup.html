@@ -21,6 +21,8 @@
 body { font: 11pt monospace; height:100%; margin: 0; overflow: hidden; }
 
 .active { color: red; }
+.attributeTitle { font-style: italic; }
+.attributeValue { color: blue; }
 
 #divContents { height:100vh; width: 100%; }
 
@@ -29,6 +31,61 @@ body { font: 11pt monospace; height:100%; margin: 0; overflow: hidden; }
 	padding: 0 1rem 0 1rem; position: fixed;
 	resize: both; left: 50%;  top: 8%; z-index: 10;
 	box-shadow: 10px 10px 25px rgba(0,0,0,0.3), 6px 6px 6px rgba(0,0,0,0.5); }
+
+	#navDragMove {
+	background-color: #f1f1f1;
+	border: 1px solid #aaa;
+	left: 80%;
+	overflow: auto;
+	height: 60%;
+	max-width: 40%;
+	position: absolute;
+	right: 1rem;
+	top: 1rem;
+	resize: both;
+}
+
+#secDragMove {
+	border: 0px solid green;
+	height: calc( 100% - 1rem );
+	overflow: hidden;
+	position: relative;
+}
+
+#divDragMoveHeader {
+	background-color: #2196F3;
+	color: #fff;
+	cursor: move;
+	padding: 0.5rem;
+}
+
+#divDragMoveContent {
+	border: 0px solid red;
+	height: calc( 100% - 4rem );
+	max-height: calc( 100% - 4rem );
+	overflow: auto;
+	padding: 0.5rem;
+	width: 100%;
+}
+
+#divDragMoveFooter {
+	background-color: #f1f1f1;
+	bottom: 0rem;
+	height: 2rem;
+	vvtext-align: right;
+	overflow: auto;
+	margin: 0 0.5rem;
+	position: absolute;
+	vvright: 0;
+	width: 100%;
+}
+
+
+@media all and ( max-width: 640px ) {
+
+	#navDragMove { left: 60%; height: 80%; max-width: 55%; right: 0.2rem; }
+
+}
 
 
 </style>
@@ -79,8 +136,15 @@ body { font: 11pt monospace; height:100%; margin: 0; overflow: hidden; }
 		<section id="secDragMove" >
 
 			<div id=divDragMoveHeader >
-				<span title="Move and resize me" >&#x2766;</span>
-					<div style=float:right; ><button id=butPopupClose onclick="POP.setPopupShowHide(butPopupClose);" >&times;</button></div>
+
+				<span title="Move and resize me" ><img src = 'https://ladybug.tools/artwork/icons_bugs/ico/spider.ico' height=24 ></span>
+
+				<div style=float:right; >
+					<button id=butPopupClose onclick="POP.setPopupShowHide(butPopupClose);" >
+						&times;
+					</button>
+				</div>
+
 			</div>
 
 			<div id="divDragMoveContent" ></div>
@@ -96,10 +160,11 @@ body { font: 11pt monospace; height:100%; margin: 0; overflow: hidden; }
 
 
 FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
+FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/coventry-university-of-warwick-small.zip";
-FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/annapolis-md-single-family-residential-2016.xml"
+//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/annapolis-md-single-family-residential-2016.xml"
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/pittsburg-airport.zip";
-FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/GreenBuildingXML/Sample-gbXML-Files@master/gbXML_TRK.xml";
+//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/GreenBuildingXML/Sample-gbXML-Files@master/gbXML_TRK.xml";
 
 
 init();
@@ -136,15 +201,7 @@ function init() {
 
 	FOB.onHashChange();
 
-	POP.setPopupShowHide( butPopupClose, "../popup.md" );
-
-	// POPdivHeader.addEventListener( "touchstart", POP.dragStart, false );
-	// POPdivHeader.addEventListener( "touchend", POP.dragEnd, false );
-	// POPdivHeader.addEventListener( "touchmove", POP.drag, false );
-
-	// POPdivHeader.addEventListener( "mousedown", POP.dragStart, false );
-	// POPdivHeader.addEventListener( "mouseup", POP.dragEnd, false );
-	// POPdivHeader.addEventListener( "mousemove", POP.drag, false );
+	POP.setPopupShowHide( butPopupClose, "popup.md" );
 
 }
 
