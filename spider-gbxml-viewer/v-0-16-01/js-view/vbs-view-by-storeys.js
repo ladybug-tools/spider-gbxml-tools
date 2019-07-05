@@ -120,10 +120,10 @@ VBS.setViewByStoreysOptions = function() {
 VBS.setSelectedIndex = function( input, select ) {
 
 	const str = input.value.toLowerCase();
-	\\console.log( 'str', str );
+	//console.log( 'str', str );
 
 	option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
-	\\console.log( 'option', option );
+	//console.log( 'option', option );
 
 	select.selectedIndex =  str && option ? option.index : -1;
 
