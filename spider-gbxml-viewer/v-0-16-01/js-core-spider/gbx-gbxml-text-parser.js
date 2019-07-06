@@ -361,13 +361,12 @@ GBX.getSurfaceMesh = function( arr, index ) {
 
 	if ( arr.length < 6 ) {
 
-		console.log( 'arr', arr );
+		console.log( 'not enough to draw a line', arr );
 		return;
 
 	} else if ( arr.length < 9 ) {
-		//console.log( 'arr', arr );
+		//console.log( 'Try to draw a line', arr );
 
-		// draw a line?
 		vertices = [ v( arr.slice( 0, 3 ) ), v( arr.slice( 3, 6 ) ), v( arr.slice( 0, 3 ) ) ];
 		//console.log( 'vertices', vertices );
 
