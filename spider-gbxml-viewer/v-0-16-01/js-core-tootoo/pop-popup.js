@@ -41,7 +41,7 @@ POP.getMenuDivPopup = function() {
 
 
 POP.setPopupShowHide = function( id = POP.popupId, text = "", footer = "" ) {
-	//console.log( 'id', id );
+	//console.log( 'text', text );
 
 	POP.popupId = id;
 

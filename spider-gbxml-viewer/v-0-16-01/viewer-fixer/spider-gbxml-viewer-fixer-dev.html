@@ -4,13 +4,13 @@
 
 <meta charset = "utf-8">
 <meta name = "copyright" content ="Ladybug Tools authors" >
-<meta name = "date" content = "2019-07-03" >
+<meta name = "date" content = "2019-07-05" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
 <meta name = "version" content = "0.16.01-7" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
-<title>Spider gbXML Fixer 'Atrax'</title>
+<title>Spider gbXML Fixer 'Atrax' DEV</title>
 
 <link rel = "canonical" href = "www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/" />
 <link rel = "license" href = "https://creativecommons.org/licenses/by/4.0/" >
@@ -49,14 +49,10 @@
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-04/tmp-template/tmp-template.js" ></script>
 
 <!-- Tootoo forks  https://github.com/pushme-pullyou/tootoo14 -->
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-03/fob-file-open-basic/fob-file-open-basic.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-04/fob-file-open-basic/fob-file-open-basic.js" ></script>
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-04/pop-popup/pop-popup.js" ></script>
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-04/mnu-menu/mnu-menu.js" ></script>
-<!--
-	<script src = "../../../../pushme-pullyou-tootoo14/js-14-03/fob-file-open-basic/fob-file-open-basic.js" ></script>
-	<script src = "../js-core-tootoo/pop-popup.js" ></script>
-	<script src = "../js-core-tootoo/mnu-menu.js" ></script>
--->
+
 <script src = "../js-menu/gff-github-folder-files.js" ></script>
 
 <!-- Spider forks -->
@@ -122,6 +118,7 @@
 
 
 	<button id="expandButton" onclick="toggleNavPanel();" >☰</button>
+
 
 	<nav id="navPanel" >
 
@@ -289,7 +286,7 @@
 				<div style=float:right; >
 					<button id=butPopupClose onclick="POP.setPopupShowHide(butPopupClose);" >&times;</button>
 				</div>
-				
+
 			</div>
 
 			<div id="divDragMoveContent" ></div>
@@ -315,6 +312,7 @@
 
 
 FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
+//FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/coventry-university-of-warwick-small.zip";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/annapolis-md-single-family-residential-2016.xml"
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/pittsburg-airport.zip";
@@ -340,9 +338,6 @@ function init() {
 	THRU.setHelpers();
 
 	THRU.addSomeLights2();
-
-	//POPdivPopup.innerHTML = POP.getMenuDivPopup();
-	POPX.init();
 
 	//const mesh = THRU.getGeometry();
 	//THR.scene.add( mesh );
@@ -388,7 +383,9 @@ function init() {
 
 	MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();
 
-	divDragMoveContent.innerHTML = POP.getMenuDivPopup();
+	POP.init();
+
+	POPX.init();
 
 	COR.init();
 
@@ -402,7 +399,7 @@ function init() {
 	aViewSource.style.display = "block";
 	aViewSource.href = MNU.urlSourceCode;
 
-	POP.setPopupShowHide( butPopupClose, "../popup.md" );
+	POP.setPopupShowHide( butPopupClose, POP.popup );
 
 	if ( window.innerWidth < 640 ) { toggleNavPanel(); }
 

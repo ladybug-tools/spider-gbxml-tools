@@ -15,7 +15,7 @@ const COR = {
 POP.date = MNU.date = "2019-07-05";
 POP.version = MNU.version = "0.16.01-13"; //document.head.querySelector( '[ name=version ]' ).content || "";
 
-POP.popup = "https://www.ladybug.tools/spider-gbxml-tools/index.html#spider-gbxml-viewer/v-0-16-01/popup.md";
+POP.popup = "https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-16-01/popup.md";
 POP.license = "https://www.ladybug.tools/spider/pages/license.md";
 
 
@@ -30,10 +30,8 @@ POP.license = "https://www.ladybug.tools/spider/pages/license.md";
 FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/GreenBuildingXML/Sample-gbXML-Files@master/gbXML_TRK.xml";
 
 // For main menu header
-MNU.urlSourceCode = `https://github.com/pushme-pullyou/tootoo14/tree/master/js-14-03/`;
 
 MNU.title = document.title;
-
 
 MNU.helpFile = "../../README.md";
 

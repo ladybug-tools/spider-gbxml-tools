@@ -46,11 +46,7 @@
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-04/fob-file-open-basic/fob-file-open-basic.js" ></script>
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-04/pop-popup/pop-popup.js" ></script>
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-04/mnu-menu/mnu-menu.js" ></script>
-<!--
-	<script src = "https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-16-01/../../../pushme-pullyou-tootoo14/js-14-04/fob-file-open-basic/fob-file-open-basic.js" ></script>
-	<script src = "https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-16-01/js-core-tootoo/pop-popup.js" ></script>
-	<script src = "https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-16-01/js-core-tootoo/mnu-menu.js" ></script>
--->
+
 <script src = "https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-16-01/js-menu/gff-github-folder-files.js" ></script>
 
 <!-- Spider forks -->
@@ -251,8 +247,13 @@
 		<section id="secDragMove" >
 
 			<div id=divDragMoveHeader >
-				<span title="Move and resize me" >&#x2766;</span>
-					<div style=float:right; ><button id=butPopupClose onclick="POP.setPopupShowHide(butPopupClose);" >&times;</button></div>
+
+				<span title="Move and resize me" ><img src = 'https://ladybug.tools/artwork/icons_bugs/ico/spider.ico' height=12 ></span>
+
+				<div style=float:right; >
+					<button id=butPopupClose onclick="POP.setPopupShowHide(butPopupClose);" >&times;</button>
+				</div>
+
 			</div>
 
 			<div id="divDragMoveContent" ></div>
@@ -304,8 +305,6 @@ function init() {
 
 	THRU.addSomeLights2();
 
-
-
 	//const mesh = THRU.getGeometry();
 	//THR.scene.add( mesh );
 
@@ -350,7 +349,7 @@ function init() {
 
 	MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();
 
-	divDragMoveContent.innerHTML = POP.getMenuDivPopup();
+	POP.init();
 
 	POPX.init();
 
@@ -364,7 +363,7 @@ function init() {
 	aViewSource.style.display = "block";
 	aViewSource.href = MNU.urlSourceCode;
 
-	POP.setPopupShowHide( butPopupClose, "https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-16-01/popup.md" );
+	POP.setPopupShowHide( butPopupClose, POP.popup );
 
 	if ( window.innerWidth < 640 ) { toggleNavPanel(); }
 
