@@ -15,11 +15,14 @@ const COR = {
 POP.date = MNU.date = "2019-07-05";
 POP.version = MNU.version = "0.16.01-13"; //document.head.querySelector( '[ name=version ]' ).content || "";
 
+POP.popup = "https://www.ladybug.tools/spider-gbxml-tools/index.html#spider-gbxml-viewer/v-0-16-01/popup.md";
+POP.license = "https://www.ladybug.tools/spider/pages/license.md";
+
 
 //THM.themeUrlStorage = 'spider-gbxml-menu-theme-url';// set for each instance in HTML file
 //THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-03/style.css";
 
-//FOB.urlDefaultFile = "../README.md";
+
 //FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/coventry-university-of-warwick-small.zip";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/annapolis-md-single-family-residential-2016.xml"

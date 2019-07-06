@@ -18,7 +18,7 @@ Or copy this link: https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-vie
 
 ## Fixer: [Spider gbXML Fixer 'Atrax']( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/fix/ )
 
-## Popup: [Spider gbXML Viewer Popup ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/fix/ )
+## Popup: [Spider gbXML Viewer Popup ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/pop/ )
 
 
 ***

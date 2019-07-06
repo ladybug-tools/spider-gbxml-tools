@@ -16,76 +16,23 @@
 <link rel = "license" href = "https://creativecommons.org/licenses/by/4.0/" >
 <link rel = "license" href = "https://opensource.org/licenses/MIT" >
 
+<link rel = "canonical" href = "www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/" />
+<link rel = "license" href = "https://creativecommons.org/licenses/by/4.0/" >
+<link rel = "license" href = "https://opensource.org/licenses/MIT" >
+<link rel = "stylesheet" href = "https://fonts.googleapis.com/css?family=Inconsolata"  >
+<link rel = "stylesheet" href = "https://pushme-pullyou.github.io/tootoo14/js-14-04/style.css" >
+
 <style>
 
 body { font: 11pt monospace; height:100%; margin: 0; overflow: hidden; }
 
-.active { color: red; }
-.attributeTitle { font-style: italic; }
-.attributeValue { color: blue; }
+#main, #divContents { height:100vh; width: 100%;  margin: 0; max-width: 100%;}
 
-#divContents { height:100vh; width: 100%; }
+main { border: 0px; height: 100%; left: 0; margin: 0; /* overflow: hidden; */
+	position: absolute; width: 100%;  }
 
-#navPopup { background-color: #eee; border: 1px solid #aaa; border-radius: 8px;
-	max-height: 90%; max-width: 45%; opacity: 0.95;  overflow: auto;
-	padding: 0 1rem 0 1rem; position: fixed;
-	resize: both; left: 50%;  top: 8%; z-index: 10;
-	box-shadow: 10px 10px 25px rgba(0,0,0,0.3), 6px 6px 6px rgba(0,0,0,0.5); }
-
-	#navDragMove {
-	background-color: #f1f1f1;
-	border: 1px solid #aaa;
-	left: 80%;
-	overflow: auto;
-	height: 60%;
-	max-width: 40%;
-	position: absolute;
-	right: 1rem;
-	top: 1rem;
-	resize: both;
-}
-
-#secDragMove {
-	border: 0px solid green;
-	height: calc( 100% - 1rem );
-	overflow: hidden;
-	position: relative;
-}
-
-#divDragMoveHeader {
-	background-color: #2196F3;
-	color: #fff;
-	cursor: move;
-	padding: 0.5rem;
-}
-
-#divDragMoveContent {
-	border: 0px solid red;
-	height: calc( 100% - 4rem );
-	max-height: calc( 100% - 4rem );
-	overflow: auto;
-	padding: 0.5rem;
-	width: 100%;
-}
-
-#divDragMoveFooter {
-	background-color: #f1f1f1;
-	bottom: 0rem;
-	height: 2rem;
-	vvtext-align: right;
-	overflow: auto;
-	margin: 0 0.5rem;
-	position: absolute;
-	vvright: 0;
-	width: 100%;
-}
-
-
-@media all and ( max-width: 640px ) {
-
-	#navDragMove { left: 60%; height: 80%; max-width: 55%; right: 0.2rem; }
-
-}
+button.active { border-color: black; font-style: oblique; font-weight: bold; margin-left: 0.3rem;
+	box-shadow: 10px 2px #888; }
 
 
 </style>
@@ -120,6 +67,9 @@ body { font: 11pt monospace; height:100%; margin: 0; overflow: hidden; }
 
 <!-- View menu -->
 <script src = "../js-view/set-settings.js" ></script>
+<script src = "../js-view/cut-section-cut.js"></script>
+<script src = "../js-view-3d/vex-view-exploded.js" ></script>
+
 
 
 	<main id=main >

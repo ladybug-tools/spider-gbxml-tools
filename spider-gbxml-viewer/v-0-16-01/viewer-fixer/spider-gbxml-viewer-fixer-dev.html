@@ -10,7 +10,7 @@
 <meta name = "version" content = "0.16.01-7" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
-<title>Spider gbXML Viewer 'Maevia' DEV</title>
+<title>Spider gbXML Fixer 'Atrax'</title>
 
 <link rel = "canonical" href = "www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/" />
 <link rel = "license" href = "https://creativecommons.org/licenses/by/4.0/" >
@@ -20,7 +20,13 @@
 
 <style>
 
-		#divContents { height: 100%; max-width: 100%; }
+	#divContents { border: 0px solid red; height: 100%; max-width: 100%; overflow: auto; }
+
+	#divThreejs { border: 1px solid lightgray; height: 40%; margin: 0; max-width: 100%; overflow: auto; /* needed */
+		padding: 0; resize: both; }
+
+	#divFixer { margin: 0 auto; max-width: 50rem; }
+
 
 </style>
 
@@ -43,11 +49,11 @@
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-04/tmp-template/tmp-template.js" ></script>
 
 <!-- Tootoo forks  https://github.com/pushme-pullyou/tootoo14 -->
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-04/fob-file-open-basic/fob-file-open-basic.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-03/fob-file-open-basic/fob-file-open-basic.js" ></script>
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-04/pop-popup/pop-popup.js" ></script>
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-04/mnu-menu/mnu-menu.js" ></script>
 <!--
-	<script src = "../../../../pushme-pullyou-tootoo14/js-14-04/fob-file-open-basic/fob-file-open-basic.js" ></script>
+	<script src = "../../../../pushme-pullyou-tootoo14/js-14-03/fob-file-open-basic/fob-file-open-basic.js" ></script>
 	<script src = "../js-core-tootoo/pop-popup.js" ></script>
 	<script src = "../js-core-tootoo/mnu-menu.js" ></script>
 -->
@@ -86,17 +92,36 @@
 <script src = "../js-view-3d/vex-view-exploded.js" ></script>
 
 <!-- Fixer Menu -->
+<script src = "../js-fixer/gbxf-gbxml-fixer.js" ></script>
+<!--
 
+	<script src = "../js-fixer/gsa-get-surface-attributes/gsa-get-surface-attributes.js" ></script>
 
+-->
 
+<script src = "../js-fixer/ggd-get-gbxml-data/ggd-get-gbxml-data.js" ></script>
+<script src = "../js-fixer/gss-get-surface-statistics/gss-get-surface-statistics.js" ></script>
+<script src = "../js-fixer/gcs-get-check-strings/gcs-get-check-strings.js" ></script>
+<script src = "../js-fixer/gco-get-check-offset/gco-get-check-offset.js" ></script>
+<script src = "../js-fixer/ocv-openings-check-vertices/ocv-openings-check-vertices.js" ></script>
+<script src = "../js-fixer/ocs-openings-check-size/ocs-openings-check-size.js" ></script>
+<script src = "../js-fixer/gwv-get-watertight-vertices/gwv-get-watertight-vertices.js" ></script>
+<script src = "../js-fixer/gws-get-watertight-spaces/gws-get-watertight-spaces.js" ></script>
 
-
+<script src = "../js-fixer/fxa-fix-xml-attributes/fxa-fix-xml-attributes.js" ></script>
+<script src = "../js-fixer/fstn-fix-surface-type-name/fstn-fix-surface-type-name.js" ></script>
+<script src = "../js-fixer/fets-fix-exposed-to-sun/fets-fix-exposed-to-sun.js" ></script>
+<script src = "../js-fixer/fdpc-fix-duplicate-planar-coordinates/fdpc-fix-duplicate-planar-coordinates.js" ></script>
+<script src = "../js-fixer/fasst-fix-adjacent-space-surface-type/fasst-fix-adjacent-space-surface-type.js" ></script>
+<script src = "../js-fixer/fase-fix-adjacent-space-extra/fase-fix-adjacent-space-extra.js" ></script>
+<script src = "../js-fixer/fasd-fix-adjacent-space-duplicate/fasd-fix-adjacent-space-duplicate.js" ></script>
+<script src = "../js-fixer/fasa-fix-air-single-adjacent/fasa-fix-air-single-adjacent.js" ></script>
+<script src = "../js-fixer/fcim-fix-cad-id-missing/fcim-fix-cad-id-missing.js" ></script>
 
 <script src = "../js-menu/cor-core.js" ></script>
 
 
 	<button id="expandButton" onclick="toggleNavPanel();" >☰</button>
-
 
 	<nav id="navPanel" >
 
@@ -115,7 +140,7 @@
 				<div >
 
 					<p>
-						See <a href="https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-16-01/viewer-fixer/spider-gbxml-viewer-fixer.html" target="_blank">Spider gbXML Fixer 'Atrax'</a>
+					See <a href="https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-16-01/viewer-view/spider-gbxml-viewer-view-dev.html" target="_blank">Spider gbXML Viewer 'Maevia'</a>
 					</p>
 
 					<p>
@@ -127,7 +152,7 @@
 			</details>
 
 
-			<details>
+			<details open >
 
 				<summary class="sumMenuTitle" >GitHub folders & files</summary>
 
@@ -140,7 +165,7 @@
 			</details>
 
 
-			<details>
+			<details open >
 
 				<summary class="sumMenuTitle" >File menu</summary>
 
@@ -154,7 +179,7 @@
 
 			</details>
 
-			<details id="detMenuView" open>
+			<details id="detMenuView" >
 
 				<summary class=sumMenuTitle >View menu </summary>
 
@@ -241,7 +266,14 @@
 
 	<main id="main" >
 
-		<div id="divContents" ></div>
+		<div id="divContents" >
+
+			<div id="divThreejs" ></div>
+			<div style=text-align:right; title="Click to update size of 3D view after adjusting window size" ><button onclick=THR.onWindowResize(divThreejs); >resize window</button></div>
+			<div id="divFixer" ></div>
+
+		</div>
+
 
 	</main>
 
@@ -251,13 +283,13 @@
 		<section id="secDragMove" >
 
 			<div id=divDragMoveHeader >
-				
+
 				<span title="Move and resize me" ><img src = 'https://ladybug.tools/artwork/icons_bugs/ico/spider.ico' height=12 ></span>
 
 				<div style=float:right; >
 					<button id=butPopupClose onclick="POP.setPopupShowHide(butPopupClose);" >&times;</button>
 				</div>
-
+				
 			</div>
 
 			<div id="divDragMoveContent" ></div>
@@ -289,6 +321,7 @@ FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristo
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/GreenBuildingXML/Sample-gbXML-Files@master/gbXML_TRK.xml";
 
 
+
 init();
 THR.animate();
 
@@ -302,11 +335,14 @@ function init() {
 
 	}
 
-	THR.getThreejs();
+	THR.getThreejs( divThreejs );
 
 	THRU.setHelpers();
 
 	THRU.addSomeLights2();
+
+	//POPdivPopup.innerHTML = POP.getMenuDivPopup();
+	POPX.init();
 
 	//const mesh = THRU.getGeometry();
 	//THR.scene.add( mesh );
@@ -350,13 +386,15 @@ function init() {
 
 	VBMsecViewByMaterials.innerHTML = VBM.getMenuViewByMaterials();
 
-	POP.init();
+	MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();
 
-	POPX.init();
+	divDragMoveContent.innerHTML = POP.getMenuDivPopup();
 
 	COR.init();
 
 	GBX.init(); // gets things going
+
+	GBXF.init(); // fixer
 
 	// let's go / FOB to load default and fire onload events
 	if ( !location.hash ) { location.hash=FOB.urlDefaultFile; } else { FOB.onHashChange(); }
@@ -364,7 +402,7 @@ function init() {
 	aViewSource.style.display = "block";
 	aViewSource.href = MNU.urlSourceCode;
 
-	POP.setPopupShowHide( butPopupClose, POP.popup );
+	POP.setPopupShowHide( butPopupClose, "../popup.md" );
 
 	if ( window.innerWidth < 640 ) { toggleNavPanel(); }
 
