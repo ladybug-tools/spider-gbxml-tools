@@ -4,7 +4,7 @@
 
 <meta charset = "utf-8">
 <meta name = "copyright" content ="Ladybug Tools authors" >
-<meta name = "date" content = "2019-07-05" >
+<meta name = "date" content = "2019-07-03" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
 <meta name = "version" content = "0.16.01-7" >
@@ -78,6 +78,7 @@
 <script src = "https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-16-01/js-view/vbsp-view-by-spaces.js" ></script>
 <script src = "https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-16-01/js-view/vbz-view-by-zones.js" ></script>
 <script src = "https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-16-01/js-view/vbco-view-by-cad-object-id.js" ></script>
+<script src = "https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-16-01/js-view/vbcoo-view-by-cad-object-id-open.js" ></script>
 
 <script src = "https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-16-01/js-view/vbo-view-by-openings.js" ></script>
 <script src = "https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-16-01/js-view/vbw-view-by-window-types.js" ></script>
@@ -119,6 +120,7 @@
 
 	<button id="expandButton" onclick="toggleNavPanel();" >☰</button>
 
+
 	<nav id="navPanel" >
 
 		<section class="secContent" >
@@ -148,7 +150,7 @@
 			</details>
 
 
-			<details open >
+			<details>
 
 				<summary class="sumMenuTitle" >GitHub folders & files</summary>
 
@@ -161,7 +163,7 @@
 			</details>
 
 
-			<details open >
+			<details>
 
 				<summary class="sumMenuTitle" >File menu</summary>
 
@@ -214,6 +216,8 @@
 				<section id="VBZsecViewByZones" ></section>
 
 				<section id="VBCOsecViewByCadObjectId" ></section>
+
+				<section id="VBCOOsecViewByCadObjectIdOpen" ></section>
 
 				<section id="VBOsecViewByOpenings" ></section>
 
@@ -368,7 +372,9 @@ function init() {
 
 	VBZsecViewByZones.innerHTML = VBZ.getMenuViewByZones();
 
-	VBCOsecViewByCadObjectId.innerHTML = VBCO.getMenuViewByCadObjectId()
+	VBCOsecViewByCadObjectId.innerHTML = VBCO.getMenuViewByCadObjectId();
+
+	VBCOOsecViewByCadObjectIdOpen.innerHTML = VBCOO.getMenuViewByCadObjectIdOpen();
 
 	VBOsecViewByOpenings.innerHTML = VBO.getMenuViewByOpenings();
 
