@@ -5,15 +5,15 @@
 const COR = {
 	"script": {
 		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-		"date": "2019-07-01",
+		"date": "2019-07-08",
 		"description": "core - contains local overrides",
 		"helpFile": "cor-core/README.md",
-		"version": "0.16.01-3cor",
+		"version": "0.16.01-4cor",
 	}
 };
 
-POP.date = MNU.date = "2019-07-05";
-POP.version = MNU.version = "0.16.01-13"; //document.head.querySelector( '[ name=version ]' ).content || "";
+POP.date = MNU.date = "2019-07-08";
+POP.version = MNU.version = "0.16.01-14"; //document.head.querySelector( '[ name=version ]' ).content || "";
 
 POP.popup = "https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-16-01/popup.md";
 POP.license = "https://www.ladybug.tools/spider/pages/license.md";
