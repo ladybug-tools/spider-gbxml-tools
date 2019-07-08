@@ -58,6 +58,7 @@ Open File loader
 * Save edited file to disk
 
 gbXML Viewer 'Maevia' R15
+
 * Files size: 8 kb
 * Reads and operates on file as if an ordinary text file
 * Very simple operations
@@ -65,14 +66,17 @@ gbXML Viewer 'Maevia' R15
 * Currently not parsing openings at load time - makes loading much faster
 
 Reports
+
 * Buttons toggle surface type display
 * Buttons provide horizontal, vertical, exterior and exposeToSun toggles
 
 Level-by-level 'Evgeny' Workflow
+
 * Select visible storey from select box
 * Actual workflow is a work-in-progress
 
 Pop-up Viewer 'Maevia' R15
+
 * Response time OK even with large files
 * Show/hide surface, spaces, storey, zone and entire model
 * Display attributes for each type of element
@@ -81,24 +85,41 @@ Pop-up Viewer 'Maevia' R15
 
 ## Issues
 
-* 2019-02-25 ~ Pop-up not showing when screen is touched with finger
+
 
 <details>
 
 <summary>Wish list / to do</summary>
 
-* 2019-06-21 ~ Theo ~ Menu header data in menu.js
-* 2019-06-21 ~ Theo ~ Add core JavaScript file with version, date etc
-* 2019-06-21 ~ Theo ~ Add construction etc data to left menu - with data showing in popup menu
-* 2019-06-21 ~ Theo ~ Update GGD so it works in either left menu, popup or main areas
-* 2019-06-21 ~ Theo ~ Add surfaces with openings
+* 2019-06-21 ~ Theo ~ Add surfaces with openings as holes
 * 2019-04-15 ~ Theo ~ load two models at same time & views diffs
+
+For v0.17
+
+* Openings visible as holes in surfaces
+* Better integration between left and right menus
+* Updates to modules folders and file names
+* Left menu: single on gbXML load event listener to close all details element in menu
+
 
 </details>
 
 <details>
 
 <summary style=font-size:1.3rem; >Change Log</summary>
+
+
+### 2019-07-08 ~ Theo
+
+SGV V 0.16.01-14
+
+Dealt with
+
+* 2019-06-21 ~ Theo ~ Menu header data in menu.js
+* 2019-02-25 ~ Pop-up not showing when screen is touched with finger
+* 2019-06-21 ~ Theo ~ Add core JavaScript file with version, date etc
+* 2019-06-21 ~ Theo ~ Add construction etc data to left menu - with data showing in popup menu
+* 2019-06-21 ~ Theo ~ Update GGD so it works in either left menu, popup or main areas
 
 ### 2019-06-21 ~ Theo
 

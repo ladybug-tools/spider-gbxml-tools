@@ -1,4 +1,4 @@
-# VBCO view by CAD object ID 0.16-01-1vbco Read Me
+# VBCO view by CAD object ID 0.16-01-2vbco Read Me
 
 [Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-16-01/js-view/vbco-view-by-cad-object-id.js )
 
@@ -27,6 +27,12 @@ View by CAD Object ID (VBCO) provides HTML and JavaScript to view individual sur
 <details>
 
 <summary>Change Log</summary>
+
+### 2019-07-08 ~ Theo
+
+VBCO 0.16-01-2vbco
+
+C - VBCO.js: Correct text mistake
 
 ### 2019-07-01 ~ Theo
 

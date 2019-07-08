@@ -72,6 +72,7 @@
 <script src = "../js-view/vbsp-view-by-spaces.js" ></script>
 <script src = "../js-view/vbz-view-by-zones.js" ></script>
 <script src = "../js-view/vbco-view-by-cad-object-id.js" ></script>
+<script src = "../js-view/vbcoo-view-by-cad-object-id-open.js" ></script>
 
 <script src = "../js-view/vbo-view-by-openings.js" ></script>
 <script src = "../js-view/vbw-view-by-window-types.js" ></script>
@@ -189,6 +190,8 @@
 				<section id="VBZsecViewByZones" ></section>
 
 				<section id="VBCOsecViewByCadObjectId" ></section>
+
+				<section id="VBCOOsecViewByCadObjectIdOpen" ></section>
 
 				<section id="VBOsecViewByOpenings" ></section>
 
@@ -335,7 +338,9 @@ function init() {
 
 	VBZsecViewByZones.innerHTML = VBZ.getMenuViewByZones();
 
-	VBCOsecViewByCadObjectId.innerHTML = VBCO.getMenuViewByCadObjectId()
+	VBCOsecViewByCadObjectId.innerHTML = VBCO.getMenuViewByCadObjectId();
+
+	VBCOOsecViewByCadObjectIdOpen.innerHTML = VBCOO.getMenuViewByCadObjectIdOpen();
 
 	VBOsecViewByOpenings.innerHTML = VBO.getMenuViewByOpenings();
 

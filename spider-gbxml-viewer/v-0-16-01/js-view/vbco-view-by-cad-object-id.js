@@ -1,15 +1,15 @@
 // Copyright 2018 Ladybug Tools authors. MIT License
-/* globals GBX, POPX, ISCOR, divDragMoveContent*/
+/* globals THR, GBX, VBCOdet, VBCOselViewBySurfaces, VBCOspnCount */
 /* jshint esversion: 6 */
 
 const VBCO = {
 
 	"script": {
 		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-		"date": "2019-07-01",
+		"date": "2019-07-08",
 		"description": "View by CAD Object ID (VBCO) provides HTML and JavaScript to view individual surfaces.",
 		"helpFile": "../js-view/vbco-view-by-cad-object-id.md",
-		"version": "0.16-01-1vbco",
+		"version": "0.16-01-2vbco",
 		"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-16-01/js-view",
 
 	}
@@ -24,8 +24,6 @@ VBCO.getMenuViewByCadObjectId = function() {
 
 	const help = `<button id="butVBCOsum" class="butHelp" onclick="POP.setPopupShowHide(butVBCOsum,VBCO.script.helpFile);" >?</button>`;
 
-	const selectOptions = ["id", "CADObjectId", "constructionIdRef", "Name"].map( option => `<option>${ option }</option>`)
-
 	const htm =
 
 	`<details id="VBCOdet" ontoggle=VBCO.setViewOptions(); >
@@ -33,12 +31,11 @@ VBCO.getMenuViewByCadObjectId = function() {
 		<summary>CAD object id groups <span id="VBCOspnCount" ></span> ${ help }</summary>
 
 		<p>
-			View surfaces by groups of CAD object IDs. For individual CAD Object IDs see 'Surfaces individually'.
+			View surfaces by groups of CAD object IDs. For individual CAD Object IDs see 'Surfaces'.
 		</p>
 
 		<p>
 			<input id=VBCOinpSelectIndex oninput=VBCO.setSelectedIndex(this,VBCOselViewBySurfaces) placeholder="Enter an attribute" >
-
 		</p>
 
 		<p>
@@ -63,31 +60,24 @@ VBCO.getMenuViewByCadObjectId = function() {
 
 VBCO.setViewOptions = function() {
 
-	//if ( VBCOdet.open === false ) { return; }
+	let color;
 
-	let color, text;
-
-	cadObjects = [];
+	const cadObjects = [];
 
 	GBX.surfaces.forEach( (surface, index ) => {
 
-		let text = surface.match( /<CADObjectId>(.*?)<\/CADObjectId>/gi )
+		let text = surface.match( /<CADObjectId>(.*?)<\/CADObjectId>/gi );
 		text = text ? text.pop() : "";
-		text = text.match( /<CADObjectId>(.*?)<\/CADObjectId>/i )
+		text = text.match( /<CADObjectId>(.*?)<\/CADObjectId>/i );
 		text = text ? text[ 1 ].replace( /\[(.*)\]/, "") : "";
 		//console.log( 'text', cadObjects.indexOf( text ) < 0 );
 
-		if ( cadObjects.indexOf( text ) < 0 ) {
-
-			cadObjects.push( text )
-			//cadObjects.push( `<option style=background-color:${ color } value=${ index } >${ text }</option>`)
-
-		}
+		if ( cadObjects.indexOf( text ) < 0 ) { cadObjects.push( text ); }
 
 	} );
 	// console.log( 'cadObjects', cadObjects );
 
-	options = cadObjects.map( ( item, index ) => {
+	const options = cadObjects.map( item => {
 
 		color = color === 'pink' ? '' : 'pink';
 		return `<option style=background-color:${ color } value=${ item } >${ item }</option>`;

@@ -31,21 +31,24 @@ VBO.getMenuViewByOpenings = function() {
 		<summary>Openings ${ help }</summary>
 
 		<p>
-			View by openings. Surfaces with multiple openings in pink. <span id="VBOspnCount" ></span>
+			View by openings. Surfaces with multiple openings in pink. <span id="VBOspnCount" >.</span>
 		</p>
 
 		<p>
-			<input id=VBOinpSelectIndex oninput=VBO.setSelectIndex(this,VBOselViewByOpenings) placeholder="enter an id" >
+			<input id=VBOinpSelectIndex oninput=VBO.setSelectIndex(this,VBOselViewByOpenings) placeholder="enter an attribute" >
 		</p>
 
 		<p>
 			<select id=VBOselViewByOpenings oninput=VBO.selectedOpeningsFocus(this);
-				style=width:100%; size=10 multiple >p
+				style=width:100%; size=10 multiple >
 			</select>
 		</p>
 
 		<p>Attribute to show:
-			<select id=VBOselAttribute oninput=VBO.setViewByOpeningsSelectOptions(); >${ selectOptions }</select></p>
+			<select id=VBOselAttribute oninput=VBO.setViewByOpeningsSelectOptions(); >
+				${ selectOptions }
+			</select>
+		</p>
 
 		<p>Select multiple openings by pressing shift or control keys</p>
 
@@ -90,7 +93,7 @@ VBO.setViewByOpeningsSelectOptions = function() {
 	let color;
 	let htmOptions = '';
 	let indexSurface = 0;
-	VBO.openings = []; //GBX.surfaces.slice();
+	VBO.openings = [];
 
 	GBX.surfaces.forEach( (surface, surfaceIndex ) => {
 
@@ -138,7 +141,7 @@ VBO.setViewByOpeningsSelectOptions = function() {
 
 	THR.controls.enableKeys = false;
 
-	return VBO.openings.length;
+	//return VBO.openings.length;
 
 };
 
@@ -174,29 +177,32 @@ VBO.selectedOpeningsFocus = function( select ) {
 
 VBO.setOpeningShowHide = function( select ) {
 
-	index = select.value;
+	const index = select.value;
 
-	opening = VBO.openings[ index ];
+	const opening = VBO.openings[ index ];
 	//console.log( '', opening );
 
-	GBX.surfaceOpenings.traverse( function ( child ) {
+	// GBX.surfaceOpenings.traverse( function ( child ) {
 
-		if ( child instanceof THREE.Line ) {
+	// 	if ( child instanceof THREE.Line ) {
 
-			child.visible = false;
+	// 		child.visible = false;
 
-		}
+	// 	}
 
-	} );
+	// } );
+
+
+	GBX.surfaceOpenings.children.forEach( child => child.visible = false );
 
 	GBX.surfaceOpenings.children[ opening.openingIndex ].visible = true;
 
 	GSAdetOpenings.open = true;
 
-	openingDivs = Array.from( GSAdetOpenings.querySelectorAll( "div" ) );
+	const openingDivs = Array.from( GSAdetOpenings.querySelectorAll( "div" ) );
 	//console.log( 'openingDivs', openingDivs );
 
-	theDiv = openingDivs.find( item => item.id === "GSAdivOpening" + opening.openingInSurface );
+	const theDiv = openingDivs.find( item => item.id === "GSAdivOpening" + opening.openingInSurface );
 
 	theDiv.style.backgroundColor = 'pink';
 

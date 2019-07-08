@@ -93,7 +93,6 @@ VBSP.setViewBySpacesOptions = function() {
 
 	const spaceNames = GBX.spaces.map( space => {
 
-
 		if ( [ "id", "spaceType" ].includes( attribute ) ) {
 
 			text = space.match( `${ attribute }="(.*?)"` );
