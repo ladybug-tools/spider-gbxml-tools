@@ -83,7 +83,13 @@ Pop-up Viewer 'Maevia' R15
 * Zoom all and toggle openings
 
 
-## Issues
+<details>
+
+<summary>Issues</summary>
+
+It's too quiet un here.
+
+<details>
 
 
 
@@ -96,6 +102,7 @@ Pop-up Viewer 'Maevia' R15
 
 For v0.17
 
+* Switchable camera controls - allow vertical movement or not
 * Openings visible as holes in surfaces
 * Better integration between left and right menus
 * Updates to modules folders and file names
