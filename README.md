@@ -15,13 +15,18 @@ _<small>Spider gbXML Viewer ~ [Iframe Carousel]( https://www.ladybug.tools/spide
 
 ## Welcome <a href="https://www.openstudio.net/" title="Hi Dan! Hi NREL!" style=color:red; target="_blank">Open Studio</a> fans! <br>Welcome [LinkedIn]( https://www.linkedin.com/feed/update/urn:li:activity:6458956499195568128/ ) and [discourse.ladybug.tools]( https://discourse.ladybug.tools/t/spider-gbxml-viewer-embedded-in-openstudio/4129 ) viewers
 
+<hr>
+
 <!--
 ## Welcome <a href="https://www.rtcevents.com/bilt/eur18/" title="Hi Michal! Hi Ljubljana!" style=color:red; target="_blank">BILT EUR 2018</a> attendees!
 -->
 
 ### Latest pre-release viewer: [Spider gbXML Viewer 'Maevia' ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/ "this one is hot" )
 
-### Latest pre-release fixer: [Spider gbXML Viewer 'Atrax' ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/fix/ "this one is cool" )
+### Latest pre-release fixer: [Spider gbXML Fixer 'Atrax' ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/fix/ "this one is cool" )
+
+### Latest pre-release popup: [Spider gbXML Viewer Popup ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/pop/ "this one is small" )
+
 <br>
 
 [Spider gbXML Tools]( https://github.com/ladybug-tools/spider "Source code on GitHub" ) is a collection of [free, open source]( https://opensource.guide/ "Read all about it at OpenSource Guides" ) modular [JavaScript]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/About_JavaScript "Callout to Brendan" ) / [WebGL]( https://www.khronos.org/webgl/ "Tip of the hat to Ken Russell" ) / [Three.js]( https://threejs.org/ "Hi Mr.doob" ) experiments hosted on [GitHub]( https://github.com/about "Beep for where the geek peeps keep" ) for viewing, validating and editing [gbXML]( http://gbxml.org "Where's your schema today?" ) files in 3D in your browser. gbXML is an industry supported file format for sharing building information between numerous building design software tools.
