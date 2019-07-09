@@ -20,21 +20,23 @@ Or copy this link: https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-vie
 
 ## Popup: [Spider gbXML Viewer Popup ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/pop/ )
 
-
 ***
 
-Download this file ( Chrome context menu > 'Save link as...' ) to your desktop or wherever, follow guidelines for loading local files here [Opening and loading files with gbXML Viewer]( https://www.ladybug.tools/spider/#pages/file-open.md ) in order to embed the Viewer in a local workflow and avoid CORS issues.
+## Usage
+
+Note to developers: You may download any of these files ( Chrome context menu > 'Save link as...' ) to your desktop or wherever. Then follow the guidelines for loading local files here [Opening and loading files with gbXML Viewer]( https://www.ladybug.tools/spider/#pages/file-open.md ) in order to embed the Viewer in a local workflow and avoid CORS issues.
+
+Everybody else: Just work with the online versions and enjoy!
 
 
-***
 
 ## Concept
 
-Open and examine very large gbXML files in your browser with free, open source JavaScript
+Mission: _Open and examine very large gbXML files in your browser with free, open source JavaScript._
 
-***
 
-The Spider gbXML Viewer 'Maevia' R15 script is a work in progress for of opening very large gbXML files,
+
+The Spider gbXML Viewer 'Maevia' script is a work in progress for of opening very large gbXML files,
 
 It is currently being tested on a gbXML file ( private and not sharable ) of 698,000,000 bytes and:
 
@@ -43,13 +45,14 @@ It is currently being tested on a gbXML file ( private and not sharable ) of 698
 * Surfaces: 70,774
 * Zones: 2,618
 
-The file breaks the Chrome browser on Windows 10, the FireFox browser on Windows 10 and OpenStudio on Windows 10. Opens in FZK Viewer but with very slow performance.
+In many other applications there are issues with large XML fils, the file breaks the Chrome browser on Windows 10, the FireFox browser on Windows 10 and OpenStudio on Windows 10. Opens in FZK Viewer but with very slow performance.
 
-But Spider gbXML Viewer 'Maevia' R15 loads and updates the file quite well - in your browser.
+But Spider gbXML Viewer 'Maevia' loads and updates the file quite well - in your browser.
 
 ### Features
 
 Open File loader
+
 * Load very large gbXML files ( greater than 700 megabytes ) at a reasonable speed
 * Read files in either UTF-8 or UTF-16 format
 * Display geometry progressively as file loads - visual feedback for very large files
@@ -57,7 +60,7 @@ Open File loader
 * Open and automatically extract UTF-8 and UTF-6 files contained in ZIP compressed folders using file dialog box
 * Save edited file to disk
 
-gbXML Viewer 'Maevia' R15
+gbXML Viewer 'Maevia'
 
 * Files size: 8 kb
 * Reads and operates on file as if an ordinary text file
@@ -75,7 +78,7 @@ Level-by-level 'Evgeny' Workflow
 * Select visible storey from select box
 * Actual workflow is a work-in-progress
 
-Pop-up Viewer 'Maevia' R15
+Pop-up Viewer 'Maevia'
 
 * Response time OK even with large files
 * Show/hide surface, spaces, storey, zone and entire model
