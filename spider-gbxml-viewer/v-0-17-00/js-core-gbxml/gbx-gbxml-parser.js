@@ -3,8 +3,13 @@
 /* globals THREE, THR, THRU, FOB, GBXU */
 
 var GBX = {
-	"version": "0.17.00",
-	"date": "2019-07-09"
+	copyright: "Copyright 2019 Ladybug Tools authors. MIT License",
+	date: "2019-07-10",
+	description: "Does all the heavy lifting",
+	helpFile: "../js-core-gbxml/gbx-gbxml-parser.md",
+	license: "MIT License",
+	urlSourceCode: "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-00/js-core-gbxml",
+	version: "0.17.00-1gbx"
 };
 
 GBX.filtersDefault = [ "Air", "ExposedFloor", "ExteriorWall", "RaisedFloor", "Roof",  "Shade",
@@ -39,9 +44,9 @@ GBX.colorsDefault = {
 };
 
 GBX.colors = Object.assign( {}, GBX.colorsDefault ); // create working copy of default colors
-GBX.opacity = 0.85;
-
 GBX.surfaceTypes = Object.keys( GBX.colors );
+
+GBX.opacity = 0.85;
 
 GBX.referenceObject = new THREE.Object3D();
 GBX.triangle = new THREE.Triangle(); // used by GBX.getPlane
@@ -74,10 +79,7 @@ GBX.parseFile = function( gbxml )  {
 	if ( !gbxml || gbxml.includes( "xmlns" ) === false ) { return; }
 	//console.log( 'gbxml', gbxml );
 
-	//GBXdetStats.open = gbxml.length > 10000000 ? true : false;
-	//GBXdivStatsGbx.innerHTML = '';
-	//GBXdivStatsThr.innerHTML = '';
-
+	// Fix this mess
 	THRU.setSceneDispose( [ GBX.surfaceMeshes, GBX.surfaceOpenings, GBX.surfaceEdgesThreejs, GBX.boundingBox, THRU.helperNormalsFaces, THRU.groundHelper ] );
 
 	//THR.scene.remove( GBX.surfaceOpenings, GBX.surfaceEdgesThreejs );
@@ -112,18 +114,14 @@ GBX.parseFile = function( gbxml )  {
 
 	}
 
+	GBX.timeStart = performance.now();
 
-	GBX.surfaceGroup = new THREE.Group();
-	GBX.surfaceGroup.name = 'GBX.surfaceGroup';
-	THR.scene.add( GBX.surfaceGroup );
 
 	GBX.materialType = THR.scene.getObjectByName( 'lightAmbient') ? THREE.MeshPhongMaterial : THREE.MeshBasicMaterial;
 	//GBX.materialType = THREE.MeshBasicMaterial;
 
 	GBX.text = gbxml.replace( /\r\n|\n/g, '' );
 	//console.log( 'GBX.text', GBX.text );
-
-	GBX.timeStart = performance.now();
 
 	const reSurface = /<Surface(.*?)<\/surface>/gi;
 	GBX.surfaces = GBX.text.match( reSurface );
@@ -133,7 +131,13 @@ GBX.parseFile = function( gbxml )  {
 
 	const meshes = GBX.getSurfaceMeshes( GBX.surfacesIndexed );
 
+	GBX.surfaceGroup = new THREE.Group();
+	GBX.surfaceGroup.name = 'GBX.surfaceGroup';
 	GBX.surfaceGroup.add( ...meshes );
+
+	THR.scene.add( GBX.surfaceGroup );
+
+	// move following to GBXU.init??
 
 	GBX.setSurfaceTypesVisible( GBX.filtersDefault );
 

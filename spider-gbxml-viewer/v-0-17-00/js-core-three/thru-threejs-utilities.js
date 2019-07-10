@@ -1,146 +1,138 @@
-// Copyright 2018 Ladybug Tools authors. MIT License
 /* global THREE, THR, GBX, rngOpacity, outOpacity */
 // jshint esversion: 6
+// jshint loopfunc: true
 
 
 
 let THRU = {
 
-	date: "2019-07-09",
+	copyright: "Copyright 2019 Ladybug Tools authors. MIT License",
+	date: "2019-07-10",
 	description: "Three.js Utilities: all this is a bit idiosyncratic / a random collection of stuff",
-	version: "0.17.00"
+	helpFile: "../js-view/thru-threejs-utilities.md",
+	license: "MIT License",
+	urlSourceCode: "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-00/js-core",
+	version: "0.17.00-1thru"
 
 };
 
 
-//THRU.radius = 1;
+
+////////// Scene
 
 
-THRU.setHelpers = function( radius = 50 ) {
+THRU.onThreejsSceneLoaded = function() {
 
-	THRU.radius = radius;
+	return THR.scene;
 
-	THRU.toggleAxesHelper();
+};
 
-	window.addEventListener( 'keyup', () => THR.controls.autoRotate=false, false );
-	THR.renderer.domElement.addEventListener( 'click', () => THR.controls.autoRotate=false, false );
-	THR.renderer.domElement.addEventListener( 'touchstart', () => THR.controls.autoRotate=false, false );
 
-	/*
-	if ( window.self === window.top ) { // don't rotate if in an iframe
 
-		THR.controls.autoRotate = true;
+THRU.setSceneDispose = function( obj = THR.scene.children ) {
+	//console.log( 'THR.scene', THR.scene );
+	// Need a test to show it's working
+
+	THR.scene.traverse( function ( child ) {
+
+		if ( child instanceof THREE.Mesh ) {
+
+			child.geometry.dispose();
+			child.material.dispose();
+
+			//THR.scene.remove( child );
+
+		} else if ( ( child instanceof THREE.LineSegments )  ) {
+
+			child.geometry.dispose();
+			child.material.dispose();
+
+		}
+
+	} );
+
+	if ( Array.isArray( obj ) ) {
+
+		THR.scene.remove( ...obj );
 
 	} else {
 
-		THR.controls.enableZoom = false;
+		THR.scene.remove( obj );
 
 	}
-	*/
+
+
+	THR.axesHelper = undefined;
+	THRU.helperNormalsFaces = undefined;
+
+	//divRendererInfo.innerHTML = THRU.getRendererInfo();
 
 };
 
 
 
-THRU.getGeometry = function() {
-
-	// useful debug snippet
-	const geometry = new THREE.TorusKnotBufferGeometry( 10, 3, 100, 16 );
-	//const geometry = new THREE.BoxBufferGeometry( 20, 20, 20 );
-	const material = new THREE.MeshNormalMaterial();
-	const mesh = new THREE.Mesh( geometry, material );
-
-	const edgesGeometry = new THREE.EdgesGeometry( geometry );
-	const edgesMaterial = new THREE.LineBasicMaterial( { color: 0x000000 } );
-	const surfaceEdge = new THREE.LineSegments( edgesGeometry, edgesMaterial );
-
-	mesh.add( surfaceEdge );
-
-	return mesh;
-
-	// add to HTML file:
-	//mesh = THRU.getGeometry();
-	//THR.scene.add( mesh );
-	
-};
+////////// Camera and Controls
 
 
+THRU.zoomObjectBoundingSphere = function( obj = THR.scene ) {
+	//console.log( 'obj', obj );
 
+	const bbox = new THREE.Box3().setFromObject( obj );
+	//console.log( 'bbox', bbox );
 
+	THRU.boundingBox = bbox;
 
-////////// Settings
+	if ( bbox.isEmpty() === true ) { return; }
 
-THRU.getSettings = function() {
+	//if ( isNaN( bbox.max.x - bbox.min.x ) ) { console.log( 'zoom fail', {obj},{bbox} ); return; } // is there a better way of seeing if we have a good bbox?
 
+	const sphere = bbox.getBoundingSphere( new THREE.Sphere() );
+	const center = sphere.center;
+	const radius = sphere.radius;
 
-	let htm =
-	`
-		<p><i>Update display parameters</i>
-			<a title="View the Three.js Utilities Read Me" href="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-viewer-threejs-utilities/" target="_blank" >?</a>
-		</p>
+	//THR.controls.reset();
+	THR.controls.target.copy( center ); // needed because model may be far from origin
+	THR.controls.maxDistance = 5 * radius;
 
-		<p>
-			<button onclick="THR.controls.autoRotate = !THR.controls.autoRotate;" >toggle rotation</button>
+	THR.camera.position.copy( center.clone().add( new THREE.Vector3( 1.5 * radius, 1.5 * radius, 1.5 * radius ) ) );
+	THR.camera.near = 0.001 * radius; //2 * camera.position.length();
+	THR.camera.far = 10 * radius; //2 * camera.position.length();
+	THR.camera.updateProjectionMatrix();
 
-			<button onclick=THRU.toggleAxesHelper(); >toggle axes</button>
-		</p>
+	if ( THRU.axesHelper ) {
 
-		<p>
-			<button onclick=THRU.toggleSurfaces(); >toggle surfaces</button>
+		THRU.axesHelper.scale.set( radius, radius, radius );
+		THRU.axesHelper.position.copy( center);
 
-			<button onclick=THRU.toggleEdges(); >toggle edges</button>
-		</p>
+	}
 
+	if ( THRU.lightDirectional ) {
 
-		<p>
-			<button onclick=THRU.toggleWireframe(); >toggle wireframe</button>
+		THRU.lightDirectional.position.copy( center.clone().add( new THREE.Vector3( 1.5 * radius, -1.5 * radius, 1.5 * radius ) ) );
+		THRU.lightDirectional.shadow.camera.scale.set( 0.2 * radius, 0.2 * radius, 0.01 * radius );
 
-			<button onclick=THRU.toggleSurfaceNormals(); title="All Three.js triangles have a normal. See them here." > toggle surface normals </button>
-		</p>
+		THRU.targetObject.position.copy( center );
 
-		<p title="opacity: 0 to 100%" >opacity
-			<output id=outOpacity class=floatRight >85%</output><br>
+		//THR.scene.remove( THRU.cameraHelper );
+		//THRU.cameraHelper = new THREE.CameraHelper( THRU.lightDirectional.shadow.camera );
+		//THR.scene.add( THRU.cameraHelper );
 
-			<input type="range" id="rngOpacity" min=0 max=100 step=1 value=85 oninput=THRU.updateOpacity(); >
-		</p>
+	}
 
-		<p>
-			<button onclick=THRU.zoomObjectBoundingSphere(GBX.surfaceMeshes);>zoom all</button>
+	THRU.center = center;
+	THRU.radius = radius;
 
-			<button accesskey="z" onclick=THR.controls.screenSpacePanning=!THR.controls.screenSpacePanning; title="Access key + B: Up/down curser kes to forward/backward or up/down" >toggle cursor keys</button>
-		</p>
-
-		<div>  </div>
-
-	`;
-
-	return htm;
+	THRU.onThreejsSceneLoaded(); // set new event??
 
 };
 
 
 
 
-THRU.toggleAxesHelper = function() {
-
-	if ( !THRU.axesHelper ) {
-
-		THRU.axesHelper = new THREE.AxesHelper( THRU.radius );
-		THR.scene.add( THRU.axesHelper );
-
-		return;
-
-	 }
-
-	THRU.axesHelper.visible = !THRU.axesHelper.visible;
-
-};
-
-
-
-
+////////// Visibility
 
 THRU.toggleSurfaces = function() {
+	// TBD' update from scene to object
 
 	THR.scene.traverse( function ( child ) {
 
@@ -156,10 +148,8 @@ THRU.toggleSurfaces = function() {
 
 
 
-
-
-
 THRU.toggleWireframe = function() {
+		// TBD' update from scene to object
 
 	THR.scene.traverse( function ( child ) {
 
@@ -176,6 +166,7 @@ THRU.toggleWireframe = function() {
 
 
 THRU.toggleSurfaceNormals = function() {
+	// TBD' update from scene to object
 
 	let material = new THREE.MeshNormalMaterial();
 
@@ -235,12 +226,12 @@ THRU.toggleSurfaceNormals = function() {
 
 
 
-THRU.updateOpacity = function() {
+THRU.setObjectOpacity = function( obj = scene, range = rngOpacity ) {
 
-	const opacity = parseInt( rngOpacity.value, 10 );
+	const opacity = parseInt( range.value, 10 );
 	outOpacity.value = opacity + '%';
 
-	THR.scene.traverse( function ( child ) {
+	THR.obj.traverse( function ( child ) {
 
 		if ( child instanceof THREE.Mesh ) {
 
@@ -253,70 +244,105 @@ THRU.updateOpacity = function() {
 };
 
 
+////////// Helpers in the scene
 
-THRU.zoomObjectBoundingSphere = function( obj = THR.scene ) {
-	//console.log( 'obj', obj );
+THRU.xxxxgetSettings = function() {
 
-	const bbox = new THREE.Box3().setFromObject( obj );
-	//console.log( 'bbox', bbox );
 
-	THRU.boundingBox = bbox;
+	let htm =
+	`
+		<p><i>Update display parameters</i>
+			<a title="View the Three.js Utilities Read Me" href="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-viewer-threejs-utilities/" target="_blank" >?</a>
+		</p>
 
-	if ( bbox.isEmpty() === true ) { return; }
+		<p>
+			<button onclick="THR.controls.autoRotate = !THR.controls.autoRotate;" >toggle rotation</button>
 
-	//if ( isNaN( bbox.max.x - bbox.min.x ) ) { console.log( 'zoom fail', {obj},{bbox} ); return; } // is there a better way of seeing if we have a good bbox?
+			<button onclick=THRU.toggleAxesHelper(); >toggle axes</button>
+		</p>
 
-	const sphere = bbox.getBoundingSphere( new THREE.Sphere() );
-	const center = sphere.center;
-	const radius = sphere.radius;
+		<p>
+			<button onclick=THRU.toggleSurfaces(); >toggle surfaces</button>
 
-	//THR.controls.reset();
-	THR.controls.target.copy( center ); // needed because model may be far from origin
-	THR.controls.maxDistance = 5 * radius;
+			<button onclick=THRU.toggleEdges(); >toggle edges</button>
+		</p>
 
-	THR.camera.position.copy( center.clone().add( new THREE.Vector3( 1.5 * radius, 1.5 * radius, 1.5 * radius ) ) );
-	THR.camera.near = 0.001 * radius; //2 * camera.position.length();
-	THR.camera.far = 10 * radius; //2 * camera.position.length();
-	THR.camera.updateProjectionMatrix();
 
-	if ( THRU.axesHelper ) {
+		<p>
+			<button onclick=THRU.toggleWireframe(); >toggle wireframe</button>
 
-		THRU.axesHelper.scale.set( radius, radius, radius );
-		THRU.axesHelper.position.copy( center);
+			<button onclick=THRU.toggleSurfaceNormals(); title="All Three.js triangles have a normal. See them here." > toggle surface normals </button>
+		</p>
 
-	}
+		<p title="opacity: 0 to 100%" >opacity
+			<output id=outOpacity class=floatRight >85%</output><br>
 
-	if ( THRU.lightDirectional ) {
+			<input type="range" id="rngOpacity" min=0 max=100 step=1 value=85 oninput=THRU.updateOpacity(); >
+		</p>
 
-		THRU.lightDirectional.position.copy( center.clone().add( new THREE.Vector3( 1.5 * radius, -1.5 * radius, 1.5 * radius ) ) );
-		THRU.lightDirectional.shadow.camera.scale.set( 0.2 * radius, 0.2 * radius, 0.01 * radius );
+		<p>
+			<button onclick=THRU.zoomObjectBoundingSphere(GBX.surfaceMeshes);>zoom all</button>
 
-		THRU.targetObject.position.copy( center );
+			<button accesskey="z" onclick=THR.controls.screenSpacePanning=!THR.controls.screenSpacePanning; title="Access key + B: Up/down curser kes to forward/backward or up/down" >toggle cursor keys</button>
+		</p>
 
-		//THR.scene.remove( THRU.cameraHelper );
-		//THRU.cameraHelper = new THREE.CameraHelper( THRU.lightDirectional.shadow.camera );
-		//THR.scene.add( THRU.cameraHelper );
+		<div>  </div>
 
-	}
+	`;
 
-	THRU.center = center;
+	return htm;
+
+};
+
+
+
+
+THRU.setHelpers = function( radius = 50 ) {
+
+	// rename to init??
+
 	THRU.radius = radius;
 
-	THRU.onThreejsSceneLoaded(); // set new event??
+	THRU.toggleAxesHelper();
+
+	window.addEventListener( 'keyup', () => THR.controls.autoRotate=false, false );
+	THR.renderer.domElement.addEventListener( 'click', () => THR.controls.autoRotate=false, false );
+	THR.renderer.domElement.addEventListener( 'touchstart', () => THR.controls.autoRotate=false, false );
+
+	/*
+	if ( window.self === window.top ) { // don't rotate if in an iframe
+
+		THR.controls.autoRotate = true;
+
+	} else {
+
+		THR.controls.enableZoom = false;
+
+	}
+	*/
+
+};
+
+
+
+THRU.toggleAxesHelper = function() {
+
+	if ( !THRU.axesHelper ) {
+
+		THRU.axesHelper = new THREE.AxesHelper( THRU.radius );
+		THR.scene.add( THRU.axesHelper );
+
+		return;
+
+	 }
+
+	THRU.axesHelper.visible = !THRU.axesHelper.visible;
 
 };
 
 
 
 ////////// Info
-
-THRU.onThreejsSceneLoaded = function() {
-
-	return THR.scene;
-
-};
-
-
 
 
 THRU.getRendererInfo = function() {
@@ -380,8 +406,6 @@ THRU.setStats = function() {
 
 
 
-
-
 ////////// Lights
 
 THRU.addSomeLights = function() {
@@ -435,45 +459,28 @@ THRU.addSomeLights2 = function() {
 
 
 
-//////////
 
+////////// Get some meshes and stuff for testing or annotating
 
-THRU.setSceneDispose = function( obj = THR.scene.children ) {
-	//console.log( 'THR.scene', THR.scene );
+THRU.getGeometry = function() {
 
-	THR.scene.traverse( function ( child ) {
+	// useful debug snippet
+	const geometry = new THREE.TorusKnotBufferGeometry( 10, 3, 100, 16 );
+	//const geometry = new THREE.BoxBufferGeometry( 20, 20, 20 );
+	const material = new THREE.MeshNormalMaterial();
+	const mesh = new THREE.Mesh( geometry, material );
 
-		if ( child instanceof THREE.Mesh ) {
+	const edgesGeometry = new THREE.EdgesGeometry( geometry );
+	const edgesMaterial = new THREE.LineBasicMaterial( { color: 0x000000 } );
+	const surfaceEdge = new THREE.LineSegments( edgesGeometry, edgesMaterial );
 
-			child.geometry.dispose();
-			child.material.dispose();
+	mesh.add( surfaceEdge );
 
-			//THR.scene.remove( child );
+	return mesh;
 
-		} else if ( ( child instanceof THREE.LineSegments )  ) {
-
-			child.geometry.dispose();
-			child.material.dispose();
-
-		}
-
-	} );
-
-	if ( Array.isArray( obj ) ) {
-
-		THR.scene.remove( ...obj );
-
-	} else {
-
-		THR.scene.remove( obj );
-
-	}
-
-
-	THR.axesHelper = undefined;
-	THRU.helperNormalsFaces = undefined;
-
-	//divRendererInfo.innerHTML = THRU.getRendererInfo();
+	// add to HTML file:
+	//mesh = THRU.getGeometry();
+	//THR.scene.add( mesh );
 
 };
 
@@ -530,6 +537,7 @@ THRU.drawPlacard = function( text = 'abc', scale = 0.05, color = Math.floor( Mat
 	//placard.add( sprite, line );
 
 	placard.add( sprite );
+
 	return placard;
 
 

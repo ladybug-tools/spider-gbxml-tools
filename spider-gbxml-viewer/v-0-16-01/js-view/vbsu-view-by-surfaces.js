@@ -10,8 +10,9 @@ const VBSU = {
 		"date": "2019-06-28",
 		"description": "View by Surfaces (VBSU) provides HTML and JavaScript to view individual surfaces.",
 		"helpFile": "../js-view/vbsu-view-by-surfaces.md",
-		"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-16-01/js-view",
-		"version": "0.16-01-3vbsu"
+		license: "MIT License",
+		"version": "0.16-01-3vbsu",
+		"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-16-01/js-view"
 
 	}
 

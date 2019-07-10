@@ -1,12 +1,17 @@
 /* global THREE, divContents */
 // jshint esversion: 6
+// jshint loopfunc: true
 
-// Copyright 2019 Ladybug Tools authors. MIT License
 
 var THR = {
 
-	version: "0.17.00",
-	date: "2019-07-09"
+	copyright: "Copyright 2019 Ladybug Tools authors. MIT License",
+	date: "2019-07-10",
+	description: "Three.js core",
+	helpFile: "../js-view-threejs/thru-threejs.md",
+	license: "MIT License",
+	urlSourceCode: "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-00/js-core-threejs",
+	version: "0.17.00-1thr"
 
 };
 

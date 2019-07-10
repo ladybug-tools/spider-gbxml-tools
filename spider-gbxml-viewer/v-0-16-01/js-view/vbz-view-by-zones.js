@@ -9,8 +9,9 @@ const VBZ = {
 	"date": "2019-07-01",
 	"description": "View the surfaces in a gbXML file by selecting one or more zones from a list of all zones",
 	"helpFile": "../js-view/vbz-view-by-zones.md",
-	"version": "0.16-01-4vbz",
+	license: "MIT License",
 	"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-16-01/js-view/vbz-view-by-zones.js",
+	"version": "0.16-01-4vbz"
 
 };
 

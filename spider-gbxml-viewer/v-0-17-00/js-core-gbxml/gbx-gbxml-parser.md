@@ -1,4 +1,4 @@
-# ZZZZZ Read Me
+# GBX gbXML Parser Read Me
 
 [Source code](  )
 
@@ -27,8 +27,10 @@
 
 <summary>Change Log</summary>
 
-### DDDDD
+### 2019-07-10 ~ Theo
 
-* F - First commit
+0.17.00-1gbx
 
+* F - GBX.md:First commit
+* F - GBX.md/GBX.js: Add text content
 </details>
