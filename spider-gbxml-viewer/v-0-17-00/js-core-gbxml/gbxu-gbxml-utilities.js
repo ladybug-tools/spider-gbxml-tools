@@ -21,7 +21,7 @@ GBXU.onGbxParse = function() {
 
 	GBXU.setSurfaceTypesVisible( GBX.filtersDefault );
 
-	GBX.toggleOpenings();
+	GBXU.toggleOpenings();
 
 	THR.controls.autoRotate = true;
 	THRU.zoomObjectBoundingSphere( GBX.boundingBox );
@@ -30,8 +30,6 @@ GBXU.onGbxParse = function() {
 	THRU.groundHelper.visible = true;
 
 	GBXU.setStats();
-
-	//THRU.groundHelper.visible = false;
 
 	window.removeEventListener( 'keyup', GBXU.onGbxParse );
 	THR.renderer.domElement.removeEventListener( 'click', GBXU.onGbxParse );
@@ -137,13 +135,9 @@ GBXU.setStats = function() {
 
 
 
-
-
-
-
 ////////// Openings
 
-GBX.getSurfaceOpenings = function() {
+GBXU.getSurfaceOpenings = function() {
 
 	const v = ( arr ) => new THREE.Vector3().fromArray( arr );
 
@@ -200,14 +194,14 @@ GBX.getSurfaceOpenings = function() {
 
 
 
-GBX.toggleOpenings = function() {
+GBXU.toggleOpenings = function() {
 	//console.log( '', 22 );
 
 	if ( GBX.surfaceOpenings && GBX.surfaceOpenings.length === 0 ) {
 
 		GBX.surfaceOpenings= new THREE.Group();
 		GBX.surfaceOpenings.name = 'GBX.surfaceOpenings';
-		surfaceOpenings = GBX.getSurfaceOpenings();
+		surfaceOpenings = GBXU.getSurfaceOpenings();
 		//console.log( 'surfaceOpenings', surfaceOpenings );
 
 		if ( !surfaceOpenings.length ) { return; }
@@ -234,7 +228,7 @@ GBX.toggleOpenings = function() {
 
 
 
-GBX.setOpeningsVisible = function( visible = true ) {
+GBXU.setOpeningsVisible = function( visible = true ) {
 
 	GBX.surfaceOpenings.traverse( function ( child ) {
 
@@ -249,100 +243,8 @@ GBX.setOpeningsVisible = function( visible = true ) {
 }
 
 
+
 //////////
-
-// Move to THRU
-
-
-
-GBXU.toggleEdges = function() {
-
-	if ( GBX.surfaceEdges && GBX.surfaceEdges.length === 0 ) {
-
-		GBX.surfaceEdges= new THREE.Group();
-		GBX.surfaceEdges.name = 'GBX.surfaceEdges';
-		GBX.surfaceEdges = GBX.getSurfaceEdgesGbxml();
-
-		//THR.scene.add( GBX.surfaceEdges );
-
-		return;
-
-	}
-
-
-	THR.scene.traverse( function ( child ) {
-
-		if ( child instanceof THREE.Line ) {
-
-			child.visible = !child.visible;
-
-		}
-
-	} );
-
-};
-
-
-
-GBX.getSurfaceEdgesThreejs = function() {
-
-	const surfaceEdges = [];
-	const lineMaterial = new THREE.LineBasicMaterial( { color: 0x888888 } );
-
-	for ( let mesh of GBX.surfaceGroup.children ) {
-
-		mesh.userData.edges = mesh;
-		const edgesGeometry = new THREE.EdgesGeometry( mesh.geometry );
-		const surfaceEdge = new THREE.LineSegments( edgesGeometry, lineMaterial );
-		surfaceEdge.rotation.copy( mesh.rotation );
-		surfaceEdge.position.copy( mesh.position );
-		surfaceEdges.push( surfaceEdge );
-
-	}
-
-	//console.log( 'surfaceEdges', surfaceEdges );
-	//THR.scene.add( ...surfaceEdges );
-
-	return surfaceEdges;
-
-};
-
-
-GBX.toggleEdgesThreejs = function() {
-
-	if ( GBX.surfaceEdgesThreejs && GBX.surfaceEdgesThreejs.length === 0 ) {
-
-		GBX.surfaceEdgesThreejs = new THREE.Group();
-		GBX.surfaceEdgesThreejs.name = 'GBX.surfaceEdgesThreejs';
-		const surfaceEdgesThreejs = GBX.getSurfaceEdgesThreejs();
-		//console.log( 'surfaceEdgesThreejs', surfaceEdgesThreejs );
-
-		GBX.surfaceEdgesThreejs.add( ...surfaceEdgesThreejs );
-
-		THR.scene.add( GBX.surfaceEdgesThreejs );
-
-		return;
-
-	}
-
-
-	GBX.surfaceEdgesThreejs.traverse( function ( child ) {
-
-		if ( child instanceof THREE.Line ) {
-
-			child.visible = !child.visible;
-
-		}
-
-	} );
-
-};
-
-
-
-
-
-
 
 GBXU.setSurfaceTypesVisible = function ( typesArray ) {
 
@@ -359,8 +261,6 @@ GBXU.setSurfaceTypesVisible = function ( typesArray ) {
 };
 
 
-
-//////////
 
 GBXU.sendSurfacesToThreeJs = function( surfacesText ) {
 	//console.log( 'surfacesText', surfacesText );
@@ -379,7 +279,7 @@ GBXU.sendSurfacesToThreeJs = function( surfacesText ) {
 	GBX.deltaLimit = 20;
 	GBX.lastTimestamp = performance.now();
 
-	GBX.addMeshes();
+	GBXU.addMeshes();
 
 	if ( !GBX.boundingBox ) {
 
@@ -395,3 +295,62 @@ GBXU.sendSurfacesToThreeJs = function( surfacesText ) {
 
 };
 
+
+
+
+
+GBXU.addMeshes = function( timestamp ) {
+
+	if ( GBX.count < GBX.surfacesTmp.length ) {
+		//console.log( 'GBX.count', GBX.count );
+
+		const delta = timestamp - GBX.lastTimestamp;
+		GBX.lastTimestamp = timestamp;
+
+		if ( delta < GBX.deltaLimit ) {
+
+			GBX.surfacesTmp.slice( GBX.count, GBX.count + GBX.step ).forEach( surface => {
+
+				const index = GBX.surfaces.indexOf( surface );
+				GBX.surfaceGroup.children[ index ].visible = true;
+
+			} );
+
+			GBX.count += GBX.step;
+
+			GBX.count = GBX.count > GBX.surfacesTmp.length ? GBX.surfacesTmp.length : GBX.count;
+
+		} else {
+
+			if ( GBX.misses > 3 ) {
+
+				GBX.deltaLimit += 20;
+				GBX.misses = 0;
+
+			}
+
+			GBX.misses ++;
+
+		}
+
+
+/* 		GBXdivStatsThr.innerHTML =
+		`
+			<hr>
+			<b>Current scene rendering data</b><br>
+			surfaces rendered: ${ GBX.count.toLocaleString() } of ${ GBX.surfacesTmp.length.toLocaleString() } <br>
+			time to render: ${ delta.toLocaleString() } ms<br>
+			took too long: ${ GBX.misses }<br>
+			time allocated frame: ${ GBX.deltaLimit } ms<br>
+			total time elapsed: ${ ( performance.now() - FOB.timeStart ).toLocaleString() } ms
+		`; */
+
+		requestAnimationFrame( GBXU.addMeshes );
+
+	} else {
+
+		//THR.controls.autoRotate = true;
+
+	}
+
+};

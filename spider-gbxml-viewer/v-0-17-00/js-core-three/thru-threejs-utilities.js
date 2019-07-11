@@ -399,6 +399,7 @@ THRU.toggleGroundHelper = function() {
 		//console.log( 'elevation', GBX.elevation );
 
 		elevation = GBX.boundingBox.box.min.z - 0.001 * THRU.radius;
+		elevation = 0;
 
 		const geometry = new THREE.PlaneGeometry( 2 * THRU.radius, 2 * THRU.radius);
 		const material = new THREE.MeshPhongMaterial( { color: 0x888888, opacity: 0.5, side: 2 } );
@@ -413,16 +414,96 @@ THRU.toggleGroundHelper = function() {
 
 		THRU.groundHelper.visible = false;
 
-		window.addEventListener( 'keyup', GBXU.onLoad, false );
-		THR.renderer.domElement.addEventListener( 'click', GBXU.onLoad, false );
-		THR.renderer.domElement.addEventListener( 'touchstart', GBXU.onLoad, false );
-
-
 		return;
 
 	}
 
 	THRU.groundHelper.visible = !THRU.groundHelper.visible;
+
+};
+
+
+
+THRU.toggleEdges = function() {
+
+	if ( GBX.surfaceEdges && THRU.surfaceEdges.length === 0 ) {
+
+		THRU.surfaceEdges= new THREE.Group();
+		THRU.surfaceEdges.name = 'THRU.surfaceEdges';
+		THRU.surfaceEdges = THRU.getSurfaceEdgesGbxml();
+
+		//THR.scene.add( THRU.surfaceEdges );
+
+		return;
+
+	}
+
+
+	THR.scene.traverse( function ( child ) {
+
+		if ( child instanceof THREE.Line ) {
+
+			child.visible = !child.visible;
+
+		}
+
+	} );
+
+};
+
+
+
+THRU.getSurfaceEdgesThreejs = function() {
+
+	const surfaceEdges = [];
+	const lineMaterial = new THREE.LineBasicMaterial( { color: 0x888888 } );
+
+	for ( let mesh of THRU.surfaceGroup.children ) {
+
+		mesh.userData.edges = mesh;
+		const edgesGeometry = new THREE.EdgesGeometry( mesh.geometry );
+		const surfaceEdge = new THREE.LineSegments( edgesGeometry, lineMaterial );
+		surfaceEdge.rotation.copy( mesh.rotation );
+		surfaceEdge.position.copy( mesh.position );
+		surfaceEdges.push( surfaceEdge );
+
+	}
+
+	//console.log( 'surfaceEdges', surfaceEdges );
+	//THR.scene.add( ...surfaceEdges );
+
+	return surfaceEdges;
+
+};
+
+
+THRU.toggleEdgesThreejs = function() {
+
+	if ( THRU.surfaceEdgesThreejs && THRU.surfaceEdgesThreejs.length === 0 ) {
+
+		THRU.surfaceEdgesThreejs = new THREE.Group();
+		THRU.surfaceEdgesThreejs.name = 'THRU.surfaceEdgesThreejs';
+		const surfaceEdgesThreejs = THRU.getSurfaceEdgesThreejs();
+		//console.log( 'surfaceEdgesThreejs', surfaceEdgesThreejs );
+
+		THRU.surfaceEdgesThreejs.add( ...surfaceEdgesThreejs );
+
+		THR.scene.add( THRU.surfaceEdgesThreejs );
+
+		return;
+
+	}
+
+
+	THRU.surfaceEdgesThreejs.traverse( function ( child ) {
+
+		if ( child instanceof THREE.Line ) {
+
+			child.visible = !child.visible;
+
+		}
+
+	} );
 
 };
 

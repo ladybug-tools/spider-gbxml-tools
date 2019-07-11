@@ -143,64 +143,6 @@ GBX.parseFile = function( gbxml )  {
 
 
 
- GBX.addMeshes = function( timestamp ) {
-
-	if ( GBX.count < GBX.surfacesTmp.length ) {
-		//console.log( 'GBX.count', GBX.count );
-
-		const delta = timestamp - GBX.lastTimestamp;
-		GBX.lastTimestamp = timestamp;
-
-		if ( delta < GBX.deltaLimit ) {
-
-			GBX.surfacesTmp.slice( GBX.count, GBX.count + GBX.step ).forEach( surface => {
-
-				const index = GBX.surfaces.indexOf( surface );
-				GBX.surfaceGroup.children[ index ].visible = true;
-
-			} );
-
-			GBX.count += GBX.step;
-
-			GBX.count = GBX.count > GBX.surfacesTmp.length ? GBX.surfacesTmp.length : GBX.count;
-
-		} else {
-
-			if ( GBX.misses > 3 ) {
-
-				GBX.deltaLimit += 20;
-				GBX.misses = 0;
-
-			}
-
-			GBX.misses ++;
-
-		}
-
-
-/* 		GBXdivStatsThr.innerHTML =
-		`
-			<hr>
-			<b>Current scene rendering data</b><br>
-			surfaces rendered: ${ GBX.count.toLocaleString() } of ${ GBX.surfacesTmp.length.toLocaleString() } <br>
-			time to render: ${ delta.toLocaleString() } ms<br>
-			took too long: ${ GBX.misses }<br>
-			time allocated frame: ${ GBX.deltaLimit } ms<br>
-			total time elapsed: ${ ( performance.now() - FOB.timeStart ).toLocaleString() } ms
-		`; */
-
-		requestAnimationFrame( GBX.addMeshes );
-
-	} else {
-
-		//THR.controls.autoRotate = true;
-
-	}
-
-};
-
-
-
 GBX.getSurfaceMeshes = function( surfaces ) {
 	// console.log( 'surfaces', surfaces );
 
@@ -225,7 +167,7 @@ GBX.getSurfaceMeshes = function( surfaces ) {
 		//console.log( 'index', index );
 
 		const openings =  polyLoops.slice( 1 ).map( polyLoop => GBX.getCoordinates( polyLoop ) );
-		
+
 		const mesh = GBX.getSurfaceMesh( coordinates, index, openings );
 
 		return mesh;
@@ -274,8 +216,7 @@ GBX.getSurfaceMesh = function( arr, index, holes ) {
 	const color = new THREE.Color( GBX.colorsDefault[ string ] );
 	//console.log( 'color', color );
 
-	const v = ( arrr ) => new THREE.Vector3().fromArray( arrr );
-
+	const v = ( arr ) => new THREE.Vector3().fromArray( arr );
 
 	let vertices, mesh;
 
