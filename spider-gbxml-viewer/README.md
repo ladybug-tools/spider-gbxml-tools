@@ -20,11 +20,13 @@ Or copy this link: https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-vie
 
 ## Popup: [Spider gbXML Viewer Popup ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/pop/ )
 
+## Version under development: [Spider gbXML Viewer Popup ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/dev/ )
+
 ***
 
 ## Usage
 
-Note to developers: You may download any of these files ( Chrome context menu > 'Save link as...' ) to your desktop or wherever. Then follow the guidelines for loading local files here [Opening and loading files with gbXML Viewer]( https://www.ladybug.tools/spider/#pages/file-open.md ) in order to embed the Viewer in a local workflow and avoid CORS issues.
+Note to developers: You may download any of the above files (except the 'dev' version ) to your desktop or wherever ( Chrome context menu > 'Save link as...' ). Then follow the guidelines for loading local files here [Opening and loading files with gbXML Viewer]( https://www.ladybug.tools/spider/#pages/file-open.md ) in order to embed the Viewer in a local workflow and avoid CORS issues.
 
 Everybody else: Just work with the online versions and enjoy!
 
