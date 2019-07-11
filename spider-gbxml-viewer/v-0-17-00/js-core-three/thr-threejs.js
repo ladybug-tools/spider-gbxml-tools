@@ -21,6 +21,7 @@ THR.getThreejs = function ( target = divContents ) {
 	THR.renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true } );
 	THR.renderer.setPixelRatio( window.devicePixelRatio );
 	THR.renderer.setSize( target.clientWidth, target.clientHeight );
+	
 	target.appendChild( THR.renderer.domElement );
 
 	THR.camera = new THREE.PerspectiveCamera( 40, target.clientWidth / target.clientHeight, 0.1, 1000 );

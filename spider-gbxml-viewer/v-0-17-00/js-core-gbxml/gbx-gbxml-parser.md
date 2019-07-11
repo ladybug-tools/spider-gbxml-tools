@@ -33,4 +33,6 @@
 
 * F - GBX.md:First commit
 * F - GBX.md/GBX.js: Add text content
+* F - GBX.js: Add openings as holes in meshes
+
 </details>

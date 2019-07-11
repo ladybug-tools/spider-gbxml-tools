@@ -9,7 +9,7 @@ let THRU = {
 	copyright: "Copyright 2019 Ladybug Tools authors. MIT License",
 	date: "2019-07-10",
 	description: "Three.js Utilities: all this is a bit idiosyncratic / a random collection of stuff",
-	helpFile: "../js-view/thru-threejs-utilities.md",
+	helpFile: "../js-core/thru-threejs-utilities.md",
 	license: "MIT License",
 	urlSourceCode: "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-00/js-core",
 	version: "0.17.00-1thru"
@@ -62,7 +62,7 @@ THRU.setSceneDispose = function( obj = THR.scene.children ) {
 	}
 
 
-	THR.axesHelper = undefined;
+	THRU.axesHelper = undefined;
 	THRU.helperNormalsFaces = undefined;
 
 	//divRendererInfo.innerHTML = THRU.getRendererInfo();

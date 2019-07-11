@@ -129,13 +129,15 @@ GBX.parseFile = function( gbxml )  {
 
 	GBX.surfacesIndexed = GBX.surfaces.map( ( surface, index ) => `indexGbx="${ index }"` + surface );
 
-	const meshes = GBX.getSurfaceMeshes( GBX.surfacesIndexed );
+	const meshes = GBX.getSurfaceMeshes( GBX.surfaces );
 
 	GBX.surfaceGroup = new THREE.Group();
 	GBX.surfaceGroup.name = 'GBX.surfaceGroup';
 	GBX.surfaceGroup.add( ...meshes );
 
 	THR.scene.add( GBX.surfaceGroup );
+
+
 
 	// move following to GBXU.init??
 
@@ -297,25 +299,34 @@ GBX.getSurfaceMeshes = function( surfaces ) {
 		const polyLoops = GBX.getPolyLoops( surface );
 		//console.log( 'polyLoops', polyLoops );
 
-		const vertices = GBX.getVertices( polyLoops[ 0 ] );
+		const coordinates = GBX.getCoordinates( polyLoops[ 0 ] );
 
-		if ( vertices.length < 9 ) {
+/* 		if ( coordinates.length < 9 ) { // for testing
 
 			console.log( 'polyLoops[ 0 ]', polyLoops[ 0 ] );
-			console.log( 'vertices', vertices );
+			console.log( 'coordinates', coordinates );
+
+		}
+*/
+
+
+
+		const openings = [];
+
+		for ( let polyLoop of polyLoops.slice( 1 ) ) {
+
+			const coordinates = GBX.getCoordinates( polyLoop );
+			//console.log( 'coordinates', coordinates );
+
+			openings.push( coordinates );
+			//console.log( '', openings );
 
 		}
 
-		const index = surface.match( 'indexGbx="(.*?)"' )[ 1 ];
+		const index = GBX.surfaces.indexOf( surface );
+		//console.log( 'index', index );
 
-		const mesh = GBX.getSurfaceMesh( vertices, index );
-
-		if ( mesh ) {
-
-			mesh.castShadow = mesh.receiveShadow = true;
-			mesh.userData.index = index;
-
-		}
+		const mesh = GBX.getSurfaceMesh( coordinates, index, openings );
 
 		return mesh;
 
@@ -333,7 +344,8 @@ GBX.getPolyLoops = function( surface ) {
 	const re = /<PlanarGeometry(.*?)<polyloop(.*?)<\/polyloop>/gi;
 	const polyloopText = surface.match( re );
 
-	if ( !polyloopText ) { console.log( 'polyloopText', polyloopText, surface ) }
+	//if ( !polyloopText ) { console.log( 'polyloopText', polyloopText, surface ) }
+
 	const polyloops = polyloopText.map( polyloop => polyloop.replace(/<\/?polyloop>/gi, '' ) );
 
 	return polyloops;
@@ -342,7 +354,7 @@ GBX.getPolyLoops = function( surface ) {
 
 
 
-GBX.getVertices = function( surface ) {
+GBX.getCoordinates = function( surface ) {
 
 	const re = /<coordinate(.*?)<\/coordinate>/gi;
 	const coordinatesText = surface.match( re );
@@ -355,14 +367,15 @@ GBX.getVertices = function( surface ) {
 
 
 
-GBX.getSurfaceMesh = function( arr, index ) {
+GBX.getSurfaceMesh = function( arr, index, holes ) {
 	//console.log( 'array', arr, 'index', index );
 
 	const string = GBX.surfaces[ index ].match( 'surfaceType="(.*?)"')[ 1 ];
 	const color = new THREE.Color( GBX.colorsDefault[ string ] );
 	//console.log( 'color', color );
 
-	const v = ( arr ) => new THREE.Vector3().fromArray( arr );
+	const v = ( arrr ) => new THREE.Vector3().fromArray( arrr );
+
 
 	let vertices, mesh;
 
@@ -387,30 +400,52 @@ GBX.getSurfaceMesh = function( arr, index ) {
 
 		mesh = GBX.getBufferGeometry( vertices, color );
 
-	} else if ( arr.length === 12 ) {
+	} else if ( arr.length === 12 && holes.length === 0 ) {
 
-		vertices = [
+			vertices = [
 
-			v( arr.slice( 0, 3 ) ), v( arr.slice( 3, 6 ) ), v( arr.slice( 6, 9 ) ),
-			v( arr.slice( 0, 3 ) ),  v( arr.slice( 6, 9 ) ), v( arr.slice( 9, 12 ) )
+				v( arr.slice( 0, 3 ) ), v( arr.slice( 3, 6 ) ), v( arr.slice( 6, 9 ) ),
+				v( arr.slice( 0, 3 ) ),  v( arr.slice( 6, 9 ) ), v( arr.slice( 9, 12 ) )
 
-		];
+			];
 
-		mesh = GBX.getBufferGeometry( vertices, color );
+			mesh = GBX.getBufferGeometry( vertices, color );
 
 	} else {
 
-		vertices = [];
+		const vertices = [];
 
 		for ( let i = 0; i < ( arr.length / 3 ); i ++ ) {
 
-			vertices.push( v( arr.slice( 3 * i, 3 * i + 3 ) ) );
+			vertices.push( v( arr.slice( 3 * i, 3 * i + 3 ) )  );
+
+		}
+		//console.log( 'vertices', vertices );
+
+		const verticesHoles = [];
+
+		for ( let i = 0; i < holes.length; i ++ ) {
+
+			const hole = holes[ i ];
+			const vertices= [];
+
+			for ( let j = 0; j < ( hole.length / 3 ); j ++ ) {
+
+				vertices.push( v( hole.slice( 3 * j, 3 * j + 3 ) ) );
+
+			}
+
+			verticesHoles.push( vertices );
+			//console.log( '', vertices, verticesHoles );
 
 		}
 
-		mesh = GBX.setPolygon( vertices, color );
+		mesh = GBX.setPolygon( vertices, color, verticesHoles );
 
 	}
+
+	mesh.castShadow = mesh.receiveShadow = true;
+	mesh.userData.index = index;
 
 	return mesh;
 
@@ -449,15 +484,7 @@ GBX.setPolygon = function( vertices, color, holes = [] ) {
 	const verticesFlat = vertices.map( vertex => GBX.referenceObject.localToWorld( vertex ) );
 	//console.log( { verticesFlat } );
 
-	/*
-	for ( let verticesHoles of holes ) {
-
-		verticesHoles.forEach( vertex => GBX.referenceObject.localToWorld( vertex ) );
-
-	}
-
 	holes.forEach( verticesHoles => verticesHoles.forEach( vertex => GBX.referenceObject.localToWorld( vertex ) ) );
-	*/
 
 	// vertices must be coplanar with the XY plane for Earcut.js to triangulate a set of points
 	const triangles = THREE.ShapeUtils.triangulateShape( verticesFlat, holes );

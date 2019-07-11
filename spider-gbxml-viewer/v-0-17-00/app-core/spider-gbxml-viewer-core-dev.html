@@ -89,7 +89,9 @@ function init() {
 
 	window.addEventListener ( 'hashchange', FOB.onHashChange, false );
 
-	if ( !parent.location.hash ) { parent.location.hash=FOB.urlDefaultFile; }
+	//if ( !parent.location.hash ) { parent.location.hash=FOB.urlDefaultFile; }
+
+	parent.location.hash=FOB.urlDefaultFile;
 
 	FOB.onHashChange();
 

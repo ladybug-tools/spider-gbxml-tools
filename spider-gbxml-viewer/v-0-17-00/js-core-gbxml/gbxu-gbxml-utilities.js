@@ -14,15 +14,6 @@ var GBXU = {
 };
 
 
-/*
-
-Change Log
-
-2019-06-27 ~ F- GBXU.js: Add event to turn off ground on load
-
-2019-02-14 ~ Lowered elevation of ground helper to reduce Moire effect
-
-*/
 
 GBXU.init = function() {
 
@@ -32,6 +23,7 @@ GBXU.init = function() {
 	document.body.addEventListener( 'onGbxParse', GBXU.setStats, false );
 
 };
+
 
 
 GBXU.getSceneInfo = function() {
@@ -163,7 +155,7 @@ GBXU.setStats = function() {
 	GBX.zones = Array.isArray( GBX.zones ) ? GBX.zones : [];
 	//console.log( 'GBX.zones', GBX.zones );
 
-	const verticesCount = GBX.surfaces.map( surfaces => GBX.getVertices( surfaces ) );
+	const verticesCount = GBX.surfaces.map( surfaces => GBX.getCoordinates( surfaces ) );
 	//console.log( 'vertices', vertices );
 
 	const count = verticesCount.reduce( ( count, val, index ) => count + verticesCount[ index ].length, 0 );
@@ -259,7 +251,7 @@ GBX.getSurfaceOpenings = function() {
 
 			for ( let polyloop of polyloops ) {
 
-				const coordinates = GBX.getVertices( polyloop );
+				const coordinates = GBX.getCoordinates( polyloop );
 
 				//console.log( 'coordinates', coordinates );
 
