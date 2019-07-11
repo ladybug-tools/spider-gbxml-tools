@@ -4,23 +4,18 @@
 
 var GBX = {
 	copyright: "Copyright 2019 Ladybug Tools authors. MIT License",
-	date: "2019-07-10",
+	date: "2019-07-11",
 	description: "Does all the heavy lifting",
 	helpFile: "../js-core-gbxml/gbx-gbxml-parser.md",
 	license: "MIT License",
 	urlSourceCode: "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-00/js-core-gbxml",
-	version: "0.17.00-1gbx"
+	version: "0.17.00-2gbx"
 };
 
 GBX.filtersDefault = [ "Air", "ExposedFloor", "ExteriorWall", "RaisedFloor", "Roof",  "Shade",
 	"SlabOnGrade", "UndergroundWall", "UndergroundSlab" ];
 
-let step = 1000;
-let count = 0;
-let max = 5000;
-let misses = 0;
-let deltaLimit = 20;
-let lastTimestamp = performance.now();
+
 
 GBX.colorsDefault = {
 
@@ -54,13 +49,14 @@ GBX.triangle = new THREE.Triangle(); // used by GBX.getPlane
 
 GBX.init = function() {
 
-	//change to custom event with data passing via event details
+	//change to custom event with data passing via event details??
+
 	FOB.xhr.addEventListener( 'load', GBX.onXhrResponse, false );
 	FOB.reader.addEventListener( 'load', GBX.onReaderResult, false );
 	document.body.addEventListener( 'FOBonZipFileLoad', GBX.onFileZipLoad, false );
 	document.body.addEventListener( 'onZipFileParse', GBX.onFileZipLoad, false );
 
-	GBXU.init();
+	document.body.addEventListener( 'onGbxParse', GBXU.onGbxParse, false );
 
 };
 
@@ -70,7 +66,7 @@ GBX.onXhrResponse = function( event ) { GBX.parseFile( event.target.response ); 
 
 GBX.onReaderResult = function() { GBX.parseFile( FOB.reader.result ); };
 
-GBX.onFileZipLoad = function() { console.log( '', 23 );GBX.parseFile( FOB.text ); };
+GBX.onFileZipLoad = function() { GBX.parseFile( FOB.text ); };
 
 
 
@@ -78,6 +74,8 @@ GBX.parseFile = function( gbxml )  {
 
 	if ( !gbxml || gbxml.includes( "xmlns" ) === false ) { return; }
 	//console.log( 'gbxml', gbxml );
+
+	GBX.timeStart = performance.now();
 
 	// Fix this mess
 	THRU.setSceneDispose( [ GBX.surfaceMeshes, GBX.surfaceOpenings, GBX.surfaceEdgesThreejs, GBX.boundingBox, THRU.helperNormalsFaces, THRU.groundHelper ] );
@@ -88,7 +86,7 @@ GBX.parseFile = function( gbxml )  {
 
 	//THR.scene.remove( GBX.boundingBox );
 	GBX.boundingBox = undefined;
-	THRU.groundHelper = undefined;
+
 
 	if ( GBX.surfaceGroup ) {
 
@@ -114,11 +112,6 @@ GBX.parseFile = function( gbxml )  {
 
 	}
 
-	GBX.timeStart = performance.now();
-
-
-	GBX.materialType = THR.scene.getObjectByName( 'lightAmbient') ? THREE.MeshPhongMaterial : THREE.MeshBasicMaterial;
-	//GBX.materialType = THREE.MeshBasicMaterial;
 
 	GBX.text = gbxml.replace( /\r\n|\n/g, '' );
 	//console.log( 'GBX.text', GBX.text );
@@ -127,7 +120,10 @@ GBX.parseFile = function( gbxml )  {
 	GBX.surfaces = GBX.text.match( reSurface );
 	//console.log( 'GBX.surfaces', GBX.surfaces );
 
-	GBX.surfacesIndexed = GBX.surfaces.map( ( surface, index ) => `indexGbx="${ index }"` + surface );
+	//GBX.surfacesIndexed = GBX.surfaces.map( ( surface, index ) => `indexGbx="${ index }"` + surface );
+
+	GBX.materialType = THR.scene.getObjectByName( 'lightAmbient') ? THREE.MeshPhongMaterial : THREE.MeshBasicMaterial;
+	//GBX.materialType = THREE.MeshBasicMaterial;
 
 	const meshes = GBX.getSurfaceMeshes( GBX.surfaces );
 
@@ -137,23 +133,8 @@ GBX.parseFile = function( gbxml )  {
 
 	THR.scene.add( GBX.surfaceGroup );
 
-
-
-	// move following to GBXU.init??
-
-	GBX.setSurfaceTypesVisible( GBX.filtersDefault );
-
-	GBX.toggleOpenings();
-
-	THR.controls.autoRotate = true;
-	THRU.zoomObjectBoundingSphere( GBX.boundingBox );
-
-	GBXU.toggleGroundHelper();
-	THRU.groundHelper.visible = true;
-
 	const event = new Event( 'onGbxParse' );
 	document.body.dispatchEvent( event );
-	
 	//use this: document.body.addEventListener( 'onGbxParse', yourFunction, false );
 
 	return GBX.surfaces.length;
@@ -162,109 +143,37 @@ GBX.parseFile = function( gbxml )  {
 
 
 
-GBX.setSurfaceTypesVisible = function ( typesArray ) {
-
-	//console.log( 'typesArray', typesArray );
-
-	//GBX.surfacesFiltered = typesArray.flatMap( filter =>
-
-	//	GBX.surfacesIndexed.filter( surface => surface.includes( `"${ filter }"` ) )
-
-	//);
-
-
-	// polyfill for MS Edge
-	GBX.surfacesFiltered = typesArray.reduce( ( acc, filter ) => acc.concat(
-
-		GBX.surfacesIndexed.filter( surface => surface.includes( `"${ filter }"` ) )
-
-	), [] );
-
-	//divReportsLog.innerHTML =
-	GBX.sendSurfacesToThreeJs( GBX.surfacesFiltered );
-
-};
-
-
-
-//////////
-
-GBX.sendSurfacesToThreeJs = function( surfacesText ) {
-	//console.log( 'surfacesText', surfacesText );
-
-	GBX.surfaceGroup.children.forEach( ( surface, index ) => {
-
-		surface.visible = false;
-
-	} );
-	//const timeStart = performance.now();
-
-	THR.controls.autoRotate = false;
-
-	GBX.surfacesTmp = surfacesText;
-
-	step = 1000;
-	count = 0;
-	max = 5000;
-	misses = 0;
-	deltaLimit = 20;
-	lastTimestamp = performance.now();
-
-	GBX.addMeshes(  );
-	//performance.now()
-	//console.log( 'ttt', ( performance.now() - timeStart) );
-
-	if ( !GBX.boundingBox ) {
-
-		const bbox = new THREE.Box3().setFromObject( GBX.surfaceGroup );
-		GBX.boundingBox = new THREE.Box3Helper( bbox, 0xffff00 );
-		THR.scene.add( GBX.boundingBox );
-
-	}
-
-	//THRU.zoomObjectBoundingSphere( GBX.boundingBox );
-
-	//GBXU.toggleGroundHelper();
-
-	const txt = !surfacesText.length ? "<span class='highlight' >No surfaces are visible</span>" : surfacesText.length.toLocaleString() + ' surfaces visible';
-
-	return txt;
-
-};
-
-
-
  GBX.addMeshes = function( timestamp ) {
 
-	if ( count < GBX.surfacesTmp.length ) {
-		//console.log( 'count', count );
+	if ( GBX.count < GBX.surfacesTmp.length ) {
+		//console.log( 'GBX.count', GBX.count );
 
-		const delta = timestamp - lastTimestamp;
-		lastTimestamp = timestamp;
+		const delta = timestamp - GBX.lastTimestamp;
+		GBX.lastTimestamp = timestamp;
 
-		if ( delta < deltaLimit ) {
+		if ( delta < GBX.deltaLimit ) {
 
-			GBX.surfacesTmp.slice( count, count + step ).forEach( surface => {
+			GBX.surfacesTmp.slice( GBX.count, GBX.count + GBX.step ).forEach( surface => {
 
-				const index = surface.match( 'indexGbx="(.*?)"' )[ 1 ];
+				const index = GBX.surfaces.indexOf( surface );
 				GBX.surfaceGroup.children[ index ].visible = true;
 
 			} );
 
-			count += step;
+			GBX.count += GBX.step;
 
-			count = count > GBX.surfacesTmp.length ? GBX.surfacesTmp.length : count;
+			GBX.count = GBX.count > GBX.surfacesTmp.length ? GBX.surfacesTmp.length : GBX.count;
 
 		} else {
 
-			if ( misses > 3 ) {
+			if ( GBX.misses > 3 ) {
 
-				deltaLimit += 20;
-				misses = 0;
+				GBX.deltaLimit += 20;
+				GBX.misses = 0;
 
 			}
 
-			misses ++;
+			GBX.misses ++;
 
 		}
 
@@ -273,10 +182,10 @@ GBX.sendSurfacesToThreeJs = function( surfacesText ) {
 		`
 			<hr>
 			<b>Current scene rendering data</b><br>
-			surfaces rendered: ${ count.toLocaleString() } of ${ GBX.surfacesTmp.length.toLocaleString() } <br>
+			surfaces rendered: ${ GBX.count.toLocaleString() } of ${ GBX.surfacesTmp.length.toLocaleString() } <br>
 			time to render: ${ delta.toLocaleString() } ms<br>
-			took too long: ${ misses }<br>
-			time allocated frame: ${ deltaLimit } ms<br>
+			took too long: ${ GBX.misses }<br>
+			time allocated frame: ${ GBX.deltaLimit } ms<br>
 			total time elapsed: ${ ( performance.now() - FOB.timeStart ).toLocaleString() } ms
 		`; */
 
@@ -302,7 +211,8 @@ GBX.getSurfaceMeshes = function( surfaces ) {
 
 		const coordinates = GBX.getCoordinates( polyLoops[ 0 ] );
 
-/* 		if ( coordinates.length < 9 ) { // for testing
+/*		// Never?? happens
+ 		if ( coordinates.length < 9 ) { // for testing
 
 			console.log( 'polyLoops[ 0 ]', polyLoops[ 0 ] );
 			console.log( 'coordinates', coordinates );
@@ -311,22 +221,11 @@ GBX.getSurfaceMeshes = function( surfaces ) {
 */
 
 
-
-		const openings = [];
-
-		for ( let polyLoop of polyLoops.slice( 1 ) ) {
-
-			const coordinates = GBX.getCoordinates( polyLoop );
-			//console.log( 'coordinates', coordinates );
-
-			openings.push( coordinates );
-			//console.log( '', openings );
-
-		}
-
 		const index = GBX.surfaces.indexOf( surface );
 		//console.log( 'index', index );
 
+		const openings =  polyLoops.slice( 1 ).map( polyLoop => GBX.getCoordinates( polyLoop ) );
+		
 		const mesh = GBX.getSurfaceMesh( coordinates, index, openings );
 
 		return mesh;

@@ -1,4 +1,4 @@
-/* global THREE, THR, GBX, rngOpacity, outOpacity */
+/* global THREE, THR, Stats, rngOpacity, outOpacity */
 // jshint esversion: 6
 // jshint loopfunc: true
 
@@ -16,11 +16,27 @@ let THRU = {
 };
 
 
+THRU.init= function( radius = 50 ) {
+
+	// called from main html / asumes three,js is loaded
+
+	THRU.radius = radius;
+
+	THRU.toggleAxesHelper();
+
+	THRU.addSomeLights2();
+
+	window.addEventListener( 'keyup', () => THR.controls.autoRotate=false, false );
+	THR.renderer.domElement.addEventListener( 'click', () => THR.controls.autoRotate=false, false );
+	THR.renderer.domElement.addEventListener( 'touchstart', () => THR.controls.autoRotate=false, false );
+
+};
+
 
 ////////// Scene
 
 
-THRU.onThreejsSceneLoaded = function() {
+THRU.xxxonThreejsSceneLoaded = function() {
 	// used where?
 	return THR.scene;
 
@@ -62,9 +78,124 @@ THRU.setSceneDispose = function( obj = THR.scene.children ) {
 
 
 	THRU.axesHelper = undefined;
+	THRU.groundHelper = undefined;
 	THRU.helperNormalsFaces = undefined;
 
 	//divRendererInfo.innerHTML = THRU.getRendererInfo();
+
+};
+
+
+
+////////// Info / move to a view menu??
+
+
+THRU.getRendererInfo = function() {
+	//console.log( 'THR.renderer.info', THR.renderer.info );
+
+	const htm =
+	`
+		<p>
+			<b>memory</b><br>
+			geometries: ${ THR.renderer.info.memory.geometries.toLocaleString() }
+		</p>
+		<p>
+			<b>renderer</b><br>
+			triangles: ${ THR.renderer.info.render.triangles.toLocaleString() } <br>
+			lines: ${ THR.renderer.info.render.lines.toLocaleString() } <br>
+		</p>
+		<p>
+			<button onclick=divRendererInfo.innerHTML=THRU.getRendererInfo(); >update info</button>
+
+			<a href="https://threejs.org/docs/#api/en/renderers/WebGLRenderer.info" target="_blank">?</a>
+
+			<button onclick=THRU.setStats(); >stats</button>
+
+			<a href="https://github.com/mrdoob/stats.js/" target="_blank">?</a>
+
+		</p>
+
+	`;
+
+	return htm;
+
+};
+
+
+
+THRU.setStats = function() {
+
+	const script = document.createElement('script');
+
+	script.onload = function() {
+
+		const stats = new Stats();
+
+		document.body.appendChild( stats.dom );
+
+		requestAnimationFrame( function loop() {
+
+			stats.update();
+
+			requestAnimationFrame( loop );
+
+		} );
+
+	};
+
+	script.src = 'https://rawgit.com/mrdoob/stats.js/master/build/stats.min.js';
+
+	document.head.appendChild( script );
+
+};
+
+
+
+THRU.xxxxgetSettings = function() {
+
+
+	let htm =
+	`
+		<p><i>Update display parameters</i>
+			<a title="View the Three.js Utilities Read Me" href="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-viewer-threejs-utilities/" target="_blank" >?</a>
+		</p>
+
+		<p>
+			<button onclick="THR.controls.autoRotate = !THR.controls.autoRotate;" >toggle rotation</button>
+
+			<button onclick=THRU.toggleAxesHelper(); >toggle axes</button>
+		</p>
+
+		<p>
+			<button onclick=THRU.toggleSurfaces(); >toggle surfaces</button>
+
+			<button onclick=THRU.toggleEdges(); >toggle edges</button>
+		</p>
+
+
+		<p>
+			<button onclick=THRU.toggleWireframe(); >toggle wireframe</button>
+
+			<button onclick=THRU.toggleSurfaceNormals(); title="All Three.js triangles have a normal. See them here." > toggle surface normals </button>
+		</p>
+
+		<p title="opacity: 0 to 100%" >opacity
+			<output id=outOpacity class=floatRight >85%</output><br>
+
+			<input type="range" id="rngOpacity" min=0 max=100 step=1 value=85 oninput=THRU.updateOpacity(); >
+		</p>
+
+		<p>
+			<button onclick=THRU.zoomObjectBoundingSphere(GBX.surfaceMeshes);>zoom all</button>
+
+			<button accesskey="z" onclick=THR.controls.screenSpacePanning=!THR.controls.screenSpacePanning; title="Access key + B: Up/down curser kes to forward/backward or up/down" >toggle cursor keys</button>
+		</p>
+
+		<div>  </div>
+
+	`;
+
+	return htm;
 
 };
 
@@ -119,8 +250,6 @@ THRU.zoomObjectBoundingSphere = function( obj = THR.scene ) {
 
 	THRU.center = center;
 	THRU.radius = radius;
-
-	THRU.onThreejsSceneLoaded(); // set new event??
 
 };
 
@@ -220,12 +349,12 @@ THRU.toggleSurfaceNormals = function( obj = THR.scene ) {
 
 
 
-THRU.setObjectOpacity = function( obj = scene, range = rngOpacity ) {
+THRU.setObjectOpacity = function( obj = THR.scene, range = rngOpacity ) {
 
 	const opacity = parseInt( range.value, 10 );
 	outOpacity.value = opacity + '%';
 
-	THR.obj.traverse( function ( child ) {
+	obj.traverse( function ( child ) {
 
 		if ( child instanceof THREE.Mesh ) {
 
@@ -240,72 +369,7 @@ THRU.setObjectOpacity = function( obj = scene, range = rngOpacity ) {
 
 ////////// Helpers in the scene
 
-THRU.xxxxgetSettings = function() {
-
-
-	let htm =
-	`
-		<p><i>Update display parameters</i>
-			<a title="View the Three.js Utilities Read Me" href="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-viewer-threejs-utilities/" target="_blank" >?</a>
-		</p>
-
-		<p>
-			<button onclick="THR.controls.autoRotate = !THR.controls.autoRotate;" >toggle rotation</button>
-
-			<button onclick=THRU.toggleAxesHelper(); >toggle axes</button>
-		</p>
-
-		<p>
-			<button onclick=THRU.toggleSurfaces(); >toggle surfaces</button>
-
-			<button onclick=THRU.toggleEdges(); >toggle edges</button>
-		</p>
-
-
-		<p>
-			<button onclick=THRU.toggleWireframe(); >toggle wireframe</button>
-
-			<button onclick=THRU.toggleSurfaceNormals(); title="All Three.js triangles have a normal. See them here." > toggle surface normals </button>
-		</p>
-
-		<p title="opacity: 0 to 100%" >opacity
-			<output id=outOpacity class=floatRight >85%</output><br>
-
-			<input type="range" id="rngOpacity" min=0 max=100 step=1 value=85 oninput=THRU.updateOpacity(); >
-		</p>
-
-		<p>
-			<button onclick=THRU.zoomObjectBoundingSphere(GBX.surfaceMeshes);>zoom all</button>
-
-			<button accesskey="z" onclick=THR.controls.screenSpacePanning=!THR.controls.screenSpacePanning; title="Access key + B: Up/down curser kes to forward/backward or up/down" >toggle cursor keys</button>
-		</p>
-
-		<div>  </div>
-
-	`;
-
-	return htm;
-
-};
-
 // add bbox??
-
-
-THRU.setHelpers = function( radius = 50 ) {
-
-	// rename to init??
-
-	THRU.radius = radius;
-
-	THRU.toggleAxesHelper();
-
-	window.addEventListener( 'keyup', () => THR.controls.autoRotate=false, false );
-	THR.renderer.domElement.addEventListener( 'click', () => THR.controls.autoRotate=false, false );
-	THR.renderer.domElement.addEventListener( 'touchstart', () => THR.controls.autoRotate=false, false );
-
-};
-
-
 
 THRU.toggleAxesHelper = function() {
 
@@ -324,68 +388,43 @@ THRU.toggleAxesHelper = function() {
 
 
 
-////////// Info / move to a view menu??
+THRU.toggleGroundHelper = function() {
+
+	// move to THRU but z min should be zero
+
+	if ( !THRU.groundHelper ) {
+
+		//const reElevation = /<Elevation>(.*?)<\/Elevation>/i;
+		//GBX.elevation = GBX.text.match( reElevation )[ 1 ];
+		//console.log( 'elevation', GBX.elevation );
+
+		elevation = GBX.boundingBox.box.min.z - 0.001 * THRU.radius;
+
+		const geometry = new THREE.PlaneGeometry( 2 * THRU.radius, 2 * THRU.radius);
+		const material = new THREE.MeshPhongMaterial( { color: 0x888888, opacity: 0.5, side: 2 } );
+		THRU.groundHelper = new THREE.Mesh( geometry, material );
+		THRU.groundHelper.receiveShadow = true;
+
+		THRU.groundHelper.position.set( GBX.boundingBox.position.x, GBX.boundingBox.position.y, parseFloat( elevation ) );
+
+		THRU.groundHelper.name = "groundHelper";
+
+		THR.scene.add( THRU.groundHelper );
+
+		THRU.groundHelper.visible = false;
+
+		window.addEventListener( 'keyup', GBXU.onLoad, false );
+		THR.renderer.domElement.addEventListener( 'click', GBXU.onLoad, false );
+		THR.renderer.domElement.addEventListener( 'touchstart', GBXU.onLoad, false );
 
 
-THRU.getRendererInfo = function() {
-	//console.log( 'THR.renderer.info', THR.renderer.info );
+		return;
 
-	const htm =
-	`
-		<p>
-			<b>memory</b><br>
-			geometries: ${ THR.renderer.info.memory.geometries.toLocaleString() }
-		</p>
-		<p>
-			<b>renderer</b><br>
-			triangles: ${ THR.renderer.info.render.triangles.toLocaleString() } <br>
-			lines: ${ THR.renderer.info.render.lines.toLocaleString() } <br>
-		</p>
-		<p>
-			<button onclick=divRendererInfo.innerHTML=THRU.getRendererInfo(); >update info</button>
+	}
 
-			<a href="https://threejs.org/docs/#api/en/renderers/WebGLRenderer.info" target="_blank">?</a>
-
-			<button onclick=THRU.setStats(); >stats</button>
-
-			<a href="https://github.com/mrdoob/stats.js/" target="_blank">?</a>
-
-		</p>
-
-	`;
-
-	return htm;
-
-};
-
-
-
-THRU.setStats = function() {
-
-	const script = document.createElement('script');
-
-	script.onload = function() {
-
-		const stats = new Stats();
-
-		document.body.appendChild( stats.dom );
-
-		requestAnimationFrame( function loop() {
-
-			stats.update();
-
-			requestAnimationFrame( loop );
-
-		} );
-
-	};
-
-	script.src = 'https://rawgit.com/mrdoob/stats.js/master/build/stats.min.js';
-
-	document.head.appendChild( script );
+	THRU.groundHelper.visible = !THRU.groundHelper.visible;
 
 };
-
 
 
 ////////// Lights
@@ -504,7 +543,6 @@ THRU.drawPlacard = function( text = 'abc', scale = 0.05, color = Math.floor( Mat
 	// 2016-02-27 ~ https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/placards
 
 	const placard = new THREE.Object3D();
-	const v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
 
 	const texture = canvasMultilineText( text, { backgroundColor: color }   );
 	const spriteMaterial = new THREE.SpriteMaterial( { map: texture, opacity: 0.9, transparent: true } );
@@ -513,6 +551,7 @@ THRU.drawPlacard = function( text = 'abc', scale = 0.05, color = Math.floor( Mat
 	sprite.scale.set( scale * texture.image.width, scale * texture.image.height );
 
 	//const geometry = new THREE.Geometry();
+	//const v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
 	//geometry.vertices = [ v( 0, 0, 0 ),  v( x, y, z ) ];
 	//const material = new THREE.LineBasicMaterial( { color: 0xaaaaaa } );
 	//const line = new THREE.Line( geometry, material );
@@ -556,7 +595,7 @@ THRU.drawPlacard = function( text = 'abc', scale = 0.05, color = Math.floor( Mat
 		context.fillStyle = '#000' ;
 		context.font = font;
 
-		for ( i = 0; i < textArray.length; i++) {
+		for ( let i = 0; i < textArray.length; i++) {
 
 			context.fillText( textArray[ i ], 10, 48  + i * 60 );
 

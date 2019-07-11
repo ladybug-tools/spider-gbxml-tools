@@ -4,23 +4,38 @@
 var GBXU = {
 
 	copyright: "Copyright 2019 Ladybug Tools authors. MIT License",
-	date: "2019-07-10",
+	date: "2019-07-11",
 	description: "GbXML utilities: all this is a bit idiosyncratic / a random collection of stuff",
 	helpFile: "../js-view-gbxml/gbxu-gbxml-utilities.md",
 	license: "MIT License",
 	urlSourceCode: "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-00/js-core-gbxml",
-	version: "0.17.00-1gbxu"
+	version: "0.17.00-2gbxu"
 
 };
 
 
+////////// inits & info
 
-GBXU.init = function() {
 
-	//FIL.reader.addEventListener( 'load', GBXU.setStats, false );
-	//GBXdivStats.addEventListener( 'click', GBXU.setStats, false );
+GBXU.onGbxParse = function() {
 
-	document.body.addEventListener( 'onGbxParse', GBXU.setStats, false );
+	GBXU.setSurfaceTypesVisible( GBX.filtersDefault );
+
+	GBX.toggleOpenings();
+
+	THR.controls.autoRotate = true;
+	THRU.zoomObjectBoundingSphere( GBX.boundingBox );
+
+	THRU.toggleGroundHelper();
+	THRU.groundHelper.visible = true;
+
+	GBXU.setStats();
+
+	//THRU.groundHelper.visible = false;
+
+	window.removeEventListener( 'keyup', GBXU.onGbxParse );
+	THR.renderer.domElement.removeEventListener( 'click', GBXU.onGbxParse );
+	THR.renderer.domElement.removeEventListener( 'touchstart', GBXU.onGbxParse );
 
 };
 
@@ -47,86 +62,6 @@ GBXU.getSceneInfo = function() {
 
 };
 
-
-
-GBXU.toggleEdges = function() {
-
-	if ( GBX.surfaceEdges && GBX.surfaceEdges.length === 0 ) {
-
-		GBX.surfaceEdges= new THREE.Group();
-		GBX.surfaceEdges.name = 'GBX.surfaceEdges';
-		GBX.surfaceEdges = GBX.getSurfaceEdgesGbxml();
-
-		//THR.scene.add( GBX.surfaceEdges );
-
-		return;
-
-	}
-
-
-	THR.scene.traverse( function ( child ) {
-
-		if ( child instanceof THREE.Line ) {
-
-			child.visible = !child.visible;
-
-		}
-
-	} );
-
-};
-
-
-
-GBXU.toggleGroundHelper = function() {
-
-	// move to THRU but z min should be zero
-
-	if ( !THRU.groundHelper ) {
-
-		//const reElevation = /<Elevation>(.*?)<\/Elevation>/i;
-		//GBX.elevation = GBX.text.match( reElevation )[ 1 ];
-		//console.log( 'elevation', GBX.elevation );
-
-		elevation = GBX.boundingBox.box.min.z - 0.001 * THRU.radius;
-
-		const geometry = new THREE.PlaneGeometry( 2 * THRU.radius, 2 * THRU.radius);
-		const material = new THREE.MeshPhongMaterial( { color: 0x888888, opacity: 0.5, side: 2 } );
-		THRU.groundHelper = new THREE.Mesh( geometry, material );
-		THRU.groundHelper.receiveShadow = true;
-
-		THRU.groundHelper.position.set( GBX.boundingBox.position.x, GBX.boundingBox.position.y, parseFloat( elevation ) );
-
-		THRU.groundHelper.name = "groundHelper";
-
-		THR.scene.add( THRU.groundHelper );
-
-		THRU.groundHelper.visible = false;
-
-		window.addEventListener( 'keyup', GBXU.onLoad, false );
-		THR.renderer.domElement.addEventListener( 'click', GBXU.onLoad, false );
-		THR.renderer.domElement.addEventListener( 'touchstart', GBXU.onLoad, false );
-
-
-		return;
-
-	}
-
-	THRU.groundHelper.visible = !THRU.groundHelper.visible;
-
-};
-
-
-GBXU.onLoad = function() {
-
-
-	THRU.groundHelper.visible = false;
-
-	window.removeEventListener( 'keyup', GBXU.onLoad );
-	THR.renderer.domElement.removeEventListener( 'click', GBXU.onLoad );
-	THR.renderer.domElement.removeEventListener( 'touchstart', GBXU.onLoad );
-
-}
 
 
 GBXU.setStats = function() {
@@ -202,30 +137,11 @@ GBXU.setStats = function() {
 
 
 
-GBX.getSurfaceEdgesThreejs = function() {
-
-	const surfaceEdges = [];
-	const lineMaterial = new THREE.LineBasicMaterial( { color: 0x888888 } );
-
-	for ( let mesh of GBX.surfaceGroup.children ) {
-
-		mesh.userData.edges = mesh;
-		const edgesGeometry = new THREE.EdgesGeometry( mesh.geometry );
-		const surfaceEdge = new THREE.LineSegments( edgesGeometry, lineMaterial );
-		surfaceEdge.rotation.copy( mesh.rotation );
-		surfaceEdge.position.copy( mesh.position );
-		surfaceEdges.push( surfaceEdge );
-
-	}
-
-	//console.log( 'surfaceEdges', surfaceEdges );
-	//THR.scene.add( ...surfaceEdges );
-
-	return surfaceEdges;
-
-};
 
 
+
+
+////////// Openings
 
 GBX.getSurfaceOpenings = function() {
 
@@ -284,7 +200,6 @@ GBX.getSurfaceOpenings = function() {
 
 
 
-
 GBX.toggleOpenings = function() {
 	//console.log( '', 22 );
 
@@ -336,6 +251,63 @@ GBX.setOpeningsVisible = function( visible = true ) {
 
 //////////
 
+// Move to THRU
+
+
+
+GBXU.toggleEdges = function() {
+
+	if ( GBX.surfaceEdges && GBX.surfaceEdges.length === 0 ) {
+
+		GBX.surfaceEdges= new THREE.Group();
+		GBX.surfaceEdges.name = 'GBX.surfaceEdges';
+		GBX.surfaceEdges = GBX.getSurfaceEdgesGbxml();
+
+		//THR.scene.add( GBX.surfaceEdges );
+
+		return;
+
+	}
+
+
+	THR.scene.traverse( function ( child ) {
+
+		if ( child instanceof THREE.Line ) {
+
+			child.visible = !child.visible;
+
+		}
+
+	} );
+
+};
+
+
+
+GBX.getSurfaceEdgesThreejs = function() {
+
+	const surfaceEdges = [];
+	const lineMaterial = new THREE.LineBasicMaterial( { color: 0x888888 } );
+
+	for ( let mesh of GBX.surfaceGroup.children ) {
+
+		mesh.userData.edges = mesh;
+		const edgesGeometry = new THREE.EdgesGeometry( mesh.geometry );
+		const surfaceEdge = new THREE.LineSegments( edgesGeometry, lineMaterial );
+		surfaceEdge.rotation.copy( mesh.rotation );
+		surfaceEdge.position.copy( mesh.position );
+		surfaceEdges.push( surfaceEdge );
+
+	}
+
+	//console.log( 'surfaceEdges', surfaceEdges );
+	//THR.scene.add( ...surfaceEdges );
+
+	return surfaceEdges;
+
+};
+
+
 GBX.toggleEdgesThreejs = function() {
 
 	if ( GBX.surfaceEdgesThreejs && GBX.surfaceEdgesThreejs.length === 0 ) {
@@ -363,6 +335,63 @@ GBX.toggleEdgesThreejs = function() {
 		}
 
 	} );
+
+};
+
+
+
+
+
+
+
+GBXU.setSurfaceTypesVisible = function ( typesArray ) {
+
+	// polyfill for MS Edge
+	GBX.surfacesFiltered = typesArray.reduce( ( acc, filter ) => acc.concat(
+
+		GBX.surfaces.filter( surface => surface.includes( `"${ filter }"` ) )
+
+	), [] );
+
+	//divReportsLog.innerHTML =
+	GBXU.sendSurfacesToThreeJs( GBX.surfacesFiltered );
+
+};
+
+
+
+//////////
+
+GBXU.sendSurfacesToThreeJs = function( surfacesText ) {
+	//console.log( 'surfacesText', surfacesText );
+
+	GBX.surfaceGroup.children.forEach( surface=> surface.visible = false );
+	//const timeStart = performance.now();
+
+	THR.controls.autoRotate = false;
+
+	GBX.surfacesTmp = surfacesText;
+
+	// render only surfaces easily doable in the time to render one frame
+	GBX.step = 1000;
+	GBX.count = 0;
+	GBX.misses = 0;
+	GBX.deltaLimit = 20;
+	GBX.lastTimestamp = performance.now();
+
+	GBX.addMeshes();
+
+	if ( !GBX.boundingBox ) {
+
+		const bbox = new THREE.Box3().setFromObject( GBX.surfaceGroup );
+		GBX.boundingBox = new THREE.Box3Helper( bbox, 0xffff00 );
+		THR.scene.add( GBX.boundingBox );
+
+	}
+
+	const txt = !surfacesText.length ? "<span class='highlight' >No surfaces are visible</span>" : surfacesText.length.toLocaleString() + ' surfaces visible';
+
+	return txt;
 
 };
 
