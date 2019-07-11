@@ -20,7 +20,7 @@ Or copy this link: https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-vie
 
 ## Popup: [Spider gbXML Viewer Popup ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/pop/ )
 
-## Version under development: [Spider gbXML Viewer PopDevup ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/dev/ )
+## Version under development: [Spider gbXML Viewer Dev ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/dev/ )
 
 ***
 
