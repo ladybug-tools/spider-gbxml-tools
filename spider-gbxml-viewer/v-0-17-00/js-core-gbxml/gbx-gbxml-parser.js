@@ -153,6 +153,7 @@ GBX.parseFile = function( gbxml )  {
 
 	const event = new Event( 'onGbxParse' );
 	document.body.dispatchEvent( event );
+	
 	//use this: document.body.addEventListener( 'onGbxParse', yourFunction, false );
 
 	return GBX.surfaces.length;

@@ -49,7 +49,6 @@ body { margin: 0; overflow: hidden; }
 <script src = "../js-core-gbxml/gbxu-gbxml-utilities.js" ></script>
 
 
-
 	<div id=divContents ></div>
 
 
@@ -85,11 +84,12 @@ function init() {
 
 	GBX.init();
 
+
 	window.addEventListener ( 'hashchange', FOB.onHashChange, false );
 
 	//if ( !parent.location.hash ) { parent.location.hash=FOB.urlDefaultFile; }
 
-	parent.location.hash=FOB.urlDefaultFile;
+	parent.location.hash = FOB.urlDefaultFile;
 
 	FOB.onHashChange();
 

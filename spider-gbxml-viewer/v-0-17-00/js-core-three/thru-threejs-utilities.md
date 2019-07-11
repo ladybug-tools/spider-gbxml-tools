@@ -31,6 +31,13 @@ Three.js Utilities: all this is a bit idiosyncratic / a random collection of stu
 
 <summary>Change Log</summary>
 
+### 2019-07-11 ~ Theo
+
+0.17.00-2thru
+
+* R - THRU.js: Abstract various function parameters from scene to object
+* R - THRU.js: Continue cleanup
+
 ### 2019-07-10 ~ Theo
 
 0.17.00-1thru

@@ -3,16 +3,15 @@
 // jshint loopfunc: true
 
 
-
 let THRU = {
 
 	copyright: "Copyright 2019 Ladybug Tools authors. MIT License",
-	date: "2019-07-10",
+	date: "2019-07-11",
 	description: "Three.js Utilities: all this is a bit idiosyncratic / a random collection of stuff",
 	helpFile: "../js-core/thru-threejs-utilities.md",
 	license: "MIT License",
 	urlSourceCode: "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-00/js-core",
-	version: "0.17.00-1thru"
+	version: "0.17.00-2thru"
 
 };
 
@@ -22,7 +21,7 @@ let THRU = {
 
 
 THRU.onThreejsSceneLoaded = function() {
-
+	// used where?
 	return THR.scene;
 
 };
@@ -30,7 +29,7 @@ THRU.onThreejsSceneLoaded = function() {
 
 
 THRU.setSceneDispose = function( obj = THR.scene.children ) {
-	//console.log( 'THR.scene', THR.scene );
+	// console.log( 'THR.scene', THR.scene );
 	// Need a test to show it's working
 
 	THR.scene.traverse( function ( child ) {
@@ -72,7 +71,6 @@ THRU.setSceneDispose = function( obj = THR.scene.children ) {
 
 
 ////////// Camera and Controls
-
 
 THRU.zoomObjectBoundingSphere = function( obj = THR.scene ) {
 	//console.log( 'obj', obj );
@@ -128,13 +126,11 @@ THRU.zoomObjectBoundingSphere = function( obj = THR.scene ) {
 
 
 
-
 ////////// Visibility
 
-THRU.toggleSurfaces = function() {
-	// TBD' update from scene to object
+THRU.toggleSurfaces = function( obj = THR.scene ) {
 
-	THR.scene.traverse( function ( child ) {
+	obj.traverse( function ( child ) {
 
 		if ( child instanceof THREE.Mesh ) {
 
@@ -148,10 +144,9 @@ THRU.toggleSurfaces = function() {
 
 
 
-THRU.toggleWireframe = function() {
-		// TBD' update from scene to object
+THRU.toggleWireframe = function( obj = THR.scene ) {
 
-	THR.scene.traverse( function ( child ) {
+	obj.traverse( function ( child ) {
 
 		if ( child instanceof THREE.Mesh ) {
 
@@ -165,8 +160,8 @@ THRU.toggleWireframe = function() {
 
 
 
-THRU.toggleSurfaceNormals = function() {
-	// TBD' update from scene to object
+THRU.toggleSurfaceNormals = function( obj = THR.scene ) {
+	//
 
 	let material = new THREE.MeshNormalMaterial();
 
@@ -177,7 +172,7 @@ THRU.toggleSurfaceNormals = function() {
 
 		THRU.helperNormalsFaces = new THREE.Group();
 
-		THR.scene.traverse( function ( child ) {
+		obj.traverse( function ( child ) {
 
 			if ( child instanceof THREE.Mesh && child.visible ) {
 
@@ -187,12 +182,10 @@ THRU.toggleSurfaceNormals = function() {
 
 					const helperNormalsFace = new THREE.FaceNormalsHelper( child, 2, 0xff00ff, 3 );
 					THRU.helperNormalsFaces.add( helperNormalsFace );
-					THRU.helperNormalsFaces.visible = false;
+					//THRU.helperNormalsFaces.visible = false;
 					//console.log( 'helperNormalsFace', helperNormalsFace );
 
 				} else if ( types.includes( child.geometry.type ) === true ) {
-
-					//console.log( 'child', child.position, child.rotation );
 
 					const geometry = new THREE.Geometry();
 					const geo = geometry.fromBufferGeometry( child.geometry );
@@ -202,7 +195,7 @@ THRU.toggleSurfaceNormals = function() {
 					const helperNormalsFace = new THREE.FaceNormalsHelper( mesh, 0.05 * THRU.radius, 0xff00ff, 3 );
 
 					THRU.helperNormalsFaces.add( helperNormalsFace );
-					THRU.helperNormalsFaces.visible = false;
+					//THRU.helperNormalsFaces.visible = false;
 
 				} else {
 
@@ -215,7 +208,8 @@ THRU.toggleSurfaceNormals = function() {
 		} );
 
 		THRU.helperNormalsFaces.name = 'helperNormalsFaces';
-		THR.scene.add( THRU.helperNormalsFaces );
+		obj.add( THRU.helperNormalsFaces );
+
 		THRU.helperNormalsFaces.visible = false;
 
 	}
@@ -294,7 +288,7 @@ THRU.xxxxgetSettings = function() {
 
 };
 
-
+// add bbox??
 
 
 THRU.setHelpers = function( radius = 50 ) {
@@ -308,18 +302,6 @@ THRU.setHelpers = function( radius = 50 ) {
 	window.addEventListener( 'keyup', () => THR.controls.autoRotate=false, false );
 	THR.renderer.domElement.addEventListener( 'click', () => THR.controls.autoRotate=false, false );
 	THR.renderer.domElement.addEventListener( 'touchstart', () => THR.controls.autoRotate=false, false );
-
-	/*
-	if ( window.self === window.top ) { // don't rotate if in an iframe
-
-		THR.controls.autoRotate = true;
-
-	} else {
-
-		THR.controls.enableZoom = false;
-
-	}
-	*/
 
 };
 
@@ -342,7 +324,7 @@ THRU.toggleAxesHelper = function() {
 
 
 
-////////// Info
+////////// Info / move to a view menu??
 
 
 THRU.getRendererInfo = function() {
@@ -459,7 +441,6 @@ THRU.addSomeLights2 = function() {
 
 
 
-
 ////////// Get some meshes and stuff for testing or annotating
 
 THRU.getGeometry = function() {
@@ -467,6 +448,7 @@ THRU.getGeometry = function() {
 	// useful debug snippet
 	const geometry = new THREE.TorusKnotBufferGeometry( 10, 3, 100, 16 );
 	//const geometry = new THREE.BoxBufferGeometry( 20, 20, 20 );
+
 	const material = new THREE.MeshNormalMaterial();
 	const mesh = new THREE.Mesh( geometry, material );
 
@@ -479,8 +461,8 @@ THRU.getGeometry = function() {
 	return mesh;
 
 	// add to HTML file:
-	//mesh = THRU.getGeometry();
-	//THR.scene.add( mesh );
+	// mesh = THRU.getGeometry();
+	// THR.scene.add( mesh );
 
 };
 
@@ -589,6 +571,3 @@ THRU.drawPlacard = function( text = 'abc', scale = 0.05, color = Math.floor( Mat
 	}
 
 };
-
-
-
