@@ -8,6 +8,11 @@
 
 Three.js Utilities: all this is a bit idiosyncratic / a random collection of stuff
 
+* THRU.setSceneDispose
+* THRU.zoomObjectBoundingSphere
+* THRU.toggleAxesHelper
+* THRU.toggleGroundHelper
+
 
 </details>
 
@@ -16,7 +21,8 @@ Three.js Utilities: all this is a bit idiosyncratic / a random collection of stu
 <summary>To Do / Wish List</summary>
 
 
-
+* Split into two or more modules??
+* THRU.setSceneDispose << whole process needs looking at
 
 </details>
 
@@ -30,6 +36,7 @@ Three.js Utilities: all this is a bit idiosyncratic / a random collection of stu
 <details>
 
 <summary>Change Log</summary>
+
 
 ### 2019-07-11 ~ Theo
 

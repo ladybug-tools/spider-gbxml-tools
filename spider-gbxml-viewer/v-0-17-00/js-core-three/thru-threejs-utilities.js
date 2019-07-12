@@ -388,9 +388,6 @@ THRU.toggleAxesHelper = function() {
 
 	THRU.axesHelper.visible = !THRU.axesHelper.visible;
 
-
-
-
 };
 
 
@@ -479,6 +476,7 @@ THRU.getSurfaceEdgesThreejs = function() {
 	return surfaceEdges;
 
 };
+
 
 
 THRU.toggleEdgesThreejs = function() {
