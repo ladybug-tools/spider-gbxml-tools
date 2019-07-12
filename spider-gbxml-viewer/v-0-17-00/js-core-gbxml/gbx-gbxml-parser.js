@@ -83,8 +83,6 @@ GBX.parseFile = function( gbxml )  {
 	//THR.scene.remove( GBX.surfaceOpenings, GBX.surfaceEdgesThreejs );
 	GBX.surfaceEdgesThreejs = [];
 	GBX.surfaceOpenings = [];
-
-	//THR.scene.remove( GBX.boundingBox );
 	GBX.boundingBox = undefined;
 
 	if ( GBX.surfaceGroup ) {
@@ -120,7 +118,6 @@ GBX.parseFile = function( gbxml )  {
 	//console.log( 'GBX.surfaces', GBX.surfaces );
 
 	//GBX.surfacesIndexed = GBX.surfaces.map( ( surface, index ) => `indexGbx="${ index }"` + surface );
-
 
 	const meshes = GBX.getSurfaceMeshes( GBX.surfaces );
 
@@ -300,7 +297,7 @@ GBX.getBufferGeometry = function( vertices, color ) {
 	const geometry = new THREE.BufferGeometry();
 	geometry.setFromPoints( vertices );
 	geometry.computeVertexNormals();
-	
+
 	const material = new GBX.materialType( { color: color, opacity: GBX.opacity, side: 2, transparent: true });
 
 	const mesh = new THREE.Mesh( geometry, material );

@@ -1,17 +1,21 @@
-/* globals THREE, THR, THRU, FOB, GBXU */
+/* globals THREE, THR, THRU, GBX */
 // jshint esversion: 6
 
 var GBXU = {
 
 	copyright: "Copyright 2019 Ladybug Tools authors. MIT License",
-	date: "2019-07-11",
+	date: "2019-07-12",
 	description: "GbXML utilities: all this is a bit idiosyncratic / a random collection of stuff",
 	helpFile: "../js-view-gbxml/gbxu-gbxml-utilities.md",
 	license: "MIT License",
 	urlSourceCode: "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-00/js-core-gbxml",
-	version: "0.17.00-2gbxu"
+	version: "0.17.00-3gbxu"
 
 };
+
+
+GBXU.filtersDefault = [ "Air", "ExposedFloor", "ExteriorWall", "RaisedFloor", "Roof",  "Shade" ];
+
 
 
 ////////// inits & info
@@ -19,50 +23,57 @@ var GBXU = {
 
 GBXU.onGbxParse = function() {
 
-	GBXU.setSurfaceTypesVisible( GBX.filtersDefault );
+	GBXU.setSurfaceTypesVisible( GBXU.filtersDefault );
 
 	GBXU.toggleOpenings();
 
-	THRU.zoomObjectBoundingSphere( GBX.boundingBox );
-	THR.controls.autoRotate = true;
+	GBXU.surfaceGroupVisible = new THREE.Object3D();
+	const arr = GBX.surfacesFiltered.flatMap( ( surface, index ) => GBX.surfaceGroup.children[ index ].clone() );
+	GBXU.surfaceGroupVisible.add( ...arr );
+	//console.log( 'GBXU.surfaceGroupVisible', GBXU.surfaceGroupVisible );
 
-	//THRU.toggleGroundHelper();
-	//THRU.groundHelper.visible = true;
+	const bbox = new THREE.Box3().setFromObject( GBXU.surfaceGroupVisible );
+	GBXU.boundingBox = new THREE.Box3Helper( bbox, 0xffff00 );
+
+	THRU.toggleAxesHelper();
+
+	THRU.zoomObjectBoundingSphere( GBXU.boundingBox );
+
+	GBX.elevation = GBXU.boundingBox.box.min.z - 0.001 * THRU.radius;
+
+	THRU.toggleGroundHelper( THRU.center, GBX.elevation );
+
+	THR.controls.autoRotate = true;
 
 	GBXU.setStats();
 
-	window.removeEventListener( 'keyup', GBXU.onGbxParse );
-	THR.renderer.domElement.removeEventListener( 'click', GBXU.onGbxParse );
-	THR.renderer.domElement.removeEventListener( 'touchstart', GBXU.onGbxParse );
+	window.addEventListener( 'keyup', GBXU.onSetRotate , false );
+	THR.renderer.domElement.addEventListener( 'click', GBXU.onSetRotate, false );
+	THR.renderer.domElement.addEventListener( 'touchstart', GBXU.onSetRotate, false );
 
 };
 
 
 
-GBXU.getSceneInfo = function() {
+GBXU.onSetRotate = function() {
 
-	let htm
+	GBXU.sendSurfacesToThreeJs( GBX.surfaces );
 
-	htm = GBX.count3 ?
+	THRU.toggleGroundHelper();
 
-		`<p>
-		<div>triangles: ${ GBX.count3.toLocaleString() }</div>
-		<div>quads: ${ GBX.count4.toLocaleString() }</div>
-		<div>five+: ${ GBX.count5plus.toLocaleString() }</div>
-		<div>openings: ${ GBX.countOpenings.toLocaleString() }</div>
-		</p>`
-	:
-	`
-		To be added
-	`;
-
-	return htm;
+	window.removeEventListener( 'keyup', GBXU.onSetRotate );
+	THR.renderer.domElement.removeEventListener( 'click', GBXU.onSetRotate );
+	THR.renderer.domElement.removeEventListener( 'touchstart', GBXU.onSetRotate );
 
 };
 
 
 
-GBXU.setStats = function() {
+GBXU.setStats = function( target = "#FOBdivAppStats" ) {
+
+	const tag = document.body.querySelectorAll( target );
+
+	if ( tag.length === 0 ) { return; }
 
 	GBX.openings = [];
 
@@ -88,10 +99,8 @@ GBXU.setStats = function() {
 	GBX.zones = Array.isArray( GBX.zones ) ? GBX.zones : [];
 	//console.log( 'GBX.zones', GBX.zones );
 
-	const verticesCount = GBX.surfaces.map( surfaces => GBX.getCoordinates( surfaces ) );
+	//const verticesCount = GBX.surfaces.map( surfaces => GBX.getCoordinates( surfaces ) );
 	//console.log( 'vertices', vertices );
-
-	const count = verticesCount.reduce( ( count, val, index ) => count + verticesCount[ index ].length, 0 );
 
 	GBX.constructions = GBX.text.match( /<Construction(.*?)<\/Construction>/gi ) || [];
 
@@ -101,9 +110,9 @@ GBXU.setStats = function() {
 
 	GBX.windowTypes = GBX.text.match( /<WindowType (.*?)<\/WindowType>/gi ) || [];
 
-	const timeToLoad = performance.now() - GBX.timeStart;
+	//const timeToLoad = performance.now() - GBX.timeStart;
 
-	items = {
+	const items = {
 		"Space:": GBX.spaces.length,
 		"Storeys": GBX.storeys.length,
 		"Zones": GBX.zones.length,
@@ -113,9 +122,9 @@ GBXU.setStats = function() {
 		"Materials": GBX.materials.length,
 		"Layers": GBX.layers.length,
 		"Window Types": GBX.windowTypes.length
-	}
+	};
 
-	keys = Object.keys( items )
+	const keys = Object.keys( items );
 	//console.log( 'keys', keys );
 
 	GBXU.stats =
@@ -127,9 +136,30 @@ GBXU.setStats = function() {
 		</div>`
 	).join( "");
 
-	tag = document.body.querySelectorAll( "#FOBdivAppStats" );
-
 	if ( tag.length > 0 ) { tag[ 0 ].innerHTML = GBXU.stats; }
+
+};
+
+
+
+GBXU.getSceneInfo = function() {
+
+	let htm;
+
+	htm = GBX.count3 ?
+
+		`<p>
+		<div>triangles: ${ GBX.count3.toLocaleString() }</div>
+		<div>quads: ${ GBX.count4.toLocaleString() }</div>
+		<div>five+: ${ GBX.count5plus.toLocaleString() }</div>
+		<div>openings: ${ GBX.countOpenings.toLocaleString() }</div>
+		</p>`
+	:
+	`
+		To be added
+	`;
+
+	return htm;
 
 };
 
@@ -201,7 +231,7 @@ GBXU.toggleOpenings = function() {
 
 		GBX.surfaceOpenings= new THREE.Group();
 		GBX.surfaceOpenings.name = 'GBX.surfaceOpenings';
-		surfaceOpenings = GBXU.getSurfaceOpenings();
+		const surfaceOpenings = GBXU.getSurfaceOpenings();
 		//console.log( 'surfaceOpenings', surfaceOpenings );
 
 		if ( !surfaceOpenings.length ) { return; }
@@ -240,7 +270,7 @@ GBXU.setOpeningsVisible = function( visible = true ) {
 
 	} );
 
-}
+};
 
 
 
@@ -255,7 +285,6 @@ GBXU.setSurfaceTypesVisible = function ( typesArray ) {
 
 	), [] );
 
-	//divReportsLog.innerHTML =
 	GBXU.sendSurfacesToThreeJs( GBX.surfacesFiltered );
 
 };
@@ -281,11 +310,11 @@ GBXU.sendSurfacesToThreeJs = function( surfacesText ) {
 
 	GBXU.addMeshes();
 
-	if ( !GBX.boundingBox ) {
+	if ( !GBXU.boundingBox ) {
 
 		const bbox = new THREE.Box3().setFromObject( GBX.surfaceGroup );
-		GBX.boundingBox = new THREE.Box3Helper( bbox, 0xffff00 );
-		THR.scene.add( GBX.boundingBox );
+		GBXU.boundingBox = new THREE.Box3Helper( bbox, 0xffff00 );
+		THR.scene.add( GBXU.boundingBox );
 
 	}
 
@@ -294,8 +323,6 @@ GBXU.sendSurfacesToThreeJs = function( surfacesText ) {
 	return txt;
 
 };
-
-
 
 
 

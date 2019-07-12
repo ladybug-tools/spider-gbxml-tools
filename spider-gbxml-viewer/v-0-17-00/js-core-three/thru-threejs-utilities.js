@@ -18,31 +18,37 @@ let THRU = {
 
 THRU.init= function( radius = 50 ) {
 
-	// called from main html / asumes three,js is loaded
+	// called from main html / assumes three.js is loaded
 
 	THRU.radius = radius;
 
 	THRU.toggleAxesHelper();
 
+	THRU.toggleGroundHelper();
+
 	THRU.addSomeLights2();
 
-	window.addEventListener( 'keyup', () => THR.controls.autoRotate=false, false );
-	THR.renderer.domElement.addEventListener( 'click', () => THR.controls.autoRotate=false, false );
-	THR.renderer.domElement.addEventListener( 'touchstart', () => THR.controls.autoRotate=false, false );
+	window.addEventListener( 'keyup', THRU.onSetRotate , false );
+	THR.renderer.domElement.addEventListener( 'click', THRU.onSetRotate, false );
+	THR.renderer.domElement.addEventListener( 'touchstart', THRU.onSetRotate, false );
 
 };
+
+
+
+THRU.onSetRotate = function() {
+
+	THR.controls.autoRotate = false;
+
+	window.removeEventListener( 'keyup', THRU.onSetRotate );
+	THR.renderer.domElement.removeEventListener( 'click', THRU.onSetRotate );
+	THR.renderer.domElement.removeEventListener( 'touchstart', THRU.onSetRotate );
+
+};
+
 
 
 ////////// Scene
-
-
-THRU.xxxonThreejsSceneLoaded = function() {
-	// used where?
-	return THR.scene;
-
-};
-
-
 
 THRU.setSceneDispose = function( obj = THR.scene.children ) {
 	// console.log( 'THR.scene', THR.scene );
@@ -213,8 +219,6 @@ THRU.zoomObjectBoundingSphere = function( obj = THR.scene ) {
 
 	if ( bbox.isEmpty() === true ) { return; }
 
-	//if ( isNaN( bbox.max.x - bbox.min.x ) ) { console.log( 'zoom fail', {obj},{bbox} ); return; } // is there a better way of seeing if we have a good bbox?
-
 	const sphere = bbox.getBoundingSphere( new THREE.Sphere() );
 	const center = sphere.center;
 	const radius = sphere.radius;
@@ -229,9 +233,9 @@ THRU.zoomObjectBoundingSphere = function( obj = THR.scene ) {
 	THR.camera.updateProjectionMatrix();
 
 	if ( THRU.axesHelper ) {
-
+console.log( '', 23 );
 		THRU.axesHelper.scale.set( radius, radius, radius );
-		THRU.axesHelper.position.copy( center);
+		THRU.axesHelper.position.copy( center );
 
 	}
 
@@ -384,11 +388,14 @@ THRU.toggleAxesHelper = function() {
 
 	THRU.axesHelper.visible = !THRU.axesHelper.visible;
 
+
+
+
 };
 
 
 
-THRU.toggleGroundHelper = function() {
+THRU.toggleGroundHelper = function( position = THR.scene.position.clone(), elevation = 0 ) {
 
 	// move to THRU but z min should be zero
 
@@ -398,21 +405,18 @@ THRU.toggleGroundHelper = function() {
 		//GBX.elevation = GBX.text.match( reElevation )[ 1 ];
 		//console.log( 'elevation', GBX.elevation );
 
-		elevation = GBX.boundingBox.box.min.z - 0.001 * THRU.radius;
-		elevation = 0;
+		//elevation = GBX.boundingBox.box.min.z - 0.001 * THRU.radius;
+		//elevation = 0;
 
 		const geometry = new THREE.PlaneGeometry( 2 * THRU.radius, 2 * THRU.radius);
 		const material = new THREE.MeshPhongMaterial( { color: 0x888888, opacity: 0.5, side: 2 } );
 		THRU.groundHelper = new THREE.Mesh( geometry, material );
 		THRU.groundHelper.receiveShadow = true;
 
-		THRU.groundHelper.position.set( GBX.boundingBox.position.x, GBX.boundingBox.position.y, parseFloat( elevation ) );
-
+		THRU.groundHelper.position.set( position.x, position.y, parseFloat( elevation ) );
 		THRU.groundHelper.name = "groundHelper";
 
 		THR.scene.add( THRU.groundHelper );
-
-		THRU.groundHelper.visible = false;
 
 		return;
 

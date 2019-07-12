@@ -1,6 +1,6 @@
 # THR Three.js Read Me
 
-[Source code](  )
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-00/js-core-three )
 
 <details open >
 
@@ -15,6 +15,14 @@ Three.js core. Seems to be running well. Standing on the shoulders of the Three.
 
 <summary>To Do / Wish List</summary>
 
+Initiates a Three.js object in its own namespace "THR".
+
+* Creates a scene
+* Adds camera, controller
+* Add function to handle a window resize event
+* Add function to handle render animation frames
+
+All the basic necessities to create a typical Three.js scene graph
 
 </details>
 
@@ -24,6 +32,17 @@ Three.js core. Seems to be running well. Standing on the shoulders of the Three.
 
 
 </details>
+
+<details open >
+
+<summary>Links of interest</summary>
+
+* https://threejs.org/
+* https://threejs.org/examples/
+* https://threejs.org/docs/
+
+</details>
+
 
 <details>
 
