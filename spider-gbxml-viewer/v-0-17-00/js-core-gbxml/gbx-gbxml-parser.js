@@ -87,7 +87,6 @@ GBX.parseFile = function( gbxml )  {
 	//THR.scene.remove( GBX.boundingBox );
 	GBX.boundingBox = undefined;
 
-
 	if ( GBX.surfaceGroup ) {
 
 		THR.scene.remove( GBX.surfaceGroup );
@@ -122,8 +121,6 @@ GBX.parseFile = function( gbxml )  {
 
 	//GBX.surfacesIndexed = GBX.surfaces.map( ( surface, index ) => `indexGbx="${ index }"` + surface );
 
-	GBX.materialType = THR.scene.getObjectByName( 'lightAmbient') ? THREE.MeshPhongMaterial : THREE.MeshBasicMaterial;
-	//GBX.materialType = THREE.MeshBasicMaterial;
 
 	const meshes = GBX.getSurfaceMeshes( GBX.surfaces );
 
@@ -146,6 +143,9 @@ GBX.parseFile = function( gbxml )  {
 GBX.getSurfaceMeshes = function( surfaces ) {
 	// console.log( 'surfaces', surfaces );
 
+	GBX.materialType = THR.scene.getObjectByName( 'lightAmbient') ? THREE.MeshPhongMaterial : THREE.MeshBasicMaterial;
+	//GBX.materialType = THREE.MeshBasicMaterial;
+
 	const meshes = surfaces.map( ( surface ) => {
 
 		const polyLoops = GBX.getPolyLoops( surface );
@@ -161,7 +161,6 @@ GBX.getSurfaceMeshes = function( surfaces ) {
 
 		}
 */
-
 
 		const index = GBX.surfaces.indexOf( surface );
 		//console.log( 'index', index );
@@ -285,6 +284,7 @@ GBX.getSurfaceMesh = function( arr, index, holes ) {
 
 	}
 
+	mesh.visible = false;
 	mesh.castShadow = mesh.receiveShadow = true;
 	mesh.userData.index = index;
 
@@ -299,8 +299,8 @@ GBX.getBufferGeometry = function( vertices, color ) {
 
 	const geometry = new THREE.BufferGeometry();
 	geometry.setFromPoints( vertices );
-
 	geometry.computeVertexNormals();
+	
 	const material = new GBX.materialType( { color: color, opacity: GBX.opacity, side: 2, transparent: true });
 
 	const mesh = new THREE.Mesh( geometry, material );

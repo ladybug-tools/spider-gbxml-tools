@@ -23,11 +23,11 @@ GBXU.onGbxParse = function() {
 
 	GBXU.toggleOpenings();
 
-	THR.controls.autoRotate = true;
 	THRU.zoomObjectBoundingSphere( GBX.boundingBox );
+	THR.controls.autoRotate = true;
 
-	THRU.toggleGroundHelper();
-	THRU.groundHelper.visible = true;
+	//THRU.toggleGroundHelper();
+	//THRU.groundHelper.visible = true;
 
 	GBXU.setStats();
 
