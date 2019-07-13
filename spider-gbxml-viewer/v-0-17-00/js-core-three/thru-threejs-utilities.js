@@ -623,7 +623,7 @@ THRU.getSomeBoxes = function( count = 500, size = 10, material = new THREE.MeshN
 THRU.drawPlacard = function( text = 'abc', scale = 0.05, color = Math.floor( Math.random() * 255 ), x = 0, y = 0, z = 10 ) {
 
 	// add update
-	// 2016-02-27 ~ https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/placards
+	// 2019-07-12 ~ https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/placards
 
 	const placard = new THREE.Object3D();
 
