@@ -12,6 +12,12 @@ Three.js Utilities: all this is a bit idiosyncratic / a random collection of stu
 * THRU.zoomObjectBoundingSphere
 * THRU.toggleAxesHelper
 * THRU.toggleGroundHelper
+* THRU.toggleEdges
+* THRU.addSomeLights
+* THRU.addSomeLights2
+* THRU.getGeometry
+* THRU.getSomeBoxes
+* THRU.drawPlacard
 
 
 </details>
@@ -20,9 +26,8 @@ Three.js Utilities: all this is a bit idiosyncratic / a random collection of stu
 
 <summary>To Do / Wish List</summary>
 
-
 * Split into two or more modules??
-* THRU.setSceneDispose << whole process needs looking at
+
 
 </details>
 
@@ -37,6 +42,18 @@ Three.js Utilities: all this is a bit idiosyncratic / a random collection of stu
 
 <summary>Change Log</summary>
 
+
+### 2019-07-15 ~ Theo
+
+
+0.17.00-3thru
+
+* R - THRU.js: Better toggleEdges
+* R - THRU.js:  Cleanup
+
+Dealt with??
+
+* THRU.setSceneDispose << whole process needs looking at
 
 ### 2019-07-11 ~ Theo
 

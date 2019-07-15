@@ -4,12 +4,12 @@
 
 var GBX = {
 	copyright: "Copyright 2019 Ladybug Tools authors. MIT License",
-	date: "2019-07-11",
-	description: "Does all the heavy lifting",
+	date: "2019-07-15",
+	description: "Parse gbXML surfaces etc and use the data to create Three.js meshes",
 	helpFile: "../js-core-gbxml/gbx-gbxml-parser.md",
 	license: "MIT License",
 	urlSourceCode: "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-00/js-core-gbxml",
-	version: "0.17.00-2gbx"
+	version: "0.17.00-3gbx"
 };
 
 GBX.filtersDefault = [ "Air", "ExposedFloor", "ExteriorWall", "RaisedFloor", "Roof",  "Shade",
@@ -71,20 +71,20 @@ GBX.onFileZipLoad = function() { GBX.parseFile( FOB.text ); };
 
 
 GBX.parseFile = function( gbxml )  {
+	//console.log( 'gbxml', gbxml );
 
 	if ( !gbxml || gbxml.includes( "xmlns" ) === false ) { return; }
-	//console.log( 'gbxml', gbxml );
 
 	GBX.timeStart = performance.now();
 
 	// Fix this mess
-	THRU.setSceneDispose( [ GBX.surfaceMeshes, GBX.surfaceOpenings, GBX.surfaceEdgesThreejs, GBX.boundingBox, THRU.helperNormalsFaces, THRU.groundHelper ] );
+	THRU.setSceneDispose( [ GBX.surfaceGroup, GBX.openingGroup, THRU.edgeGroup, GBX.boundingBox, THRU.helperNormalsFaces, THRU.groundHelper ] );
 
-	//THR.scene.remove( GBX.surfaceOpenings, GBX.surfaceEdgesThreejs );
-	GBX.surfaceEdgesThreejs = [];
-	GBX.surfaceOpenings = [];
+	THRU.edgeGroup = [];
+	GBX.openingGroup = [];
 	GBX.boundingBox = undefined;
 
+	/*
 	if ( GBX.surfaceGroup ) {
 
 		THR.scene.remove( GBX.surfaceGroup );
@@ -108,6 +108,7 @@ GBX.parseFile = function( gbxml )  {
 		} );
 
 	}
+	*/
 
 
 	GBX.text = gbxml.replace( /\r\n|\n/g, '' );
@@ -116,8 +117,6 @@ GBX.parseFile = function( gbxml )  {
 	const reSurface = /<Surface(.*?)<\/surface>/gi;
 	GBX.surfaces = GBX.text.match( reSurface );
 	//console.log( 'GBX.surfaces', GBX.surfaces );
-
-	//GBX.surfacesIndexed = GBX.surfaces.map( ( surface, index ) => `indexGbx="${ index }"` + surface );
 
 	const meshes = GBX.getSurfaceMeshes( GBX.surfaces );
 

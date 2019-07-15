@@ -1,11 +1,13 @@
 # GBX gbXML Parser Read Me
 
-[Source code](  )
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-00/js-core-gbxml )
 
 <details open >
 
 <summary>Concept</summary>
 
+* Parse gbXML surfaces etc and use the data to create Three.js meshes
+* Does all the heavy lifting
 
 </details>
 
@@ -26,6 +28,14 @@
 <details>
 
 <summary>Change Log</summary>
+
+
+### 2019-07-15 ~ Theo
+
+0.17.00-2gbx
+
+* R - GBX.js: Refactor var names
+
 
 ### 2019-07-11 ~ Theo
 

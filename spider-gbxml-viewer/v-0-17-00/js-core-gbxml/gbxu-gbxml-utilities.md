@@ -34,6 +34,12 @@ Various utilities to help with display of gbXML data
 
 <summary>Change Log</summary>
 
+### 2019-07-15 ~ Theo
+
+0.17.00-3gbxu
+
+* R - GBXU.js: Rejig handling of edges and openings
+
 ### 2019-07-10 ~ Theo
 
 0.17.00-3gbxu

@@ -6,14 +6,15 @@
 let THRU = {
 
 	copyright: "Copyright 2019 Ladybug Tools authors. MIT License",
-	date: "2019-07-11",
+	date: "2019-07-15",
 	description: "Three.js Utilities: all this is a bit idiosyncratic / a random collection of stuff",
 	helpFile: "../js-core/thru-threejs-utilities.md",
 	license: "MIT License",
 	urlSourceCode: "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-00/js-core",
-	version: "0.17.00-2thru"
+	version: "0.17.00-4thru"
 
 };
+
 
 
 THRU.init= function( radius = 50 ) {
@@ -22,9 +23,11 @@ THRU.init= function( radius = 50 ) {
 
 	THRU.radius = radius;
 
-	THRU.toggleAxesHelper();
+	//THRU.toggleAxesHelper();
 
-	THRU.toggleGroundHelper();
+	//THRU.toggleGroundHelper();
+
+	//THRU.toggleEdges();
 
 	THRU.addSomeLights2();
 
@@ -157,56 +160,6 @@ THRU.setStats = function() {
 
 
 
-THRU.xxxxgetSettings = function() {
-
-
-	let htm =
-	`
-		<p><i>Update display parameters</i>
-			<a title="View the Three.js Utilities Read Me" href="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/cookbook/spider-viewer-threejs-utilities/" target="_blank" >?</a>
-		</p>
-
-		<p>
-			<button onclick="THR.controls.autoRotate = !THR.controls.autoRotate;" >toggle rotation</button>
-
-			<button onclick=THRU.toggleAxesHelper(); >toggle axes</button>
-		</p>
-
-		<p>
-			<button onclick=THRU.toggleSurfaces(); >toggle surfaces</button>
-
-			<button onclick=THRU.toggleEdges(); >toggle edges</button>
-		</p>
-
-
-		<p>
-			<button onclick=THRU.toggleWireframe(); >toggle wireframe</button>
-
-			<button onclick=THRU.toggleSurfaceNormals(); title="All Three.js triangles have a normal. See them here." > toggle surface normals </button>
-		</p>
-
-		<p title="opacity: 0 to 100%" >opacity
-			<output id=outOpacity class=floatRight >85%</output><br>
-
-			<input type="range" id="rngOpacity" min=0 max=100 step=1 value=85 oninput=THRU.updateOpacity(); >
-		</p>
-
-		<p>
-			<button onclick=THRU.zoomObjectBoundingSphere(GBX.surfaceMeshes);>zoom all</button>
-
-			<button accesskey="z" onclick=THR.controls.screenSpacePanning=!THR.controls.screenSpacePanning; title="Access key + B: Up/down curser kes to forward/backward or up/down" >toggle cursor keys</button>
-		</p>
-
-		<div>  </div>
-
-	`;
-
-	return htm;
-
-};
-
-
-
 ////////// Camera and Controls
 
 THRU.zoomObjectBoundingSphere = function( obj = THR.scene ) {
@@ -233,7 +186,7 @@ THRU.zoomObjectBoundingSphere = function( obj = THR.scene ) {
 	THR.camera.updateProjectionMatrix();
 
 	if ( THRU.axesHelper ) {
-console.log( '', 23 );
+
 		THRU.axesHelper.scale.set( radius, radius, radius );
 		THRU.axesHelper.position.copy( center );
 
@@ -425,85 +378,56 @@ THRU.toggleGroundHelper = function( position = THR.scene.position.clone(), eleva
 
 
 
-THRU.toggleEdges = function() {
+THRU.getMeshEdges = function( obj = THR.scene ) {
 
-	if ( GBX.surfaceEdges && THRU.surfaceEdges.length === 0 ) {
-
-		THRU.surfaceEdges= new THREE.Group();
-		THRU.surfaceEdges.name = 'THRU.surfaceEdges';
-		THRU.surfaceEdges = THRU.getSurfaceEdgesGbxml();
-
-		//THR.scene.add( THRU.surfaceEdges );
-
-		return;
-
-	}
-
-
-	THR.scene.traverse( function ( child ) {
-
-		if ( child instanceof THREE.Line ) {
-
-			child.visible = !child.visible;
-
-		}
-
-	} );
-
-};
-
-
-
-THRU.getSurfaceEdgesThreejs = function() {
-
-	const surfaceEdges = [];
+	const meshEdges = [];
 	const lineMaterial = new THREE.LineBasicMaterial( { color: 0x888888 } );
 
-	for ( let mesh of THRU.surfaceGroup.children ) {
+	for ( let mesh of obj.children ) {
 
-		mesh.userData.edges = mesh;
+		if ( !mesh.geometry ) { continue; }
+
 		const edgesGeometry = new THREE.EdgesGeometry( mesh.geometry );
 		const surfaceEdge = new THREE.LineSegments( edgesGeometry, lineMaterial );
 		surfaceEdge.rotation.copy( mesh.rotation );
 		surfaceEdge.position.copy( mesh.position );
-		surfaceEdges.push( surfaceEdge );
+		meshEdges.push( surfaceEdge );
 
 	}
+	//console.log( 'meshEdges', meshEdges );
 
-	//console.log( 'surfaceEdges', surfaceEdges );
-	//THR.scene.add( ...surfaceEdges );
-
-	return surfaceEdges;
+	return meshEdges;
 
 };
 
 
 
-THRU.toggleEdgesThreejs = function() {
+THRU.toggleEdges = function( obj = THR.scene ) {
 
-	if ( THRU.surfaceEdgesThreejs && THRU.surfaceEdgesThreejs.length === 0 ) {
+	if ( THRU.edgeGroup && THRU.edgeGroup.length === 0 ) {
 
-		THRU.surfaceEdgesThreejs = new THREE.Group();
-		THRU.surfaceEdgesThreejs.name = 'THRU.surfaceEdgesThreejs';
-		const surfaceEdgesThreejs = THRU.getSurfaceEdgesThreejs();
-		//console.log( 'surfaceEdgesThreejs', surfaceEdgesThreejs );
+		THRU.edgeGroup = new THREE.Group();
+		THRU.edgeGroup.name = 'THRU.edgeGroup';
 
-		THRU.surfaceEdgesThreejs.add( ...surfaceEdgesThreejs );
+		const edgeGroup = THRU.getMeshEdges( obj );
+		//console.log( 'edgeGroup', edgeGroup );
 
-		THR.scene.add( THRU.surfaceEdgesThreejs );
+		THRU.edgeGroup.add( ...edgeGroup );
+
+		THR.scene.add( THRU.edgeGroup );
 
 		return;
 
 	}
 
 
-	THRU.surfaceEdgesThreejs.traverse( function ( child ) {
+	THRU.edgeGroup.traverse( child => {
 
-		if ( child instanceof THREE.Line ) {
+		//if ( child instanceof THREE.Line ) {
 
 			child.visible = !child.visible;
 
-		}
+		//}
 
 	} );
 

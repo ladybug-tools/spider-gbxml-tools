@@ -4,12 +4,12 @@
 var GBXU = {
 
 	copyright: "Copyright 2019 Ladybug Tools authors. MIT License",
-	date: "2019-07-12",
+	date: "2019-07-15",
 	description: "GbXML utilities: all this is a bit idiosyncratic / a random collection of stuff",
 	helpFile: "../js-view-gbxml/gbxu-gbxml-utilities.md",
 	license: "MIT License",
 	urlSourceCode: "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-00/js-core-gbxml",
-	version: "0.17.00-3gbxu"
+	version: "0.17.00-4gbxu"
 
 };
 
@@ -47,23 +47,25 @@ GBXU.onGbxParse = function() {
 
 	GBXU.setStats();
 
-	window.addEventListener( 'keyup', GBXU.onSetRotate , false );
-	THR.renderer.domElement.addEventListener( 'click', GBXU.onSetRotate, false );
-	THR.renderer.domElement.addEventListener( 'touchstart', GBXU.onSetRotate, false );
+	window.addEventListener( 'keyup', GBXU.onFirstTouch , false );
+	THR.renderer.domElement.addEventListener( 'click', GBXU.onFirstTouch, false );
+	THR.renderer.domElement.addEventListener( 'touchstart', GBXU.onFirstTouch, false );
 
 };
 
 
 
-GBXU.onSetRotate = function() {
+GBXU.onFirstTouch = function() {
 
 	GBXU.sendSurfacesToThreeJs( GBX.surfaces );
 
 	THRU.toggleGroundHelper();
 
-	window.removeEventListener( 'keyup', GBXU.onSetRotate );
-	THR.renderer.domElement.removeEventListener( 'click', GBXU.onSetRotate );
-	THR.renderer.domElement.removeEventListener( 'touchstart', GBXU.onSetRotate );
+	THRU.toggleEdges( GBX.surfaceGroup );
+
+	window.removeEventListener( 'keyup', GBXU.onFirstTouch );
+	THR.renderer.domElement.removeEventListener( 'click', GBXU.onFirstTouch );
+	THR.renderer.domElement.removeEventListener( 'touchstart', GBXU.onFirstTouch );
 
 };
 
@@ -172,7 +174,7 @@ GBXU.getSurfaceOpenings = function() {
 	const v = ( arr ) => new THREE.Vector3().fromArray( arr );
 
 	const material = new THREE.LineBasicMaterial( { color: 0x444444, linewidth: 2, transparent: true } );
-	const surfaceOpenings = [];
+	const openingGroup = [];
 
 	for ( let surfaceText of GBX.surfaces ) {
 
@@ -209,16 +211,16 @@ GBXU.getSurfaceOpenings = function() {
 				//console.log( 'geometry', geometry );
 
 				const line = new THREE.LineLoop( geometry, material );
-				surfaceOpenings.push( line );
+				openingGroup.push( line );
 
 			}
 		}
 
 	}
 
-	//THR.scene.add( surfaceOpenings );
+	//THR.scene.add( openingGroup );
 
-	return surfaceOpenings;
+	return openingGroup;
 
 };
 
@@ -227,24 +229,24 @@ GBXU.getSurfaceOpenings = function() {
 GBXU.toggleOpenings = function() {
 	//console.log( '', 22 );
 
-	if ( GBX.surfaceOpenings && GBX.surfaceOpenings.length === 0 ) {
+	if ( GBX.openingGroup && GBX.openingGroup.length === 0 ) {
 
-		GBX.surfaceOpenings= new THREE.Group();
-		GBX.surfaceOpenings.name = 'GBX.surfaceOpenings';
-		const surfaceOpenings = GBXU.getSurfaceOpenings();
-		//console.log( 'surfaceOpenings', surfaceOpenings );
+		GBX.openingGroup = new THREE.Group();
+		GBX.openingGroup.name = 'GBX.openingGroup';
+		const openingGroup = GBXU.getSurfaceOpenings();
+		//console.log( 'openingGroup', openingGroup );
 
-		if ( !surfaceOpenings.length ) { return; }
+		if ( !openingGroup.length ) { return; }
 
-		GBX.surfaceOpenings.add( ...surfaceOpenings );
+		GBX.openingGroup.add( ...openingGroup );
 
-		THR.scene.add( GBX.surfaceOpenings );
+		THR.scene.add( GBX.openingGroup );
 
 		return;
 
 	}
 
-	GBX.surfaceOpenings.traverse( function ( child ) {
+	GBX.openingGroup.traverse( function ( child ) {
 
 		if ( child instanceof THREE.Line ) {
 
@@ -260,13 +262,13 @@ GBXU.toggleOpenings = function() {
 
 GBXU.setOpeningsVisible = function( visible = true ) {
 
-	GBX.surfaceOpenings.traverse( function ( child ) {
+	GBX.openingGroup.traverse( child  => {
 
-		if ( child instanceof THREE.Line ) {
+		//if ( child instanceof THREE.Line ) {
 
 			child.visible = visible;
 
-		}
+		//}
 
 	} );
 
