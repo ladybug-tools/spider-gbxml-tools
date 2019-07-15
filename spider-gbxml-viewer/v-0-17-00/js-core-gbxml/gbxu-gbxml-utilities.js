@@ -27,13 +27,15 @@ GBXU.onGbxParse = function() {
 
 	GBXU.toggleOpenings();
 
-	GBXU.surfaceGroupVisible = new THREE.Object3D();
-	const arr = GBX.surfacesFiltered.flatMap( ( surface, index ) => GBX.surfaceGroup.children[ index ].clone() );
-	GBXU.surfaceGroupVisible.add( ...arr );
+	//GBXU.surfaceGroupVisible = new THREE.Object3D();
+	//const arr = GBX.surfacesFiltered.flatMap( ( surface, index ) => GBX.surfaceGroup.children[ index ].clone() );
+	//GBXU.surfaceGroupVisible.add( ...arr );
 	//console.log( 'GBXU.surfaceGroupVisible', GBXU.surfaceGroupVisible );
 
-	const bbox = new THREE.Box3().setFromObject( GBXU.surfaceGroupVisible );
-	GBXU.boundingBox = new THREE.Box3Helper( bbox, 0xffff00 );
+	const bbox = new THREE.Box3().setFromObject( GBX.surfaceGroup );
+	GBXU.boundingBox = new THREE.Box3Helper( bbox, 0xdddd00 );
+	THR.scene.add( GBXU.boundingBox );
+
 
 	THRU.toggleAxesHelper();
 
@@ -59,6 +61,8 @@ GBXU.onFirstTouch = function() {
 
 	GBXU.sendSurfacesToThreeJs( GBX.surfaces );
 
+	GBXU.boundingBox.visible = false;
+
 	THRU.toggleGroundHelper();
 
 	THRU.toggleEdges( GBX.surfaceGroup );
@@ -72,10 +76,6 @@ GBXU.onFirstTouch = function() {
 
 
 GBXU.setStats = function( target = "#FOBdivAppStats" ) {
-
-	const tag = document.body.querySelectorAll( target );
-
-	if ( tag.length === 0 ) { return; }
 
 	GBX.openings = [];
 
@@ -114,12 +114,16 @@ GBXU.setStats = function( target = "#FOBdivAppStats" ) {
 
 	//const timeToLoad = performance.now() - GBX.timeStart;
 
+	const tag = document.body.querySelectorAll( target );
+	if ( tag.length === 0 ) { return; }
+
 	const items = {
 		"Space:": GBX.spaces.length,
 		"Storeys": GBX.storeys.length,
 		"Zones": GBX.zones.length,
 		"Surfaces": GBX.surfaces.length,
 		"Openings": GBX.openings.length,
+		//GBX.openingGroup
 		"count": GBX.constructions.length,
 		"Materials": GBX.materials.length,
 		"Layers": GBX.layers.length,
@@ -312,13 +316,7 @@ GBXU.sendSurfacesToThreeJs = function( surfacesText ) {
 
 	GBXU.addMeshes();
 
-	if ( !GBXU.boundingBox ) {
 
-		const bbox = new THREE.Box3().setFromObject( GBX.surfaceGroup );
-		GBXU.boundingBox = new THREE.Box3Helper( bbox, 0xffff00 );
-		THR.scene.add( GBXU.boundingBox );
-
-	}
 
 	const txt = !surfacesText.length ? "<span class='highlight' >No surfaces are visible</span>" : surfacesText.length.toLocaleString() + ' surfaces visible';
 
