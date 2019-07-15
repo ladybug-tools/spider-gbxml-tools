@@ -18,6 +18,7 @@ read me for current version
 * Uses relative URLs
 * Version to run locally for building and testing
 
+[view-core-in-iframe]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-00/app-core/view-core-in-iframe.html )
 
 
 </details>
