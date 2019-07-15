@@ -1,12 +1,22 @@
 # Spider gbXML Viewer Read Me Read Me
 
-[Source code](  )
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-00 )
 
 <details open >
 
 <summary>Concept</summary>
 
 read me for current version
+
+
+[viewer  core ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-00/app-core/spider-gbxml-viewer-core-dev.html )
+
+* Uses absolute URLs
+
+[ core dev]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-00/app-core/spider-gbxml-viewer-core-dev.html )
+
+* Uses relative URLs
+* Version to run locally for building and testing
 
 </details>
 
