@@ -13,7 +13,7 @@ read me for current version
 
 * Uses absolute URLs
 
-[ core dev]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-00/app-core/spider-gbxml-viewer-core-dev.html )
+[viewer core dev]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-00/app-core/spider-gbxml-viewer-core-dev.html )
 
 * Uses relative URLs
 * Version to run locally for building and testing
@@ -21,7 +21,9 @@ read me for current version
 [view-core-in-iframe]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-00/app-core/view-core-in-iframe.html )
 
 
-[view popup dev]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-00/app-popup/spider-gbxml-viewer-popup-dev.html )
+[viewer popup dev]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-00/app-popup/spider-gbxml-viewer-popup.html )
+
+[viewer popup dev]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-00/app-popup/spider-gbxml-viewer-popup-dev.html )
 
 
 </details>
