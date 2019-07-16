@@ -30,6 +30,27 @@ main { border: 0px; height: 100%; left: 0; margin: 0; /* overflow: hidden; */
 button.active { border-color: black; font-style: oblique; font-weight: bold; margin-left: 0.3rem;
 	box-shadow: 10px 2px #888; }
 
+	#divDragMoveContent {
+	border: 0px solid red;
+	height: calc( 100% - 7rem );
+	max-height: calc( 100% - 4rem );
+	overflow: auto;
+	padding: 0.5rem;
+	width: 100%;
+}
+
+#divDragMoveFooter {
+	bottom: 0rem;
+	height: 4rem;
+	text-align: right;
+	overflow: auto;
+	position: absolute;
+	right: 0;
+	width: 100%;
+}
+
+.POPFbutIcon { display: inline-block; padding: 3px;  }
+
 </style>
 
 <base href="../" >

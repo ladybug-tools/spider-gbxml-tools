@@ -17,49 +17,26 @@ const POPF = {
 
 POPX.footer =
 	`
-	<div style=text-align:right; >
+		<div style=text-align:right; >
 
-		<button onclick=POPX.onClickZoomAll(); title="Show entire campus & display attributes" >🔍</button>
+			<button  onclick=POPX.onClickZoomAll(); title="Show entire campus & display attributes" >🔍</button>
 
-		<button onclick="POPF.onToggleInteriorExterior(this)" title="Exterior or interior surfaces">☂️</button>
-		<button onclick="THRU.toggleEdges();" title="Display edges" >📏</button>
-		<button onclick="GBXU.toggleOpenings();" title="Display openings" >🚪</button>
-		<button onclick="POPF.setScreen1();" title="Surface types" >💡</button>
+			<button class=POPFbutIcon onclick="POPF.onToggleInteriorExterior(this)" title="Exterior or interior surfaces">☂️</button>
+			<button class=POPFbutIcon onclick="THRU.toggleEdges();" title="Display edges" >📏</button>
+			<button class=POPFbutIcon onclick="GBXU.toggleOpenings();" title="Display openings" >🚪</button>
+			<button class=POPFbutIcon onclick="POPF.setScreen1();" title="Surface types" >💡</button>
 
-		<button onclick="POPF.setScreen2();" title="Display parameters" >👁️</button>
-		<button onclick="POPF.setScreen3();" title="Cut sections" >🔪</button>
-		<button onclick="POPF.setScreen4();" title="Exploded views" >🧨</button>
-		<button onclick="navDragMove.style.height='60%';POPX.setPrevious();" title="Previously selected surface" >📌</button>
+			<button class=POPFbutIcon onclick="POPF.setScreen2();" title="Display parameters" >👁️</button>
+			<button class=POPFbutIcon onclick="POPF.setScreen3();" title="Cut sections" >🔪</button>
+			<button class=POPFbutIcon onclick="POPF.setScreen4();" title="Exploded views" >🧨</button>
+			<button class=POPFbutIcon onclick="navDragMove.style.height='60%';POPX.setPrevious();" title="Previously selected surface" >📌</button>
 
 
-	</div>
+		</div>
 	`;
 
 
-POPF.setNextPopup = function( x = 1 ){
-
-	let url;
-
-	if ( x === 0 ) {
-
-		POPX.setPrevious();
-
-	} else {
-
-		const pages = [ POPF.setScreen2, POPF.setScreen1, POPF.setScreen3, POPF.setScreen4 ];
-		POPF.page += x;
-		POPF.page = POPF.page >= pages.length ? 0 : POPF.page;
-		POPF.page = POPF.page < 0 ? pages.length - 1 : POPF.page;
-
-		pages[ POPF.page ]();
-
-	}
-
-};
-
-
 POPF.onToggleInteriorExterior = function( button ) {
-
 
 	THR.scene.remove( POPX.line, POPX.particle );
 
@@ -84,6 +61,8 @@ POPF.onToggleInteriorExterior = function( button ) {
 	GBXU.sendSurfacesToThreeJs( surfacesFiltered );
 
 };
+
+
 
 POPF.setScreen4 = function() {
 
@@ -194,7 +173,7 @@ POPF.sendSurfacesToThreeJs = function( filters ) {
 //////////
 
 
-POPF.toggleInteriorExterior = function( button ) {
+POPF.xxxtoggleInteriorExterior = function( button ) {
 
 	const buttonsActive = divDragMoveContent.getElementsByClassName( "active" ); // collection
 
