@@ -4,12 +4,12 @@
 var GBXU = {
 
 	copyright: "Copyright 2019 Ladybug Tools authors. MIT License",
-	date: "2019-07-15",
+	date: "2019-07-16",
 	description: "GbXML utilities: all this is a bit idiosyncratic / a random collection of stuff",
 	helpFile: "../js-view-gbxml/gbxu-gbxml-utilities.md",
 	license: "MIT License",
 	urlSourceCode: "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-00/js-core-gbxml",
-	version: "0.17.00-4gbxu"
+	version: "0.17.00-5gbxu"
 
 };
 
@@ -25,21 +25,23 @@ GBXU.onGbxParse = function() {
 
 	GBXU.setSurfaceTypesVisible( GBXU.filtersDefault );
 
+	THRU.toggleBoundingBoxHelper( GBXU.surfaceGroup );
+
 	GBXU.toggleOpenings();
 
-	//GBXU.surfaceGroupVisible = new THREE.Object3D();
-	//const arr = GBX.surfacesFiltered.flatMap( ( surface, index ) => GBX.surfaceGroup.children[ index ].clone() );
-	//GBXU.surfaceGroupVisible.add( ...arr );
-	//console.log( 'GBXU.surfaceGroupVisible', GBXU.surfaceGroupVisible );
-
-	const bbox = new THREE.Box3().setFromObject( GBX.surfaceGroup );
-	GBXU.boundingBox = new THREE.Box3Helper( bbox, 0xdddd00 );
-	THR.scene.add( GBXU.boundingBox );
-
+	THRU.zoomObjectBoundingSphere( );
 
 	THRU.toggleAxesHelper();
 
-	THRU.zoomObjectBoundingSphere( GBXU.boundingBox );
+	// needs work
+	GBXU.surfaceGroupVisible = new THREE.Object3D();
+	const arr = GBX.surfacesFiltered.flatMap( ( surface, index ) => GBX.surfaceGroup.children[ index ].clone() );
+	GBXU.surfaceGroupVisible.add( ...arr );
+	//console.log( 'GBXU.surfaceGroupVisible', GBXU.surfaceGroupVisible );
+
+	const bbox = new THREE.Box3().setFromObject( GBXU.surfaceGroupVisible );
+	GBXU.boundingBox = new THREE.Box3Helper( bbox, 0xdddd00 );
+	//THR.scene.add( GBXU.boundingBox );
 
 	GBX.elevation = GBXU.boundingBox.box.min.z - 0.001 * THRU.radius;
 
@@ -61,7 +63,7 @@ GBXU.onFirstTouch = function() {
 
 	GBXU.sendSurfacesToThreeJs( GBX.surfaces );
 
-	GBXU.boundingBox.visible = false;
+	THRU.toggleBoundingBoxHelper();
 
 	THRU.toggleGroundHelper();
 
@@ -282,6 +284,7 @@ GBXU.setOpeningsVisible = function( visible = true ) {
 
 //////////
 
+
 GBXU.setSurfaceTypesVisible = function ( typesArray ) {
 
 	// polyfill for MS Edge
@@ -315,8 +318,6 @@ GBXU.sendSurfacesToThreeJs = function( surfacesText ) {
 	GBX.lastTimestamp = performance.now();
 
 	GBXU.addMeshes();
-
-
 
 	const txt = !surfacesText.length ? "<span class='highlight' >No surfaces are visible</span>" : surfacesText.length.toLocaleString() + ' surfaces visible';
 
@@ -361,7 +362,8 @@ GBXU.addMeshes = function( timestamp ) {
 		}
 
 
-/* 		GBXdivStatsThr.innerHTML =
+/*
+ 		GBXdivStatsThr.innerHTML =
 		`
 			<hr>
 			<b>Current scene rendering data</b><br>
@@ -370,13 +372,16 @@ GBXU.addMeshes = function( timestamp ) {
 			took too long: ${ GBX.misses }<br>
 			time allocated frame: ${ GBX.deltaLimit } ms<br>
 			total time elapsed: ${ ( performance.now() - FOB.timeStart ).toLocaleString() } ms
-		`; */
+		`;
+*/
 
 		requestAnimationFrame( GBXU.addMeshes );
 
 	} else {
 
 		//THR.controls.autoRotate = true;
+
+		THRU.getMeshesVisible( GBX.surfaceGroup );
 
 	}
 

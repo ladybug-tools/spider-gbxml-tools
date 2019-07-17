@@ -166,38 +166,28 @@ THRU.zoomObjectBoundingSphere = function( obj = THR.scene ) {
 	//console.log( 'obj', obj );
 
 	const bbox = new THREE.Box3().setFromObject( obj );
-	//console.log( 'bbox', bbox );
-
-	THRU.boundingBox = bbox;
+	// console.log( 'bbox', bbox )
 
 	if ( bbox.isEmpty() === true ) { return; }
 
 	const sphere = bbox.getBoundingSphere( new THREE.Sphere() );
-	const center = sphere.center;
-	const radius = sphere.radius;
+	THRU.center = sphere.center;
+	THRU.radius = sphere.radius;
 
-	//THR.controls.reset();
-	THR.controls.target.copy( center ); // needed because model may be far from origin
-	THR.controls.maxDistance = 5 * radius;
+	THR.controls.target.copy( THRU.center ); // needed because model may be far from origin
+	THR.controls.maxDistance = 5 * THRU.radius;
 
-	THR.camera.position.copy( center.clone().add( new THREE.Vector3( 1.5 * radius, 1.5 * radius, 1.5 * radius ) ) );
-	THR.camera.near = 0.001 * radius; //2 * camera.position.length();
-	THR.camera.far = 10 * radius; //2 * camera.position.length();
+	THR.camera.position.copy( THRU.center.clone().add( new THREE.Vector3( 1.5 * THRU.radius, 1.5 * THRU.radius, 1.5 * THRU.radius ) ) );
+	THR.camera.near = 0.001 * THRU.radius; //2 * camera.position.length();
+	THR.camera.far = 10 * THRU.radius; //2 * camera.position.length();
 	THR.camera.updateProjectionMatrix();
-
-	if ( THRU.axesHelper ) {
-
-		THRU.axesHelper.scale.set( radius, radius, radius );
-		THRU.axesHelper.position.copy( center );
-
-	}
 
 	if ( THRU.lightDirectional ) {
 
-		THRU.lightDirectional.position.copy( center.clone().add( new THREE.Vector3( 1.5 * radius, -1.5 * radius, 1.5 * radius ) ) );
-		THRU.lightDirectional.shadow.camera.scale.set( 0.2 * radius, 0.2 * radius, 0.01 * radius );
+		THRU.lightDirectional.position.copy( THRU.center.clone().add( new THREE.Vector3( 1.5 * THRU.radius, -1.5 * THRU.radius, 1.5 * THRU.radius ) ) );
+		THRU.lightDirectional.shadow.camera.scale.set( 0.2 * THRU.radius, 0.2 * THRU.radius, 0.01 * THRU.radius );
 
-		THRU.targetObject.position.copy( center );
+		THRU.targetObject.position.copy( THRU.center );
 
 		//THR.scene.remove( THRU.cameraHelper );
 		//THRU.cameraHelper = new THREE.CameraHelper( THRU.lightDirectional.shadow.camera );
@@ -205,14 +195,30 @@ THRU.zoomObjectBoundingSphere = function( obj = THR.scene ) {
 
 	}
 
-	THRU.center = center;
-	THRU.radius = radius;
-
 };
 
 
 
 ////////// Visibility
+
+
+THRU.getMeshesVisible = function ( objThree = THR.scene ) { // not??
+	//console.log( '', objThree );
+
+	THRU.meshGroupVisible = new THREE.Object3D();
+
+	const arr = objThree.children.filter( mesh => mesh.visible ).map ( mesh => mesh.clone() );
+	THRU.meshGroupVisible.add( ...arr );
+
+	//console.log( 'THRU.meshGroupVisible', THRU.meshGroupVisible );
+
+
+	return THRU.meshGroupVisible;
+
+};
+
+
+
 
 THRU.toggleSurfaces = function( obj = THR.scene ) {
 
@@ -326,22 +332,44 @@ THRU.setObjectOpacity = function( obj = THR.scene, range = rngOpacity ) {
 
 ////////// Helpers in the scene
 
-// add bbox??
-
 THRU.toggleAxesHelper = function() {
 
 	if ( !THRU.axesHelper ) {
 
-		THRU.axesHelper = new THREE.AxesHelper( THRU.radius );
+		THRU.axesHelper = new THREE.AxesHelper();
 		THR.scene.add( THRU.axesHelper );
 
-		return;
+	 } else {
 
-	 }
+		THRU.axesHelper.visible = !THRU.axesHelper.visible;
 
-	THRU.axesHelper.visible = !THRU.axesHelper.visible;
+	}
+
+	THRU.axesHelper.scale.set( THRU.radius, THRU.radius, THRU.radius );
+	THRU.axesHelper.position.copy( THRU.center );
 
 };
+
+
+
+THRU.toggleBoundingBoxHelper = function( objThree = THR.scene ){
+
+	if ( !THRU.boundingBoxHelper ) {
+
+		const bbox = new THREE.Box3().setFromObject( objThree );
+
+
+		THRU.boundingBoxHelper = new THREE.Box3Helper( bbox, 0xff0000 );
+		THRU.boundingBoxHelper.geometry.computeBoundingBox();
+		THR.scene.add( THRU.boundingBoxHelper );
+
+	 } else {
+
+		THRU.boundingBoxHelper.visible = !THRU.boundingBoxHelper.visible;
+
+	}
+
+}
 
 
 

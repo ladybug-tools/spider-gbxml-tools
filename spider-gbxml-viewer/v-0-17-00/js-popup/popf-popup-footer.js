@@ -15,7 +15,7 @@ const POPF = {
 };
 
 
-POPX.footer =
+POPF.footer =
 	`
 		<div style=text-align:right; >
 

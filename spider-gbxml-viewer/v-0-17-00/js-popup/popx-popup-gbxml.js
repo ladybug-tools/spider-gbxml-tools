@@ -1,4 +1,4 @@
-/* global Stats, POPbutRateLimits, navDragMove, divDragMoveContent, main, showdown */
+/* global THREE, THR, GBX, GBXU, GSA, THRU, POP, POPF, divDragMoveFooter,POPXbutAdjacentSpace1, POPXbutAdjacentSpace2,  navDragMove, divDragMoveContent, main, */
 /* jshint esversion: 6 */
 /* jshint loopfunc: true */
 
@@ -51,7 +51,7 @@ POPX.onClickZoomAll = function() {
 
 	THRU.zoomObjectBoundingSphere( GBXU.boundingBox );
 
-	const time = performance.now();
+	//const time = performance.now();
 
 	const campusXml = POPX.parser.parseFromString( GBX.text, "application/xml").documentElement;
 	POPX.campusXml = campusXml;
@@ -162,7 +162,7 @@ POPX.onDocumentMouseDown = function( event ) {
 
 		divDragMoveContent.innerHTML = POPX.getIntersectedDataHtml();
 
-		divDragMoveFooter.innerHTML = POPX.footer;
+		divDragMoveFooter.innerHTML = POPF.footer;
 
 		navDragMove.hidden = false;
 
@@ -626,7 +626,65 @@ POPX.toggleStoreyVisible = function( button, storeyId ) {
 
 	POPX.intersected.visible = true;
 
-	const htm = POPX.getStoreyAttributes( storeyId )
+	const htm = POPX.getStoreyAttributes( storeyId );
+
+	return htm;
+
+};
+
+
+
+POPX.toggleStoreyVisible = function( button, storeyId ) {
+
+
+	button.classList.toggle( "active" );
+
+	POPXbutSurfaceFocus.classList.remove( "active" );
+	POPXbutAdjacentSpace1.classList.remove( "active" );
+	POPXbutAdjacentSpace2.classList.remove( "active" );
+	POPXbutZoneVisible.classList.remove( "active" );
+
+	const focus = button.classList.contains( "active" );
+
+	GBX.surfaceGroup.children.forEach( element => element.visible = false );
+
+	if ( focus === true ) {
+
+		const spaces = GBX.spaces;
+
+
+		GBX.surfaces.forEach( ( surface, index ) => {
+
+			const adjacentSpaceIds = surface.match( /spaceIdRef="(.*?)"/gi );
+
+			if ( adjacentSpaceIds && adjacentSpaceIds.length ) {
+
+				//const id = surface.match( / id="(.*?)"/i )[ 1 ];
+
+				let spaceIdRef = adjacentSpaceIds.length === 1 ? adjacentSpaceIds[ 0 ] : adjacentSpaceIds[ 1 ];
+				spaceIdRef = spaceIdRef.slice( 12, -1 );
+
+				spaces.forEach( space => {
+
+					const spaceId = space.match( / id="(.*?)"/i )[ 1 ];
+					const spaceBuildingStoreyIdRef = space.match( / buildingStoreyIdRef="(.*?)"/i )[ 1 ];
+
+					const mesh = GBX.surfaceGroup.children[ index ];
+					mesh.visible = spaceId === spaceIdRef && spaceBuildingStoreyIdRef === storeyId ? true : mesh.visible;
+
+				} );
+
+			}
+
+		} );
+
+
+	}
+
+	POPX.intersected.visible = true;
+
+	const htm = POPX.getStoreyAttributes( storeyId );
+
 	return htm;
 
 };
@@ -785,7 +843,7 @@ POPX.setSurfaceZoom = function() {
 	const sphere = bbox.getBoundingSphere( new THREE.Sphere() );
 	const center = sphere.center;
 	//const radius = sphere.radius;
-	const radius = THRU.radius;
+	//const radius = THRU.radius;
 	const vector = THR.camera.position.clone().sub( THR.controls.target );
 
 	THR.controls.target.copy( center );
@@ -800,7 +858,7 @@ POPX.setSurfaceZoom = function() {
 POPX.toggleSurfaceNeighbors = function() {
 
 
-	const surfaceText  = GBX.surfaces[ POPX.intersected.userData.index ]
+	const surfaceText  = GBX.surfaces[ POPX.intersected.userData.index ];
 	//console.log( 'surfaceText', surfaceText );
 
 
@@ -813,9 +871,9 @@ POPX.toggleSurfaceNeighbors = function() {
 	const surfaces = [];
 	GBX.surfaces.forEach( ( surface, index ) => {
 
-		const points = cartesianPoints.filter( point => surface.includes( point ) )
+		const points = cartesianPoints.filter( point => surface.includes( point ) );
 
-		if ( points.length > 0 ) { surfaces.push( surface ) };
+		if ( points.length > 0 ) { surfaces.push( surface ); }
 
 	} );
 
