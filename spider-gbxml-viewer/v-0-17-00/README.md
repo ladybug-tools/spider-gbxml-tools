@@ -20,10 +20,23 @@ read me for current version
 
 [view-core-in-iframe]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-00/app-core/view-core-in-iframe.html )
 
+***
 
 [viewer popup]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-00/app-popup/spider-gbxml-viewer-popup.html )
 
 [viewer popup dev]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-00/app-popup/spider-gbxml-viewer-popup-dev.html )
+
+[viewer popup]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-00/app-popup/spider-gbxml-viewer-popup.html )
+
+[iframe-src-xml-via-filereader]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-00/app-popup/iframe-src-xml-via-filereader.html )
+
+***
+
+
+[viewer popumenup dev]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-00/app-menu/spider-gbxml-viewer-menu-dev.html )
+
+
+
 
 
 </details>

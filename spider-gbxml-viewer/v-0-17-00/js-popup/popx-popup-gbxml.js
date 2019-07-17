@@ -857,7 +857,6 @@ POPX.setSurfaceZoom = function() {
 
 POPX.toggleSurfaceNeighbors = function() {
 
-
 	const surfaceText  = GBX.surfaces[ POPX.intersected.userData.index ];
 	//console.log( 'surfaceText', surfaceText );
 
