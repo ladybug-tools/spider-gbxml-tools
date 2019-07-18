@@ -12,26 +12,8 @@ const COR = {
 	}
 };
 
-//POP.date = MNU.date = "2019-07-18";
-//POP.version = MNU.version = "0.17.00-00"; //document.head.querySelector( '[ name=version ]' ).content || "";
-
-//POP.popup = "popup.md";
-//POP.license = "https://www.ladybug.tools/spider/pages/license.md";
-
-
-//THM.themeUrlStorage = 'spider-gbxml-menu-theme-url';// set for each instance in HTML file
-//THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-05/style.css";
-
-
-//FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
-//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/coventry-university-of-warwick-small.zip";
-//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/annapolis-md-single-family-residential-2016.xml"
-//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/pittsburg-airport.zip";
-//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/GreenBuildingXML/Sample-gbXML-Files@master/gbXML_TRK.xml";
 
 // For main menu header
-
-MNU.title = document.title;
 
 MNU.helpFile = "../../README.md";
 
@@ -68,11 +50,9 @@ COR.init = function() {
 		`
 			body { margin: 0; padding: 0; overflow: hidden; }
 
-			#ccdivContents { border: 00px solid red; height: 100%; max-width: 100%; }
+			#divContents { border: 0px solid red; height: 100%; max-width: 100%; }
 
 			#navPanel { background-color: #eee; }
-
-			#mmnavDragMove { background-color: #eee; }
 
 			#VSTdivSurfaceType button  { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;
 				padding: 2px 5px; min-width: 13.5rem; }
