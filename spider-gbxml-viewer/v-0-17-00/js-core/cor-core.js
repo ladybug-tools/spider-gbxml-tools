@@ -5,7 +5,7 @@
 const COR = {
 	"script": {
 		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-		"date": "2019-07-16",
+		"date": "2019-07-18",
 		"description": "core - contains local overrides",
 		"helpFile": "cor-core/README.md",
 		"version": "0.17.00-0cor",
@@ -15,12 +15,12 @@ const COR = {
 //POP.date = MNU.date = "2019-07-16";
 //POP.version = MNU.version = "0.17.00-00"; //document.head.querySelector( '[ name=version ]' ).content || "";
 
-POP.popup = "popup.md";
-POP.license = "https://www.ladybug.tools/spider/pages/license.md";
+//POP.popup = "popup.md";
+//POP.license = "https://www.ladybug.tools/spider/pages/license.md";
 
 
 //THM.themeUrlStorage = 'spider-gbxml-menu-theme-url';// set for each instance in HTML file
-//THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-03/style.css";
+//THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-05/style.css";
 
 
 //FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
@@ -68,11 +68,11 @@ COR.init = function() {
 		`
 			body { margin: 0; padding: 0; overflow: hidden; }
 
-			#divContents { border: 0px solid red; height: 100%; max-width: 100%; }
+			#divContents { border: 00px solid red; height: 100%; max-width: 100%; }
 
 			#navPanel { background-color: #eee; }
 
-			#navPopup { background-color: #efe; top: 1rem;  }
+			#navDragMove { background-color: #eee; top: 1rem; }
 
 			#VSTdivSurfaceType button  { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;
 				padding: 2px 5px; min-width: 13.5rem; }
