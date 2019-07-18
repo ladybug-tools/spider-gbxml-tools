@@ -11,6 +11,8 @@ const SET = {
 
 };
 
+
+
 SET.getSettingsMenu = function() {
 
 	const htm =

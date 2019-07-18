@@ -158,7 +158,7 @@ POPX.onDocumentMouseDown = function( event ) {
 
 		POPX.setIntersectedParticleAtPoint( POPX.intersects[ 0 ].point );
 
-		navDragMove.style.height = "60%";
+		divDragMoveContent.style.height = "90%";
 
 		divDragMoveContent.innerHTML = POPX.getIntersectedDataHtml();
 
@@ -170,7 +170,7 @@ POPX.onDocumentMouseDown = function( event ) {
 
 		POPX.intersected = null;
 
-		navDragMove.style.height = "6rem";
+		divDragMoveContent.style.height = "6rem";
 
 		divDragMoveContent.innerHTML = '';
 
@@ -652,7 +652,6 @@ POPX.toggleStoreyVisible = function( button, storeyId ) {
 
 		const spaces = GBX.spaces;
 
-
 		GBX.surfaces.forEach( ( surface, index ) => {
 
 			const adjacentSpaceIds = surface.match( /spaceIdRef="(.*?)"/gi );
@@ -661,8 +660,7 @@ POPX.toggleStoreyVisible = function( button, storeyId ) {
 
 				//const id = surface.match( / id="(.*?)"/i )[ 1 ];
 
-				let spaceIdRef = adjacentSpaceIds.length === 1 ? adjacentSpaceIds[ 0 ] : adjacentSpaceIds[ 1 ];
-				spaceIdRef = spaceIdRef.slice( 12, -1 );
+				let spaceIdRef = adjacentSpaceIds.pop().slice( 12, -1 );
 
 				spaces.forEach( space => {
 

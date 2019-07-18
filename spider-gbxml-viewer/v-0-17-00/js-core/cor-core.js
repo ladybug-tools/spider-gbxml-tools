@@ -12,8 +12,8 @@ const COR = {
 	}
 };
 
-POP.date = MNU.date = "2019-07-16";
-POP.version = MNU.version = "0.17.00-00"; //document.head.querySelector( '[ name=version ]' ).content || "";
+//POP.date = MNU.date = "2019-07-16";
+//POP.version = MNU.version = "0.17.00-00"; //document.head.querySelector( '[ name=version ]' ).content || "";
 
 POP.popup = "popup.md";
 POP.license = "https://www.ladybug.tools/spider/pages/license.md";
@@ -66,48 +66,42 @@ COR.init = function() {
 	COR.css = document.body.appendChild( document.createElement('style') );
 	COR.css.innerHTML =
 		`
-		#POPdivFooter { color: #f00; }
+			body { margin: 0; padding: 0; overflow: hidden; }
 
-		body { margin: 0; padding: 0; overflow: hidden; }
+			#divContents { border: 0px solid red; height: 100%; max-width: 100%; }
 
-		#divContents { border: 0px solid red; height: 100%; max-width: 100%; }
+			#navPanel { background-color: #eee; }
 
-		#navPanel { background-color: #eee; }
+			#navPopup { background-color: #efe; top: 1rem;  }
 
-		#navPopup { background-color: #efe; top: 1rem;  }
+			#VSTdivSurfaceType button  { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;
+				padding: 2px 5px; min-width: 13.5rem; }
 
-		#VSTdivSurfaceType button  { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;
-			padding: 2px 5px; min-width: 13.5rem; }
+			#VSTdivSurfaceType button:hover { background: #ccc; color: #888 }
 
-		#VSTdivSurfaceType button:hover { background: #ccc; color: #888 }
+			button.active { border-color: black; font-style: oblique; font-weight: bold; margin-left: 0.3rem;
+				box-shadow: 10px 2px #888; }
+/*
+			#divDragMoveContent {
+				border: 0px solid red;
+				height: calc( 100% - 7rem );
+				max-height: calc( 100% - 4rem );
+				overflow: auto;
+				padding: 0.5rem;
+				width: 100%;
+			}
 
-		button.active { border-color: black; font-style: oblique; font-weight: bold; margin-left: 0.3rem;
-			box-shadow: 10px 2px #888; }
+			#divDragMoveFooter {
+				bottom: 0rem;
+				height: 4rem;
+				text-align: right;
+				overflow: auto;
+				position: absolute;
+				right: 0;
+				width: 100%;
+			}
 
-
-
-
-		#divDragMoveContent {
-			border: 0px solid red;
-			height: calc( 100% - 7rem );
-			max-height: calc( 100% - 4rem );
-			overflow: auto;
-			padding: 0.5rem;
-			width: 100%;
-		}
-
-		#divDragMoveFooter {
-			bottom: 0rem;
-			height: 4rem;
-			text-align: right;
-			overflow: auto;
-			position: absolute;
-			right: 0;
-			width: 100%;
-		}
-
-		.POPFbutIcon { padding: 3px; }
-
-
-	`;
+			.POPFbutIcon { padding: 0 3px; }
+*/
+		`;
 };

@@ -17,7 +17,7 @@ const POPF = {
 
 POPF.footer =
 	`
-		<div style=text-align:right; >
+		<div>
 
 			<button  onclick=POPX.onClickZoomAll(); title="Show entire campus & display attributes" >🔍</button>
 
@@ -29,7 +29,7 @@ POPF.footer =
 			<button class=POPFbutIcon onclick="POPF.setScreen2();" title="Display parameters" >👁️</button>
 			<button class=POPFbutIcon onclick="POPF.setScreen3();" title="Cut sections" >🔪</button>
 			<button class=POPFbutIcon onclick="POPF.setScreen4();" title="Exploded views" >🧨</button>
-			<button class=POPFbutIcon onclick="navDragMove.style.height='60%';POPX.setPrevious();" title="Previously selected surface" >📌</button>
+			<button class=POPFbutIcon onclick="POPX.setPrevious();" title="Previously selected surface" >📌</button>
 
 
 		</div>
@@ -48,7 +48,6 @@ POPF.onToggleInteriorExterior = function( button ) {
 		:
 		[ "ExposedFloor", "ExteriorWall", "RaisedFloor", "Roof", "Shade", "SlabOnGrade", "UndergroundSlab", "UndergroundWall" ]
 	;
-
 
 		const surfaces = GBX.surfaces;
 
