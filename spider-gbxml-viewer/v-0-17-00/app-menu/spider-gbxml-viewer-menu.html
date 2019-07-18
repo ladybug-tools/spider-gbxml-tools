@@ -12,7 +12,7 @@
 
 <title>Spider gbXML Viewer Menu</title>
 
-<base href="https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-00//" >
+<base href="https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-00/" >
 
 <link rel = "canonical" href = "www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/" />
 <link rel = "license" href = "https://creativecommons.org/licenses/by/4.0/" >
@@ -198,15 +198,13 @@
 
 	<nav>
 
-		<a href="" id="aViewSource" target="_blank"; hidden >view source</a>
+		<a href="" id="aViewSource" target="_blank"; >view source</a>
 
 	</nav>
 
 
 <script>
 
-//THM.themeUrlStorage = 'spider-gbxml-view-theme-url';
-//THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-05/style.css";
 
 
 FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
@@ -214,12 +212,6 @@ FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristo
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/annapolis-md-single-family-residential-2016.xml"
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/pittsburg-airport.zip";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/GreenBuildingXML/Sample-gbXML-Files@master/gbXML_TRK.xml";
-
-MNU.vvdescription =
-	`
-		Display the basic left side menu
-	`;
-
 
 
 init();
@@ -264,15 +256,13 @@ function init() {
 
 	GBX.init(); // gets things going
 
-	//window.addEventListener ( 'hashchange', FOB.onHashChange, false );
-
 	//if ( !parent.location.hash ) { parent.location.hash=FOB.urlDefaultFile; }
 
 	FOB.onHashChange();
 
-	aViewSource.href = MNU.urlSourceCode;
-
 	POP.setPopupShowHide();
+
+	aViewSource.href = MNU.urlSourceCode;
 
 	if ( window.innerWidth < 640 || window.innerHeight < 640 ) { toggleNavPanel(); }
 
