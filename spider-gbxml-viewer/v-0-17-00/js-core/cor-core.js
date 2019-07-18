@@ -12,7 +12,7 @@ const COR = {
 	}
 };
 
-//POP.date = MNU.date = "2019-07-16";
+//POP.date = MNU.date = "2019-07-18";
 //POP.version = MNU.version = "0.17.00-00"; //document.head.querySelector( '[ name=version ]' ).content || "";
 
 //POP.popup = "popup.md";
@@ -68,40 +68,16 @@ COR.init = function() {
 		`
 			body { margin: 0; padding: 0; overflow: hidden; }
 
-			#divContents { border: 00px solid red; height: 100%; max-width: 100%; }
+			#ccdivContents { border: 00px solid red; height: 100%; max-width: 100%; }
 
 			#navPanel { background-color: #eee; }
 
-			#navDragMove { background-color: #eee; top: 1rem; }
+			#mmnavDragMove { background-color: #eee; }
 
 			#VSTdivSurfaceType button  { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;
 				padding: 2px 5px; min-width: 13.5rem; }
 
 			#VSTdivSurfaceType button:hover { background: #ccc; color: #888 }
 
-			button.active { border-color: black; font-style: oblique; font-weight: bold; margin-left: 0.3rem;
-				box-shadow: 10px 2px #888; }
-/*
-			#divDragMoveContent {
-				border: 0px solid red;
-				height: calc( 100% - 7rem );
-				max-height: calc( 100% - 4rem );
-				overflow: auto;
-				padding: 0.5rem;
-				width: 100%;
-			}
-
-			#divDragMoveFooter {
-				bottom: 0rem;
-				height: 4rem;
-				text-align: right;
-				overflow: auto;
-				position: absolute;
-				right: 0;
-				width: 100%;
-			}
-
-			.POPFbutIcon { padding: 0 3px; }
-*/
 		`;
 };
