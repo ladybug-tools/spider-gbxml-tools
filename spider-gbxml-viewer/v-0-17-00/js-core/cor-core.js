@@ -12,6 +12,7 @@ const COR = {
 	}
 };
 
+THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-05/style.css";
 
 // For main menu header
 
@@ -50,7 +51,7 @@ COR.init = function() {
 		`
 			body { margin: 0; padding: 0; overflow: hidden; }
 
-			#divContents { border: 0px solid red; height: 100%; max-width: 100%; }
+			#divContents { border: 0px solid red; height: 100%; max-width: 100%; overflow: hidden;}
 
 			#navPanel { background-color: #eee; }
 

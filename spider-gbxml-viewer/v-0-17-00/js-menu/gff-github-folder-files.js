@@ -197,7 +197,7 @@ GFF.callbackGitHubMenu = function( xhr ) {
 
 			<a href=${ item.urlGitHubSource + fileName } title="Edit me" >${ GFF.iconInfo }</a>
 
-			<a href=#${ item.urlGitHubPage + fileName } title="${ file.size.toLocaleString() } bytes" >${ file.name }</a>
+			<a href=${ location.href.replace( location.hash, "" ) }#${ item.urlGitHubPage + fileName } title="${ file.size.toLocaleString() } bytes" >${ file.name }</a>
 
 			<a href=${ item.threeDefaultFile }#${ item.urlGitHubPage }${ fileName } title="Link to just this file" >&#x2750;</a>
 

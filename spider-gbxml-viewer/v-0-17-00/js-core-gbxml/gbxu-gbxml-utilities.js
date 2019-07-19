@@ -27,11 +27,13 @@ GBXU.onGbxParse = function() {
 
 	THRU.toggleBoundingBoxHelper( GBXU.surfaceGroup );
 
-	GBXU.toggleOpenings();
+	//GBXU.toggleOpenings();
 
 	THRU.zoomObjectBoundingSphere( );
 
 	THRU.toggleAxesHelper();
+
+	THRU.toggleEdges( GBX.surfaceGroup );
 
 	// needs work
 	GBXU.surfaceGroupVisible = new THREE.Object3D();
@@ -65,9 +67,11 @@ GBXU.onFirstTouch = function() {
 
 	THRU.toggleBoundingBoxHelper();
 
+	//GBXU.toggleOpenings();
+
 	THRU.toggleGroundHelper();
 
-	THRU.toggleEdges( GBX.surfaceGroup );
+	//THRU.toggleEdges( GBX.surfaceGroup );
 
 	window.removeEventListener( 'keyup', GBXU.onFirstTouch );
 	THR.renderer.domElement.removeEventListener( 'click', GBXU.onFirstTouch );
