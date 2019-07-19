@@ -304,7 +304,7 @@ GBXU.setSurfaceTypesVisible = function ( typesArray ) {
 
 
 
-GBXU.sendSurfacesToThreeJs = function( surfacesText ) {
+GBXU.sendSurfacesToThreeJs = function( surfacesText = [] ) {
 	//console.log( 'surfacesText', surfacesText );
 
 	GBX.surfaceGroup.children.forEach( surface=> surface.visible = false );
@@ -321,7 +321,7 @@ GBXU.sendSurfacesToThreeJs = function( surfacesText ) {
 	GBX.deltaLimit = 20;
 	GBX.lastTimestamp = performance.now();
 
-	GBXU.addMeshes();
+	if ( surfacesText.length ) { GBXU.addMeshes(); }
 
 	const txt = !surfacesText.length ? "<span class='highlight' >No surfaces are visible</span>" : surfacesText.length.toLocaleString() + ' surfaces visible';
 

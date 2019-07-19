@@ -33,10 +33,14 @@ VST.getMenuViewStoreys = function() {
 
 			<summary>Storeys ${help } </summary>
 
-			<p>Display surfaces by storey. Default is all storeys visible. Operates in conjunction with surface type settings.</p>
+			<p>
+				Display surfaces by storey. Default is all storeys visible.
+				Operates in conjunction with surface type settings.
+				<span id=VSTspnCount ></span>
+			</p>
 
 			<p>
-				<input id=VSTinpAttribute oninput=VST.setSelectedIndex(this,VSTselStorey) placeholder="Enter an attribute" >
+				<input type=search id=VSTinpAttribute oninput=VST.setSelectedIndex(this,VSTselStorey) placeholder="Enter an attribute" >
 			</p>
 
 			<div id="VSTdivViewStoreys" >
@@ -48,7 +52,12 @@ VST.getMenuViewStoreys = function() {
 			<p>Attribute to show:
 				<select id=VSTselAttribute oninput=VST.setViewStoreysOptions(); >${ selectOptions }</select></p>
 
-			<p><button onclick=VST.setStoreyShowHide(this,VST.surfacesFilteredStorey); >show/hide all storeys</button> </p>
+			<p>
+				<button onclick=VST.setStoreyShowHide(this,VST.surfacesFilteredStorey); >show/hide all storeys</button>
+
+				<button onclick=VST.setSurfaceTypesShowHide(this,VST.surfacesFilteredStorey); >show/hide all surface types</button>
+
+			</p>
 
 			<p>Select multiple storeys by pressing shift or control keys</p>
 
@@ -113,6 +122,8 @@ VST.setViewStoreysOptions = function() {
 
 	VSTselStorey.innerHTML = options;
 
+	VSTspnCount.innerHTML = `${ GBX.storeys.length } storeys found.`;
+
 };
 
 
@@ -147,7 +158,7 @@ VST.selStoreys = function() {
 
 	VST.surfacesFilteredStorey = VST.setSurfacesFilteredStorey();
 
-	VSTdivReportsLog.innerHTML = `<p>${ GBX.sendSurfacesToThreeJs( VST.surfacesFilteredStorey ) }</p>`;
+	VSTdivReportsLog.innerHTML = `<p>${ GBXU.sendSurfacesToThreeJs( VST.surfacesFilteredStorey ) }</p>`;
 
 	divDragMoveContent.innerHTML = POPX.getStoreyAttributes( VSTselStorey.value );
 
@@ -160,9 +171,9 @@ VST.setSurfacesFilteredStorey = function( surfaces ) {
 	const storeyIds = VSTselStorey.selectedOptions;
 	//console.log( 'storeyIds', storeyIds );
 
-	if ( storeyIds.length === 0 ) {
+	if ( storeyIds.length === 0 ) { // works with VTY
 
-		const buttonsActive = VSTdivSurfaceType.getElementsClassName( "active" ); // collection
+		const buttonsActive = VTYdivSurfaceTypes.getElementsByClassName( "active" ); // collection
 
 		let filterArray = Array.from( buttonsActive ).map( button => button.innerText );
 
@@ -171,7 +182,7 @@ VST.setSurfacesFilteredStorey = function( surfaces ) {
 
 		surfaces = filterArray.flatMap( filter =>
 
-			GBX.surfacesIndexed.filter( surface => surface.includes( `"${ filter }"` ) )
+			GBX.surfaces.filter( surface => surface.includes( `"${ filter }"` ) )
 
 		);
 
@@ -192,11 +203,11 @@ VST.setSurfacesFilteredStorey = function( surfaces ) {
 		);
 		//console.log( 'surfacesVisibleSpace', surfacesVisibleSpace );
 
-		const buttonsActive = VSTdivSurfaceType.getElementsClassName( "active" ); // collection
+		const buttonsActive = VTYdivSurfaceTypes.getElementsByClassName( "active" ); // collection
 
 		let filterArr = Array.from( buttonsActive ).map( button => button.innerText );
 
-		filterArr = filterArr.length > 0 ? filterArr : VST.filtersDefault;
+		filterArr = filterArr.length > 0 ? filterArr : VTY.filtersDefault;
 
 		const surfacesFiltered = filterArr.flatMap( filter =>
 
@@ -215,11 +226,12 @@ VST.setSurfacesFilteredStorey = function( surfaces ) {
 
 
 
-
 VST.setStoreyShowHide = function( button, surfaceArray ) {
 	//console.log( 'surfaceArray', surfaceArray );
 
 	button.classList.toggle( "active" );
+
+	if ( VSTselStorey.selectedIndex === -1 ) { alert( "First, select a storey from the list"); return; }
 
 	if ( button.classList.contains( 'active' ) && surfaceArray.length ) {
 
@@ -227,8 +239,62 @@ VST.setStoreyShowHide = function( button, surfaceArray ) {
 
 	} else {
 
-		GBX.sendSurfacesToThreeJs( surfaceArray );
+		GBXU.sendSurfacesToThreeJs( surfaceArray );
 
 	}
+
+};
+
+VST.setSurfaceTypesShowHide = function( button, surfaceArray ) {
+
+	button.classList.toggle( "active" );
+
+	if ( VSTselStorey.selectedIndex === -1 ) { alert( "First, select a storey from the list"); return; }
+
+	if ( button.classList.contains( 'active' ) && surfaceArray.length ) {
+
+		const storeyIds = VSTselStorey.selectedOptions;
+
+		const surfacesFilteredStory = [];
+
+		for ( let storeyId of storeyIds ) {
+
+			const spacesInStorey = GBX.spaces.filter ( space => space.includes( `buildingStoreyIdRef="${ storeyId.value }"` ) );
+			//console.log( 'spacesInStorey', spacesInStorey );
+
+			const spacesInStoreyIds = spacesInStorey.map( space => space.match( ' id="(.*?)"' )[ 1 ] );
+			//console.log( 'spacesInStoreyIds', spacesInStoreyIds );
+
+			const surfacesVisibleSpace = spacesInStoreyIds.flatMap( spaceId =>
+				GBX.surfaces.filter( surface => surface.includes( `spaceIdRef="${ spaceId }"`  ) )
+			);
+			//console.log( 'surfacesVisibleSpace', surfacesVisibleSpace );
+
+			const buttonsActive = VTYdivSurfaceTypes.getElementsByClassName( "active" ); // collection
+
+			let filterArr = Array.from( buttonsActive ).map( button => button.innerText );
+
+			filterArr = filterArr.length > 0 ? filterArr : VTY.filtersDefault;
+
+			const surfacesFiltered = filterArr.flatMap( filter =>
+
+				surfacesVisibleSpace.filter( surface => surface.includes( `"${ filter }"` ) )
+
+			);
+
+			surfacesFilteredStory.push( ...surfacesVisibleSpace );
+			//console.log( 'GBX.surfacesFiltered',  GBX.surfacesFiltered );
+
+			GBXU.sendSurfacesToThreeJs( surfacesFilteredStory );
+
+		}
+	} else {
+
+		GBXU.sendSurfacesToThreeJs( surfaceArray );
+
+	}
+
+
+
 
 };

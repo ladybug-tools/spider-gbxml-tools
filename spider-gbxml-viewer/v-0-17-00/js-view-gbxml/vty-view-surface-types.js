@@ -1,13 +1,13 @@
-/* globals VBS, GBX, VSTdivSurfaceType, VSTsecViewSurfaceType, VSTdivReportsLog, THRU, detReports, */
+/* globals VBS, GBX, VTYdivSurfaceTypes, VTYsecViewSurfaceType, VSTdivReportsLog, THRU, detReports, */
 // jshint esversion: 6
 // jshint loopfunc: true
 
-const VST = {
+const VTY = {
 	"script": {
 
 		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",	"date": "2019-06-28",
 		"date": "2019-07-01",
-		"description": "Show or hide the surfaces (VST) in a gbXML file by surface type.",
+		"description": "Show or hide the surfaces (VTY) in a gbXML file by surface type.",
 		"helpFile": "../js-view/vst-view-surface-types.md",
 		"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-16-01/js-view/vst-view-surface-types.js",
 		"version": "0.16.01-2vst"
@@ -17,22 +17,22 @@ const VST = {
 };
 
 
-VST.filtersDefault = [ "Air", "ExposedFloor", "ExteriorWall", "Roof", "Shade" ];
+VTY.filtersDefault = [ "Air", "ExposedFloor", "ExteriorWall", "Roof", "Shade" ];
 
 
 
-VST.getMenuViewSurfaceTypes = function() {
+VTY.getMenuViewSurfaceTypes = function() {
 
-	document.body.addEventListener( 'onGbxParse', VST.resetMenu, false );
+	document.body.addEventListener( 'onGbxParse', VTY.resetMenu, false );
 
-	//document.body.addEventListener( 'onGbxParse', function(){ VSTdet.open = false; }, false );
+	//document.body.addEventListener( 'onGbxParse', function(){ VTYdet.open = false; }, false );
 
-	const help = `<button id="butVSTsum" class="butHelp" onclick="POP.setPopupShowHide(butVSTsum,VST.script.helpFile);" >?</button>`;
+	const help = `<button id="butVTYsum" class="butHelp" onclick="POP.setPopupShowHide(butVTYsum,VTY.script.helpFile);" >?</button>`;
 
 
 	const htm =
 	`
-		<details id=VSTdet ontoggle=VST.onToggleSurfaceTypes(); >
+		<details id=VTYdet ontoggle=VTY.onToggleSurfaceTypes(); >
 
 			<summary>Surfaces by type ${ help }</summary>
 
@@ -40,25 +40,27 @@ VST.getMenuViewSurfaceTypes = function() {
 				Show by surface type. Default is exterior surfaces only.
 			</p>
 
-			<div id="VSTdivSurfaceType" ></div>
+			<p id="VTYdivSurfaceTypes" ></p>
+
+			<div id="VTYdivReportsLog" ></div>
 
 			<p>
-				<button onclick=VST.onToggleInteriorExterior(this) >show/hide interior/exterior</button>
+				<button onclick=VTY.onToggleInteriorExterior(this) >show/hide interior/exterior</button>
 
-				<button id=butExposed onclick=VST.setSurfacesActiveByFilter(this,'exposedToSun="true"'); >show/hide 'exposedToSun' </button>
+				<button id=butExposed onclick=VTY.setSurfacesActiveByFilter(this,'exposedToSun="true"'); >show/hide 'exposedToSun' </button>
 			</p>
 
 			<p>
-				<button onclick=VST.onToggleHorizontalVertical(this) >show/hide horizontal vertical</button>
+				<button onclick=VTY.onToggleHorizontalVertical(this) >show/hide horizontal vertical</button>
 			</p>
 
 			<p>
-				<button id=but onclick=VST.setShowAll(this); >show/hide all surfaces</button>
+				<button id=VTYbutShowAll onclick=VTY.setShowAll(this); >show/hide all surfaces</button>
 			</p>
 
-			<div id="VSTdivReportsLog" ></div>
 
-			<p id="VSTdivViewCurrentStats" > </p>
+
+			<p id="VTYdivViewCurrentStats" > </p>
 
 		</details>
 	`;
@@ -69,18 +71,18 @@ VST.getMenuViewSurfaceTypes = function() {
 
 
 
-VST.resetMenu = function() {
+VTY.resetMenu = function() {
 
-	VSTdet.open = false;
-	VSTdivSurfaceType.innerHTML = "";
+	VTYdet.open = false;
+	VTYdivSurfaceTypes.innerHTML = "";
 
 };
 
 
 
-VST.onToggleSurfaceTypes = function() {
+VTY.onToggleSurfaceTypes = function() {
 
-	if ( VSTdivSurfaceType.innerHTML === '' ) {
+	if ( VTYdivSurfaceTypes.innerHTML === '' ) {
 
 		const types = GBX.surfaceTypes.filter( type => GBX.surfaces.find( surface => surface.includes( `"${ type }"` ) ) );
 
@@ -90,15 +92,17 @@ VST.onToggleSurfaceTypes = function() {
 
 		const buttonSurfaceTypes = types.map( ( type, index ) =>
 			`
-			<button onclick=VST.toggleThisSurface("${ type}");  style=min-width:1.5rem;width:1rem;>o</button>
-			<button onclick=VST.toggleSurfaceByButtons(this); style="background-color:#${ colors[ index ] };" > ${ type } </button>`
+			<button onclick=VTY.toggleThisSurface("${ type}"); style=min-width:1.5rem;>o</button>
+			<button onclick=VTY.toggleSurfaceByButtons(this); style="background-color:#${ colors[ index ] };width:10rem;" > ${ type } </button>`
 		);
 
-		VSTdivSurfaceType.innerHTML = buttonSurfaceTypes.join( '<br>' );
+		VTYdivSurfaceTypes.innerHTML = buttonSurfaceTypes.join( '<br>' );
 
-		//VSTdivViewCurrentStats.innerHTML = VST.getViewStats();
+		//VTYdivViewCurrentStats.innerHTML = VTY.getViewStats();
 
-		VST.setSurfacesActiveByDefaults();
+		//VTY.setSurfacesActiveByDefaults();
+
+		VTY.setShowAll(VTYbutShowAll);
 
 	}
 
@@ -106,50 +110,50 @@ VST.onToggleSurfaceTypes = function() {
 
 
 
-VST.setSurfacesActiveByDefaults = function() {
+VTY.setSurfacesActiveByDefaults = function() {
 
-	const buttons = VSTdivSurfaceType.querySelectorAll( "button" );
+	const buttons = VTYdivSurfaceTypes.querySelectorAll( "button" );
 
-	buttons.forEach( button => VST.filtersDefault.includes( button.innerText ) ?
+	buttons.forEach( button => VTY.filtersDefault.includes( button.innerText ) ?
 		button.classList.add( "active" ) : button.classList.remove( "active" )
 	);
 
-	VST.sendSurfacesToThreeJs( VST.filtersDefault );
+	VTY.sendSurfacesToThreeJs( VTY.filtersDefault );
 
 };
 
 
 
-VST.toggleThisSurface = function( type ) {
+VTY.toggleThisSurface = function( type ) {
 
-	const buttonsActive = VSTdet.getElementsByClassName( "active" ); // collection
+	const buttonsActive = VTYdet.getElementsByClassName( "active" ); // collection
 
 	Array.from( buttonsActive ).forEach( button => button.classList.remove( "active" ) );
 
-	VST.sendSurfacesToThreeJs ( [ type ] );
+	VTY.sendSurfacesToThreeJs ( [ type ] );
 
 };
 
 
 
-VST.toggleSurfaceByButtons = function( button ) {
+VTY.toggleSurfaceByButtons = function( button ) {
 
 	button.classList.toggle( "active" );
 
-	const buttonsActive = VSTdivSurfaceType.getElementsByClassName( "active" ); // collection
+	const buttonsActive = VTYdivSurfaceTypes.getElementsByClassName( "active" ); // collection
 
 	const filterArray = Array.from( buttonsActive ).map( button => button.innerText );
 
-	VST.sendSurfacesToThreeJs ( filterArray );
+	VTY.sendSurfacesToThreeJs ( filterArray );
 
 };
 
 
 
-VST.setSurfacesActiveByFilter = function( button, filter ) {
+VTY.setSurfacesActiveByFilter = function( button, filter ) {
 	// console.log( 'filter', filter );
 
-	const buttonsActive = VSTsecViewSurfaceType.getElementsByClassName( "active" ); // collection
+	const buttonsActive = VTYsecViewSurfaceTypes.getElementsByClassName( "active" ); // collection
 
 	Array.from( buttonsActive ).forEach( butt => { if ( butt !== button ) ( butt.classList.remove( "active" ) ); } );
 
@@ -159,18 +163,18 @@ VST.setSurfacesActiveByFilter = function( button, filter ) {
 
 	if ( button.classList.contains( "active" ) ) {
 
-		surfacesFiltered = GBX.surfacesIndexed.filter( surface => surface.includes( `${ filter }` ) );
+		surfacesFiltered = GBX.surfaces.filter( surface => surface.includes( `${ filter }` ) );
 		//console.log( 'surfacesFiltered', surfacesFiltered );
 
 	} else {
 
-		surfacesFiltered = GBX.surfacesIndexed.filter( surface => surface.includes( `${ filter }` ) === false );
+		surfacesFiltered = GBX.surfaces.filter( surface => surface.includes( `${ filter }` ) === false );
 		//console.log( 'surfacesFiltered', surfacesFiltered );
 	}
 
-	VSTdivReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( surfacesFiltered );
+	VTYdivReportsLog.innerHTML = GBXU.sendSurfacesToThreeJs( surfacesFiltered );
 
-	const buttons = VSTdivSurfaceType.querySelectorAll( "button" );
+	const buttons = VTYdivSurfaceTypes.querySelectorAll( "button" );
 
 	buttons.forEach( button => button.classList.remove( "active" ) );
 
@@ -180,9 +184,9 @@ VST.setSurfacesActiveByFilter = function( button, filter ) {
 
 
 
-VST.onToggleInteriorExterior = function( button ) {
+VTY.onToggleInteriorExterior = function( button ) {
 
-	const buttonsActive = VSTdet.getElementsByClassName( "active" ); // collection
+	const buttonsActive = VTYdet.getElementsByClassName( "active" ); // collection
 
 	Array.from( buttonsActive ).forEach( butt => { if ( butt !== button ) ( butt.classList.remove( "active" ) ); } );
 
@@ -194,15 +198,15 @@ VST.onToggleInteriorExterior = function( button ) {
 		:
 		[ "Ceiling","InteriorFloor", "InteriorWall", "UndergroundCeiling" ];
 
-	VST.sendSurfacesToThreeJs( array );
+	VTY.sendSurfacesToThreeJs( array );
 
 };
 
 
 
-VST.onToggleHorizontalVertical = function( button ) {
+VTY.onToggleHorizontalVertical = function( button ) {
 
-	const buttonsActive = VSTsecViewSurfaceType.getElementsByClassName( "active" ); // collection
+	const buttonsActive = VTYsecViewSurfaceTypes.getElementsByClassName( "active" ); // collection
 
 	Array.from( buttonsActive ).forEach( butt => { if ( butt !== button ) ( butt.classList.remove( "active" ) ); } );
 
@@ -214,15 +218,15 @@ VST.onToggleHorizontalVertical = function( button ) {
 		:
 		[ "ExteriorWall","InteriorWall","UndergroundWall" ];
 
-	VST.sendSurfacesToThreeJs( array );
+	VTY.sendSurfacesToThreeJs( array );
 
 };
 
 
 
-VST.setShowAll = function( button ) {
+VTY.setShowAll = function( button ) {
 
-	const buttons = VSTdivSurfaceType.querySelectorAll( "button" );
+	const buttons = VTYdivSurfaceTypes.querySelectorAll( "button" );
 	let surfacesFiltered;
 
 	button.classList.toggle( "active" );
@@ -230,7 +234,7 @@ VST.setShowAll = function( button ) {
 	if ( button.classList.contains( "active" ) ) {
 
 		buttons.forEach( button => button.classList.add( "active" ) );
-		surfacesFiltered = GBX.surfacesIndexed;
+		surfacesFiltered = GBX.surfaces;
 
 	} else {
 
@@ -239,26 +243,26 @@ VST.setShowAll = function( button ) {
 
 	}
 
-	VSTdivReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( surfacesFiltered );
+	VTYdivReportsLog.innerHTML = GBXU.sendSurfacesToThreeJs( surfacesFiltered );
 
 };
 
 
 
-VST.sendSurfacesToThreeJs = function( filters ) {
+VTY.sendSurfacesToThreeJs = function( filters ) {
 
 	filters = Array.isArray( filters ) ? filters : [ filters ];
 	//console.log( 'filters', filters );
 
-	const buttons = VSTdivSurfaceType.querySelectorAll( "button" );
+	const buttons = VTYdivSurfaceTypes.querySelectorAll( "button" );
 
 	buttons.forEach( button => filters.includes( button.innerText ) ?
 		button.classList.add( "active" ) : button.classList.remove( "active" )
 	);
 
-	VBS.surfacesFilteredByStorey = VBS.setSurfacesFilteredByStorey();
+	VST.surfacesFilteredStorey = VST.setSurfacesFilteredStorey();
 
-	const surfaces = VBS.surfacesFilteredByStorey ? VBS.surfacesFilteredByStorey : GBX.surfacesIndexed;
+	const surfaces = VST.surfacesFilteredStorey ? VST.surfacesFilteredStorey : GBX.surfaces;
 	//console.log( 'surfaces', surfaces.length  );
 
 	const surfacesFiltered = filters.flatMap( filter =>
@@ -267,8 +271,8 @@ VST.sendSurfacesToThreeJs = function( filters ) {
 
 	);
 
-	VSTdivReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( surfacesFiltered );
+	VTYdivReportsLog.innerHTML = GBXU.sendSurfacesToThreeJs( surfacesFiltered );
 
-	return VSTdivReportsLog.innerHTML;
+	return VTYdivReportsLog.innerHTML;
 
 };
