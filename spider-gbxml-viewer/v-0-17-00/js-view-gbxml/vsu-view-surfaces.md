@@ -1,0 +1,53 @@
+# VSU View surfaces Read Me
+
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-16-01/js-view/vbsu-view-by-surfaces.js )
+
+<details open >
+
+<summary>Concept</summary>
+
+View by Surfaces (VSU) provides HTML and JavaScript to view individual surfaces.
+
+</details>
+
+<details>
+
+<summary>To Do / Wish List</summary>
+
+
+</details>
+
+<details>
+
+<summary>Issues</summary>
+
+
+</details>
+
+<details>
+
+<summary>Change Log</summary>
+
+### 2019-07-19 ~ Theo
+
+VSU 0.17-00-0vsu
+
+* R - VSU: First commit
+
+### 2019-06-28 ~ Theo
+
+VBSU 0.16-01-3vbsu
+
+* R - VBSU: streamline VBSU.setSelectedIndex()
+* C - VBSU.js: Update script params
+
+### 2019-06-27 ~ The
+
+VBSU 0.16-01-2vbsu
+
+* C - VBSU.js: add script params
+* C - VBSU.js: add new help
+* F = VBSU.js: add select by attributes
+* F - First commit 0f readme
+
+</details>

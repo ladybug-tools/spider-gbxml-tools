@@ -53,6 +53,8 @@ COR.init = function() {
 
 			#divContents { border: 0px solid red; height: 100%; max-width: 100%; overflow: hidden;}
 
+			.sumMenuTitle { padding: 0 0.5rem; text-align: left }
+
 			#navPanel { background-color: #eee; }
 
 			#VSTdivSurfaceType button  { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;

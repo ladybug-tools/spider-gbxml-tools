@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+
+<meta charset = "utf-8">
+<meta name = "copyright" content ="Ladybug Tools authors" >
+<meta name = "date" content = "2019-07-18" >
+<meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
+<meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
+<meta name = "version" content = "0.17.00-0mnu" >
+<meta name = "viewport" content = "width=device-width, initial-scale=1" >
+
+<title>Spider gbXML Viewer Menu</title>
+
+<base href="https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-00/" >
+
+<link rel = "canonical" href = "www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/" />
+<link rel = "license" href = "https://creativecommons.org/licenses/by/4.0/" >
+<link rel = "license" href = "https://opensource.org/licenses/MIT" >
+<link rel = "stylesheet" href = "https://pushme-pullyou.github.io/tootoo14/js-14-05/style.css" >
+
+<style>
+
+	#divContents { border: 0px solid red; height: 100%; max-width: 100%; }
+
+</style>
+</head>
+
+<body>
+
+<!-- utility libraries -->
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js" ></script>
+
+<!-- Three.js -->
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r106/build/three.min.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r106/examples/js/controls/OrbitControls.js" ></script>
+
+<!-- Spider Three.js -->
+<script src = "js-core-three/thr-threejs.js" ></script>
+<script src = "js-core-three/thru-threejs-utilities.js" ></script>
+
+<!-- Spider gbXML forks -->
+<script src = "js-core-gbxml/gbx-gbxml-parser.js" ></script>
+<script src = "js-core-gbxml/gbxu-gbxml-utilities.js" ></script>
+<script src = "js-core-gbxml/gsa-gbxml-surface-attributes.js" ></script>
+
+<!-- Menus generally -->
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-05/mnu-menu/mnu-menu.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-05/pop-popup/pop-popup.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-05/gat-github-access-token/gat-github-access-token.js" ></script>
+
+<!-- Spider popup menu -->
+<script src = "js-popup/popx-popup-gbxml.js" ></script>
+<script src = "js-popup/popf-popup-footer.js" ></script>
+
+<!-- File menu panel -->
+<script src = "js-menu/gff-github-folder-files.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-05/fob-file-open-basic/fob-file-open-basic.js" ></script>
+
+<!-- View menu -->
+<script src = "js-view-3d/set-settings.js" ></script>
+<script src = "js-view-3d/cut-section-cut.js"></script>
+<script src = "js-view-3d/vex-view-exploded.js" ></script>
+
+<!-- Settings menu -->
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-05/thm-theme/thm-theme.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-05/tmp-template/tmp-template.js" ></script>
+
+<!-- Core / local settings -->
+<script src = "js-core/cor-core.js" ></script>
+
+
+	<button id="expandButton" onclick="toggleNavPanel();" >☰</button>
+
+	<nav id="navPanel" >
+
+		<section class="secContent" >
+
+			<details open>
+
+				<summary class="sumMenuTitle" >Menu bar header</summary>
+
+				<header>
+
+					<div id="MNUdivHeader" ></div>
+
+				</header>
+
+				<div>
+
+					<p>
+						See <a href="https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-16-01/viewer-fixer/spider-gbxml-viewer-fixer.html" target="_blank">Spider gbXML Fixer 'Atrax'</a>
+					</p>
+
+					<p>
+						See <a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">Schema GreenBuildingXML_Ver6.01.xsd </a>
+					</p>
+
+			</div>
+
+			</details>
+
+			<details>
+
+				<summary class="sumMenuTitle" >GitHub folders & files</summary>
+
+				<div id=GFFdivGithubFoldersFiles ></div>
+
+				<div id=GFFdivFileInfo></div>
+
+				<div id="GATdivGithubAccessToken" ></div>
+
+			</details>
+
+
+			<details >
+
+				<summary class="sumMenuTitle" >File menu</summary>
+
+				<div id="GALdivSampleFilesGallery"></div>
+
+				<div id=FOBdivFileOpenBasic ></div>
+
+				<div id=GBXUdivStatsGbx ></div>
+
+				<div id=FOBdivFileSaveBasic ></div>
+
+			</details>
+
+
+			<details>
+
+				<summary class=sumMenuTitle >Settings menu</summary>
+
+				<div id=THMdivMenuThemeSelect ></div>
+
+				<div id=TMPdivTemplate ></div>
+
+			</details>
+
+			<footer>
+
+				<details>
+
+					<summary class=sumMenuTitle >Help menu</summary>
+
+					<div id="MNUdivFooterPopup" ></div>
+
+				</details>
+
+				<h1 onclick="navPanel.scrollTop=0;" style="cursor:pointer;text-align:center;" title="go to top of menu" >
+					<img alt="spider icon" src = "https://ladybug.tools/artwork/icons_bugs/ico/spider.ico" height=18 >
+				</h1>
+
+			</footer>
+
+		</section>
+
+	</nav>
+
+
+	<main id="main" >
+
+		<div id="divContents" >
+
+	</main>
+
+
+	<nav id="navDragMove"  >
+
+		<section id="secDragMove" >
+
+			<div id=divDragMoveHeader >
+
+				<span title="Move and resize me" ><img src = 'https://ladybug.tools/artwork/icons_bugs/ico/spider.ico' height=12 ></span>
+
+				<div style=float:right; >
+					<button id=butPopupClose onclick="POP.onClickClose(butPopupClose);" >
+						&times;
+					</button>
+				</div>
+
+			</div>
+
+			<div id="divDragMoveContent" ></div>
+
+			<div id="divDragMoveFooter" ></div>
+
+		</section>
+
+	</nav>
+
+
+	<nav>
+
+		<a href="" id="aViewSource" target="_blank"; >view source</a>
+
+	</nav>
+
+
+<script>
+
+
+FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
+//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/coventry-university-of-warwick-small.zip";
+//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/annapolis-md-single-family-residential-2016.xml"
+//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/pittsburg-airport.zip";
+//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/GreenBuildingXML/Sample-gbXML-Files@master/gbXML_TRK.xml";
+
+
+init();
+THR.animate();
+
+function init() {
+
+	if ( /(iPad|iPhone|iPod)/g.test( navigator.userAgent ) ) { /* I hate having to add this */
+
+		divContents.style.width = getComputedStyle( divContents ).width;
+		divContents.style.height = getComputedStyle( divContents ).height;
+		divContents.setAttribute( 'scrolling', 'no' );
+
+	}
+
+	THR.getThreejs();
+
+	THRU.init();
+
+	GBX.init();
+
+	//const mesh = THRU.getGeometry();
+	//THR.scene.add( mesh );
+
+	THMdivMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
+
+	THM.init();
+
+	MNUdivHeader.innerHTML = MNU.getNavHeader();
+
+	GFFdivGithubFoldersFiles.innerHTML = GFF.getMenuGithubFoldersFiles();
+
+	GATdivGithubAccessToken.innerHTML = GAT.getMenuGitHubAccessToken();
+
+	FOBdivFileOpenBasic.innerHTML = FOB.getMenuFileOpenBasic();
+
+	FOBdivFileSaveBasic.innerHTML = FOB.getMenuFileSaveBasic();
+
+	TMPdivTemplate.innerHTML = TMP.getMenuTemplate();
+
+	MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();
+
+	POP.init();
+
+	POPX.init();
+
+	COR.init();
+
+	GBX.init(); // gets things going
+
+	//if ( !parent.location.hash ) { parent.location.hash=FOB.urlDefaultFile; }
+
+	FOB.onHashChange();
+
+	POP.setPopupShowHide();
+
+	aViewSource.href = MNU.urlSourceCode;
+
+	if ( window.innerWidth < 640 || window.innerHeight < 640 ) { toggleNavPanel(); }
+
+}
+
+
+
+function toggleNavPanel() {
+
+	expandButton.classList.toggle( 'collapsed' );
+	navPanel.classList.toggle( 'collapsed' );
+	main.classList.toggle( 'collapsed' );
+
+	THR.onWindowResize();
+
+}
+
+</script>
+</body>
+</html>

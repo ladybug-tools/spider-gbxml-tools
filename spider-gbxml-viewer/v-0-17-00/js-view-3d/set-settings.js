@@ -15,6 +15,8 @@ const SET = {
 
 SET.getSettingsMenu = function() {
 
+	SET.spaceTitles = [];
+
 	const htm =
 	`
 		<h4>Update display parameters</h4>
@@ -49,10 +51,12 @@ SET.getSettingsMenu = function() {
 			<button onclick=THRU.toggleSurfaceNormals(); title="All Three.js triangles have a normal. See them here." > toggle surface normals </button>
 		</p>
 
-		<p title="opacity: 0 to 100%" >
-			opacity
-			<output id=outOpacity class=floatRight >85%</output><br>
+		<p>
+		<button onclick=SET.toggleSpaceTitles(); >toggle space titles</button>
+		</p>
 
+		<p title="opacity: 0 to 100%" >
+			opacity <output id=outOpacity class=floatRight >85%</output><br>
 			<input type="range" id="rngOpacity" min=0 max=100 step=1 value=85 oninput=THRU.setObjectOpacity(); >
 		</p>
 
@@ -84,39 +88,7 @@ SET.toggleShadows = function() {
 
 
 
-SET.xxtoggleOpenings = function() {
-
-	if ( GBX.surfaceOpenings && GBX.surfaceOpenings.length === 0 ) {
-
-		GBX.surfaceOpenings= new THREE.Group();
-		GBX.surfaceOpenings.name = 'GBX.surfaceOpenings';
-		surfaceOpenings = GBX.getSurfaceOpenings();
-		//console.log( 'surfaceOpenings', surfaceOpenings );
-
-		if ( !surfaceOpenings.length ) { return; }
-
-		GBX.surfaceOpenings.add( ...surfaceOpenings );
-
-		THR.scene.add( GBX.surfaceOpenings );
-
-		return;
-
-	}
-
-	GBX.surfaceOpenings.traverse( function ( child ) {
-
-		if ( child instanceof THREE.Line ) {
-
-			child.visible = !child.visible;
-
-		}
-
-	} );
-
-};
-
-
-SET.toggleEdgesThreejs = function() {
+SET.xxtoggleEdgesThreejs = function () {
 
 	if ( GBX.surfaceEdgesThreejs && GBX.surfaceEdgesThreejs.length === 0 ) {
 
@@ -143,5 +115,51 @@ SET.toggleEdgesThreejs = function() {
 		}
 
 	} );
+
+};
+
+
+SET.toggleSpaceTitles = function () {
+
+	titles = GBX.spaces.map( space => {
+
+		const name = space.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
+		const id = space.match( / id="(.*?)"/ )[ 1 ];
+
+		return ( { id, name } );
+
+	} );
+	//console.log( 'titles', titles );
+
+	const floors = GBX.surfaces.filter( surface => surface.includes( "InteriorFloor" ) );
+	//console.log( 'floors', floors );
+	const scale = 0.001;
+	const distance = THR.camera.position.distanceTo( THR.controls.target );
+
+	points = floors.map( surface => {
+
+		const id = surface.match( / id="(.*?)"/ )[ 1 ];
+
+		const spaceId = surface.match( / spaceIdRef="(.*?)"/gi ).pop().slice( 13,-1);
+		//console.log( 'spaceId', spaceId );
+
+		const title = titles.find( title => title.id === spaceId )
+		//console.log( '', title );
+
+		const index = GBX.surfaces.indexOf( surface );
+
+		const mesh = GBX.surfaceGroup.children[ index ];
+
+		const center = mesh.geometry.boundingSphere.center;
+
+		const placard = THRU.drawPlacard( title.name, 0.0001 * distance, 0x00ff00,
+			center.x, center.y, center.z + 1);
+
+		mesh.add( placard )
+
+	} );
+
+
+
 
 };
