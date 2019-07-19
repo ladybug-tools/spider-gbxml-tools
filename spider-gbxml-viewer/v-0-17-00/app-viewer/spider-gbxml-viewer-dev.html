@@ -60,7 +60,7 @@
 
 <!-- View gbXML menu -->
 <script src = "js-view-gbxml/vsu-view-surfaces.js" ></script>
-
+<script src = "js-view-gbxml/vsp-view-spaces.js" ></script>
 
 <!-- View Three.js menu -->
 <script src = "js-view-3d/set-settings.js" ></script>
@@ -138,15 +138,13 @@
 
 				<section id="VSUsecViewSurfaces" ></section>
 
+				<section id="VSPsecViewSpaces" ></section>
+
 			</details>
 
 			<details>
 
 				<summary class=sumMenuTitle >View 3D menu</summary>
-
-
-
-
 
 			</details>
 
@@ -269,6 +267,8 @@ function init() {
 	//
 
 	VSUsecViewSurfaces.innerHTML = VSU.getMenuViewSurfaces();
+
+	VSPsecViewSpaces.innerHTML = VSP.getMenuViewSpaces();
 
 
 	//
