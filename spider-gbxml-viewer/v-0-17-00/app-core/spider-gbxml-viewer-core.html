@@ -40,19 +40,21 @@ body { margin: 0; overflow: hidden; }
 <script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r106/build/three.min.js" ></script>
 <script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r106/examples/js/controls/OrbitControls.js" ></script>
 
-<!-- Tootoo 0.14.04 forks -->
+<!-- Tootoo -->
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-05/fob-file-open-basic/fob-file-open-basic.js" ></script>
 
-<!-- Spider Three.js forks -->
+<!-- Spider Three.js -->
 <script src = "js-core-three/thr-threejs.js" ></script>
 <script src = "js-core-three/thru-threejs-utilities.js" ></script>
 
-<!-- Spider gbXML forks -->
+<!-- Spider gbXML -->
 <script src = "js-core-gbxml/gbx-gbxml-parser.js" ></script>
 <script src = "js-core-gbxml/gbxu-gbxml-utilities.js" ></script>
 
 
-	<div id=divContents ></div>
+	<div id="divRendererInfo" style=position:absolute; ></div>
+
+	<div id="divContents" ></div>
 
 
 <script>
@@ -84,12 +86,7 @@ function init() {
 
 	GBX.init();
 
-
 	window.addEventListener ( 'hashchange', FOB.onHashChange, false );
-
-	//if ( !parent.location.hash ) { parent.location.hash=FOB.urlDefaultFile; }
-
-	//parent.location.hash = FOB.urlDefaultFile;
 
 	FOB.onHashChange();
 
