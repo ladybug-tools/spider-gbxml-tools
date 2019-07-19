@@ -19,6 +19,8 @@ let THRU = {
 
 THRU.init= function( radius = 50 ) {
 
+	//console.log( '', THRU );
+
 	// called from main html / assumes three.js is loaded
 
 	THRU.radius = radius;
@@ -53,20 +55,12 @@ THRU.onSetRotate = function() {
 
 ////////// Scene
 
-THRU.setSceneDispose = function( obj = THR.scene.children ) {
+THRU.setSceneDispose = function( objArr = [] ) {
 	// console.log( 'THR.scene', THR.scene );
-	// Need a test to show it's working
 
-	THR.scene.traverse( function ( child ) {
+	THR.scene.traverse( child => {
 
-		if ( child instanceof THREE.Mesh ) {
-
-			child.geometry.dispose();
-			child.material.dispose();
-
-			//THR.scene.remove( child );
-
-		} else if ( ( child instanceof THREE.LineSegments )  ) {
+		if ( child.isMesh || child.isLine || child.isSprite ) {
 
 			child.geometry.dispose();
 			child.material.dispose();
@@ -75,20 +69,11 @@ THRU.setSceneDispose = function( obj = THR.scene.children ) {
 
 	} );
 
-	if ( Array.isArray( obj ) ) {
+	objArr = Array.isArray( objArr ) ? objArr : [ objArr ];
 
-		THR.scene.remove( ...obj );
+	THR.scene.remove( ...objArr );
 
-	} else {
-
-		THR.scene.remove( obj );
-
-	}
-
-
-	THRU.axesHelper = undefined;
-	THRU.groundHelper = undefined;
-	THRU.helperNormalsFaces = undefined;
+	objArr.forEach( obj => obj = undefined );
 
 	//divRendererInfo.innerHTML = THRU.getRendererInfo();
 
@@ -346,6 +331,7 @@ THRU.toggleAxesHelper = function() {
 	}
 
 	THRU.axesHelper.scale.set( THRU.radius, THRU.radius, THRU.radius );
+	THRU.axesHelper.name = "axesHelper";
 	THRU.axesHelper.position.copy( THRU.center );
 
 };
@@ -361,6 +347,7 @@ THRU.toggleBoundingBoxHelper = function( objThree = THR.scene ){
 
 		THRU.boundingBoxHelper = new THREE.Box3Helper( bbox, 0xff0000 );
 		THRU.boundingBoxHelper.geometry.computeBoundingBox();
+		THRU.boundingBoxHelper.name = "boundingBoxHelper";
 		THR.scene.add( THRU.boundingBoxHelper );
 
 	 } else {
@@ -435,7 +422,7 @@ THRU.toggleEdges = function( obj = THR.scene ) {
 	if ( THRU.edgeGroup && THRU.edgeGroup.length === 0 ) {
 
 		THRU.edgeGroup = new THREE.Group();
-		THRU.edgeGroup.name = 'THRU.edgeGroup';
+		THRU.edgeGroup.name = "edgeGroup";
 
 		const edgeGroup = THRU.getMeshEdges( obj );
 		//console.log( 'edgeGroup', edgeGroup );

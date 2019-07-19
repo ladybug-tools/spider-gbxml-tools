@@ -77,39 +77,14 @@ GBX.parseFile = function( gbxml )  {
 
 	GBX.timeStart = performance.now();
 
-	// Fix this mess
-	THRU.setSceneDispose( [ GBX.surfaceGroup, GBX.openingGroup, THRU.edgeGroup, GBX.boundingBox, THRU.helperNormalsFaces, THRU.groundHelper ] );
+	THRU.setSceneDispose( [
+		THRU.axesHelper, THRU.boundingBoxHelper, THRU.edgeGroup, THRU.groundHelper, THRU.helperNormalsFaces,
+		GBX.surfaceGroup, GBX.openingGroup,
+	] );
 
 	THRU.edgeGroup = [];
 	GBX.openingGroup = [];
 	GBX.boundingBox = undefined;
-
-	/*
-	if ( GBX.surfaceGroup ) {
-
-		THR.scene.remove( GBX.surfaceGroup );
-
-		GBX.surfaceGroup.traverse( function ( child ) {
-
-			if ( child instanceof THREE.Mesh ) {
-
-				child.geometry.dispose();
-				child.material.dispose();
-
-				//THR.scene.remove( child );
-
-			} else if ( ( child instanceof THREE.LineSegments )  ) {
-
-				child.geometry.dispose();
-				child.material.dispose();
-
-			}
-
-		} );
-
-	}
-	*/
-
 
 	GBX.text = gbxml.replace( /\r\n|\n/g, '' );
 	//console.log( 'GBX.text', GBX.text );

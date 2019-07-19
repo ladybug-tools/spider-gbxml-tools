@@ -191,7 +191,7 @@ POPX.setPrevious = function() {
 
 	divDragMoveContent.innerHTML = POPX.getIntersectedDataHtml();
 
-	divDragMoveFooter.innerHTML = POPX.footer;
+	divDragMoveFooter.innerHTML = POPF.footer;
 
 	navDragMove.hidden = false;
 
