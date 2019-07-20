@@ -6,7 +6,15 @@
 
 <summary>Concept</summary>
 
-Get data from selected GitHub folders and files and display as links in details/summary that update location.hash
+Obtain data from selected GitHub folders and files and display as links in details/summary that update location.hash
+
+
+* Use [GitHub Developer API]( https://developer.github.com/v3/ ) to obtain a list of files in a GitHub repo
+* Build menu to access the files
+* Display a breadcrumb menu to display the current path
+
+The script makes API calls and reads the data one folder at a time. This may be considered a feature or an issue.
+
 
 </details>
 
@@ -28,6 +36,15 @@ Get data from selected GitHub folders and files and display as links in details/
 <details>
 
 <summary>Change Log</summary>
+
+### 2019-07-20 ~ Theo
+
+GFF 0.17.00-0gff
+
+* C - GFF.js: Add links to source files
+* F - GFF.js: Add link to help
+* C - GFF.js: Update text params
+* C - GFF.md: Add text
 
 ### 2019-05-31 ~ Theo
 

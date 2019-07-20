@@ -4,17 +4,20 @@
 
 
 const GFF = {
-	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-05-31",
-	"description": "Get data from selected GitHub folders and files and display as links in details/summary that update location.hash",
-	"helpFile": "gff-github-folder-files/README.md",
-	"urlSourceCode": "",
-	"version": "0.14.0-1",
+
+	script: {
+
+		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
+		"date": "2019-05-31",
+		"description": "Get data from selected GitHub folders and files and display as links in details/summary that update location.hash",
+		"helpFile": "js-menu/gff-github-folder-files.md",
+		"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-menu/gff-github-folder-files.js",
+		"version": "0.17.0-0gff",
+	}
 };
 
-
 GFF.iconGitHubMark = "https://pushme-pullyou.github.io/github-mark-64.png";
-GFF.iconInfo = `<img src=${GFF.iconGitHubMark} height=14 style=opacity:0.5 >`;
+GFF.iconInfo = `<img src=${GFF.iconGitHubMark} height=14 style=opacity:0.5 alt="Ladybug Tools logo" >`;
 
 GFF.items = [
 {
@@ -63,7 +66,10 @@ GFF.items = [
 
 GFF.getMenuGithubFoldersFiles = function() {
 
-	let  htm = "";
+	const help = `<button id="GFFbutHelp" class="butHelp" onclick="POP.setPopupShowHide(GFFbutHelp,GFF.script.helpFile);" >?</button>`;
+
+	let  htm = help;
+
 	let index = 0;
 
 	for ( let item of GFF.items ) {
@@ -111,7 +117,11 @@ GFF.getGithubFoldersFiles = function( index ) {
 
 	const htm =
 	`
-		<p><i>${ item.title }</i></p>
+		<p><i>
+			${ item.subTitle }.
+			User: <a href="https://github.com/${ item.user }" target="_blank">${ item.user }</a>
+			Repo: <a href="https://github.com/${ item.user }${ item.repo }" target="_blank">${ item.repo }</a>
+		</i></p>
 
 		<div id=GALdivGallery${ index } ></div>
 
