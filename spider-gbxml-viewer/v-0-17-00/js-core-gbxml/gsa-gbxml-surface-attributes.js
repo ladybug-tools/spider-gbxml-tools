@@ -48,9 +48,9 @@ GSA.selectedSurfacesFocus = function( index ) {
 
 	divDragMoveContent.innerHTML = POPX.getIntersectedDataHtml();
 
-	const surface = GBX.surfacesIndexed[ index ];
+	const surface = GBX.surfaces[ index ];
 
-	GBX.sendSurfacesToThreeJs( [ surface ] );
+	GBXU.sendSurfacesToThreeJs( [ surface ] );
 
 };
 

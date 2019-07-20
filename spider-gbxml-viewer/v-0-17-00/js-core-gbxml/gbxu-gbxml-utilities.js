@@ -57,14 +57,15 @@ GBXU.onGbxParse = function() {
 	THR.renderer.domElement.addEventListener( 'click', GBXU.onFirstTouch, false );
 	THR.renderer.domElement.addEventListener( 'touchstart', GBXU.onFirstTouch, false );
 
-	divMessage.innerHTML = FOB.fileInfo;
+	divMessage.innerHTML = FOB.fileInfo + GBXU.stats;
+
 };
 
 
 
 GBXU.onFirstTouch = function() {
 
-	divMessage.innerHTML = `45`;
+	divMessage.innerHTML = "";
 
 	GBXU.sendSurfacesToThreeJs( GBX.surfaces );
 
@@ -128,13 +129,13 @@ GBXU.setStats = function( target = "#FOBdivAppStats" ) {
 	if ( tag.length === 0 ) { return; }
 
 	const items = {
-		"Space:": GBX.spaces.length,
+		"Surfaces": GBX.surfaces.length,
+		"Spaces:": GBX.spaces.length,
 		"Storeys": GBX.storeys.length,
 		"Zones": GBX.zones.length,
-		"Surfaces": GBX.surfaces.length,
 		"Openings": GBX.openings.length,
 		//GBX.openingGroup
-		"count": GBX.constructions.length,
+		"Constructions": GBX.constructions.length,
 		"Materials": GBX.materials.length,
 		"Layers": GBX.layers.length,
 		"Window Types": GBX.windowTypes.length
@@ -160,9 +161,8 @@ GBXU.setStats = function( target = "#FOBdivAppStats" ) {
 
 GBXU.getSceneInfo = function() {
 
-	let htm;
 
-	htm = GBX.count3 ?
+	GBXU.sceneInfo = GBX.count3 ?
 
 		`<p>
 		<div>triangles: ${ GBX.count3.toLocaleString() }</div>
@@ -175,7 +175,7 @@ GBXU.getSceneInfo = function() {
 		To be added
 	`;
 
-	return htm;
+	return GBXU.sceneInfo;
 
 };
 

@@ -7,10 +7,10 @@
 const GBXF = {
 
 	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-06-07",
+	"date": "2019-07-20",
 	"description": "Creates the GBXF object and basic variables. Creates the template for the main contents and more",
 	"helpFile": "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/README.md",
-	"version": "0.4.0-7",
+	"version": "0.17.00-0gbxf",
 
 };
 
@@ -88,7 +88,6 @@ GBXF.getMenuFixer = function() {
 
 
 
-
 GBXF.colorsDefault = {
 
 	InteriorWall: 0x008000,
@@ -147,21 +146,17 @@ GBXF.init = function( target = divFixer ) {
 	FOB.reader.addEventListener( 'load', GBXF.onReaderResult, false );
 	document.body.addEventListener( 'onZipFileParse', GBXF.onFileZipLoad, false );
 
-/*
-	GBXFh1FileName.innerHTML = `File: ${ decodeURI( FIL.name ) }`;
-
-	GGD.getData( FIL.text );
-
-	GGDdivGetGbxmlData.innerHTML = GGD.getGbxmlData( FIL.text );
-*/
-
 };
+
+
 
 GBXF.onXhrResponse = function( event ) { GBXF.setUp( event.target.response ); };
 
 GBXF.onReaderResult = function() { GBXF.setUp( FOB.reader.result ); };
 
 GBXF.onFileZipLoad = function() { GBXF.setUp( FOB.text ); };
+
+
 
 GBXF.setUp = function( text ) {
 
@@ -205,53 +200,6 @@ GBXF.setUp = function( text ) {
 
 	//TMPdivTemplate.innerHTML = TMP.getMenuTemplate();
 
-/*
-	GBXFdivIframe.style.cssText = `
-
-		border: 1px solid red;
-		left: 50%;
-		margin-left: -50vw;
-		margin-right: -50vw;
-		max-width: 100vw;
-		position: relative;
-		right: 50%;
-		width: 100vw;
-	`;
-
-
-	if ( !FOB.files ) { // switch positions
-
-		const url = location.hash ? location.hash : "#" + FOB.urlDefaultFile;
-		//console.log( 'url', url );
-
-		GBXFifr.src = `${ GBXF.viewer }${ url }`;
-
-	} else {
-
-		// need something loaded. Will be updated by the load event later
-		const url = "#https://cdn.jsdelivr.net/gh/ladybug-tools/spider-gbxml-fixer@master/test-samples/one-space-default.xml";
-
-		GBXFifr.src = `${ GBXF.viewer }${ url }`;
-
-		GBXFifr.onload = function() {
-			//console.log( 'FOB', FOB.files.files[ 0 ].name );
-
-			if ( FOB.files.files[ 0 ].name.toLowerCase().endsWith( ".xml" ) ) {
-
-				GBXFifr.contentWindow.GBXF.parseFile( FOB.reader.result );
-
-			} else {
-
-				GBXFifr.contentWindow.GBXF.parseFile( FOB.text );
-
-			}
-
-		};
-
-	}
-*/
-
-
 };
 
 
@@ -288,8 +236,6 @@ GBXF.openAllNonZero = function( target = divFixer ){
 	const details = target.querySelectorAll( 'details' );
 
 	for ( let item of details ) {
-
-		//console.log( 'item', item );
 
 		if ( item.innerText.includes( "~" ) && item.innerText.includes( "~ 0 " ) === false ) {
 
