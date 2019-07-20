@@ -15,6 +15,7 @@ Obtain data from selected GitHub folders and files and display as links in detai
 
 The script makes API calls and reads the data one folder at a time. This may be considered a feature or an issue.
 
+"Maevia" is delighted to receive your sample files - especially files with two versions - broken and fixed - for testing.
 
 </details>
 
@@ -22,6 +23,7 @@ The script makes API calls and reads the data one folder at a time. This may be 
 
 <summary>To Do / Wish List</summary>
 
+* 2019-07-20 ~ Theo ~ Source files need better attributions
 * 2019-05-31 ~ Theo ~ Menu code to be simplified
 
 </details>

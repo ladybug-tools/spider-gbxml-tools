@@ -57,11 +57,14 @@ GBXU.onGbxParse = function() {
 	THR.renderer.domElement.addEventListener( 'click', GBXU.onFirstTouch, false );
 	THR.renderer.domElement.addEventListener( 'touchstart', GBXU.onFirstTouch, false );
 
+	divMessage.innerHTML = FOB.fileInfo;
 };
 
 
 
 GBXU.onFirstTouch = function() {
+
+	divMessage.innerHTML = `45`;
 
 	GBXU.sendSurfacesToThreeJs( GBX.surfaces );
 
@@ -121,6 +124,7 @@ GBXU.setStats = function( target = "#FOBdivAppStats" ) {
 	//const timeToLoad = performance.now() - GBX.timeStart;
 
 	const tag = document.body.querySelectorAll( target );
+
 	if ( tag.length === 0 ) { return; }
 
 	const items = {
