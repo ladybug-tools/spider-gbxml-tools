@@ -1,11 +1,12 @@
 # VG view gbXML Read Me
 
-[Source code](  )
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-view-gbxml/vg-view-gbxml.js )
 
 <details open >
 
 <summary>Concept</summary>
 
+* View gbXML (VG) - view campus and building attributes
 
 </details>
 
