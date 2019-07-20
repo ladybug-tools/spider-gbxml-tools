@@ -192,14 +192,19 @@ VST.setSurfacesFilteredStorey = function( surfaces ) {
 
 	for ( let storeyId of storeyIds ) {
 
-		const spacesInStorey = GBX.spaces.filter ( space => space.includes( `buildingStoreyIdRef="${ storeyId.value }"` ) );
+		const spacesInStorey = GBX.spaces.filter( space => space.includes( `buildingStoreyIdRef="${ storeyId.value }"` ) );
 		//console.log( 'spacesInStorey', spacesInStorey );
 
 		const spacesInStoreyIds = spacesInStorey.map( space => space.match( ' id="(.*?)"' )[ 1 ] );
 		//console.log( 'spacesInStoreyIds', spacesInStoreyIds );
 
 		const surfacesVisibleSpace = spacesInStoreyIds.flatMap( spaceId =>
-			GBX.surfaces.filter( surface => surface.includes( `spaceIdRef="${ spaceId }"`  ) )
+
+			GBX.surfaces.filter( surface => {
+				const adjacentSpaceIds = surface.match( /spaceIdRef="(.*?)"/gi );
+				let spaceIdRef = adjacentSpaceIds ? adjacentSpaceIds.pop().slice( 12, -1 ) : "";
+				return spaceIdRef === spaceId;
+			} )
 		);
 		//console.log( 'surfacesVisibleSpace', surfacesVisibleSpace );
 

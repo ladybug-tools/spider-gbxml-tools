@@ -59,10 +59,12 @@
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-05/fob-file-open-basic/fob-file-open-basic.js" ></script>
 
 <!-- View gbXML menu -->
+<script src = "js-view-gbxml/vg-view-gbxml.js" ></script>
 <script src = "js-view-gbxml/vty-view-surface-types.js" ></script>
 <script src = "js-view-gbxml/vsu-view-surfaces.js" ></script>
 <script src = "js-view-gbxml/vsp-view-spaces.js" ></script>
 <script src = "js-view-gbxml/vst-view-storeys.js" ></script>
+<script src = "js-view-gbxml/vzo-view-zones.js" ></script>
 
 <!-- View Three.js menu -->
 <script src = "js-view-3d/set-settings.js" ></script>
@@ -142,6 +144,8 @@
 
 				<summary class=sumMenuTitle >View gbXML menu</summary>
 
+				<section id="VGsecViewGbxml" ></section>
+
 				<section id="VTYsecViewSurfaceTypes" ></section>
 
 				<section id="VSUsecViewSurfaces" ></section>
@@ -149,6 +153,8 @@
 				<section id="VSPsecViewSpaces" ></section>
 
 				<section id="VSTsecViewStoreys" ></section>
+
+				<section id="VZOsecViewZones" ></section>
 
 			</details>
 
@@ -276,6 +282,8 @@ function init() {
 
 	//
 
+	VGsecViewGbxml.innerHTML = VG.getMenuViewGbxml();
+
 	VTYsecViewSurfaceTypes.innerHTML = VTY.getMenuViewSurfaceTypes();
 
 	VSUsecViewSurfaces.innerHTML = VSU.getMenuViewSurfaces();
@@ -283,6 +291,8 @@ function init() {
 	VSPsecViewSpaces.innerHTML = VSP.getMenuViewSpaces();
 
 	VSTsecViewStoreys.innerHTML = VST.getMenuViewStoreys();
+
+	VZOsecViewZones.innerHTML = VZO.getMenuViewZones();
 
 
 	//
