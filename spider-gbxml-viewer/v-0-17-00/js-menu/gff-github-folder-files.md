@@ -41,6 +41,7 @@ The script makes API calls and reads the data one folder at a time. This may be 
 
 GFF 0.17.00-0gff
 
+* R - GFF.js: Drop link to individual files
 * C - GFF.js: Add links to source files
 * F - GFF.js: Add link to help
 * C - GFF.js: Update text params

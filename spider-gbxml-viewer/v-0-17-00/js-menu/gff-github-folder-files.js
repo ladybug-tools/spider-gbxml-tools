@@ -24,16 +24,16 @@ GFF.items = [
 	"user": "GreenBuildingXML",
 	"repo": "/Sample-gbXML-Files",
 	"pathRepo": "",
-	"title": "gbXML Sample Files",
-	"subTitle": "gbXML Sample Files on GitHub",
+	"title": "gbXML sample Files",
+	"subTitle": "Sample Files on GitHubSample files from the gXML organization",
 	"button": "butGalleryGbxml"
 },
 {
 	"user": "ladybug-tools",
 	"repo": "/spider",
 	"pathRepo": "gbxml-sample-files/",
-	"title": "Spider gbXML files",
-	"subTitle": "Ladybug Tools/Spider gbXML Viewer sample files on GitHub",
+	"title": "Spider gbXML files ",
+	"subTitle": "Ladybug Tools/Spider gbXML Viewer sample files from a variety of sourceson GitHub",
 	"button": "butGallerySampleFiles"
 },
 {
@@ -49,7 +49,7 @@ GFF.items = [
 	"repo": "/spider",
 	"pathRepo": "cookbook/07-create-exportable-buildings/test-gbxml-files/",
 	"title": "Build Well",
-	"subTitle": "Build Well on GitHub",
+	"subTitle": "A spider project to generate gbXML files on the fly",
 	"button": "butGalleryBuildWell"
 },
 {
@@ -113,6 +113,7 @@ GFF.getGithubFoldersFiles = function( index ) {
 	item.urlGitHubPage = 'https://cdn.jsdelivr.net/gh/' + item.user + item.repo + '@master/' + item.pathRepo;
 
 	item.urlGitHubSource = 'https://github.com/' + item.user + item.repo + '/blob/master/' + item.pathRepo;
+
 	GFF.index = index;
 
 	const htm =
@@ -129,7 +130,7 @@ GFF.getGithubFoldersFiles = function( index ) {
 
 		<p>Click any file title to view the file in this script.</p>
 
-		<p>Click any ❐ icon to go full screen & get link to individual file.</p>
+		<!--<p>Click any ❐ icon to go full screen & get link to individual file.</p> -->
 
 		<p>Tool tips provide file size.
 
@@ -183,7 +184,7 @@ GFF.callbackGitHubMenu = function( xhr ) {
 	const response = xhr.target.response;
 	const files = JSON.parse( response );
 
-	let htm = '';
+	let htm = "";
 
 	const item = GFF.items[ GFF.index ];
 	//console.log( 'item', item );
@@ -209,7 +210,7 @@ GFF.callbackGitHubMenu = function( xhr ) {
 
 			<a href=${ location.href.replace( location.hash, "" ) }#${ item.urlGitHubPage + fileName } title="${ file.size.toLocaleString() } bytes" >${ file.name }</a>
 
-			<a href=${ item.threeDefaultFile }#${ item.urlGitHubPage }${ fileName } title="Link to just this file" >&#x2750;</a>
+			<!--<a href=${ item.threeDefaultFile }#${ item.urlGitHubPage }${ fileName } title="Link to just this file" >&#x2750;</a> -->
 
 		</div>`;
 
