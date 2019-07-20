@@ -33,13 +33,13 @@ SET.getMenuSettings = function() {
 
 				<button onclick=THRU.toggleAxesHelper(); >toggle axes</button>
 			<p>
-
 				<button onclick=GBXU.boundingBox.visible=!GBXU.boundingBox.visible; >toggle bounding box</button>
 
 				<button onclick=THRU.toggleGroundHelper(); >toggle ground</button>
+			</p>
 
+			<p>
 				<button onclick=SET.toggleShadows(); >toggle shadows</button>
-
 			</p>
 
 			<p>
