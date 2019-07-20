@@ -506,7 +506,8 @@ POPX.toggleSpaceVisible = function( button, spaceId ) {
 
 			arr.forEach( item => child.visible = item.includes( spaceId1 ) || item.includes( spaceId2 ) ? true : child.visible );
 
-		} */
+		}
+*/
 
 		console.log( 'adj space vis', spaceId1, visible1, spaceId2, visible2 );
 		GBX.surfaces.forEach( ( surface, index ) => {

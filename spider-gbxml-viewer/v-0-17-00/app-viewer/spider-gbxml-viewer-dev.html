@@ -67,9 +67,9 @@
 <script src = "js-view-gbxml/vzo-view-zones.js" ></script>
 
 <!-- View Three.js menu -->
-<script src = "js-view-3d/set-settings.js" ></script>
-<script src = "js-view-3d/cut-section-cut.js"></script>
-<script src = "js-view-3d/vex-view-exploded.js" ></script>
+<script src = "js-scene/set-settings.js" ></script>
+<script src = "js-scene/cut-section-cut.js"></script>
+<script src = "js-scene/vex-view-exploded.js" ></script>
 
 <!-- Settings menu -->
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-05/thm-theme/thm-theme.js" ></script>
@@ -140,7 +140,7 @@
 
 			</details>
 
-			<details open>
+			<details>
 
 				<summary class=sumMenuTitle >View gbXML menu</summary>
 
@@ -158,9 +158,20 @@
 
 			</details>
 
-			<details>
+			<details open>
 
-				<summary class=sumMenuTitle >View 3D menu</summary>
+				<summary class=sumMenuTitle >Scene menu</summary>
+
+				<section id="SETsecSettings" ></section>
+
+
+				<details id=detSectionCut ontoggle="divSectionCut.innerHTML=CUT.getDetSectionViews();" >
+
+					<summary>Scene cut sections</summary>
+
+					<div id="divSectionCut"></div>
+
+				</details>
 
 			</details>
 
@@ -280,7 +291,7 @@ function init() {
 
 	FOBdivFileSaveBasic.innerHTML = FOB.getMenuFileSaveBasic();
 
-	//
+	// gbXML menu
 
 	VGsecViewGbxml.innerHTML = VG.getMenuViewGbxml();
 
@@ -295,7 +306,11 @@ function init() {
 	VZOsecViewZones.innerHTML = VZO.getMenuViewZones();
 
 
-	//
+	// Scene memu
+
+	SETsecSettings.innerHTML = SET.getMenuSettings()
+
+
 
 	TMPdivTemplate.innerHTML = TMP.getMenuTemplate();
 

@@ -79,12 +79,13 @@ GBX.parseFile = function( gbxml )  {
 
 	THRU.setSceneDispose( [
 		THRU.axesHelper, THRU.boundingBoxHelper, THRU.edgeGroup, THRU.groundHelper, THRU.helperNormalsFaces,
-		GBX.surfaceGroup, GBX.openingGroup,
+		GBX.surfaceGroup, GBX.openingGroup, GBX.placards
 	] );
 
 	THRU.edgeGroup = [];
 	GBX.openingGroup = [];
 	GBX.boundingBox = undefined;
+	GBX.placards = undefined;
 
 	GBX.text = gbxml.replace( /\r\n|\n/g, '' );
 	//console.log( 'GBX.text', GBX.text );
@@ -166,10 +167,10 @@ GBX.getPolyLoops = function( surface ) {
 
 
 
-GBX.getCoordinates = function( surface ) {
+GBX.getCoordinates = function( text ) {
 
 	const re = /<coordinate(.*?)<\/coordinate>/gi;
-	const coordinatesText = surface.match( re );
+	const coordinatesText = text.match( re );
 	const coordinates = coordinatesText.map( coordinate => coordinate.replace(/<\/?coordinate>/gi, '' ) )
 		.map( txt => Number( txt ) );
 
