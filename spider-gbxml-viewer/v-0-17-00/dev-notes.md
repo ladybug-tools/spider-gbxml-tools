@@ -5,7 +5,7 @@
 
 * code is settling down
 * I am happy with the code
-* I want t start talking about it, sharing it
+* I want to start talking about it, sharing it
 * I want people to start looking at the code
 * It's not great code, but perhaps more to the point it not bad code
 * The levels of indentation are getting to be fewer and fewer. The code is becoming simpler and simpler, the modules smaller and smaller. More small modules rather a few big ones
@@ -20,9 +20,11 @@ Summary
 * Supports files that are local or remote with one button press file reloading
 * Displays virtually every aspect of numerical and attribute data in the file
 * Supplies a variety of 3D visualization aids including exploding, cut sections
-* Begins to provide tools to fix any issues found in the files
+* Begins to provide tools to fix many issues found in the files
 * Delivers a user interface that may be themed to fit in with the house style of any organization
 * Works just fine on phone, tablet or computer
+* Set a theme
+* Display helpful text including text-to-voice in a popup
 * Runs locally, on server, in an iframe or even embedded in another app ( such as Open Studio ;-)
 * Entirely written in plain vanilla JavaScript with just two dependencies: Three.js and Showdown.js
 
