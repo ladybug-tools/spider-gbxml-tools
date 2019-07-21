@@ -1,4 +1,4 @@
-# VBCOO view-by-cad-object-id-open Read Me
+# VCO View CAD Object ID OpenType Read Me
 
 [Source code](  )
 
@@ -6,7 +6,7 @@
 
 <summary>Concept</summary>
 
-View by CAD Object ID ooen (VBCOO) provides HTML and JavaScript to view openings by their CAD Object ID group.
+View by CAD Object ID open (VCO) provides HTML and JavaScript to view openings by their CAD Object ID group.
 
 </details>
 
@@ -27,6 +27,13 @@ View by CAD Object ID ooen (VBCOO) provides HTML and JavaScript to view openings
 <details>
 
 <summary>Change Log</summary>
+
+### 2019-07-21 ~ Theo
+
+VCO 0.17.00-0vco
+
+* R - VCO.js: First commit
+
 
 ### 2019-07-08 ~ Theo
 

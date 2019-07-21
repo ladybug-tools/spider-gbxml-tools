@@ -114,9 +114,13 @@ VCIO.selectedGroupFocus = function( select ) {
 
 	POPX.intersected = null;
 
+	divDragMoveFooter.innerHTML = POPF.footer;
+
+	navDragMove.hidden = false;
+
 	THR.scene.remove( POPX.line, POPX.particle );
 
-	GBX.surfaceOpenings.children.forEach( opening => opening.visible = false );
+	GBX.openingGroup.children.forEach( opening => opening.visible = false );
 
 	VCIO.surfacesWithOpenings = [];
 
@@ -124,17 +128,17 @@ VCIO.selectedGroupFocus = function( select ) {
 
 		const cadId = option.innerText;
 
-		const surfacesWithOpenings = GBX.surfacesIndexed.filter( opening => opening.includes( cadId ) );
+		const surfacesWithOpenings = GBX.surfaces.filter( opening => opening.includes( cadId ) );
 
 		VCIO.surfacesWithOpenings.push( ...surfacesWithOpenings );
 
 		GBX.openings.filter( opening => opening.includes( cadId ) )
 			.map( item => GBX.openings.indexOf( item ) )
-			.forEach( index => GBX.surfaceOpenings.children[ index ].visible = true );
+			.forEach( index => GBX.openingGroup.children[ index ].visible = true );
 
 	} );
 
-	GBX.sendSurfacesToThreeJs( VCIO.surfacesWithOpenings );
+	GBXU.sendSurfacesToThreeJs( VCIO.surfacesWithOpenings );
 
 };
 

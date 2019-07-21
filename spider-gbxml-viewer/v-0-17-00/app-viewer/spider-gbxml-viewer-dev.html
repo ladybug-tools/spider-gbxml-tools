@@ -74,6 +74,7 @@
 <script src = "js-view-gbxml/vzo-view-zones.js" ></script>
 <script src = "js-view-gbxml/vop-view-openings.js" ></script>
 <script src = "js-view-gbxml/vci-view-cad-object-id.js" ></script>
+<script src = "js-view-gbxml/vcio-view-cad-object-id-open.js" ></script>
 <script src = "js-view-gbxml/vco-view-constructions.js" ></script>
 <script src = "js-view-gbxml/vla-view-layers.js" ></script>
 <script src = "js-view-gbxml/vma-view-materials.js" ></script>
@@ -189,6 +190,8 @@
 				<section id="VZOsecViewZones" ></section>
 
 				<section id="VCIsecViewCadObjectId" ></section>
+
+				<section id="VCIOsecViewCadObjectIdOpen" ></section>
 
 				<section id="VOPsecViewOpenings" ></section>
 
@@ -362,6 +365,8 @@ function init() {
 	VOPsecViewOpenings.innerHTML = VOP.getMenuViewOpenings();
 
 	VCIsecViewCadObjectId.innerHTML = VCI.getMenuViewCadObjectId();
+
+	VCIOsecViewCadObjectIdOpen.innerHTML = VCIO.getMenuViewCadObjectIdOpen();
 
 	VCOsecViewConstructions.innerHTML = VCO.getMenuViewConstructions();
 
