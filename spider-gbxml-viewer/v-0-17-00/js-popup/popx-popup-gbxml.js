@@ -152,19 +152,21 @@ POPX.onDocumentMouseDown = function( event ) {
 
 		POPX.intersected = POPX.intersects[ 0 ].object;
 
-		POPX.intersected.material.opacity = 1;
+		POPX.setIntersected( POPX.intersected )
 
-		POPX.intersectedLast = POPX.intersected;
+		//POPX.intersected.material.opacity = 1;
+
+		//POPX.intersectedLast = POPX.intersected;
 
 		POPX.setIntersectedParticleAtPoint( POPX.intersects[ 0 ].point );
 
 		//divDragMoveContent.style.height = "90%";
 
-		divDragMoveContent.innerHTML = POPX.getIntersectedDataHtml();
+		//divDragMoveContent.innerHTML = POPX.getIntersectedDataHtml();
 
-		divDragMoveFooter.innerHTML = POPF.footer;
+		//divDragMoveFooter.innerHTML = POPF.footer;
 
-		navDragMove.hidden = false;
+		//navDragMove.hidden = false;
 
 	} else {
 
@@ -183,17 +185,19 @@ POPX.onDocumentMouseDown = function( event ) {
 
 
 
-POPX.setPrevious = function() {
+POPX.setIntersected = function( intersected = POPX.intersectedLast ) { // called by POPF.footer
 
-	POPX.intersected = POPX.intersectedLast;
+	POPX.intersected = intersected;
 
-	POPX.intersected.material.opacity = 1;
+	intersected.material.opacity = 1;
 
 	divDragMoveContent.innerHTML = POPX.getIntersectedDataHtml();
 
 	divDragMoveFooter.innerHTML = POPF.footer;
 
 	navDragMove.hidden = false;
+
+	POPX.intersectedLast = intersected;
 
 };
 

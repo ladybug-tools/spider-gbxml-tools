@@ -72,7 +72,11 @@
 <script src = "js-view-gbxml/vsp-view-spaces.js" ></script>
 <script src = "js-view-gbxml/vst-view-storeys.js" ></script>
 <script src = "js-view-gbxml/vzo-view-zones.js" ></script>
-
+<script src = "js-view-gbxml/vop-view-openings.js" ></script>
+<script src = "js-view-gbxml/vco-view-constructions.js" ></script>
+<script src = "js-view-gbxml/vla-view-layers.js" ></script>
+<script src = "js-view-gbxml/vma-view-materials.js" ></script>
+<script src = "js-view-gbxml/vwt-view-window-types.js" ></script>
 
 <!-- Scene menu -->
 <script src = "js-scene/set-settings.js" ></script>
@@ -140,7 +144,7 @@
 
 			</details>
 
-			<details open >
+			<details>
 
 				<summary class="sumMenuTitle" >gbXML samples menu</summary>
 
@@ -167,7 +171,7 @@
 
 			</details>
 
-			<details>
+			<details open>
 
 				<summary class=sumMenuTitle >View gbXML menu</summary>
 
@@ -182,6 +186,16 @@
 				<section id="VSTsecViewStoreys" ></section>
 
 				<section id="VZOsecViewZones" ></section>
+
+				<section id="VOPsecViewOpenings" ></section>
+
+				<section id="VCOsecViewConstructions" ></section>
+
+				<section id="VMAsecViewMaterials" ></section>
+
+				<section id="VLAsecViewLayers" ></section>
+
+				<section id="VWTsecViewWindowTypes" ></section>
 
 			</details>
 
@@ -341,6 +355,16 @@ function init() {
 	VSTsecViewStoreys.innerHTML = VST.getMenuViewStoreys();
 
 	VZOsecViewZones.innerHTML = VZO.getMenuViewZones();
+
+	VOPsecViewOpenings.innerHTML = VOP.getMenuViewOpenings();
+
+	VCOsecViewConstructions.innerHTML = VCO.getMenuViewConstructions();
+
+	VLAsecViewLayers.innerHTML = VLA.getMenuViewLayers();
+
+	VMAsecViewMaterials.innerHTML = VMA.getMenuViewMaterials();
+
+	VWTsecViewWindowTypes.innerHTML = VWT.getMenuViewWindowTypes();
 
 
 	// Scene memu

@@ -27,13 +27,13 @@ GBXU.onGbxParse = function() {
 
 	THRU.toggleBoundingBoxHelper( GBXU.surfaceGroup );
 
-	//GBXU.toggleOpenings();
+	GBXU.toggleOpenings();
 
 	THRU.zoomObjectBoundingSphere( );
 
 	THRU.toggleAxesHelper();
 
-	THRU.toggleEdges( GBX.surfaceGroup );
+	//THRU.toggleEdges( GBX.surfaceGroup );
 
 	// needs work
 	GBXU.surfaceGroupVisible = new THREE.Object3D();
@@ -54,8 +54,8 @@ GBXU.onGbxParse = function() {
 	GBXU.setStats();
 
 	window.addEventListener( 'keyup', GBXU.onFirstTouch , false );
-	THR.renderer.domElement.addEventListener( 'click', GBXU.onFirstTouch, false );
-	THR.renderer.domElement.addEventListener( 'touchstart', GBXU.onFirstTouch, false );
+	window.addEventListener( 'click', GBXU.onFirstTouch, false );
+	window.addEventListener( 'touchstart', GBXU.onFirstTouch, false );
 
 	divMessage.innerHTML = FOB.fileInfo + GBXU.stats;
 
@@ -71,15 +71,15 @@ GBXU.onFirstTouch = function() {
 
 	THRU.toggleBoundingBoxHelper();
 
-	//GBXU.toggleOpenings();
+	GBXU.toggleOpenings();
 
 	THRU.toggleGroundHelper();
 
-	//THRU.toggleEdges( GBX.surfaceGroup );
+	THRU.toggleEdges( GBX.surfaceGroup );
 
 	window.removeEventListener( 'keyup', GBXU.onFirstTouch );
-	THR.renderer.domElement.removeEventListener( 'click', GBXU.onFirstTouch );
-	THR.renderer.domElement.removeEventListener( 'touchstart', GBXU.onFirstTouch );
+	window.removeEventListener( 'click', GBXU.onFirstTouch );
+	window.removeEventListener( 'touchstart', GBXU.onFirstTouch );
 
 };
 

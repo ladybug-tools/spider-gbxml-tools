@@ -1,4 +1,4 @@
-/* globals GBX, THR, POPX, VSPdetMenu, divDragMoveContent, VSPselSpace, VSPdivReportsLog, VSPselAttribute */
+/* globals GBX, GBXU, THR, POPX, POPF, VSPdetMenu, navDragMove, divDragMoveContent, divDragMoveFooter, VSPselSpace, VSPdivReportsLog, VSPselAttribute */
 // jshint esversion: 6
 // jshint loopfunc: true
 
@@ -160,6 +160,10 @@ VSP.selSpacesFocus = function() {
 
 	divDragMoveContent.innerHTML = POPX.getSpaceAttributes( VSPselSpace.value );
 
+	divDragMoveFooter.innerHTML = POPF.footer;
+
+	navDragMove.hidden = false;
+
 };
 
 
@@ -188,7 +192,7 @@ VSP.getSurfacesFilteredSpace = function(  ) {
 
 
 
-VSP.setViewSpacesShowHide = function() {
+VSP.xxxsetViewSpacesShowHide = function() {
 
 	VSPselSpace.selectedIndex = -1;
 

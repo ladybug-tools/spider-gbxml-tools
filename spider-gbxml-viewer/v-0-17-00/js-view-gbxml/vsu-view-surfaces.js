@@ -117,7 +117,7 @@ VSU.setSelectedIndex = function( input, select ) {
 
 	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
 
-	select.selectedIndex =  str && option ? option.index : -1;
+	select.selectedIndex = str && option ? option.index : -1;
 
 };
 
@@ -127,16 +127,13 @@ VSU.selectedSurfacesFocus = function( select ) {
 
 	POPX.intersected = GBX.surfaceGroup.children[ select.value ];
 
-	divDragMoveContent.innerHTML = POPX.getIntersectedDataHtml();
-	//console.log( 'sel', select.value );
+	POPX.setIntersected( POPX.intersected );
 
 	const options = select.selectedOptions;
 	//console.log( 'option', options );
 
 	const indexes = Array.from( options ).map( option => Number( option.value ) );
 	//console.log( 'indexes', indexes );
-
-	//VSU.surfaces = GBX.surfacesIndexed.filter( ( surface, index ) => indexes.includes( index  ) );
 
 	VSU.surfaces = indexes.map( index => GBX.surfaces[ index ] );
 

@@ -162,6 +162,10 @@ VST.selStoreys = function() {
 
 	divDragMoveContent.innerHTML = POPX.getStoreyAttributes( VSTselStorey.value );
 
+	divDragMoveFooter.innerHTML = POPF.footer;
+
+	navDragMove.hidden = false;
+
 };
 
 
@@ -298,8 +302,5 @@ VST.setSurfaceTypesShowHide = function( button, surfaceArray ) {
 		GBXU.sendSurfacesToThreeJs( surfaceArray );
 
 	}
-
-
-
 
 };

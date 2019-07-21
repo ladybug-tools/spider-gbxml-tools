@@ -13,6 +13,8 @@
 
 <summary>To Do / Wish List</summary>
 
+* 2019-07-20 ~ Theo ~ Add placards only to visible spaces
+
 
 </details>
 

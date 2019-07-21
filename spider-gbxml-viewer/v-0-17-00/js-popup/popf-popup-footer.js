@@ -29,7 +29,7 @@ POPF.footer =
 			<button class=POPFbutIcon onclick="POPF.setScreen2();" title="Display parameters" >👁️</button>
 			<button class=POPFbutIcon onclick="POPF.setScreen3();" title="Cut sections" >🔪</button>
 			<button class=POPFbutIcon onclick="POPF.setScreen4();" title="Exploded views" >🧨</button>
-			<button class=POPFbutIcon onclick="POPX.setPrevious();" title="Previously selected surface" >📌</button>
+			<button class=POPFbutIcon onclick="POPX.setIntersected();" title="Previously selected surface" >📌</button>
 
 
 		</div>
@@ -83,7 +83,7 @@ POPF.setScreen3 = function() {
 
 POPF.setScreen2 = function() {
 
-	divDragMoveContent.innerHTML = SET.getSettingsMenu();
+	divDragMoveContent.innerHTML = SET.getPanelSettings();
 
 };
 
