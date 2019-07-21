@@ -1,11 +1,12 @@
-# ZZZZZ Read Me
+# View gbXML Read Me
 
-[Source code](  )
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-00/js-view-gbxml )
 
 <details open >
 
 <summary>Concept</summary>
 
+* Scripts to help you examine gbXML data
 
 </details>
 
@@ -13,6 +14,17 @@
 
 <summary>To Do / Wish List</summary>
 
+* Embed the help buttons inside the details
+* jsHint all the files
+* Make sure all
+	* report number of items found
+	* input type=search
+* create core script?
+	* help
+	* select index
+	* select surfaces show hide
+* Add openType script
+* Try in OpenStudio
 
 </details>
 

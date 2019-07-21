@@ -21,7 +21,7 @@ GBXU.filtersDefault = [ "Air", "ExposedFloor", "ExteriorWall", "RaisedFloor", "R
 ////////// inits & info
 
 
-GBXU.onGbxParse = function() {
+GBXU.onGbxParse = function() { // see GBX.parseFile
 
 	GBXU.setSurfaceTypesVisible( GBXU.filtersDefault );
 

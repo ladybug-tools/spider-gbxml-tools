@@ -7,7 +7,7 @@ let THRU = {
 
 	copyright: "Copyright 2019 Ladybug Tools authors. MIT License",
 	date: "2019-07-15",
-	description: "Three.js Utilities: all this is a bit idiosyncratic / a random collection of stuff",
+	description: "Three.js utilities",
 	helpFile: "../js-core/thru-threejs-utilities.md",
 	license: "MIT License",
 	urlSourceCode: "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-00/js-core",
@@ -83,7 +83,6 @@ THRU.setSceneDispose = function( objArr = [] ) {
 
 ////////// Info / move to a view menu??
 
-
 THRU.getRendererInfo = function() {
 	//console.log( 'THR.renderer.info', THR.renderer.info );
 
@@ -108,7 +107,6 @@ THRU.getRendererInfo = function() {
 			<a href="https://github.com/mrdoob/stats.js/" target="_blank">?</a>
 
 		</p>
-
 	`;
 
 	return htm;
@@ -196,7 +194,6 @@ THRU.getMeshesVisible = function ( objThree = THR.scene ) { // not??
 	THRU.meshGroupVisible.add( ...arr );
 
 	//console.log( 'THRU.meshGroupVisible', THRU.meshGroupVisible );
-
 
 	return THRU.meshGroupVisible;
 
@@ -392,6 +389,7 @@ THRU.toggleGroundHelper = function( position = THR.scene.position.clone(), eleva
 };
 
 
+//////////
 
 THRU.getMeshEdges = function( obj = THR.scene ) {
 

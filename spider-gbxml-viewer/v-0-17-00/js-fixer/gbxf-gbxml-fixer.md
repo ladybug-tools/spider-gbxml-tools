@@ -7,7 +7,7 @@
 <summary>Concept</summary>
 
 * Loads all the Fixes files
-* Adds runall etc buttons
+* Adds 'run all' etc buttons
 
 </details>
 
@@ -19,7 +19,7 @@
 * 2019-07-20 ~ Theo ~ Add 'fix all' button
 * 2019-07-20 ~ Theo ~ Add number the fixes
 	* Make easier to identify
-* 2019-07-20 ~ Theo ~ Add identify tine surfaces
+* 2019-07-20 ~ Theo ~ Add identify tiny surfaces
 
 </details>
 

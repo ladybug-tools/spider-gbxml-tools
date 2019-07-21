@@ -14,6 +14,8 @@
 
 <summary>To Do / Wish List</summary>
 
+* 2019-07-21 ~ Theo ~ Add search for all attributes in the gbXML files
+
 
 </details>
 

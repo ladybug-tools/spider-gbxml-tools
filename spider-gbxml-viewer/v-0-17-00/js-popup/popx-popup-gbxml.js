@@ -184,7 +184,6 @@ POPX.onDocumentMouseDown = function( event ) {
 
 
 
-
 POPX.setIntersected = function( intersected = POPX.intersectedLast ) { // called by POPF.footer
 
 	POPX.intersected = intersected;
