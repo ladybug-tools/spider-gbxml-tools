@@ -35,19 +35,19 @@ VLA.getMenuViewLayers = function() {
 		<p>
 			View layers. <span id="VLAspnCount" ></span>
 		</p>
-<!--
+
 		<p>
 			<input id=VLAinpSelectIndex oninput=VLA.setSelectedIndex(this,VLAselViewSurfaces) placeholder="Enter an attribute" >
 		</p>
--->
+
 		<p>
 			<select id=VLAselViewLayers oninput=VLA.selLayersFocus(this); style=width:100%; size=10 multiple >
 			</select>
 		</p>
 
 
-		<p>Attribute to show: <select id=VLAselAttribute oninput=VLA.setViewSurfacesSelectOptions(); >${ selectOptions }</select></p>
 <!--
+		<p>Attribute to show: <select id=VLAselAttribute oninput=VLA.setViewSurfacesSelectOptions(); >${ selectOptions }</select></p>
 		<p>Select multiple surfaces by pressing shift or control keys</p>
 
 		<p>
@@ -69,7 +69,7 @@ VLA.setViewLayersSelectOptions = function() {
 
 	if ( VLAdet.open === false ) { return; }
 
-	const attribute = VLAselAttribute.value;
+	const attribute = "id"; //VLAselAttribute.value;
 	//console.log( 'attribute', attribute );
 
 	//VLAinpSelectIndex.value = "";
