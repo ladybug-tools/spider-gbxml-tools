@@ -8,7 +8,7 @@
 
 read me for current version
 
-[Spider gbXML viewer Dev]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-00/app-viewer/spider-gbxml-viewer-viewer-dev.html )
+[Spider gbXML viewer Dev]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-00/app-viewer/spider-gbxml-viewer-dev.html )
 
 * Primary version
 
