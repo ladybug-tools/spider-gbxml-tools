@@ -4,13 +4,14 @@
 
 const VMA = {
 
-	"script": {
-		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-		"date": "2019-07-20",
-		"description": "View materials (VMA)",
-		"helpFile": "../js-view-gbxml/vma-view-materials.md",
-		"version": "0.17-00-0vma",
-		"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-view-gbxml/vma-view-materials.js",
+	script: {
+
+		copyright: "Copyright 2019 Ladybug Tools authors",
+		date: "2019-07-22",
+		description: "View materials (VMA)",
+		helpFile: "../v-0-17-00/js-view-gbxml/vma-view-materials.md",
+		license: "MIT License",
+		version: "0.17-00-1vma",
 
 	}
 
@@ -20,9 +21,7 @@ const VMA = {
 
 VMA.getMenuViewMaterials = function() {
 
-	document.body.addEventListener( 'onGbxParse', function(){ VMAdet.open = false; }, false );
-
-	const help = `<button id="butVMAsum" class="butHelp" onclick="POP.setPopupShowHide(butVMAsum,VMA.script.helpFile);" >?</button>`;
+	const help = VGC.getHelpButton("VMAbutSum",VMA.script.helpFile);
 
 	const selectOptions = ["id", "Name"]
 		.map( option => `<option ${ option === "Name" ? "selected" : "" } >${ option }</option>`)
@@ -31,14 +30,16 @@ VMA.getMenuViewMaterials = function() {
 
 	`<details id="VMAdet" ontoggle=VMA.setViewMaterialsSelectOptions(); >
 
-		<summary>Materials ${ help }</summary>
+		<summary>Materials </summary>
+
+		${ help }
 
 		<p>
 			View materials. <span id="VMAspnCount" ></span>
 		</p>
 
 		<p>
-			<input type=search id=VMAinpSelectIndex oninput=VMA.setSelectedIndex(this,VMAselViewSurfaces) placeholder="Enter an attribute" >
+			<input type=search id=VMAinpSelectIndex oninput=VGC.setSelectedIndex(this,VMAselViewSurfaces) placeholder="Enter an attribute" >
 		</p>
 
 		<p>
@@ -50,11 +51,13 @@ VMA.getMenuViewMaterials = function() {
 
 		<p>TBD: viewing surfaces by material</p>
 
+<!--
 		<p>
-			<button onclick=VMA.setViewSurfaceShowHide(this,VMA.surfaces); >
+			<button onclick=VGC.toggleViewSelectedOrAll(this,VMAselViewSurfaces,VMA.surfaces); >
 				Show/hide by surfaces
 			</button>
 		</p>
+-->
 
 	</details>`;
 
@@ -97,21 +100,8 @@ VMA.setViewMaterialsSelectOptions = function() {
 	} );
 
 	VMAselViewSurfaces.innerHTML = htmOptions;
-	VMAspnCount.innerHTML = `: ${ GBX.materials.length } found`;
 
-	THR.controls.enableKeys = false;
-
-};
-
-
-
-VMA.setSelectedIndex = function( input, select ) {
-
-	const str = input.value.toLowerCase();
-
-	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
-
-	select.value =  option ? option.index : "";
+	VMAspnCount.innerHTML = `: ${ GBX.materials.length } materials found`;
 
 };
 
@@ -119,22 +109,9 @@ VMA.setSelectedIndex = function( input, select ) {
 
 VMA.selMaterialsFocus = function( select ) {
 
-	THR.controls.enableKeys = false;
-
-	POPX.intersected = null;
-
-	THR.scene.remove( POPX.line, POPX.particle );
+	VGC.setPopup
 
 	divDragMoveContent.innerHTML = VMA.getMaterialsAttributes( select.value );
-
-	//VMA.surfacesFilteredSpace = VMA.getSurfacesFilteredSpace();
-
-	//VMAdivReportsLog.innerHTML = GBX.sendSurfacesToThreeJs( VMA.surfacesFilteredSpace );
-
-	divDragMoveFooter.innerHTML = POPF.footer;
-
-	navDragMove.hidden = false;
-
 
 };
 

@@ -1,6 +1,6 @@
 # VLA View Layers Read Me
 
-[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-16-01/js-view-gbxml/vla-view-layers.js )
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-view-gbxml/vla-view-layers.js )
 
 <details open >
 

@@ -1,6 +1,6 @@
-# VMA view by materials 0.16-01-1vbm Read Me
+# VMA View Materials Read Me
 
-[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-16-01/js-view-gbxml/vma-view-materials.js )
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-view-gbxml/vma-view-materials.js )
 
 <details open >
 
@@ -30,6 +30,12 @@ View materials (VMA)
 <details>
 
 <summary>Change Log</summary>
+
+### 2019-07-22 ~ Theo
+
+VMA 0.17.00-1vma
+
+* R - VMA.js: Cleanup
 
 ### 2019-07-20 ~ Theo
 
