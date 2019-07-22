@@ -6,7 +6,7 @@
 
 <summary>Concept</summary>
 
-* View gbXML (VG) - view campus and building attributes
+* View gbXML (VG) - view gbXML campus and building attributes
 
 </details>
 
@@ -29,6 +29,12 @@
 <details>
 
 <summary>Change Log</summary>
+
+### 2019-07-22 ~ Theo
+
+VG 0.17.00-1vg
+
+* R - VG.js: Cleanup
 
 ### 2019-07-19 ~ Theo
 

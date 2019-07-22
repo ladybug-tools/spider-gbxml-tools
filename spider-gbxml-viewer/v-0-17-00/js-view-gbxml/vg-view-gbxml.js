@@ -1,18 +1,17 @@
-/* globals THR, GBX, POPX, divDragMoveContent, VGdet */
+/* globals GBX, GBXU, GSA, POPX, VGC, VGdivReport */
 // jshint esversion: 6
 // jshint loopfunc: true
 
 const VG = {
 
-	"script": {
+	script: {
 
-		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-		"date": "2019-07-19",
-		"description": "View gbXML (VG) - view campus and building attributes",
-		"helpFile": "../v-0-17-00/js-view-gbxml/vg-view-gbxml.md",
-		"urlSourceCode":
-	"https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-view-gbxml/vg-view-gbxml.js",
-		"version": "0.17.00-0vg"
+		copyright: "Copyright 2019 Ladybug Tools authors",
+		date: "2019-07-22",
+		description: "View gbXML (VG) - view campus and building attributes",
+		helpFile: "../v-0-17-00/js-view-gbxml/vg-view-gbxml.md",
+		license: "MIT License",
+		version: "0.17.00-1vg"
 
 	}
 
@@ -22,15 +21,15 @@ const VG = {
 
 VG.getMenuViewGbxml = function() {
 
-	document.body.addEventListener( 'onGbxParse', () => { VGdet.open = false; }, false );
 
-	const help = `<button id="butVGsum" class="butHelp" onclick="POP.setPopupShowHide(butVGsum,VG.script.helpFile);" >?</button>`;
-
+	const help = VGC.getHelpButton("VGbutSum",VG.script.helpFile);
 	const htm =
 
 	`<details id="VGdet" ontoggle=VG.setViewGbxml(); >
 
-		<summary>gbXML attributes and nodes ${ help }</summary>
+		<summary>gbXML attributes and nodes </summary>
+
+		${ help }
 
 		<div id=VGdivReport > </div>
 
@@ -39,6 +38,7 @@ VG.getMenuViewGbxml = function() {
 	return htm;
 
 };
+
 
 
 VG.setViewGbxml = function( target = VGdivReport ) {
@@ -52,12 +52,10 @@ VG.setViewGbxml = function( target = VGdivReport ) {
 	const buildingXml = campusXml.getElementsByTagName( 'Building' )[ 0 ];
 	//const documentXml = campusXml.getElementsByTagName( 'DocumentHistory' )[ 0 ];
 
-	latitude = campusXml.getElementsByTagName( 'Latitude' )[ 0 ].innerHTML;
-	longitude = campusXml.getElementsByTagName( 'Longitude' )[ 0 ].innerHTML;
+	const latitude = campusXml.getElementsByTagName( 'Latitude' )[ 0 ].innerHTML;
+	const longitude = campusXml.getElementsByTagName( 'Longitude' )[ 0 ].innerHTML;
 
-	//console.log( '', latitude, longitude );
-
-	//console.log( '', performance.now() - time );
+	let linkToMap;
 
 	if ( latitude && longitude ) {
 
@@ -105,4 +103,4 @@ VG.setViewGbxml = function( target = VGdivReport ) {
 	target.innerHTML = htm;
 
 
-}
+};
