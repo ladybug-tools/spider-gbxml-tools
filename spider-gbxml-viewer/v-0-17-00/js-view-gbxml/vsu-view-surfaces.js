@@ -6,15 +6,12 @@ const VSU = {
 
 	"script": {
 
-		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
+		"copyright": "Copyright 2019 Ladybug Tools authors",
 		"date": "2019-07-19",
 		"description": "View Surfaces (VSU) provides HTML and JavaScript to view individual surfaces.",
 		"helpFile": "../v-0-17-00/js-view-gbxml/vsu-view-surfaces.md",
 		license: "MIT License",
-		"version": "0.17-00-0vbsu",
-		"urlSourceCode":
-	"https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-00/js-view-gbxml/"
-
+		"version": "0.17-00-0vbsu"
 	}
 
 };

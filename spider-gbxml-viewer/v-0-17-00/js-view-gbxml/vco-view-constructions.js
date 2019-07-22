@@ -144,7 +144,7 @@ VCO.getViewConstructionsSelectOptions = function() {
 
 VCO.selectedConstructionsFocus = function( select ) {
 
-	THR.controls.enableKeys = false;
+	
 
 	POPX.intersected = null;
 

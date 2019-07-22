@@ -28,6 +28,12 @@ View by CAD Object ID (VCI) provides HTML and JavaScript to view individual surf
 
 <summary>Change Log</summary>
 
+### 2019-07-22 ~ Theo
+
+VCI 0.17.00-1vci
+
+* R - VCI.js: Refactor
+
 ### 2019-07-20 ~ Theo
 
 VCI 0.17.00-0vci

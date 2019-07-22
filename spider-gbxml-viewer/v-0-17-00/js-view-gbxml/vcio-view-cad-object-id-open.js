@@ -4,12 +4,13 @@
 
 const VCIO = {
 
-	"script": {
-		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-		"date": "2019-07-22",
-		"description": "View by CAD Object ID open (VCIO) provides HTML and JavaScript to view openings by their CAD Object ID group.",
-		"helpFile": "../v-0-17-00/js-view-gbxml/vcio-view-cad-object-id-open.md",
-		"version": "0.17.00-1vcio"
+	script: {
+		copyright: "Copyright 2019 Ladybug Tools authors",
+		date: "2019-07-22",
+		description: "View by CAD Object ID open (VCIO) provides HTML and JavaScript to view openings by their CAD Object ID group.",
+		helpFile: "../v-0-17-00/js-view-gbxml/vcio-view-cad-object-id-open.md",
+		license: "MIT License",
+		version: "0.17.00-1vcio"
 	}
 
 };
@@ -35,7 +36,7 @@ VCIO.getMenuViewCadObjectIdOpen = function() {
 		</p>
 
 		<p>
-			<input type=search id=VCIOinpSelectIndex oninput=VCIO.setSelectedIndex(this,VCIOselViewGroup) placeholder="Enter an attribute" >
+			<input type=search id=VCIOinpSelectIndex oninput=VGC.setSelectedIndex(this,VCIOselViewGroup) placeholder="Enter an attribute" >
 		</p>
 
 		<p>
@@ -52,8 +53,6 @@ VCIO.getMenuViewCadObjectIdOpen = function() {
 		</p>
 
 	</details>`;
-
-	THR.controls.enableKeys = false;
 
 	return htm;
 
@@ -92,21 +91,10 @@ VCIO.setViewOptions = function() {
 	} );
 
 	VCIOselViewGroup.innerHTML = options;
+
 	VCIOspnCount.innerHTML = `${ VCIO.cadObjects.length } types found`;
 
-
-
-};
-
-
-
-VCIO.setSelectedIndex = function( input, select ) {
-
-	const str = input.value.toLowerCase();
-
-	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
-
-	select.selectedIndex =  str && option ? option.index : -1;
+	THR.controls.enableKeys = false;
 
 };
 
@@ -114,13 +102,7 @@ VCIO.setSelectedIndex = function( input, select ) {
 
 VCIO.selectedGroupFocus = function( select ) {
 
-	POPX.intersected = null;
-
-	divDragMoveFooter.innerHTML = POPF.footer;
-
-	navDragMove.hidden = false;
-
-	THR.scene.remove( POPX.line, POPX.particle );
+	VGC.setPopup();
 
 	GBX.openingGroup.children.forEach( opening => opening.visible = false );
 
@@ -141,27 +123,5 @@ VCIO.selectedGroupFocus = function( select ) {
 	} );
 
 	GBXU.sendSurfacesToThreeJs( VCIO.surfacesWithOpenings );
-
-};
-
-
-
-VCIO.setViewSurfaceShowHide = function( button, surfaceArray ) {
-	//console.log( 'surfaceArray', surfaceArray );
-
-	button.classList.toggle( "active" );
-
-	if ( VCIOselViewGroup.selectedIndex === -1 ) { alert( "First, select a surface from the list"); return; }
-
-
-	if ( button.classList.contains( 'active' ) && surfaceArray.length ) {
-
-		GBXU.sendSurfacesToThreeJs( surfaceArray );
-
-	} else {
-
-		GBX.surfaceGroup.children.forEach( element => element.visible = true );
-
-	}
 
 };

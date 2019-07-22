@@ -1,17 +1,16 @@
-// Copyright 2018 Ladybug Tools authors. MIT License
-/* globals THR, GBX, VCIdet, VCIselViewSurfaces, VCIspnCount */
-/* jshint esversion: 6 */
+/* globals GBX, GBXU, VGC, VCIselViewSurfaces, VCIspnCount */
+// jshint esversion: 6
+// jshint loopfunc: true
 
 const VCI = {
 
-	"script": {
-		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-		"date": "2019-07-08",
-		"description": "View by CAD Object ID (VCI) provides HTML and JavaScript to view individual surfaces.",
-		"helpFile": "../js-view/vbco-view-by-cad-object-id.md",
-		"version": "0.16-01-2vbco",
-		"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-16-01/js-view",
-
+	script: {
+		copyright: "Copyright 2019 Ladybug Tools authors",
+		date: "2019-07-22",
+		description: "View by CAD Object ID (VCI) provides HTML and JavaScript to view individual surfaces.",
+		helpFile: "../v-0-17-00/js-view-gbxml/vci-view-cad-object-id.md",
+		license: "MIT License",
+		version: "0.17-00-1vci"
 	}
 
 };
@@ -20,22 +19,22 @@ const VCI = {
 
 VCI.getMenuViewCadObjectId = function() {
 
-	document.body.addEventListener( 'onGbxParse', function(){ VCIdet.open = false; }, false );
-
-	const help = `<button id="butVCIsum" class="butHelp" onclick="POP.setPopupShowHide(butVCIsum,VCI.script.helpFile);" >?</button>`;
+	const help = VGC.getHelpButton("VCIbutSum",VCI.script.helpFile);
 
 	const htm =
 
 	`<details id="VCIdet" ontoggle=VCI.setViewOptions(); >
 
-		<summary>CAD object id groups <span id="VCIspnCount" ></span> ${ help }</summary>
+		<summary>CAD object id groups <span id="VCIspnCount" ></span> </summary>
+
+		${ help }
 
 		<p>
 			View surfaces by groups of CAD object IDs. For individual CAD Object IDs see 'Surfaces'.
 		</p>
 
 		<p>
-			<input id=VCIinpSelectIndex oninput=VCI.setSelectedIndex(this,VCIselViewSurfaces) placeholder="Enter an attribute" >
+			<input type=search id=VCIinpSelectIndex oninput=VGC.setSelectedIndex(this,VCIselViewSurfaces) placeholder="Enter an attribute" >
 		</p>
 
 		<p>
@@ -46,7 +45,7 @@ VCI.getMenuViewCadObjectId = function() {
 		<p>Select multiple groups by pressing shift or control keys</p>
 
 		<p>
-			<button onclick=VCI.setViewSurfaceShowHide(this,VCI.surfaces); >
+			<button onclick=VGC.toggleViewSelectedOrAll(this,VCIselViewSurfaces,VCI.surfaces); >
 				Show/hide by surfaces
 			</button>
 		</p>
@@ -77,6 +76,8 @@ VCI.setViewOptions = function() {
 	} );
 	// console.log( 'cadObjects', cadObjects );
 
+	cadObjects.sort();
+
 	const options = cadObjects.map( item => {
 
 		color = color === 'pink' ? '' : 'pink';
@@ -86,9 +87,7 @@ VCI.setViewOptions = function() {
 
 	VCIselViewSurfaces.innerHTML = options;
 
-	VCIspnCount.innerHTML = `: ${ cadObjects.length } found`;
-
-	THR.controls.enableKeys = false;
+	VCIspnCount.innerHTML = `: ${ cadObjects.length } groups found`;
 
 	return options;
 
@@ -96,29 +95,9 @@ VCI.setViewOptions = function() {
 
 
 
-VCI.setSelectedIndex = function( input, select ) {
-
-	const str = input.value.toLowerCase();
-
-	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
-
-	select.selectedIndex =  str && option ? option.index : -1;
-
-};
-
-
-
 VCI.selectedSurfacesFocus = function( select ) {
 
-	THR.controls.enableKeys = false;
-
-	POPX.intersected = null;
-
-	THR.scene.remove( POPX.line, POPX.particle );
-
-	divDragMoveFooter.innerHTML = POPF.footer;
-
-	navDragMove.hidden = false;
+	VGC.setPopup();
 
 	VCI.surfaces = [];
 
@@ -131,24 +110,5 @@ VCI.selectedSurfacesFocus = function( select ) {
 	} );
 
 	GBXU.sendSurfacesToThreeJs( VCI.surfaces );
-
-};
-
-
-
-VCI.setViewSurfaceShowHide = function( button, surfaceArray ) {
-	//console.log( 'surfaceArray', surfaceArray );
-
-	button.classList.toggle( "active" );
-
-	if ( button.classList.contains( 'active' ) && surfaceArray.length ) {
-
-		GBX.sendSurfacesToThreeJs( surfaceArray );
-
-	} else {
-
-		GBX.surfaceGroup.children.forEach( element => element.visible = true );
-
-	}
 
 };
