@@ -8,7 +8,7 @@
 
 View by construction (VCO) provides HTML and JavaScript to view individual construction details
 
-* See Construction schema: http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html#Link57
+See Construction schema: http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html#Link57
 	* A Construction is a combination of layers, such as a wall or a roof
 
 
@@ -18,6 +18,8 @@ View by construction (VCO) provides HTML and JavaScript to view individual const
 
 <summary>To Do / Wish List</summary>
 
+* 2019-07-22 ~ Theo ~ Add show/hide selected
+* 2019-07-22 ~ Theo ~ Add sort items in select box
 
 </details>
 
@@ -31,6 +33,12 @@ View by construction (VCO) provides HTML and JavaScript to view individual const
 <details>
 
 <summary>Change Log</summary>
+
+### 2019-07-22 ~ Theo
+
+VCO 0.17.00-1vco
+
+* R - VCO.js: Cleanup
 
 ### 2019-07-20 ~ Theo
 

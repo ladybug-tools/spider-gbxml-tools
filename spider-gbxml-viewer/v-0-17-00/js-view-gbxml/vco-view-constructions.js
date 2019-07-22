@@ -1,27 +1,24 @@
 /* globals THR, GBX, POPX, GSA, VCOdetMenu, VCOselViewConstruction, divDragMoveContent*/
 // jshint esversion: 6
-/* jshint loopfunc: true */
+// jshint loopfunc: true
 
 const VCO = {
 
-	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-07-20",
-	"description": "View by construction (VCO) provides HTML and JavaScript to view individual construction details.",
-	"helpFile": "../js-view-gbxml/vco-view7-constructions.md",
-	"version": "0.17.00-0vco",
-	"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-view-gbxml/vco-view-constructions.js",
-
+	script: {
+		"copyright": "Copyright 2019 Ladybug Tools authors",
+		"date": "2019-07-22",
+		"description": "View by construction (VCO) provides HTML and JavaScript to view individual construction details.",
+		"helpFile": "../v-0-17-00/js-view-gbxml/vco-view-constructions.md",
+		license: "MIT License",
+		"version": "0.17.00-1vco"
+	}
 };
 
 
 
 VCO.getMenuViewConstructions = function() {
 
-	document.body.addEventListener( 'onGbxParse', function(){ VCOdetMenu.open = false; }, false );
-
-	const foot = `v${ VCO.version} - ${ VCO.date }`;
-
-	const help = `<button id="butVCOsum" class="butHelp" onclick="POP.setPopupShowHide(butVCOsum,VCO.helpFile,'${foot}');" >?</button>`;
+	const help = VGC.getHelpButton("VCObutSum",VCO.script.helpFile);
 
 	const selectOptions = [ "id", "layerIdRef", "Name" ]
 		.map( option => `<option ${ option === "Name" ? "selected" : "" } >${ option }</option>`);
@@ -30,14 +27,16 @@ VCO.getMenuViewConstructions = function() {
 
 	`<details id="VCOdetMenu" ontoggle=VCO.getViewConstructionsSelectOptions(); >
 
-		<summary>Constructions  ${ help }</summary>
+		<summary>Constructions  </summary>
+
+		${ help }
 
 		<p>
 			View by constructions. <span id="VCOspnCount" ></span>
 		</p>
 
 		<p>
-			<input type=search id=VCOinpSelectIndex oninput=VCO.setSelectIndex(this,VCOselViewConstructions) placeholder="enter an id" >
+			<input type=search id=VCOinpSelectIndex oninput=VGC.setSelectedIndex(this,VCOselViewConstructions) placeholder="enter an attribute" >
 		</p>
 
 		<p>
@@ -50,29 +49,15 @@ VCO.getMenuViewConstructions = function() {
 			<select id=VCOselAttribute oninput=VCO.getViewConstructionsSelectOptions(); >${ selectOptions }</select></p>
 
 		<p>Select multiple Constructions by pressing shift or control keys</p>
-<!--
+
 		<p>
-			<button onclick=VCO.setViewConstructionsShowHide(this,VCO.surfaceWithConstructions); >
-				Show/hide by constructions
-			</button>
-		</p>
--->
+		<button onclick=VGC.toggleViewSelectedOrAll(this,VCOselViewConstructions,VCIselViewSurfaces,VCI.surfaces); >
+			Show/hide by surfaces
+		</button>
+	</p>
 	</details>`;
 
 	return htm;
-
-};
-
-
-
-VCO.setSelectIndex = function( input, select ) {
-
-	const str = input.value.toLowerCase();
-
-	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
-	console.log( 'option', option.value );
-
-	select.selectedIndex =  str && option ? option.index : -1;
 
 };
 
@@ -100,6 +85,7 @@ VCO.getViewConstructionsSelectOptions = function() {
 	} );
 
 	constructionsRefs = [...new Set( constructionsRefs )];
+
 	VCO.constructionsRefs = constructionsRefs.sort();
 	//console.log( '', VCO.constructionsRefs );
 
@@ -131,7 +117,6 @@ VCO.getViewConstructionsSelectOptions = function() {
 
 		const constructionText = text ? text : "no space name in file";
 
-
 		return `<option style=background-color:${ color } value=${ constructionsRef } >${ constructionText }</option>`;
 
 	} );
@@ -144,11 +129,7 @@ VCO.getViewConstructionsSelectOptions = function() {
 
 VCO.selectedConstructionsFocus = function( select ) {
 
-	
-
-	POPX.intersected = null;
-
-	THR.scene.remove( POPX.line, POPX.particle );
+	VGC.setPopup()
 
 	const constructionId = select.value;
 	//console.log( 'constructionId', constructionId );
@@ -162,10 +143,6 @@ VCO.selectedConstructionsFocus = function( select ) {
 	GBXU.sendSurfacesToThreeJs( surfaces );
 
 	divDragMoveContent.innerHTML = VCO.getConstruction( constructionId );
-
-	divDragMoveFooter.innerHTML = POPF.footer;
-
-	navDragMove.hidden = false;
 
 };
 
