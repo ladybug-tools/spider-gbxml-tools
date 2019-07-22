@@ -5,12 +5,14 @@
 const VCI = {
 
 	script: {
+
 		copyright: "Copyright 2019 Ladybug Tools authors",
 		date: "2019-07-22",
 		description: "View by CAD Object ID (VCI) provides HTML and JavaScript to view individual surfaces.",
 		helpFile: "../v-0-17-00/js-view-gbxml/vci-view-cad-object-id.md",
 		license: "MIT License",
 		version: "0.17-00-1vci"
+
 	}
 
 };

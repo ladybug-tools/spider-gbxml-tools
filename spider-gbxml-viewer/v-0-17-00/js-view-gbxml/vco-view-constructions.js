@@ -49,12 +49,13 @@ VCO.getMenuViewConstructions = function() {
 			<select id=VCOselAttribute oninput=VCO.getViewConstructionsSelectOptions(); >${ selectOptions }</select></p>
 
 		<p>Select multiple Constructions by pressing shift or control keys</p>
-
+<!--
 		<p>
-		<button onclick=VGC.toggleViewSelectedOrAll(this,VCOselViewConstructions,VCIselViewSurfaces,VCI.surfaces); >
-			Show/hide by surfaces
-		</button>
-	</p>
+			<button onclick=VGC.toggleViewSelectedOrAll(this,VCOselViewConstructions,VCIselViewSurfaces,VCI.surfaces); >
+				Show/hide by surfaces
+			</button>
+		</p>
+-->
 	</details>`;
 
 	return htm;
