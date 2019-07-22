@@ -1,17 +1,15 @@
-// Copyright 2018 Ladybug Tools authors. MIT License
-/* globals THR, GBX, POPX, VCIOdet, VCIOselViewGroup, VCIOspnCount */
-/* jshint esversion: 6 */
+/* globals THR, GBX, GBXU, VGC, POPX, POPF, divDragMoveFooter, navDragMove, VCIOdet, VCIOselViewGroup, VCIOspnCount */
+// jshint esversion: 6
+// jshint loopfunc: true
 
 const VCIO = {
 
 	"script": {
 		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-		"date": "2019-07-21",
+		"date": "2019-07-22",
 		"description": "View by CAD Object ID open (VCIO) provides HTML and JavaScript to view openings by their CAD Object ID group.",
-		"helpFile": "../js-view-gbxml/vco-view-by-cad-object-id.md",
-		"version": "0.17.00-0vco",
-		"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-00/js-view-gbxml",
-
+		"helpFile": "../v-0-17-00/js-view-gbxml/vcio-view-cad-object-id-open.md",
+		"version": "0.17.00-1vcio"
 	}
 
 };
@@ -20,24 +18,24 @@ const VCIO = {
 
 VCIO.getMenuViewCadObjectIdOpen = function() {
 
-	document.body.addEventListener( 'onGbxParse', function(){ VCIOdet.open = false; }, false );
-
-	const help = `<button id="butVCIOsum" class="butHelp" onclick="POP.setPopupShowHide(butVCIOsum,VCIO.script.helpFile);" >?</button>`;
+	const help = VGC.getHelpButton("VCIObutSum",VCIO.script.helpFile);
 
 	const htm =
 
 	`<details id="VCIOdet" ontoggle=VCIO.setViewOptions(); >
 
-		<summary>CAD object id opening groups ${ help }</summary>
+		<summary>CAD object id opening groups </summary>
+
+		${ help }
 
 		<p>
-			View openings by groups of CAD object IDs.
-			For individual CAD Object ID openings see 'Openings'.
+			View opening types by groups of CAD object IDs.
+			For individual CAD Object ID opening types see 'Openings'.
 			<span id="VCIOspnCount" ></span>
 		</p>
 
 		<p>
-			<input id=VCIOinpSelectIndex oninput=VCIO.setSelectedIndex(this,VCIOselViewGroup) placeholder="Enter an attribute" >
+			<input type=search id=VCIOinpSelectIndex oninput=VCIO.setSelectedIndex(this,VCIOselViewGroup) placeholder="Enter an attribute" >
 		</p>
 
 		<p>
@@ -48,12 +46,14 @@ VCIO.getMenuViewCadObjectIdOpen = function() {
 		<p>Select multiple groups by pressing shift or control keys</p>
 
 		<p>
-			<button onclick=VCIO.setViewSurfaceShowHide(this,VCIO.openings); >
-				Show/hide by openings
+			<button onclick=VGC.toggleViewSelectedOrAll(this,VCIOselViewGroup,VCIO.surfacesWithOpenings); >
+				Show/hide by cad object opening types
 			</button>
 		</p>
 
 	</details>`;
+
+	THR.controls.enableKeys = false;
 
 	return htm;
 
@@ -82,6 +82,8 @@ VCIO.setViewOptions = function() {
 	} );
 	// console.log( 'VCIO.cadObjects', VCIO.cadObjects );
 
+	VCIO.cadObjects.sort();
+
 	const options = VCIO.cadObjects.map( item => {
 
 		color = color === 'pink' ? '' : 'pink';
@@ -90,9 +92,9 @@ VCIO.setViewOptions = function() {
 	} );
 
 	VCIOselViewGroup.innerHTML = options;
-	VCIOspnCount.innerHTML = `${ VCIO.cadObjects.length } found`;
+	VCIOspnCount.innerHTML = `${ VCIO.cadObjects.length } types found`;
 
-	THR.controls.enableKeys = false;
+
 
 };
 
@@ -149,9 +151,12 @@ VCIO.setViewSurfaceShowHide = function( button, surfaceArray ) {
 
 	button.classList.toggle( "active" );
 
+	if ( VCIOselViewGroup.selectedIndex === -1 ) { alert( "First, select a surface from the list"); return; }
+
+
 	if ( button.classList.contains( 'active' ) && surfaceArray.length ) {
 
-		GBX.sendSurfacesToThreeJs( surfaceArray );
+		GBXU.sendSurfacesToThreeJs( surfaceArray );
 
 	} else {
 
