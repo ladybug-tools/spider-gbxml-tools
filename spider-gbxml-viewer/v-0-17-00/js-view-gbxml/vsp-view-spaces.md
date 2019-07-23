@@ -1,12 +1,16 @@
 # VSP View Spaces Read Me
 
-[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-16-01/js-view/vbsp-view-by-spaces.js )
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-view/vbsp-view-by-spaces.js )
 
 <details open >
 
 <summary>Concept</summary>
 
 View the surfaces in a gbXML file by selecting one or more spaces from a list of all spaces
+
+See Space schema: http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html#Link19D
+
+	A space represents a volume enclosed by surfaces
 
 </details>
 
@@ -28,9 +32,15 @@ View the surfaces in a gbXML file by selecting one or more spaces from a list of
 
 <summary>Change Log</summary>
 
+### 2019-07-22 ~ Theo
+
+VSP 0.17-00-1vsp
+
+* R - VSP.js: Cleanup
+
 ### 2019-07-19 ~ Theo
 
-VSP 0.17-01-0vsp
+VSP 0.17-00-0vsp
 
 * R - VSP.js: First commit
 
