@@ -1,31 +1,34 @@
 /* globals divContents, FASA, FASD, FASE, FASST, FCIM, FDPC, FETS, FIL, FSTN, FXA,
 	GBXFifr, GCO, GCS, GGD, GSS, OCV, GBXFh1FileName, */
-/* jshint esversion: 6 */
-/* jshint loopfunc: true */
+// jshint esversion: 6
+// jshint loopfunc: true
 
 
 const GBXF = {
 
-	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-07-20",
-	"description": "Creates the GBXF object and basic variables. Creates the template for the main contents and more",
-	"helpFile": "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/README.md",
-	"version": "0.17.00-0gbxf",
+	script: {
+
+		copyright: "Copyright 2019 Ladybug Tools authors",
+		date: "2019-07-23",
+		description: "",
+		helpFile: "../v-0-17-00/js-fixer/gbxf-gbxml-fixer.md",
+		license: "MIT License",
+		version: "0.17.00-0fstn",
+
+	}
 
 };
 
-//GBXF.viewer = "../spider-gbxml-tools/spider-gbxml-viewer/r15/spider-gbxml-viewer15.html";
+
+
+// at top so to be easier to edit
 
 
 GBXF.getMenuFixer = function() {
 
 	const htm =
 	`
-		<p>
-			<button id=butGBXF class=butHelp onclick="POP.setPopupShowHide(butGBXF,GBXF.helpFile);" >?</button>
-		</p>
-
-		<h2 id=GBXFh1FileName ></h2>
+		${ GBXF.getHelpButton( "GBXFbutHelp", GBXF.script.helpFile ) }
 
 		<p>
 			<button onclick=GBXF.runAll(); >Run all checks</button>
@@ -34,6 +37,8 @@ GBXF.getMenuFixer = function() {
 
 			<button onclick=GBXF.closeAll(); >Close all</button>
 
+			<br>
+			
 			To do: a 'fix all' button
 
 		</p>
@@ -139,7 +144,7 @@ GBXF.init = function( target = divFixer ) {
 
 	target.innerHTML = GBXF.getMenuFixer();
 
-	GBXF.setUp( GBX.text )
+	GBXF.setUp( GBX.text );
 
 	//change to custom event with data passing via event details
 	FOB.xhr.addEventListener( 'load', GBXF.onXhrResponse, false );
@@ -149,16 +154,19 @@ GBXF.init = function( target = divFixer ) {
 };
 
 
-
+// why not FOB always send FOB.text??
 GBXF.onXhrResponse = function( event ) { GBXF.setUp( event.target.response ); };
 
 GBXF.onReaderResult = function() { GBXF.setUp( FOB.reader.result ); };
 
 GBXF.onFileZipLoad = function() { GBXF.setUp( FOB.text ); };
 
+GBXF.getHelpButton = ( id, file ) => `<button id="${ id }" class="butHelp" onclick="POP.setPopupShowHide(${id},'${file}');" >
+	? </button>`;
 
 
-GBXF.setUp = function( text ) {
+
+GBXF.setUp = function( text ) { // build a fresh menu any time a new file is loaded
 
 	//GBXFh1FileName.innerHTML = `File: ${ decodeURI( FOB.name ) }`;
 

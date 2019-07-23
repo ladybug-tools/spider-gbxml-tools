@@ -5,11 +5,16 @@
 
 const FSTN = {
 
-	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-05-30",
-	"description": "Checks for a surface type name that is not one of the 15 valid gbXML surface type names",
-	"helpFile": "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/fstn-fix-surface-type-name/README.md",
-	"vaersion": "0.4.0-4"
+	script: {
+
+
+		copyright: "Copyright 2019 Ladybug Tools authors. MIT License",
+		date: "2019-07-23",
+		description: "Checks for a surface type name that is not one of the 15 valid gbXML surface type names",
+		helpFile: "../v-0-17-00/js-fixer/fstn-fix-surface-type-name/fstn-fix-surface-type-name.md",
+		version: "0.17.00-0fstn"
+
+	}
 
 };
 
@@ -26,19 +31,19 @@ FSTN.types = [
 
 FSTN.getMenuSurfaceTypeName = function() {
 
-	FSTN.help = `<button id=butFSTN class=butHelp onclick="POP.setPopupShowHide(butFSTN,FSTN.helpFile);" >?</button>`;
+	const help = GBXF.getHelpButton( "FSTNbutHelp", FSTN.script.helpFile );
 
 	const htm =
 		`
 			<details id=FSTNdet ontoggle="FSTNdivSurfaceType.innerHTML=FSTN.getSurfaceTypeErrors();" >
 
-			<summary id=FSTNsumSurfaceType >Fix surfaces with invalid surface type name
-				${ FSTN.help }
-			</summary>
+				<summary id=FSTNsumSurfaceType >Fix surfaces with invalid surface type name</summary>
 
-			<div id=FSTNdivSurfaceType ></div>
+				${ help }
 
-			<div id=FSTNdivSurfaceAttributeData ></div>
+				<div id=FSTNdivSurfaceType ></div>
+
+				<div id=FSTNdivSurfaceAttributeData ></div>
 
 			</details>
 
@@ -84,9 +89,9 @@ FSTN.getSurfaceTypeErrors = function() {
 	const tag = FSTN.errors.length === 0 ? "span" : "mark";
 
 	FSTNsumSurfaceType.innerHTML =
-		`Fix surfaces with invalid surface type name
+		`
+		Fix surfaces with invalid surface type name
 			~ <${ tag }>${ FSTN.errors.length.toLocaleString() }</${ tag }> errors
-			${ FSTN.help }
 		`;
 
 	const htm =
@@ -96,7 +101,7 @@ FSTN.getSurfaceTypeErrors = function() {
 		<p>${ FSTN.errors.length.toLocaleString() } surface with type issues found.</p>
 
 		<p>
-			<select id=FSTNselSurfaces onclick=FSTN.setSurfaceData(this); size=5 style=min-width:8rem; >
+			<select id=FSTNselSurfaces onclick=FSTN.setSurfaceData(this); size=5 style=width:100%; >
 				${ options }
 			</select>
 		</p>
@@ -138,7 +143,7 @@ FSTN.setSurfaceData = function( select ) {
 		</p>
 	`;
 
-	FSTNdivSurfaceAttributeData.innerHTML = htm;
+	//FSTNdivSurfaceAttributeData.innerHTML = htm;
 
 };
 
@@ -467,4 +472,3 @@ FSTN.fixAllChecked = function() {
 	FSTNdet.open = false;
 
 };
-

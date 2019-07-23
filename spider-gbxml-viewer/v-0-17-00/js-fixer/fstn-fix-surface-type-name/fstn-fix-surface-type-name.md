@@ -1,6 +1,6 @@
 # Fix Surface Type Name (FSTN) Read Me
 
-[Source code]( https://github.com/ladybug-tools/spider-gbxml-fixer/blob/master/r0-4-0/fstn-fix-surface-type-name/fstn-fix-surface-type-name.js )
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-fixer/fstn-fix-surface-type-name/fstn-fix-surface-type-name.js )
 
 
 <details open>
@@ -22,7 +22,7 @@ Most likely this type of error is quite rare. It occurs when a user working with
 
 </details>
 
-<details open>
+<details>
 
 <summary>Issues</summary>
 
@@ -32,6 +32,12 @@ Most likely this type of error is quite rare. It occurs when a user working with
 <details>
 
 <summary>Change Log</summary>
+
+### 2019-07-23 ~ Theo
+
+FSTN 0.17.00-0fstn
+
+* R - FSTN.js: Move feedback to popup / cleanup
 
 ### 2019-05-22 ~ Theo
 

@@ -1,13 +1,14 @@
 # GBXF gbXML Fixer Read Me
 
-[Source code](  )
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-fixer/gbxf-gbxml-fixer.js )
 
 <details open >
 
 <summary>Concept</summary>
 
-* Loads all the Fixes files
+* Loads all the Fixer files
 * Adds 'run all' etc buttons
+* Includes core functions used by all scripts
 
 </details>
 
@@ -33,6 +34,13 @@
 <details>
 
 <summary>Change Log</summary>
+
+### 2019-07-23 ~ Theo
+
+
+GBXF 0.17.00-0gbxf
+
+* R - GBXF.js: Cleanup
 
 ### 2019-07-20 ~ Theo
 
