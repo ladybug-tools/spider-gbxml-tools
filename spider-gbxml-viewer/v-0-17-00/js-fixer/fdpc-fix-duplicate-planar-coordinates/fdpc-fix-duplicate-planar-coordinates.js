@@ -1,15 +1,20 @@
-/* globals GBX, GSA, FDPCsumDuplicatePlanar, FDPCdivDuplData, FDPCdivGetDuplicatePlanar, FDPCdet */
+/* globals GBX, GBXF, GSA, FDPCsumDuplicatePlanar, FDPCdivDuplData, FDPCdivGetDuplicatePlanar, FDPCdet */
 // jshint esversion: 6
 /* jshint loopfunc:true */
 
 
 const FDPC = {
 
+	script: {
+
 		copyright: "Copyright 2019 Ladybug Tools authors",
 		date: "2019-07-23",
 		description: "Identify two or more surfaces with the same planar geometry coordinates",
-		helpFile: "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/fdpc-fix-duplicate-planar-coordinates/README.md",
-	"release": "0.4.0-2"
+		helpFile: "../v-0-17-00/js-fixer/fdpc-fix-duplicate-planar-coordinates/fdpc-fix-duplicate-planar-coordinates.md",
+		license: "MIT License",
+		version: "0.17.00-0fdpc"
+
+	}
 
 };
 
@@ -17,15 +22,13 @@ const FDPC = {
 
 FDPC.getMenuDuplicatePlanarCoordinates = function() {
 
-	FDPC.help = `<button id=butFDPC class=butHelp onclick="POP.setPopupShowHide(butFDPC,FDPC.helpFile);" >?</button>`;
-
 	const htm =
 		`
 			<details id=FDPCdet  ontoggle="FDPCdivDuplicatePlanar.innerHTML=FDPC.getDuplicatePlanarCoordinates();" >
 
-				<summary id=FDPCsumDuplicatePlanar >Fix surfaces with duplicate planar coordinates
-					${ FDPC.help }
-				</summary>
+				<summary id=FDPCsumDuplicatePlanar >Fix surfaces with duplicate planar coordinates</summary>
+
+				${ GBXF.getHelpButton( "FDPCbutHelp", FDPC.script.helpFile ) }
 
 				<div id=FDPCdivDuplicatePlanar ></div>
 

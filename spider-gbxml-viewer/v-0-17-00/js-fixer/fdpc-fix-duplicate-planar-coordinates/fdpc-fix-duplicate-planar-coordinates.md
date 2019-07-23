@@ -1,8 +1,10 @@
 # Fix Surfaces with duplicate planar coordinates (FDPC) Read Me
 
-<details open>
 
-[Source code]( https://github.com/ladybug-tools/spider-gbxml-fixer/blob/master/r0-4-0/fdpc-fix-duplicate-planar-coordinates/fdpc-fix-duplicate-planar-coordinates.js )
+
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-fixer/fdpc-fix-duplicate-planar-coordinates/fdpc-fix-duplicate-planar-coordinates.js )
+
+<details open>
 
 <summary>Concept</summary>
 
@@ -30,6 +32,13 @@ Identify two or more surfaces with the same planar geometry coordinates
 <details>
 
 <summary>Change Log</summary>
+
+### 2019-07-23 ~ Theo
+
+FDPC 0.17.00-0fdpc
+
+* R - FDPC.js: Cleanup
+
 
 ### 2019-05-21 ~ Theo
 
