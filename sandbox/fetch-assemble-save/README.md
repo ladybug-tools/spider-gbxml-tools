@@ -37,10 +37,10 @@ Usage: best to reload page between assemblies. Keep the JavaScript console open 
 ### Full screen: [Fetch Assemble Save R5 ]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/fetch-assemble-save/r5/fetch-assemble-save.html )
 
 
+### Full screen: [Fetch Assemble Save R4 ]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/fetch-assemble-save/r4/fetch-assemble-save.html )
 
-***
 
-### Full screen: [Fetch Assemble Save R3 ]( https://rawgit.com/ladybug-tools/spider-gbxml-tools/develop/fetch-assemble-save/r3/fetch-assemble-save.html )
+### Full screen: [Fetch Assemble Save R3 ]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/fetch-assemble-save/r3/fetch-assemble-save.html )
 
 * All files now loaded as external text files
 * Loads any release of Three.js - not fully tested
