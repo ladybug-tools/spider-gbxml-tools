@@ -192,7 +192,7 @@ FETS.setSurfaceData = function( index ) {
 		</p>
 	`;
 
-	FETSdivSurfaceData.innerHTML = htm;
+	//FETSdivSurfaceData.innerHTML = htm;
 
 };
 

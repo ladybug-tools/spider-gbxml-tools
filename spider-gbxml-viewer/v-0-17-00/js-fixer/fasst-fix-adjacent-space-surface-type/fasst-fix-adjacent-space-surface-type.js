@@ -109,7 +109,7 @@ FASST.getSurfaces = function() {
 		<p>${ FASST.surfacesTwoSpaces.length.toLocaleString() } surface(s) found.</p>
 
 		<p>
-			<select id=FASSTselSurfaces onclick=FASST.setSurfaceData(this); size=5 style=min-width:8rem; >
+			<select id=FASSTselSurfaces onclick=FASST.setSurfaceData(this); size=5 style=width:100%; >
 				${ options }
 			</select>
 		</p>
@@ -118,7 +118,6 @@ FASST.getSurfaces = function() {
 
 		<div id="FASSTdivSurfaceData" >Click a surface name above to view its details. Tool tip shows the ID of the surface.</div>
 
-		<p>Click 'Save file' button in File menu to save changes to a file.</p>
 
 		<p>Time to check: ${ ( performance.now() - timeStart ).toLocaleString() } ms</p>
 
@@ -147,10 +146,11 @@ FASST.setSurfaceData = function( select ) {
 
 	`;
 
-	FASSTdivSurfaceData.innerHTML = htm;
+	//FASSTdivSurfaceData.innerHTML = htm;
 
-	const det = FASSTdivSurfaceData.querySelectorAll( 'details');
-	det[ 0 ].open = true;
+	//const det = FASSTdivSurfaceData.querySelectorAll( 'details');
+
+	//det[ 0 ].open = true;
 
 };
 

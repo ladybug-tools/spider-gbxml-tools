@@ -125,15 +125,9 @@ FASD.getAdjacentSpaceDuplicate = function() {
 
 			</p>
 
-			<p>
-				Click 'Save file' button in File menu to save changes to a file.
-			</p>
-
 			<p>Time to check: ${ ( performance.now() - timeStart ).toLocaleString() } ms</p>
 
 			<hr>
-
-			<div id="FASDdivAdjacentSpaceDuplicateData" >Click a surface name above to view its details and update its adjacent spaces</div>
 
 			<div id=FASDdivCheckGbxml ></div>
 
@@ -188,15 +182,15 @@ FASD.setSpaceDuplicateData = function( select ) {
 
 	const attributes = GSA.getSurfacesAttributesByIndex( select.value, select.options[ select.selectedIndex ].innerText );
 
-	FASDdivAdjacentSpaceDuplicateData.innerHTML =
-		`
-			${ attributes }
+	// FASDdivAdjacentSpaceDuplicateData.innerHTML =
+	// 	`
+	// 		${ attributes }
 
-			${ htm }
+	// 		${ htm }
 
-		`;
+	// 	`;
 
-		FASDdivAdjacentSpaceDuplicateData.querySelectorAll( "details" )[ 0 ].open = true;
+	// 	FASDdivAdjacentSpaceDuplicateData.querySelectorAll( "details" )[ 0 ].open = true;
 
 };
 
