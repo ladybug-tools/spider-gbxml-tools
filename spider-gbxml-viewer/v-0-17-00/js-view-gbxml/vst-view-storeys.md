@@ -8,6 +8,10 @@
 
 View the surfaces in a gbXML file by selecting one or more storeys from a list of all storeys
 
+See BuildingStorey schema: http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html#Link35
+
+	Captures Building Storey Structure
+
 </details>
 
 <details>
@@ -17,16 +21,23 @@ View the surfaces in a gbXML file by selecting one or more storeys from a list o
 
 </details>
 
-<details>
+<details open>
 
 <summary>Issues</summary>
 
+* <mark>2019-07-22 ~ Theo ~ Surface types not working as anticipated</mark>
 
 </details>
 
 <details>
 
 <summary>Change Log</summary>
+
+### 2019-07-22 ~ Theo
+
+VST 0.17.00-1vst
+
+* R - VST.js: Cleanup
 
 ### 2019-07-19 ~ Theo
 

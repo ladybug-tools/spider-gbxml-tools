@@ -4,14 +4,14 @@
 
 const VST = {
 
-	"script": {
+	script: {
 
-		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-		"date": "2019-06-28",
-		"description": "View the surfaces in a gbXML file by selecting one or more storeys from a list of all storeys",
-		"helpFile": "../js-view/vbs-view-by-storeys.md",
-		"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-16-01/js-view",
-		"version": "0.16-01-2vbs"
+		copyright: "Copyright 2019 Ladybug Tools authors",
+		date: "2019-07-22",
+		description: "View the surfaces in a gbXML file by selecting one or more storeys from a list of all storeys",
+		helpFile: "../v-0-17-00/js-view-gbxml/vst-view-storeys.md",
+		license: "MIT License",
+		version: "0.17.00-2vst"
 
 	}
 
@@ -21,9 +21,7 @@ const VST = {
 
 VST.getMenuViewStoreys = function() {
 
-	document.body.addEventListener( 'onGbxParse', function(){ VSTdetMenu.open = false; }, false );
-
-	const help = `<button id="butVSTsum" class="butHelp" onclick="POP.setPopupShowHide(butVSTsum,VST.script.helpFile);" >?</button>`;
+	const help = VGC.getHelpButton("VSTbutSum",VST.script.helpFile);
 
 	const selectOptions = [ "id", "Level", "Name" ].map( option => `<option ${ option === "Name" ? "selected" : "" }>${ option }</option>`);
 
@@ -31,7 +29,9 @@ VST.getMenuViewStoreys = function() {
 	`
 		<details id=VSTdetMenu ontoggle=VST.setViewStoreysOptions(); >
 
-			<summary>Storeys ${help } </summary>
+			<summary>Storeys</summary>
+
+			${help }
 
 			<p>
 				Display surfaces by storey. Default is all storeys visible.
@@ -40,7 +40,7 @@ VST.getMenuViewStoreys = function() {
 			</p>
 
 			<p>
-				<input type=search id=VSTinpAttribute oninput=VST.setSelectedIndex(this,VSTselStorey) placeholder="Enter an attribute" >
+				<input type=search id=VSTinpAttribute oninput=VGC.setSelectedIndex(this,VSTselStorey) placeholder="Enter an attribute" >
 			</p>
 
 			<div id="VSTdivViewStoreys" >
@@ -53,7 +53,9 @@ VST.getMenuViewStoreys = function() {
 				<select id=VSTselAttribute oninput=VST.setViewStoreysOptions(); >${ selectOptions }</select></p>
 
 			<p>
-				<button onclick=VST.setStoreyShowHide(this,VST.surfacesFilteredStorey); >show/hide all storeys</button>
+				<button onclick=VGC.toggleViewSelectedOrAll(this,VSTselStorey,VST.surfacesFilteredStorey); >
+					show/hide all storeys
+				</button>
 
 				<button onclick=VST.setSurfaceTypesShowHide(this,VST.surfacesFilteredStorey); >show/hide all surface types</button>
 
@@ -128,43 +130,17 @@ VST.setViewStoreysOptions = function() {
 
 
 
-VST.setSelectedIndex = function( input, select ) {
-
-	const str = input.value.toLowerCase();
-	//console.log( 'str', str );
-
-	option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
-	//console.log( 'option', option );
-
-	select.selectedIndex =  str && option ? option.index : -1;
-
-};
-
-
-
 //////////
 
 VST.selStoreys = function() {
 
-	THR.controls.enableKeys = false;
-
-	POPX.intersected = null;
-
-	// show storey data in POPX-up
-
-	//POPelementAttributes.innerHTML=POPX.toggleStoreyVisible(this,"aim0250");
-
-	THR.scene.remove( POPX.line, POPX.particle );
+	VGC.setPopup();
 
 	VST.surfacesFilteredStorey = VST.setSurfacesFilteredStorey();
 
 	VSTdivReportsLog.innerHTML = `<p>${ GBXU.sendSurfacesToThreeJs( VST.surfacesFilteredStorey ) }</p>`;
 
 	divDragMoveContent.innerHTML = POPX.getStoreyAttributes( VSTselStorey.value );
-
-	divDragMoveFooter.innerHTML = POPF.footer;
-
-	navDragMove.hidden = false;
 
 };
 
@@ -234,25 +210,6 @@ VST.setSurfacesFilteredStorey = function( surfaces ) {
 };
 
 
-
-VST.setStoreyShowHide = function( button, surfaceArray ) {
-	//console.log( 'surfaceArray', surfaceArray );
-
-	button.classList.toggle( "active" );
-
-	if ( VSTselStorey.selectedIndex === -1 ) { alert( "First, select a storey from the list"); return; }
-
-	if ( button.classList.contains( 'active' ) && surfaceArray.length ) {
-
-		GBX.surfaceGroup.children.forEach( element => element.visible = true );
-
-	} else {
-
-		GBXU.sendSurfacesToThreeJs( surfaceArray );
-
-	}
-
-};
 
 VST.setSurfaceTypesShowHide = function( button, surfaceArray ) {
 
