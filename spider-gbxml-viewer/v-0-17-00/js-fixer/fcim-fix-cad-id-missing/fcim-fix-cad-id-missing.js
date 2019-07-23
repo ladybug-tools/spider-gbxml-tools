@@ -23,15 +23,11 @@ const FCIM = {
 
 FCIM.getCadIdMissing = function() {
 
-	FCIM.help = `<button id=butFCIM class=butHelp onclick="POP.setPopupShowHide(butFCIM,FCIM.helpFile);" >?</button>`;
-
 	const htm =
 		`
 			<details id=FCIMdet ontoggle="FCIMdivCadIdMissing.innerHTML=FCIM.getFixCadIdMissing();" >
 
-				<summary id=FCIMsumCadIdMissing >Fix Surfaces with CAD object ID missing
-					${ FCIM.help }
-				</summary>
+				<summary id=FCIMsumCadIdMissing >Fix Surfaces with CAD object ID missing</summary>
 
 				${ GBXF.getHelpButton( "FCIMbutHelp", FCIM.script.helpFile ) }
 
@@ -112,9 +108,7 @@ FCIM.getFixCadIdMissing = function() {
 	const tag = FCIM.errors.length === 0 ? "span" : "mark";
 
 	FCIMsumCadIdMissing.innerHTML =
-		`Fix surfaces with missing CAD object ID ~ <${ tag }>${ FCIM.errors.length.toLocaleString() }</${ tag }> found
-			${ FCIM.help }
-		`;
+		`Fix surfaces with missing CAD object ID ~ <${ tag }>${ FCIM.errors.length.toLocaleString() }</${ tag }> found`;
 
 
 	const htm =
