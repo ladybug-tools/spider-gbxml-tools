@@ -4,14 +4,14 @@
 
 const VSU = {
 
-	"script": {
+	script: {
 
-		"copyright": "Copyright 2019 Ladybug Tools authors",
-		"date": "2019-07-19",
-		"description": "View Surfaces (VSU) provides HTML and JavaScript to view individual surfaces.",
-		"helpFile": "../v-0-17-00/js-view-gbxml/vsu-view-surfaces.md",
+		copyright: "Copyright 2019 Ladybug Tools authors",
+		date: "2019-07-22",
+		description: "View Surfaces (VSU) provides HTML and JavaScript to view individual surfaces.",
+		helpFile: "../v-0-17-00/js-view-gbxml/vsu-view-surfaces.md",
 		license: "MIT License",
-		"version": "0.17-00-0vbsu"
+		version: "0.17.00-1vsu"
 	}
 
 };
@@ -20,9 +20,7 @@ const VSU = {
 
 VSU.getMenuViewSurfaces = function() {
 
-	document.body.addEventListener( 'onGbxParse', () => {VSUdet.open = false; }, false );
-
-	const help = `<button id="butVSUsum" class="butHelp" onclick="POP.setPopupShowHide(butVSUsum,VSU.script.helpFile);" >?</button>`;
+	const help = VGC.getHelpButton("VSUbutSum",VSU.script.helpFile);
 
 	const selectOptions = [ "id", "CADObjectId", "constructionIdRef", "Name" ]
 		.map( option => `<option>${ option }</option>`);
@@ -31,14 +29,16 @@ VSU.getMenuViewSurfaces = function() {
 
 	`<details id="VSUdet" ontoggle=VSU.setViewSurfacesSelectOptions(); >
 
-		<summary>Surfaces ${ help }</summary>
+		<summary>Surfaces</summary>
 
+		${ help }
+		
 		<p>
 			View gbXMLsurfaces one at a time. <span id="VSUspnCount" ></span>
 		</p>
 
 		<p>
-			<input type=search id=VSUinpSelectIndex oninput=VSU.setSelectedIndex(this,VSUselViewSurfaces) placeholder="Enter an attribute" >
+			<input type=search id=VSUinpSelectIndex oninput=VGC.setSelectedIndex(this,VSUselViewSurfaces) placeholder="Enter an attribute" >
 		</p>
 
 		<p>
@@ -52,7 +52,7 @@ VSU.getMenuViewSurfaces = function() {
 		<p>Select multiple surfaces by pressing shift or control keys</p>
 
 		<p>
-			<button onclick=VSU.setViewSurfaceShowHide(this,VSU.surfaces); >
+			<button onclick=VGC.toggleViewSelectedOrAll(this,VSUselViewSurfaces,VSU.surfaces); >
 				Show/hide by surfaces
 			</button>
 		</p>

@@ -1,6 +1,6 @@
-# VSU View surfaces Read Me
+# VSU View Surfaces Read Me
 
-[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-16-01/js-view/vbsu-view-by-surfaces.js )
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-view/vsu-view-surfaces.js )
 
 <details open >
 
@@ -8,11 +8,16 @@
 
 View by Surfaces (VSU) provides HTML and JavaScript to view individual surfaces.
 
+See Surface schema: http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html#Link1A8
+
+
 </details>
 
 <details>
 
 <summary>To Do / Wish List</summary>
+
+* 2019-07-22 ~ Theo ~ Better sorting of items in select box
 
 
 </details>
@@ -30,7 +35,13 @@ View by Surfaces (VSU) provides HTML and JavaScript to view individual surfaces.
 
 ### 2019-07-19 ~ Theo
 
-VSU 0.17-00-0vsu
+VSU 0.17.00-1vsu
+
+* R - VSU.js: Cleanup
+
+### 2019-07-19 ~ Theo
+
+VSU 0.17.00-0vsu
 
 * R - VSU: First commit
 
