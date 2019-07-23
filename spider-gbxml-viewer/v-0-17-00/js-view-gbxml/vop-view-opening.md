@@ -1,4 +1,4 @@
-# VOP View by openings Read Me
+# VOP View Openings Read Me
 
 [Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-view-gbxml/vop-view-openings.js )
 
@@ -28,6 +28,13 @@ View by Surfaces (VOP) provides HTML and JavaScript to view individual openings 
 <details>
 
 <summary>Change Log</summary>
+
+### 2019-07-20 ~ Theo
+
+VOP 0.17.00-0vop
+
+* R -VOP.js: Cleanup
+
 
 ### 2019-07-20 ~ Theo
 

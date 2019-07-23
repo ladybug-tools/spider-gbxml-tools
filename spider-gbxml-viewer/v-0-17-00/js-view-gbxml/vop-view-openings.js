@@ -1,15 +1,19 @@
 /* globals GBX, divDragMoveContent */
 // jshint esversion: 6
-/* jshint loopfunc: true */
+// jshint loopfunc: true
 
 const VOP = {
 
-	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-07-20",
-	"description": "View by openings (VOP) provides HTML and JavaScript to view individual openings.",
-	"helpFile": "../v-0-17-00/js-view/vbo-view-by-opening.md",
-	"version": "0.16-01-1vbo",
-	"urlSourceCode": "https://github.com/pushme-pullyou/tootoo14/blob/master/js-14-2/fob-file-open-basic/fob-file-open-basic.js",
+	script: {
+
+		copyright: "Copyright 2019 Ladybug Tools authors",
+		date: "2019-07-22",
+		description: "View by openings (VOP) provides HTML and JavaScript to view individual openings.",
+		helpFile: "../v-0-17-00/js-view-gbxml/vbo-view-opening.md",
+		license: "MIT License",
+		version: "0.16-01-2vbo"
+
+	}
 
 };
 
@@ -17,9 +21,8 @@ const VOP = {
 
 VOP.getMenuViewOpenings = function() {
 
-	document.body.addEventListener( 'onGbxParse', function(){ VOPdetMenu.open = false; }, false );
 
-	const help = `<button id="butVOPsum" class="butHelp" onclick="POP.setPopupShowHide(butVOPsum,VOP.helpFile);" >?</button>`;
+	const help = VGC.getHelpButton("VOPbutSum",VOP.script.helpFile);
 
 	const selectOptions = [ "id", "openingType", "windowTypeIdRef", "CADObjectId", "Name" ]
 	.map( option => `<option>${ option }</option>`);
@@ -35,7 +38,7 @@ VOP.getMenuViewOpenings = function() {
 		</p>
 
 		<p>
-			<input type=search id=VOPinpSelectIndex oninput=VOP.setSelectIndex(this,VOPselViewOpenings) placeholder="enter an attribute" >
+			<input type=search id=VOPinpSelectIndex oninput=VGC.setSelectedIndex(this,VOPselViewOpenings) placeholder="enter an attribute" >
 		</p>
 
 		<p>
@@ -53,7 +56,7 @@ VOP.getMenuViewOpenings = function() {
 		<p>Select multiple openings by pressing shift or control keys</p>
 
 		<p>
-			<button onclick=VOP.setViewOpeningsShowHide(this,VOP.surfaceWithOpenings); >
+			<button onclick=VGC.toggleViewSelectedOrAll(this,VOPselViewOpenings,VOP.surfaceWithOpenings); >
 				Show/hide by surfaces
 			</button>
 		</p>
@@ -61,19 +64,6 @@ VOP.getMenuViewOpenings = function() {
 	</details>`;
 
 	return htm;
-
-};
-
-
-
-VOP.setSelectIndex = function( input, select ) {
-
-	const str = input.value.toLowerCase();
-
-	const option = Array.from( select.options ).find( option => option.innerHTML.includes( str ) );
-	//console.log( 'option', option );
-
-	select.selectedIndex = str && option ? option.index : -1;
 
 };
 
@@ -137,11 +127,8 @@ VOP.setViewOpeningsSelectOptions = function() {
 	//console.log( 'VOP.openings', VOP.openings );
 
 	VOPselViewOpenings.innerHTML = htmOptions;
+
 	VOPspnCount.innerHTML = `${ VOP.openings.length } openings found`;
-
-	THR.controls.enableKeys = false;
-
-	//return VOP.openings.length;
 
 };
 
@@ -149,16 +136,14 @@ VOP.setViewOpeningsSelectOptions = function() {
 
 VOP.selectedOpeningsFocus = function( select ) {
 
+	VGC.setPopup();
+
 	const opening = VOP.openings[ select.value ];
 	//console.log( 'opening', opening );
 
 	POPX.intersected = GBX.surfaceGroup.children[ opening.surfaceIndex ];
 
 	divDragMoveContent.innerHTML = POPX.getIntersectedDataHtml();
-
-	divDragMoveFooter.innerHTML = POPF.footer;
-
-	navDragMove.hidden = false;
 
 	const options = select.selectedOptions
 	//console.log( 'options', options );
