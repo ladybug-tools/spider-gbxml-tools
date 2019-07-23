@@ -32,6 +32,12 @@
 
 <summary>Change Log</summary>
 
+### 2019-07-22 ~ Theo
+
+VWT 0.17.00-1vwt
+
+* R - VWT.js: Cleanup
+
 ### 2019-07-20 ~ Theo
 
 VWT 0.17.00-0vwt
