@@ -1,5 +1,6 @@
-# [Fix XML Attributes (FXA) Read Me]( #fxa-fix-xml-attributes/README.md )
+# FXA Fix XML Attributes Read Me
 
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-fixer/fxa-fix-xml-attributes/fxa-fix-xml-attributes.js )
 <details open>
 
 <summary>Concept</summary>
@@ -37,6 +38,12 @@ Check for existence of seven required gbXML file attributes. If any of the attri
 <details>
 
 <summary>Change Log</summary>
+
+### 2019-07-23 ~ Theo
+
+FXA 0.17.00-0fxa
+
+* R - FXA.js: Cleanup
 
 ### 2019-05-21 ~ Theo
 

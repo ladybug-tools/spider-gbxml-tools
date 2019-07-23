@@ -1,4 +1,4 @@
-/* globals GBX, GSA, FSTNsumSurfaceType, FSTNdivSurfaceType, FSTNdet, FSTNtxt, FSTNdivSurfaceAttributeData */
+/* globals GBX, GBXF, GSA, FSTNsumSurfaceType, FSTNdivSurfaceType, FSTNdet, FSTNtxt, FSTNdivSurfaceAttributeData */
 // jshint esversion: 6
 // jshint loopfunc: true
 

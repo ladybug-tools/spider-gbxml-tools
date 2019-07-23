@@ -6,11 +6,16 @@
 
 const FXA = {
 
+	script: {
+
 		copyright: "Copyright 2019 Ladybug Tools authors",
 		date: "2019-07-23",
 		description: "Check for existence of seven required gbXML file attributes. If attributes missing, then supply fixes.",
-		helpFile: "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/fxa-fix-xml-attributes/README.md",
-		version: "0.4.0-4"
+		helpFile: "../v-0-17-00/js-fixer/fxa-fix-xml-attributes/fxa-fix-xml-attributes.md",
+		license: "MIT License",
+		version: "0.17.00-0fxa"
+
+	}
 
 };
 
@@ -18,15 +23,13 @@ const FXA = {
 
 FXA.getMenuFixXmlAttributes = function() {
 
-	FXA.help = `<button id=butFXA class=butHelp onclick="POP.setPopupShowHide(butFXA,FXA.helpFile);" >?</button>`;
-
 	const htm =
 		`
 			<details id=FXAdet ontoggle="FXAdivAttributes.innerHTML=FXA.getAttributes();" >
 
-			<summary id=FXAsumAttributes >Fix missing required gbXML attributes
-				${ FXA.help }
-			</summary>
+			<summary id=FXAsumAttributes >Fix missing required gbXML attributes</summary>
+
+			${ GBXF.getHelpButton( "FXAbutHelp", FXA.script.helpFile ) }
 
 				<div id=FXAdivAttributes ></div>
 
@@ -83,9 +86,7 @@ FXA.getAttributes = function() {
 	const tag = FXA.attributesMissing.length === 0 ? "span" : "mark";
 
 	FXAsumAttributes.innerHTML =
-		`Fix missing required gbXML attributes ~ <${ tag }>${FXA.attributesMissing.length}</${ tag }> missing
-			${ FXA.help }
-		`;
+		`Fix missing required gbXML attributes ~ <${ tag }>${FXA.attributesMissing.length}</${ tag }> missing`;
 
 	const htm =
 		`
