@@ -3,14 +3,15 @@
 // jshint loopfunc: true
 
 const VTY = {
-	"script": {
 
-		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",	"date": "2019-06-28",
-		"date": "2019-07-01",
-		"description": "Show or hide the surfaces (VTY) in a gbXML file by surface type.",
-		"helpFile": "../js-view/vst-view-surface-types.md",
-		"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-16-01/js-view/vst-view-surface-types.js",
-		"version": "0.16.01-2vst"
+	script: {
+
+		copyright: "Copyright 2019 Ladybug Tools authors",
+		date: "2019-07-22",
+		description: "Show or hide the surfaces (VTY) in a gbXML file by surface type.",
+		helpFile: "../v-0-17-00/js-view-gbxml/vst-view-surface-types.md",
+		license: "MIT License",
+		version: "0.17.00-1vst"
 
 	}
 
@@ -23,18 +24,16 @@ VTY.filtersDefault = [ "Air", "ExposedFloor", "ExteriorWall", "Roof", "Shade" ];
 
 VTY.getMenuViewSurfaceTypes = function() {
 
-	document.body.addEventListener( 'onGbxParse', VTY.resetMenu, false );
 
-	//document.body.addEventListener( 'onGbxParse', function(){ VTYdet.open = false; }, false );
-
-	const help = `<button id="butVTYsum" class="butHelp" onclick="POP.setPopupShowHide(butVTYsum,VTY.script.helpFile);" >?</button>`;
-
+	const help = VGC.getHelpButton("VTYbutSum",VTY.script.helpFile);
 
 	const htm =
 	`
 		<details id=VTYdet ontoggle=VTY.onToggleSurfaceTypes(); >
 
-			<summary>Surfaces by type ${ help }</summary>
+			<summary>Surfaces by type</summary>
+
+			${ help }
 
 			<p>
 				Show by surface type. Default is exterior surfaces only.
@@ -58,23 +57,10 @@ VTY.getMenuViewSurfaceTypes = function() {
 				<button id=VTYbutShowAll onclick=VTY.setShowAll(this); >show/hide all surfaces</button>
 			</p>
 
-
-
-			<p id="VTYdivViewCurrentStats" > </p>
-
 		</details>
 	`;
 
 	return htm;
-
-};
-
-
-
-VTY.resetMenu = function() {
-
-	VTYdet.open = false;
-	VTYdivSurfaceTypes.innerHTML = "";
 
 };
 
@@ -97,8 +83,6 @@ VTY.onToggleSurfaceTypes = function() {
 		);
 
 		VTYdivSurfaceTypes.innerHTML = buttonSurfaceTypes.join( '<br>' );
-
-		//VTYdivViewCurrentStats.innerHTML = VTY.getViewStats();
 
 		//VTY.setSurfacesActiveByDefaults();
 
