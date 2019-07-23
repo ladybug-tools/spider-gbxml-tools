@@ -5,11 +5,16 @@
 
 const FETS = {
 
-	copyright: "Copyright 2019 Ladybug Tools authors. MIT License",
+	script: {
+
+		copyright: "Copyright 2019 Ladybug Tools authors",
 		date: "2019-07-23",
 		description: "Checks for surface with invalid exposedToSun values",
-		helpFile: "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/fets-fix-exposed-to-sun/README.md",
-		version: "0.17.00-"
+		helpFile: "../v-0-17-00/js-fixer/fets-fix-exposed-to-sun/fets-fix-exposed-to-sun.md",
+		license: "MIT License",
+		version: "0.17.00-0fets"
+
+	}
 
 };
 
@@ -29,15 +34,13 @@ FETS.exposedTypes = [ "ExteriorWall", "Roof", "ExposedFloor", "Shade", "RaisedFl
 
 FETS.getMenuSurfaceExposedToSun = function() {
 
-	FETS.help = `<button id=butFETS class=butHelp onclick="POP.setPopupShowHide(butFETS,FETS.helpFile);" >?</button>`;
-
 	const htm =
 	`
 		<details id=FETSdet ontoggle="FETSdivSurfaces.innerHTML=FETS.getSurfaceExposedToSunErrors();" >
 
-			<summary id=FETSsumSurfaces >Fix surfaces with invalid ExposedToSun
-				${ FETS.help }
-			</summary>
+			<summary id=FETSsumSurfaces >Fix surfaces with invalid ExposedToSun</summary>
+
+			${ GBXF.getHelpButton( "FETSbutHelp", FETS.script.helpFile ) }
 
 			<div id=FETSdivSurfaces ></div>
 
@@ -139,9 +142,7 @@ FETS.getSurfaceExposedToSunErrors = function() {
 
 	FETSsumSurfaces.innerHTML =
 	`Fix surfaces with invalid ExposedToSun
-		~ <${ tag }>${ ( FETS.errors.length ).toLocaleString() }</${ tag }> errors
-		${ FETS.help }
-	`;
+		~ <${ tag }>${ ( FETS.errors.length ).toLocaleString() }</${ tag }> errors`;
 
 	const options = FETS.errors.map( surface => {
 

@@ -1,5 +1,6 @@
 # Fix Exposed To Sun (FETS) Read Me
 
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-fixer/fets-fix-exposed-to-sun/fets-fix-exposed-to-sun.js )
 
 <details open >
 
@@ -36,6 +37,12 @@ List of surfaces where exposedToSun should be true:
 <details>
 
 <summary>Change Log</summary>
+
+### 2019-07-23 ~ Theo
+
+FETS 0.17.00-0fets
+
+* R - FETS.js: Cleanup
 
 ### 2019-05-21 ~ Theo
 

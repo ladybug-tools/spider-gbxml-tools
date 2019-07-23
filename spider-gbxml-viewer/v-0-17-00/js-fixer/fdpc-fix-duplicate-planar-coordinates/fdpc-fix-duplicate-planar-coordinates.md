@@ -1,7 +1,5 @@
 # Fix Surfaces with duplicate planar coordinates (FDPC) Read Me
 
-
-
 [Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-fixer/fdpc-fix-duplicate-planar-coordinates/fdpc-fix-duplicate-planar-coordinates.js )
 
 <details open>
