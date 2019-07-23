@@ -1,18 +1,20 @@
 /* globals GBX, VST, THREE, divDragMoveContent, VZOselZone, VZOdivReportsLog, VSTdivSurfaceType */
 // jshint esversion: 6
-/* jshint loopfunc: true */
+// jshint loopfunc: true
 
 
 const VZO = {
 
-	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-07-19",
-	"description": "View the surfaces in a gbXML file by selecting one or more zones from a list of all zones",
-	"helpFile": "../v-0-17-00/js-view-gbxml/vzo-view-zones.md",
-	license: "MIT License",
-	"urlSourceCode":
-"https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-view-gbxml/vzo-view-zones.js",
-	"version": "0.17-00-0vzo"
+	script: {
+
+		copyright: "Copyright 2019 Ladybug Tools authors",
+		date: "2019-07-22",
+		description: "View the surfaces in a gbXML file by selecting one or more zones from a list of all zones",
+		helpFile: "../v-0-17-00/js-view-gbxml/vzo-view-zones.md",
+		license: "MIT License",
+		version: "0.17-00-1vzo"
+
+	}
 
 };
 
@@ -34,9 +36,7 @@ VZO.temperatureZones = [
 
 VZO.getMenuViewZones = function() {
 
-	document.body.addEventListener( 'onGbxParse', function(){ VZOdetMenu.open = false; }, false );
-
-	const help = `<button id="butVZOsum" class="butHelp" onclick="POP.setPopupShowHide(butVZOsum,VZO.helpFile);" >?</button>`;
+	const help = VGC.getHelpButton("VZObutSum",VZO.script.helpFile);
 
 	// VZO.selectOptions = [
 	// 	"id", "airChangesSchedIdRef", "coolSchedIdRef", "fanSchedIdRef", "fanTempSchedIdRef",
@@ -61,7 +61,9 @@ VZO.getMenuViewZones = function() {
 	`
 		<details id=VZOdetMenu ontoggle=VZO.getZonesOptions(); >
 
-			<summary>Zones  ${ help }</summary>
+			<summary>Zones</summary>
+
+			${ help }
 
 			<p>
 				Display surfaces by zone. Default is all zones visible. Legends viewable in
@@ -70,7 +72,7 @@ VZO.getMenuViewZones = function() {
 			/p>
 
 			<p>
-				<input type=search id=VZOinpSelectIndex oninput=VZO.setSelectedIndex(this,VZOselZone) placeholder="Enter an attribute" >
+				<input type=search id=VZOinpSelectIndex oninput=VGC.setSelectedIndex(this,VZOselZone) placeholder="Enter an attribute" >
 			</p>
 
 			<p>
@@ -89,6 +91,7 @@ VZO.getMenuViewZones = function() {
 	`;
 
 	return htm;
+
 };
 
 
@@ -162,27 +165,9 @@ VZO.getZonesOptions = function() {
 
 
 
-VZO.setSelectedIndex = function( input, select ) {
-
-	const str = input.value.toLowerCase();
-
-	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
-
-	select.selectedIndex =  str && option ? option.index : -1;
-
-};
-
-
-
 VZO.selectZoneFocus = function( select ) {
 
-	//console.log( '', 23 );
-
-	THR.controls.enableKeys = false;
-
-	POPX.intersected = null;
-
-	THR.scene.remove( POPX.line, POPX.particle );
+	VGC.setPopup();
 
 	const zoneId = select.value;
 	//console.log( 'zoneId', zoneId );

@@ -1,6 +1,6 @@
 # VZO View Zones Read Me
 
-[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-16-01/js-view/vbz-view-by-zones.js )
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-view-gbxml/vbz-view-zones.js )
 
 <details open >
 
@@ -13,6 +13,10 @@ View the surfaces in a gbXML file by selecting one or more zones from a list of 
 ![]( https://www.ladybug.tools/spider-gbxml-tools/images/zone-color-legend-cool.png )
 
 ![]( https://www.ladybug.tools/spider-gbxml-tools/images/zone-color-legend-heat.png )
+
+See Zone schema: http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html#Link1D3
+
+
 
 </details>
 
@@ -33,6 +37,12 @@ View the surfaces in a gbXML file by selecting one or more zones from a list of 
 <details>
 
 <summary>Change Log</summary>
+
+### 2019-07-22 ~ Theo
+
+VZO 0.17.00-1vzo
+
+* R - VZO.js: Cleanup
 
 ### 2019-07-19 ~ Theo
 

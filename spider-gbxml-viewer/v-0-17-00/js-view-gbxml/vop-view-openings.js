@@ -31,8 +31,10 @@ VOP.getMenuViewOpenings = function() {
 
 	`<details id="VOPdetMenu" ontoggle=VOP.setViewOpeningsSelectOptions(); >
 
-		<summary>Openings ${ help }</summary>
+		<summary>Openings</summary>
 
+		${ help }
+		
 		<p>
 			View by openings. Surfaces with multiple openings in pink. <span id="VOPspnCount" >.</span>
 		</p>
