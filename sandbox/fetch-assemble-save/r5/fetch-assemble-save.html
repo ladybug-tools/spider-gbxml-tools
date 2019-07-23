@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1" >
+<meta name = "description" content = "Request multiple scripts, assemble them into a working HTML file, display in iframe, save to disk" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2019-05-25" >
+<meta name = "version" content = "0.0.0" >
+<title></title>
+<style>
+
+	* { box-sizing: border-box; }
+
+	:root { --mnu-width: 22rem; --screen-width: calc( 100vw ); --headerHeight: 6rem; }
+
+	html { height: 100%; }
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; padding: 0 0.5rem; }
+
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus, a:active { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	/*
+	main { border: 0px; height: 100%; left: var( --mnu-width ); margin: 0;
+		padding: 0 1rem; position: absolute; width: calc( 100% - var( --mnu-width ) );  }
+
+	#navMenu { background-color: #eee; left: 0; margin: 0; padding: 0 1rem;
+		position: absolute; top: 0; width: var( --mnu-width ); }
+	*/
+
+</style>
+</head>
+<body>
+<script id=cor src="core-source.js" ></script>
+
+	<nav id="navMenu" >
+
+		<div id="divTitle" ></div>
+
+		<p>
+			<button id=but onclick=assembleFiles(); >assembleFiles</button>
+		</p>
+
+	</nav>
+
+	<main>
+
+		<div id="divContents" ></div>
+
+		<textarea id=txt style=height:300px;width:100%; ></textarea>
+
+		<iframe id=ifr style=height:500px;width:100%; ></iframe>
+
+	</main>
+
+
+<script>
+
+filesSource = [
+
+	"https://cdn.jsdelivr.net/gh/mrdoob/three.js@r106/build/three.min.js",
+	"https://cdn.jsdelivr.net/gh/mrdoob/three.js@r106/examples/js/controls/TrackballControls.js"
+];
+
+
+
+let scripts = [];
+
+const urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/fetch-assemble-save/";
+const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-64.png";
+
+init();
+
+function init() {
+
+	divTitle.innerHTML = getTitle();
+
+}
+
+
+
+function assembleFiles() {
+
+	filesSource.forEach( ( url, index ) => requestFile( url, index ) );
+
+}
+
+
+function requestFile( url, index ) {
+
+	const xhr = new XMLHttpRequest();
+	xhr.open( 'GET', url, true );
+	xhr.onprogress = ( xhr ) => console.log( '', xhr.loaded );
+	xhr.onload = ( xhr ) => callback( xhr, index );
+	xhr.send( null );
+
+}
+
+
+function callback( xhr, index ) {
+
+	scripts[ index ] = `<script>${ xhr.target.response }<\/script>`;
+
+	console.log( 'index', index, Object.keys( scripts).length );
+
+	if ( Object.keys( scripts ).length  === filesSource.length ) {
+
+		const text  = sourceTop + scripts.join( "" ) + sourceBottom ;
+		txt.innerText = text;
+		ifr.srcdoc = text;
+	}
+
+}
+
+
+
+function getTitle() {
+
+	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+	const version = document.head.querySelector( "[ name=version ]" ).content;
+
+	const htm =
+	`
+		<h2>
+			<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
+				<img src=${ urlSourceCodeIcon } height=18 style=opacity:0.5; >
+			</a>
+			<a href="" title="Click to reload this page" >${ document.title }</a>
+		</h2>
+
+		<p>
+			${ document.head.querySelector( "[ name=description ]" ).content }
+		</p>
+	`;
+
+	return htm;
+
+}
+
+</script>
+</body>
+</html>
+
