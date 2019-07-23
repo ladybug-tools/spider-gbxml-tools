@@ -1,6 +1,6 @@
 # Fix Surface CAD Object ID Missing (FCIM) Read Me
 
-[Source code]( https://github.com/ladybug-tools/spider-gbxml-fixer/blob/master/r0-4-0/fcim-fix-cad-id-missing/fcim-fix-cad-id-missing.js )
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-fixer/fcim-fix-cad-id-missing/fcim-fix-cad-id-missing.js )
 
 <details open >
 
@@ -35,6 +35,12 @@ Lookup table for CAD IDs: https://github.com/ladybug-tools/spider-gbxml-fixer/bl
 <details>
 
 <summary>Change Log</summary>
+
+### 2019-07-23 ~ Theo
+
+FCIM 0.17.00-0fcim
+
+* R - FCIM.js: Cleanup
 
 ### 2019-05-23 ~ Theo
 

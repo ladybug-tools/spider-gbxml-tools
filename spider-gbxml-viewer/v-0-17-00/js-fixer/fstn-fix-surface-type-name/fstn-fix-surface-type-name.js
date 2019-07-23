@@ -1,6 +1,6 @@
 /* globals GBX, GSA, FSTNsumSurfaceType, FSTNdivSurfaceType, FSTNdet, FSTNtxt, FSTNdivSurfaceAttributeData */
-/* jshint esversion: 6 */
-/* jshint loopfunc: true */
+// jshint esversion: 6
+// jshint loopfunc: true
 
 
 const FSTN = {

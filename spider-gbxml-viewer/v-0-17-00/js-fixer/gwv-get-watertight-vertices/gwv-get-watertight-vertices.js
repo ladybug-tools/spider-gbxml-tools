@@ -1,15 +1,15 @@
 /* globals GBX, GSA, GWVsumSurfaces, GWVdivSurfaceData, GWVdet, GWVtxt */
-/* jshint esversion: 6 */
-/* jshint loopfunc: true */
+// jshint esversion: 6
+// jshint loopfunc: true
 
 
 const GWV = {
 
-	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-06-26",
-	"description": "Check for surfaces with vertices unconnected to other vertices. Ignore all \"Shade\" surface types.",
-	"helpFile": "../js-fixer/gwv-get-watertight-vertices/README.md",
-	"version": "0.16.01-1gwv"
+		copyright: "Copyright 2019 Ladybug Tools authors",
+		date: "2019-06-26",
+		description: "Check for surfaces with vertices unconnected to other vertices. Ignore all \"Shade\" surface types.",
+		helpFile: "../js-fixer/gwv-get-watertight-vertices/README.md",
+		version: "0.16.01-1gwv"
 
 };
 

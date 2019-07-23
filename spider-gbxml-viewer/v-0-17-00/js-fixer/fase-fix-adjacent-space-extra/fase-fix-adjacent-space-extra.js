@@ -1,15 +1,22 @@
 /* globals GBX, GSA, FASEdet, FASEsumAdjacentSpaceExtra, FASEdivSpaceExtraData, FASEdivSpaceExtra  */
-/* jshint esversion: 6 */
-/* jshint loopfunc: true */
+// jshint esversion: 6
+// jshint loopfunc: true
+
+// Not currently used!!!!!
 
 
 const FASE = {
 
-	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"description": "Checks for a surface with more adjacent spaces than required",
-	"date": "2019-05-30",
-	"helpFile": "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/fase-fix-adjacent-space-extra/README.md",
-	"version": "0.4.0-3"
+	script: {
+
+		copyright: "Copyright 2019 Ladybug Tools authors",
+		description: "Checks for a surface with more adjacent spaces than required",
+		date: "2019-07-23",
+		helpFile: "../v-0-17-00/js-fixer/fase-fix-adjacent-space-extra/fase-fix-adjacent-space-extra.md",
+		license: "MIT License",
+		version: "0.17.00-0fase"
+
+	}
 
 };
 
@@ -21,15 +28,13 @@ FASE.oneSpace = [ 'ExteriorWall', 'Roof', 'ExposedFloor', 'UndergroundCeiling', 
 
 FASE.getMenuAdjacentSpaceExtra = function() {
 
-	FASE.help = `<button id=butFASE class=butHelp onclick="POP.setPopupShowHide(butFASE,FASE.helpFile);" >?</button>`;
-
 	const htm =
 		`
 			<details id=FASEdet ontoggle="FASEdivAdjacentSpaceExtra.innerHTML=FASE.getAdjacentSpaceExtra();" >
 
-				<summary id=FASEsumAdjacentSpaceExtra >Fix surfaces with an extra adjacent space
-					${ FASE.help }
-				</summary>
+				<summary id=FASEsumAdjacentSpaceExtra >Fix surfaces with an extra adjacent space</summary>
+
+				${ GBXF.getHelpButton( "FASEbutHelp", FASE.script.helpFile ) }
 
 				<div id=FASEdivAdjacentSpaceExtra ></div>
 
@@ -89,7 +94,6 @@ FASE.getAdjacentSpaceExtra = function() {
 
 	FASEsumAdjacentSpaceExtra.innerHTML =
 		`Fix surfaces with an extra adjacent space ~ <${ tag }>${ FASE.extras.length.toLocaleString() }</${ tag }> found
-			${ FASE.help }
 		`;
 
 	const faseHtm =

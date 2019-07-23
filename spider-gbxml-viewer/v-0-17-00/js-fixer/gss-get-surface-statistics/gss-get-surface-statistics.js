@@ -1,15 +1,15 @@
 /* globals GBX, GSA, GSSdivSurfaceData */
-/* jshint esversion: 6 */
-/* jshint loopfunc: true */
+// jshint esversion: 6
+// jshint loopfunc: true
 
 
 const GSS = {
 
-	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-05-30",
-	"description": "Display all referenced gbXML surface types and CAD object IDs",
-	"helpFile": "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/gss-get-surface-statistics/README.md",
-	"version": "0.4.0-4"
+		copyright: "Copyright 2019 Ladybug Tools authors",
+		date: "2019-07-23",
+		description: "Display all referenced gbXML surface types and CAD object IDs",
+		helpFile: "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/gss-get-surface-statistics/README.md",
+		version: "0.4.0-4"
 
 };
 

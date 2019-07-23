@@ -1,15 +1,15 @@
 /* globals GBX, GSA, OCSsumSurfaces, OCSdivSurfaceData, OCSdet, OCStxt */
-/* jshint esversion: 6 */
-/* jshint loopfunc: true */
+// jshint esversion: 6
+// jshint loopfunc: true
 
 
 const OCS = {
 
-	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-06-12",
-	"description": "check for openings with area greater than enclosing surface are",
-	"helpFile": "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/ocs-openings-check-size/README.md",
-	"version": "0.4.0-0"
+		copyright: "Copyright 2019 Ladybug Tools authors",
+		date: "2019-06-12",
+		description: "check for openings with area greater than enclosing surface are",
+		helpFile: "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/ocs-openings-check-size/README.md",
+		version: "0.4.0-0"
 
 };
 

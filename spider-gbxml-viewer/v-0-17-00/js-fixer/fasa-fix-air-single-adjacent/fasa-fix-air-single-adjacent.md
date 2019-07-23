@@ -1,6 +1,6 @@
 # Fix Air Space Adjacent (FASA) Read Me
 
-[Source code]( https://github.com/ladybug-tools/spider-gbxml-fixer/blob/master/r0-4-0/fasa-fix-air-single-adjacent/fasa-fix-air-single-adjacent.js )
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-fixer/fasa-fix-air-single-adjacent/fasa-fix-air-single-adjacent.js )
 
 
 <details open>
@@ -33,6 +33,12 @@ Identify all the surfaces of a model of type "Air" that have a single adjacent s
 <details>
 
 <summary>Change Log</summary>
+
+### 2019-07-23 ~ Theo
+
+FASA 0.17.00-0fasa
+
+* R - FASA.js: Cleanup
 
 ### 2019-05-21 ~ Theo
 

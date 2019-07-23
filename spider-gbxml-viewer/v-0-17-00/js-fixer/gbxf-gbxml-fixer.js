@@ -10,10 +10,10 @@ const GBXF = {
 
 		copyright: "Copyright 2019 Ladybug Tools authors",
 		date: "2019-07-23",
-		description: "",
+		description: "Fixer menu and utility scripts",
 		helpFile: "../v-0-17-00/js-fixer/gbxf-gbxml-fixer.md",
 		license: "MIT License",
-		version: "0.17.00-0fstn",
+		version: "0.17.00-0gbfx",
 
 	}
 
@@ -38,7 +38,7 @@ GBXF.getMenuFixer = function() {
 			<button onclick=GBXF.closeAll(); >Close all</button>
 
 			<br>
-			
+
 			To do: a 'fix all' button
 
 		</p>

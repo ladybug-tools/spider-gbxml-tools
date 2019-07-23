@@ -1,15 +1,15 @@
 /* globals GBX, GSA, FETSdet, FETStxt, FETSdivSurfaceData, FETSsumSurfaces */
-/* jshint esversion: 6 */
-/* jshint loopfunc: true */
+// jshint esversion: 6
+// jshint loopfunc: true
 
 
 const FETS = {
 
-	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-05-30",
-	"description": "Checks for surface with invalid exposedToSun values",
-	"helpFile": "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/fets-fix-exposed-to-sun/README.md",
-	"version": "0.4.0-3"
+	copyright: "Copyright 2019 Ladybug Tools authors. MIT License",
+		date: "2019-07-23",
+		description: "Checks for surface with invalid exposedToSun values",
+		helpFile: "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/fets-fix-exposed-to-sun/README.md",
+		version: "0.17.00-"
 
 };
 

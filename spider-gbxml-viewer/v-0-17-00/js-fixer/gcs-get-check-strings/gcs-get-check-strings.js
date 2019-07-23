@@ -1,14 +1,14 @@
 /* globals GBX, GCS, GCSsumGetCheckStrings */
-/* jshint esversion: 6 */
-/* jshint loopfunc: true */
+// jshint esversion: 6
+// jshint loopfunc: true
 
 
 GCS = {
-	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-05-30",
-	"description": "Check and report on elements with inappropriate null, zero or blank values values",
-	"helpFile": "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/gcs-get-check-strings/README.md",
-	"version": "0.4.0-4"
+		copyright: "Copyright 2019 Ladybug Tools authors",
+		date: "2019-07-23",
+		description: "Check and report on elements with inappropriate null, zero or blank values values",
+		helpFile: "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/gcs-get-check-strings/README.md",
+		version: "0.4.0-4"
 };
 
 

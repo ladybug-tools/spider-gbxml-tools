@@ -1,14 +1,14 @@
 /* globals FIL, divContents, GGD, GCS, OCV, GSAh1FileName, */
-/* jshint esversion: 6 */
-/* jshint loopfunc: true */
+// jshint esversion: 6
+// jshint loopfunc: true
 
 const GSA = {
 
-	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-05-30",
-	"description": "Display all possible data for a surface",
-	"helpFile": "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/gsa-get-surface-attributes/README.md",
-	"version": "0.4.0-1"
+		copyright: "Copyright 2019 Ladybug Tools authors",
+		date: "2019-07-23",
+		description: "Display all possible data for a surface",
+		helpFile: "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/gsa-get-surface-attributes/README.md",
+		version: "0.4.0-1"
 
 };
 

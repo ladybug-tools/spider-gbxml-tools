@@ -1,18 +1,18 @@
 /* globals GBX, GSA, FASAdivSurfaceAttributeData, FASAsumSurfaces, FASAtxt, FASAdet, FASAdivFixAirSingleAdjacent
  */
-/* jshint esversion: 6 */
-/* jshint loopfunc: true */
+// jshint esversion: 6
+// jshint loopfunc: true
 
 
 const FASA = {
 
-	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-05-30",
-	"description":
+		copyright: "Copyright 2019 Ladybug Tools authors",
+		date: "2019-07-23",
+		description:
 		"Identify all the surfaces of a model of type \"Air\" that have a single adjacent space attribute. " +
 		"Allow you to change the surface type to \"Roof\". ",
-	"helpFile": "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/fasa-fix-air-single-adjacent/README.md",
-	"version": "0.4.0-4",
+		helpFile: "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/fasa-fix-air-single-adjacent/README.md",
+		version: "0.4.0-4",
 
 };
 
@@ -175,6 +175,7 @@ FASA.setAirSingleAdjacentData = function( select ) {
 	FASAdivSurfaceAttributeData.innerHTML = htm;
 
 	const det = FASAdivSurfaceAttributeData.querySelectorAll( 'details');
+
 	det[ 0 ].open = true;
 
 };

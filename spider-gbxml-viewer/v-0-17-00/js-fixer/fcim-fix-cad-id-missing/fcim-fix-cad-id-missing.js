@@ -1,15 +1,21 @@
 /* globals GBX, GSA, GBXinpIgnoreAirSurfaceType, FCIMsumCadIdMissing, FCIMdivIdMissingData, FCIMtxt, FCIMdet, FCIMdivCadIdMissing, FCIMselSurface */
-/* jshint esversion: 6 */
-/* jshint loopfunc: true */
+// jshint esversion: 6
+// jshint loopfunc: true
 
 
 const FCIM = {
 
-	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-05-30",
-	"description": "Assign an ID to surfaces with a missing CAD object ID",
-	"helpFile": "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/fcim-fix-cad-id-missing/README.md",
-	"version": "0.4.0-2"
+	script: {
+
+
+		copyright: "Copyright 2019 Ladybug Tools authors",
+		date: "2019-07-23",
+		description: "Assign an ID to surfaces with a missing CAD object ID",
+		helpFile: "../v-0-17-00/js-fixer/fcim-fix-cad-id-missing/fcim-fix-cad-id-missing.ms",
+		license: "MIT License",
+		version: "0.17.00-0fcim"
+
+	}
 
 };
 
@@ -26,6 +32,8 @@ FCIM.getCadIdMissing = function() {
 				<summary id=FCIMsumCadIdMissing >Fix Surfaces with CAD object ID missing
 					${ FCIM.help }
 				</summary>
+
+				${ GBXF.getHelpButton( "FCIMbutHelp", FCIM.script.helpFile ) }
 
 				<div id=FCIMdivCadIdMissing ></div>
 
@@ -161,7 +169,7 @@ FCIM.setSurfaceData = function() {
 
 	`;
 
-	FCIMdivIdMissingData.innerHTML = htm;
+	//FCIMdivIdMissingData.innerHTML = htm;
 
 };
 

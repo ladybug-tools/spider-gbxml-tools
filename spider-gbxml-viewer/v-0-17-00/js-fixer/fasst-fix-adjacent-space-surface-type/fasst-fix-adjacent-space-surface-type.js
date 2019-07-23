@@ -1,15 +1,20 @@
-/* globals GBX, GSA, FASSTsumSurfaces, FASSTdivSurfaceAttributeData, FASSTdivSurfaceData, FASSTdet, FASSTtxt */
-/* jshint esversion: 6 */
-/* jshint loopfunc: true */
+/* globals GBX, GBXG, GSA, FASSTsumSurfaces, FASSTdivSurfaceAttributeData, FASSTdivSurfaceData, FASSTdet, FASSTtxt */
+// jshint esversion: 6
+// jshint loopfunc: true
 
 
 const FASST = {
 
-	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-05-30",
-	"description": "Fix surfaces with two adjacent spaces that are not of a surface type that requires two adjacent spaces",
-	"helpFile": "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/fasst-fix-adjacent-space-surface-type/README.md",
-	"version": "0.4.0-5"
+	script: {
+
+		copyright: "Copyright 2019 Ladybug Tools authors",
+		date: "2019-07-23",
+		description: "Fix surfaces with two adjacent spaces that are not of a surface type that requires two adjacent spaces",
+		helpFile: "../v-0-17-00/js-fixer/fasst-fix-adjacent-space-surface-type/fasst-fix-adjacent-space-surface-type.md",
+		license: "MIT License",
+		version: "0.17.00-0fasst"
+
+	}
 
 };
 
@@ -19,15 +24,13 @@ FASST.typesTwoAdjacentSpaces = [ "InteriorWall", "InteriorFloor", "Ceiling", "Ai
 
 FASST.getMenuFASST = function() {
 
-	FASST.help = `<button id=butFASST class=butHelp onclick="POP.setPopupShowHide(butFASST,FASST.helpFile);" >?</button>`;
-
 	const htm =
 		`
 			<details id=FASSTdet ontoggle="FASSTdivSurface.innerHTML=FASST.getSurfaces();" >
 
-				<summary id=FASSTsumSurfaces >Fix surfaces with two adjacent spaces & incorrect surface type
-					${ FASST.help }
-				</summary>
+				<summary id=FASSTsumSurfaces >Fix surfaces with two adjacent spaces & incorrect surface type</summary>
+
+				${ GBXF.getHelpButton( "FASSTbutHelp", FASST.script.helpFile ) }
 
 				<div id=FASSTdivSurface ></div>
 
@@ -88,7 +91,7 @@ FASST.getSurfaces = function() {
 	const tag = FASST.surfacesTwoSpaces.length === 0 ? "span" : "mark";
 
 	FASSTsumSurfaces.innerHTML = `Fix surfaces with two adjacent spaces & incorrect surface type
-		~ <${ tag }>${ FASST.surfacesTwoSpaces.length.toLocaleString() }</${ tag }> found ${ FASST.help }`;
+		~ <${ tag }>${ FASST.surfacesTwoSpaces.length.toLocaleString() }</${ tag }> found`;
 
 	const htm =
 	`

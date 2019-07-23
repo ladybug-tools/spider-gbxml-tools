@@ -1,14 +1,14 @@
 /* globals GBX, GSA, FDPCsumDuplicatePlanar, FDPCdivDuplData, FDPCdivGetDuplicatePlanar, FDPCdet */
-/* jshint esversion: 6 */
+// jshint esversion: 6
 /* jshint loopfunc:true */
 
 
 const FDPC = {
 
-	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-05-30",
-	"description": "Identify two or more surfaces with the same planar geometry coordinates",
-	"helpFile": "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/fdpc-fix-duplicate-planar-coordinates/README.md",
+		copyright: "Copyright 2019 Ladybug Tools authors",
+		date: "2019-07-23",
+		description: "Identify two or more surfaces with the same planar geometry coordinates",
+		helpFile: "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/fdpc-fix-duplicate-planar-coordinates/README.md",
 	"release": "0.4.0-2"
 
 };

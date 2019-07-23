@@ -1,16 +1,21 @@
 /* globals GBX, GBXinpIgnoreAirSurfaceType, GSA, FASDdet, FASDsumAdjacentSpaceDuplicate, FASDselSurface,
 	FASDdivAdjacentSpaceDuplicateData, FASDdivSpaceDuplicate */
-/* jshint esversion: 6 */
-/* jshint loopfunc: true */
+// jshint esversion: 6
+// jshint loopfunc: true
 
 
 const FASD = {
 
-	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-05-30",
-	"description": "Fix air, InteriorWall, InteriorFloor, or Ceiling surfaces where both adjacent space IDs point to the same space",
-	"helpFile": "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/fasd-fix-adjacent-space-duplicate/README.md",
-	"version": "0.4.0-3"
+	script: {
+
+		copyright: "Copyright 2019 Ladybug Tools authors",
+		date: "2019-07-23",
+		description: "Fix air, InteriorWall, InteriorFloor, or Ceiling surfaces where both adjacent space IDs point to the same space",
+		helpFile: "../v-0-17-00/js-fixer/fasd-fix-adjacent-space-duplicate/fasd-fix-adjacent-space-duplicate.md",
+		license: "MIT License",
+		version: "0.17.00-0fasd"
+
+	}
 
 };
 
@@ -18,15 +23,13 @@ const FASD = {
 
 FASD.getFixAdjacentSpaceDuplicate = function() {
 
-	FASD.help = `<button id=butFASD class=butHelp onclick="POP.setPopupShowHide(butFASD,FASD.helpFile);" >?</button>`;
-
 	const htm =
 		`
 			<details id=FASDdet ontoggle="FASDdivAdjacentSpaceDuplicate.innerHTML=FASD.getAdjacentSpaceDuplicate();" >
 
-				<summary id=FASDsumAdjacentSpaceDuplicate >Fix surfaces with duplicate adjacent spaces
-					${ FASD.help }
-				</summary>
+				<summary id=FASDsumAdjacentSpaceDuplicate >Fix surfaces with duplicate adjacent spaces</summary>
+
+				${ GBXF.getHelpButton( "FASDbutHelp", FASD.script.helpFile ) }
 
 				<div id=FASDdivAdjacentSpaceDuplicate ></div>
 
@@ -88,7 +91,6 @@ FASD.getAdjacentSpaceDuplicate = function() {
 	FASDsumAdjacentSpaceDuplicate.innerHTML =
 		`Fix surfaces with duplicate adjacent spaces
 			~ <${ tag }>${ FASD.duplicates.length.toLocaleString() }</${ tag }> found
-			${ FASD.help }
 		`;
 
 	const options = FASD.duplicates.map( index => {

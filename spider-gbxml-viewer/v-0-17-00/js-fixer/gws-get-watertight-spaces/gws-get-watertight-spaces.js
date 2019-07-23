@@ -1,15 +1,15 @@
 /* globals GBX, GSA, GWSsumSurfaces, GWSdivSurfaceData, GWSdet, GWStxt */
-/* jshint esversion: 6 */
-/* jshint loopfunc: true */
+// jshint esversion: 6
+// jshint loopfunc: true
 
 
 const GWS = {
 
-	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-06-26",
-	"description": "Checking for water-tight spaces",
-	"helpFile": "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/tmp-template/README.md",
-	"version": "0.16.01-1gws"
+		copyright: "Copyright 2019 Ladybug Tools authors",
+		date: "2019-06-26",
+		description: "Checking for water-tight spaces",
+		helpFile: "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/tmp-template/README.md",
+		version: "0.16.01-1gws"
 
 };
 

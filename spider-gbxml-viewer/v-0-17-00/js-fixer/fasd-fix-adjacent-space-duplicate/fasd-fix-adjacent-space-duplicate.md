@@ -1,7 +1,9 @@
 # Fix Adjacent Space Duplicate (FASD) Read Me
 
 
-[Source code]( https://github.com/ladybug-tools/spider-gbxml-fixer/blob/master/r0-4-0/fasd-fix-adjacent-space-duplicate/fasd-fix-adjacent-space-duplicate.js )
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-fixer/fasd-fix-adjacent-space-duplicate/fasd-fix-adjacent-space-duplicate.js )
+
+
 <details open >
 
 <summary>Concept</summary>
@@ -27,6 +29,12 @@ Fix air, InteriorWall, InteriorFloor, or Ceiling surfaces where both adjacent sp
 <details>
 
 <summary>Change Log</summary>
+
+### 2019-07-23 ~ Theo
+
+FASD 0.17.00-0fasd
+
+* R - FASD.js: Cleanup
 
 ### 2019-05-21 ~ Theo
 

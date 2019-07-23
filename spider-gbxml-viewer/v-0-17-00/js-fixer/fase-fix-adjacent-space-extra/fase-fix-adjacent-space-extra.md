@@ -1,6 +1,6 @@
 # Fix Surface Adjacent Space Extra (FASE) Read Me
 
-[Source code]( https://github.com/ladybug-tools/spider-gbxml-fixer/blob/master/r0-4-0/fase-fix-adjacent-space-extra/fase-fix-adjacent-space-extra.js )
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-fixer/fase-fix-adjacent-space-extra/fase-fix-adjacent-space-extra.js )
 
 <details open>
 
@@ -32,6 +32,12 @@ See also: Fix Adjacent Space Surface Type (FASST) Read Me
 
 <summary>Change Log</summary>
 
+
+### 2019-07-23 ~ Theo
+
+FASE 0.17.00-0fase
+
+* R - FASE.js: Cleanup
 
 ### 2019-05-21 ~ Theo
 

@@ -1,6 +1,8 @@
 # Fix Adjacent Space Surface Type (FASST) Read Me
 
-[Source code]( https://github.com/ladybug-tools/spider-gbxml-fixer/blob/master/r0-4-0/fasst-fix-adjacent-space-surface-type/fasst-fix-adjacent-space-surface-type.js )
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-fixer/fasst-fix-adjacent-space-surface-type/fasst-fix-adjacent-space-surface-type.js )
+
+
 <details open>
 
 <summary>Concept</summary>
@@ -40,6 +42,13 @@ Surface types to be checked:
 <details>
 
 <summary>Change Log</summary>
+
+### 2019-07-23 ~ Theo
+
+FASST 0.17.00-0fasst
+
+* R - FASST.js: Cleanup
+
 
 ### 2019-05-21 ~ Theo
 
