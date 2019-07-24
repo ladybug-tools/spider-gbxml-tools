@@ -2,13 +2,18 @@
 // jshint esversion: 6
 // jshint loopfunc: true
 
-
 GCS = {
+
+	script: {
+
 		copyright: "Copyright 2019 Ladybug Tools authors",
 		date: "2019-07-23",
 		description: "Check and report on elements with inappropriate null, zero or blank values values",
 		helpFile: "../v-0-17-00/js-fixer/gcs-get-check-strings/gcs-get-check-strings.md",
 		version: "0.17.00-0gcs"
+		
+	}
+
 };
 
 
