@@ -135,8 +135,6 @@ VSP.selSpacesFocus = function() {
 
 	VGC.setPopup();
 
-	THR.controls.enableKeys = false;
-
 	VSP.surfacesFilteredSpace = VSP.getSurfacesFilteredSpace();
 
 	VSPdivReportsLog.innerHTML = GBXU.sendSurfacesToThreeJs( VSP.surfacesFilteredSpace );

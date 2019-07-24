@@ -25,7 +25,7 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 
 	GBXU.setSurfaceTypesVisible( GBXU.filtersDefault );
 
-	THRU.toggleBoundingBoxHelper( GBXU.surfaceGroup );
+	THRU.toggleBoundingBoxHelper( GBXU.meshGroup );
 
 	GBXU.toggleOpenings();
 
@@ -33,15 +33,7 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 
 	THRU.toggleAxesHelper();
 
-	//THRU.toggleEdges( GBX.surfaceGroup );
-
-	// needs work
-	//GBXU.surfaceGroupVisible = new THREE.Object3D();
-	//const arr = GBX.surfacesFiltered.flatMap( ( surface, index ) => GBX.surfaceGroup.children[ index ].clone() );
-	//GBXU.surfaceGroupVisible.add( ...arr );
-	//console.log( 'GBXU.surfaceGroupVisible', GBXU.surfaceGroupVisible );
-
-	const bbox = new THREE.Box3().setFromObject( GBX.surfaceGroup );
+	const bbox = new THREE.Box3().setFromObject( GBX.meshGroup );
 	GBXU.boundingBox = new THREE.Box3Helper( bbox, 0xdddd00 );
 	//THR.scene.add( GBXU.boundingBox );
 
@@ -57,7 +49,7 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 	window.addEventListener( 'click', GBXU.onFirstTouch, false );
 	window.addEventListener( 'touchstart', GBXU.onFirstTouch, false );
 
-	divMessage.innerHTML = FOB.fileInfo + GBXU.stats;
+	if ( window.divMessage ) { divMessage.innerHTML = FOB.fileInfo + GBXU.stats; }
 
 };
 
@@ -65,7 +57,7 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 
 GBXU.onFirstTouch = function() {
 
-	divMessage.innerHTML = "";
+	if ( window.divMessage ) { divMessage.innerHTML = ""; }
 
 	GBXU.sendSurfacesToThreeJs( GBX.surfaces );
 
@@ -75,7 +67,7 @@ GBXU.onFirstTouch = function() {
 
 	THRU.toggleGroundHelper();
 
-	THRU.toggleEdges( GBX.surfaceGroup );
+	THRU.toggleEdges( GBX.meshGroup );
 
 	window.removeEventListener( 'keyup', GBXU.onFirstTouch );
 	window.removeEventListener( 'click', GBXU.onFirstTouch );
@@ -311,7 +303,7 @@ GBXU.setSurfaceTypesVisible = function ( typesArray ) {
 GBXU.sendSurfacesToThreeJs = function( surfacesText = [] ) {
 	//console.log( 'surfacesText', surfacesText );
 
-	GBX.surfaceGroup.children.forEach( surface=> surface.visible = false );
+	GBX.meshGroup.children.forEach( surface=> surface.visible = false );
 	//const timeStart = performance.now();
 
 	THR.controls.autoRotate = false;
@@ -348,7 +340,7 @@ GBXU.addMeshes = function( timestamp ) {
 			GBX.surfacesTmp.slice( GBX.count, GBX.count + GBX.step ).forEach( surface => {
 
 				const index = GBX.surfaces.indexOf( surface );
-				GBX.surfaceGroup.children[ index ].visible = true;
+				GBX.meshGroup.children[ index ].visible = true;
 
 			} );
 
@@ -389,7 +381,7 @@ GBXU.addMeshes = function( timestamp ) {
 
 		//THR.controls.autoRotate = true;
 
-		THRU.getMeshesVisible( GBX.surfaceGroup );
+		THRU.getMeshesVisible( GBX.meshGroup );
 
 	}
 

@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+
+<meta charset = "utf-8">
+<meta name = "copyright" content ="Ladybug Tools authors" >
+<meta name = "date" content = "2019-07-18" >
+<meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
+<meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
+<meta name = "version" content = "0.17.00-0popup" >
+<meta name = "viewport" content = "width=device-width, initial-scale=1" >
+
+<title>Spider gbXML Viewer Popup</title>
+
+<base href="../" >
+
+<link rel = "canonical" href = "www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/" />
+<link rel = "license" href = "https://creativecommons.org/licenses/by/4.0/" >
+<link rel = "license" href = "https://opensource.org/licenses/MIT" >
+<link rel = "stylesheet" href = "https://pushme-pullyou.github.io/tootoo14/js-14-05/style.css" >
+
+<style>
+
+	html { overflow: hidden; }
+	#divContents { border: 0px solid red; height: 100%; max-width: 100%; }
+
+</style>
+
+</head>
+
+<body>
+
+<!-- utility libraries -->
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js" ></script>
+
+<!-- Three.js -->
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r106/build/three.min.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r106/examples/js/controls/OrbitControls.js" ></script>
+
+<!-- Tootoo forks -->
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-05/fob-file-open-basic/fob-file-open-basic.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-05/pop-popup/pop-popup.js" ></script>
+
+<!-- Spider forks -->
+<script src = "js-core-three/thr-threejs.js" ></script>
+<script src = "js-core-three/thru-threejs-utilities.js" ></script>
+
+<!-- Spider gbXML forks -->
+<script src = "js-core-gbxml/gbx-gbxml-parser.js" ></script>
+<script src = "js-core-gbxml/gbxu-gbxml-utilities.js" ></script>
+<script src = "js-core-gbxml/gsa-gbxml-surface-attributes.js" ></script>
+
+<!-- popup menu -->
+<script src = "js-popup/popx-popup-gbxml.js" ></script>
+<script src = "js-popup/popf-popup-footer.js" ></script>
+
+<!-- View menu -->
+<script src = "js-view-3d/set-settings.js" ></script>
+<script src = "js-view-3d/cut-section-cut.js"></script>
+<script src = "js-view-3d/vex-view-exploded.js" ></script>
+
+
+	<main id="main" >
+
+		<div id="divContents" ></div>
+
+	</main>
+
+
+	<nav id="navDragMove"  >
+
+		<section id="secDragMove" >
+
+			<div id=divDragMoveHeader >
+
+				<span title="Move and resize me" ><img src = 'https://ladybug.tools/artwork/icons_bugs/ico/spider.ico' height=12 ></span>
+
+				<div style=float:right; >
+					<button id=butPopupClose onclick="POP.setPopupShowHide(butPopupClose);" >
+						&times;
+					</button>
+				</div>
+
+			</div>
+
+			<div id="divDragMoveContent" ></div>
+
+			<div id="divDragMoveFooter" ></div>
+
+		</section>
+
+	</nav>
+
+
+<script>
+
+
+//FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
+FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml";
+//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/coventry-university-of-warwick-small.zip";
+//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/annapolis-md-single-family-residential-2016.xml"
+//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/pittsburg-airport.zip";
+//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/GreenBuildingXML/Sample-gbXML-Files@master/gbXML_TRK.xml";
+
+POP.popup = "popup.md";
+POP.license = "https://www.ladybug.tools/spider/pages/license.md";
+
+init();
+THR.animate();
+
+function init() {
+
+	if ( /(iPad|iPhone|iPod)/g.test( navigator.userAgent ) ) { /* I hate having to add this */
+
+		divContents.style.width = getComputedStyle( divContents ).width;
+		divContents.style.height = getComputedStyle( divContents ).height;
+		divContents.setAttribute( 'scrolling', 'no' );
+
+	}
+
+	THR.getThreejs();
+
+	THRU.init();
+
+	GBX.init();
+
+	POP.init();
+
+	POPX.init();
+
+	//const mesh = THRU.getGeometry();
+	//THR.scene.add( mesh );
+
+	window.addEventListener ( 'hashchange', FOB.onHashChange, false );
+
+	//if ( !parent.location.hash ) { parent.location.hash=FOB.urlDefaultFile; }
+
+	FOB.onHashChange();
+
+	POP.setPopupShowHide( butPopupClose, POP.popup);
+
+}
+
+</script>
+</body>
+</html>

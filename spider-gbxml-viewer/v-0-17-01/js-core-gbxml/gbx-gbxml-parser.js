@@ -79,8 +79,8 @@ GBX.parseFile = function( gbxml )  {
 
 	THRU.setSceneDispose( [
 		THRU.axesHelper, THRU.boundingBoxHelper, THRU.edgeGroup, THRU.groundHelper, THRU.helperNormalsFaces,
-		GBX.surfaceGroup, GBX.openingGroup, GBX.placards,
-		POPX.line, POPX.particle
+		GBX.meshGroup, GBX.openingGroup, GBX.placards,
+		//POPX.line, POPX.particle
 	] );
 
 	THRU.edgeGroup = [];
@@ -95,13 +95,29 @@ GBX.parseFile = function( gbxml )  {
 	GBX.surfaces = GBX.text.match( reSurface );
 	//console.log( 'GBX.surfaces', GBX.surfaces );
 
+	const reSpaces = /<Space(.*?)<\/Space>/gi;
+	GBX.spaces = GBX.text.match( reSpaces );
+
+	const reStoreys = /<BuildingStorey(.*?)<\/BuildingStorey>/gi;
+	GBX.storeys = GBX.text.match( reStoreys );
+	GBX.storeys = Array.isArray( GBX.storeys ) ? GBX.storeys : [];
+	//console.log( 'GBX.storeys', GBX.storeys );
+
+	const reZones = /<Zone(.*?)<\/Zone>/gi;
+	GBX.zones = GBX.text.match( reZones );
+	GBX.zones = Array.isArray( GBX.zones ) ? GBX.zones : [];
+	//console.log( 'GBX.zones', GBX.zones );
+
+	GBX.spacesJson = GBX.getSpacesJason();
+	//console.log( 'GBX.spacesJson', GBX.spacesJson );
+
 	const meshes = GBX.getSurfaceMeshes( GBX.surfaces );
 
-	GBX.surfaceGroup = new THREE.Group();
-	GBX.surfaceGroup.name = 'GBX.surfaceGroup';
-	GBX.surfaceGroup.add( ...meshes );
+	GBX.meshGroup = new THREE.Group();
+	GBX.meshGroup.name = 'GBX.meshGroup';
+	GBX.meshGroup.add( ...meshes );
 
-	THR.scene.add( GBX.surfaceGroup );
+	THR.scene.add( GBX.meshGroup );
 
 	const event = new Event( 'onGbxParse' );
 	document.body.dispatchEvent( event );
@@ -113,8 +129,30 @@ GBX.parseFile = function( gbxml )  {
 
 
 
+GBX.getSpacesJason = function() {
+
+	const json  = GBX.spaces.map( space => {
+
+		const spaceId = space.match( / id="(.*?)"/i )[ 1 ];
+
+		const zoneId = space.match( / zoneIdRef="(.*?)"/i )[ 1 ];
+
+		const storeyId = space.match( / buildingStoreyIdRef="(.*?)"/i )[ 1 ];
+
+		return { spaceId, zoneId, storeyId };
+
+	} );
+
+	return json;
+
+};
+
+
+
 GBX.getSurfaceMeshes = function( surfaces ) {
 	// console.log( 'surfaces', surfaces );
+
+	timeStart = performance.now();
 
 	GBX.materialType = THR.scene.getObjectByName( 'lightAmbient') ? THREE.MeshPhongMaterial : THREE.MeshBasicMaterial;
 	//GBX.materialType = THREE.MeshBasicMaterial;
@@ -145,6 +183,8 @@ GBX.getSurfaceMeshes = function( surfaces ) {
 		return mesh;
 
 	} );
+
+	console.log( '',  performance.now() - timeStart );
 
 	return meshes;
 
@@ -184,7 +224,9 @@ GBX.getCoordinates = function( text ) {
 GBX.getSurfaceMesh = function( arr, index, holes ) {
 	//console.log( 'array', arr, 'index', index );
 
-	const surfaceType = GBX.surfaces[ index ].match( 'surfaceType="(.*?)"')[ 1 ];
+	surface = GBX.surfaces[ index ];
+
+	const surfaceType = surface.match( 'surfaceType="(.*?)"')[ 1 ];
 	const color = new THREE.Color( GBX.colorsDefault[ surfaceType ] );
 	//console.log( 'color', color );
 
@@ -257,10 +299,28 @@ GBX.getSurfaceMesh = function( arr, index, holes ) {
 
 	}
 
-	//mesh.visible = false;
 	mesh.castShadow = mesh.receiveShadow = true;
 	mesh.userData.index = index;
 	mesh.userData.surfaceType = surfaceType;
+
+	let spaceIds = surface.match( / spaceIdRef="(.*?)"/gi )
+	spaceIds = spaceIds ? spaceIds.map( id => id.slice( 13, -1 ) ) : [];
+	mesh.userData.spaceIds = spaceIds;
+
+	const spaceLevel = spaceIds.pop();
+	const space = GBX.spacesJson.find( item => item.spaceId === spaceLevel ) || {};
+	mesh.userData.spaceJson = space;
+
+	//console.log( 'space.storeyId', space.storeyId );
+
+	if ( space.storeyId ) {
+
+		const storey = GBX.storeys.find( storey => storey.includes( space.storeyId ) );
+		//console.log( '', storey );
+
+		const name = storey.match( /<Name>(.*?)<\/Name/ )[ 1 ]
+		//console.log( 'name ', name );
+	}
 
 	return mesh;
 

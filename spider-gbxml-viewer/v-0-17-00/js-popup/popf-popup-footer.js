@@ -24,7 +24,7 @@ POPF.footer =
 			<button class=POPFbutIcon onclick="POPF.onToggleInteriorExterior(this)" title="Exterior or interior surfaces">☂️</button>
 			<button class=POPFbutIcon onclick="THRU.toggleEdges();" title="Display edges" >📏</button>
 			<button class=POPFbutIcon onclick="GBXU.toggleOpenings();" title="Display openings" >🚪</button>
-			<button class=POPFbutIcon onclick="POPF.setScreen1();" title="Surface types" >💡</button>
+			<button class=POPFbutIcon onclick="POPF.setPanelSurfaceTypes();" title="Surface types" >💡</button>
 
 			<button class=POPFbutIcon onclick="POPF.setScreen2();" title="Display parameters" >👁️</button>
 			<button class=POPFbutIcon onclick="POPF.setScreen3();" title="Cut sections" >🔪</button>
@@ -89,21 +89,26 @@ POPF.setScreen2 = function() {
 
 
 
-POPF.setScreen1 = function() {
+POPF.setPanelSurfaceTypes = function() {
 
 	THR.scene.remove( POPX.line, POPX.particle );
 
-	const types = GBX.surfaceTypes.filter( type => GBX.surfaces.find( surface => surface.includes( `"${ type }"` ) ) );
 
-	let colors =  types.map( type => GBX.colorsDefault[ type ].toString( 16 ) );
+
+	const typesInUse = GBX.surfaceTypes.filter( type => GBX.surfaces.find( surface => surface.includes( `"${ type }"` ) ) );
+
+	POPF.surfaceTypesActive = !POPF.surfaceTypesActive ? typesInUse : POPF.surfaceTypesActive;
+
+	let colors =  typesInUse.map( type => GBX.colorsDefault[ type ].toString( 16 ) );
 	colors = colors.map( color => color.length > 4 ? color : '00' + color ); // otherwise greens no show
 	//console.log( 'col', colors );
 
-	const buttonSurfaceTypes = types.map( ( type, index ) =>
+	const buttonSurfaceTypes = typesInUse.map( ( type, index ) =>
 		`
 		<div style=margin:0.5rem 0; >
-		<button onclick=POPF.toggleThisSurface("${ type}");  style=min-width:2rem;width:1rem;>o</button>
-		<button onclick=POPF.toggleSurfaceByButtons(this); style="background-color:#${ colors[ index ] };width:10rem;" > ${ type } </button>
+		<button onclick=POPF.toggleThisSurfaceType("${ type}");  style=min-width:2rem;width:1rem;>👁️</button>
+		<button class=${ POPF.surfaceTypesActive.includes( type ) ? "active" : "" } onclick=POPF.toggleSurfaceByButtons(this); style="background-color:#${ colors[ index ] };width:10rem;" >
+			${ type } </button>
 		</div>
 		`
 	);
@@ -119,13 +124,13 @@ POPF.setScreen1 = function() {
 
 
 
-POPF.toggleThisSurface = function( type ) {
+POPF.toggleThisSurfaceType = function( surfaceType ) {
 
 	const buttonsActive = divDragMoveContent.getElementsByClassName( "active" ); // collection
 
 	Array.from( buttonsActive ).forEach( button => button.classList.remove( "active" ) );
 
-	POPF.sendSurfacesToThreeJs ( [ type ] );
+	POPF.sendSurfaceTypesToThreeJs ( [ surfaceType ] );
 
 };
 
@@ -137,55 +142,27 @@ POPF.toggleSurfaceByButtons = function( button ) {
 
 	const buttonsActive = divDragMoveContent.getElementsByClassName( "active" ); // collection
 
-	const filterArray = Array.from( buttonsActive ).map( button => button.innerText );
+	POPF.surfaceTypesActive = Array.from( buttonsActive ).map( button => button.innerText );
 
-	POPF.sendSurfacesToThreeJs ( filterArray );
+	POPF.sendSurfaceTypesToThreeJs ( POPF.surfaceTypesActive );
 
 };
 
 
 
-POPF.sendSurfacesToThreeJs = function( filters ) {
+POPF.sendSurfaceTypesToThreeJs = function( surfaceTypes ) {
+	//console.log( 'surfaceTypes', surfaceTypes );
 
-	filters = Array.isArray( filters ) ? filters : [ filters ];
-	//console.log( 'filters', filters );
+	const surfacesFiltered = surfaceTypes.flatMap( filter =>
 
-	//VBS.surfacesFilteredByStorey = VBS.setSurfacesFilteredByStorey();
-
-	const surfaces = GBX.surfaces;
-	//console.log( 'surfaces', surfaces.length  );
-
-	const surfacesFiltered = filters.flatMap( filter =>
-
-		surfaces.filter( surface => surface.includes( `"${ filter }"` ) )
+		GBX.surfaces.filter( surface => surface.includes( `"${ filter }"` ) )
 
 	);
 
+	POPF.surfaceTypesActive = surfaceTypes;
+
+	POPF.surfacesFilteredByType = surfacesFiltered;
+
 	GBXU.sendSurfacesToThreeJs( surfacesFiltered );
-
-	//return POPFdivReportsLog.innerHTML;
-
-};
-
-
-
-//////////
-
-
-POPF.xxxtoggleInteriorExterior = function( button ) {
-
-	const buttonsActive = divDragMoveContent.getElementsByClassName( "active" ); // collection
-
-	Array.from( buttonsActive ).forEach( butt => { if ( butt !== button ) ( butt.classList.remove( "active" ) ); } );
-
-	button.classList.toggle( "active" );
-
-	const array = button.classList.contains( "active" ) ?
-
-		[ "ExposedFloor", "ExteriorWall", "RaisedFloor", "Roof" ]
-		:
-		[ "Ceiling","InteriorFloor", "InteriorWall", "SlabOnGrade", "UndergroundCeiling", "UndergroundSlab", "UndergroundWall" ];
-
-	POPF.sendSurfacesToThreeJs( array );
 
 };

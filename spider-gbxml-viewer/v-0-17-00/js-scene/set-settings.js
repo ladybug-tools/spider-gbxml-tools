@@ -4,16 +4,14 @@
 
 const SET = {
 
-	"script": {
+	script: {
 
-		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-		"date": "2019-07-19",
-		"description": "",
-		"helpFile": "../v-0-17-00/js-scene/set-settings.md",
+		copyright: "Copyright 2019 Ladybug Tools authors. MIT License",
+		date: "2019-07-19",
+		description: "",
+		helpFile: "../v-0-17-00/js-scene/set-settings.md",
 		license: "MIT License",
-		"version": "0.17-00-0set",
-		"urlSourceCode":
-	"https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-00/js-scene/"
+		version: "0.17-00-0set"
 
 	}
 };
@@ -86,7 +84,7 @@ SET.getPanelSettings = function() { // add help??
 		<p>
 			<button onclick=THRU.zoomObjectBoundingSphere(GBXU.boundingBox);>zoom all</button>
 
-			<button accesskey="z" onclick=THR.controls.screenSpacePanning=!THR.controls.screenSpacePanning; title="Access key + B: Up/down curser kes to forward/backward or up/down" >toggle cursor keys</button>
+			<button accesskey="z" onclick=THR.controls.enableKeys=true;THR.controls.screenSpacePanning=!THR.controls.screenSpacePanning; title="Access key + B: Up/down curser kes to forward/backward or up/down" >toggle cursor keys</button>
 		</p>
 
 

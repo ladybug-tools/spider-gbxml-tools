@@ -1,0 +1,54 @@
+# THRU Three.js Utilities 0.17.00-1thru Read Me
+
+[Source code](  )
+
+<details open >
+
+<summary>Concept</summary>
+
+Three.js Utilities: all this is a bit idiosyncratic / a random collection of stuff
+
+* THRU.setSceneDispose
+* THRU.zoomObjectBoundingSphere
+* THRU.toggleAxesHelper
+* THRU.toggleGroundHelper
+* THRU.toggleMeshesVisible
+* THRU.toggleEdges
+* THRU.addSomeLights
+* THRU.addSomeLights2
+* THRU.getGeometry
+* THRU.getSomeBoxes
+* THRU.drawPlacard
+
+
+</details>
+
+<details>
+
+<summary>To Do / Wish List</summary>
+
+* Split into two or more modules??
+
+
+</details>
+
+<details>
+
+<summary>Issues</summary>
+
+
+</details>
+
+<details>
+
+<summary>Change Log</summary>
+
+### 2019-07-24 ~ Theo
+
+THRU 0.17.01-0thru
+
+* R - THRU.js: Ren THRU.toggleMeshesVisible
+* R - THRU.js: Pass jsHint
+* R - THRU.js: First commit
+
+</details>

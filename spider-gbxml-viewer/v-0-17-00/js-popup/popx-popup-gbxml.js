@@ -564,7 +564,7 @@ POPX.getSpaceAttributes = function( spaceId ) {
 
 
 
-POPX.toggleStoreyVisible = function( button, storeyId ) {
+POPX.vvvtoggleStoreyVisible = function( button, storeyId ) {
 
 	button.classList.toggle( "active" );
 
@@ -640,7 +640,6 @@ POPX.toggleStoreyVisible = function( button, storeyId ) {
 
 POPX.toggleStoreyVisible = function( button, storeyId ) {
 
-
 	button.classList.toggle( "active" );
 
 	POPXbutSurfaceFocus.classList.remove( "active" );
@@ -652,11 +651,13 @@ POPX.toggleStoreyVisible = function( button, storeyId ) {
 
 	GBX.surfaceGroup.children.forEach( element => element.visible = false );
 
+	const surfaces = ( POPF.surfacesFilteredByType && POPF.surfacesFilteredByType.length ) ? POPF.surfacesFilteredByType : GBX.surfaces;
+
 	if ( focus === true ) {
 
 		const spaces = GBX.spaces;
 
-		GBX.surfaces.forEach( ( surface, index ) => {
+		surfaces.forEach( ( surface, index ) => {
 
 			const adjacentSpaceIds = surface.match( /spaceIdRef="(.*?)"/gi );
 
