@@ -28,7 +28,7 @@ GGD.getGbxmlData = function() {
 
 				<summary id=GGDsumGetGbxmlData >Show gbXML file statistics</summary>
 
-				${ GBXF.getHelpButton( "GGDbutHelp", GGDF.script.helpFile ) }
+				${ GBXF.getHelpButton( "GGDbutHelp", GGD.script.helpFile ) }
 
 				<div id=GGDdivGbxmlData ></div>
 
