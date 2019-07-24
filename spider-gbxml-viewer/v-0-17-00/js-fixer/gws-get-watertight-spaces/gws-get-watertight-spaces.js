@@ -5,11 +5,16 @@
 
 const GWS = {
 
+	script: {
+
 		copyright: "Copyright 2019 Ladybug Tools authors",
-		date: "2019-06-26",
+		date: "2019-07-23",
 		description: "Checking for water-tight spaces",
-		helpFile: "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/tmp-template/README.md",
-		version: "0.16.01-1gws"
+		helpFile: "../v-0-17-00/js-fixer/js-fixer/gwv-get-watertight-vertices/gwv-get-watertight-vertices.md",
+		license: "MIT License",
+		version: "0.17.00-0gws"
+
+	}
 
 };
 
@@ -25,15 +30,13 @@ GWS.types = [
 
 GWS.getMenuWatertightSpaces = function() {
 
-	GWS.help = `<button id=butGWS class=butHelp onclick="POP.setPopupShowHide(butGWS,GWS.helpFile);" >?</button>`;
-
 	const htm =
 		`
 			<details id=GWSdet ontoggle="GWSdivSurface.innerHTML=GWS.getSurfaceData();" >
 
-				<summary id=GWSsumSurfaces >Check for non-watertight spaces
-					${ GWS.help }
-				</summary>
+				<summary id=GWSsumSurfaces >Check for non-watertight spaces</summary>
+
+				${ GBXF.getHelpButton( "GWSbutHelp", GWS.script.helpFile ) }
 
 				<div id=GWSdivSurface ></div>
 

@@ -2,14 +2,18 @@
 // jshint esversion: 6
 // jshint loopfunc: true
 
-
 const GWV = {
 
+	script: {
+
 		copyright: "Copyright 2019 Ladybug Tools authors",
-		date: "2019-06-26",
+		date: "2019-07-23",
 		description: "Check for surfaces with vertices unconnected to other vertices. Ignore all \"Shade\" surface types.",
-		helpFile: "../js-fixer/gwv-get-watertight-vertices/README.md",
-		version: "0.16.01-1gwv"
+		helpFile: "../v-0-17-00/js-fixer/gwv-get-watertight-vertices/gwv-get-watertight-vertices.md",
+		license: "MIT License",
+		version: "0.17.00-0gwv"
+
+	}
 
 };
 
@@ -25,15 +29,14 @@ GWV.typesNoShade = [
 
 GWV.getMenuWatertightVertices = function() {
 
-	GWV.help = `<button id=butGWV class=butHelp onclick="POP.setPopupShowHide(butGWV,GWV.helpFile);" >?</button>`;
 
 	const htm =
 		`
 			<details id=GWVdet ontoggle="GWVdivSurface.innerHTML=GWV.getSurfacesTight();" >
 
-				<summary id=GWVsumSurfaces >Check for non-watertight vertices
-					${ GWV.help }
-				</summary>
+				<summary id=GWVsumSurfaces >Check for non-watertight vertices</summary>
+
+				${ GBXF.getHelpButton( "GWVbutHelp", GWV.script.helpFile ) }
 
 				<p>${ GWV.description } See ?/read me for more details.</p>
 

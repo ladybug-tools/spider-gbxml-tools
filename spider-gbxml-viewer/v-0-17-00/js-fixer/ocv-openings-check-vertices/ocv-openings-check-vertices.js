@@ -5,11 +5,16 @@
 
 const OCV = {
 
+	script: {
+
 		copyright: "Copyright 2019 Ladybug Tools authors",
 		date: "2019-07-23",
 		description: "Openings: check openings with more than four vertices",
-		helpFile: "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/ocv-openings-check-vertices/README.md",
-		version: "0.17.00-"
+		helpFile: "../v-0-17-00/js-fixer/ocv-openings-check-vertices/ocv-openings-check-vertices.md",
+		license: "MIT License",
+		version: "0.17.00-0ocv"
+
+	}
 
 };
 
@@ -17,15 +22,13 @@ const OCV = {
 
 OCV.getOpeningsCheckVertices = function() {
 
-	OCV.help = `<button id=butOCV class=butHelp onclick="POP.setPopupShowHide(butOCV,OCV.helpFile);" >?</button>`;
-
 	const htm =
 		`
 			<details ontoggle="OCVdivOpeningsVertices.innerHTML=OCV.getOpeningsVertices();" >
 
-				<summary id=OCVsumOpeningsVertices >Check for openings with more than four vertices
-					${ OCV.help }
-				</summary>
+				<summary id=OCVsumOpeningsVertices >Check for openings with more than four vertices</summary>
+
+				${ GBXF.getHelpButton( "OCVFbutHelp", OCV.script.helpFile ) }
 
 				<div id=OCVdivOpeningsVertices ></div>
 

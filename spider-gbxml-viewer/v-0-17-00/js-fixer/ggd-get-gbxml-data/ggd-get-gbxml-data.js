@@ -1,15 +1,20 @@
-/* globals GBX */
+/* globals GBX, GBXF */
 // jshint esversion: 6
 // jshint loopfunc: true
 
 
 const GGD = {
 
+	script: {
+
 		copyright: "Copyright 2019 Ladybug Tools authors",
 		date: "2019-07-23",
 		description: "Gather data to be used by other modules and report statistics",
-		helpFile: "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/ggd-get-gbxml-data/README.md",
-		version: "0.4.0-1"
+		helpFile: "../v-0-17-00/js-fixer/ggd-get-gbxml-data/ggd-get-gbxml-data.md",
+		license: "MIT License",
+		version: "0.17.00-0ggd"
+
+	}
 
 };
 
@@ -21,9 +26,9 @@ GGD.getGbxmlData = function() {
 		`
 			<details ontoggle="GGDdivGbxmlData.innerHTML=GGD.getData(GBX.text);" >
 
-				<summary id=GGDsumGetGbxmlData >Show gbXML file statistics
-					<button id=butGGD class=butHelp onclick="POP.setPopupShowHide(butGGD,GGD.helpFile);" >?</button>
-				</summary>
+				<summary id=GGDsumGetGbxmlData >Show gbXML file statistics</summary>
+
+				${ GBXF.getHelpButton( "GGDbutHelp", GGDF.script.helpFile ) }
 
 				<div id=GGDdivGbxmlData ></div>
 

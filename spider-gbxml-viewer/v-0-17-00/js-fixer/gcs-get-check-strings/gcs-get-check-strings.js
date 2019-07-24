@@ -7,8 +7,8 @@ GCS = {
 		copyright: "Copyright 2019 Ladybug Tools authors",
 		date: "2019-07-23",
 		description: "Check and report on elements with inappropriate null, zero or blank values values",
-		helpFile: "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/gcs-get-check-strings/README.md",
-		version: "0.4.0-4"
+		helpFile: "../v-0-17-00/js-fixer/gcs-get-check-strings/gcs-get-check-strings.md",
+		version: "0.17.00-0gcs"
 };
 
 
@@ -21,9 +21,9 @@ GCS.getCheckStrings = function() {
 		`
 			<details ontoggle="GCSdivCheckStrings.innerHTML=GCS.getData();" >
 
-				<summary id=GCSsumGetCheckStrings >Check for valid text and numbers
-					${ GCS.help }
-				</summary>
+				<summary id=GCSsumGetCheckStrings >Check for valid text and numbers</summary>
+
+				${ GBXF.getHelpButton( "GCSbutHelp", GCS.script.helpFile ) }
 
 				<div id=GCSdivCheckStrings ></div>
 

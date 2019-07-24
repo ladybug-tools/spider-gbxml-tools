@@ -5,11 +5,16 @@
 
 const OCS = {
 
+	script: {
+
 		copyright: "Copyright 2019 Ladybug Tools authors",
-		date: "2019-06-12",
+		date: "2019-07-23",
 		description: "check for openings with area greater than enclosing surface are",
-		helpFile: "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/ocs-openings-check-size/README.md",
-		version: "0.4.0-0"
+		helpFile: "../v-0-17-00/js-fixer/ocs-openings-check-size/ocs-openings-check-size.md",
+		license: "MIT License",
+		version: "0.17.00-0ocs"
+
+	}
 
 };
 
@@ -25,15 +30,13 @@ OCS.types = [
 
 OCS.getMenuOpeningsCheckSize= function() {
 
-	OCS.help = `<button id=butOCS class=butHelp onclick="POP.setPopupShowHide(butOCS,OCS.helpFile);" >?</button>`;
-
 	const htm =
 		`
 			<details id=OCSdet ontoggle="OCSdivSurface.innerHTML=OCS.getSurfaces();" >
 
-				<summary id=OCSsumSurfaces >Check for openings too large
-					${ OCS.help }
-				</summary>
+				<summary id=OCSsumSurfaces >Check for openings too large</summary>
+
+				${ GBXF.getHelpButton( "OCSbutHelp", OCS.script.helpFile ) }
 
 				<div id=OCSdivSurface ></div>
 

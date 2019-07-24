@@ -135,13 +135,11 @@ FASA.getAirSingleAdjacent = function() {
 
 		<p><button onclick=FASA.changeAllAirSingleAdjacent(); >Fix all</button></p>
 
-		<p>Click 'Save file' button in File menu to save changes to a file.</p>
-
 		<p>Time to check: ${ ( performance.now() - timeStart ).toLocaleString() } ms</p>
 
 		<hr>
 
-		<div id="FASAdivAirSingleAdjacentData" >Click a surface name above to view its details and change its surface type. Tool tip shows the ID of the surface.</div>
+		<div id="FASAdivAirSingleAdjacentData" >Click a surface name above to view its details. Tool tip shows the ID of the surface.</div>
 
 	`;
 
@@ -175,11 +173,11 @@ FASA.setAirSingleAdjacentData = function( select ) {
 		</p>
 	`;
 
-	FASAdivSurfaceAttributeData.innerHTML = htm;
+	//FASAdivSurfaceAttributeData.innerHTML = htm;
 
-	const det = FASAdivSurfaceAttributeData.querySelectorAll( 'details');
+	//const det = FASAdivSurfaceAttributeData.querySelectorAll( 'details');
 
-	det[ 0 ].open = true;
+	//det[ 0 ].open = true;
 
 };
 

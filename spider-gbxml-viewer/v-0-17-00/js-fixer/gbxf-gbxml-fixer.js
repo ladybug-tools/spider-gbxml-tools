@@ -1,5 +1,5 @@
 /* globals divContents, FASA, FASD, FASE, FASST, FCIM, FDPC, FETS, FIL, FSTN, FXA,
-	GBXFifr, GCO, GCS, GGD, GSS, OCV, GBXFh1FileName, */
+	GBXF, GCO, GCS, GGD, GSS, OCV, GBXFh1FileName, */
 // jshint esversion: 6
 // jshint loopfunc: true
 

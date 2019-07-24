@@ -8,8 +8,9 @@ const GCO = {
 		copyright: "Copyright 2019 Ladybug Tools authors",
 		date: "2019-07-23",
 		description: "Check for the maximum vertex offset from the origin point of the model",
-		helpFile: "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/gco-get-check-offset/README.md",
-		version: "0.4.0-6"
+		helpFile: "../v-0-17-00/js-fixer/ocv-openings-check-vertices/ocv-openings-check-vertices.md",
+		license: "MIT License",
+		version: "0.17.00-0gco"
 
 };
 
@@ -17,14 +18,13 @@ const GCO = {
 
 GCO.getCheckOffset = function() {
 
-	GCO.help = `<button id=butGCO class=butHelp onclick="POP.setPopupShowHide(butGCO,GCO.helpFile);" >?</button>`;
-
 	const htm =
 		`
 			<details ontoggle="GCOdivCheckOffset.innerHTML=GCO.getOffset();" >
-				<summary id=GCOsumCheckOffset >Check project offset distance from origin
-					${ GCO.help }
-				</summary>
+
+				<summary id=GCOsumCheckOffset >Check project offset distance from origin</summary>
+
+				${ GBXF.getHelpButton( "GCObutHelp", GCO.script.helpFile ) }
 
 				<div id=GCOdivCheckOffset ></div>
 

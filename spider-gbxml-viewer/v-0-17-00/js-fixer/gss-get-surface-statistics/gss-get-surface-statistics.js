@@ -5,11 +5,16 @@
 
 const GSS = {
 
+	script: {
+
 		copyright: "Copyright 2019 Ladybug Tools authors",
 		date: "2019-07-23",
 		description: "Display all referenced gbXML surface types and CAD object IDs",
-		helpFile: "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/gss-get-surface-statistics/README.md",
-		version: "0.4.0-4"
+		helpFile: "../v-0-17-00/js-fixer/gss-get-surface-statistics/gss-get-surface-statistics.md",
+		license: "MIT License",
+		version: "0.17.00-0gss"
+
+	}
 
 };
 
@@ -26,16 +31,13 @@ GSS.types = [
 
 GSS.getMenuSurfaceStatistics = function() {
 
-	GSS.help = `<button id=butGSS class=butHelp onclick="POP.setPopupShowHide(butGSS,GSS.helpFile);" >?</button>`;
-
-
 	const htm =
 		`
 			<details ontoggle="GSSdivSurface.innerHTML=GSS.getSurfaces();" >
 
-				<summary id=GSSsumSurfaces >Show surfaces statistics
-					${ GSS.help }
-				</summary>
+				<summary id=GSSsumSurfaces >Show surfaces statistics</summary>
+
+				${ GBXF.getHelpButton( "GSSbutHelp", GSS.script.helpFile ) }
 
 				<div id=GSSdivSurface ></div>
 
