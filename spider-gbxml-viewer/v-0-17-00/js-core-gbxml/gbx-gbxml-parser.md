@@ -29,6 +29,12 @@
 
 <summary>Change Log</summary>
 
+### 2019-07-23 ~ Theo
+
+0.17.00-2gbx
+
+* R - GBX.js: POPX line/particle to scene dispose
+
 
 ### 2019-07-15 ~ Theo
 

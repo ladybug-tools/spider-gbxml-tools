@@ -79,7 +79,8 @@ GBX.parseFile = function( gbxml )  {
 
 	THRU.setSceneDispose( [
 		THRU.axesHelper, THRU.boundingBoxHelper, THRU.edgeGroup, THRU.groundHelper, THRU.helperNormalsFaces,
-		GBX.surfaceGroup, GBX.openingGroup, GBX.placards
+		GBX.surfaceGroup, GBX.openingGroup, GBX.placards,
+		POPX.line, POPX.particle
 	] );
 
 	THRU.edgeGroup = [];

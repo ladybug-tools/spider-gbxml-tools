@@ -16,10 +16,6 @@ _<small>Spider gbXML Viewer 'Maevia'</small>_
 
 Or copy this link: https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/
 
-## Fixer: [Spider gbXML Fixer 'Atrax']( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/fix/ )
-
-## Popup: [Spider gbXML Viewer Popup ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/pop/ )
-
 ## Version under development: [Spider gbXML Viewer Dev ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/dev/ )
 
 ***
