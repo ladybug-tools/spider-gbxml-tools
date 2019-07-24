@@ -4,10 +4,10 @@
 
 <meta charset = "utf-8">
 <meta name = "copyright" content ="Ladybug Tools authors" >
-<meta name = "date" content = "2019-07-18" >
+<meta name = "date" content = "2019-07-24" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.17.00-0popup" >
+<meta name = "version" content = "0.17.01-0pin" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
 <title>Spider gbXML Viewer Popup</title>
@@ -22,7 +22,12 @@
 <style>
 
 	html { overflow: hidden; }
-	#divContents { border: 0px solid red; height: 100%; max-width: 100%; }
+
+	body { font: 11pt monospace; margin: 0; overflow: hidden; }
+
+	main { border: 0px; height: 100%; left: 0; margin: 0; position: absolute; width: 100%;  }
+
+	#divContents { border: 1px solid red; height: 100%; max-width: 100%; }
 
 </style>
 
@@ -52,18 +57,27 @@
 <script src = "js-core-gbxml/gsa-gbxml-surface-attributes.js" ></script>
 
 <!-- popup menu -->
-<script src = "js-popup/popx-popup-gbxml.js" ></script>
+<script src = "js-popup/pin-popup-intersect.js" ></script>
+<script src = "js-popup/pco-popup-content.js" ></script>
+
+
+<!--
 <script src = "js-popup/popf-popup-footer.js" ></script>
 
-<!-- View menu -->
+<!-- View menu
 <script src = "js-view-3d/set-settings.js" ></script>
 <script src = "js-view-3d/cut-section-cut.js"></script>
 <script src = "js-view-3d/vex-view-exploded.js" ></script>
 
 
+-->
+
+
 	<main id="main" >
 
 		<div id="divContents" ></div>
+
+		<div id="divMessage" style=position:absolute;left:3vh;top:1vh; >loading...</div>
 
 	</main>
 
@@ -123,11 +137,11 @@ function init() {
 
 	THRU.init();
 
-	GBX.init();
+	GBX.init( divMessage);
 
 	POP.init();
 
-	POPX.init();
+	PIN.init();
 
 	//const mesh = THRU.getGeometry();
 	//THR.scene.add( mesh );

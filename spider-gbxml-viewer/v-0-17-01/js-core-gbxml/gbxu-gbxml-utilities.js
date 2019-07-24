@@ -4,12 +4,12 @@
 var GBXU = {
 
 	copyright: "Copyright 2019 Ladybug Tools authors. MIT License",
-	date: "2019-07-16",
+	date: "2019-07-24",
 	description: "GbXML utilities: all this is a bit idiosyncratic / a random collection of stuff",
 	helpFile: "../js-view-gbxml/gbxu-gbxml-utilities.md",
 	license: "MIT License",
 	urlSourceCode: "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-00/js-core-gbxml",
-	version: "0.17.00-5gbxu"
+	version: "0.17.01-0gbxu"
 
 };
 
@@ -49,7 +49,7 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 	window.addEventListener( 'click', GBXU.onFirstTouch, false );
 	window.addEventListener( 'touchstart', GBXU.onFirstTouch, false );
 
-	if ( window.divMessage ) { divMessage.innerHTML = FOB.fileInfo + GBXU.stats; }
+	//if ( GBX.messageDiv ) { GBX.messageDiv.innerHTML = GBXU.stats; }
 
 };
 
@@ -57,7 +57,7 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 
 GBXU.onFirstTouch = function() {
 
-	if ( window.divMessage ) { divMessage.innerHTML = ""; }
+	if ( GBX.messageDiv) { GBX.messageDiv.innerHTML = ""; }
 
 	GBXU.sendSurfacesToThreeJs( GBX.surfaces );
 
@@ -77,7 +77,7 @@ GBXU.onFirstTouch = function() {
 
 
 
-GBXU.setStats = function( target = "#FOBdivAppStats" ) {
+GBXU.setStats = function() {
 
 	GBX.openings = [];
 
@@ -89,7 +89,7 @@ GBXU.setStats = function( target = "#FOBdivAppStats" ) {
 
 	} );
 
-	const reSpaces = /<Space(.*?)<\/Space>/gi;
+/* 	const reSpaces = /<Space(.*?)<\/Space>/gi;
 	GBX.spaces = GBX.text.match( reSpaces );
 	//console.log( 'spaces', GBX.spaces );
 
@@ -102,6 +102,7 @@ GBXU.setStats = function( target = "#FOBdivAppStats" ) {
 	GBX.zones = GBX.text.match( reZones );
 	GBX.zones = Array.isArray( GBX.zones ) ? GBX.zones : [];
 	//console.log( 'GBX.zones', GBX.zones );
+*/
 
 	//const verticesCount = GBX.surfaces.map( surfaces => GBX.getCoordinates( surfaces ) );
 	//console.log( 'vertices', vertices );
@@ -116,9 +117,9 @@ GBXU.setStats = function( target = "#FOBdivAppStats" ) {
 
 	//const timeToLoad = performance.now() - GBX.timeStart;
 
-	const tag = document.body.querySelectorAll( target );
+	//const tag = document.body.querySelectorAll( target );
 
-	if ( tag.length === 0 ) { return; }
+	if ( !GBX.messageDiv ) { return; }
 
 	const items = {
 		"Surfaces": GBX.surfaces.length,
@@ -145,14 +146,13 @@ GBXU.setStats = function( target = "#FOBdivAppStats" ) {
 		</div>`
 	).join( "");
 
-	if ( tag.length > 0 ) { tag[ 0 ].innerHTML = GBXU.stats; }
+	GBX.messageDiv.innerHTML = GBXU.stats;
 
 };
 
 
 
 GBXU.getSceneInfo = function() {
-
 
 	GBXU.sceneInfo = GBX.count3 ?
 

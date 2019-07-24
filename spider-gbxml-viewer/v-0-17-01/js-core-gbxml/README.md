@@ -1,4 +1,4 @@
-# ZZZZZ Read Me
+# gbXML Utilities Read Me
 
 [Source code](  )
 
@@ -27,7 +27,7 @@
 
 <summary>Change Log</summary>
 
-### DDDDD
+### 2019-07-24 ~ Theo
 
 * F - First commit
 

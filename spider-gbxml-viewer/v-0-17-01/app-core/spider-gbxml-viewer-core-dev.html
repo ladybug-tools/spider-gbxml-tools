@@ -20,7 +20,7 @@
 
 * { box-sizing: border-box; }
 
-body { margin: 0; overflow: hidden; }
+body { font: 11pt monospace; margin: 0; overflow: hidden; }
 
 #divContents {  height: 100vh; width: 100vw; }
 
@@ -40,7 +40,7 @@ body { margin: 0; overflow: hidden; }
 <script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r106/build/three.min.js" ></script>
 <script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r106/examples/js/controls/OrbitControls.js" ></script>
 
-<!-- Tootoo 0.14.04 forks -->
+<!-- Tootoo 0.14.05 forks -->
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-05/fob-file-open-basic/fob-file-open-basic.js" ></script>
 
 <!-- Spider Three.js forks -->
@@ -56,7 +56,7 @@ body { margin: 0; overflow: hidden; }
 
 	<div id="divContents" ></div>
 
-	<div id="bbdivMessage" style=position:absolute;left:10%;top:0; ></div>
+	<div id="divMessage" style=position:absolute;left:3vh;top:1vh; >loading...</div>
 
 
 <script>
@@ -86,7 +86,7 @@ function init() {
 
 	THRU.init();
 
-	GBX.init();
+	GBX.init( divMessage );
 
 	window.addEventListener ( 'hashchange', FOB.onHashChange, false );
 

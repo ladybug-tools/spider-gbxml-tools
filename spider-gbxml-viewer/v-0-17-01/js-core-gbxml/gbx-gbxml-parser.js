@@ -1,6 +1,6 @@
-// Copyright 2018 Ladybug Tools authors. MIT License
-// jshint esversion: 6
 /* globals THREE, THR, THRU, FOB, GBXU */
+// jshint esversion: 6
+//
 
 var GBX = {
 	copyright: "Copyright 2019 Ladybug Tools authors. MIT License",
@@ -47,7 +47,7 @@ GBX.referenceObject = new THREE.Object3D();
 GBX.triangle = new THREE.Triangle(); // used by GBX.getPlane
 
 
-GBX.init = function() {
+GBX.init = function( target = divMessage ) {
 
 	//change to custom event with data passing via event details??
 
@@ -57,6 +57,8 @@ GBX.init = function() {
 	document.body.addEventListener( 'onZipFileParse', GBX.onFileZipLoad, false );
 
 	document.body.addEventListener( 'onGbxParse', GBXU.onGbxParse, false );
+
+	GBX.messageDiv = target;
 
 };
 
@@ -79,7 +81,7 @@ GBX.parseFile = function( gbxml )  {
 
 	THRU.setSceneDispose( [
 		THRU.axesHelper, THRU.boundingBoxHelper, THRU.edgeGroup, THRU.groundHelper, THRU.helperNormalsFaces,
-		GBX.meshGroup, GBX.openingGroup, GBX.placards,
+		GBX.meshGroup, GBX.openingGroup, GBX.placards, GBX.boundingBox ,
 		//POPX.line, POPX.particle
 	] );
 
@@ -95,20 +97,8 @@ GBX.parseFile = function( gbxml )  {
 	GBX.surfaces = GBX.text.match( reSurface );
 	//console.log( 'GBX.surfaces', GBX.surfaces );
 
-	const reSpaces = /<Space(.*?)<\/Space>/gi;
-	GBX.spaces = GBX.text.match( reSpaces );
-
-	const reStoreys = /<BuildingStorey(.*?)<\/BuildingStorey>/gi;
-	GBX.storeys = GBX.text.match( reStoreys );
-	GBX.storeys = Array.isArray( GBX.storeys ) ? GBX.storeys : [];
-	//console.log( 'GBX.storeys', GBX.storeys );
-
-	const reZones = /<Zone(.*?)<\/Zone>/gi;
-	GBX.zones = GBX.text.match( reZones );
-	GBX.zones = Array.isArray( GBX.zones ) ? GBX.zones : [];
-	//console.log( 'GBX.zones', GBX.zones );
-
-	GBX.spacesJson = GBX.getSpacesJason();
+	//Do now or does it slow down loading too much?
+	GBX.spacesJson = GBX.getSpacesJson();
 	//console.log( 'GBX.spacesJson', GBX.spacesJson );
 
 	const meshes = GBX.getSurfaceMeshes( GBX.surfaces );
@@ -129,17 +119,36 @@ GBX.parseFile = function( gbxml )  {
 
 
 
-GBX.getSpacesJason = function() {
+GBX.getSpacesJson = function() {
 
-	const json  = GBX.spaces.map( space => {
+	const reSpaces = /<Space(.*?)<\/Space>/gi;
+	GBX.spaces = GBX.text.match( reSpaces );
+
+	const reStoreys = /<BuildingStorey(.*?)<\/BuildingStorey>/gi;
+	GBX.storeys = GBX.text.match( reStoreys );
+	GBX.storeys = Array.isArray( GBX.storeys ) ? GBX.storeys : [];
+	//console.log( 'GBX.storeys', GBX.storeys );
+
+	const reZones = /<Zone(.*?)<\/Zone>/gi;
+	GBX.zones = GBX.text.match( reZones );
+	GBX.zones = Array.isArray( GBX.zones ) ? GBX.zones : [];
+	//console.log( 'GBX.zones', GBX.zones );
+
+	const json  = GBX.spaces.map( ( space, index ) => {
 
 		const spaceId = space.match( / id="(.*?)"/i )[ 1 ];
 
-		const zoneId = space.match( / zoneIdRef="(.*?)"/i )[ 1 ];
+		const spaceIndex = index;
+
+		zoneId = space.match( / zoneIdRef="(.*?)"/i )[ 1 ];
+
+		zoneIndex = GBX.zones.findIndex( zone => zone.includes( zoneId ) );
 
 		const storeyId = space.match( / buildingStoreyIdRef="(.*?)"/i )[ 1 ];
 
-		return { spaceId, zoneId, storeyId };
+		const storeyIndex = GBX.storeys.findIndex( storey => storey.includes( storeyId ) );
+
+		return { spaceId, spaceIndex, zoneId, zoneIndex, storeyId, storeyIndex };
 
 	} );
 
@@ -184,7 +193,7 @@ GBX.getSurfaceMeshes = function( surfaces ) {
 
 	} );
 
-	console.log( '',  performance.now() - timeStart );
+	//console.log( '',  performance.now() - timeStart );
 
 	return meshes;
 
@@ -303,19 +312,38 @@ GBX.getSurfaceMesh = function( arr, index, holes ) {
 	mesh.userData.index = index;
 	mesh.userData.surfaceType = surfaceType;
 
-	let spaceIds = surface.match( / spaceIdRef="(.*?)"/gi )
+
+	GBX.meshAddGbJson( surface, mesh );
+
+	return mesh;
+
+};
+
+
+
+GBX.meshAddGbJson = function ( surface, mesh ) {
+
+	let surfaceId = surface.match( / id="(.*?)"/i )[ 1 ];
+	mesh.userData.surfaceId = surfaceId;
+
+	let spaceIds = surface.match( / spaceIdRef="(.*?)"/gi );
 	spaceIds = spaceIds ? spaceIds.map( id => id.slice( 13, -1 ) ) : [];
-	mesh.userData.spaceIds = spaceIds;
+	mesh.userData.spaceIds = spaceIds.slice();
 
 	const spaceLevel = spaceIds.pop();
-	const space = GBX.spacesJson.find( item => item.spaceId === spaceLevel ) || {};
-	mesh.userData.spaceJson = space;
+	const spaceJson = GBX.spacesJson.find( item => item.spaceId === spaceLevel ) || {};
+
+	mesh.userData.storeyId = spaceJson.storeyId;
+	mesh.userData.storeyIndex = spaceJson.storeyIndex;
+
+	mesh.userData.zoneId = spaceJson.zoneId;
+	mesh.userData.zoneIndex = spaceJson.zoneIndex;
 
 	//console.log( 'space.storeyId', space.storeyId );
 
-	if ( space.storeyId ) {
+	if ( spaceJson.storeyId ) {
 
-		const storey = GBX.storeys.find( storey => storey.includes( space.storeyId ) );
+		const storey = GBX.storeys.find( storey => storey.includes( spaceJson.storeyId ) );
 		//console.log( '', storey );
 
 		const name = storey.match( /<Name>(.*?)<\/Name/ )[ 1 ]
@@ -328,7 +356,7 @@ GBX.getSurfaceMesh = function( arr, index, holes ) {
 
 
 
-GBX.getBufferGeometry = function( points, color ) {
+GBX.getBufferGeometry = function ( points, color ) {
 	//console.log( 'points', points, color );
 
 	const geometry = new THREE.BufferGeometry();

@@ -1,6 +1,6 @@
 /* global THREE, THR, GBX, GBXU, GSA, THRU, POP, POPF, divDragMoveFooter,POPXbutAdjacentSpace1, POPXbutAdjacentSpace2,  navDragMove, divDragMoveContent, main, */
-/* jshint esversion: 6 */
-/* jshint loopfunc: true */
+// jshint esversion:
+// jshint loopfunc: true
 
 
 const POPX = {

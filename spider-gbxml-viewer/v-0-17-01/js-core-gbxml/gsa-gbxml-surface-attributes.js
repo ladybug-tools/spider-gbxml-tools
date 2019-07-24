@@ -42,7 +42,7 @@ GSA.getSurfacesAttributesByIndex = function ( indexes, id = 1 ) {
 
 
 GSA.selectedSurfacesFocus = function( index ) {
-
+/*
 	THR.scene.remove( POPX.line, POPX.particle );
 
 	POPX.intersected = GBX.surfaceGroup.children[ index ];
@@ -53,6 +53,8 @@ GSA.selectedSurfacesFocus = function( index ) {
 	divDragMoveFooter.innerHTML = POPF.footer;
 
 	navDragMove.hidden = false;
+ */
+	PIN.setIntersected( GBX.surfaceGroup.children[ index ] )
 
 	const surface = GBX.surfaces[ index ];
 
