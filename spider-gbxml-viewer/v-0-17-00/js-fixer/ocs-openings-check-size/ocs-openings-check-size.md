@@ -1,6 +1,6 @@
 # Openings Check Size (OCS) Read Me
 
-[Source code]()
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-fixer/ocs-openings-check-size/ocs-openings-check-size.js )
 
 <details open>
 
@@ -27,6 +27,12 @@ Check for openings too large
 <details>
 
 <summary>Change Log</summary>
+
+### 2019-07-23 ~ Theo
+
+OCS 0.17.00-0ocs
+
+* R - OCS.js: Cleanup
 
 ### 2019-06-12 ~ Theo
 

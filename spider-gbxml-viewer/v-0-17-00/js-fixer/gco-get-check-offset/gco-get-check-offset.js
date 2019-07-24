@@ -10,7 +10,7 @@ const GCO = {
 		copyright: "Copyright 2019 Ladybug Tools authors",
 		date: "2019-07-23",
 		description: "Check for the maximum vertex offset from the origin point of the model",
-		helpFile: "../v-0-17-00/js-fixer/ocv-openings-check-vertices/ocv-openings-check-vertices.md",
+		helpFile: "../v-0-17-00/js-fixer/gco-get-check-offset/gco-get-check-offset.md",
 		license: "MIT License",
 		version: "0.17.00-0gco"
 
@@ -56,9 +56,7 @@ GCO.getOffset = function() {
 	const tag = max < 10000 ? "span" : "mark";
 
 	GCOsumCheckOffset.innerHTML =
-		`Check project offset distance from origin ~ <${ tag }>${ max.toLocaleString() }</${ tag }> units
-			${ GCO.help }
-		`;
+		`Check project offset distance from origin ~ <${ tag }>${ max.toLocaleString() }</${ tag }> units`;
 
 	const offsetHtm =
 

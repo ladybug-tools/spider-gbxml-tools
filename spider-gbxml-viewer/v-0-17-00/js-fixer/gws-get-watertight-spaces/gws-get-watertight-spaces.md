@@ -1,10 +1,12 @@
 # GWS Get Watertight Spaces Read Me
 
-[Source code]()
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-fixer/gws-get-watertight-spaces/gws-get-watertight-spaces.js )
 
-<details>
+<details open>
 
 <summary>Concept</summary>
+
+Find spaces that are not manifold / completely enclosed.
 
 WIP. At very early stage
 
@@ -28,7 +30,7 @@ WIP. At very early stage
 
 <summary>Change Log</summary>
 
-### ZZZ
+### 2019-07-23 ~ Theo
 
 * F - First commit
 

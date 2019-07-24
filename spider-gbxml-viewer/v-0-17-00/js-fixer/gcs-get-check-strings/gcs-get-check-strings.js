@@ -11,7 +11,7 @@ GCS = {
 		description: "Check and report on elements with inappropriate null, zero or blank values values",
 		helpFile: "../v-0-17-00/js-fixer/gcs-get-check-strings/gcs-get-check-strings.md",
 		version: "0.17.00-0gcs"
-		
+
 	}
 
 };
@@ -19,8 +19,6 @@ GCS = {
 
 
 GCS.getCheckStrings = function() {
-
-	GCS.help = `<button id=butTMP class=butHelp onclick="POP.setPopupShowHide(butTMP,GCS.helpFile);" >?</button>`;
 
 	const htm =
 		`
@@ -97,7 +95,7 @@ GCS.getData = function() {
 	const tag = errors === 0 ? "span" : "mark";
 
 	GCSsumGetCheckStrings.innerHTML =
-		`Check for valid text and numbers ~ <${ tag }>${ errors }</${ tag }> errors found ${ GCS.help }`;
+		`Check for valid text and numbers ~ <${ tag }>${ errors }</${ tag }> errors found`;
 
 	const generalHtm =
 		`

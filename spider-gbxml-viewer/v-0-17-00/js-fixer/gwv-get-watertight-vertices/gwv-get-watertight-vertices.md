@@ -1,4 +1,4 @@
-# GVW Get Watertight Vertices v0.16.01-1gwv Read Me
+# GWV Get Watertight Vertices Read Me
 
 [Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-16-01/js-fixer/gwv-get-watertight-vertices )
 
@@ -56,6 +56,13 @@ Because Shade type surfaces are ignored, the vertices of the Air surface are fou
 <details>
 
 <summary>Change Log</summary>
+
+### 2019-07-23 ~ Theo
+
+GWV 0.17.00-0gwv
+
+* R - GWV.js: Cleanup
+
 
 ### 2019-06-26 ~ Theo
 

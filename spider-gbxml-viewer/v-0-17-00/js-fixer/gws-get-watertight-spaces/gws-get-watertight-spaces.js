@@ -10,7 +10,7 @@ const GWS = {
 		copyright: "Copyright 2019 Ladybug Tools authors",
 		date: "2019-07-23",
 		description: "Checking for water-tight spaces",
-		helpFile: "../v-0-17-00/js-fixer/js-fixer/gwv-get-watertight-vertices/gwv-get-watertight-vertices.md",
+		helpFile: "../v-0-17-00/js-fixer/gws-get-watertight-spaces/gws-get-watertight-spaces.md",
 		license: "MIT License",
 		version: "0.17.00-0gws"
 
@@ -87,7 +87,7 @@ GWS.getSurfaces = function() {
 	const tag = GWS.surfaces.length === 0 ? "span" : "mark";
 
 	GWSsumSurfaces.innerHTML =
-		`Check for non-watertight spaceRefs ~ <${ tag }>${ GWS.surfaces.length.toLocaleString() }</${ tag }> found ${ GWS.help }`;
+		`Check for non-watertight spaceRefs ~ <${ tag }>${ GWS.surfaces.length.toLocaleString() }</${ tag }> found`;
 
 	const htm =
 	`

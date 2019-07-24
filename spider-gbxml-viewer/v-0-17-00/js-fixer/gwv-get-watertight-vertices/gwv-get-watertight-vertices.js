@@ -38,7 +38,7 @@ GWV.getMenuWatertightVertices = function() {
 
 				${ GBXF.getHelpButton( "GWVbutHelp", GWV.script.helpFile ) }
 
-				<p>${ GWV.description } See ?/read me for more details.</p>
+				<p>${ GWV.script.description } See ?/read me for more details.</p>
 
 				<div id=GWVdivSurface ></div>
 
@@ -140,7 +140,7 @@ GWV.getSurfacesTight = function() {
 	const tag = GWV.surfaceUniques.length === 0 ? "span" : "mark";
 
 	GWVsumSurfaces.innerHTML =
-		`Check for non-watertight vertices ~ <${ tag }>${ GWV.surfaceUniques.length.toLocaleString() }</${ tag }> found ${ GWV.help }`;
+		`Check for non-watertight vertices ~ <${ tag }>${ GWV.surfaceUniques.length.toLocaleString() }</${ tag }> found`;
 
 	const htm =
 	`

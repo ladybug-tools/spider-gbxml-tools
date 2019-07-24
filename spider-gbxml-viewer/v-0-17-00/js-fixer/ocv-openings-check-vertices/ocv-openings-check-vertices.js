@@ -64,7 +64,7 @@ OCV.getOpeningsVertices = function() {
 
 	const tag = OCV.ids.length === 0 ? "span" : "mark";
 
-	OCVsumOpeningsVertices.innerHTML = `Check for openings with more than four vertices ~ <${ tag }>${ OCV.ids.length }</${ tag }> found ${ OCV.help }`;
+	OCVsumOpeningsVertices.innerHTML = `Check for openings with more than four vertices ~ <${ tag }>${ OCV.ids.length }</${ tag }> found`;
 
 	const htm =
 		`

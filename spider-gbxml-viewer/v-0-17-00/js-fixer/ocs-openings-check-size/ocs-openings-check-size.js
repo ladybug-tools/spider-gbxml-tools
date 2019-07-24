@@ -118,7 +118,7 @@ OCS.getSurfaces = function() {
 	const tag = OCS.surfacesTooSmall.length === 0 ? "span" : "mark";
 
 	OCSsumSurfaces.innerHTML =
-		`Check for openings too large ~ <${ tag }>${ OCS.surfacesTooSmall.length.toLocaleString() }</${ tag }> found ${ OCS.help }`;
+		`Check for openings too large ~ <${ tag }>${ OCS.surfacesTooSmall.length.toLocaleString() }</${ tag }> found`;
 
 	const htm =
 	`
