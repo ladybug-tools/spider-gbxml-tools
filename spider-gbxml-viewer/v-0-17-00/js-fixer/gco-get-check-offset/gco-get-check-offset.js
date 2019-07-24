@@ -1,9 +1,11 @@
-/* globals GBX, GCOsumCheckOffset*/
 // jshint esversion: 6
+/* globals GBX, GCOsumCheckOffset*/
 // jshint loopfunc: true
 
 
 const GCO = {
+
+	script: {
 
 		copyright: "Copyright 2019 Ladybug Tools authors",
 		date: "2019-07-23",
@@ -11,6 +13,8 @@ const GCO = {
 		helpFile: "../v-0-17-00/js-fixer/ocv-openings-check-vertices/ocv-openings-check-vertices.md",
 		license: "MIT License",
 		version: "0.17.00-0gco"
+
+	}
 
 };
 
