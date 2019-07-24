@@ -104,10 +104,6 @@ It's too quiet un here.
 For v0.17
 
 * Switchable camera controls - allow vertical movement or not
-* Openings visible as holes in surfaces
-* Better integration between left and right menus
-* Updates to modules folders and file names
-* Left menu: single on gbXML load event listener to close all details element in menu
 
 
 </details>
@@ -115,6 +111,16 @@ For v0.17
 <details>
 
 <summary style=font-size:1.3rem; >Change Log</summary>
+
+### 2019-07-23 ~ Theo
+
+Mostly dealt with
+
+* Openings visible as holes in surfaces
+* Better integration between left and right menus
+* Updates to modules folders and file names
+* Left menu: single on gbXML load event listener to close all details element in menu
+
 
 
 ### 2019-07-08 ~ Theo

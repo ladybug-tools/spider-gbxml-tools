@@ -8,9 +8,9 @@
 
 read me for current version
 
-[Spider gbXML viewer Dev]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/ )
+[Spider gbXML viewer 'Maevia']( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/ )
 
-* Build version ~ uses absolut URLs / canonical link
+* Build version ~ uses absolutw URLs / canonical link
 
 [Spider gbXML viewer Dev]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-00/app-viewer/spider-gbxml-viewer-dev.html )
 
