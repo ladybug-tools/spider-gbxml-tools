@@ -86,7 +86,7 @@ VST.setViewStoreysOptions = function() {
 	const storeyLevels = GBX.storeys.map( storey => storey.match( '<Level>(.*?)</Level>' )[ 1 ] );
 	//console.log( 'storeyLevels', storeyLevels);
 
-	const storeyLevelsSorted = storeyLevels.slice().sort( (a, b) => b - a );
+	const storeyLevelsSorted = storeyLevels.slice().sort( (a, b) => a - b );
 	//console.log( 'storeyLevelsSorted', storeyLevelsSorted );
 
 	const storeyNames = GBX.storeys.map( storey => {

@@ -116,7 +116,7 @@ PIN.setIntersected = function( intersected = PIN.intersectedLast ) { // called b
 
 	divDragMoveContent.innerHTML = PCO.getContents( PIN.surfaceXml );
 
-	//divDragMoveFooter.innerHTML = POPF.footer;
+	divDragMoveFooter.innerHTML = PFO.footer;
 
 	navDragMove.hidden = false;
 

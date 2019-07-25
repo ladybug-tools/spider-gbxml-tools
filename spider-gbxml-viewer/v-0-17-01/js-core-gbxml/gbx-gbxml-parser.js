@@ -81,7 +81,7 @@ GBX.parseFile = function( gbxml )  {
 
 	THRU.setSceneDispose( [
 		THRU.axesHelper, THRU.boundingBoxHelper, THRU.edgeGroup, THRU.groundHelper, THRU.helperNormalsFaces,
-		GBX.meshGroup, GBX.openingGroup, GBX.placards, GBX.boundingBox ,
+		GBX.meshGroup, GBX.openingGroup, GBX.placards, GBX.boundingBox,
 		//POPX.line, POPX.particle
 	] );
 
@@ -157,6 +157,27 @@ GBX.getSpacesJson = function() {
 };
 
 
+
+GBX.getStoreysJson = function() {
+
+	const storeyLevels = GBX.storeys.map( storey => storey.match( /<Level>(.*?)<\/Level>/i )[ 1 ] );
+
+	const storeyLevelsSorted = storeyLevels.slice().sort( (a, b) => a - b );
+
+	GBX.storeysJson = storeyLevelsSorted.map( ( level, index ) => {
+		//console.log( 'level', level );
+
+		const storey = GBX.storeys.find( storey => storey.includes( level ) );
+
+		const id = storey.match( / id="(.*?)"/i )[ 1 ];
+
+		const name = storey.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
+
+		return { id, index, level, name }
+
+	} );
+
+};
 
 GBX.getSurfaceMeshes = function( surfaces ) {
 	// console.log( 'surfaces', surfaces );
