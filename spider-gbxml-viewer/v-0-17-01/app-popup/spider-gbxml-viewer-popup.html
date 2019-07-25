@@ -4,35 +4,31 @@
 
 <meta charset = "utf-8">
 <meta name = "copyright" content ="Ladybug Tools authors" >
-<meta name = "date" content = "2019-07-18" >
+<meta name = "date" content = "2019-07-25" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.17.00-0popup" >
+<meta name = "version" content = "0.17.01-0popup" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
 <title>Spider gbXML Viewer Popup</title>
 
+<base href="https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-01/" >
+
 <link rel = "canonical" href = "www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/" />
 <link rel = "license" href = "https://creativecommons.org/licenses/by/4.0/" >
 <link rel = "license" href = "https://opensource.org/licenses/MIT" >
-<link rel = "stylesheet" href = "https://fonts.googleapis.com/css?family=Inconsolata"  >
-<link rel = "stylesheet" href = "https://pushme-pullyou.github.io/tootoo14/js-14-04/style.css" >
+<link rel = "stylesheet" href = "https://pushme-pullyou.github.io/tootoo14/js-14-05/style.css" >
 
 <style>
 
 body { font: 11pt monospace; height:100%; margin: 0; overflow: hidden; }
 
-#main, #divContents { height:100vh; width: 100%;  margin: 0; max-width: 100%;}
-
 main { border: 0px; height: 100%; left: 0; margin: 0; /* overflow: hidden; */
 	position: absolute; width: 100%;  }
 
-button.active { border-color: black; font-style: oblique; font-weight: bold; margin-left: 0.3rem;
-	box-shadow: 10px 2px #888; }
+#divContents { height:100vh; width: 100%;  margin: 0; max-width: 100%;}
 
 </style>
-
-<base href="https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-00/" >
 
 </head>
 
@@ -43,8 +39,8 @@ button.active { border-color: black; font-style: oblique; font-weight: bold; mar
 <script src = "https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js" ></script>
 
 <!-- Three.js -->
-<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r105/build/three.min.js" ></script>
-<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r105/examples/js/controls/OrbitControls.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r106/build/three.min.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r106/examples/js/controls/OrbitControls.js" ></script>
 
 <!-- Tootoo forks -->
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-05/fob-file-open-basic/fob-file-open-basic.js" ></script>
@@ -60,17 +56,27 @@ button.active { border-color: black; font-style: oblique; font-weight: bold; mar
 <script src = "js-core-gbxml/gsa-gbxml-surface-attributes.js" ></script>
 
 <!-- popup menu -->
-<script src = "js-popup/popx-popup-gbxml.js" ></script>
-<script src = "js-popup/popf-popup-footer.js" ></script>
+<script src = "js-popup/pin-popup-intersect.js" ></script>
+<script src = "js-popup/pco-popup-content.js" ></script>
+<script src = "js-popup/pfo-popup-footer.js" ></script>
 
-<!-- View menu -->
+
+<!--
+
+<!-- View menu
 <script src = "js-view-3d/set-settings.js" ></script>
 <script src = "js-view-3d/cut-section-cut.js"></script>
 <script src = "js-view-3d/vex-view-exploded.js" ></script>
 
+
+-->
+
+
 	<main id="main" >
 
 		<div id="divContents" ></div>
+
+		<div id="divMessage" style=position:absolute;left:3vh;top:1vh; >loading...</div>
 
 	</main>
 
@@ -130,11 +136,11 @@ function init() {
 
 	THRU.init();
 
-	GBX.init();
+	GBX.init( divMessage);
 
 	POP.init();
 
-	POPX.init();
+	PIN.init();
 
 	//const mesh = THRU.getGeometry();
 	//THR.scene.add( mesh );
