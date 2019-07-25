@@ -45,7 +45,7 @@ GSA.selectedSurfacesFocus = function( index ) {
 /*
 	THR.scene.remove( POPX.line, POPX.particle );
 
-	POPX.intersected = GBX.surfaceGroup.children[ index ];
+	POPX.intersected = GBX.meshGroup.children[ index ];
 	//console.log( 'POPX.intersected', POPX.intersected );
 
 	divDragMoveContent.innerHTML = POPX.getIntersectedDataHtml();
@@ -54,7 +54,7 @@ GSA.selectedSurfacesFocus = function( index ) {
 
 	navDragMove.hidden = false;
  */
-	PIN.setIntersected( GBX.surfaceGroup.children[ index ] )
+	PIN.setIntersected( GBX.meshGroup.children[ index ] )
 
 	const surface = GBX.surfaces[ index ];
 

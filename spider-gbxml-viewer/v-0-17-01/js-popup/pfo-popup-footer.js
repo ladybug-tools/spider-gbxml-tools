@@ -38,6 +38,8 @@ PFO.onToggleInteriorExterior = function( button ) {
 
 	THR.scene.remove( PIN.line, PIN.particle );
 
+	button.classList.toggle( "active" );
+
 	const array = button.classList.contains( "active" ) ?
 
 		[ "Ceiling","InteriorFloor", "InteriorWall", "UndergroundCeiling" ]
@@ -169,7 +171,7 @@ PFO.toggleSurfaceByButtons = function( button ) {
 
 
 
-PFO.sendSurfaceTypesToThreeJs = function( surfaceTypes ) {
+PFO.vvvvvsendSurfaceTypesToThreeJs = function( surfaceTypes ) {
 	//console.log( 'surfaceTypes', surfaceTypes );
 
 	const surfacesFiltered = surfaceTypes.flatMap( filter =>
@@ -232,6 +234,8 @@ PFO.setAllTypesVisible = function(){
 	PFO.surfaceTypesActive = Array.from( buttonsActive ).map( button => button.innerText );
 
 	GBX.meshGroup.children.forEach( child => child.visible = true );
+
+	selStorey.selectedIndex= -1;
 
 };
 

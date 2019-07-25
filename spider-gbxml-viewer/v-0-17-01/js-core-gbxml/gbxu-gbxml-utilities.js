@@ -23,6 +23,10 @@ GBXU.filtersDefault = [ "Air", "ExposedFloor", "ExteriorWall", "RaisedFloor", "R
 
 GBXU.onGbxParse = function() { // see GBX.parseFile
 
+	THR.scene.remove( PIN.line, PIN.particle );
+
+	POP.setPopupShowHide( butPopupClose, POP.popup);
+
 	GBXU.setSurfaceTypesVisible( GBXU.filtersDefault );
 
 	THRU.toggleBoundingBoxHelper( GBXU.meshGroup );
@@ -50,6 +54,10 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 	window.addEventListener( 'touchstart', GBXU.onFirstTouch, false );
 
 	//if ( GBX.messageDiv ) { GBX.messageDiv.innerHTML = GBXU.stats; }
+
+	PFO.storeyIdsActive = undefined;
+
+	PFO.surfaceTypesActive = undefined;
 
 };
 
