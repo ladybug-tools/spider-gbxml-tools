@@ -11,7 +11,7 @@ const VMA = {
 		description: "View materials (VMA)",
 		helpFile: "../v-0-17-01/js-view-gbxml/vma-view-materials.md",
 		license: "MIT License",
-		version: "0.17-01-1vma",
+		version: "0.17-01-0vma",
 
 	}
 
@@ -30,7 +30,7 @@ VMA.getMenuViewMaterials = function() {
 
 	`<details id="VMAdet" ontoggle=VMA.setViewMaterialsSelectOptions(); >
 
-		<summary>Materials </summary>
+		<summary>VMA Materials </summary>
 
 		${ help }
 
@@ -39,11 +39,11 @@ VMA.getMenuViewMaterials = function() {
 		</p>
 
 		<p>
-			<input type=search id=VMAinpSelectIndex oninput=VGC.setSelectedIndex(this,VMAselViewSurfaces) placeholder="Enter an attribute" >
+			<input type=search id=VMAinpSelectIndex oninput=VGC.setSelectedIndex(this,VMAselViewMaterials) placeholder="Enter an attribute" >
 		</p>
 
 		<p>
-			<select id=VMAselViewSurfaces oninput=VMA.selMaterialsFocus(this); style=width:100%; size=10 multiple >
+			<select id=VMAselViewMaterials oninput=VMA.selMaterialsFocus(this); style=width:100%; size=10 multiple >
 			</select>
 		</p>
 
@@ -53,7 +53,7 @@ VMA.getMenuViewMaterials = function() {
 
 <!--
 		<p>
-			<button onclick=VGC.toggleViewSelectedOrAll(this,VMAselViewSurfaces,VMA.surfaces); >
+			<button onclick=VGC.toggleViewSelectedOrAll(this,VMAselViewMaterials,VMA.surfaces); >
 				Show/hide by surfaces
 			</button>
 		</p>
@@ -66,18 +66,21 @@ VMA.getMenuViewMaterials = function() {
 };
 
 
+
 VMA.setViewMaterialsSelectOptions = function() {
 
 	if ( VMAdet.open === false ) { return; }
 
+	VMAinpSelectIndex.value = "";
+
+	VMAselViewMaterials.size = GBX.materials.length > 10 ? 10 : GBX.materials.length + 1;
+
 	const attribute = VMAselAttribute.value;
 	//console.log( 'attribute', attribute );
 
-	VMAinpSelectIndex.value = ""
-
 	let color, text;
 
-	htmOptions = GBX.materials.map( (surface, index ) => {
+	const htmOptions = GBX.materials.map( (surface, index ) => {
 
 		color = color === 'pink' ? '' : 'pink';
 
@@ -99,9 +102,11 @@ VMA.setViewMaterialsSelectOptions = function() {
 
 	} );
 
-	VMAselViewSurfaces.innerHTML = htmOptions;
+	VMAselViewMaterials.innerHTML = htmOptions;
 
-	VMAspnCount.innerHTML = `: ${ GBX.materials.length } materials found`;
+	VMAspnCount.innerHTML = `${ GBX.materials.length } materials found`;
+
+	THR.controls.enableKeys = false;
 
 };
 

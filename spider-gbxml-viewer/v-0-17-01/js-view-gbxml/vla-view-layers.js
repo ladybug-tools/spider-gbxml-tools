@@ -11,7 +11,7 @@ const VLA = {
 		description: "View by layers (VLA) provides HTML and JavaScript to view individual surfaces.",
 		helpFile: "../v-0-17-01/js-view-gbxml/vla-view-layers.md",
 		license: "MIT License",
-		version: "0.17-01-1vla"
+		version: "0.17-01-0vla"
 	}
 
 };
@@ -26,7 +26,7 @@ VLA.getMenuViewLayers = function() {
 
 	`<details id="VLAdet" ontoggle=VLA.setViewLayersSelectOptions(); >
 
-		<summary>Layers </summary>
+		<summary>VLA Layers </summary>
 
 		${ help }
 
@@ -55,14 +55,17 @@ VLA.setViewLayersSelectOptions = function() { // needs cleanup!!
 
 	if ( VLAdet.open === false ) { return; }
 
+	VLAinpSelectIndex.value = "";
+
+	VLAselViewLayers.size = GBX.layers.length > 10 ? 10 : GBX.layers.length + 1;
+
 	const attribute = "id"; //VLAselAttribute.value;
 	//console.log( 'attribute', attribute );
 
-	//VLAinpSelectIndex.value = "";
 
 	let color, text;
 
-	htmOptions = GBX.layers.map( (layer, index ) => {
+	const htmOptions = GBX.layers.map( (layer, index ) => {
 
 		color = color === 'pink' ? '' : 'pink';
 
@@ -93,6 +96,8 @@ VLA.setViewLayersSelectOptions = function() { // needs cleanup!!
 	VLAselViewLayers.innerHTML = htmOptions;
 
 	VLAspnCount.innerHTML = `${ GBX.layers.length } layers found`;
+
+	THR.controls.enableKeys = false;
 
 };
 

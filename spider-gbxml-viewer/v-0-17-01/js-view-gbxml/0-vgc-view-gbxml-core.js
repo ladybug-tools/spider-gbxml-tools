@@ -37,7 +37,7 @@ VGC.setSelectedIndex = function( input, select ) {
 
 
 
-VGC.setPopup = function( intersected = null ) {
+VGC.xxxsetPopup = function( intersected = null ) {
 
 	PIN.intersected = intersected;
 

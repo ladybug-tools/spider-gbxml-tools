@@ -42,7 +42,7 @@ VSU.getMenuViewSurfaces = function() {
 		</p>
 
 		<p>
-			<select id=VSUselViewSurfaces oninput=VSU.selectedSurfacesFocus(this); style=width:100%; size=10 multiple >
+			<select id=VSUselViewSurfaces oninput=VSU.selectedSurfacesFocus(this); style=width:100%; multiple >
 			</select>
 		</p>
 
@@ -70,6 +70,8 @@ VSU.setViewSurfacesSelectOptions = function() {
 	if ( VSUdet.open === false ) { return; }
 
 	VSUinpSelectIndex.value = "";
+
+	VSUselViewSurfaces.size = GBX.surfaces.length > 10 ? 10 : GBX.surfaces.length + 1;
 
 	let color, text;
 

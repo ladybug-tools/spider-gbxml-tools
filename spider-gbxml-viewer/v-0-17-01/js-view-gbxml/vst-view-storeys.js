@@ -73,12 +73,14 @@ VST.getMenuViewStoreys = function() {
 
 VST.setViewStoreysOptions = function() {
 
+	if ( VSTdetMenu.open === false ) { return; }
+
+	VSTinpAttribute.value = "";
+
 	VSTselStorey.size = GBX.storeys.length > 10 ? 10 : GBX.storeys.length;
 
 	const attribute = VSTselAttribute.value;
 	//console.log( 'attribute', attribute );
-
-	VSTinpAttribute.value = "";
 
 	const storeyIds = GBX.storeys.map( storey => storey.match( 'id="(.*?)">')[ 1 ] );
 	//console.log( 'storeyIds', storeyIds );

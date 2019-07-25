@@ -11,7 +11,7 @@ const VWT = {
 		description: "View by Surfaces (VWT) provides HTML and JavaScript to view individual opening types",
 		helpFile: "../v-0-17-01/js-view-gbxml/vwt-view-opening-types.md",
 		license: "MIT License",
-		version: "0.17.00-1vwt"
+		version: "0.17.01-0vwt"
 
 	}
 
@@ -21,7 +21,6 @@ const VWT = {
 
 VWT.getMenuViewWindowTypes = function() {
 
-
 	const help = VGC.getHelpButton("VWTbutSum",VWT.script.helpFile);
 
 	const selectOptions = [ "id", "Name", "Description", "U-value", "SolarHeatGainCoeff", "Transmittance" ].map( option => `<option>${ option }</option>`)
@@ -30,7 +29,7 @@ VWT.getMenuViewWindowTypes = function() {
 
 	`<details id="VWTdet" ontoggle=VWT.setViewSurfacesSelectOptions(); >
 
-		<summary>Window types</summary>
+		<summary>VWT Window types</summary>
 
 		${ help }
 
@@ -54,7 +53,7 @@ VWT.getMenuViewWindowTypes = function() {
 		<p>Select multiple types by pressing shift or control keys</p>
 
 		<p>
-			<button onclick=PIN.onClickZoomAll(); >
+			<button onclick=PFO.onClickZoomAll(); >
 				Reset view
 			</button>
 		</p>
@@ -71,10 +70,13 @@ VWT.setViewSurfacesSelectOptions = function() {
 
 	if ( VWTdet.open === false ) { return; }
 
+	VWTinpSelectIndex.value = "";
+
+	VWTselViewWindowTypes.size = GBX.windowTypes.length > 10 ? 10 : GBX.windowTypes.length + 1;
+
 	const attribute = VWTselAttribute.value;
 	//console.log( 'attribute', attribute );
 
-	VWTinpSelectIndex.value = "";
 
 	let color, text;
 
@@ -91,7 +93,7 @@ VWT.setViewSurfacesSelectOptions = function() {
 	//console.log( 'GBX.windowTypes', GBX.windowTypes );
 
 
-	htmOptions = GBX.windowTypes.map( ( type, index ) => {
+	const htmOptions = GBX.windowTypes.map( ( type, index ) => {
 
 		color = color === 'pink' ? '' : 'pink';
 
@@ -120,6 +122,7 @@ VWT.setViewSurfacesSelectOptions = function() {
 	} );
 
 	VWTselViewWindowTypes.innerHTML = htmOptions;
+
 	VWTspnCount.innerHTML = `${ GBX.windowTypes.length } types found`;
 
 	THR.controls.enableKeys = false;

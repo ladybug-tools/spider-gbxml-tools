@@ -435,9 +435,9 @@ function toggleNavPanel() {
 }
 
 
-function toggleDetailsOpen() {
+function toggleDetailsOpen( target = navPanel ) {
 
-	const details = navPanel.querySelectorAll( "details" );
+	const details = target.querySelectorAll( "details" );
 
 	details.forEach( detail => detail.open = false );
 
