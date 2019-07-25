@@ -36,12 +36,12 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 	//THRU.toggleEdges( GBX.surfaceGroup );
 
 	// needs work
-	//GBXU.surfaceGroupVisible = new THREE.Object3D();
-	//const arr = GBX.surfacesFiltered.flatMap( ( surface, index ) => GBX.surfaceGroup.children[ index ].clone() );
-	//GBXU.surfaceGroupVisible.add( ...arr );
+	GBXU.surfaceGroupVisible = new THREE.Object3D();
+	const arr = GBX.surfacesFiltered.flatMap( ( surface, index ) => GBX.surfaceGroup.children[ index ].clone() );
+	GBXU.surfaceGroupVisible.add( ...arr );
 	//console.log( 'GBXU.surfaceGroupVisible', GBXU.surfaceGroupVisible );
 
-	const bbox = new THREE.Box3().setFromObject( GBX.surfaceGroup );
+	const bbox = new THREE.Box3().setFromObject( GBX.surfaceGroupVisible );
 	GBXU.boundingBox = new THREE.Box3Helper( bbox, 0xdddd00 );
 	//THR.scene.add( GBXU.boundingBox );
 

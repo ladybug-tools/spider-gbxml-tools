@@ -59,7 +59,20 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 
 	PFO.surfaceTypesActive = undefined;
 
+	GBXU.toggleDetailsOpen( detMenuViewGbxml )
+
 };
+
+
+
+GBXU.toggleDetailsOpen = function( target = navPanel ) {
+
+	console.log( 'target', target );
+	const details = target.querySelectorAll( "details" );
+
+	details.forEach( detail => detail.open = false );
+
+}
 
 
 

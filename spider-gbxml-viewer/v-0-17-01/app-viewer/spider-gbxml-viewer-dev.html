@@ -175,7 +175,7 @@
 
 			</details>
 
-			<details open>
+			<details id="detMenuViewGbxml">
 
 				<summary class=sumMenuTitle >View gbXML menu</summary>
 
@@ -437,6 +437,7 @@ function toggleNavPanel() {
 
 function toggleDetailsOpen( target = navPanel ) {
 
+	console.log( 'target', target );
 	const details = target.querySelectorAll( "details" );
 
 	details.forEach( detail => detail.open = false );
