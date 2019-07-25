@@ -8,7 +8,7 @@ const COR = {
 		"date": "2019-07-18",
 		"description": "core - contains local overrides",
 		"helpFile": "cor-core/README.md",
-		"version": "0.17.00-0cor",
+		"version": "0.17.01-0cor",
 	}
 };
 

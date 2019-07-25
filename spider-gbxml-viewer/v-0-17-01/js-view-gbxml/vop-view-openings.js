@@ -11,7 +11,7 @@ const VOP = {
 		description: "View by openings (VOP) provides HTML and JavaScript to view individual openings.",
 		helpFile: "../v-0-17-01/js-view-gbxml/vbo-view-opening.md",
 		license: "MIT License",
-		version: "0.16-01-2vbo"
+		version: "0.17-01-0vbo"
 
 	}
 
@@ -20,7 +20,6 @@ const VOP = {
 
 
 VOP.getMenuViewOpenings = function() {
-
 
 	const help = VGC.getHelpButton("VOPbutSum",VOP.script.helpFile);
 
@@ -31,7 +30,7 @@ VOP.getMenuViewOpenings = function() {
 
 	`<details id="VOPdetMenu" ontoggle=VOP.setViewOpeningsSelectOptions(); >
 
-		<summary>Openings</summary>
+		<summary>VOP Openings</summary>
 
 		${ help }
 
@@ -145,8 +144,6 @@ VOP.selectedOpeningsFocus = function( select ) {
 
 	PIN.intersected = GBX.meshGroup.children[ opening.surfaceIndex ];
 
-	divDragMoveContent.innerHTML = PIN.getIntersectedDataHtml();
-
 	const options = select.selectedOptions
 	//console.log( 'options', options );
 
@@ -159,52 +156,5 @@ VOP.selectedOpeningsFocus = function( select ) {
 	VOP.surfaceWithOpenings = openings.map( opening => GBX.surfaces[ opening.surfaceIndex ] );
 
 	GBXU.sendSurfacesToThreeJs( VOP.surfaceWithOpenings );
-
-	VOP.setOpeningShowHide( select );
-
-};
-
-
-
-VOP.setOpeningShowHide = function( select ) {
-
-	const index = select.value;
-
-	const opening = VOP.openings[ index ];
-	//console.log( '', opening );
-
-	GBX.openingGroup.children.forEach( child => child.visible = false );
-
-	GBX.openingGroup.children[ opening.openingIndex ].visible = true;
-
-	GSAdetOpenings.open = true;
-
-	const openingDivs = Array.from( GSAdetOpenings.querySelectorAll( "div" ) );
-	//console.log( 'openingDivs', openingDivs );
-
-	const theDiv = openingDivs.find( item => item.id === "GSAdivOpening" + opening.openingInSurface );
-
-	theDiv.style.backgroundColor = 'pink';
-
-};
-
-
-
-VOP.setViewOpeningsShowHide = function( button, surfaceArray ) {
-	//console.log( 'surfaceArray', surfaceArray );
-
-	button.classList.toggle( "active" );
-
-	if ( VOPselViewOpenings.selectedIndex === -1 ) { alert( "First, select an opening from the list"); return; }
-
-	if ( button.classList.contains( 'active' ) && surfaceArray.length ) {
-
-		GBXU.sendSurfacesToThreeJs( surfaceArray );
-
-	} else {
-
-		GBX.meshGroup.children.forEach( element => element.visible = true );
-
-	}
 
 };

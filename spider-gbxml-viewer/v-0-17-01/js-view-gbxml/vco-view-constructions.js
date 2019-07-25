@@ -6,11 +6,11 @@ const VCO = {
 
 	script: {
 		"copyright": "Copyright 2019 Ladybug Tools authors",
-		"date": "2019-07-22",
+		"date": "2019-07-25",
 		"description": "View by construction (VCO) provides HTML and JavaScript to view individual construction details.",
-		"helpFile": "../v-0-17-00/js-view-gbxml/vco-view-constructions.md",
+		"helpFile": "../v-0-17-01/js-view-gbxml/vco-view-constructions.md",
 		license: "MIT License",
-		"version": "0.17.00-1vco"
+		"version": "0.17.01-0vco"
 	}
 };
 
@@ -27,7 +27,7 @@ VCO.getMenuViewConstructions = function() {
 
 	`<details id="VCOdetMenu" ontoggle=VCO.getViewConstructionsSelectOptions(); >
 
-		<summary>Constructions  </summary>
+		<summary>VCO Constructions  </summary>
 
 		${ help }
 
@@ -66,16 +66,14 @@ VCO.getMenuViewConstructions = function() {
 
 VCO.getViewConstructionsSelectOptions = function() {
 
-	//VBO.constructions = []; //GBX.surfaces.slice();
-
 	if ( VCOdetMenu.open === false ) { return; }
 
-	//VCOselSpace.size = GBX.spaces.length > 10 ? 10 : GBX.spaces.length;
+	VCOinpSelectIndex.value = "";
+
+	VCOselViewConstructions.size = GBX.constructions.length > 10 ? 10 : GBX.constructions.length + 1;
 
 	const attribute = VCOselAttribute.value;
 	//console.log( 'attribute', attribute );
-
-	VCOinpSelectIndex.value = "";
 
 	let constructionsRefs = GBX.surfaces.map( (surface, surfaceIndex ) => {
 

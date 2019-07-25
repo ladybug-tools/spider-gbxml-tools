@@ -8,7 +8,7 @@ const GSA = {
 	"date": "2019-07-15",
 	"description": "Display all possible data for a surface",
 	"helpFile": "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/gsa-get-surface-attributes/README.md",
-	"version": "0.17.00-0gsa"
+	"version": "0.17.01-0gsa"
 
 };
 
