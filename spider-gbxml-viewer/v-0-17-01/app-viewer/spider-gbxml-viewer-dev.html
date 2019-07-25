@@ -4,10 +4,10 @@
 
 <meta charset = "utf-8">
 <meta name = "copyright" content ="Ladybug Tools authors" >
-<meta name = "date" content = "2019-07-23" >
+<meta name = "date" content = "2019-07-25" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.17.00-0sgv" >
+<meta name = "version" content = "0.17.01-0sgv" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
 <title>Spider gbXML Viewer Dev</title>
@@ -49,15 +49,16 @@
 <script src = "js-core-gbxml/gsa-gbxml-surface-attributes.js" ></script>
 
 
-<!-- Menus generally -->
+<!--TooToo ~ menus generally -->
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-05/mnu-menu/mnu-menu.js" ></script>
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-05/pop-popup/pop-popup.js" ></script>
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-05/gat-github-access-token/gat-github-access-token.js" ></script>
 
 
 <!-- Spider popup menu -->
-<script src = "js-popup/popx-popup-gbxml.js" ></script>
-<script src = "js-popup/popf-popup-footer.js" ></script>
+<script src = "js-popup/pin-popup-intersect.js" ></script>
+<script src = "js-popup/pco-popup-content.js" ></script>
+<script src = "js-popup/pfo-popup-footer.js" ></script>
 
 
 <!-- File menu panel -->
@@ -233,6 +234,15 @@
 
 			<details>
 
+				<summary class=sumMenuTitle >Fixer 3D menu</summary>
+
+				<div id=divFixer >This menu is for scripts - very experimental - that utilize the Three.js linear algebra library to check for 3D errors
+					such as incorrect normals and InteriorWall surfaces on the exterior. The scripts will be available here soon.</div>
+
+			</details>
+
+			<details>
+
 				<summary class=sumMenuTitle >Settings menu</summary>
 
 				<div id=THMdivMenuThemeSelect ></div>
@@ -390,7 +400,7 @@ function init() {
 
 	POP.init();
 
-	POPX.init();
+	PIN.init();
 
 	COR.init();
 
@@ -400,7 +410,7 @@ function init() {
 
 	FOB.onHashChange();
 
-	POP.setPopupShowHide();
+	//POP.setPopupShowHide();
 
 	aViewSource.href = MNU.urlSourceCode;
 

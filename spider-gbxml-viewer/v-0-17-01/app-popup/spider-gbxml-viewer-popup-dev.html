@@ -7,10 +7,10 @@
 <meta name = "date" content = "2019-07-25" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.17.01-0pin" >
+<meta name = "version" content = "0.17.01-0popup" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
-<title>Spider gbXML Viewer Popup</title>
+<title>Spider gbXML Viewer Popup Dev</title>
 
 <base href="../" >
 
@@ -39,34 +39,38 @@
 <script src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
 <script src = "https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js" ></script>
 
+
 <!-- Three.js -->
 <script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r106/build/three.min.js" ></script>
 <script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r106/examples/js/controls/OrbitControls.js" ></script>
 
-<!-- Tootoo forks -->
+
+<!-- Tootoo -->
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-05/fob-file-open-basic/fob-file-open-basic.js" ></script>
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-05/pop-popup/pop-popup.js" ></script>
 
-<!-- Spider forks -->
+
+<!-- Spider Three.js -->
 <script src = "js-core-three/thr-threejs.js" ></script>
 <script src = "js-core-three/thru-threejs-utilities.js" ></script>
+
 
 <!-- Spider gbXML forks -->
 <script src = "js-core-gbxml/gbx-gbxml-parser.js" ></script>
 <script src = "js-core-gbxml/gbxu-gbxml-utilities.js" ></script>
 <script src = "js-core-gbxml/gsa-gbxml-surface-attributes.js" ></script>
 
-<!-- popup menu -->
+
+<!-- Spider popup menu -->
 <script src = "js-popup/pin-popup-intersect.js" ></script>
 <script src = "js-popup/pco-popup-content.js" ></script>
 <script src = "js-popup/pfo-popup-footer.js" ></script>
+
 
 <!-- View menu -->
 <script src = "js-scene/set-settings.js" ></script>
 <script src = "js-scene/cut-section-cut.js"></script>
 <script src = "js-scene/vex-view-exploded.js" ></script>
-
-
 
 
 	<main id="main" >
@@ -107,8 +111,8 @@
 
 
 //FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
-//FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml";
-FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/coventry-university-of-warwick-small.zip";
+FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml";
+//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/coventry-university-of-warwick-small.zip";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/annapolis-md-single-family-residential-2016.xml"
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/pittsburg-airport.zip";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/GreenBuildingXML/Sample-gbXML-Files@master/gbXML_TRK.xml";
@@ -148,7 +152,7 @@ function init() {
 
 	FOB.onHashChange();
 
-	POP.setPopupShowHide( butPopupClose, POP.popup);
+	//POP.setPopupShowHide( butPopupClose, POP.popup);
 
 }
 
