@@ -4,10 +4,10 @@
 
 <meta charset = "utf-8">
 <meta name = "copyright" content ="Ladybug Tools authors" >
-<meta name = "date" content = "2019-07-18" >
+<meta name = "date" content = "2019-07-25" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.17.0-2cor" >
+<meta name = "version" content = "0.17.01-0cor" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
 <title>Spider gbXML Viewer Core</title>
@@ -20,13 +20,13 @@
 
 * { box-sizing: border-box; }
 
-body { margin: 0; overflow: hidden; }
+body { font: 11pt monospace; margin: 0; overflow: hidden; }
 
 #divContents {  height: 100vh; width: 100vw; }
 
 </style>
 
-<base href="https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-00/" >
+<base href="https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-01/" >
 
 </head>
 
@@ -56,6 +56,8 @@ body { margin: 0; overflow: hidden; }
 
 	<div id="divContents" ></div>
 
+	<div id="divMessage" style=position:absolute;left:3vh;top:1vh; >loading...</div>
+
 
 <script>
 
@@ -84,7 +86,7 @@ function init() {
 
 	THRU.init();
 
-	GBX.init();
+	GBX.init( divMessage );
 
 	window.addEventListener ( 'hashchange', FOB.onHashChange, false );
 

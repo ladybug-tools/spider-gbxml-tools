@@ -1,6 +1,6 @@
-# App Core v0.17.00-0cor Read Me
+# App Core Read Me
 
-[Source code](  )
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-01/app-core )
 
 <details open >
 
@@ -27,9 +27,9 @@
 
 <summary>Change Log</summary>
 
-### 2019-07-09 ~ Theo
+### 2019-07-25 ~ Theo
 
 * F - First commit
-* R - Validator.w3.org reports no errors
+
 
 </details>
