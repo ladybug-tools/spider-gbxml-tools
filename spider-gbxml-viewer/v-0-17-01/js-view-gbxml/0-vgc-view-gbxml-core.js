@@ -1,4 +1,4 @@
-/* globals THR, GBX, POPX, VCIOdet, VCIOselViewGroup, VCIOspnCount */
+/* globals THR, GBX, PIN, VCIOdet, VCIOselViewGroup, VCIOspnCount */
 // jshint esversion: 6
 // jshint loopfunc: true
 
@@ -6,9 +6,9 @@ const VGC = {
 
 	script: {
 		copyright: "Copyright 2019 Ladybug Tools authors. MIT License",
-		date: "2019-07-22",
+		date: "2019-07-25",
 		description: "utilities",
-		helpFile: "../v-0-17-00/js-view-gbxml/vgc-view-gbxml-core.md",
+		helpFile: "../v-0-17-01/js-view-gbxml/vgc-view-gbxml-core.md",
 		license: "MIT License",
 		version: "0.17.00-0vgc"
 	}
@@ -39,13 +39,13 @@ VGC.setSelectedIndex = function( input, select ) {
 
 VGC.setPopup = function( intersected = null ) {
 
-	POPX.intersected = intersected;
+	PIN.intersected = intersected;
 
-	THR.scene.remove( POPX.line, POPX.particle );
+	THR.scene.remove( PIN.line, PIN.particle );
 
 	divDragMoveContent.innerHTML = "";
 
-	divDragMoveFooter.innerHTML = POPF.footer;
+	divDragMoveFooter.innerHTML = PFO.footer;
 
 	navDragMove.hidden = false;
 

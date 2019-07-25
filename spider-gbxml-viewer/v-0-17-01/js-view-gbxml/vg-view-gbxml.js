@@ -1,4 +1,4 @@
-/* globals GBX, GBXU, GSA, POPX, VGC, VGdivReport */
+/* globals GBX, GBXU, GSA, PIN, VGC, VGdivReport */
 // jshint esversion: 6
 // jshint loopfunc: true
 
@@ -7,9 +7,9 @@ const VG = {
 	script: {
 
 		copyright: "Copyright 2019 Ladybug Tools authors",
-		date: "2019-07-22",
+		date: "2019-07-25",
 		description: "View gbXML (VG) - view campus and building attributes",
-		helpFile: "../v-0-17-00/js-view-gbxml/vg-view-gbxml.md",
+		helpFile: "../v-0-17-01/js-view-gbxml/vg-view-gbxml.md",
 		license: "MIT License",
 		version: "0.17.00-1vg"
 
@@ -27,7 +27,7 @@ VG.getMenuViewGbxml = function() {
 
 	`<details id="VGdet" ontoggle=VG.setViewGbxml(); >
 
-		<summary>gbXML attributes and nodes </summary>
+		<summary>VG gbXML attributes and nodes </summary>
 
 		${ help }
 
@@ -43,8 +43,8 @@ VG.getMenuViewGbxml = function() {
 
 VG.setViewGbxml = function( target = VGdivReport ) {
 
-	const campusXml = POPX.parser.parseFromString( GBX.text, "application/xml").documentElement;
-	POPX.campusXml = campusXml;
+	const campusXml = PIN.parser.parseFromString( GBX.text, "application/xml").documentElement;
+	PIN.campusXml = campusXml;
 	//console.log( 'campusXml', campusXml.attributes );
 	//console.log( 'campusXml', campusXml );
 

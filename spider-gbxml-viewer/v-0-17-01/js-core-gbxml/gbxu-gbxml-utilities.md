@@ -1,6 +1,6 @@
 # GBXU gbXML Utilities 0.17.00-3gbxu Read Me
 
-[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-00/js-core-gbxml )
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-01/js-core-gbxml )
 
 <details open >
 

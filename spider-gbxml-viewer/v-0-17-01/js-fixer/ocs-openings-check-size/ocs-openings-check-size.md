@@ -1,6 +1,6 @@
 # Openings Check Size (OCS) Read Me
 
-[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-fixer/ocs-openings-check-size/ocs-openings-check-size.js )
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-01/js-fixer/ocs-openings-check-size/ocs-openings-check-size.js )
 
 <details open>
 

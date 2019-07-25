@@ -1,4 +1,4 @@
-/* globals GBX, GBXU, THR, POPX, VGC, VSPdetMenu, divDragMoveContent, VSPselSpace, VSPinpAttribute, VSPspnCount, VSPdivReportsLog, VSPselAttribute */
+/* globals GBX, GBXU, THR, PIN, VGC, VSPdetMenu, divDragMoveContent, VSPselSpace, VSPinpAttribute, VSPspnCount, VSPdivReportsLog, VSPselAttribute */
 // jshint esversion: 6
 // jshint loopfunc: true
 
@@ -7,11 +7,11 @@ const VSP = {
 	script: {
 
 		copyright: "Copyright 2019 Ladybug Tools authors",
-		date: "2019-07-22",
+		date: "2019-07-25",
 		description: "View the surfaces in a gbXML file by selecting one or more spaces from a list of all spaces",
-		helpFile: "../v-0-17-00/js-view-gbxml/vsp-view-spaces.md",
+		helpFile: "../v-0-17-01/js-view-gbxml/vsp-view-spaces.md",
 		license: "MIT License",
-		version: "0.17-00-1vsp"
+		version: "0.17-01-1vsp"
 
 	}
 
@@ -31,7 +31,7 @@ VSP.getMenuViewSpaces = function() {
 	`
 		<details id=VSPdetMenu ontoggle=VSP.setViewSpacesOptions(); >
 
-			<summary>Spaces </summary>
+			<summary>VSP Spaces </summary>
 
 			${ help }
 
@@ -70,12 +70,12 @@ VSP.setViewSpacesOptions = function() {
 
 	if ( VSPdetMenu.open === false ) { return; }
 
+	VSPinpAttribute.value = "";
+
 	VSPselSpace.size = GBX.spaces.length > 10 ? 10 : GBX.spaces.length;
 
 	const attribute = VSPselAttribute.value;
 	//console.log( 'attribute', attribute );
-
-	VSPinpAttribute.value = "";
 
 	const spaceIds = GBX.spaces.map( space => space.match( 'id="(.*?)"' )[ 1 ] );
 	//console.log( 'spaceIds', spaceIds );
@@ -139,7 +139,7 @@ VSP.selSpacesFocus = function() {
 
 	VSPdivReportsLog.innerHTML = GBXU.sendSurfacesToThreeJs( VSP.surfacesFilteredSpace );
 
-	divDragMoveContent.innerHTML = POPX.getSpaceAttributes( VSPselSpace.value );
+	divDragMoveContent.innerHTML = PCO.getSpaceAttributes( VSPselSpace.value );
 
 };
 
@@ -155,7 +155,7 @@ VSP.getSurfacesFilteredSpace = function(  ) {
 		//console.log( 'spaceId', spaceId );
 
 		const surfacesVisibleSpace = GBX.surfaces.filter( surface =>
-				surface.includes( `spaceIdRef="${ spaceId.value }"`  ) );
+			surface.includes( `spaceIdRef="${ spaceId.value }"`  ) );
 		//console.log( 'surfacesVisibleSpace', surfacesVisibleSpace );
 
 		surfacesFilteredSpace.push( ...surfacesVisibleSpace );

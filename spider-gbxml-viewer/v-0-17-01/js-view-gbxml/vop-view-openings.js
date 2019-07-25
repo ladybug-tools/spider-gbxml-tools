@@ -7,9 +7,9 @@ const VOP = {
 	script: {
 
 		copyright: "Copyright 2019 Ladybug Tools authors",
-		date: "2019-07-22",
+		date: "2019-07-25",
 		description: "View by openings (VOP) provides HTML and JavaScript to view individual openings.",
-		helpFile: "../v-0-17-00/js-view-gbxml/vbo-view-opening.md",
+		helpFile: "../v-0-17-01/js-view-gbxml/vbo-view-opening.md",
 		license: "MIT License",
 		version: "0.16-01-2vbo"
 
@@ -143,9 +143,9 @@ VOP.selectedOpeningsFocus = function( select ) {
 	const opening = VOP.openings[ select.value ];
 	//console.log( 'opening', opening );
 
-	POPX.intersected = GBX.meshGroup.children[ opening.surfaceIndex ];
+	PIN.intersected = GBX.meshGroup.children[ opening.surfaceIndex ];
 
-	divDragMoveContent.innerHTML = POPX.getIntersectedDataHtml();
+	divDragMoveContent.innerHTML = PIN.getIntersectedDataHtml();
 
 	const options = select.selectedOptions
 	//console.log( 'options', options );

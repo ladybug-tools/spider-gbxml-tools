@@ -175,7 +175,7 @@
 
 			</details>
 
-			<details>
+			<details open>
 
 				<summary class=sumMenuTitle >View gbXML menu</summary>
 
@@ -351,6 +351,8 @@ function init() {
 
 	MNUdivHeader.innerHTML = MNU.getNavHeader();
 
+	// File menu
+
 	GFFdivGithubFoldersFiles.innerHTML = GFF.getMenuGithubFoldersFiles();
 
 	GATdivGithubAccessToken.innerHTML = GAT.getMenuGitHubAccessToken();
@@ -388,13 +390,14 @@ function init() {
 	VWTsecViewWindowTypes.innerHTML = VWT.getMenuViewWindowTypes();
 
 
-	// Scene memu
+	// Scene menu
 
 	SETsecSettings.innerHTML = SET.getMenuSettings()
 
-
-
 	TMPdivTemplate.innerHTML = TMP.getMenuTemplate();
+
+
+	// Help menu
 
 	MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();
 
@@ -419,6 +422,7 @@ function init() {
 }
 
 
+// to TooToo MNU??
 
 function toggleNavPanel() {
 

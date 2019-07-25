@@ -11,7 +11,7 @@ const GFF = {
 		"date": "2019-05-31",
 		"description": "Get data from selected GitHub folders and files and display as links in details/summary that update location.hash",
 		"helpFile": "js-menu/gff-github-folder-files.md",
-		"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-menu/gff-github-folder-files.js",
+		"urlSourceCode": "https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-01/js-menu/gff-github-folder-files.js",
 		"version": "0.17.0-0gff",
 	}
 };

@@ -1,4 +1,4 @@
-/* globals GBX, POPX, divDragMoveContent */
+/* globals GBX, PIN, divDragMoveContent */
 /* jshint esversion: 6 */
 /* jshint loopfunc: true */
 
@@ -43,12 +43,12 @@ GSA.getSurfacesAttributesByIndex = function ( indexes, id = 1 ) {
 
 GSA.selectedSurfacesFocus = function( index ) {
 /*
-	THR.scene.remove( POPX.line, POPX.particle );
+	THR.scene.remove( PIN.line, PIN.particle );
 
-	POPX.intersected = GBX.meshGroup.children[ index ];
-	//console.log( 'POPX.intersected', POPX.intersected );
+	PIN.intersected = GBX.meshGroup.children[ index ];
+	//console.log( 'PIN.intersected', PIN.intersected );
 
-	divDragMoveContent.innerHTML = POPX.getIntersectedDataHtml();
+	divDragMoveContent.innerHTML = PIN.getIntersectedDataHtml();
 
 	divDragMoveFooter.innerHTML = POPF.footer;
 

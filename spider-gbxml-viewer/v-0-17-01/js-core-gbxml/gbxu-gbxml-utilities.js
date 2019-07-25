@@ -8,7 +8,7 @@ var GBXU = {
 	description: "GbXML utilities: all this is a bit idiosyncratic / a random collection of stuff",
 	helpFile: "../js-view-gbxml/gbxu-gbxml-utilities.md",
 	license: "MIT License",
-	urlSourceCode: "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-00/js-core-gbxml",
+	urlSourceCode: "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-01/js-core-gbxml",
 	version: "0.17.01-0gbxu"
 
 };

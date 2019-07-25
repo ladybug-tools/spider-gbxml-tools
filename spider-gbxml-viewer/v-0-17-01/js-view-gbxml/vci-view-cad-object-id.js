@@ -7,11 +7,11 @@ const VCI = {
 	script: {
 
 		copyright: "Copyright 2019 Ladybug Tools authors",
-		date: "2019-07-22",
+		date: "2019-07-25",
 		description: "View by CAD Object ID (VCI) provides HTML and JavaScript to view individual surfaces.",
-		helpFile: "../v-0-17-00/js-view-gbxml/vci-view-cad-object-id.md",
+		helpFile: "../v-0-17-01/js-view-gbxml/vci-view-cad-object-id.md",
 		license: "MIT License",
-		version: "0.17-00-1vci"
+		version: "0.17-01-0vci"
 
 	}
 
@@ -27,7 +27,7 @@ VCI.getMenuViewCadObjectId = function() {
 
 	`<details id="VCIdet" ontoggle=VCI.setViewOptions(); >
 
-		<summary>CAD object id groups <span id="VCIspnCount" ></span> </summary>
+		<summary>VCI CAD object id groups <span id="VCIspnCount" ></span> </summary>
 
 		${ help }
 
@@ -44,11 +44,11 @@ VCI.getMenuViewCadObjectId = function() {
 			</select>
 		</p>
 
-		<p>Select multiple groups by pressing shift or control keys</p>
+		<p>Select multiple id groups by pressing shift or control keys</p>
 
 		<p>
 			<button onclick=VGC.toggleViewSelectedOrAll(this,VCIselViewSurfaces,VCI.surfaces); >
-				Show/hide by surfaces
+				Show/hide by id groups
 			</button>
 		</p>
 
@@ -60,6 +60,10 @@ VCI.getMenuViewCadObjectId = function() {
 
 
 VCI.setViewOptions = function() {
+
+	if ( VCIdet.open === false ) { return; }
+
+	VCIinpSelectIndex.value = "";
 
 	let color;
 

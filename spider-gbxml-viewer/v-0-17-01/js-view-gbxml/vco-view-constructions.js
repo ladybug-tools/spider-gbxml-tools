@@ -1,4 +1,4 @@
-/* globals THR, GBX, POPX, GSA, VCOdetMenu, VCOselViewConstruction, divDragMoveContent*/
+/* globals THR, GBX, PIN, GSA, VCOdetMenu, VCOselViewConstruction, divDragMoveContent*/
 // jshint esversion: 6
 // jshint loopfunc: true
 

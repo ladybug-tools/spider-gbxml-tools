@@ -1,6 +1,6 @@
 # GWS Get Watertight Spaces Read Me
 
-[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-fixer/gws-get-watertight-spaces/gws-get-watertight-spaces.js )
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-01/js-fixer/gws-get-watertight-spaces/gws-get-watertight-spaces.js )
 
 <details open>
 

@@ -8,11 +8,11 @@ const VZO = {
 	script: {
 
 		copyright: "Copyright 2019 Ladybug Tools authors",
-		date: "2019-07-22",
+		date: "2019-07-25",
 		description: "View the surfaces in a gbXML file by selecting one or more zones from a list of all zones",
-		helpFile: "../v-0-17-00/js-view-gbxml/vzo-view-zones.md",
+		helpFile: "../v-0-17-01/js-view-gbxml/vzo-view-zones.md",
 		license: "MIT License",
-		version: "0.17-00-1vzo"
+		version: "0.17-01-1vzo"
 
 	}
 
@@ -61,7 +61,7 @@ VZO.getMenuViewZones = function() {
 	`
 		<details id=VZOdetMenu ontoggle=VZO.getZonesOptions(); >
 
-			<summary>Zones</summary>
+			<summary>VZO Zones</summary>
 
 			${ help }
 
@@ -172,7 +172,7 @@ VZO.selectZoneFocus = function( select ) {
 	const zoneId = select.value;
 	//console.log( 'zoneId', zoneId );
 
-	divDragMoveContent.innerHTML = POPX.getZoneAttributes( zoneId );
+	divDragMoveContent.innerHTML = PIN.getZoneAttributes( zoneId );
 
 	const options = select.selectedOptions
 	//console.log( 'options', options );

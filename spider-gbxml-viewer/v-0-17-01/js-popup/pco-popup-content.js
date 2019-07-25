@@ -556,6 +556,8 @@ PCO.getZoneAttributes = function( zoneIdRef ) {
 
 };
 
+
+
 PCO.setAllVisibleZoom = function() {
 
 	const meshes = GBX.meshGroup.children.filter( mesh => mesh.visible === true );

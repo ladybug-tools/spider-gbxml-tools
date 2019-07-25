@@ -11,7 +11,7 @@ const SET = {
 		description: "",
 		helpFile: "../v-0-17-00/js-scene/set-settings.md",
 		license: "MIT License",
-		version: "0.17-00-0set"
+		version: "0.17-01-0set"
 
 	}
 };

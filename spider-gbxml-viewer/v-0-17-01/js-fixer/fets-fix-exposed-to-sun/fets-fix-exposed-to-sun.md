@@ -1,6 +1,6 @@
 # Fix Exposed To Sun (FETS) Read Me
 
-[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-fixer/fets-fix-exposed-to-sun/fets-fix-exposed-to-sun.js )
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-01/js-fixer/fets-fix-exposed-to-sun/fets-fix-exposed-to-sun.js )
 
 <details open >
 

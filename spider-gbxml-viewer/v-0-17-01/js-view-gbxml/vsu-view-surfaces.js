@@ -1,4 +1,4 @@
-/* globals THR, GBX, POPX, divDragMoveContent, VSUdet, VSUselAttribute, VBSUselViewBySurfaces, VBSUspnCount */
+/* globals THR, GBX, PIN, divDragMoveContent, VSUdet, VSUselAttribute, VBSUselViewBySurfaces, VBSUspnCount */
 // jshint esversion: 6
 // jshint loopfunc: true
 
@@ -7,11 +7,11 @@ const VSU = {
 	script: {
 
 		copyright: "Copyright 2019 Ladybug Tools authors",
-		date: "2019-07-22",
+		date: "2019-07-25",
 		description: "View Surfaces (VSU) provides HTML and JavaScript to view individual surfaces.",
-		helpFile: "../v-0-17-00/js-view-gbxml/vsu-view-surfaces.md",
+		helpFile: "../v-0-17-01/js-view-gbxml/vsu-view-surfaces.md",
 		license: "MIT License",
-		version: "0.17.00-1vsu"
+		version: "0.17.01-0vsu"
 	}
 
 };
@@ -29,7 +29,7 @@ VSU.getMenuViewSurfaces = function() {
 
 	`<details id="VSUdet" ontoggle=VSU.setViewSurfacesSelectOptions(); >
 
-		<summary>Surfaces</summary>
+		<summary>VSU Surfaces</summary>
 
 		${ help }
 
@@ -69,12 +69,12 @@ VSU.setViewSurfacesSelectOptions = function() {
 
 	if ( VSUdet.open === false ) { return; }
 
-	const attribute = VSUselAttribute.value;
-	//console.log( 'attribute', attribute );
-
 	VSUinpSelectIndex.value = "";
 
 	let color, text;
+
+	const attribute = VSUselAttribute.value;
+	//console.log( 'attribute', attribute );
 
 	const htmOptions = GBX.surfaces.map( (surface, index ) => {
 
@@ -94,12 +94,12 @@ VSU.setViewSurfacesSelectOptions = function() {
 
 		}
 
-
 		return `<option style=background-color:${ color } value=${ index } >${ text }</option>`;
 
 	} );
 
 	VSUselViewSurfaces.innerHTML = htmOptions;
+
 	VSUspnCount.innerHTML = `${ GBX.surfaces.length } surfaces found.`;
 
 	THR.controls.enableKeys = false;
@@ -108,53 +108,16 @@ VSU.setViewSurfacesSelectOptions = function() {
 
 
 
-VSU.setSelectedIndex = function( input, select ) {
-
-	const str = input.value.toLowerCase();
-
-	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
-
-	select.selectedIndex = str && option ? option.index : -1;
-
-};
-
-
-
 VSU.selectedSurfacesFocus = function( select ) {
 
-	POPX.intersected = GBX.meshGroup.children[ select.value ];
+	PIN.intersected = GBX.meshGroup.children[ select.value ];
 
-	POPX.setIntersected( POPX.intersected );
+	PIN.setIntersected( PIN.intersected );
 
-	const options = select.selectedOptions;
-	//console.log( 'option', options );
-
-	const indexes = Array.from( options ).map( option => Number( option.value ) );
+	const indexes = Array.from( select.selectedOptions ).map( option => Number( option.value ) );
 	//console.log( 'indexes', indexes );
 
-	VSU.surfaces = indexes.map( index => GBX.surfaces[ index ] );
+	GBX.meshGroup.children.forEach( mesh => mesh.visible = indexes.includes( mesh.userData.index ) ? true : false );
 
-	GBXU.sendSurfacesToThreeJs( VSU.surfaces );
-
-};
-
-
-
-VSU.setViewSurfaceShowHide = function( button, surfaceArray ) {
-	//console.log( 'surfaceArray', surfaceArray );
-
-	button.classList.toggle( "active" );
-
-	if ( VSUselViewSurfaces.selectedIndex === -1 ) { alert( "First, select a surface from the list"); return; }
-
-	if ( button.classList.contains( 'active' ) && surfaceArray.length ) {
-
-		GBXU.sendSurfacesToThreeJs( surfaceArray );
-
-	} else {
-
-		GBX.meshGroup.children.forEach( element => element.visible = true );
-
-	}
 
 };

@@ -7,11 +7,11 @@ const VTY = {
 	script: {
 
 		copyright: "Copyright 2019 Ladybug Tools authors",
-		date: "2019-07-22",
+		date: "2019-07-25",
 		description: "Show or hide the surfaces (VTY) in a gbXML file by surface type.",
-		helpFile: "../v-0-17-00/js-view-gbxml/vst-view-surface-types.md",
+		helpFile: "../v-0-17-01/js-view-gbxml/vty-view-surface-types.md",
 		license: "MIT License",
-		version: "0.17.00-1vst"
+		version: "0.17.01-0vst"
 
 	}
 
@@ -31,7 +31,7 @@ VTY.getMenuViewSurfaceTypes = function() {
 	`
 		<details id=VTYdet ontoggle=VTY.onToggleSurfaceTypes(); >
 
-			<summary>Surfaces by type</summary>
+			<summary>VTY Surfaces by type</summary>
 
 			${ help }
 

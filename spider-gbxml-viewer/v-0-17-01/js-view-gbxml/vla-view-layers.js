@@ -1,4 +1,4 @@
-/* globals GBX, POPX, ISCOR, divDragMoveContent*/
+/* globals GBX, PIN, ISCOR, divDragMoveContent*/
 // jshint esversion: 6
 // jshint loopfunc: true
 
@@ -7,11 +7,11 @@ const VLA = {
 	script: {
 
 		copyright: "Copyright 2019 Ladybug Tools authors",
-		date: "2019-07-22",
+		date: "2019-07-25",
 		description: "View by layers (VLA) provides HTML and JavaScript to view individual surfaces.",
-		helpFile: "../v-0-17-00/js-view-gbxml/vla-view-layers.md",
+		helpFile: "../v-0-17-01/js-view-gbxml/vla-view-layers.md",
 		license: "MIT License",
-		version: "0.17-00-1vla"
+		version: "0.17-01-1vla"
 	}
 
 };
@@ -114,7 +114,7 @@ VLA.getLayersAttributes = function( index ) {
 
 	const typeId = typeTxt.match( ` id="(.*?)"` )[ 1 ];
 
-	const typeXml = POPX.parser.parseFromString( typeTxt, "application/xml").documentElement;
+	const typeXml = PIN.parser.parseFromString( typeTxt, "application/xml").documentElement;
 	//console.log( 'typeXml ', typeXml );
 
 	const htmType = GSA.getAttributesHtml( typeXml );

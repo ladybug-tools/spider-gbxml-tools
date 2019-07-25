@@ -1,4 +1,4 @@
-/* globals GBX, POPX, ISCOR, divDragMoveContent*/
+/* globals GBX, PIN, ISCOR, divDragMoveContent*/
 // jshint esversion: 6
 // jshint loopfunc: true
 
@@ -7,9 +7,9 @@ const VWT = {
 	script: {
 
 		copyright: "Copyright 2019 Ladybug Tools authors",
-		date: "2019-07-22",
+		date: "2019-07-25",
 		description: "View by Surfaces (VWT) provides HTML and JavaScript to view individual opening types",
-		helpFile: "../v-0-17-00/js-view-gbxml/vwt-view-opening-types.md",
+		helpFile: "../v-0-17-01/js-view-gbxml/vwt-view-opening-types.md",
 		license: "MIT License",
 		version: "0.17.00-1vwt"
 
@@ -54,7 +54,7 @@ VWT.getMenuViewWindowTypes = function() {
 		<p>Select multiple types by pressing shift or control keys</p>
 
 		<p>
-			<button onclick=POPX.onClickZoomAll(); >
+			<button onclick=PIN.onClickZoomAll(); >
 				Reset view
 			</button>
 		</p>
@@ -149,7 +149,7 @@ VWT.getWindowTypesAttributes = function( index ) {
 
 	const typeId = typeTxt.match( ` id="(.*?)"` )[ 1 ];
 
-	const typeXml = POPX.parser.parseFromString( typeTxt, "application/xml").documentElement;
+	const typeXml = PIN.parser.parseFromString( typeTxt, "application/xml").documentElement;
 	//console.log( 'typeXml ', typeXml );
 
 	const htmType = GSA.getAttributesHtml( typeXml );

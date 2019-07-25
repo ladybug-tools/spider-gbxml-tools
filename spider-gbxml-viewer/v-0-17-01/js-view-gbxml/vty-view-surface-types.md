@@ -1,6 +1,6 @@
 # VTY View Surface Types Read Me
 
-[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-view-gbxml/vst-view-surface-types.js )
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-01/js-view-gbxml/vst-view-surface-types.js )
 
 <details open >
 

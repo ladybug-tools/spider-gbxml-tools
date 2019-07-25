@@ -106,11 +106,13 @@ PIN.setIntersected = function( intersected = PIN.intersectedLast ) { // called b
 
 	PIN.intersected = intersected;
 
-	intersected.material.opacity = 1;
-
 	PIN.surfaceXml = PIN.getIntersectedDataGbxml();
 
-	PIN.setIntersectedParticleAtPoint( PIN.intersects[ 0 ].point );
+	if ( PIN.intersects && PIN.intersects.length > 0 ) {
+
+		PIN.setIntersectedParticleAtPoint( PIN.intersects[ 0 ].point );
+
+	}
 
 	PIN.drawBorder( PIN.surfaceXml );
 

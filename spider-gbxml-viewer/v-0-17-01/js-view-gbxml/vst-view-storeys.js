@@ -1,4 +1,4 @@
-/* globals GBX, VST, THREE, THR, POPX, divDragMoveContent, VSTdetMenu, VSTselStorey, VSTdivReportsLog, VSTdivSurfaceType */
+/* globals GBX, VST, THREE, THR, PIN, divDragMoveContent, VSTdetMenu, VSTselStorey, VSTdivReportsLog, VSTdivSurfaceType */
 // jshint esversion: 6
 // jshint loopfunc: true
 
@@ -7,11 +7,11 @@ const VST = {
 	script: {
 
 		copyright: "Copyright 2019 Ladybug Tools authors",
-		date: "2019-07-22",
+		date: "2019-07-25",
 		description: "View the surfaces in a gbXML file by selecting one or more storeys from a list of all storeys",
-		helpFile: "../v-0-17-00/js-view-gbxml/vst-view-storeys.md",
+		helpFile: "../v-0-17-01/js-view-gbxml/vst-view-storeys.md",
 		license: "MIT License",
-		version: "0.17.00-2vst"
+		version: "0.17.01-0vst"
 
 	}
 
@@ -29,7 +29,7 @@ VST.getMenuViewStoreys = function() {
 	`
 		<details id=VSTdetMenu ontoggle=VST.setViewStoreysOptions(); >
 
-			<summary>Storeys</summary>
+			<summary>VST Storeys</summary>
 
 			${help }
 
@@ -140,7 +140,7 @@ VST.selStoreys = function() {
 
 	VSTdivReportsLog.innerHTML = `<p>${ GBXU.sendSurfacesToThreeJs( VST.surfacesFilteredStorey ) }</p>`;
 
-	divDragMoveContent.innerHTML = POPX.getStoreyAttributes( VSTselStorey.value );
+	divDragMoveContent.innerHTML = PIN.getStoreyAttributes( VSTselStorey.value );
 
 };
 

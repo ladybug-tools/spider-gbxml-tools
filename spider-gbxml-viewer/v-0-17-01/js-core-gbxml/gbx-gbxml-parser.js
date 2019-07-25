@@ -8,7 +8,7 @@ var GBX = {
 	description: "Parse gbXML surfaces etc and use the data to create Three.js meshes",
 	helpFile: "../js-core-gbxml/gbx-gbxml-parser.md",
 	license: "MIT License",
-	urlSourceCode: "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-00/js-core-gbxml",
+	urlSourceCode: "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-01/js-core-gbxml",
 	version: "0.17.00-3gbx"
 };
 
@@ -82,7 +82,7 @@ GBX.parseFile = function( gbxml )  {
 	THRU.setSceneDispose( [
 		THRU.axesHelper, THRU.boundingBoxHelper, THRU.edgeGroup, THRU.groundHelper, THRU.helperNormalsFaces,
 		GBX.meshGroup, GBX.openingGroup, GBX.placards, GBX.boundingBox,
-		//POPX.line, POPX.particle
+		//PIN.line, PIN.particle
 	] );
 
 	THRU.edgeGroup = [];

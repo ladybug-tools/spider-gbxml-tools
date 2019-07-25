@@ -1,4 +1,4 @@
-/* globals THR, GBX, GBXU, VGC, POPX, POPF, divDragMoveFooter, navDragMove, VCIOdet, VCIOselViewGroup, VCIOspnCount */
+/* globals THR, GBX, GBXU, VGC, PIN, POPF, divDragMoveFooter, navDragMove, VCIOdet, VCIOselViewGroup, VCIOspnCount */
 // jshint esversion: 6
 // jshint loopfunc: true
 
@@ -6,11 +6,11 @@ const VCIO = {
 
 	script: {
 		copyright: "Copyright 2019 Ladybug Tools authors",
-		date: "2019-07-22",
+		date: "2019-07-25",
 		description: "View by CAD Object ID open (VCIO) provides HTML and JavaScript to view openings by their CAD Object ID group.",
-		helpFile: "../v-0-17-00/js-view-gbxml/vcio-view-cad-object-id-open.md",
+		helpFile: "../v-0-17-01/js-view-gbxml/vcio-view-cad-object-id-open.md",
 		license: "MIT License",
-		version: "0.17.00-1vcio"
+		version: "0.17.01-0vcio"
 	}
 
 };
@@ -25,7 +25,7 @@ VCIO.getMenuViewCadObjectIdOpen = function() {
 
 	`<details id="VCIOdet" ontoggle=VCIO.setViewOptions(); >
 
-		<summary>CAD object id opening groups </summary>
+		<summary>VCIO CAD object id opening groups </summary>
 
 		${ help }
 
@@ -63,6 +63,8 @@ VCIO.getMenuViewCadObjectIdOpen = function() {
 VCIO.setViewOptions = function() {
 
 	if ( VCIOdet.open === false ) { return; }
+
+	VCIOinpSelectIndex.value = "";
 
 	let color;
 

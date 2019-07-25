@@ -1,6 +1,6 @@
 # GBX gbXML Parser Read Me
 
-[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-00/js-core-gbxml )
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-01/js-core-gbxml )
 
 <details open >
 
@@ -33,7 +33,7 @@
 
 0.17.00-2gbx
 
-* R - GBX.js: POPX line/particle to scene dispose
+* R - GBX.js: PIN line/particle to scene dispose
 
 
 ### 2019-07-15 ~ Theo

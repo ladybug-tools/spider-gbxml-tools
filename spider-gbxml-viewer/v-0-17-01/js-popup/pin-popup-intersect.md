@@ -1,6 +1,6 @@
-# POPX gbXML Popoup v0.16.01-2popx Read Me
+# PIN gbXML Popoup v0.16.01-2PIN Read Me
 
-[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-00/js-popup/popx-popup-gbxml.js )
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-01/js-popup/PIN-popup-gbxml.js )
 
 <details open >
 
@@ -31,21 +31,21 @@
 
 ## 2019-06-26 ~ Theo
 
-0.16.01-2popx
+0.16.01-2PIN
 
-* F - POPX.js: add previous button
-* F - POPX.js: Add better button toggles
-* F - POPX.js: View two spaces at once
-* F - POPX.js: Add update surface opacity
-* F - POPX.js: Reset opacity on zoom all
+* F - PIN.js: add previous button
+* F - PIN.js: Add better button toggles
+* F - PIN.js: View two spaces at once
+* F - PIN.js: Add update surface opacity
+* F - PIN.js: Reset opacity on zoom all
 
-* 2019-06-25 ~ Theo ~ to do <button onclick=POPX.toggleVertexPlacards(); title="Display vertex numbers" > # </button>
+* 2019-06-25 ~ Theo ~ to do <button onclick=PIN.toggleVertexPlacards(); title="Display vertex numbers" > # </button>
 
 ## 2019-06-25 ~ Theo
 
-* F - POPX.js: add vertex placards
-* R - POPX.js: cleanup
+* F - PIN.js: add vertex placards
+* R - PIN.js: cleanup
 * F - First commit of read me
-* C - POPXjs: add default params
+* C - PINjs: add default params
 
 </details>

@@ -34,9 +34,9 @@ VEX.explodeInit = function() {
 
 	THR.scene.updateMatrixWorld();
 
-	POPX.intersected = null;
+	PIN.intersected = null;
 
-	THR.scene.remove( POPX.line, POPX.particle );
+	THR.scene.remove( PIN.line, PIN.particle );
 
 	GBX.meshGroup.traverse( function ( child ) { // gather original positions
 
