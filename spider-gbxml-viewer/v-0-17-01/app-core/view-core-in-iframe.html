@@ -5,8 +5,8 @@
 <meta name = "viewport" content= "width=device-width, initial-scale=1" >
 <meta name = "description" content = "Spider gbXML Viewer running in an iframe that you may resize." >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
-<meta name = "date" content = "2019-07-09" >
-<meta name = "version" content = "0.17.00" >
+<meta name = "date" content = "2019-07-26" >
+<meta name = "version" content = "0.17.01" >
 <title></title>
 <style>
 
@@ -87,7 +87,7 @@
 
 var ifr;
 
-const urlSourceCode = "https://github.com/zzzzz/xxxxx.html";
+const urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-01/app-core/view-core-in-iframe.html";
 const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-64.png";
 
 init();
@@ -100,7 +100,7 @@ function init() {
 
 	ifr = ifrMain.contentWindow;
 
-	ifr.onload = () => { console.log( 'on load', ifr.GBX ); }
+	ifr.onload = () => { console.log( 'on load', ifr.GBX ); } // not needed - just to show it's available
 
 }
 
