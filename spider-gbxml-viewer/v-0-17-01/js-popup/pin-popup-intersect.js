@@ -94,6 +94,8 @@ PIN.onDocumentMouseDown = function( event ) {
 
 		divDragMoveContent.innerHTML = '';
 
+		divDragMoveFooter.innerHTML = POP.footer;
+
 		THR.scene.remove( PIN.line, PIN.particle );
 
 	}

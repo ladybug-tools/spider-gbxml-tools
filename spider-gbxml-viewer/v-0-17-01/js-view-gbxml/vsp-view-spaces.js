@@ -133,7 +133,7 @@ VSP.setViewSpacesOptions = function() {
 
 VSP.selSpacesFocus = function() {
 
-	VGC.setPopup();
+	VGC.setPopupBlank();
 
 	VSP.surfacesFilteredSpace = VSP.getSurfacesFilteredSpace();
 

@@ -1,20 +1,24 @@
 /* globals THREE, THR, THRU, FOB, GBXU */
 // jshint esversion: 6
-//
+// jshint loopfunc: true
+
 
 var GBX = {
-	copyright: "Copyright 2019 Ladybug Tools authors. MIT License",
-	date: "2019-07-15",
-	description: "Parse gbXML surfaces etc and use the data to create Three.js meshes",
-	helpFile: "../js-core-gbxml/gbx-gbxml-parser.md",
-	license: "MIT License",
-	urlSourceCode: "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-01/js-core-gbxml",
-	version: "0.17.00-3gbx"
+	script: {
+
+		copyright: "Copyright 2019 Ladybug Tools authors",
+		date: "2019-07-25",
+		description: "Parse gbXML surfaces etc and use the data to create Three.js meshes",
+		helpFile: "../js-core-gbxml/gbx-gbxml-parser.md",
+		license: "MIT License",
+		urlSourceCode: "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-01/js-core-gbxml",
+		version: "0.17.01-0gbx"
+	}
+
 };
 
 GBX.filtersDefault = [ "Air", "ExposedFloor", "ExteriorWall", "RaisedFloor", "Roof",  "Shade",
 	"SlabOnGrade", "UndergroundWall", "UndergroundSlab" ];
-
 
 
 GBX.colorsDefault = {
@@ -40,6 +44,9 @@ GBX.colorsDefault = {
 
 GBX.colors = Object.assign( {}, GBX.colorsDefault ); // create working copy of default colors
 GBX.surfaceTypes = Object.keys( GBX.colors );
+
+//let colors =  GBX.surfaceTypes.map( type => GBX.colorsDefault[ type ].toString( 16 ) );
+//GBX.colorsHex = colors.map( color => color.length > 4 ? color : '00' + color ); // otherwise greens no show
 
 GBX.opacity = 0.85;
 
@@ -82,8 +89,10 @@ GBX.parseFile = function( gbxml )  {
 	THRU.setSceneDispose( [
 		THRU.axesHelper, THRU.boundingBoxHelper, THRU.edgeGroup, THRU.groundHelper, THRU.helperNormalsFaces,
 		GBX.meshGroup, GBX.openingGroup, GBX.placards, GBX.boundingBox,
-		//PIN.line, PIN.particle
 	] );
+
+	if ( window.PIN ) THRU.setSceneDispose( [ PIN.line, PIN.particle ] );
+
 
 	THRU.edgeGroup = [];
 	GBX.openingGroup = [];
@@ -140,11 +149,15 @@ GBX.getSpacesJson = function() {
 
 		const spaceIndex = index;
 
-		zoneId = space.match( / zoneIdRef="(.*?)"/i )[ 1 ];
+		let zoneId = space.match( / zoneIdRef="(.*?)"/i )
 
-		zoneIndex = GBX.zones.findIndex( zone => zone.includes( zoneId ) );
+		zoneId = zoneId ? zoneId[ 1 ] : "";
 
-		const storeyId = space.match( / buildingStoreyIdRef="(.*?)"/i )[ 1 ];
+		const zoneIndex = GBX.zones.findIndex( zone => zone.includes( zoneId ) );
+
+		let storeyId = space.match( / buildingStoreyIdRef="(.*?)"/i )
+
+		storeyId = storeyId ? storeyId[ 1 ] : "";
 
 		const storeyIndex = GBX.storeys.findIndex( storey => storey.includes( storeyId ) );
 

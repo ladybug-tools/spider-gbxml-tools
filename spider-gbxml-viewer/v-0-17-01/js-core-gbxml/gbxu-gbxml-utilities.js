@@ -3,13 +3,17 @@
 
 var GBXU = {
 
-	copyright: "Copyright 2019 Ladybug Tools authors. MIT License",
-	date: "2019-07-24",
-	description: "GbXML utilities: all this is a bit idiosyncratic / a random collection of stuff",
-	helpFile: "../js-view-gbxml/gbxu-gbxml-utilities.md",
-	license: "MIT License",
-	urlSourceCode: "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-01/js-core-gbxml",
-	version: "0.17.01-0gbxu"
+	script: {
+
+		copyright: "Copyright 2019 Ladybug Tools authors",
+		date: "2019-07-25",
+		description: "GbXML utilities: all this is a bit idiosyncratic / a random collection of stuff",
+		helpFile: "../js-view-gbxml/gbxu-gbxml-utilities.md",
+		license: "MIT License",
+		urlSourceCode: "js-core-gbxml/gbxu-gbxml-utilities.js",
+		version: "0.17.01-0gbxu"
+
+	}
 
 };
 
@@ -23,9 +27,9 @@ GBXU.filtersDefault = [ "Air", "ExposedFloor", "ExteriorWall", "RaisedFloor", "R
 
 GBXU.onGbxParse = function() { // see GBX.parseFile
 
-	THR.scene.remove( PIN.line, PIN.particle );
+	if ( PIN.line ) THR.scene.remove( PIN.line, PIN.particle );
 
-	POP.setPopupShowHide( butPopupClose, POP.popup);
+	if ( navDragMove ) POP.setPopupShowHide( butPopupClose, POP.popup );
 
 	GBXU.setSurfaceTypesVisible( GBXU.filtersDefault );
 
@@ -53,26 +57,19 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 	window.addEventListener( 'click', GBXU.onFirstTouch, false );
 	window.addEventListener( 'touchstart', GBXU.onFirstTouch, false );
 
-	//if ( GBX.messageDiv ) { GBX.messageDiv.innerHTML = GBXU.stats; }
+	PFO.surfaceTypesInUse = GBX.surfaceTypes.filter( type => GBX.surfaces.find( surface => surface.includes( `"${ type }"` ) ) );
 
-	PFO.storeyIdsActive = undefined;
+	PFO.surfaceTypesActive = !PFO.surfaceTypesActive ? PFO.surfaceTypesInUse : PFO.surfaceTypesActive;
 
-	PFO.surfaceTypesActive = undefined;
+	GBX.getStoreysJson();
 
-	GBXU.toggleDetailsOpen( detMenuViewGbxml )
+	PFO.storeyIdsInUse = GBX.storeysJson.map( storey => storey.id );
+
+	PFO.storeyIdsActive = !PFO.storeyIdsActive ? PFO.storeyIdsInUse : PFO.storeyIdsActive;
+
+	if ( window.detMenuViewGbxml ) MNU.toggleDetailsOpen( detMenuViewGbxml );
 
 };
-
-
-
-GBXU.toggleDetailsOpen = function( target = navPanel ) {
-
-	console.log( 'target', target );
-	const details = target.querySelectorAll( "details" );
-
-	details.forEach( detail => detail.open = false );
-
-}
 
 
 
@@ -167,7 +164,7 @@ GBXU.setStats = function() {
 		</div>`
 	).join( "");
 
-	GBX.messageDiv.innerHTML = GBXU.stats;
+	GBX.messageDiv.innerHTML = GBXU.stats + "<br><b>File Statistics</b>" + FOB.fileInfo;
 
 };
 

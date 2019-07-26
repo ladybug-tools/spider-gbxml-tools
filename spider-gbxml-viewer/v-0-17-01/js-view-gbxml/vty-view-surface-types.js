@@ -9,9 +9,10 @@ const VTY = {
 		copyright: "Copyright 2019 Ladybug Tools authors",
 		date: "2019-07-25",
 		description: "Show or hide the surfaces (VTY) in a gbXML file by surface type.",
-		helpFile: "../v-0-17-01/js-view-gbxml/vty-view-surface-types.md",
+		helpFile: "js-view-gbxml/vty-view-surface-types.md",
 		license: "MIT License",
-		version: "0.17.01-0vst"
+		sourceCode: "js-view-gbxml/vty-view-surface-types.js",
+		version: "0.17.01-0vty"
 
 	}
 
@@ -25,18 +26,20 @@ VTY.filtersDefault = [ "Air", "ExposedFloor", "ExteriorWall", "Roof", "Shade" ];
 VTY.getMenuViewSurfaceTypes = function() {
 
 
-	const help = VGC.getHelpButton("VTYbutSum",VTY.script.helpFile);
+	const source = `<a href=${ MNU.urlSourceCode + VTY.script.sourceCode } target=_blank >${ MNU.urlSourceCodeIcon } source code</a>`;
+
+	const help = VGC.getHelpButton("VTYbutSum",VTY.script.helpFile,POP.footer,source);
 
 	const htm =
 	`
-		<details id=VTYdet ontoggle=VTY.onToggleSurfaceTypes(); >
+		<details id=VTYdet ontoggle=VTY.setSurfaceTypeOptions(); >
 
 			<summary>VTY Surfaces by type</summary>
 
 			${ help }
 
 			<p>
-				Show by surface type. Default is exterior surfaces only.
+				Show by surface type.
 			</p>
 
 			<p id="VTYdivSurfaceTypes" ></p>
@@ -44,18 +47,22 @@ VTY.getMenuViewSurfaceTypes = function() {
 			<div id="VTYdivReportsLog" ></div>
 
 			<p>
-				<button onclick=VTY.onToggleInteriorExterior(this) >show/hide interior/exterior</button>
+				<button class=butEye id=VTYbutShowAll onclick=VTY.setAllTypesVisible(this); >set all surface types visible </button>
+			</p>
 
-				<button id=butExposed onclick=VTY.setSurfacesActiveByFilter(this,'exposedToSun="true"'); >show/hide 'exposedToSun' </button>
+
+			<p>
+				<button class=butEye onclick=PFO.onToggleInteriorExterior(this) >show/hide interior/exterior</button>
 			</p>
 
 			<p>
-				<button onclick=VTY.onToggleHorizontalVertical(this) >show/hide horizontal vertical</button>
+				<button class=butEye id=butExposed onclick=VTY.setSurfacesActiveByFilter(this,'exposedToSun="true"'); >show/hide 'exposedToSun' </button>
 			</p>
 
 			<p>
-				<button id=VTYbutShowAll onclick=VTY.setShowAll(this); >show/hide all surfaces</button>
+				<button class=butEye onclick=VTY.onToggleHorizontalVertical(this) >show/hide horizontal vertical</button>
 			</p>
+
 
 		</details>
 	`;
@@ -63,6 +70,104 @@ VTY.getMenuViewSurfaceTypes = function() {
 	return htm;
 
 };
+
+
+VTY.setAllTypesVisible = function(){
+
+	const buttons = VTYdet.querySelectorAll( `button` );
+
+	Array.from( buttons ).forEach( button => {
+
+		if ( !button.classList.contains( "butEye") ) { button.classList.add( "active" ); }
+
+	} );
+
+	const buttonsActive = VTYdet.getElementsByClassName( "active" ); // collection
+
+	PFO.surfaceTypesActive = Array.from( buttonsActive ).map( button => button.innerText );
+
+	GBX.meshGroup.children.forEach( child => child.visible = true );
+
+};
+
+
+
+VTY.setSurfaceTypeOptions = function() {
+
+	let colors =  PFO.surfaceTypesInUse.map( type => GBX.colorsDefault[ type ].toString( 16 ) );
+	colors = colors.map( color => color.length > 4 ? color : '00' + color ); // otherwise greens no show
+
+	const buttonSurfaceTypes = PFO.surfaceTypesInUse.map( ( type, index ) =>
+		`
+		<div style="margin: 0.5rem 0;" >
+			<button class=butEye onclick=VTY.toggleThisSurfaceType("${ type}"); style=width:2rem; >👁️</button>
+			<button id=but${ type } class=${ PFO.surfaceTypesActive.includes( type ) ? "active" : "" }
+				onclick=VTY.toggleSurfaceByButtons(this); style="background-color:#${ colors[ index ] };width:10rem;" >
+				${ type }
+			</button>
+		</div>
+		`
+	);
+
+	VTYdivSurfaceTypes.innerHTML = buttonSurfaceTypes.join( "" );
+
+};
+
+
+
+VTY.toggleThisSurfaceType = function( surfaceType ) {
+	const buttonsActive = VTYdet.getElementsByClassName( "active" ); // collection
+
+	Array.from( buttonsActive ).forEach( button => button.classList.remove( "active" ) );
+
+	PFO.surfaceTypesActive = Array.from( buttonsActive ).map( button => button.innerText );
+
+	const button = VTYdet.querySelectorAll( `#but${ surfaceType }` );
+
+	VTY.toggleSurfaceByButtons( button[ 0 ] );
+
+}
+
+
+
+
+VTY.toggleSurfaceByButtons = function( button ) {
+
+	button.classList.toggle( "active" );
+
+	const buttonsActive = VTYdet.getElementsByClassName( "active" );
+
+	PFO.surfaceTypesActive = Array.from( buttonsActive ).map( button => button.innerText );
+
+	PFO.setVisible();
+
+};
+
+
+
+VTY.onToggleHorizontalVertical = function( button ) {
+
+	const buttonsActive = VTYsecViewSurfaceTypes.getElementsByClassName( "active" ); // collection
+
+	Array.from( buttonsActive ).forEach( butt => { if ( butt !== button ) ( butt.classList.remove( "active" ) ); } );
+
+	button.classList.toggle( "active" );
+
+	PFO.surfaceTypesActive = button.classList.contains( "active" ) ?
+
+		["Ceiling","ExposedFloor", "InteriorFloor","RaisedFloor", "Roof","SlabOnGrade","UndergroundCeiling", "UndergroundSlab"]
+		:
+		[ "ExteriorWall","InteriorWall","UndergroundWall" ];
+
+	PFO.setVisible();
+
+};
+
+
+
+
+
+
 
 
 
@@ -94,6 +199,7 @@ VTY.onToggleSurfaceTypes = function() {
 
 
 
+
 VTY.setSurfacesActiveByDefaults = function() {
 
 	const buttons = VTYdivSurfaceTypes.querySelectorAll( "button" );
@@ -120,7 +226,7 @@ VTY.toggleThisSurface = function( type ) {
 
 
 
-VTY.toggleSurfaceByButtons = function( button ) {
+VTY.xxxxtoggleSurfaceByButtons = function( button ) {
 
 	button.classList.toggle( "active" );
 
@@ -188,7 +294,7 @@ VTY.onToggleInteriorExterior = function( button ) {
 
 
 
-VTY.onToggleHorizontalVertical = function( button ) {
+VTY.vvvvonToggleHorizontalVertical = function( button ) {
 
 	const buttonsActive = VTYsecViewSurfaceTypes.getElementsByClassName( "active" ); // collection
 

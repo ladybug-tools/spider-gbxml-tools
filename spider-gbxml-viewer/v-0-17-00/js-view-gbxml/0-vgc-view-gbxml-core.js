@@ -25,6 +25,22 @@ VGC.getHelpButton = ( id, file ) => `<button id="${ id }" class="butHelp" onclic
 
 
 
+VGC.setPopup = function( intersected = null ) {
+
+	PIN.intersected = intersected;
+
+	THR.scene.remove( PIN.line, PIN.particle );
+
+	divDragMoveContent.innerHTML = "";
+
+	divDragMoveFooter.innerHTML = PFO.footer;
+
+	navDragMove.hidden = false;
+
+	THR.controls.enableKeys = false;
+
+};
+
 VGC.setSelectedIndex = function( input, select ) {
 
 	const str = input.value.toLowerCase();

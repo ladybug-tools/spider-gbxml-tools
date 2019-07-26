@@ -4,10 +4,10 @@
 
 <meta charset = "utf-8">
 <meta name = "copyright" content ="Ladybug Tools authors" >
-<meta name = "date" content = "2019-07-25" >
-<meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
+<meta name = "date" content = "2019-07-26" >
+<meta name = "description" content = "Basic file that opens a gbXML file and displays it in 3D" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.17.01-0cor" >
+<meta name = "version" content = "0.17.01-1cor" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
 <title>Spider gbXML Viewer Core</title>
@@ -41,7 +41,7 @@ body { font: 11pt monospace; margin: 0; overflow: hidden; }
 <script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r106/examples/js/controls/OrbitControls.js" ></script>
 
 <!-- Tootoo -->
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-05/fob-file-open-basic/fob-file-open-basic.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-06/fob-file-open-basic/fob-file-open-basic.js" ></script>
 
 <!-- Spider Three.js -->
 <script src = "js-core-three/thr-threejs.js" ></script>
@@ -56,8 +56,13 @@ body { font: 11pt monospace; margin: 0; overflow: hidden; }
 
 	<div id="divContents" ></div>
 
-	<div id="divMessage" style=position:absolute;left:3vh;top:1vh; >loading...</div>
+	<div style=position:absolute;left:3vh;top:1vh; >
 
+		<div id="GBXdivMessage" >loading...</div>
+
+		<div id="FOBdivMessage" ></div>
+
+	</div>
 
 <script>
 
@@ -68,6 +73,9 @@ FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristo
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/pittsburg-airport.zip";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/GreenBuildingXML/Sample-gbXML-Files@master/gbXML_TRK.xml";
 
+const PIN = {};
+const PFO = {};
+let navDragMove;
 
 init();
 THR.animate();
@@ -86,11 +94,11 @@ function init() {
 
 	THRU.init();
 
-	GBX.init( divMessage );
+	GBX.init( GBXdivMessage );
 
 	window.addEventListener ( 'hashchange', FOB.onHashChange, false );
 
-	FOB.onHashChange();
+	FOB.onHashChange( divContents );
 
 }
 

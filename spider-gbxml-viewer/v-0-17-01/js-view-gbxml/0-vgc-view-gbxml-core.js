@@ -10,7 +10,8 @@ const VGC = {
 		description: "utilities",
 		helpFile: "../v-0-17-01/js-view-gbxml/vgc-view-gbxml-core.md",
 		license: "MIT License",
-		version: "0.17.00-0vgc"
+		version: "0.17.01-0vgc"
+
 	}
 
 };
@@ -20,7 +21,8 @@ const VGC = {
 
 
 
-VGC.getHelpButton = ( id, file ) => `<button id="${ id }" class="butHelp" onclick="POP.setPopupShowHide(${id},'${file}');" >
+VGC.getHelpButton = ( id, file, footer, link ) => `<button id="${ id }" class="butHelp"
+	onclick="POP.setPopupShowHide(${id},'${file}',POP.footer,'${ link }');" >
 	? </button>`;
 
 
@@ -32,12 +34,14 @@ VGC.setSelectedIndex = function( input, select ) {
 	const option = Array.from( select.options ).find( option => option.innerHTML.toLowerCase().includes( str ) );
 
 	select.selectedIndex =  str && option ? option.index : -1;
+	
+	navDragMove.hidden = false;
 
 };
 
 
 
-VGC.xxxsetPopup = function( intersected = null ) {
+VGC.setPopupBlank = function( intersected = null ) {
 
 	PIN.intersected = intersected;
 

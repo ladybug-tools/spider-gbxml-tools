@@ -1,11 +1,11 @@
-# App Core Read Me
+# Spider gbXML Viewer Core Read Me
 
-[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-01/app-core )
 
 <details open >
 
 <summary>Concept</summary>
 
+Basic file that opens a gbXML file and displays it in 3D
 
 </details>
 
@@ -27,7 +27,9 @@
 
 <summary>Change Log</summary>
 
-### 2019-07-25 ~ Theo
+### 2019-07-26 ~ Theo
+
+SGV Core 0.17.01-0cor
 
 * F - First commit
 

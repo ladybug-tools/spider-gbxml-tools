@@ -93,14 +93,15 @@ PFO.setPanelSurfaceTypes = function() {
 
 	THR.scene.remove( PIN.line, PIN.particle );
 
-	const typesInUse = GBX.surfaceTypes.filter( type => GBX.surfaces.find( surface => surface.includes( `"${ type }"` ) ) );
+	//const typesInUse = GBX.surfaceTypes.filter( type => GBX.surfaces.find( surface => surface.includes( `"${ type }"` ) ) );
 
-	let colors =  typesInUse.map( type => GBX.colorsDefault[ type ].toString( 16 ) );
+	//PFO.surfaceTypesActive = !PFO.surfaceTypesActive ? typesInUse : PFO.surfaceTypesActive;
+
+	let colors =  PFO.surfaceTypesInUse.map( type => GBX.colorsDefault[ type ].toString( 16 ) );
 	colors = colors.map( color => color.length > 4 ? color : '00' + color ); // otherwise greens no show
 
-	PFO.surfaceTypesActive = !PFO.surfaceTypesActive ? typesInUse : PFO.surfaceTypesActive;
 
-	const buttonSurfaceTypes = typesInUse.map( ( type, index ) =>
+	const buttonSurfaceTypes = PFO.surfaceTypesInUse.map( ( type, index ) =>
 		`
 		<div style="margin: 0.5rem 0;" >
 			<button class=butEye onclick=PFO.toggleThisSurfaceType("${ type}"); style=width:2rem; >👁️</button>
@@ -112,11 +113,11 @@ PFO.setPanelSurfaceTypes = function() {
 		`
 	);
 
-	if ( !GBX.storeysJson ) { GBX.getStoreysJson(); }
+	//if ( !GBX.storeysJson ) { GBX.getStoreysJson(); }
 
-	const storeyIdsInUse = GBX.storeysJson.map( storey => storey.id );
+	//PFO.storeyIdsInUse = GBX.storeysJson.map( storey => storey.id );
 
-	PFO.storeyIdsActive = !PFO.storeyIdsActive ? storeyIdsInUse : PFO.storeyIdsActive;
+	//PFO.storeyIdsActive = !PFO.storeyIdsActive ? storeyIdsInUse : PFO.storeyIdsActive;
 
 	const options = GBX.storeysJson.map( storey => `<option value=${ storey.id } >${ storey.name }</option>` );
 
@@ -166,25 +167,6 @@ PFO.toggleSurfaceByButtons = function( button ) {
 	PFO.surfaceTypesActive = Array.from( buttonsActive ).map( button => button.innerText );
 
 	PFO.setVisible();
-
-};
-
-
-
-PFO.vvvvvsendSurfaceTypesToThreeJs = function( surfaceTypes ) {
-	//console.log( 'surfaceTypes', surfaceTypes );
-
-	const surfacesFiltered = surfaceTypes.flatMap( filter =>
-
-		GBX.surfaces.filter( surface => surface.includes( `"${ filter }"` ) )
-
-	);
-
-	PFO.surfaceTypesActive = surfaceTypes;
-
-	PFO.surfacesFilteredByType = surfacesFiltered;
-
-	GBXU.sendSurfacesToThreeJs( surfacesFiltered );
 
 };
 
