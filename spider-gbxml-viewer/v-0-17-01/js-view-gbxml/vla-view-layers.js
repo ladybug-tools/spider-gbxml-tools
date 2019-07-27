@@ -105,7 +105,7 @@ VLA.setViewLayersSelectOptions = function() { // needs cleanup!!
 
 VLA.selLayersFocus = function( select ) {
 
-	VGC.setPopup();
+	VGC.setPopupBlank();
 
 	divDragMoveContent.innerHTML = VLA.getLayersAttributes( select.value );
 

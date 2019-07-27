@@ -128,7 +128,7 @@ VCO.getViewConstructionsSelectOptions = function() {
 
 VCO.selectedConstructionsFocus = function( select ) {
 
-	VGC.setPopup()
+	VGC.setPopupBlank()
 
 	const constructionId = select.value;
 	//console.log( 'constructionId', constructionId );

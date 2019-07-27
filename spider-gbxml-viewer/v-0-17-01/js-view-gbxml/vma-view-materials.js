@@ -114,7 +114,7 @@ VMA.setViewMaterialsSelectOptions = function() {
 
 VMA.selMaterialsFocus = function( select ) {
 
-	VGC.setPopup
+	VGC.setPopupBlank();
 
 	divDragMoveContent.innerHTML = VMA.getMaterialsAttributes( select.value );
 

@@ -133,7 +133,7 @@ VWT.setViewSurfacesSelectOptions = function() {
 
 VWT.selWindowTypesFocus = function( select ) {
 
-	VGC.setPopup();
+	VGC.setPopupBlank();
 
 	divDragMoveContent.innerHTML = VWT.getWindowTypesAttributes( VWTselViewWindowTypes.value );
 

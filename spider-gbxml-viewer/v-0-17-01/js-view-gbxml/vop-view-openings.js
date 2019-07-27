@@ -7,11 +7,11 @@ const VOP = {
 	script: {
 
 		copyright: "Copyright 2019 Ladybug Tools authors",
-		date: "2019-07-25",
+		date: "2019-07-26",
 		description: "View by openings (VOP) provides HTML and JavaScript to view individual openings.",
-		helpFile: "../v-0-17-01/js-view-gbxml/vbo-view-opening.md",
+		helpFile: "../v-0-17-01/js-view-gbxml/vop-view-opening.md",
 		license: "MIT License",
-		version: "0.17-01-0vbo"
+		version: "0.17-01-0vop"
 
 	}
 
@@ -142,7 +142,10 @@ VOP.selectedOpeningsFocus = function( select ) {
 	const opening = VOP.openings[ select.value ];
 	//console.log( 'opening', opening );
 
-	PIN.intersected = GBX.meshGroup.children[ opening.surfaceIndex ];
+	//PIN.intersected = GBX.meshGroup.children[ opening.surfaceIndex ];
+
+	PIN.setIntersected( GBX.meshGroup.children[ opening.surfaceIndex ] )
+	//divDragMoveContent.innerHTML = PIN.getIntersectedDataGbxml()
 
 	const options = select.selectedOptions
 	//console.log( 'options', options );
@@ -156,5 +159,29 @@ VOP.selectedOpeningsFocus = function( select ) {
 	VOP.surfaceWithOpenings = openings.map( opening => GBX.surfaces[ opening.surfaceIndex ] );
 
 	GBXU.sendSurfacesToThreeJs( VOP.surfaceWithOpenings );
+
+	VOP.setOpeningShowHide( select );
+
+};
+
+
+VOP.setOpeningShowHide = function( select ) {
+
+	const index = select.value;
+
+	const opening = VOP.openings[ index ];
+
+	GBX.openingGroup.children.forEach( child => child.visible = false );
+
+	GBX.openingGroup.children[ opening.openingIndex ].visible = true;
+
+	GSAdetOpenings.open = true;
+
+	const openingDivs = Array.from( GSAdetOpenings.querySelectorAll( "div" ) );
+	//console.log( 'openingDivs', openingDivs );
+
+	const theDiv = openingDivs.find( item => item.id === "GSAdivOpening" + opening.openingInSurface );
+
+	theDiv.style.backgroundColor = 'pink';
 
 };
