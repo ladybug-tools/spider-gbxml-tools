@@ -41,7 +41,7 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 	GBXU.surfaceGroupVisible.add( ...arr );
 	//console.log( 'GBXU.surfaceGroupVisible', GBXU.surfaceGroupVisible );
 
-	const bbox = new THREE.Box3().setFromObject( GBX.surfaceGroupVisible );
+	const bbox = new THREE.Box3().setFromObject( GBX.surfaceGroup );
 	GBXU.boundingBox = new THREE.Box3Helper( bbox, 0xdddd00 );
 	//THR.scene.add( GBXU.boundingBox );
 
