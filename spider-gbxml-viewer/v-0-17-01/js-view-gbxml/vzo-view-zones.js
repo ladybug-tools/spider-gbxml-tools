@@ -167,12 +167,12 @@ VZO.getZonesOptions = function() {
 
 VZO.selectZoneFocus = function( select ) {
 
-	VGC.setPopup();
+	VGC.setPopupBlank();
 
 	const zoneId = select.value;
 	//console.log( 'zoneId', zoneId );
 
-	divDragMoveContent.innerHTML = PIN.getZoneAttributes( zoneId );
+	divDragMoveContent.innerHTML = PCO.getZoneAttributes( zoneId );
 
 	const options = select.selectedOptions
 	//console.log( 'options', options );
