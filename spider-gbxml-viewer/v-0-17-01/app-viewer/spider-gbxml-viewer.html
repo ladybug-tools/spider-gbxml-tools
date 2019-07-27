@@ -21,9 +21,10 @@
 
 <style>
 
-	#divContents { border: 0px solid red; height: 100%; max-width: 100%; }
+	#divContents { height: 100vh; max-width: 100vw; }
 
 </style>
+
 </head>
 
 <body>
@@ -38,31 +39,32 @@
 <script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r106/examples/js/controls/OrbitControls.js" ></script>
 
 
+<!--TooToo ~ menus generally -->
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-06/pop-popup/pop-popup.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-06/mnu-menu/mnu-menu.js" ></script>
+
+
 <!-- Spider Three.js -->
 <script src = "js-core-three/thr-threejs.js" ></script>
 <script src = "js-core-three/thru-threejs-utilities.js" ></script>
 
 
-<!-- Spider gbXML forks -->
+<!-- Spider gbXML -->
 <script src = "js-core-gbxml/gbx-gbxml-parser.js" ></script>
 <script src = "js-core-gbxml/gbxu-gbxml-utilities.js" ></script>
 <script src = "js-core-gbxml/gsa-gbxml-surface-attributes.js" ></script>
 
 
-<!-- Menus generally -->
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-05/mnu-menu/mnu-menu.js" ></script>
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-05/pop-popup/pop-popup.js" ></script>
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-05/gat-github-access-token/gat-github-access-token.js" ></script>
-
-
 <!-- Spider popup menu -->
-<script src = "js-popup/PIN-popup-gbxml.js" ></script>
-<script src = "js-popup/popf-popup-footer.js" ></script>
+<script src = "js-popup/pin-popup-intersect.js" ></script>
+<script src = "js-popup/pco-popup-content.js" ></script>
+<script src = "js-popup/pfo-popup-footer.js" ></script>
 
 
 <!-- File menu panel -->
 <script src = "js-menu/gff-github-folder-files.js" ></script>
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-05/fob-file-open-basic/fob-file-open-basic.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-06/gat-github-access-token/gat-github-access-token.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-06/fob-file-open-basic/fob-file-open-basic.js" ></script>
 
 
 <!-- View gbXML menu -->
@@ -109,8 +111,8 @@
 
 
 <!-- Settings menu -->
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-05/thm-theme/thm-theme.js" ></script>
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-05/tmp-template/tmp-template.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-06/thm-theme/thm-theme.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-06/tmp-template/tmp-template.js" ></script>
 
 
 <!-- Core / local settings -->
@@ -137,10 +139,6 @@
 
 					<p>
 						See also <a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">gbXML Schema</a>
-					</p>
-
-					<p>
-						<button onclick=toggleDetailsOpen() >close all</button>
 					</p>
 
 				</div>
@@ -174,7 +172,7 @@
 
 			</details>
 
-			<details>
+			<details id="detMenuViewGbxml" open>
 
 				<summary class=sumMenuTitle >View gbXML menu</summary>
 
@@ -233,6 +231,17 @@
 
 			<details>
 
+				<summary class=sumMenuTitle >Fixer 3D menu</summary>
+
+				<div>
+					This menu is for scripts - very experimental - that utilize the Three.js linear algebra library to check for 3D errors
+					such as incorrect normals and InteriorWall surfaces on the exterior. The scripts will be available here soon.
+				</div>
+
+			</details>
+
+			<details>
+
 				<summary class=sumMenuTitle >Settings menu</summary>
 
 				<div id=THMdivMenuThemeSelect ></div>
@@ -266,7 +275,7 @@
 
 		<div id="divContents" ></div>
 
-		<div id="divMessage" style=position:absolute;left:10%;top:0; ></div>
+		<div id="divMessage" style=position:absolute;left:3vh;top:1vh; >loading...</div>
 
 	</main>
 
@@ -306,7 +315,8 @@
 <script>
 
 
-FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
+//FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
+FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/coventry-university-of-warwick-small.zip";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/annapolis-md-single-family-residential-2016.xml"
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/pittsburg-airport.zip";
@@ -326,20 +336,27 @@ function init() {
 
 	}
 
+	// Three.js
+
 	THR.getThreejs();
 
 	THRU.init();
 
 	GBX.init();
 
-	//const mesh = THRU.getGeometry();
-	//THR.scene.add( mesh );
+
+	// Theme
 
 	THMdivMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
 
 	THM.init();
 
+	// Menu header
+
 	MNUdivHeader.innerHTML = MNU.getNavHeader();
+
+
+	// File menu
 
 	GFFdivGithubFoldersFiles.innerHTML = GFF.getMenuGithubFoldersFiles();
 
@@ -349,7 +366,8 @@ function init() {
 
 	FOBdivFileSaveBasic.innerHTML = FOB.getMenuFileSaveBasic();
 
-	// gbXML menu
+
+	// View gbXML menu
 
 	VGsecViewGbxml.innerHTML = VG.getMenuViewGbxml();
 
@@ -378,16 +396,18 @@ function init() {
 	VWTsecViewWindowTypes.innerHTML = VWT.getMenuViewWindowTypes();
 
 
-	// Scene memu
+	// Settings menu
 
 	SETsecSettings.innerHTML = SET.getMenuSettings()
 
-
-
 	TMPdivTemplate.innerHTML = TMP.getMenuTemplate();
+
+
+	// Help menu
 
 	MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();
 
+	//
 	POP.init();
 
 	PIN.init();
@@ -396,11 +416,9 @@ function init() {
 
 	GBX.init(); // gets things going
 
-	//if ( !parent.location.hash ) { parent.location.hash=FOB.urlDefaultFile; }
-
 	FOB.onHashChange();
 
-	POP.setPopupShowHide();
+	//POP.setPopupShowHide();
 
 	aViewSource.href = MNU.urlSourceCode;
 
@@ -409,6 +427,7 @@ function init() {
 }
 
 
+// to TooToo MNU??
 
 function toggleNavPanel() {
 
@@ -420,14 +439,6 @@ function toggleNavPanel() {
 
 }
 
-
-function toggleDetailsOpen() {
-
-	const details = navPanel.querySelectorAll( "details" );
-
-	details.forEach( detail => detail.open = false );
-
-}
 
 </script>
 </body>
