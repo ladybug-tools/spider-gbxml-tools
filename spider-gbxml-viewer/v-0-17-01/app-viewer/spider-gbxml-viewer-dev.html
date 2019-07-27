@@ -4,7 +4,7 @@
 
 <meta charset = "utf-8">
 <meta name = "copyright" content ="Ladybug Tools authors" >
-<meta name = "date" content = "2019-07-25" >
+<meta name = "date" content = "2019-07-26" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
 <meta name = "version" content = "0.17.01-0sgv" >
@@ -21,9 +21,10 @@
 
 <style>
 
-	#divContents { border: 0px solid red; height: 100%; max-width: 100%; }
+	#divContents { height: 100vh; max-width: 100vw; }
 
 </style>
+
 </head>
 
 <body>
@@ -38,21 +39,20 @@
 <script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r106/examples/js/controls/OrbitControls.js" ></script>
 
 
+<!--TooToo ~ menus generally -->
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-06/pop-popup/pop-popup.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-06/mnu-menu/mnu-menu.js" ></script>
+
+
 <!-- Spider Three.js -->
 <script src = "js-core-three/thr-threejs.js" ></script>
 <script src = "js-core-three/thru-threejs-utilities.js" ></script>
 
 
-<!-- Spider gbXML forks -->
+<!-- Spider gbXML -->
 <script src = "js-core-gbxml/gbx-gbxml-parser.js" ></script>
 <script src = "js-core-gbxml/gbxu-gbxml-utilities.js" ></script>
 <script src = "js-core-gbxml/gsa-gbxml-surface-attributes.js" ></script>
-
-
-<!--TooToo ~ menus generally -->
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-06/mnu-menu/mnu-menu.js" ></script>
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-06/pop-popup/pop-popup.js" ></script>
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-06/gat-github-access-token/gat-github-access-token.js" ></script>
 
 
 <!-- Spider popup menu -->
@@ -63,6 +63,7 @@
 
 <!-- File menu panel -->
 <script src = "js-menu/gff-github-folder-files.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-06/gat-github-access-token/gat-github-access-token.js" ></script>
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-06/fob-file-open-basic/fob-file-open-basic.js" ></script>
 
 
@@ -138,10 +139,6 @@
 
 					<p>
 						See also <a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">gbXML Schema</a>
-					</p>
-
-					<p>
-						<button onclick=toggleDetailsOpen() >close all</button>
 					</p>
 
 				</div>
@@ -278,7 +275,7 @@
 
 		<div id="divContents" ></div>
 
-		<div id="divMessage" style=position:absolute;left:10%;top:0; ></div>
+		<div id="divMessage" style=position:absolute;left:3vh;top:1vh; >loading...</div>
 
 	</main>
 
@@ -318,7 +315,8 @@
 <script>
 
 
-FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
+//FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
+FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/coventry-university-of-warwick-small.zip";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/annapolis-md-single-family-residential-2016.xml"
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/pittsburg-airport.zip";
@@ -338,20 +336,25 @@ function init() {
 
 	}
 
+	// Three.js
+
 	THR.getThreejs();
 
 	THRU.init();
 
 	GBX.init();
 
-	//const mesh = THRU.getGeometry();
-	//THR.scene.add( mesh );
+
+	// Theme
 
 	THMdivMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
 
 	THM.init();
 
+	// Menu header
+
 	MNUdivHeader.innerHTML = MNU.getNavHeader();
+
 
 	// File menu
 
@@ -363,7 +366,8 @@ function init() {
 
 	FOBdivFileSaveBasic.innerHTML = FOB.getMenuFileSaveBasic();
 
-	// gbXML menu
+
+	// View gbXML menu
 
 	VGsecViewGbxml.innerHTML = VG.getMenuViewGbxml();
 
@@ -392,7 +396,7 @@ function init() {
 	VWTsecViewWindowTypes.innerHTML = VWT.getMenuViewWindowTypes();
 
 
-	// Scene menu
+	// Settings menu
 
 	SETsecSettings.innerHTML = SET.getMenuSettings()
 
@@ -403,6 +407,7 @@ function init() {
 
 	MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();
 
+	//
 	POP.init();
 
 	PIN.init();
@@ -410,8 +415,6 @@ function init() {
 	COR.init();
 
 	GBX.init(); // gets things going
-
-	//if ( !parent.location.hash ) { parent.location.hash=FOB.urlDefaultFile; }
 
 	FOB.onHashChange();
 
@@ -436,15 +439,6 @@ function toggleNavPanel() {
 
 }
 
-
-function toggleDetailsOpen( target = navPanel ) {
-
-	console.log( 'target', target );
-	const details = target.querySelectorAll( "details" );
-
-	details.forEach( detail => detail.open = false );
-
-}
 
 </script>
 </body>

@@ -33,6 +33,15 @@ See Surface schema: http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.ht
 
 <summary>Change Log</summary>
 
+### 2019-07-26 ~ Theo
+
+VSU 0.17.01-1vsu
+
+* F: Add sort select box items
+* F: Add select box items in surface type colors
+* F: Add select box items ID as tooltip
+* B: Fix show/fide button
+
 ### 2019-07-25 ~ Theo
 
 VSU 0.17.01-0vsu

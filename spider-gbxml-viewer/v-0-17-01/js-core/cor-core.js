@@ -5,7 +5,7 @@
 const COR = {
 	"script": {
 		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-		"date": "2019-07-18",
+		"date": "2019-07-26",
 		"description": "core - contains local overrides",
 		"helpFile": "cor-core/README.md",
 		"version": "0.17.01-0cor",
@@ -13,6 +13,9 @@ const COR = {
 };
 
 THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-06/style.css";
+
+
+POP.license = "https://www.ladybug.tools/spider/pages/license.md";
 
 // For main menu header
 
@@ -53,16 +56,9 @@ COR.init = function() {
 
 			details { margin: 0 0 0.5rem 0; }
 
-			#divContents { border: 0px solid red; height: 100%; max-width: 100%; overflow: hidden;}
+			#divContents { height: 100%; max-width: 100%; }
 
 			.sumMenuTitle { padding: 0 0.5rem; text-align: left }
-
-			#navPanel { background-color: #eee; }
-
-			#VSTdivSurfaceType button  { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;
-				padding: 2px 5px; min-width: 13.5rem; }
-
-			#VSTdivSurfaceType button:hover { background: #ccc; color: #888 }
 
 		`;
 };

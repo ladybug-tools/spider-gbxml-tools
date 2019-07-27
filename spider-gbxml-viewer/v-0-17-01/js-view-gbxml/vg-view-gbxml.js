@@ -23,6 +23,9 @@ VG.getMenuViewGbxml = function() {
 
 
 	const help = VGC.getHelpButton("VGbutSum",VG.script.helpFile);
+
+	console.log( '', help  );
+
 	const htm =
 
 	`<details id="VGdet" ontoggle=VG.setViewGbxml(); >

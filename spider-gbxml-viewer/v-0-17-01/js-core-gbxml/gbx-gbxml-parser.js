@@ -48,6 +48,7 @@ GBX.surfaceTypes = Object.keys( GBX.colors );
 //let colors =  GBX.surfaceTypes.map( type => GBX.colorsDefault[ type ].toString( 16 ) );
 //GBX.colorsHex = colors.map( color => color.length > 4 ? color : '00' + color ); // otherwise greens no show
 
+
 GBX.opacity = 0.85;
 
 GBX.referenceObject = new THREE.Object3D();
