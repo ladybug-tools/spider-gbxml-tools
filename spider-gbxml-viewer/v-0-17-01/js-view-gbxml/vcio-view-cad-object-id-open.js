@@ -104,7 +104,7 @@ VCIO.setViewOptions = function() {
 
 VCIO.selectedGroupFocus = function( select ) {
 
-	VGC.setPopup();
+	VGC.setPopupBlank();
 
 	GBX.openingGroup.children.forEach( opening => opening.visible = false );
 

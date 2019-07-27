@@ -103,7 +103,7 @@ VCI.setViewOptions = function() {
 
 VCI.selectedSurfacesFocus = function( select ) {
 
-	VGC.setPopup();
+	VGC.setPopupBlank();
 
 	VCI.surfaces = [];
 

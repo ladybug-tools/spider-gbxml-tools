@@ -11,6 +11,7 @@ const VSP = {
 		description: "View the surfaces in a gbXML file by selecting one or more spaces from a list of all spaces",
 		helpFile: "../v-0-17-01/js-view-gbxml/vsp-view-spaces.md",
 		license: "MIT License",
+		sourceCode: "js-view-gbxml/vsp-view-spaces.js",
 		version: "0.17-01-1vsp"
 
 	}
@@ -21,8 +22,9 @@ const VSP = {
 
 VSP.getMenuViewSpaces = function() {
 
+	const source = `<a href=${ MNU.urlSourceCode + VSP.script.sourceCode } target=_blank >${ MNU.urlSourceCodeIcon } source code</a>`;
 
-	const help = VGC.getHelpButton("VSPbutSum",VSP.script.helpFile);
+	const help = VGC.getHelpButton("VSPbutSum",VSP.script.helpFile,POP.footer,source);
 
 	const selectOptions = [ "id", "CADObjectId", "spaceType", "Name" ]
 		.map( option => `<option ${ option === "Name" ? "selected" : "" } >${ option }</option>`);
@@ -42,7 +44,7 @@ VSP.getMenuViewSpaces = function() {
 			</p>
 
 			<div id="VSPdivViewSpaces" >
-				<select id=VSPselSpace onchange=VSP.selSpacesFocus(); multiple style=min-width:15rem; ></select
+				<select id=VSPselSpace onchange=VSP.selSpacesFocus(this); multiple style=min-width:15rem; ></select
 			</div>
 
 			<p id="VSPdivReportsLog" ></p>
@@ -53,7 +55,7 @@ VSP.getMenuViewSpaces = function() {
 			<p>Select multiple spaces by pressing shift or control keys</p>
 
 			<p>
-				<button onclick=VGC.toggleViewSelectedOrAll(this,VSPselSpace,VSP.surfacesFilteredSpace); >
+				<button onclick=VGC.toggleViewSelectedMeshes(this,VSPselSpace,VSP.visible); >
 					Show/hide all spaces
 				</button>
 			</p>
@@ -75,94 +77,71 @@ VSP.setViewSpacesOptions = function() {
 	VSPselSpace.size = GBX.spaces.length > 10 ? 10 : GBX.spaces.length;
 
 	const attribute = VSPselAttribute.value;
-	//console.log( 'attribute', attribute );
 
-	const spaceIds = GBX.spaces.map( space => space.match( 'id="(.*?)"' )[ 1 ] );
-	//console.log( 'spaceIds', spaceIds );
+	const options = GBX.spaces.map( ( space, index ) => {
 
-	let text;
-
-	const spaceNames = GBX.spaces.map( space => {
+		let text;
 
 		if ( [ "id", "spaceType" ].includes( attribute ) ) {
 
 			text = space.match( `${ attribute }="(.*?)"` );
-			text = text ? text[ 1 ] : "";
-			//console.log( 'text', text );
 
 		} else if ( [ "Name", "CADObjectId" ].includes( attribute ) ) {
 
 			text = space.match( `<${ attribute }>(.*?)<\/${ attribute }>` );
-			text = text ? text[ 1 ] : "";
-			//console.log( 'text', text );
 
 		}
+		text = text ? text[ 1 ] : "";
 
-		const spaceName = text ? text : "no space name in file";
+		text = text ? text : "no data in file";
 
-		return spaceName;
+		return { text, index };
 
 	} );
-	//console.log( 'spaceNames', spaceNames);
+
+	options.sort( (a, b) => b - a );
 
 	let color;
 
-	const spacesSorted = spaceNames.slice().sort( (a, b) => b - a );
-	//console.log( 'spacesSorted', spacesSorted );
+	const spaceIds = GBX.spacesJson.map( space => space.spaceId );
 
-	const options = spacesSorted.map( space => {
-		//console.log( 'level', level );
+	const htmOptions = options.map( option => {
 
 		color = color === 'pink' ? '' : 'pink';
 
-		const index = spaceNames.indexOf( space );
-		//console.log( 'indexUnsorted', indexUnsorted );
-
-		//console.log( 'spaceIds[ index ]', spaceIds[ index ]  );
-		return `<option style=background-color:${ color } value=${ spaceIds[ index ] } title="${ spaceIds[ index ] }" >${ spaceNames[ index ] }</option>`;
+		return `<option style=background-color:${ color } value=${ spaceIds[ option.index ]}
+			title="${ spaceIds[ option.index ] }" >${ option.text }</option>`;
 
 	} );
 
-	VSPselSpace.innerHTML = options;
+	VSPselSpace.innerHTML = htmOptions;
 
 	VSPspnCount.innerHTML = `${ GBX.spaces.length } spaces found.`;
 
+	THR.controls.enableKeys = false;
+
 };
 
 
 
-VSP.selSpacesFocus = function() {
+VSP.selSpacesFocus = function( select ) {
 
 	VGC.setPopupBlank();
 
-	VSP.surfacesFilteredSpace = VSP.getSurfacesFilteredSpace();
+	GBX.meshGroup.children.forEach( element => element.visible = false );
 
-	VSPdivReportsLog.innerHTML = GBXU.sendSurfacesToThreeJs( VSP.surfacesFilteredSpace );
+	VSP.ids = Array.from( select.selectedOptions ).map( option => option.value );
+
+	VSP.ids.forEach( id => // is there a simpler logic?
+
+		GBX.meshGroup.children.filter( mesh => mesh.userData.spaceIds.includes( id ) )
+			.filter( mesh => PFO.surfaceTypesActive.includes( mesh.userData.surfaceType ) )
+			.map( mesh => mesh.visible = true )
+	);
+
+
+	VSP.visible = GBX.meshGroup.children.filter( mesh => mesh.visible === true ).map( mesh => mesh.userData.index );
 
 	divDragMoveContent.innerHTML = PCO.getSpaceAttributes( VSPselSpace.value );
-
-};
-
-
-
-VSP.getSurfacesFilteredSpace = function(  ) {
-
-	const spaceIds = VSPselSpace.selectedOptions;
-
-	const surfacesFilteredSpace = [];
-
-	for ( let spaceId of spaceIds ) {
-		//console.log( 'spaceId', spaceId );
-
-		const surfacesVisibleSpace = GBX.surfaces.filter( surface =>
-			surface.includes( `spaceIdRef="${ spaceId.value }"`  ) );
-		//console.log( 'surfacesVisibleSpace', surfacesVisibleSpace );
-
-		surfacesFilteredSpace.push( ...surfacesVisibleSpace );
-
-	}
-	//console.log( 'surfacesFilteredSpace', surfacesFilteredSpace );
-
-	return surfacesFilteredSpace;
 
 };

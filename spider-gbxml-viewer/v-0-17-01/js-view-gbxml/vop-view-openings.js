@@ -137,7 +137,7 @@ VOP.setViewOpeningsSelectOptions = function() {
 
 VOP.selectedOpeningsFocus = function( select ) {
 
-	VGC.setPopup();
+	VGC.setPopupBlank();
 
 	const opening = VOP.openings[ select.value ];
 	//console.log( 'opening', opening );

@@ -21,10 +21,7 @@ const VG = {
 
 VG.getMenuViewGbxml = function() {
 
-
 	const help = VGC.getHelpButton("VGbutSum",VG.script.helpFile);
-
-	console.log( '', help  );
 
 	const htm =
 

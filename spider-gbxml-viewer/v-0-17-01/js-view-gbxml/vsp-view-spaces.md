@@ -1,6 +1,5 @@
 # VSP View Spaces Read Me
 
-[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-01/js-view/vbsp-view-by-spaces.js )
 
 <details open >
 
@@ -31,6 +30,13 @@ See Space schema: http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html
 <details>
 
 <summary>Change Log</summary>
+
+### 2019-07-26 ~ Theo
+
+VSP 0.17-01-1vsp
+
+* R: Use spacesJson for speed and simplicity
+* F: Use new help and source code links
 
 ### 2019-07-25 ~ Theo
 
