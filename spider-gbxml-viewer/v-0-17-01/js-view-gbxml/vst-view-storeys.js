@@ -7,12 +7,12 @@ const VST = {
 	script: {
 
 		copyright: "Copyright 2019 Ladybug Tools authors",
-		date: "2019-07-25",
-		description: "View the surfaces in a gbXML file by selecting one or more storeys from a list of all storeys",
+		date: "2019-07-29",
+		description: "View the surfaces in a gbXML file by selecting one or more storeys from the list of all storeys",
 		helpFile: "js-view-gbxml/vst-view-storeys.md",
 		license: "MIT License",
 		sourceCode: "js-view-gbxml/vst-view-storeys.js",
-		version: "0.17.01-0vst"
+		version: "0.17.01-1vst"
 
 	}
 
@@ -59,10 +59,10 @@ VST.getMenuViewStoreys = function() {
 			-->
 
 			<p>
-				<button onclick=VST.setAllStoreysVisible(); >
-					show all storeys
+				<button onclick=VGC.toggleViewSelectedMeshes(this,VSTselStoreys,VST.visible); >
+					Show/hide all storeys
 				</button>
-			<p>
+			</p>
 
 			<p>Select multiple storeys by pressing shift or control keys</p>
 
@@ -82,11 +82,21 @@ VST.setViewStoreysOptions = function() {
 
 	VSTselStoreys.size = GBX.storeys.length > 10 ? 10 : GBX.storeys.length;
 
-	const options = GBX.storeysJson.map( storey => `<option value=${ storey.id } title="id: ${ storey.id }">${ storey.level } m / ${ storey.name }</option>` );
+	let color;
+
+	const options = GBX.storeysJson.map( storey => {
+
+		color = color === 'pink' ? '' : 'pink';
+
+		return `<option style=background-color:${ color } value=${ storey.id } title="id: ${ storey.id }">${ storey.level } m / ${ storey.name }</option>}`
+
+	} );
 
 	VSTselStoreys.innerHTML = options;
 
 	VSTspnCount.innerHTML = `${ GBX.storeys.length } storeys found.`;
+
+	THR.controls.enableKeys = false;
 
 };
 
@@ -104,19 +114,10 @@ VST.selStoreys = function( select ) {
 
 	PFO.setVisible();
 
+	VST.visible = GBX.meshGroup.children.filter( mesh => mesh.visible === true ).map( mesh => mesh.userData.index );
+
+	VSTdivReportsLog.innerHTML = `<p>${ VST.visible.length } surfaces visible</p>`;
+
 	THR.controls.enableKeys = false;
-
-
-};
-
-
-
-VST.setAllStoreysVisible = function(){
-
-	PFO.storeyIdsActive = PFO.storeyIdsInUse;
-
-	PFO.setVisible();
-
-	VSTselStoreys.selectedIndex= -1;
 
 };

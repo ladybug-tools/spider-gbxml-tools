@@ -7,6 +7,9 @@
 
 View by Surfaces (VOP) provides HTML and JavaScript to view individual openings and their attributes
 
+
+
+
 </details>
 
 <details>
@@ -27,6 +30,8 @@ View by Surfaces (VOP) provides HTML and JavaScript to view individual openings 
 <details>
 
 <summary>Change Log</summary>
+
+
 
 ### 2019-07-26 ~ Theo
 

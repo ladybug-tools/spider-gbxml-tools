@@ -30,6 +30,16 @@ See [gbXML BuildingStorey schema]( http://gbxml.org/schema_doc/6.01/GreenBuildin
 
 <summary>Change Log</summary>
 
+
+### 2019-07-29 ~ Theo
+
+VST 0.17.01-1vst js
+
+* F: Add alternate colors to options in select box
+* F: Add show/hide all storeys
+* F: Add display number of visible surfaces
+
+
 ### 2019-07-22 ~ Theo
 
 VST 0.17.01-0vst

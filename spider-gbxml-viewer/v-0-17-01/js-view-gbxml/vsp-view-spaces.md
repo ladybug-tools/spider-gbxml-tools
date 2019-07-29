@@ -7,9 +7,10 @@
 
 View the surfaces in a gbXML file by selecting one or more spaces from a list of all spaces
 
-See Space schema: http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html#Link19D
+See [gbXML Space schema]( http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html#Link19D )
 
 	A space represents a volume enclosed by surfaces
+
 
 </details>
 
@@ -30,6 +31,13 @@ See Space schema: http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html
 <details>
 
 <summary>Change Log</summary>
+
+### 2019-07-29 ~ Theo
+
+VSP 0.17-01-2vsp js
+
+* R: Cleanup
+
 
 ### 2019-07-26 ~ Theo
 

@@ -7,12 +7,12 @@ const VSP = {
 	script: {
 
 		copyright: "Copyright 2019 Ladybug Tools authors",
-		date: "2019-07-25",
-		description: "View the surfaces in a gbXML file by selecting one or more spaces from a list of all spaces",
-		helpFile: "../v-0-17-01/js-view-gbxml/vsp-view-spaces.md",
+		date: "2019-07-29",
+		description: "View the surfaces in a gbXML file by selecting one or more spaces from a list of all the spaces",
+		helpFile: "js-view-gbxml/vsp-view-spaces.md",
 		license: "MIT License",
 		sourceCode: "js-view-gbxml/vsp-view-spaces.js",
-		version: "0.17-01-1vsp"
+		version: "0.17-01-2vsp"
 
 	}
 
@@ -130,17 +130,20 @@ VSP.selSpacesFocus = function( select ) {
 
 	GBX.meshGroup.children.forEach( element => element.visible = false );
 
-	VSP.ids = Array.from( select.selectedOptions ).map( option => option.value );
+	VSP.spaceIdsActive = Array.from( select.selectedOptions ).map( option => option.value );
 
-	VSP.ids.forEach( id => // is there a simpler logic?
+	VSP.spaceIdsActive.forEach( id => // is there a simpler logic?
 
 		GBX.meshGroup.children.filter( mesh => mesh.userData.spaceIds.includes( id ) )
 			.filter( mesh => PFO.surfaceTypesActive.includes( mesh.userData.surfaceType ) )
 			.map( mesh => mesh.visible = true )
+
 	);
 
 
 	VSP.visible = GBX.meshGroup.children.filter( mesh => mesh.visible === true ).map( mesh => mesh.userData.index );
+
+	VSPdivReportsLog.innerHTML = `${ VSP.visible.length } surfaces visible`;
 
 	divDragMoveContent.innerHTML = PCO.getSpaceAttributes( VSPselSpace.value );
 

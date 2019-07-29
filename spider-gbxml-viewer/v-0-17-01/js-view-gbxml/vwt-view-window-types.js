@@ -8,10 +8,10 @@ const VWT = {
 
 		copyright: "Copyright 2019 Ladybug Tools authors",
 		date: "2019-07-29",
-		description: "View by Surfaces (VWT) provides HTML and JavaScript to view individual opening types",
+		description: "View by Surfaces (VWT) provides HTML and JavaScript to view individual window types",
 		helpFile: "js-view-gbxml/vwt-view-window-types.md",
 		license: "MIT License",
-		sourceCode: "../v-0-17-01/js-view-gbxml/vwt-view-window-types.js",
+		sourceCode: "js-view-gbxml/vwt-view-window-types.js",
 		version: "0.17.01-2vwt"
 
 	}
