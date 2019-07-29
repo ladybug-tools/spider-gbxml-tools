@@ -7,8 +7,9 @@
 <summary>Concept</summary>
 
 * Windows Types
-* See WindowType schema: http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html#Link1CB
-	* One WindowType should be created for each type of window. Create a Blind, Frame, and Cost for each OpeningType, and then add as many Glaze and Gaps as exist in the window. Place these Glaze and Gap elements in order from outside to inside. For instance, a two pane window will have Glaze Gap Glaze, where the first Glaze represents the outside surface.
+* See [gbXML WindowType schema]( http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html#Link1CB )
+
+	One WindowType should be created for each type of window. Create a Blind, Frame, and Cost for each OpeningType, and then add as many Glaze and Gaps as exist in the window. Place these Glaze and Gap elements in order from outside to inside. For instance, a two pane window will have Glaze Gap Glaze, where the first Glaze represents the outside surface.
 
 </details>
 
@@ -16,7 +17,7 @@
 
 <summary>To Do / Wish List</summary>
 
-* 2019-07-20 ~ Theo ~ Add visible surfaces
+* 2019-07-20 ~ Theo ~ Add visible surfaces and better interaction with edges
 * 2019-07-20 ~ Theo ~ Add clickable windows
 
 </details>
@@ -31,6 +32,14 @@
 <details>
 
 <summary>Change Log</summary>
+
+### 2019-07-29 ~ Theo
+
+VWT 0.17.01-2vwt js/md
+
+* R: Minor cleanup
+* B: fix links
+* C: Update read me
 
 ### 2019-07-22 ~ Theo
 

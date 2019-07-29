@@ -7,11 +7,12 @@ const VWT = {
 	script: {
 
 		copyright: "Copyright 2019 Ladybug Tools authors",
-		date: "2019-07-25",
+		date: "2019-07-29",
 		description: "View by Surfaces (VWT) provides HTML and JavaScript to view individual opening types",
-		helpFile: "../v-0-17-01/js-view-gbxml/vwt-view-opening-types.md",
+		helpFile: "js-view-gbxml/vwt-view-window-types.md",
 		license: "MIT License",
-		version: "0.17.01-0vwt"
+		sourceCode: "../v-0-17-01/js-view-gbxml/vwt-view-window-types.js",
+		version: "0.17.01-2vwt"
 
 	}
 
@@ -21,7 +22,9 @@ const VWT = {
 
 VWT.getMenuViewWindowTypes = function() {
 
-	const help = VGC.getHelpButton("VWTbutSum",VWT.script.helpFile);
+	const source = `<a href=${ MNU.urlSourceCode + VWT.script.sourceCode } target=_blank >${ MNU.urlSourceCodeIcon } source code</a>`;
+
+	const help = VGC.getHelpButton("VWTbutSum",VWT.script.helpFile, POP.footer,source);
 
 	const selectOptions = [ "id", "Name", "Description", "U-value", "SolarHeatGainCoeff", "Transmittance" ].map( option => `<option>${ option }</option>`)
 
@@ -75,25 +78,12 @@ VWT.setViewSurfacesSelectOptions = function() {
 	VWTselViewWindowTypes.size = GBX.windowTypes.length > 10 ? 10 : GBX.windowTypes.length + 1;
 
 	const attribute = VWTselAttribute.value;
-	//console.log( 'attribute', attribute );
 
-
-	let color, text;
-
-	if ( !GBX.windowTypes ){
-
-		GBX.windowTypes = GBX.text.filter( text => {
-
-			types = GBX.text.match( /<WindowTypes(.*?)<\/WindowTypes>/gi );
-			return Array.isArray( GBX.zones ) ? GBX.zones : [];
-
-		} );
-
-	}
-	//console.log( 'GBX.windowTypes', GBX.windowTypes );
-
+	let color;
 
 	const htmOptions = GBX.windowTypes.map( ( type, index ) => {
+
+		let text;
 
 		color = color === 'pink' ? '' : 'pink';
 
@@ -101,18 +91,15 @@ VWT.setViewSurfacesSelectOptions = function() {
 
 			text = type.match( `${ attribute }="(.*?)"` );
 			text = text ? text[ 1 ] : "";
-			//console.log( 'text', text );
 
 		} else if ( [ "Name", "Description" ].includes( attribute )   ) {
 
 			text = type.match( `<${ attribute }>(.*?)<\/${ attribute }>` );
-			//console.log( 'text', text );
 			text = text ? text[ 1 ] : "";
 
 		} else if ( [ "U-value", "SolarHeatGainCoeff", "Transmittance" ].includes( attribute ) ) {
 
 			text = type.match( `<${ attribute }(.*?)>(.*?)<\/${ attribute }>` );
-			//console.log( 'text', text );
 			text = text ? text[ 2 ] : "";
 
 		}

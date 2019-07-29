@@ -23,10 +23,20 @@ Although the guidelines of the gbXML format are clear and well documented, the p
 
 First released in 2017 as a programming exercise, the Spider gbbXML Viewer is a web browser viewer of gbXML data. it reads the data from ASCII or ZIP files, parses the data and creates 3D representations viewable in the browser. Right from the get go, designers and engineers saw the potential for the Viewer to help spot errors visually. Within a few months R17 of the viewer was allowing users to spot many issues as well as providing tools to fix the issues and save the data to new files
 
+The upcoming Spider gbbXML Viewer v0.17 - code name 'Maevia' makes managing gbXML files faster, simpler and with higher quality transfers.
 
-The upcoming Spider gbbXML Viewer v0.17 - code name 'Maevia' makes managing gbXML files faster, simpler and with higher quality transfers
 
-Problems to be solved
+Behind the simple words, lies a myriad of features and benefits that need to be defined built and tested. The following is an overview of a number of the thought processes covered by the Spider team while developing the app.
+
+
+The list is quite long. There are several intentions
+
+* Software is not magic, Software is created by humans who and think har over extended periods of time
+* It's light and easy and can be used in a small office almost instantly but there is also enough depth and robustness so that the routines can be (and already hve been) brought into the complex workflows of very large practices
+
+
+The following sections identify the problems that need to be solved to make good software, software that tackles gbXML issues and software that people can use to solve real issues
+
 
 
 ## Any good software
