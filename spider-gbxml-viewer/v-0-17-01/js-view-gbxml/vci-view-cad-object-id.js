@@ -67,23 +67,17 @@ VCI.setViewOptions = function() {
 
 	VCIinpSelectIndex.value = "";
 
-
-	const cadObjects = [];
-
-	GBX.surfaces.forEach( (surface, index ) => {
+	const cadObjects = GBX.surfaces.map( surface => {
 
 		let text = surface.match( /<CADObjectId>(.*?)<\/CADObjectId>/gi );
 		text = text ? text.pop() : "";
 		text = text.match( /<CADObjectId>(.*?)<\/CADObjectId>/i );
-		text = text ? text[ 1 ].replace( /\[(.*)\]/, "") : "";
-		//console.log( 'text', cadObjects.indexOf( text ) < 0 );
-
-		if ( cadObjects.includes( text ) === false ) { cadObjects.push( text ); }
+		return text = text ? text[ 1 ].replace( /\[(.*)\]/, "" ) : "";
 
 	} );
-	// console.log( 'cadObjects', cadObjects );
 
-	cadObjects.sort();
+	cadObjects = [...new Set( cadObjects )].sort();
+	// console.log( 'cadObjects', cadObjects );
 
 	let color;
 
@@ -115,7 +109,7 @@ VCI.selectedSurfacesFocus = function( select ) {
 
 	VCI.surfaceVisibleIndices = VCI.CadIdsActive.flatMap( cadId =>
 
-		GBX.surfaces.filter( surface => surface.includes( cadIid ) )
+		GBX.surfaces.filter( surface => surface.includes( cadId ) )
 			.map( surface => GBX.surfaces.indexOf( surface ) )
 
 	 );
@@ -123,5 +117,7 @@ VCI.selectedSurfacesFocus = function( select ) {
 	GBX.meshGroup.children.forEach( ( mesh, index ) => mesh.visible = VCI.surfaceVisibleIndices.includes( index ) ? true : false );
 
 	VCIdivReportsLog.innerHTML = `${ VCI.surfaceVisibleIndices.length } surfaces visible`;
+
+	THR.controls.enableKeys = false;
 
 };
