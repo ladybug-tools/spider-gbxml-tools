@@ -194,9 +194,6 @@ VWT.getSurfacesFilteredWindowType = function(  ) {
 
 	}
 
-
-	//return surfacesFilteredByWindowTypes;
-
 };
 
 

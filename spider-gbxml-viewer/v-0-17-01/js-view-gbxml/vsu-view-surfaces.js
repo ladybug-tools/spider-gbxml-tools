@@ -97,8 +97,6 @@ VSU.setViewSurfacesSelectOptions = function() {
 
 	VSUselViewSurfaces.size = GBX.surfaces.length > 10 ? 10 : GBX.surfaces.length + 1;
 
-	let color;
-
 	const attribute = VSUselAttribute.value;
 
 	const options = GBX.surfaces.map( ( surface, index ) => {

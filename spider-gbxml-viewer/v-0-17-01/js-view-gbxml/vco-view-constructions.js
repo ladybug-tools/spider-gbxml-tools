@@ -5,12 +5,13 @@
 const VCO = {
 
 	script: {
-		"copyright": "Copyright 2019 Ladybug Tools authors",
-		"date": "2019-07-25",
-		"description": "View by construction (VCO) provides HTML and JavaScript to view individual construction details.",
-		"helpFile": "../v-0-17-01/js-view-gbxml/vco-view-constructions.md",
+		copyright: "Copyright 2019 Ladybug Tools authors",
+		date: "2019-07-29",
+		description: "View by construction (VCO) provides HTML and JavaScript to view individual construction details.",
+		helpFile: "js-view-gbxml/vco-view-constructions.md",
 		license: "MIT License",
-		"version": "0.17.01-0vco"
+		sourceCode: "js-view-gbxml/vco-view-constructions.js",
+		version: "0.17.01-1vco"
 	}
 };
 
@@ -18,7 +19,9 @@ const VCO = {
 
 VCO.getMenuViewConstructions = function() {
 
-	const help = VGC.getHelpButton("VCObutSum",VCO.script.helpFile);
+	const source = `<a href=${ MNU.urlSourceCode + VCO.script.sourceCode } target=_blank >${ MNU.urlSourceCodeIcon } source code</a>`;
+
+	const help = VGC.getHelpButton("VCObutSum",VCO.script.helpFile, POP.footer, source);
 
 	const selectOptions = [ "id", "layerIdRef", "Name" ]
 		.map( option => `<option ${ option === "Name" ? "selected" : "" } >${ option }</option>`);
@@ -48,14 +51,15 @@ VCO.getMenuViewConstructions = function() {
 		<p>Attribute to show:
 			<select id=VCOselAttribute oninput=VCO.getViewConstructionsSelectOptions(); >${ selectOptions }</select></p>
 
+		<!--
 		<p>Select multiple Constructions by pressing shift or control keys</p>
-<!--
+		-->
 		<p>
-			<button onclick=VGC.toggleViewSelectedOrAll(this,VCOselViewConstructions,VCIselViewSurfaces,VCI.surfaces); >
+			<button onclick=VGC.toggleViewSelectedOrAll(this,VCOselViewConstructions,VCO.visible); >
 				Show/hide by surfaces
 			</button>
 		</p>
--->
+
 	</details>`;
 
 	return htm;
@@ -73,50 +77,59 @@ VCO.getViewConstructionsSelectOptions = function() {
 	VCOselViewConstructions.size = GBX.constructions.length > 10 ? 10 : GBX.constructions.length + 1;
 
 	const attribute = VCOselAttribute.value;
-	//console.log( 'attribute', attribute );
 
-	let constructionsRefs = GBX.surfaces.map( (surface, surfaceIndex ) => {
+	let options = GBX.constructions.map( ( surface, index ) => {
 
-		const constructions = surface.match( /constructionIdRef="(.*?)"/i )|| [];
+		let text;
 
-		return constructions.length > 0 ? constructions[ 1 ] : "";
+		if ( [ "id", "constructionIdRef" ].includes( attribute ) ) {
+
+			text = surface.match( `${ attribute }="(.*?)"` );
+
+		} else if ( [ "Name", "LayerId" ].includes( attribute ) ) {
+
+			text = surface.match( `<${ attribute }>(.*?)<\/${ attribute }>` );
+
+		}
+
+		text = text ? text[ 1 ] : "";
+
+		return text;
 
 	} );
 
-	constructionsRefs = [...new Set( constructionsRefs )];
 
-	VCO.constructionsRefs = constructionsRefs.sort();
-	//console.log( '', VCO.constructionsRefs );
+	options = options.sort();
+	//console.log( 'options', options );
 
 	let color;
 
-	const htmOptions = VCO.constructionsRefs.map( ( constructionsRef, index ) => {
+	const htmOptions = options.map( ( option, index ) => {
 
 		color = color === 'pink' ? '' : 'pink';
 
-		const construction = GBX.constructions.find( construction => construction.includes( constructionsRef ) );
+		const construction = GBX.constructions.find( construction => construction.includes( option ) );
 
 		if ( !construction ) { return; }
+
+		const id = construction.match( / id="(.*?)"/i )[ 1 ];
 
 		let text;
 
 		if ( [ "id", "layerIdRef" ].includes( attribute ) ) {
 
 			text = construction.match( `${ attribute }="(.*?)"` );
-			text = text ? text[ 1 ] : "";
-			//console.log( 'text', text );
 
 		} else if ( [ "Name" ].includes( attribute ) ) {
 
 			text = construction.match( `<${ attribute }>(.*?)<\/${ attribute }>` );
-			text = text ? text[ 1 ] : "";
-			//console.log( 'text', text );
 
 		}
+		text = text ? text[ 1 ] : "";
 
 		const constructionText = text ? text : "no space name in file";
 
-		return `<option style=background-color:${ color } value=${ constructionsRef } >${ constructionText }</option>`;
+		return `<option style=background-color:${ color } value=${ id } >${ option }</option>`;
 
 	} );
 
@@ -131,17 +144,15 @@ VCO.selectedConstructionsFocus = function( select ) {
 	VGC.setPopupBlank()
 
 	const constructionId = select.value;
-	//console.log( 'constructionId', constructionId );
 
-	const surfaces = GBX.surfaces.filter( (surface, surfaceIndex ) => {
+	VCO.visible = GBX.surfaces.filter( surface => surface.includes( constructionId ) )
+		.map( surface => GBX.surfaces.indexOf( surface ) );
 
-		return surface.includes( constructionId );
-
-	} );
-
-	GBXU.sendSurfacesToThreeJs( surfaces );
+	GBX.meshGroup.children.forEach( ( mesh, index ) => mesh.visible = VCO.visible.includes( index ) ? true: false )
 
 	divDragMoveContent.innerHTML = VCO.getConstruction( constructionId );
+
+	THR.controls.enableKeys = false;
 
 };
 
@@ -149,23 +160,19 @@ VCO.selectedConstructionsFocus = function( select ) {
 
 VCO.getConstruction = function( constructionId ) {
 
-	VCO.constructions = GBX.text.match( /<Construction(.*?)<\/Construction>/gi );
-
-	//console.log( 'VCO.constructions', VCO.constructions );
-
-	const construction = VCO.constructions.find( construction => construction.includes( constructionId ) );
+	const construction = GBX.constructions.find( construction => construction.includes( constructionId ) );
 
 	const parser = new DOMParser();
 
 	const constructionXml = parser.parseFromString( construction, "application/xml" ).documentElement;
 
-	const atts = GSA.getAttributesHtml( constructionXml );
+	const attributes = GSA.getAttributesHtml( constructionXml );
 
 	const attributesHTM =
 	`
 		<b>${ constructionId } construction</b>
 
-		<p>${ atts }</p>
+		<p>${ attributes }</p>
 
 		<details>
 
@@ -177,9 +184,6 @@ VCO.getConstruction = function( constructionId ) {
 
 	`;
 
-	//console.log( 'attributesHTM', attributesHTM );
-
 	return attributesHTM;
-
 
 };
