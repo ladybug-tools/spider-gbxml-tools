@@ -6,7 +6,7 @@
 
 <summary>Concept</summary>
 
-View by CAD Object ID (VCI) provides HTML and JavaScript to view individual surfaces.
+View by CAD Object ID (VCI) provides HTML and JavaScript to view groups of surfaces with the identical CAD Object ID prefix.
 
 </details>
 
