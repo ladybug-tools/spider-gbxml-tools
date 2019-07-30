@@ -41,10 +41,25 @@ The following sections identify the problems that need to be solved to make good
 
 ## Any good software
 
+What are the minimum criteria for the software we want? Several qualities wanted
+
+* Follows the rules of programs we know
+* Handles the data
+* OS/device independent
+
+More
+
+* Changes the game
+
+
+
+
 
 ### Polyglotism
 
-**Problem**: We live in a connected world. Data may arrive from anywhere at any time. Systems that force you to download a file or limit you to opening file on a remote server or use another app to decompress data are problems not solutions .
+File management, data safety
+
+**Problem**: We live in a connected world. Data may arrive from anywhere at any time. Systems that force you to download a file or limit you to opening file on a remote server or use another app to decompress data are problems not solutions.
 
 **Want/Need**: Opening files is not an issue. You may open any file, of any type, from any source, anywhere, any time.
 

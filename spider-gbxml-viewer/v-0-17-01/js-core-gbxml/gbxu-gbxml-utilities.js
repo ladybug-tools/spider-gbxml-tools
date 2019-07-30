@@ -51,7 +51,7 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 
 	THR.controls.autoRotate = true;
 
-	GBXU.setStats();
+	GBXU.setElementsJson();
 
 	window.addEventListener( 'keyup', GBXU.onFirstTouch , false );
 	window.addEventListener( 'click', GBXU.onFirstTouch, false );
@@ -95,7 +95,7 @@ GBXU.onFirstTouch = function() {
 
 
 
-GBXU.setStats = function() {
+GBXU.setElementsJson = function() {
 
 	GBX.openings = [];
 
@@ -107,20 +107,6 @@ GBXU.setStats = function() {
 
 	} );
 
-/* 	const reSpaces = /<Space(.*?)<\/Space>/gi;
-	GBX.spaces = GBX.text.match( reSpaces );
-	//console.log( 'spaces', GBX.spaces );
-
-	const reStoreys = /<BuildingStorey(.*?)<\/BuildingStorey>/gi;
-	GBX.storeys = GBX.text.match( reStoreys );
-	GBX.storeys = Array.isArray( GBX.storeys ) ? GBX.storeys : [];
-	//console.log( 'GBX.storeys', GBX.storeys );
-
-	const reZones = /<Zone(.*?)<\/Zone>/gi;
-	GBX.zones = GBX.text.match( reZones );
-	GBX.zones = Array.isArray( GBX.zones ) ? GBX.zones : [];
-	//console.log( 'GBX.zones', GBX.zones );
-*/
 
 	//const verticesCount = GBX.surfaces.map( surfaces => GBX.getCoordinates( surfaces ) );
 	//console.log( 'vertices', vertices );
@@ -133,9 +119,6 @@ GBXU.setStats = function() {
 
 	GBX.windowTypes = GBX.text.match( /<WindowType (.*?)<\/WindowType>/gi ) || [];
 
-	//const timeToLoad = performance.now() - GBX.timeStart;
-
-	//const tag = document.body.querySelectorAll( target );
 
 	if ( !GBX.messageDiv ) { return; }
 

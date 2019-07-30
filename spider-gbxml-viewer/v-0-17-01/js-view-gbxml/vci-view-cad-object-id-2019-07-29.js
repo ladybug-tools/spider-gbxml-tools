@@ -7,11 +7,11 @@ const VCI = {
 	script: {
 
 		copyright: "Copyright 2019 Ladybug Tools authors",
-		date: "2019-07-30",
+		date: "2019-07-25",
 		description: "View by CAD Object ID (VCI) provides HTML and JavaScript to view individual surfaces.",
 		helpFile: "../v-0-17-01/js-view-gbxml/vci-view-cad-object-id.md",
 		license: "MIT License",
-		version: "0.17-01-1vci"
+		version: "0.17-01-0vci"
 
 	}
 
@@ -67,6 +67,7 @@ VCI.setViewOptions = function() {
 
 	VCIinpSelectIndex.value = "";
 
+	let color;
 
 	const cadObjects = [];
 
@@ -78,19 +79,16 @@ VCI.setViewOptions = function() {
 		text = text ? text[ 1 ].replace( /\[(.*)\]/, "") : "";
 		//console.log( 'text', cadObjects.indexOf( text ) < 0 );
 
-		if ( cadObjects.includes( text ) === false ) { cadObjects.push( text ); }
+		if ( cadObjects.indexOf( text ) < 0 ) { cadObjects.push( text ); }
 
 	} );
 	// console.log( 'cadObjects', cadObjects );
 
 	cadObjects.sort();
 
-	let color;
-
 	const options = cadObjects.map( item => {
 
 		color = color === 'pink' ? '' : 'pink';
-
 		return `<option style=background-color:${ color } value=${ item } >${ item }</option>`;
 
 	} );
@@ -109,19 +107,18 @@ VCI.selectedSurfacesFocus = function( select ) {
 
 	VGC.setPopupBlank();
 
-	GBX.meshGroup.children.forEach( element => element.visible = false );
+	VCI.surfaces = [];
 
-	VCI.CadIdsActive = Array.from( select.selectedOptions ).map( option => option.innerHTML.trim() );
+	Array.from( select.selectedOptions ).forEach( option => {
 
-	VCI.surfaceVisibleIndices = VCI.CadIdsActive.flatMap( cadId =>
+		const surfaces = GBX.surfaces.filter( surface => surface.includes( option.innerText ) );
 
-		GBX.surfaces.filter( surface => surface.includes( cadIid ) )
-			.map( surface => GBX.surfaces.indexOf( surface ) )
+		VCI.surfaces.push( ...surfaces );
 
-	 );
+	} );
 
-	GBX.meshGroup.children.forEach( ( mesh, index ) => mesh.visible = VCI.surfaceVisibleIndices.includes( index ) ? true : false );
-
-	VCIdivReportsLog.innerHTML = `${ VCI.surfaceVisibleIndices.length } surfaces visible`;
+	VCIdivReportsLog.innerHTML = `<p>${ VCI.surfaces.length } surfaces visible`;
+	
+	GBXU.sendSurfacesToThreeJs( VCI.surfaces );
 
 };
