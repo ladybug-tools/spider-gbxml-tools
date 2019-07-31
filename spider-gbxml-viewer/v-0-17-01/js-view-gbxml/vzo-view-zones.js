@@ -8,11 +8,12 @@ const VZO = {
 	script: {
 
 		copyright: "Copyright 2019 Ladybug Tools authors",
-		date: "2019-07-25",
+		date: "2019-07-30",
 		description: "View the surfaces in a gbXML file by selecting one or more zones from a list of all zones",
-		helpFile: "../v-0-17-01/js-view-gbxml/vzo-view-zones.md",
+		helpFile: "js-view-gbxml/vzo-view-zones.md",
 		license: "MIT License",
-		version: "0.17-01-1vzo"
+		sourceCode: "js-view-gbxml/vzo-view-zones.js",
+		version: "0.17-01-2vzo"
 
 	}
 
@@ -28,7 +29,7 @@ VZO.temperatureZones = [
 	"#fae2e8", "#fae2e8",
 	"#f1aaba", "#f1aaba",
 	"#e7718d", "#e7718d","#e7718d",
-	"#de385", "#de385", "#de385", "#de385", "#de385", "#de385", "#d=e385", "#de385",
+	"#de385", "#de385", "#de385", "#de385", "#de385", "#de385", "#de385", "#de385",
 	"#d50032", "#d50032", "#d50032", "#d50032", "#d50032",  "#d50032",  "#d50032",  "#d50032"
 ];
 
@@ -36,7 +37,9 @@ VZO.temperatureZones = [
 
 VZO.getMenuViewZones = function() {
 
-	const help = VGC.getHelpButton("VZObutSum",VZO.script.helpFile);
+	const source = `<a href=${ MNU.urlSourceCode + VZO.script.sourceCode } target=_blank >${ MNU.urlSourceCodeIcon } source code</a>`;
+
+	const help = VGC.getHelpButton("VZObutSum", VZO.script.helpFile, POP.footer, source );
 
 	// VZO.selectOptions = [
 	// 	"id", "airChangesSchedIdRef", "coolSchedIdRef", "fanSchedIdRef", "fanTempSchedIdRef",
@@ -67,16 +70,20 @@ VZO.getMenuViewZones = function() {
 
 			<p>
 				Display surfaces by zone. Default is all zones visible. Legends viewable in
-				<button id="butVZOtxt" onclick="POP.setPopupShowHide(butVZOtxt,VZO.helpFile);">? / read me</button>.
-				<span id="VZOspnCount" ></span>. Very slow on large files. Will speed things up.
-			/p>
+				<button id="butVZOtxt" onclick="POP.setPopupShowHide(butVZOtxt,VZO.script.helpFile);">? / read me</button>.
+			</p>
+			<p>
+				Current version is Celsius  only. Very slow on large files. Will speed things up.
+			</p>
 
+			</p>
+				<span id="VZOspnCount" ></span>.
 			<p>
 				<input type=search id=VZOinpSelectIndex oninput=VGC.setSelectedIndex(this,VZOselZone) placeholder="Enter an attribute" >
 			</p>
 
 			<p>
-				<select id=VZOselZone oninput=VZO.selectZoneFocus(this); style=width:100%; ></select
+				<select id=VZOselZone oninput=VZO.selectZoneFocus(this); style=width:100%; multiple ></select
 			</p>
 
 			<div id="VZOdivReportsLog" ></div>
@@ -84,6 +91,8 @@ VZO.getMenuViewZones = function() {
 			<p>Attribute to show: <select id=VZOselAttribute oninput=VZO.getZonesOptions(); >${ VZO.selectAttribute }</select></p>
 
 			<p>Value to show: <select id=VZOselElement oninput=VZO.getZonesOptions(); >${ VZO.selectElement }</select></p>
+
+			<p>Select multiple surfaces by pressing shift or control keys</p>
 
 			<p><button onclick=VZO.resetColors(); >reset colors</button> </p>
 
@@ -98,12 +107,14 @@ VZO.getMenuViewZones = function() {
 
 VZO.getZonesOptions = function() {
 
+	if ( VZOdetMenu.open === false ) { return; }
+
+	VZOinpSelectIndex.value = "";
+
 	VZOselZone.size = GBX.zones.length > 10 ? 10 : GBX.zones.length;
 
 	const attribute = VZOselAttribute.value;
 	//console.log( 'attribute', attribute );
-
-	VZOinpSelectIndex.value = "";
 
 	let zoneArr;
 
@@ -113,7 +124,6 @@ VZO.getZonesOptions = function() {
 
 			zoneArr = zone.match( `<${ attribute }(.*?)>(.*?)</${ attribute }>` );
 			zoneArr = zoneArr ? zoneArr[ 2 ] : "";
-			//console.log( '', zoneArr );
 
 		} else if ( ["id" ].includes( attribute ) ) {
 
@@ -142,7 +152,11 @@ VZO.getZonesOptions = function() {
 		const element = VZOselElement.value;
 
 		const tempArr = zone.match( `<${ element }(.*?)>(.*?)<\/${ element }>` );
-		const temp = tempArr ? tempArr[ 2 ] : 20;
+		let temp = tempArr ? tempArr[ 2 ] : 20;
+		temp = temp < 0 ? 0 : temp;
+		temp = temp > 36 ? 36 : temp;
+
+		console.log( 'temp', temp );
 
 		const color = VZO.temperatureZones[ parseInt( temp ) ];
 
@@ -179,13 +193,34 @@ VZO.selectZoneFocus = function( select ) {
 
 	GBX.meshGroup.children.forEach( element => element.visible = false );
 
-	Array.from( options ).forEach( option => VZO.setZoneVisible( option.value ) );
+	Array.from( options ).forEach( option => VZO.setZoneVisible( option ) );
+
+};
+
+
+types = [ "InteriorFloor", "SlabOnGrade" ]
+VZO.setZoneVisible = function ( option ) {
+
+
+	GBX.meshGroup.children.forEach( mesh => {
+
+		if (mesh.userData.zoneId === option.value && types.includes( mesh.userData.surfaceType )  ) {
+
+			mesh.visible = true;
+
+			mesh.material = new THREE.MeshBasicMaterial( { color: 0xff0000, side: 2 } )
+			mesh.material.color.setStyle( option.style.backgroundColor ); //
+
+		}
+
+	} );
 
 };
 
 
 
-VZO.setZoneVisible = function ( zoneId ) {
+
+VZO.xxxxsetZoneVisible = function ( zoneId ) {
 
 	//console.log( 'zoneId', zoneId );
 
@@ -297,7 +332,7 @@ VZO.toggleZones = function( button ) {
 
 ////////// looks at surface types
 
-VZO.setSurfacesFilteredZone = function( surfaces ) {
+VZO.xxxxsetSurfacesFilteredZone = function( surfaces ) {
 
 	const zoneIds = VZOselZone.selectedOptions;
 	//console.log( 'zoneIds', zoneIds );

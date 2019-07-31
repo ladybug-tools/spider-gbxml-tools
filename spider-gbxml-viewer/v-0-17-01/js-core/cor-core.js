@@ -25,7 +25,7 @@ MNU.helpFile = "../../README.md";
 //MNU.description = `Tools to help you find, load, examine and edit gbXML files - in large numbers and size`;
 MNU.description =
 	`
-		Mission: run a series of basic checks on <a href="https://gbXML.org" target="_blank">gbXML</a> files to identify, report and help you fix any errors.
+		Mission: run a series of basic checks on <a href="http://gbXML.org" target="_blank">gbXML</a> files to identify, report and help you fix any errors.
 	`;
 
 MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-01/";

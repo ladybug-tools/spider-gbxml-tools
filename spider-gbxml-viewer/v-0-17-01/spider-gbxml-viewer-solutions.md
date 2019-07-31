@@ -15,7 +15,7 @@ Spider gbbXML Viewer v0.17 'Maevia' provides a significant leap forward in terms
 
 ## Spider gbXML Viewer ReadMe
 
-First released in 1999, gbXML is the architecture, engineering and construction (AEC) industry standard file format for transmitting data between CAD programs such as Revit, AutoCAD , Bentley Microstation  and energy analysis programs such as Open Studio, Energy Plus, Sefaira, TAS and others.
+First released in 1999, gbXML is the architecture, engineering and construction (AEC) industry standard file format for transmitting data between CAD programs such as Revit, AutoCAD , Bentley MicroStation  and energy analysis programs such as Open Studio, Energy Plus, [Sefaira]( https://sefaira.com/ ), TAS and others.
 
 gbXML files are generally created as exports from CAD programs as the minimum representation of building data that is suitable for creating a 3D model that may be use carrying out energy and illumination analysis.
 
