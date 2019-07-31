@@ -1,6 +1,4 @@
-# VCI View CAD object Read Me
-
-[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-01/js-view-gbxml/vci-view-cad-object-id.js )
+# VCI View CAD object ID Read Me
 
 <details open >
 
@@ -24,9 +22,17 @@ View by CAD Object ID (VCI) provides HTML and JavaScript to view groups of surfa
 
 </details>
 
+
 <details>
 
 <summary>Change Log</summary>
+
+### 2019-07-31 ~ Theo
+
+VCI 0.17.01-2vci js/md
+
+* F: Update source link
+
 
 ### 2019-07-30 ~ Theo
 

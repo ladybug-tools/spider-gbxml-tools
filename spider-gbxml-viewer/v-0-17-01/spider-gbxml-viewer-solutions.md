@@ -3,7 +3,8 @@ RESTful access
 
 Testing
 
-GitHub driven
+Source control
+* GitHub driven
 
 
 ## 2019-07-26 ~
@@ -39,7 +40,7 @@ The following sections identify the problems that need to be solved to make good
 
 
 
-## Any good software
+## Data is accessible
 
 What are the minimum criteria for the software we want? Several qualities wanted
 

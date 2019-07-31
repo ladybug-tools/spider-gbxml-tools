@@ -67,7 +67,7 @@
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-06/fob-file-open-basic/fob-file-open-basic.js" ></script>
 
 
-<!-- View gbXML menu -->
+<!-- View gbXML menu / items in order of appearance on menu -->
 <script src = "js-view-gbxml/0-vgc-view-gbxml-core.js" ></script>
 <script src = "js-view-gbxml/vg-view-gbxml.js" ></script>
 <script src = "js-view-gbxml/vty-view-surface-types.js" ></script>
@@ -82,6 +82,8 @@
 <script src = "js-view-gbxml/vla-view-layers.js" ></script>
 <script src = "js-view-gbxml/vma-view-materials.js" ></script>
 <script src = "js-view-gbxml/vwt-view-window-types.js" ></script>
+<script src = "js-view-gbxml/vdo-view-documents.js" ></script>
+
 
 <!-- Scene menu -->
 <script src = "js-scene/set-settings.js" ></script>
@@ -201,6 +203,8 @@
 				<section id="VLAsecViewLayers" ></section>
 
 				<section id="VWTsecViewWindowTypes" ></section>
+
+				<section id="VDOsecViewDocuments" ></section>
 
 			</details>
 
@@ -394,6 +398,8 @@ function init() {
 	VMAsecViewMaterials.innerHTML = VMA.getMenuViewMaterials();
 
 	VWTsecViewWindowTypes.innerHTML = VWT.getMenuViewWindowTypes();
+
+	VDOsecViewDocuments.innerHTML = VDO.getMenuViewDocuments();
 
 
 	// Settings menu

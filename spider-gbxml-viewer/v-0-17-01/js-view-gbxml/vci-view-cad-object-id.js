@@ -9,8 +9,9 @@ const VCI = {
 		copyright: "Copyright 2019 Ladybug Tools authors",
 		date: "2019-07-30",
 		description: "View by CAD Object ID (VCI) provides HTML and JavaScript to view individual surfaces.",
-		helpFile: "../v-0-17-01/js-view-gbxml/vci-view-cad-object-id.md",
+		helpFile: "js-view-gbxml/vci-view-cad-object-id.md",
 		license: "MIT License",
+		sourceCode: "js-view-gbxml/vci-view-cad-object-id.js",
 		version: "0.17-01-1vci"
 
 	}
@@ -21,7 +22,9 @@ const VCI = {
 
 VCI.getMenuViewCadObjectId = function() {
 
-	const help = VGC.getHelpButton("VCIbutSum",VCI.script.helpFile);
+	const source = `<a href=${ MNU.urlSourceCode + VCI.script.sourceCode } target=_blank >${ MNU.urlSourceCodeIcon } source code</a>`;
+
+	const help = VGC.getHelpButton("VCIbutSum",VCI.script.helpFile, POP.footer, source );
 
 	const htm =
 
@@ -67,7 +70,7 @@ VCI.setViewOptions = function() {
 
 	VCIinpSelectIndex.value = "";
 
-	const cadObjects = GBX.surfaces.map( surface => {
+	let cadObjects = GBX.surfaces.map( surface => {
 
 		let text = surface.match( /<CADObjectId>(.*?)<\/CADObjectId>/gi );
 		text = text ? text.pop() : "";
@@ -105,7 +108,7 @@ VCI.selectedSurfacesFocus = function( select ) {
 
 	GBX.meshGroup.children.forEach( element => element.visible = false );
 
-	VCI.CadIdsActive = Array.from( select.selectedOptions ).map( option => option.innerHTML.trim() );
+	VCI.CadIdsActive = Array.from( select.selectedOptions ).map( option => option.innerHTML );
 
 	VCI.surfaceVisibleIndices = VCI.CadIdsActive.flatMap( cadId =>
 
@@ -114,7 +117,8 @@ VCI.selectedSurfacesFocus = function( select ) {
 
 	 );
 
-	GBX.meshGroup.children.forEach( ( mesh, index ) => mesh.visible = VCI.surfaceVisibleIndices.includes( index ) ? true : false );
+	GBX.meshGroup.children.forEach( ( mesh, index ) => mesh.visible =
+		VCI.surfaceVisibleIndices.includes( index ) ? true : false );
 
 	VCIdivReportsLog.innerHTML = `${ VCI.surfaceVisibleIndices.length } surfaces visible`;
 
