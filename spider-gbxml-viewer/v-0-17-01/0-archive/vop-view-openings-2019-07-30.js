@@ -7,12 +7,12 @@ const VOP = {
 	script: {
 
 		copyright: "Copyright 2019 Ladybug Tools authors",
-		date: "2019-07-30",
+		date: "2019-07-26",
 		description: "View by openings (VOP) provides HTML and JavaScript to view individual openings.",
 		helpFile: "js-view-gbxml/vop-view-opening.md",
 		license: "MIT License",
 		sourceCode: "js-view-gbxml/vop-view-opening.js",
-		version: "0.17-01-2vop"
+		version: "0.17-01-0vop"
 
 	}
 
@@ -60,7 +60,7 @@ VOP.getMenuViewOpenings = function() {
 		<p>Select multiple openings by pressing shift or control keys</p>
 
 		<p>
-			<button onclick=VGC.toggleViewSelectedMeshes(this,VOPselViewOpenings,VOP.surfacesVisible); >
+			<button onclick=VGC.toggleViewSelectedOrAll(this,VOPselViewOpenings,VOP.surfaceWithOpenings); >
 				Show/hide by surfaces
 			</button>
 		</p>
@@ -81,7 +81,7 @@ VOP.setViewOpeningsSelectOptions = function() {
 
 	VOPinpSelectIndex.value = "";
 
-	VOPselViewOpenings.size = GBX.openingGroup.children.length > 10 ? 10 : GBX.surfaces.length + 1;
+	VOPselViewOpenings.size = GBX.openings.length > 10 ? 10 : GBX.surfaces.length + 1;
 
 	const attribute = VOPselAttribute.value;
 
@@ -89,6 +89,7 @@ VOP.setViewOpeningsSelectOptions = function() {
 
 	let color;
 	let htmOptions = '';
+
 	VOP.openings = [];
 
 	GBX.surfaces.forEach( (surface, surfaceIndex ) => {
@@ -122,6 +123,8 @@ VOP.setViewOpeningsSelectOptions = function() {
 
 		} );
 
+		indexSurface ++;
+
 	} );
 	//console.log( 'VOP.openings', VOP.openings );
 
@@ -140,6 +143,8 @@ VOP.selectedOpeningsFocus = function( select ) {
 	const opening = VOP.openings[ select.value ];
 	//console.log( 'opening', opening );
 
+	//PIN.intersected = GBX.meshGroup.children[ opening.surfaceIndex ];
+
 	PIN.setIntersected( GBX.meshGroup.children[ opening.surfaceIndex ] )
 	//divDragMoveContent.innerHTML = PIN.getIntersectedDataGbxml()
 
@@ -152,16 +157,13 @@ VOP.selectedOpeningsFocus = function( select ) {
 	openings = openingIndexes.map( index => VOP.openings[ index ] );
 	//console.log( 'openings', openings );
 
-	//VOP.surfacesWithOpenings = openings.map( opening => GBX.surfaces[ opening.surfaceIndex ] );
+	VOP.surfaceWithOpenings = openings.map( opening => GBX.surfaces[ opening.surfaceIndex ] );
 
-	VOP.surfacesVisible = openings.map( opening => opening.surfaceIndex );
-
-	GBX.meshGroup.children.forEach( ( mesh, index ) => mesh.visible = VOP.surfacesVisible.includes( index ) ? true : false );
+	GBXU.sendSurfacesToThreeJs( VOP.surfaceWithOpenings );
 
 	VOP.setOpeningShowHide( select );
 
 };
-
 
 
 VOP.setOpeningShowHide = function( select ) {

@@ -79,6 +79,7 @@ VGC.toggleViewSelectedOrAll = function( button, select, surfaces ) {
 };
 
 
+
 VGC.toggleViewSelectedMeshes = function( button, select, indexes ) {
 	//console.log( 'surfaces', surfaces );
 
