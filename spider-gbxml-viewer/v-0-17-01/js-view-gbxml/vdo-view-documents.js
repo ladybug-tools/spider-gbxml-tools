@@ -22,7 +22,9 @@ const VDO = {
 
 VDO.getMenuViewDocuments = function() {
 
-	const help = VGC.getHelpButton("VDObutSum",VDO.script.helpFile);
+	const source = `<a href=${ MNU.urlSourceCode + VDO.script.sourceCode } target=_blank >${ MNU.urlSourceCodeIcon } source code</a>`;
+
+	const help = VGC.getHelpButton( "VDObutSum", VDO.script.helpFile, POP.footer, source);
 
 	const htm =
 
