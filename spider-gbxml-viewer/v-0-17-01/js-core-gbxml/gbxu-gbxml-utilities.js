@@ -6,12 +6,12 @@ var GBXU = {
 	script: {
 
 		copyright: "Copyright 2019 Ladybug Tools authors",
-		date: "2019-07-25",
+		date: "2019-07-31",
 		description: "GbXML utilities: all this is a bit idiosyncratic / a random collection of stuff",
 		helpFile: "../js-view-gbxml/gbxu-gbxml-utilities.md",
 		license: "MIT License",
 		urlSourceCode: "js-core-gbxml/gbxu-gbxml-utilities.js",
-		version: "0.17.01-0gbxu"
+		version: "0.17.01-1gbxu"
 
 	}
 
@@ -31,17 +31,19 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 
 	if ( navDragMove ) POP.setPopupShowHide( butPopupClose, POP.popup );
 
+	THRU.zoomObjectBoundingSphere();
+
 	GBXU.setSurfaceTypesVisible( GBXU.filtersDefault );
 
-	THRU.toggleBoundingBoxHelper( GBXU.meshGroup );
+	const meshes = GBX.meshGroup.children.filter( mesh => GBXU.filtersDefault.includes( mesh.userData.surfaceType) )
+		.map( mesh => mesh.clone() );
 
-	GBXU.toggleOpenings();
+	GBX.meshesVisible = new THREE.Group();
+	GBX.meshesVisible.add( ...meshes );
 
-	THRU.zoomObjectBoundingSphere( );
+	THRU.toggleBoundingBoxHelper( GBX.meshesVisible );
 
-	THRU.toggleAxesHelper();
-
-	const bbox = new THREE.Box3().setFromObject( GBX.meshGroup );
+	const bbox = new THREE.Box3().setFromObject( GBX.meshesVisible ); // clumsy
 	GBXU.boundingBox = new THREE.Box3Helper( bbox, 0xdddd00 );
 	//THR.scene.add( GBXU.boundingBox );
 
@@ -49,13 +51,13 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 
 	THRU.toggleGroundHelper( THRU.center, GBX.elevation );
 
+	GBXU.toggleOpenings();
+
+	THRU.toggleAxesHelper();
+
 	THR.controls.autoRotate = true;
 
 	GBXU.setElementsJson();
-
-	window.addEventListener( 'keyup', GBXU.onFirstTouch , false );
-	window.addEventListener( 'click', GBXU.onFirstTouch, false );
-	window.addEventListener( 'touchstart', GBXU.onFirstTouch, false );
 
 	PFO.surfaceTypesInUse = GBX.surfaceTypes.filter( type => GBX.surfaces.find( surface => surface.includes( `"${ type }"` ) ) );
 
@@ -68,6 +70,10 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 	PFO.storeyIdsActive = !PFO.storeyIdsActive ? PFO.storeyIdsInUse : PFO.storeyIdsActive;
 
 	if ( window.detMenuViewGbxml ) MNU.toggleDetailsOpen( detMenuViewGbxml );
+
+	window.addEventListener( 'keyup', GBXU.onFirstTouch , false );
+	window.addEventListener( 'click', GBXU.onFirstTouch, false );
+	window.addEventListener( 'touchstart', GBXU.onFirstTouch, false );
 
 };
 

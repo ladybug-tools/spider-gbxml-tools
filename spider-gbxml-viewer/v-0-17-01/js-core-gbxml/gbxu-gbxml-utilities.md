@@ -34,25 +34,12 @@ Various utilities to help with display of gbXML data
 
 <summary>Change Log</summary>
 
-### 2019-07-15 ~ Theo
+### 2019-07-31 ~ Theo
 
-0.17.00-3gbxu
 
-* R - GBXU.js: Rejig handling of edges and openings
+0.17.01-1gbxu
 
-### 2019-07-10 ~ Theo
+* B: Fix ground level issues
 
-0.17.00-3gbxu
-
-* F - GBXU.js: Much better init control
-	* Separate onload and onclick functions
-* F - GBXU.js: better handling stats
-* F - GBXU.js: Better axes and ground toggling
-
-### 2019-07-10 ~ Theo
-
-0.17.00-1gbxu
-
-* C - GBXU.md: First commit
 
 </details>
