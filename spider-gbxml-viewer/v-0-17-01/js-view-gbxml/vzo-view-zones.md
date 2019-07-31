@@ -35,6 +35,13 @@ See [gbXML Zone schema]( http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.
 
 <summary>Change Log</summary>
 
+### 2019-07-31 ~ Theo
+
+VZO 0.17.01-3vzo
+
+* B: Fix single zone issues, add UndergroundSlab
+
+
 ### 2019-07-30 ~ Theo
 
 VZO 0.17.01-1vzo

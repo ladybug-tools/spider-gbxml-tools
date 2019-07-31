@@ -67,7 +67,7 @@
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-06/fob-file-open-basic/fob-file-open-basic.js" ></script>
 
 
-<!-- View gbXML menu -->
+<!-- View gbXML menu / items in order of appearance on menu -->
 <script src = "js-view-gbxml/0-vgc-view-gbxml-core.js" ></script>
 <script src = "js-view-gbxml/vg-view-gbxml.js" ></script>
 <script src = "js-view-gbxml/vty-view-surface-types.js" ></script>
@@ -76,12 +76,15 @@
 <script src = "js-view-gbxml/vst-view-storeys.js" ></script>
 <script src = "js-view-gbxml/vzo-view-zones.js" ></script>
 <script src = "js-view-gbxml/vop-view-openings.js" ></script>
+<script src = "js-view-gbxml/vot-view-opening-types.js" ></script>
 <script src = "js-view-gbxml/vci-view-cad-object-id.js" ></script>
 <script src = "js-view-gbxml/vcio-view-cad-object-id-open.js" ></script>
 <script src = "js-view-gbxml/vco-view-constructions.js" ></script>
 <script src = "js-view-gbxml/vla-view-layers.js" ></script>
 <script src = "js-view-gbxml/vma-view-materials.js" ></script>
 <script src = "js-view-gbxml/vwt-view-window-types.js" ></script>
+<script src = "js-view-gbxml/vdo-view-documents.js" ></script>
+
 
 <!-- Scene menu -->
 <script src = "js-scene/set-settings.js" ></script>
@@ -172,7 +175,7 @@
 
 			</details>
 
-			<details id="detMenuViewGbxml" open>
+			<details id="detMenuViewGbxml" >
 
 				<summary class=sumMenuTitle >View gbXML menu</summary>
 
@@ -194,6 +197,8 @@
 
 				<section id="VOPsecViewOpenings" ></section>
 
+				<section id="VOTsecViewOpeningTypes" ></section>
+
 				<section id="VCOsecViewConstructions" ></section>
 
 				<section id="VMAsecViewMaterials" ></section>
@@ -201,6 +206,8 @@
 				<section id="VLAsecViewLayers" ></section>
 
 				<section id="VWTsecViewWindowTypes" ></section>
+
+				<section id="VDOsecViewDocuments" ></section>
 
 			</details>
 
@@ -383,6 +390,8 @@ function init() {
 
 	VOPsecViewOpenings.innerHTML = VOP.getMenuViewOpenings();
 
+	VOTsecViewOpeningTypes.innerHTML = VOT.getMenuViewOpeningTypes();
+
 	VCIsecViewCadObjectId.innerHTML = VCI.getMenuViewCadObjectId();
 
 	VCIOsecViewCadObjectIdOpen.innerHTML = VCIO.getMenuViewCadObjectIdOpen();
@@ -394,6 +403,8 @@ function init() {
 	VMAsecViewMaterials.innerHTML = VMA.getMenuViewMaterials();
 
 	VWTsecViewWindowTypes.innerHTML = VWT.getMenuViewWindowTypes();
+
+	VDOsecViewDocuments.innerHTML = VDO.getMenuViewDocuments();
 
 
 	// Settings menu

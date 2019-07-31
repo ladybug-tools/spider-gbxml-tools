@@ -1,4 +1,8 @@
-/* globals GBX, VST, THREE, divDragMoveContent, VZOselZone, VZOdivReportsLog, VSTdivSurfaceType */
+/* globals MNU, POP, GBX, VGC, PCO, THREE, divDragMoveContent, VZOselZone, VZOdetMenu
+112	VZOinpSelectIndex
+116	VZOselAttribute
+152	VZOselElement, VZOspnCount
+*/
 // jshint esversion: 6
 // jshint loopfunc: true
 
@@ -8,12 +12,12 @@ const VZO = {
 	script: {
 
 		copyright: "Copyright 2019 Ladybug Tools authors",
-		date: "2019-07-30",
+		date: "2019-07-31",
 		description: "View the surfaces in a gbXML file by selecting one or more zones from a list of all zones",
 		helpFile: "js-view-gbxml/vzo-view-zones.md",
 		license: "MIT License",
 		sourceCode: "js-view-gbxml/vzo-view-zones.js",
-		version: "0.17-01-2vzo"
+		version: "0.17-01-3vzo"
 
 	}
 
@@ -73,7 +77,7 @@ VZO.getMenuViewZones = function() {
 				<button id="butVZOtxt" onclick="POP.setPopupShowHide(butVZOtxt,VZO.script.helpFile);">? / read me</button>.
 			</p>
 			<p>
-				Current version is Celsius  only. Very slow on large files. Will speed things up.
+				<mark>Current version is Celsius only</mark>. May be slow on large files. Will speed things up.
 			</p>
 
 			</p>
@@ -83,7 +87,7 @@ VZO.getMenuViewZones = function() {
 			</p>
 
 			<p>
-				<select id=VZOselZone oninput=VZO.selectZoneFocus(this); style=width:100%; multiple ></select
+				<select id=VZOselZone onclick=VZO.selectZoneFocus(this); oninput=VZO.selectZoneFocus(this); style=width:100%; multiple ></select
 			</p>
 
 			<div id="VZOdivReportsLog" ></div>
@@ -118,7 +122,7 @@ VZO.getZonesOptions = function() {
 
 	let zoneArr;
 
-	zoneAttributes = GBX.zones.map( zone => {
+	let zoneAttributes = GBX.zones.map( zone => {
 
 		if ( ["CADObjectId", "Name", "TypeCode" ].includes( attribute )) {
 
@@ -156,7 +160,7 @@ VZO.getZonesOptions = function() {
 		temp = temp < 0 ? 0 : temp;
 		temp = temp > 36 ? 36 : temp;
 
-		console.log( 'temp', temp );
+		//console.log( 'temp', temp );
 
 		const color = VZO.temperatureZones[ parseInt( temp ) ];
 
@@ -164,16 +168,11 @@ VZO.getZonesOptions = function() {
 			${ zoneAttribute || zoneId }</option>`;
 
 	} );
-
-	if ( zoneAttributes.length === 1 ) {
-
-		zoneOptions = `<option placeholder="" >select an option</option> ${ zoneOptions }`;
-
-	}
+	//console.log( 'zoneOptions', zoneOptions );
 
 	VZOselZone.innerHTML = zoneOptions;
 
-	VZOspnCount.innerHTML = `${ zoneAttributes.length } zones found`;
+	VZOspnCount.innerHTML = `${ zoneAttributes.length } zone(s) found`;
 
 };
 
@@ -188,7 +187,7 @@ VZO.selectZoneFocus = function( select ) {
 
 	divDragMoveContent.innerHTML = PCO.getZoneAttributes( zoneId );
 
-	const options = select.selectedOptions
+	const options = select.selectedOptions;
 	//console.log( 'options', options );
 
 	GBX.meshGroup.children.forEach( element => element.visible = false );
@@ -198,9 +197,10 @@ VZO.selectZoneFocus = function( select ) {
 };
 
 
-types = [ "InteriorFloor", "SlabOnGrade" ]
+
 VZO.setZoneVisible = function ( option ) {
 
+	const types = [ "InteriorFloor", "SlabOnGrade", "UndergroundSlab" ];
 
 	GBX.meshGroup.children.forEach( mesh => {
 
@@ -208,7 +208,7 @@ VZO.setZoneVisible = function ( option ) {
 
 			mesh.visible = true;
 
-			mesh.material = new THREE.MeshBasicMaterial( { color: 0xff0000, side: 2 } )
+			mesh.material = new THREE.MeshBasicMaterial( { color: 0xff0000, side: 2 } );
 			mesh.material.color.setStyle( option.style.backgroundColor ); //
 
 		}
@@ -217,71 +217,6 @@ VZO.setZoneVisible = function ( option ) {
 
 };
 
-
-
-
-VZO.xxxxsetZoneVisible = function ( zoneId ) {
-
-	//console.log( 'zoneId', zoneId );
-
-	const children = GBX.meshGroup.children;
-
-	const spaces = GBX.spaces;
-
-	const spaceIdsInZone = [];
-
-	for ( let space of spaces ) {
-
-		const spaceZoneId = space.match( /zoneIdRef="(.*?)"/ );
-
-		if ( spaceZoneId && spaceZoneId[ 1 ] === zoneId ) {
-			//console.log( 'spaceZoneId', spaceZoneId[ 1 ] );
-
-			const spaceId = space.match( ` id="(.*?)"` )[ 1 ];
-			//console.log( 'spaceId', spaceId );
-
-			spaceIdsInZone.push( spaceId );
-
-		}
-
-	}
-	//console.log( 'spaceIdsInZone', spaceIdsInZone );
-
-	for ( let child of children ) {
-
-		const id = child.userData.index;
-		const surface = GBX.surfaces[ id ];
-		const spacesArr = surface.match( / spaceIdRef="(.*?)"/g );
-		//console.log( 'spacesArr', spacesArr );
-
-		if ( spacesArr ) {
-
-			const spacesIdsArr = spacesArr.map( space => space.match( `="(.*?)"` )[ 1 ] );
-			//console.log( 'spacesIdsArr', spacesIdsArr );
-
-			for ( let spaceId of spaceIdsInZone ) {
-
-				spaceText = GBX.spaces.find( space => space.includes( spaceId ) );
-				zoneIdRef = spaceText.match( /zoneIdRef="(.*?)"/i )[ 1 ];
-				//console.log( '', zoneId );
-
-				//zoneData = VZO.zones.find( zone => zone.includes( zoneId ) )
-				//console.log( 'zoneData', zoneData );
-				//console.log( '', zoneData.tempHeat );
-
-				child.visible = spacesIdsArr.includes( spaceId ) ? true : child.visible;
-
-				//console.log( 'child', child );
-
-				//child.material.color.setHex( zoneData.color ); // new THREE.MeshPhongMaterial( { color: 0xff0000, side: 2 } );
-
-			}
-
-		}
-
-	}
-
-};
 
 
 //////////
@@ -297,7 +232,7 @@ VZO.resetColors = function( ) {
 
 	} );
 
-}
+};
 
 
 
@@ -315,7 +250,7 @@ VZO.toggleZones = function( button ) {
 
 		GBX.meshGroup.children.forEach( element => element.visible = false );
 
-		const options = VZOselZone.selectedOptions
+		const options = VZOselZone.selectedOptions;
 		console.log( 'options', options );
 
 		Array.from( options ).forEach( option =>
@@ -327,66 +262,3 @@ VZO.toggleZones = function( button ) {
 
 };
 
-
-
-
-////////// looks at surface types
-
-VZO.xxxxsetSurfacesFilteredZone = function( surfaces ) {
-
-	const zoneIds = VZOselZone.selectedOptions;
-	//console.log( 'zoneIds', zoneIds );
-
-	if ( zoneIds.length === 0 ) {
-
-		const buttonsActive = VSTdivSurfaceType.getElementsByClassName( "active" ); // collection
-
-		let filterArray = Array.from( buttonsActive ).map( button => button.innerText );
-
-		filterArray = filterArray.length > 0 ? filterArray : VST.filtersDefault;
-		//console.log( 'filterArray', filterArray );
-
-		surfaces = filterArray.flatMap( filter =>
-
-			GBX.surfacesIndexed.filter( surface => surface.includes( `"${ filter }"` ) )
-
-		);
-
-	}
-
-	const surfacesFilteredZone = surfaces ? surfaces : [];
-
-	for ( let zoneId of zoneIds ) {
-
-		const zonesFiltered = GBX.zones.filter( zone => zone.includes( ` id="${ zoneId.value }"` ) );
-		//console.log( 'zonesFiltered', zonesFiltered );
-
-		const zonesInZoneIds = zonesFiltered.map( zone => zone.match( ' id="(.*?)"' )[ 1 ] );
-		//console.log( 'zonesInZoneIds', zonesInZoneIds );
-
-		const surfacesVisibleZone = zonesInZoneIds.flatMap( zoneId =>
-			GBX.surfacesIndexed.filter( surface => surface.includes( `zoneIdRef="${ zoneId }"`  ) )
-		);
-		//console.log( 'surfacesVisibleZone', surfacesVisibleZone );
-/*
-		const buttonsActive = VSTdivSurfaceType.getElementsByClassName( "active" ); // collection
-
-		let filterArr = Array.from( buttonsActive ).map( button => button.innerText );
-
-		filterArr = filterArr.length > 0 ? filterArr : VST.filtersDefault;
-
-		const surfacesFiltered = filterArr.flatMap( filter =>
-
-			surfacesVisibleZone.filter( surface => surface.includes( `"${ filter }"` ) )
-
-		);
-*/
-		surfacesFilteredZone.push( ...surfacesVisibleZone );
-
-		console.log( 'GBX.surfacesFiltered',  GBX.surfacesFiltered );
-
-	}
-
-	return surfacesFilteredZone;
-
-};

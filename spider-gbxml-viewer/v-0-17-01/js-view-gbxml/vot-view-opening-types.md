@@ -1,7 +1,5 @@
 # VOT View Opening Types Read Me
 
-[Source code](  )
-
 <details open >
 
 <summary>Concept</summary>
