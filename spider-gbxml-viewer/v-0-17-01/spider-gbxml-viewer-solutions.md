@@ -14,23 +14,23 @@ Source control
 Spider gbbXML Viewer v0.17 'Maevia' provides a significant leap forward in terms of performance, usability and robustness.
 
 
-## Spider gbXML Viewer ReadMe
+## Spider gbXML Viewer Read Me
 
-First released in 1999, gbXML is the architecture, engineering and construction (AEC) industry standard file format for transmitting data between CAD programs such as Revit, AutoCAD , Bentley MicroStation  and energy analysis programs such as Open Studio, Energy Plus, [Sefaira]( https://sefaira.com/ ), TAS and others.
+First released in 1999, [gbXML]( http://gbxml.org) is the architecture, engineering and construction (AEC) industry standard file format for transmitting data between CAD programs such as Revit, AutoCAD , [Bentley MicroStation]( https://www.bentley.com/en/products/brands/microstation )  and energy analysis programs such as [Open Studio]( https://www.openstudio.net/ ), [Energy Plus]( https://energyplus.net/ ), [Sefaira]( https://sefaira.com/ ), [TAS Engineering]( https://www.edsl.net/tas-engineering/ ) and others.
 
-gbXML files are generally created as exports from CAD programs as the minimum representation of building data that is suitable for creating a 3D model that may be use carrying out energy and illumination analysis.
+gbXML files are generally created as exports from CAD programs as the minimum representation of building data that is suitable for creating a 3D model used to carry out energy and illumination studies.
 
-Although the guidelines of the gbXML format are clear and well documented, the process of simplifying data required for a complex building is fraught with issues. In turn the import of files with problems is also fraught with issues. A sad result of theses issues is that building engineers around the world spend much time dealing with data file issues - time which would much be much better spent actually analyzing the models
+Although the guidelines of the gbXML format are clear and well documented, the process of simplifying data required for a complex building is fraught with issues. In turn the import of files with problems is also fraught with issues. A sad result is that building engineers around the world spend much time dealing with data file issues - time which would much be much better spent actually analyzing the models and recommending better solutions. The Spider project is an effort to help remedy these issues.
 
-First released in 2017 as a programming exercise, the Spider gbbXML Viewer is a web browser viewer of gbXML data. it reads the data from ASCII or ZIP files, parses the data and creates 3D representations viewable in the browser. Right from the get go, designers and engineers saw the potential for the Viewer to help spot errors visually. Within a few months R17 of the viewer was allowing users to spot many issues as well as providing tools to fix the issues and save the data to new files
+First released in 2017 as a programming exercise, the Spider gbbXML Viewer is a web browser viewer of gbXML data. It reads the data from ASCII or ZIP files, parses the data and creates 3D representations viewable in the browser. Right from the get go, designers and engineers saw the potential for the Viewer to help spot errors visually. Within a few months R12 of the viewer was allowing users to spot many issues as well as providing tools to fix the issues and save the data to new files
 
-The upcoming Spider gbbXML Viewer v0.17 - code name 'Maevia' makes managing gbXML files faster, simpler and with higher quality transfers.
-
-
-Behind the simple words, lies a myriad of features and benefits that need to be defined built and tested. The following is an overview of a number of the thought processes covered by the Spider team while developing the app.
+The upcoming Spider gbbXML Viewer v0.17 - code name 'Maevia' makes managing gbXML files faster, simpler and with higher quality data transfers.
 
 
-The list is quite long. There are several intentions
+Behind the simple words, there lies a myriad of features and benefits that need to be defined built and tested. The following is an overview of a number of the thought processes covered by the Spider team while developing the app.
+
+
+The list is quite long. There are several intentions.
 
 * Software is not magic, Software is created by humans who and think har over extended periods of time
 * It's light and easy and can be used in a small office almost instantly but there is also enough depth and robustness so that the routines can be (and already hve been) brought into the complex workflows of very large practices
@@ -39,24 +39,27 @@ The list is quite long. There are several intentions
 The following sections identify the problems that need to be solved to make good software, software that tackles gbXML issues and software that people can use to solve real issues
 
 
+## General software needs
 
-## Data is accessible
+The items in this section are requirements for any software to be used to process the core repositories of data used by building design or engineering organizations.
+
 
 What are the minimum criteria for the software we want? Several qualities wanted
 
+* Data is accessible
 * Follows the rules of programs we know
 * Handles the data
 * OS/device independent
 
 More
 
-* Changes the game
+* Open to software and stuff that completely change the game
 
 
 
 
 
-### Polyglotism
+### Compatibility Polyglotism
 
 File management, data safety
 
@@ -64,7 +67,7 @@ File management, data safety
 
 **Want/Need**: Opening files is not an issue. You may open any file, of any type, from any source, anywhere, any time.
 
-**Solution**: Spider is good at opening gbXML files and making the data usable for you. The file open module deals with data files that may be local or remote, 8 bit/single or 16bit/double-byte, in ASCII or ZIP format, small or hundreds of megabytes, working or broken, loaded once or repeatedly with a click, readable as text, as XML, as JSON or in 3D. And you open most files are loaded in a second or two.
+**Solution**: Spider is good at opening gbXML files and making the data usable for you. The file open module deals with data files that may be local or remote, 8 bit/single or 16bit/double-byte, in ASCII or ZIP format, small or hundreds of megabytes, working or broken, loaded once or repeatedly with a click, readable as text, as XML, as JSON or in 3D.
 
 **Importance**: This is a nice to have. It won't change the world, but every app should have this. And since file-open-basic.js is on GitHug, what are you waiting for?
 
@@ -82,32 +85,53 @@ future may bring more light width ad-hoc field engineering where you pull the fo
 
 
 
-### Forgiving / "Use the Force, Luke"
+### Robust / Forgiving /
 
-**Problem**: Files are huge, complex, have errors and of of inconsistent content
+**Problem**: You want to access data in the office and on building sites without issues. In other words under a variety of environmental conditions, a range of devices and a variety of human focus or training on the task hand
 
-**Want/Need**: A file reader that is forgiving, makes the date understandable, works fast and is fun to play with
+**Want/Need**: The software is able to operate under stress or tolerate unpredictable or invalid input. For example, it can be designed with resilience to low memory conditions.
 
-**Solution**: Billions of dollars and zillions of hours have been spent making your browser work fast. Spider harnesses that power to read huge files into memory - even if they happen to break rules
+/// A file reader that is forgiving, makes the date understandable, works fast and is fun to play with
 
-**Importance**: Decreasing. Because of industries such as gaming, pornography and advertising, the browser is rendering faster than we can think. At some time is the future even the slowest app will appear faster than we can think.
+**Solution**: Billions of dollars and zillions of hours have been spent making your browser work always and anywhere. Spider harnesses that power.
+
+**Importance**: Decreasing. Because of industries such as gaming, pornography and advertising, the browser is rendering faster and more safely than we can think.
+
+
+**Links of interest**:
+
+* https://en.wikipedia.org/wiki/Robustness_testing
+
+	robustness as the degree to which a system or component can function correctly in the presence of invalid inputs or stressful environmental conditions
+
+* http://www.performance-workshop.org/documents/Verifying_Software_Robustness_Final_Collard.pdf
+
+	 Software is robust if it can tolerate such problems as unanticipated events, invalid inputs, corrupted internally stored data, improper uses by system operators, unavailable databases, stress overloads and so on.
+	Systems that include both hardware and software are robust if they can tolerate physical problems such as equipment damage loss of power software crashes and equipment damage, loss of power, software crashes and so on.
 
 
 
-### Auditable
+### Software verification and validation
 
 **Problem**: The system has given you an answer, but you need to know that the answer is authoritative, verifiable and beneficial.
 
-**Want/Need**: Answers and solutions that are trustworthy. Built on FOSS, few dependencies
+* Verification: Are we building the product right?
+* Validation: Are we building the right product?
 
-**Solution**: Spider is built on Three.js, PKZip.js and Showdown.js. Plus several dozen in-house modules all written in plain-vanilla JavaScript. There are no other dependencies. All of the above are plain vanilla open source JavaScript files available for inspection on GitHub.
+**Want/Need**: Answers and solutions that are trustworthy and my be audited
+
+**Solution**: All built on FOSS, few dependencies. Spider is built on our own source code and the following JavaScript libraries Three.js, PKZip.js and Showdown.js.  Also several dozen in-house modules all written in plain-vanilla JavaScript. There are no other dependencies. All of the above are plain vanilla open source JavaScript files available for inspection on GitHub.
 
 **Importance**: Unknown. At some time in the future all programs may be some AI neural network thingies. On the other hand maybe programming becomes things like strumming a guitar or combing your hair.
 
+**Links of interest**:
+
+* https://en.wikipedia.org/wiki/Software_verification_and_validation
+* https://en.wikipedia.org/wiki/Verification_and_validation
+* https://en.wikipedia.org/wiki/Runtime_verification
 
 
-
-### Speedy execution
+### Performance / Speedy execution
 
 **Problem**: Going from one tab or window to another tab or window and then returning to the first tab or window is boring, frustrating and old-skool. Fixing the design takes longer than designing the design. Every keystroke is it takes to do something is a keystroke slowing down better engineering
 
@@ -197,17 +221,16 @@ Relevance: All apps 'should just work'. So this category in the future should no
 
 
 
-## Learnability
+## Usability / Learnability
 
 ### Documentation
 
-Documentation
-
-In code documentation: inline comments are rare. Often they merely indicate the beginning and end of a logical grouping of functions. The bigger, deeper effort is going into the naming of variable, function, files and folders Every module has its own name space.
 
 
+**Comments**: Inline comments are rare in Spider. Often they merely indicate the beginning and end of a logical grouping of functions. The bigger, deeper effort is going into the naming of variable, function, files and folders Every module has its own name space.
 
-Every module has an associated read me file written in Markdown format. fileName.js has fileName.md. Every read me incorporates module mission/vision/problem-being-solved, wish list, issues, links of interest and change log. Automating the process of updating - ( think jsDOc, aspects of YAML and so on ) of the module read me is a work-in-progress
+
+**Read Me Files**: Every module has an associated read me file written in Markdown format. fileName.js has fileName.md. Every read me incorporates module mission/vision/problem-being-solved, wish list, issues, links of interest and change log. Automating the process of updating - ( think jsDOc, aspects of YAML and so on ) of the module read me is a work-in-progress
 
 
 ### Sample Data
@@ -222,29 +245,18 @@ Every module has an associated read me file written in Markdown format. fileName
 
 
 
-### Extensible product Portfolio
+### Extensible Product Portfolio (EPP )
 
 **Problem**: Users hate change
 
-
-**Solution**: We are EPP. All versions are online
-
-Jacon Nielson :[Users Hate Change]( https://www.nngroup.com/videos/users-hate-change/ )
-Comments by sleepyfix [Users hate change]( https://gist.github.com/sleepyfox/a4d311ffcdc4fd908ec97d1c245e57dc )
+**Want/Need**: The idea of EPP is thus: when you have a product that works, and an existing customer base - freeze it. Instead of a major redesign simply leave the product the way it is, bar minor bug-fix work. Instead devote effort into building a new, next-generation product that addresses (hopefully) a new customer segment, and allow existing customers to add this new product to their portfolio. This allows existing customers to self-select into a new product, protects revenue and reduces the risk of existing product customers leaving due to badwill.
 
 
+**Solution**: Spider is very EPP. All of the Spider gbXML Viewer versions are online. Most are in usable working order.
 
 
+**Links of interest**:
 
-
-
-
-
-
-
-
-
-
-
-
+* Jacon Nielson:[Users Hate Change]( https://www.nngroup.com/videos/users-hate-change/ )
+* Comments by sleepyfix [Users hate change]( https://gist.github.com/sleepyfox/a4d311ffcdc4fd908ec97d1c245e57dc )
 
