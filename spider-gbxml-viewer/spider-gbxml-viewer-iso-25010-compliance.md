@@ -1,7 +1,11 @@
 # Spider gbXML Viewer compliance with _ISO 245010 System and software quality models
 
 
-A side project is to document Spider gbXML Viewer compliance with _ISO 245010 System and software quality models_. By clarifying project priorities and converting abstract priorities to measurable values, the intention is develop a common understanding of the Spider gbXML Viewer's objectives and goals. The following are highlights of a much longer work-in-progress document. Text in italics are quotes from the text on the ISO 25010 web page. Text not in italics begins to describe compliance. The name 'Maevia' is used to indicate 'Spider gbXML Viewer Maevia v0.17.01'.
+A Spider side project is to document Spider gbXML Viewer compliance with [_ISO 245010 System and software quality models_]( https://iso25000.com/index.php/en/iso-25000-standards/iso-25010 ). By clarifying project priorities and converting abstract priorities to measurable values, the intention is develop a common and sharable understanding of the Spider gbXML Viewer's objectives and goals.
+
+Text in italics is a quote from the text on the ISO 25010 web page. Text not in italics begins to describe compliance. The name 'Maevia' is used to indicate 'Spider gbXML Viewer Maevia v0.17.01'.
+
+***
 
 ## Functional suitability
 
@@ -16,20 +20,25 @@ File handling
 
 * Maevia reads, parses and displays all the [Spider Sanple Files]( https://www.ladybug.tools/spider/#gbxml-sample-files/ )test files at without issue
 
-Item viewing
+gbXML item viewing
 
 * The official [gbXML schema v6.01]( http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html ) provides a specification for 346 elements and 122 simple types.
 * Important or frequently used elements include: surfaces, spaces, stories, zones, constructions, materials - all of these are readily locatable and viewable using Maevia.
 * A future revision could document any items not covered or viewable in Maevia
 
+Issue Fixers
+
+* TBD
 
 
 ### Functional correctness
 
 _ Degree to which a product or system provides the correct results with the needed degree of precision._
 
+gbXML item viewing
+
 * Providing correct results is a primary mission of Maevia
-* Every item in Maivia is viewable as raw GB XML, 'prettified' text and in 3D
+* Every item in Maevia is viewable as raw GB XML, 'prettified' text and in 3D
 * The results of any one format may be verified by the contents of the other two formats
 
 ### Functional appropriateness
@@ -39,7 +48,8 @@ _Degree to which the functions facilitate the accomplishment of specified tasks 
 
 File handling
 
-* Maevia has the ability to handle file idiosyncrasies
+Maevia
+* Has the ability to numerous handle file idiosyncrasies
 * Handles very large gbXML files in a speedy, no-fail, fashion
 * Loads, extracts and saves 8-bit and 16-bit gbXML files to and from XML files and ZIP files
 * Supports files that are local or on a server with one button press file reloading
@@ -47,13 +57,15 @@ File handling
 
 Identifying content and viewing issues
 
-* Displays virtually every aspect of numerical and attribute data in the file
-* Supplies a variety of 3D visualization aids including exploding, cut sections
+* Displays virtually every aspect of numerical and attribute data in the gbXML file
+* Supplies a variety of 3D visualization aids including exploding, cut sections, wireframe and more
 
 
 Identifying and fixing issues
 
 * Maevia begins to provide tools to fix many issues found in the gbXML files
+
+These will be documented in future versions of this this document
 
 
 
@@ -119,8 +131,8 @@ _Degree to which users can recognize whether a product or system is appropriate 
 ### Learnability
 
 * Maevia a provides context sensitive help in both 3D and 2D
-* Display helpful text including text-to-voice in popup
-* Every module has a read me file with help, wish list, issues and a change log
+* Displays helpful text including text-to-voice in popup
+* Every module has an assicated read me file in Markdown format with help, wish list, issues and a change log
 
 
 ### Operability
@@ -128,7 +140,8 @@ _Degree to which users can recognize whether a product or system is appropriate 
 _Degree to which a product or system has attributes that make it easy to operate and control._
 
 * Maevia runs as any webpage does in a browser
-* Maevia a menus are organized in the standard file, edit, select, view, settings, help format used by many programs
+* Maevia menus are organized in the standard and familiar file, edit, select, view, settings and help format used by many programs
+
 
 ### User error protection
 
@@ -137,12 +150,14 @@ _Degree to which a system protects users against making errors._
 * Much time has been spent trying to make a workflow that is simple and logical and obvious
 * Alerts that pop up are added to the code whenever a pattern of mistakes has been identified
 
+
 ### User interface aesthetics
 
 _Degree to which a user interface enables pleasing and satisfying interaction for the user._
 
 * By default Maevia is neither attractive nor unattractive
 * By design, Maevia a delivers a user interface that may be themed to fit in with the house style of any organization
+
 
 ### Accessibility
 
@@ -151,6 +166,7 @@ _Degree to which a product or system can be used by people with the widest range
 * The senior maintainer for the Maevia project is 72 years old, is missing a left hand and is a partial paraplegic
 * Maevea is tested on a wide variety of devices with a wide variety of interface elements
 * Maevia is designed so that ARIA roles and other theme updates to assist with accessibility may be applied to the user interface, but awaiting testing procedures (and testers) these have not yet been implemented
+
 
 
 
@@ -173,6 +189,7 @@ _Degree to which a system, product or component meets needs for reliability unde
 _Degree to which a system, product or component is operational and accessible when required for use._
 
 * Maevia it is your typical web app, it just works
+
 
 ### Fault tolerance
 
