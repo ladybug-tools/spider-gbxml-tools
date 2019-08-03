@@ -16,9 +16,9 @@ Spider gbbXML Viewer v0.17 'Maevia' provides a significant leap forward in terms
 
 ## Spider gbXML Viewer Read Me
 
-First released in 1999, [gbXML]( http://gbxml.org) is the architecture, engineering and construction (AEC) industry standard file format for transmitting data between CAD programs such as Revit, AutoCAD , [Bentley MicroStation]( https://www.bentley.com/en/products/brands/microstation )  and energy analysis programs such as [Open Studio]( https://www.openstudio.net/ ), [Energy Plus]( https://energyplus.net/ ), [Sefaira]( https://sefaira.com/ ), [TAS Engineering]( https://www.edsl.net/tas-engineering/ ) and others.
+Spider gbXML Viewer opens, parses and displays gbXML files. First released in 1999, [gbXML]( http://gbxml.org) is the architecture, engineering and construction (AEC) industry standard file format for transmitting data between CAD programs such as Revit, AutoCAD , [Bentley MicroStation]( https://www.bentley.com/en/products/brands/microstation )  and energy analysis programs such as [Open Studio]( https://www.openstudio.net/ ), [Energy Plus]( https://energyplus.net/ ), [Sefaira]( https://sefaira.com/ ), [TAS Engineering]( https://www.edsl.net/tas-engineering/ ) and others.
 
-gbXML files are generally created as exports from CAD programs as the minimum representation of building data that is suitable for creating a 3D model used to carry out energy and illumination studies.
+gbXML files are generally created as exports from CAD programs as the minimum representation of building data that is suitable for creating a 3D model used to carry out energy and illumination studies. The purpose of a gbXML file is to act as a method of transferring data. In a manner similar to CSV, JSON files or other similar uses of XML.
 
 Although the guidelines of the gbXML format are clear and well documented, the process of simplifying data required for a complex building is fraught with issues. In turn the import of files with problems is also fraught with issues. A sad result is that building engineers around the world spend much time dealing with data file issues - time which would much be much better spent actually analyzing the models and recommending better solutions. The Spider project is an effort to help remedy these issues.
 

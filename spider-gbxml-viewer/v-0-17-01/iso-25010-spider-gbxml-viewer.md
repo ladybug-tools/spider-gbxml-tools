@@ -1,8 +1,22 @@
-# Overview of ISO 25010
+# Spider gbXML Viewer ISO 25010 Compliance
 
-The fundamental objective of the ISO/IEC 9126 standard is to address some of the well known human biases that can adversely affect the delivery and perception of a software development project. These biases include changing priorities after the start of a project or not having any clear definitions of "success". By clarifying, then agreeing on the project priorities and subsequently converting abstract priorities (compliance) to measurable values (output data can be validated against schema X with zero intervention), ISO/IEC 9126 tries to develop a common understanding of the project's objectives and goals.
+## Overview of this effort
 
-The quality model is the cornerstone of a product quality evaluation system. The quality model determines which quality characteristics will be taken into account when evaluating the properties of a software product.
+A typical proprietary software product sold on the open market frequently has a web site byult by advertising agency that touts the features and benefits of the product. Many open source projects for similar routes.
+
+There are, however, others paths to gaining user recognition and adoption. This document is the initial exploration of another method of gaining "Appropriateness recognizability". Paraphrasing the ISO 9126 terminology, the mission here may be stated as:
+
+By clarifying project priorities and converting abstract priorities to measurable values this document develops a common understanding of the Spider gbXML Viewer's objectives and goals.
+
+
+
+## Overview of ISO 25010 ~ System and software quality models
+
+_Describes the model, consisting of characteristics and sub-characteristics, for software product quality, and software quality in use._
+
+Preface to previous version: The fundamental objective of the ISO/IEC 9126 standard is to address some of the well known human biases that can adversely affect the delivery and perception of a software development project. These biases include changing priorities after the start of a project or not having any clear definitions of "success". By clarifying, then agreeing on the project priorities and subsequently converting abstract priorities (compliance) to measurable values (output data can be validated against schema X with zero intervention), ISO/IEC 9126 tries to develop a common understanding of the project's objectives and goals.
+
+Preface to current version: The quality model is the cornerstone of a product quality evaluation system. The quality model determines which quality characteristics will be taken into account when evaluating the properties of a software product.
 
 The quality of a system is the degree to which the system satisfies the stated and implied needs of its various stakeholders, and thus provides value. Those stakeholders' needs (functionality, performance, security, maintainability, etc.) are precisely what is represented in the quality model, which categorizes the product quality into characteristics and sub-characteristics.
 
@@ -11,34 +25,63 @@ The product quality model defined in ISO/IEC 25010 comprises the eight quality c
 
 ## Functionality
 
-Functionality: A set of attributes that bear on the existence of a set of functions and their specified properties. The functions are those that satisfy stated or implied needs.
-
-Degree to which a product or system provides functions that meet stated and implied needs when used under specified conditions.
+_Degree to which a product or system provides functions that meet stated and implied needs when used under specified conditions._
 
 ### Functional completeness
 
-Degree to which the set of functions covers all the specified tasks and user objectives.
+_Degree to which the set of functions covers all the specified tasks and user objectives._
 
-#### In depth Views
 
-**Problem**: gbXML files typically contain many elements including surfaces, spaces, stories, zones, constructions, materials and many more. Any one of these may have issues
+#### gbXML Overview
 
-**Want/Need**: the ability to view any and all elements in a gbXML file
+The official [gbXML schema v6.01]( http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html ) provides a specification for 346 elements and 122 simple types.
 
-**Solution**: Spider provides the tools to view every instance in every element with a few keystrokes. For example, surface elements may be located using ID, name, construction or CAD Object ID. Once located, the attributes of the surface may be viewed as clickable items, a raw gbXML or as 3D representation highligted un the 3D model
+Important or frequently used elements include: surfaces, spaces, stories, zones, constructions, materials.
 
-Relevance: Very important. Spiders ability to locate an element, highlight it, view it;s detail, zoom into it, show its neighbors and more are the things that make Maevia useful, speedy and fun.
+
+#### Spider Compliance
+
+Spider provides the tools to view every instance in every element with a few keystrokes. For example, surface elements may be located using ID, name, construction or CAD Object ID. Once located, the attributes of the surface may be viewed as clickable items, a raw gbXML or as 3D representation highlighted un the 3D model
+
+Relevance: Very important. Spiders ability to locate an element, highlight it, view its detail, zoom into it, show its neighbors and more are the things that make Maevia useful, speedy and fun.
 
 
 
 ### Functional correctness
 
-Degree to which a product or system provides the correct results with the needed degree of precision.
+_Degree to which a product or system provides the correct results with the needed degree of precision._
+
+
+#### gbXML Considerations
+
+* Files may be
+	* local or remote
+	* 8 bit/single or 16bit/double-byte
+	* in ASCII or ZIP format
+	* small or hundreds of megabytes
+	* working or broken
+	* loaded once or repeatedly with a click
+	* readable as text, as XML, as JSON or in 3D.
+
+
 
 ### Functional appropriateness
 
-Degree to which the functions facilitate the accomplishment of specified tasks and objectives.
+_Degree to which the functions facilitate the accomplishment of specified tasks and objectives._
 
+You should have access to any and all of these types whenever they appear in a data file.
+
+You should be able to view the data in the following ways
+
+* Raw gbXML
+* As 'prettified' text
+* In a format suitable to the data type
+	* 3D coordinate data in 3D
+	* Tabular data in table
+
+You may access any item with three clicks or fewer
+
+You may filter the data so that only selected subsets of the data are visible
 
 
 
