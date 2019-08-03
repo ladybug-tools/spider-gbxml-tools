@@ -225,12 +225,17 @@ _degree to which actions or events can be proven to have taken place, so that th
 _Degree to which the actions of an entity can be traced uniquely to the entity._
 
 
+* gbXML files have a document history element. 
+* Previous versions of Maevia have had the ability to add and edit this data
+* previous versions of maybe I have also had the ability to maintain log files of edits
+* Future revisions of Maevia should add these capabilities back
 
 
 ### Authenticity
 
 _Degree to which the identity of a subject or resource can be proved to be the one claimed._
 
+* given that the Maevia application is a web app, verifying the authenticity of an instance depends on the organization using Maevia and its ability to maintain encryption and security throughout the pipeline
 
 
 
@@ -243,27 +248,47 @@ _The degree of effectiveness and efficiency with which a product or system can b
 
 _Degree to which a system or computer program is composed of discrete components such that a change to one component has minimal impact on other components._
 
-* Entirely written in plain vanilla FOSS JavaScript with just three dependencies: Three.js, pkZip.js and Showdown.js
+* Maevia is entirely written in plain vanilla FOSS JavaScript with just three dependencies: Three.js, pkZip.js and Showdown.js
 * Hosted on GitHub
+* Maevia is built up from several dozen JavaScript modules Each of which tends to be less than 500 lines long
+* Groups of modules are kept in separate folders so as to be identifiable as a group
+
 
 ### Reusability
 
 _Degree to which an asset can be used in more than one system, or in building other assets._
 
+* given that the modules are written in plain vanilla JavaScript it should be fairly easy to reuse the code as part of a view, angular, react environment
 
 ### Analysability
 
 _Degree of effectiveness and efficiency with which it is possible to assess the impact on a product or system of an intended change to one or more of its parts, or to diagnose a product for deficiencies or causes of failures, or to identify parts to be modified._
 
+* Maevia modules are passed through jsHint and jsLint on a frequent basis
+* 
+
 ### Modifiability
 
 _Degree to which a product or system can be effectively and efficiently modified without introducing defects or degrading existing product quality._
+
+* Much attention in the development of Maivia has been devoted to creation of logical namespaces, folder, file and vaiable names that helped provide the feeling that the code is written as if it were a spoken language
 
 
 ### Testability
 
 _Degree of effectiveness and efficiency with which test criteria can be established for a system, product or component and tests can be performed to determine whether those criteria have been met._
 
+Code
+
+* Currently all testing is manual and mostly by opening the Spider Samole gbXML files
+
+gbXML Viewers
+
+* currently all testing is manual and carried out by interacting with the menu and you and results in the in World 3D model and on the 2D context sensitive pop-up screen
+
+Issue Fixers
+
+* 
 
 
 
