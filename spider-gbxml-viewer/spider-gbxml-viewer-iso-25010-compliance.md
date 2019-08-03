@@ -224,10 +224,9 @@ _degree to which actions or events can be proven to have taken place, so that th
 
 _Degree to which the actions of an entity can be traced uniquely to the entity._
 
-
 * gbXML files have a document history element. 
 * Previous versions of Maevia have had the ability to add and edit this data
-* previous versions of maybe I have also had the ability to maintain log files of edits
+* previous versions of Maevia have also had the ability to maintain log files of edits
 * Future revisions of Maevia should add these capabilities back
 
 
@@ -235,7 +234,7 @@ _Degree to which the actions of an entity can be traced uniquely to the entity._
 
 _Degree to which the identity of a subject or resource can be proved to be the one claimed._
 
-* given that the Maevia application is a web app, verifying the authenticity of an instance depends on the organization using Maevia and its ability to maintain encryption and security throughout the pipeline
+* Given that the Maevia application is a web app, verifying the authenticity of an instance depends on the organization using Maevia and its ability to maintain encryption and security throughout their workflow pipeline
 
 
 
@@ -248,30 +247,38 @@ _The degree of effectiveness and efficiency with which a product or system can b
 
 _Degree to which a system or computer program is composed of discrete components such that a change to one component has minimal impact on other components._
 
-* Maevia is entirely written in plain vanilla FOSS JavaScript with just three dependencies: Three.js, pkZip.js and Showdown.js
-* Hosted on GitHub
-* Maevia is built up from several dozen JavaScript modules Each of which tends to be less than 500 lines long
-* Groups of modules are kept in separate folders so as to be identifiable as a group
+* Maevia is entirely written in plain vanilla FOSS JavaScript with just thrlee dependencies: Three.js, pkZip.js and Showdown.js
+* All three dependencies are in use in thousands of other applications
+* The Maevia file handling, menu, theming and other modules are currently in use in dozens of other locations
+* The primary Maevia parser is in use in a number of Maevia versions an as well as being embdedd in applcations by MREL and Perkins Will
 
 
 ### Reusability
 
 _Degree to which an asset can be used in more than one system, or in building other assets._
 
-* given that the modules are written in plain vanilla JavaScript it should be fairly easy to reuse the code as part of a view, angular, react environment
+* Given that the modules are written in plain vanilla JavaScript it should be fairly easy to reuse the code as part of a Vue, Angular or React environment
+* Hosted on GitHub, everything is forkable
+* Maevia is built up from several dozen JavaScript modules Each of which tends to be less than 500 lines long
+* Groups of modules are kept in separate folders so as to be identifiable as a group
 
 ### Analysability
 
 _Degree of effectiveness and efficiency with which it is possible to assess the impact on a product or system of an intended change to one or more of its parts, or to diagnose a product for deficiencies or causes of failures, or to identify parts to be modified._
 
 * Maevia modules are passed through jsHint and jsLint on a frequent basis
-* 
+* Maevia code is not currently compiled and therefore does not get all the error checking a compiler provides
+* Maevia code is not currently being passed through a full 'prettify' cleanup
+
 
 ### Modifiability
 
 _Degree to which a product or system can be effectively and efficiently modified without introducing defects or degrading existing product quality._
 
-* Much attention in the development of Maivia has been devoted to creation of logical namespaces, folder, file and vaiable names that helped provide the feeling that the code is written as if it were a spoken language
+* Much attention in the development of Maivia has been devoted to creation of logical namespaces, folder, file and variable names that helped provide the feeling that the code is written as if it were a spoken language
+* Maevia is written in plain vanilla JavaScript with code that is easy to read and designed so it is very simple for beginners to edit
+* Maevia is written in a very simple coding style so rhat building engineers may be able to verify the validity of the calculations without being full stack programmers
+
 
 
 ### Testability
@@ -280,15 +287,15 @@ _Degree of effectiveness and efficiency with which test criteria can be establis
 
 Code
 
-* Currently all testing is manual and mostly by opening the Spider Samole gbXML files
+* Currently all testing is manual and mostly carried out by opening the Spider Sample gbXML files and clicking on the various menus
 
-gbXML Viewers
+gbXML element viewers
 
-* currently all testing is manual and carried out by interacting with the menu and you and results in the in World 3D model and on the 2D context sensitive pop-up screen
+* Currently all testing is manual and carried out by interacting with the menus and viewing results in the 3D model and on the 2D context sensitive pop-up screen
 
 Issue Fixers
 
-* 
+* currently all issue fixers are checked by running the tests again and seeing if the number of errors has been reduced down to zero
 
 
 
@@ -300,8 +307,11 @@ _Degree of effectiveness and efficiency with which a system, product or componen
 
 _Degree to which a product or system can effectively and efficiently be adapted for different or evolving hardware, software or other operational or usage environments._
 
-* Maevia Works just fine on phone, tablet, laptop or workstation
-* Maevia has opened files from several CAD systems and has exported to files read by a number of energy analysis programs
+* Maevia works just fine on phones, tablets, laptops or workstations
+* Maevia has been tested on Chrome, Edge, Firefox and Safari browsers
+* Maevia has been tested on Windows, MacOS, Chromebooks and another number of other device operating systems
+* maybe has been tested hosted on GitHub, hosted on content delivery networks and opened directly from the local hard disk
+* Maevia has opened files exported from several CAD systems and has exported to files that are read by a number of energy analysis programs
 
 
 ### Installability
@@ -315,4 +325,5 @@ _Degree of effectiveness and efficiency with which a product or system can be su
 
 _Degree to which a product can replace another specified software product for the same purpose in the same environment_
 
-* Maevia may replace or be replaced by anu other programs that opens gbXML files
+* Maevia may replace or be replaced by any other programs that opens gbXML files
+* There are a number of versions of Maevia hosted on the spider website. most but not all are curently operable. All of the versions may be used interchangeably to view gbXML files
