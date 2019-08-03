@@ -1,9 +1,9 @@
-# Spider gbXML Viewer compliance with _ISO 245010 System and software quality models
+# Spider gbXML Viewer compliance with _ISO 245010 System and software quality models_
 
 
 A Spider side project is to document Spider gbXML Viewer compliance with [_ISO 245010 System and software quality models_]( https://iso25000.com/index.php/en/iso-25000-standards/iso-25010 ). By clarifying project priorities and converting abstract priorities to measurable values, the intention is develop a common and sharable understanding of the Spider gbXML Viewer's objectives and goals.
 
-Text in italics is a quote from the text on the ISO 25010 web page. Text not in italics begins to describe compliance. The name 'Maevia' is used to indicate 'Spider gbXML Viewer Maevia v0.17.01'.
+The titles and text in italics are quotes from the text on the ISO 25010 web page. These cover the eight primary characteristcs and associated sub-characteristics. Text not in italics begins to describe Spider compliance. The name 'Maevia' is used to indicate 'Spider gbXML Viewer Maevia v0.17.01'.
 
 ***
 
