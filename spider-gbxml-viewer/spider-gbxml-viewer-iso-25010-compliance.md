@@ -1,8 +1,6 @@
 # Spider gbXML Viewer compliance with _ISO 245010 System and software quality models
 
 
-
-
 A side project is to document Spider gbXML Viewer compliance with _ISO 245010 System and software quality models_. By clarifying project priorities and converting abstract priorities to measurable values, the intention is develop a common understanding of the Spider gbXML Viewer's objectives and goals. The following are highlights of a much longer work-in-progress document. Text in italics are quotes from the text on the ISO 25010 web page. Text not in italics begins to describe compliance. The name 'Maevia' is used to indicate 'Spider gbXML Viewer Maevia v0.17.01'.
 
 ## Functional suitability
@@ -16,13 +14,13 @@ _Degree to which the set of functions covers all the specified tasks and user ob
 
 File handling
 
-* Maevia read, parses and display all the test files at withut issue
+* Maevia reads, parses and displays all the [Spider Sanple Files]( https://www.ladybug.tools/spider/#gbxml-sample-files/ )test files at without issue
 
-Element Viewing
+Item viewing
 
 * The official [gbXML schema v6.01]( http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html ) provides a specification for 346 elements and 122 simple types.
 * Important or frequently used elements include: surfaces, spaces, stories, zones, constructions, materials - all of these are readily locatable and viewable using Maevia.
-* A future revision could document any items not covered in Maevia
+* A future revision could document any items not covered or viewable in Maevia
 
 
 
@@ -30,6 +28,9 @@ Element Viewing
 
 _ Degree to which a product or system provides the correct results with the needed degree of precision._
 
+* Providing correct results is a primary mission of Maevia
+* Every item in Maivia is viewable as raw GB XML, 'prettified' text and in 3D
+* The results of any one format may be verified by the contents of the other two formats
 
 ### Functional appropriateness
 
@@ -52,7 +53,7 @@ Identifying content and viewing issues
 
 Identifying and fixing issues
 
-* Maevia begins to provide tools to fix many issues found in the files
+* Maevia begins to provide tools to fix many issues found in the gbXML files
 
 
 
@@ -72,7 +73,7 @@ _Degree to which the response and processing times and throughput rates of a pro
 
 _Degree to which the amounts and types of resources used by a product or system, when performing its functions, meet requirements._
 
-* Runs on an Amazon Kindle Fire with 4GB Ram
+* Maevia runs, opens and displays files on an Amazon Kindle Fire HD8 with just 1.5 GB of RAM
 
 
 ### Capacity
@@ -93,14 +94,13 @@ _Degree to which a product, system or component can exchange information with ot
 
 _Degree to which a product can perform its required functions efficiently while sharing a common environment and resources with other products, without detrimental impact on any other product._
 
-
-* All typical files tested run at 60 frames per second in a browser with multiple tabs open
+* All typical files tested on Mavia run at 60 frames per second in a browser with multiple tabs open
 
 ### Interoperability.
 
 _Degree to which two or more systems, products or components can exchange information and use the information that has been exchanged._
 
-
+* Maevia is currently running in production environments with a variety of CAD applications and energy analysis programs including Revit. Open Studio. TAS Engineering and others
 
 
 
@@ -112,12 +112,13 @@ _Degree to which a product or system can be used by specified users to achieve s
 
 _Degree to which users can recognize whether a product or system is appropriate for their needs._
 
+* Running as a web app in the browser, means that Maevia's capabilities may be tested and analyzed in a very speedy fashion
+* Product details, user activity may be verified by examining the Maevia repositories on GitHub
 
 
 ### Learnability
 
-context sensitive help in both 3D and 2D
-
+* Maevia a provides context sensitive help in both 3D and 2D
 * Display helpful text including text-to-voice in popup
 * Every module has a read me file with help, wish list, issues and a change log
 
@@ -126,20 +127,30 @@ context sensitive help in both 3D and 2D
 
 _Degree to which a product or system has attributes that make it easy to operate and control._
 
+* Maevia runs as any webpage does in a browser
+* Maevia a menus are organized in the standard file, edit, select, view, settings, help format used by many programs
+
 ### User error protection
 
 _Degree to which a system protects users against making errors._
 
+* Much time has been spent trying to make a workflow that is simple and logical and obvious
+* Alerts that pop up are added to the code whenever a pattern of mistakes has been identified
 
 ### User interface aesthetics
 
 _Degree to which a user interface enables pleasing and satisfying interaction for the user._
 
-* Delivers a user interface that may be themed to fit in with the house style of any organization
+* By default Maevia is neither attractive nor unattractive
+* By design, Maevia a delivers a user interface that may be themed to fit in with the house style of any organization
 
 ### Accessibility
 
 _Degree to which a product or system can be used by people with the widest range of characteristics and capabilities to achieve a specified goal in a specified context of use._
+
+* The senior maintainer for the Maevia project is 72 years old, is missing a left hand and is a partial paraplegic
+* Maevea is tested on a wide variety of devices with a wide variety of interface elements
+* Maevia is designed so that ARIA roles and other theme updates to assist with accessibility may be applied to the user interface, but awaiting testing procedures (and testers) these have not yet been implemented
 
 
 
@@ -153,51 +164,68 @@ _Degree to which a system, product or component performs specified functions und
 
 _Degree to which a system, product or component meets needs for reliability under normal operation._
 
+* Maevia may be considered a fairly young project. the first commits were in 2017.
+* The gbXML parser in Maevia however has been almost in continuous use ever since and has successfully opened and handled many thousands of files
+
 
 ### Availability
 
 _Degree to which a system, product or component is operational and accessible when required for use._
 
-
+* Maevia it is your typical web app, it just works
 
 ### Fault tolerance
 
 _Degree to which a system, product or component operates as intended despite the presence of hardware or software faults._
 
-
+* Glitches are quite rare, but when they occur a single click in the Maevia menu title will reload the webpage
+* Reloads take only a second or so
 
 ### Recoverability
 
 _Degree to which, in the event of an interruption or a failure, a product or system can recover the data directly affected and re-establish the desired state of the system._
 
+* The current system apart from reloading, offers no protection in the case of a system failure
+* If there is a system failure and you have not saved your unsaved edits are lost
+* Future versins could be created that would save temporary data in local storage, but the overarching intention is to provide viewing and fixing that is so speedy that temporary storage is not required
 
 
-
-
-## Security: confidentiality fits your needs
+## Security:
 
 _Degree to which a product or system protects information and data so that persons or other products or systems have the degree of data access appropriate to their types and levels of authorization._
+
+Given the nature of the Maevia application, there are few areas of copyright, trademark or secrecy where security could be an issue. In any case, no issues have been raised to this date
+
+
 
 ### Confidentiality
 
 _Degree to which a product or system ensures that data are accessible only to those authorized to have access._
 
-* Runs locally, on server, in an iframe or even embedded in another app ( such as Open Studio ;-)
-
+* Maevia euns locally, on server, in an iframe or even embedded in another app ( such as Open Studio ;-)
+* Given that Maivia is just a webpage statically hosted, the organization using Mevia may apply security parameters that they might need
 
 ### Integrity
 
 _Degree to which a system, product or component prevents unauthorized access to, or modification of, computer programs or data._
+
+* See above
+* Given that the Maevia files are hosted on GitHub, an organization seeking to verify code integrity could compare the SHA of the local instance aof a module gainst the SHA of the instance on GitHub
 
 
 ### Non-repudiation
 
 _degree to which actions or events can be proven to have taken place, so that the events or actions cannot be repudiated later._
 
+* It would be an interesting experiment to add blockchain capability to the instances of gbXML files
+
 
 ### Accountability
 
 _Degree to which the actions of an entity can be traced uniquely to the entity._
+
+
+
 
 ### Authenticity
 
