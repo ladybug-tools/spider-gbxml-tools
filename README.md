@@ -70,10 +70,16 @@ gbXML Viewer is a collection of modular experiments for viewing, examining and v
 
 #### General objectives
 
-* Loads almost instantly
+* Open and display files almost instantly
 * Non-modal interface
 * Fast effective workflow: get things done faster
-* Full interactive 3D
+* Fully interactive 3D
+
+
+#### Vision and engineering objectives
+
+* Helping students, clients and non-AEC peeps gain access BIM data easily, quickly and freely
+* Facilitating the transfer of data between design programs and analysis programs
 
 #### Coding objectives
 
@@ -83,11 +89,6 @@ gbXML Viewer is a collection of modular experiments for viewing, examining and v
 * Every module has a descriptive read me file
 * Every JavaScript file has an accompanying standalone HTML file for testing purposes
 * All revisions are always available and runnable via GitHub pages with a click of a button
-
-#### Vision and engineering objectives
-
-* Helping students, clients and non-AEC peeps gain access BIM data easily, quickly and freely
-* Facilitating the transfer of data between design programs and analysis programs
 
 #### Previous releases always available to run and view in your browser
 
@@ -101,7 +102,7 @@ gbXML Viewer is a collection of modular experiments for viewing, examining and v
 
 <details>
 
-<summary style=font-size:1.5rem; >Selected Repository Contents</summary>
+<summary style=font-size:1.5rem; >Selected repository contents</summary>
 
 _The following section highlight some of the files to be found in this repository._
 
@@ -193,9 +194,13 @@ The new code base reads and retains the file as text and uses regular expression
 
 </details>
 
+
+
+
+
 <details>
 
-<summary style=font-size:1.5rem; title="Better title for this section?" >Links of Interest</summary>
+<summary style=font-size:1.5rem; title="Better title for this section?" >Links of interest</summary>
 
 
 #### gbXML Home Page
@@ -283,7 +288,7 @@ The goal of the scripts in this project is to enable you to transfer data from a
 
 <details>
 
-<summary style=font-size:1.5rem; >To Do / Change Log</summary>
+<summary style=font-size:1.5rem; >To do / Change log</summary>
 
 
 ## To Do
