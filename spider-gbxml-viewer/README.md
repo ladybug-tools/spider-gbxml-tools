@@ -16,7 +16,9 @@ _<small>Spider gbXML Viewer 'Maevia'</small>_
 
 Or copy this link: https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/
 
+<!--
 ## Version under development: [Spider gbXML Viewer Dev ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/dev/ )
+-->
 
 ***
 
@@ -25,26 +27,29 @@ Or copy this link: https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-vie
 
 Mission: _Open and examine very large gbXML files in your browser with free, open source JavaScript._
 
-Spider gbXML Viewer opens, parses and displays gbXML files. First released in 1999, [gbXML]( http://gbxml.org) is the architecture, engineering and construction (AEC) industry standard file format for transmitting data between CAD programs such as Revit, AutoCAD , [Bentley MicroStation]( https://www.bentley.com/en/products/brands/microstation )  and energy analysis programs such as [Open Studio]( https://www.openstudio.net/ ), [Energy Plus]( https://energyplus.net/ ), [Sefaira]( https://sefaira.com/ ), [TAS Engineering]( https://www.edsl.net/tas-engineering/ ) and others.
+Spider gbXML Viewer opens, parses and displays gbXML files. First released in 1999, [gbXML]( http://gbxml.org) is the architecture, engineering and construction (AEC) industry standard file format for transmitting data between CAD programs such as [Revit]( https://www.autodesk.com/products/revit/overview ), [AutoCAD]( https://www.autodesk.com/products/autocad/overview ), [Bentley MicroStation]( https://www.bentley.com/en/products/brands/microstation )  and energy analysis programs such as [Open Studio]( https://www.openstudio.net/ ), [Energy Plus]( https://energyplus.net/ ), [Sefaira]( https://sefaira.com/ ), [TAS Engineering]( https://www.edsl.net/tas-engineering/ ) and others.
 
-gbXML files are generally created as exports from CAD programs as the minimum representation of building data that is suitable for creating a 3D model used to carry out energy and illumination studies. The purpose of a gbXML file is to act as a method of transferring data. In a manner similar to CSV, JSON files or other similar uses of XML.
+gbXML files are generally created as exports from architectural design CAD programs as the minimum 3D representation of building data suitable to carry out energy and illumination studies. The intended purpose of a gbXML file is to act as a method of transferring data between applicatations.  This is similar to CSV, JSON files or other similar uses of XML.
 
-Although the guidelines of the gbXML format are clear and well documented, the process of simplifying data required for a complex building is fraught with issues. In turn the import of files with problems is also fraught with issues. A sad result is that building engineers around the world spend much time dealing with data file issues - time which would much be much better spent actually analyzing the models and recommending better solutions. The Spider project is an effort to help remedy these issues.
+Although the guidelines of the gbXML format are clear and well documented, the process of simplifying data required for a complex building is fraught with issues. In turn the import of gbXML files with problems is also fraught with issues. A sad result is that building engineers around the world spend much time dealing with data file issues - time which would much be much better spent actually analyzing the models and recommending better solutions. The Spider project is an effort to help remedy these issues.
 
-First released in 2017 as a programming exercise, the Spider gbbXML Viewer is a web browser viewer of gbXML data. It reads the data from ASCII or ZIP files, parses the data and creates 3D representations viewable in the browser. Right from the get go, designers and engineers saw the potential for the Viewer to help spot errors visually. Within a few months R12 of the viewer was allowing users to spot many issues as well as providing tools to fix the issues and save the data to new files
+First released in 2017 as a programming exercise, the Spider gbbXML Viewer is a web browser viewer of gbXML data. It reads the data from ASCII or ZIP files, parses the data and creates 3D representations viewable in the browser. Right from the get go, designers and engineers saw the potential for the Viewer to help spot errors visually. Within a few months release 12 of the viewer was allowing users to spot many issues as well as providing tools to fix the issues and save the data to new files
 
-The upcoming Spider gbbXML Viewer v0.17 - code name 'Maevia' makes managing gbXML files faster, simpler and with higher quality data transfers.
+The upcoming Spider gbbXML Viewer v0.17 - code name 'Maevia' makes managing gbXML files even faster, simpler and provides with higher quality data transfers.
 
 
 
 ## Spider gbXML Viewer compliance with _ISO 245010 System and software quality models
 
+Behind the improvements in the Spider gbXML Viewer, there lie a myriad of features and benefits that need to be documented and shared.
 
-Behind the simple words describing the improvements, there lie a myriad of features and benefits that need to be documented
+A side project for the Spider team is to document Spider gbXML Viewer compliance with _ISO 245010 System and software quality models_. By clarifying project priorities and converting abstract priorities to measurable values, the intention is develop a common understanding of the Spider gbXML Viewer's objectives and goals.
 
-A side project is to document Spider gbXML Viewer compliance with _ISO 245010 System and software quality models_. By clarifying project priorities and converting abstract priorities to measurable values, the intention is develop a common understanding of the Spider gbXML Viewer's objectives and goals. The following are highlights of a much longer work-in-progress document. Text in italics are quotes from the text on the ISO 25010 web page. Text not in italics begins to describe compliance. The name 'Maevia' is used to indicate 'Spider gbXML Viewer Maevia v0.17.01'.
+Please have a look at the following document:
 
-[spider-gbxml-viewer-iso-25010-compliance.md]( #spider-gbxml-viewer-iso-25010-compliance.md )
+## [spider-gbxml-viewer-iso-25010-compliance.md]( https://www.ladybug.tools/spider-gbxml-tools/index.html#spider-gbxml-viewer/spider-gbxml-viewer-iso-25010-compliance.md )
+
+
 
 ## Usage
 
