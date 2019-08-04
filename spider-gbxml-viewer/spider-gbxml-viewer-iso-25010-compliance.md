@@ -175,7 +175,7 @@ _Degree to which a product or system can be used by people with the widest range
 
 * The senior maintainer for the Maevia project is 72 years old, is missing a left hand and is a partial paraplegic
 * Maevia is tested on a wide variety of devices with a wide variety of interface elements
-* Maevia is designed so that ARIA roles and other theme updates to assist with accessibility may be applied to the user interface, but awaiting testing procedures (and testers) these have not yet been implemented
+* Maevia is designed so that [ARIA roles]( https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles ) and other theme updates to assist with accessibility may be applied to the user interface, but awaiting testing procedures (and testers) these have not yet been implemented
 
 
 
