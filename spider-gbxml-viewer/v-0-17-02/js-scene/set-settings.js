@@ -8,7 +8,7 @@ const SET = {
 
 		copyright: "Copyright 2019 Ladybug Tools authors. MIT License",
 		date: "2019-07-19",
-		description: "",
+		description: "Toggle various scene display parameters",
 		helpFile: "../v-0-17-00/js-scene/set-settings.md",
 		license: "MIT License",
 		version: "0.17-01-0set"
@@ -62,7 +62,7 @@ SET.getPanelSettings = function() { // add help??
 			<button onclick=GBXU.toggleOpenings(); >toggle openings</button>
 
 		<p>
-			<button onclick=THRU.toggleEdges(); >toggle edges three.js</button>
+			<button onclick=THRU.toggleEdges(GBX.meshGroup); >toggle edges three.js</button>
 		</p>
 
 
@@ -87,7 +87,6 @@ SET.getPanelSettings = function() { // add help??
 			<button accesskey="z" onclick=THR.controls.enableKeys=true;THR.controls.screenSpacePanning=!THR.controls.screenSpacePanning; title="Access key + B: Up/down curser kes to forward/backward or up/down" >toggle cursor keys</button>
 		</p>
 
-
 	`;
 
 	return htm;
@@ -106,15 +105,13 @@ SET.toggleShadows = function() {
 
 SET.toggleSpaceTitles = function () {
 
-	if ( GBX.placards === undefined ) {
+	if ( GBX.placards.children.length === 0 ) {
 
 		const scale = 0.0001 * THR.camera.position.distanceTo( THR.controls.target );
 
 		GBX.placards = new THREE.Object3D();
 
-		GBX.spaces.forEach( space => {
-
-			const name = space.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
+		GBX.spaces.forEach( ( space, index ) => {
 
 			const polyLoop = GBX.getPolyLoops( space );
 			//console.log( '', polyLoop );
@@ -129,7 +126,11 @@ SET.toggleSpaceTitles = function () {
 			const center = bbox.getCenter( new THREE.Vector3() );
 			//console.log( 'center', center );
 
+			const name = space.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
+
 			const placard = THRU.drawPlacard( name, scale, 0x00ff00, center.x, center.y, center.z + 1.5 );
+
+			placard.userData = GBX.spacesJson[ index ];
 
 			GBX.placards.add( placard );
 

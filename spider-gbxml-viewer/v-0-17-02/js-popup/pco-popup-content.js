@@ -179,6 +179,7 @@ PCO.toggleSurfaceVisible = function() {
 };
 
 
+
 PCO.setSurfaceZoom = function() {
 
 	const surfaceMesh = PIN.intersected;

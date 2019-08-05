@@ -20,7 +20,7 @@ PFO.footer =
 			<button  onclick=PFO.onClickZoomAll(); title="Show entire campus & display attributes" >🔍</button>
 
 			<button class=PFObutIcon onclick="PFO.onToggleInteriorExterior(this)" title="Exterior or interior surfaces">☂️</button>
-			<button class=PFObutIcon onclick="THRU.toggleEdges();" title="Display edges" >📏</button>
+			<button class=PFObutIcon onclick="THRU.toggleEdges(GBX.meshGroup);" title="Display edges" >📏</button>
 			<button class=PFObutIcon onclick="GBXU.toggleOpenings();" title="Display openings" >🚪</button>
 			<button class=PFObutIcon onclick="PFO.setPanelSurfaceTypes();" title="Surface types" >👁️</button>
 
@@ -176,6 +176,8 @@ PFO.onClickZoomAll = function() {
 
 	GBX.meshGroup.children.forEach( mesh => mesh.visible = true );
 
+	GBX.placards.children.forEach( mesh => mesh.visible = false );
+
 	THRU.zoomObjectBoundingSphere( GBXU.boundingBox );
 
 	//const time = performance.now();
@@ -242,6 +244,12 @@ PFO.setVisible = function() {
 	GBX.meshGroup.children
 		.filter( mesh => PFO.storeyIdsActive.includes( mesh.userData.storeyId ) || mesh.userData.surfaceType === "Shade" )
 		.filter( mesh => PFO.surfaceTypesActive.includes( mesh.userData.surfaceType ) )
+		.forEach( mesh => mesh.visible = true );
+
+	GBX.placards.children.forEach( mesh => mesh.visible = false );
+
+	GBX.placards.children
+		.filter( mesh => PFO.storeyIdsActive.includes( mesh.userData.storeyId ) )
 		.forEach( mesh => mesh.visible = true );
 
 };

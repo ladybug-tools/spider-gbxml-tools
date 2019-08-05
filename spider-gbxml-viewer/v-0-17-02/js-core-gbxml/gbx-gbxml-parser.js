@@ -97,7 +97,7 @@ GBX.parseFile = function( gbxml )  {
 
 	GBX.openingGroup = [];
 	GBX.boundingBox = undefined;
-	GBX.placards = undefined;
+	GBX.placards = new THREE.Group();
 
 	GBX.text = gbxml.replace( /\r\n|\n/g, '' );
 	//console.log( 'GBX.text', GBX.text );

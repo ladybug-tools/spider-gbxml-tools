@@ -1,11 +1,11 @@
-# ZZZZZ Read Me
+# POF Popup Footer Read Me
 
-[PPOF Popup Footer Source code](  )
 
 <details open >
 
 <summary>Concept</summary>
 
+Handle all popup footer events
 
 </details>
 
@@ -26,6 +26,12 @@
 <details>
 
 <summary>Change Log</summary>
+
+POF 0.17.02-0pof
+
+* F: First commit
+* F: Add placard visibility handling
+
 
 ### 2019-07-15 ~ Theo
 
