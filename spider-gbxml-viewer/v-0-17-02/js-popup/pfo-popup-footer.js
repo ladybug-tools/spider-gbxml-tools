@@ -217,6 +217,8 @@ PFO.setAllTypesVisible = function(){
 
 	PFO.surfaceTypesActive = Array.from( buttonsActive ).map( button => button.innerText );
 
+	PFO.storeyIdsActive = GBX.storeysJson.map( json => json.id );
+
 	GBX.meshGroup.children.forEach( child => child.visible = true );
 
 	selStorey.selectedIndex= -1;

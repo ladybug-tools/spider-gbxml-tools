@@ -1,4 +1,4 @@
-# POF Popup Footer Read Me
+# PFO Popup Footer Read Me
 
 
 <details open >
@@ -27,10 +27,11 @@ Handle all popup footer events
 
 <summary>Change Log</summary>
 
-POF 0.17.02-0pof
+PFO 0.17.02-0pof
 
 * F: First commit
 * F: Add placard visibility handling
+* F: Add storeys to set all visible
 
 
 ### 2019-07-15 ~ Theo
