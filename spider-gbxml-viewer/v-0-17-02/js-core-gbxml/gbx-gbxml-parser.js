@@ -79,8 +79,8 @@ GBX.onReaderResult = function() { GBX.parseFile( FOB.reader.result ); };
 
 GBX.onFileZipLoad = function() { GBX.parseFile( FOB.text ); };
 
-const PIN = {} || PIN;
-const PFO =  {} || PFO;
+var PIN = {} || PIN;
+var PFO = {} || PFO;
 
 
 GBX.parseFile = function( gbxml )  {

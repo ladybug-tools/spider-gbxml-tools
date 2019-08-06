@@ -3,7 +3,7 @@
 // jshint loopfunc: true
 
 
-const PIN = {
+var PIN = {
 	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
 	"date": "2019-07-24",
 	"description": "TooToo Menu (PIN) generates standard HTML popup menu code and content and code that works on computers, tablets and phones",
