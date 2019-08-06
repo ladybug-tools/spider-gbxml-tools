@@ -27,9 +27,9 @@ GBXU.filtersDefault = [ "Air", "ExposedFloor", "ExteriorWall", "RaisedFloor", "R
 
 GBXU.onGbxParse = function() { // see GBX.parseFile
 
-	if ( PIN.line ) THR.scene.remove( PIN.line, PIN.particle );
+	//if ( PIN.line ) THR.scene.remove( PIN.line, PIN.particle );
 
-	if ( navDragMove ) POP.setPopupShowHide( butPopupClose, POP.popup );
+	if ( window.navDragMove ) POP.setPopupShowHide( butPopupClose, POP.popup );
 
 	THRU.zoomObjectBoundingSphere();
 
@@ -59,15 +59,19 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 
 	GBXU.setElementsJson();
 
-	PFO.surfaceTypesInUse = GBX.surfaceTypes.filter( type => GBX.surfaces.find( surface => surface.includes( `"${ type }"` ) ) );
-
-	PFO.surfaceTypesActive = !PFO.surfaceTypesActive ? PFO.surfaceTypesInUse : PFO.surfaceTypesActive;
-
 	GBX.getStoreysJson();
 
-	PFO.storeyIdsInUse = GBX.storeysJson.map( storey => storey.id );
+	if ( window.PFO ) {
 
-	PFO.storeyIdsActive = !PFO.storeyIdsActive ? PFO.storeyIdsInUse : PFO.storeyIdsActive;
+		PFO.surfaceTypesInUse = GBX.surfaceTypes.filter( type => GBX.surfaces.find( surface => surface.includes( `"${ type }"` ) ) );
+
+		PFO.surfaceTypesActive = !PFO.surfaceTypesActive ? PFO.surfaceTypesInUse : PFO.surfaceTypesActive;
+
+		PFO.storeyIdsInUse = GBX.storeysJson.map( storey => storey.id );
+
+		PFO.storeyIdsActive = !PFO.storeyIdsActive ? PFO.storeyIdsInUse : PFO.storeyIdsActive;
+
+	}
 
 	if ( window.detMenuViewGbxml ) MNU.toggleDetailsOpen( detMenuViewGbxml );
 

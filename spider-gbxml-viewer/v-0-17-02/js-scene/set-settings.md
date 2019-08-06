@@ -23,6 +23,7 @@ Toggle various scene display parameters
 
 <summary>To Do / Wish List</summary>
 
+* 2019-08-05 ~ Theo ~ Placard colors from zone colors
 
 
 </details>
@@ -39,7 +40,6 @@ Toggle various scene display parameters
 <summary>Change Log</summary>
 
 ### 2019-08-05 ~ Theo
-
 
 SET 0.17.02-0set
 

@@ -55,9 +55,10 @@ GBX.referenceObject = new THREE.Object3D();
 GBX.triangle = new THREE.Triangle(); // used by GBX.getPlane
 
 
-GBX.init = function( target = divMessage ) {
+GBX.init = function( target ) {
 
 	//change to custom event with data passing via event details??
+
 
 	FOB.xhr.addEventListener( 'load', GBX.onXhrResponse, false );
 	FOB.reader.addEventListener( 'load', GBX.onReaderResult, false );
@@ -66,7 +67,7 @@ GBX.init = function( target = divMessage ) {
 
 	document.body.addEventListener( 'onGbxParse', GBXU.onGbxParse, false );
 
-	GBX.messageDiv = target;
+	GBX.messageDiv = target || "";
 
 };
 
@@ -78,6 +79,8 @@ GBX.onReaderResult = function() { GBX.parseFile( FOB.reader.result ); };
 
 GBX.onFileZipLoad = function() { GBX.parseFile( FOB.text ); };
 
+const PIN = {} || PIN;
+const PFO =  {} || PFO;
 
 
 GBX.parseFile = function( gbxml )  {

@@ -1,6 +1,5 @@
 # GBX gbXML Parser Read Me
 
-[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-01/js-core-gbxml )
 
 <details open >
 
@@ -29,33 +28,12 @@
 
 <summary>Change Log</summary>
 
-### 2019-07-23 ~ Theo
+### 2019-08-06 ~ Theo
 
-0.17.00-2gbx
+0.17.02-0gbx
 
-* R - GBX.js: PIN line/particle to scene dispose
+* F: First commit
+* R: Move PIN and PFO dummy declarations here
 
-
-### 2019-07-15 ~ Theo
-
-0.17.00-2gbx
-
-* R - GBX.js: Refactor var names
-
-
-### 2019-07-11 ~ Theo
-
-0.17.00-2gbx
-
-* R - GBX.js: Update vars to GBX name space
-* R - GBX.js: Cleanup and move non-essential functions to GBXU
-
-### 2019-07-10 ~ Theo
-
-0.17.00-1gbx
-
-* F - GBX.js: Add openings as holes in meshes
-* F - GBX.md:First commit
-* F - GBX.md/GBX.js: Add text content
 
 </details>

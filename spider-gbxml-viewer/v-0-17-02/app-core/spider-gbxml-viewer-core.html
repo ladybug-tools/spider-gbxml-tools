@@ -4,10 +4,10 @@
 
 <meta charset = "utf-8">
 <meta name = "copyright" content ="Ladybug Tools authors" >
-<meta name = "date" content = "2019-07-26" >
+<meta name = "date" content = "2019-08-06" >
 <meta name = "description" content = "Basic file that opens a gbXML file and displays it in 3D" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.17.01-1cor" >
+<meta name = "version" content = "0.17.02-0cor" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
 <title>Spider gbXML Viewer Core</title>
@@ -26,7 +26,7 @@ body { font: 11pt monospace; margin: 0; overflow: hidden; }
 
 </style>
 
-<base href="https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-01/" >
+<base href="https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-02/" >
 
 </head>
 
@@ -58,6 +58,8 @@ body { font: 11pt monospace; margin: 0; overflow: hidden; }
 
 	<div style=position:absolute;left:3vh;top:1vh; >
 
+		<!-- following not required -->
+
 		<div id="GBXdivMessage" >loading...</div>
 
 		<div id="FOBdivMessage" ></div>
@@ -73,9 +75,7 @@ FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristo
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/pittsburg-airport.zip";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/GreenBuildingXML/Sample-gbXML-Files@master/gbXML_TRK.xml";
 
-const PIN = {};
-const PFO = {};
-let navDragMove;
+
 
 init();
 THR.animate();
@@ -94,7 +94,7 @@ function init() {
 
 	THRU.init();
 
-	GBX.init( GBXdivMessage );
+	GBX.init( GBXdivMessage );  // parameter not required
 
 	window.addEventListener ( 'hashchange', FOB.onHashChange, false );
 
