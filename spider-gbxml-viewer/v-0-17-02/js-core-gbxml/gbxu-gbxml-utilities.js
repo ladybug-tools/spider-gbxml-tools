@@ -43,11 +43,12 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 
 	THRU.toggleBoundingBoxHelper( GBX.meshesVisible );
 
-	const bbox = new THREE.Box3().setFromObject( GBX.meshesVisible ); // clumsy
-	GBXU.boundingBox = new THREE.Box3Helper( bbox, 0xdddd00 );
+	//const bbox = new THREE.Box3().setFromObject( GBX.meshesVisible ); // clumsy
+	//GBXU.boundingBox = new THREE.Box3Helper( bbox, 0xdddd00 );
+	console.log( 'GBXU.boundingBox', GBXU.boundingBox );
 	//THR.scene.add( GBXU.boundingBox );
 
-	GBX.elevation = GBXU.boundingBox.box.min.z - 0.001 * THRU.radius;
+	GBX.elevation = THRU.boundingBoxHelper.box.min.z - 0.001 * THRU.radius;
 
 	THRU.toggleGroundHelper( THRU.center, GBX.elevation );
 

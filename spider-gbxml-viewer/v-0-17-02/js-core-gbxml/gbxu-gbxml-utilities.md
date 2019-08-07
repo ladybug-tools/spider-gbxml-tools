@@ -1,6 +1,5 @@
-# GBXU gbXML Utilities 0.17.00-3gbxu Read Me
+# GBXU gbXML Utilities Read Me
 
-[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-01/js-core-gbxml )
 
 <details open >
 
@@ -33,6 +32,15 @@ Various utilities to help with display of gbXML data
 <details>
 
 <summary>Change Log</summary>
+
+### 2019-08-06 ~ Theo
+
+
+0.17.02-0gbxu
+
+* F: First commit
+* B: Fix bounding box issues
+
 
 ### 2019-07-31 ~ Theo
 

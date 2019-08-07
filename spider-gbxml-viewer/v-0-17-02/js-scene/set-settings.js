@@ -47,7 +47,7 @@ SET.getPanelSettings = function() { // add help??
 
 			<button onclick=THRU.toggleAxesHelper(); >toggle axes</button>
 		<p>
-			<button onclick=GBXU.boundingBox.visible=!GBXU.boundingBox.visible; >toggle bounding box</button>
+			<button onclick=THRU.boundingBoxHelper.visible=!THRU.boundingBoxHelper.visible; >toggle bounding box</button>
 
 			<button onclick=THRU.toggleGroundHelper(); >toggle ground</button>
 		</p>

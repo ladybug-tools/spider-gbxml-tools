@@ -9,6 +9,7 @@ To do
 * Toggle bounding box needs fixing
 * Scene menu items need links to help
 * Explode placards?
+* Spaces polyloops viewer
 
 More
 

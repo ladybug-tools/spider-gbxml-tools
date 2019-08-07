@@ -30,6 +30,8 @@ THRU.init= function( radius = 50 ) {
 
 	//THRU.toggleEdges();
 
+	//THRU.toggleBoundingBoxHelper();
+
 	THRU.addSomeLights2();
 
 	window.addEventListener( 'keyup', THRU.onSetRotate , false );
@@ -74,6 +76,7 @@ THRU.setSceneDispose = function( objArr = [] ) {
 
 	objArr.forEach( obj => obj = undefined );
 
+	// for testing
 	//divRendererInfo.innerHTML = THRU.getRendererInfo();
 
 };
@@ -339,7 +342,6 @@ THRU.toggleBoundingBoxHelper = function( objThree = THR.scene ){
 	if ( !THRU.boundingBoxHelper ) {
 
 		const bbox = new THREE.Box3().setFromObject( objThree );
-
 
 		THRU.boundingBoxHelper = new THREE.Box3Helper( bbox, 0xff0000 );
 		THRU.boundingBoxHelper.geometry.computeBoundingBox();

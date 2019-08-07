@@ -282,7 +282,14 @@
 
 		<div id="divContents" ></div>
 
-		<div id="divMessage" style=position:absolute;left:3vh;top:1vh; >loading...</div>
+		<div id="divMessage" style=position:absolute;left:3vh;top:1vh; >
+
+			<div id="GBXdivMessage" >loading...</div>
+
+			<div id="FOBdivMessage" ></div>
+
+
+		</div>
 
 	</main>
 
@@ -349,7 +356,7 @@ function init() {
 
 	THRU.init();
 
-	GBX.init();
+	GBX.init( GBXdivMessage ); // gets things going
 
 
 	// Theme
@@ -424,8 +431,6 @@ function init() {
 	PIN.init();
 
 	COR.init();
-
-	GBX.init(); // gets things going
 
 	FOB.onHashChange();
 

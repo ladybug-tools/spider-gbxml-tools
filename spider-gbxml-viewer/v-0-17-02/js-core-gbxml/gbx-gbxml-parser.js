@@ -57,8 +57,8 @@ GBX.triangle = new THREE.Triangle(); // used by GBX.getPlane
 
 GBX.init = function( target ) {
 
+	//console.log( 'target', target );
 	//change to custom event with data passing via event details??
-
 
 	FOB.xhr.addEventListener( 'load', GBX.onXhrResponse, false );
 	FOB.reader.addEventListener( 'load', GBX.onReaderResult, false );
