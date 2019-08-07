@@ -2,30 +2,33 @@
 
 ## Overview of this effort
 
-A typical proprietary software product sold on the open market frequently has a web site built by advertising agency that touts the features and benefits of the product. Many open source projects follow similar routes.
+The owners of a typical commercial software product sold on the open market frequently pay to have a web site built by an advertising agency. The web site is usually designed to push the features and benefits of the product and omit any aspects about the products being sold that are not positive. Many open source projects follow similar routes.
 
-There are, however, others paths to gaining your recognition and adoption. This document is the initial exploration of another method of gaining "Appropriateness recognizability". Paraphrasing the ISO 9126 terminology, our mission here may be stated as:
+Are there other paths to gain your recognition and adoption in your organization? This document is the initial exploration of another method of gaining "Appropriateness recognizability".
 
-By clarifying project priorities and converting abstract priorities to measurable values this document develops a common understanding of the Spider gbXML Viewer's objectives and capabilities.
+Paraphrasing the ISO 9126 terminology, our mission here may be stated as:
+
+By clarifying project priorities and converting abstract priorities to measurable values this document develops a common and sharable understanding of the Spider gbXML Viewer's objectives and capabilities.
 
 
 
 ## Prefaces
 
-Preface to previous version, ISO 9126: The fundamental objective of the ISO/IEC 9126 standard is to address some of the well known human biases that can adversely affect the delivery and perception of a software development project. These biases include changing priorities after the start of a project or not having any clear definitions of "success". By clarifying, then agreeing on the project priorities and subsequently converting abstract priorities (compliance) to measurable values (output data can be validated against schema X with zero intervention), ISO/IEC 9126 tries to develop a common understanding of the project's objectives and goals.
+[Wikipedia introduction previous version, ISO 9126]( https://en.wikipedia.org/wiki/ISO/IEC_9126): _The fundamental objective of the ISO/IEC 9126 standard is to address some of the well known human biases that can adversely affect the delivery and perception of a software development project. These biases include changing priorities after the start of a project or not having any clear definitions of "success". By clarifying, then agreeing on the project priorities and subsequently converting abstract priorities (compliance) to measurable values (output data can be validated against schema X with zero intervention), ISO/IEC 9126 tries to develop a common understanding of the project's objectives and goals._
 
-Preface to current version, ISO/IEC 25010: The quality model is the cornerstone of a product quality evaluation system. The quality model determines which quality characteristics will be taken into account when evaluating the properties of a software product.
+[iso25000.com introduction to current version, ISO/IEC 25010]( https://iso25000.com/index.php/en/iso-25000-standards/iso-25010 ): _The quality model is the cornerstone of a product quality evaluation system. The quality model determines which quality characteristics will be taken into account when evaluating the properties of a software product._
 
-The quality of a system is the degree to which the system satisfies the stated and implied needs of its various stakeholders, and thus provides value. Those stakeholders' needs (functionality, performance, security, maintainability, etc.) are precisely what is represented in the quality model, which categorizes the product quality into characteristics and sub-characteristics.
+_The quality of a system is the degree to which the system satisfies the stated and implied needs of its various stakeholders, and thus provides value. Those stakeholders' needs (functionality, performance, security, maintainability, etc.) are precisely what is represented in the quality model, which categorizes the product quality into characteristics and sub-characteristics._
 
-The product quality model defined in ISO/IEC 25010 comprises eight quality characteristics
+_The product quality model defined in ISO/IEC 25010 comprises eight quality characteristics_
 
+The the source for the following text is from [iso25000.com](  https://iso25000.com/index.php/en/iso-25000-standards/iso-25010 ). And that hext appears to be a redaction from [iso.org]( https://www.iso.org/obp/ui/#iso:std:iso-iec:25010:ed-1:v1:en )
 
 ## ISO 25010 ~ System and software quality models
 
 _Describes the model, consisting of characteristics and sub-characteristics, for software product quality, and software quality in use._
 
-## Functionality
+## 1. Functionality
 
 _Degree to which a product or system provides functions that meet stated and implied needs when used under specified conditions._
 
@@ -87,7 +90,7 @@ You may filter the data so that only selected subsets of the data are visible
 
 
 
-## Performance Efficiency
+## 2. Performance Efficiency
 
 A set of attributes that bear on the relationship between the level of performance of the software and the amount of resources used, under stated conditions.
 
@@ -116,7 +119,7 @@ Degree to which the maximum limits of a product or system parameter meet require
 
 
 
-## Compatibility
+## 3. Compatibility
 
 Degree to which a product, system or component can exchange information with other products, systems or components, and/or perform its required functions, while sharing the same hardware or software environment.
 

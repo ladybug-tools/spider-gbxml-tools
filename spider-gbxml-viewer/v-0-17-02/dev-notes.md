@@ -1,18 +1,13 @@
 # Dev Notes
 
 
-## 2019-08-05
+## 2019-08-06
 
 To do
 
-
-* Toggle bounding box needs fixing
 * Scene menu items need links to help
 * Explode placards?
 * Spaces polyloops viewer
-
-More
-
 * Version for OpenStudio
 * 3D fixers
 * Construction data

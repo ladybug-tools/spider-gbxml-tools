@@ -12,13 +12,13 @@ value='You are now in a GitHub web page view - Click this button to view this re
 <iframe src=https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/index.html width=100% height=500px >Iframes are do not render in GitHub source code views</iframe>
 _<small>Spider gbXML Viewer 'Maevia'</small>_
 
-## Viewer: [Spider gbXML Viewer 'Maevia' ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/ )
+## Stable version: [Spider gbXML Viewer 'Maevia' ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/ )
 
 Or copy this link: https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/
 
-<!--
-## Version under development: [Spider gbXML Viewer Dev ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/dev/ )
--->
+
+## Development Version: [Spider gbXML Viewer Dev ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/dev/ )
+
 
 ***
 
@@ -33,9 +33,9 @@ gbXML files are generally created as exports from architectural design CAD progr
 
 Although the guidelines of the gbXML format are clear and well documented, the process of simplifying data required for a complex building is fraught with issues. In turn the import of gbXML files with problems is also fraught with issues. A sad result is that building engineers around the world spend much time dealing with data file issues - time which would much be much better spent actually analyzing the models and recommending better solutions. The Spider project is an effort to help remedy these issues.
 
-First released in 2017 as a programming exercise, the Spider gbbXML Viewer is a web browser viewer of gbXML data. It reads the data from ASCII or ZIP files, parses the data and creates 3D representations viewable in the browser. Right from the get go, designers and engineers saw the potential for the Viewer to help spot errors visually. Within a few months release 12 of the viewer was allowing users to spot many issues as well as providing tools to fix the issues and save the data to new files
+First released in 2017 as a programming exercise, the Spider gbXML Viewer is a web browser viewer of gbXML data. It reads the data from ASCII or ZIP files, parses the data and creates 3D representations viewable in the browser. Right from the get go, designers and engineers saw the potential for the Viewer to help spot errors visually. Within a few months release 12 of the viewer was allowing users to spot many issues as well as providing tools to fix the issues and save the data to new files
 
-The upcoming Spider gbbXML Viewer v0.17 - code name 'Maevia' makes managing gbXML files even faster, simpler and provides with higher quality data transfers.
+The latest version, Spider gbbXML Viewer v0.17.01 - code name 'Maevia' - helps make managing your gbXML files even faster, simpler and provides you with higher quality data transfers.
 
 
 
@@ -56,8 +56,6 @@ Please have a look at the following document:
 Note to developers: You may download any of the above files (except the 'dev' version ) to your desktop or wherever ( Chrome context menu > 'Save link as...' ). Then follow the guidelines for loading local files here [Opening and loading files with gbXML Viewer]( https://www.ladybug.tools/spider/#pages/file-open.md ) in order to embed the Viewer in a local workflow and avoid CORS issues.
 
 Everybody else: Just work with the online versions and enjoy!
-
-
 
 
 

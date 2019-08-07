@@ -1,15 +1,63 @@
-# Spider gbXML Viewer compliance with _ISO 245010 System and software quality models_
+<style>
 
-A Spider team side project is to document Spider gbXML Viewer compliance with [_ISO 245010 System and software quality models_]( https://iso25000.com/index.php/en/iso-25000-standards/iso-25010 ) produced by the [International Organization for Standardization]( https://www.iso.org/home.html ). By clarifying project priorities and converting abstract priorities to measurable values, the intention is develop a common and sharable understanding of the Spider gbXML Viewer's objectives and goals.
+main summary, h2 { margin: 0; padding: 0; }
 
-In the following sections, the titles and text in _italics_ are quotes from the text on the ISO 25010 web page. These cover the eight primary characteristics and associated sub-characteristics of the standard. Text not in italics begins to describe Spider compliance with the standard. The name 'Maevia' is used to indicate 'Spider gbXML Viewer Maevia v0.17.01'.
+main h2 { display: inline; }
+
+</style>
+
+# Spider gbXML Viewer compliance with _ISO 245010 ~ System and software quality models_
+
+<details open>
+
+<summary><h2>Overview of this effort</h2></summary>
+
+
+The owners of a typical commercial software product sold on the open market frequently pay an  an advertising agency to create a web site for the product. The web site is usually designed to broadcast the features and benefits of the product and omit any aspects about the products being sold that are not positive. Many open source projects follow similar routes.
+
+Are there other paths to gain your recognition and adoption in your organization? This document is the initial exploration of other possibilities for creating an "Appropriateness recognizability" to help you ascertain whether our projects are suitable or not suitable for your organization.
+
+This Spider team side project is an intention to document Spider gbXML Viewer compliance with [_ISO 245010 System and software quality models_]( https://iso25000.com/index.php/en/iso-25000-standards/iso-25010 ) produced by the [International Organization for Standardization]( https://www.iso.org/home.html ).
+
+Paraphrasing the ISO 9126 terminology, our mission here may be stated as:
+
+By clarifying project priorities and converting abstract priorities to measurable values this document develops a common and sharable understanding of the objectives and capabilities of the Spider gbXML Viewer project.
+
+
+</details>
+
+
+<details>
+
+<summary><h2>Prefaces to the ISO documents</h2></summary>
+
+[Wikipedia introduction previous version, ISO 9126]( https://en.wikipedia.org/wiki/ISO/IEC_9126): _The fundamental objective of the ISO/IEC 9126 standard is to address some of the well known human biases that can adversely affect the delivery and perception of a software development project. These biases include changing priorities after the start of a project or not having any clear definitions of "success". By clarifying, then agreeing on the project priorities and subsequently converting abstract priorities (compliance) to measurable values (output data can be validated against schema X with zero intervention), ISO/IEC 9126 tries to develop a common understanding of the project's objectives and goals._
+
+[iso25000.com introduction to current version, ISO/IEC 25010]( https://iso25000.com/index.php/en/iso-25000-standards/iso-25010 ): _The quality model is the cornerstone of a product quality evaluation system. The quality model determines which quality characteristics will be taken into account when evaluating the properties of a software product._
+
+_The quality of a system is the degree to which the system satisfies the stated and implied needs of its various stakeholders, and thus provides value. Those stakeholders' needs (functionality, performance, security, maintainability, etc.) are precisely what is represented in the quality model, which categorizes the product quality into characteristics and sub-characteristics._
+
+_The product quality model defined in ISO/IEC 25010 comprises eight quality characteristics_
+
+The the source for the following text is from [iso25000.com](  https://iso25000.com/index.php/en/iso-25000-standards/iso-25010 ). And that hext appears to be a redaction from [iso.org]( https://www.iso.org/obp/ui/#iso:std:iso-iec:25010:ed-1:v1:en )
+
+</details>
+
+
+<details>
+
+<summary><h2>Usage notes</h2></summary>
+
+In the following sections, the titles and text in _italics_ are quotes from the text on the ISO 25010 web page. These cover the eight the primary characteristics and associated sub-characteristics of the standard. Text not in italics begins to describe Spider compliance with the standard. The name 'Maevia' is used to indicate 'Spider gbXML Viewer Maevia v0.17.01'.
 
 Kindly note that the following is a first, small step. Actual compliance certification would require much more documentation.
 
+</details>
 
-***
 
-## Functional suitability
+<details>
+
+<summary><h2>1. Functional suitability</h2></summary>
 
 _The degree to which a product or system provides functions that meet stated and implied needs when used under specified conditions._
 
@@ -71,10 +119,13 @@ Identifying and fixing issues
 
 These will be documented in future versions of this this document
 
+</details>
 
-***
 
-## Performance efficiency
+
+<details>
+
+<summary><h2>2. Performance efficiency</h2></summary>
 
 _This characteristic represents the performance relative to the amount of resources used under stated conditions._
 
@@ -102,7 +153,10 @@ _Degree to which the maximum limits of a product or system parameter meet requir
 
 ***
 
-## Compatibility
+
+</details>
+<details>
+<summary><h2>3. Compatibility</h2></summary>
 
 _Degree to which a product, system or component can exchange information with other products, systems or components, and/or perform its required functions, while sharing the same hardware or software environment._
 
@@ -120,9 +174,12 @@ _Degree to which two or more systems, products or components can exchange inform
 * Maevia is currently running in production environments with a variety of CAD applications and energy analysis programs including Revit, Open Studio, TAS Engineering and others
 
 
-***
+</details>
 
-## Usability
+
+<details>
+
+<summary><h2>4. Usability</h2></summary>
 
 _Degree to which a product or system can be used by specified users to achieve specified goals with effectiveness, efficiency and satisfaction in a specified context of use_
 
@@ -153,7 +210,7 @@ _Degree to which a product or system has attributes that make it easy to operate
 
 _Degree to which a system protects users against making errors._
 
-* Much time has been spent trying to make a Maevia workflow that is simple and logical and obvious
+* A lot of time has been spent making a Maevia workflow that is simple and logical and obvious
 	* Most desired outcomes may be accomplished with two or three clicks on a menu
 * Many buttons have popup tooltips
 * Alerts that pop up are added to the code whenever a pattern of mistakes has been identified
@@ -164,7 +221,7 @@ _Degree to which a system protects users against making errors._
 _Degree to which a user interface enables pleasing and satisfying interaction for the user._
 
 * By default Maevia is neither attractive nor unattractive
-* By design, Maevia a delivers a user interface that may be themed to fit in with the house style of any organization
+* By design, Maevia a delivers a user interface themed to fit in with the existing house style of any organization
 * Along with the basic built-in theme, two theme-adding modules are provided: [W3Schools]( https://www.w3schools.com/w3css/ ) and [BootSwatch]( https://bootswatch.com/ ).
 * Selected themes are remembered in between sessions
 
@@ -179,9 +236,13 @@ _Degree to which a product or system can be used by people with the widest range
 
 
 
-***
 
-## Reliability
+</details>
+
+
+<details>
+
+<summary><h2>5. Reliability</h2></summary>
 
 _Degree to which a system, product or component performs specified functions under specified conditions for a specified period of time._
 
@@ -224,9 +285,10 @@ _Degree to which, in the event of an interruption or a failure, a product or sys
 
 
 
-***
 
-## Security:
+</details>
+<details>
+<summary><h2>6. Security</h2></summary>
 
 _Degree to which a product or system protects information and data so that persons or other products or systems have the degree of data access appropriate to their types and levels of authorization._
 
@@ -238,7 +300,7 @@ Given the nature of the Maevia application, there are few areas of copyright, tr
 _Degree to which a product or system ensures that data are accessible only to those authorized to have access._
 
 * Maevia runs locally, on server, in an iframe or even embedded in another app ( such as Open Studio ;-)
-* Given that Maevia is just a webpage statically hosted, the organization using Maevia may readily apply security parameters that they might need
+* Given that Maevia is just a webpage statically hosted, the organization using Maevia may readily apply security parameters as need
 
 ### Integrity
 
@@ -273,9 +335,9 @@ _Degree to which the identity of a subject or resource can be proved to be the o
 
 
 
-***
-
-## Maintainability
+</details>
+<details>
+<summary><h2>7. Maintainability</h2></summary>
 
 _The degree of effectiveness and efficiency with which a product or system can be modified to improve it, correct it or adapt it to changes in environment, and in requirements._
 
@@ -337,10 +399,12 @@ Issue Fixers
 * Re-running the test is carried out automatically after a fix has been carried out
 
 
+</details>
 
-***
 
-## Portability
+<details>
+
+<summary><h2>8. Portability</h2></summary>
 
 _Degree of effectiveness and efficiency with which a system, product or component can be transferred from one hardware, software or other operational or usage environment to another._
 
@@ -369,3 +433,118 @@ _Degree to which a product can replace another specified software product for th
 * Maevia may replace or be replaced by any other programs that opens gbXML files
 * There are a number of versions of Maevia hosted on the spider website.
 	Most but not all are currently operable. All of the versions may be used interchangeably to view gbXML files
+
+
+</details>
+
+
+<details>
+
+<summary><h2>Criticism of this effort</h2></summary>
+
+* It will take much time and effort to complete this project. The time might better be spent writing good software
+* The ISO standard is one of many. Perhaps the IEEE or any one of several others might be better choices
+* ISO standards are highly proprietary, have extremely restrictive licenses and cost considerable amounts of money. Developing open source equivalents are a better long term solution.
+
+</details>
+
+<details>
+
+<summary><h2>Links of interest</h2></summary>
+
+
+### Standards
+
+* https://pm.stackexchange.com/questions/20950/what-is-the-best-industry-standard-report-for-code-quality-control-and-measureme
+* ISO or IEEE?? https://pdfs.semanticscholar.org/de1c/f09a52540b0cc500d712fa44fed3c13dcf3d.pdf
+* http://profs.etsmtl.ca/claporte/english/enseignement/cmu_sqa/Notes/Normes/Software_Engineering_Standards_Int.pdf
+* https://www.ifi.uzh.ch/dam/jcr:8e9cd2bb-60de-4ce7-b17e-8f994744d4cd/06_product_q.pdf
+
+### ISO 25010 Software Quality Model
+
+* https://iso25000.com/index.php/en/iso-25000-standards/iso-25010
+* https://www.iso.org/standard/35733.html
+* https://www.iso.org/obp/ui/#iso:std:iso-iec:25010:ed-1:v1:en
+
+About
+
+* https://edisciplinas.usp.br/pluginfile.php/294901/mod_resource/content/1/ISO%2025010%20-%20Quality%20Model.pdf
+* https://www.codacy.com/blog/iso-25010-software-quality-model/
+* https://nocomplexity.com/overview-of-iso-25010/
+* https://nocomplexity.com/category/quality-management/
+
+### ISO/IEC_9126
+
+* https://www.iso.org/standard/22749.html
+* https://en.wikipedia.org/wiki/ISO/IEC_9126
+* http://www.arisa.se/compendium/
+* http://www.arisa.se/compendium/node6.html
+
+
+
+### IEEE Standard for a Software Quality Metrics Methodology
+
+* https://standards.ieee.org/standard/1061-1998.html
+* https://ieeexplore.ieee.org/document/749159
+* https://github.com/rick4470/IEEE-SRS-Tempate
+
+### Boehm software quality tree
+
+* https://www.google.com/search?rlz=1C1GCEA_enUS815US815&q=:+Boehm%E2%80%99s+software+quality+tree
+
+
+### Software
+
+* https://en.wikipedia.org/wiki/Software_quality
+* https://en.wikipedia.org/wiki/Software
+* https://en.wikipedia.org/wiki/Application_software
+* https://en.wikipedia.org/wiki/Software_development
+* https://en.wikipedia.org/wiki/Software_design ***
+* https://en.wikipedia.org/wiki/Open-source_software
+* https://en.wikipedia.org/wiki/Open-source_software
+* https://en.wikipedia.org/wiki/The_Cathedral_and_the_Bazaar
+
+
+### WBS
+
+* https://en.wikipedia.org/wiki/Work_breakdown_structure
+* https://www.lucidchart.com/blog/how-to-create-a-work-breakdown-structure-and-why-you-should
+
+As you make a work breakdown structure, use the following rules for best results:
+
+The 100% rule. The work represented by your WBS must include 100% of the work necessary to complete the overarching goal without including any extraneous or unrelated work. Also,  child tasks on any level must account for all of the work necessary to complete the parent task.
+
+Mutually exclusive. Do not include a sub-task twice or account for any amount of work twice. Doing so would violate the 100% rule and will result in miscalculations as you try to determine the resources necessary to complete a project.
+
+Outcomes, not actions. Remember to focus on deliverables and outcomes rather than actions. For example, if you were building a bike, a deliverable might be “the braking system” while actions would include “calibrate the brake pads.”
+
+The 8/80 rule. There are several ways to decide when a work package is small enough without being too small. This rule is one of the most common suggestions—a work package should take no less than eight hours of effort, but no more than 80. Other rules suggest no more than ten days (which is the same as 80 hours if you work full time) or no more than a standard reporting period. In other words, if you report on your work every month, a work package should take no more than a month to complete. When in doubt, apply the “if it makes sense” rule and use your best judgment.
+
+Three levels. Generally speaking, a WBS should include about three levels of detail. Some branches of the WBS will be more subdivided than others, but if most branches have about three levels, the scope of your project and the level of detail in your WBS are about right.
+Make assignments. Every work package should be assigned to a specific team or individual. If you have made your WBS well, there will be no work overlap so responsibilities will be clear.
+
+
+
+
+
+### Design considerations
+
+From: https://en.wikipedia.org/wiki/Software_design
+
+
+There are many aspects to consider in the design of a piece of software. The importance of each consideration should reflect the goals and expectations that the software is being created to meet. Some of these aspects are:
+
+* Compatibility - The software is able to operate with other products that are designed for interoperability with another product. For example, a piece of software may be backward-compatible with an older version of itself.
+* Extensibility - New capabilities can be added to the software without major changes to the underlying architecture.
+* Modularity - the resulting software comprises well defined, independent components which leads to better maintainability. The components could be then implemented and tested in isolation before being integrated to form a desired software system. This allows division of work in a software development project.
+* Fault-tolerance - The software is resistant to and able to recover from component failure.
+* Maintainability - A measure of how easily bug fixes or functional modifications can be accomplished. High maintainability can be the product of modularity and extensibility.
+* Reliability (Software durability) - The software is able to perform a required function under stated conditions for a specified period of time.
+* Reusability - The ability to use some or all of the aspects of the preexisting software in other projects with little to no modification.
+* Robustness - The software is able to operate under stress or tolerate unpredictable or invalid input. For example, it can be designed with resilience to low memory conditions.
+* Security - The software is able to withstand and resist hostile acts and influences.
+* Usability - The software user interface must be usable for its target user/audience. Default values for the parameters must be chosen so that they are a good choice for the majority of the users.[6]
+* Performance - The software performs its tasks within a time-frame that is acceptable for the user, and does not require too much memory.
+* Portability - The software should be usable across a number of different conditions and environments.
+* Scalability - The software adapts well to increasing data or number of users.
+
