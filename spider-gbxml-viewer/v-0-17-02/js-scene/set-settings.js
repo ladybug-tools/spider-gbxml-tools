@@ -9,7 +9,7 @@ const SET = {
 		copyright: "Copyright 2019 Ladybug Tools authors. MIT License",
 		date: "2019-07-19",
 		description: "Toggle various scene display parameters",
-		helpFile: "../v-0-17-00/js-scene/set-settings.md",
+		helpFile: "js-scene/set-settings.md",
 		license: "MIT License",
 		version: "0.17-01-0set"
 
@@ -137,6 +137,8 @@ SET.toggleSpaceTitles = function () {
 		} );
 
 		THR.scene.add( GBX.placards );
+
+		PFO.setVisible();
 
 	} else {
 
