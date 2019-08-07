@@ -13,7 +13,8 @@ value='You are now in a GitHub web page view - Click this button to view this re
 <div style=display:none; >
 <img src=https://www.ladybug.tools/spider-gbxml-tools/images/sgv-0-17-02.png >
 </div>
-_<small>Spider gbXML Viewer 'Maevia'</small>_
+
+_Spider gbXML Viewer 'Maevia'_
 
 
 
