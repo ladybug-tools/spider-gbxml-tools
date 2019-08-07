@@ -9,7 +9,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 # [Spider gbXML Viewer 'Maevia' Read Me]( #spider-gbxml-viewer/README.md )
 
 
-<iframe src=https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/index.html width=100% height=500px >Iframes are do not render in GitHub source code views</iframe>
+<iframe src=https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/dev/index.html width=100% height=500px >Iframes are do not render in GitHub source code views</iframe>
 _<small>Spider gbXML Viewer 'Maevia'</small>_
 
 ## Stable version: [Spider gbXML Viewer 'Maevia' ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/ )
@@ -29,7 +29,7 @@ Mission: _Open and examine very large gbXML files in your browser with free, ope
 
 Spider gbXML Viewer opens, parses and displays gbXML files. First released in 1999, [gbXML]( http://gbxml.org) is the architecture, engineering and construction (AEC) industry standard file format for transmitting data between CAD programs such as [Revit]( https://www.autodesk.com/products/revit/overview ), [AutoCAD]( https://www.autodesk.com/products/autocad/overview ), [Bentley MicroStation]( https://www.bentley.com/en/products/brands/microstation )  and energy analysis programs such as [Open Studio]( https://www.openstudio.net/ ), [Energy Plus]( https://energyplus.net/ ), [Sefaira]( https://sefaira.com/ ), [TAS Engineering]( https://www.edsl.net/tas-engineering/ ) and others.
 
-gbXML files are generally created as exports from architectural design CAD programs as the minimum 3D representation of building data suitable to carry out energy and illumination studies. The intended purpose of a gbXML file is to act as a method of transferring data between applicatations.  This is similar to CSV, JSON files or other similar uses of XML.
+gbXML files are generally created as exports from architectural design CAD programs as the minimum 3D representation of building data suitable to carry out energy and illumination studies. The intended purpose of a gbXML file is to act as a method of transferring data between applications.  This is similar to the use of [CSV]( https://en.wikipedia.org/wiki/Comma-separated_values ), [JSON]( https://en.wikipedia.org/wiki/JSON ) files or other similar uses of [XML]( https://en.wikipedia.org/wiki/XML ).
 
 Although the guidelines of the gbXML format are clear and well documented, the process of simplifying data required for a complex building is fraught with issues. In turn the import of gbXML files with problems is also fraught with issues. A sad result is that building engineers around the world spend much time dealing with data file issues - time which would much be much better spent actually analyzing the models and recommending better solutions. The Spider project is an effort to help remedy these issues.
 
@@ -53,11 +53,29 @@ Please have a look at the following document:
 
 ## Usage
 
-Note to developers: You may download any of the above files (except the 'dev' version ) to your desktop or wherever ( Chrome context menu > 'Save link as...' ). Then follow the guidelines for loading local files here [Opening and loading files with gbXML Viewer]( https://www.ladybug.tools/spider/#pages/file-open.md ) in order to embed the Viewer in a local workflow and avoid CORS issues.
+All Spider are designed to open, run and update in your browser. Typically, you click on a link to the script, it loads, opens a default file to let you know it's working and then you select files to work on using the file open dialog box, clicking on a link or dragging and dropping a file into the designated box.
 
-Everybody else: Just work with the online versions and enjoy!
+## Variations
+
+The are a number of slightly different Spider gbXML Viewer files you may experiment with:
+
+### Absolute and relative link versions
+
+If a file title is like this: file-name.html then you can move or copy that file anywhere - to your computer or server - and it should run. by clicking on it. All assets are called using absolute links
+
+If a file title is like this: file-name-dev.html then file is set up for you to edit and customize. The file uses relative links. All support files need to be available nearby.
+
+You may follow the guidelines for loading local files here [Opening and loading files with gbXML Viewer]( https://www.ladybug.tools/spider/#pages/file-open.md ) in order to embed the Viewer in a local workflow and avoid CORS issues.
+
+### Cor and pop versions
+
+* [cor]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/cor ): no menu or popup. Useful for embedding in an [iframe]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-02/app-core/view-core-in-iframe.html )
+* [pop]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/ ): popup on right but no left menu. Also good in an [iframe]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-02/app-popup/iframe-src-xml-via-filereader.html )
 
 
+## More
+
+For contributing, license and other similar information, click on 'Help menu' in the eft menu. 2019-08-06: There's a bug and currently you will have to scroll back to the top of the page to read the content.
 
 
 ***
