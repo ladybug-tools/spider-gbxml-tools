@@ -29,7 +29,7 @@ This is a significant update for the following reasons (and more):
 
 And given all this un-unhappiness, I am very happy to tackle the future of this project whereever you help me take it.
 
-Tings for you to look at include:
+Things for you to look at include:
 
 ### [Updated Read Me]( https://www.ladybug.tools/spider-gbxml-tools/#spider-gbxml-viewer/README.md )
 
@@ -41,7 +41,7 @@ Tings for you to look at include:
 
 * By clarifying project priorities and converting abstract priorities to measurable values this document develops a common and sharable understanding of the objectives and capabilities of the Spider gbXML Viewer project.
 
-### [Spider gbXML Viewer v0.17.02]( https://www.ladybug.tools/spider-gbxml-tools/index.html#spider-gbxml-viewer/spider-gbxml-viewer-iso-25010-compliance.md )
+### [Spider gbXML Viewer v0.17.02]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/ )
 
 * Simpler and faster
 * Easier to use
