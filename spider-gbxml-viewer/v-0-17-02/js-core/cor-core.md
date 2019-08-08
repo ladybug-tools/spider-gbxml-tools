@@ -1,12 +1,10 @@
-# COR Core 0.16.01-1cor Read Me
-
-[Source code](  )
+# COR Core Read Me
 
 <details open >
 
 <summary>Concept</summary>
 
-core - contains local overrides
+core - contains local variable settings and overrides
 
 </details>
 
@@ -28,12 +26,10 @@ core - contains local overrides
 
 <summary>Change Log</summary>
 
-## 2019-06-27 ~ Theo
+### 2019-08-07 ~ Theo
 
-COR Core 0.16.01-1cor
-* C - COR.js: Create script object in cor
-* F - COR.js: Add core init()
-* D/R - COR.js: update parameters
-* F - First commit of read me
+COR Core 0.17.02-0cor
+
+* F: First commit
 
 </details>

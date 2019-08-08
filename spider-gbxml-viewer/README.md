@@ -18,12 +18,12 @@ _Spider gbXML Viewer 'Maevia'_
 
 
 
-## Stable version: [Spider gbXML Viewer 'Maevia' ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/ )
+## Stable version: [Spider gbXML Viewer 'Maevia' ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/ "Click me to run the stable app" )
 
 Or copy this link: https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/
 
 
-## Development Version: [Spider gbXML Viewer Dev ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/dev/ )
+## Development Version: [Spider gbXML Viewer Dev ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/dev/ "Click me to run the latest app" )
 
 
 ***

@@ -5,10 +5,10 @@
 const COR = {
 	"script": {
 		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-		"date": "2019-07-26",
+		"date": "2019-08-07",
 		"description": "core - contains local overrides",
 		"helpFile": "cor-core/README.md",
-		"version": "0.17.01-0cor",
+		"version": "0.17.02-0cor",
 	}
 };
 
@@ -28,7 +28,7 @@ MNU.description =
 		Mission: run a series of basic checks on <a href="http://gbXML.org" target="_blank">gbXML</a> files to identify, report and help you fix any errors.
 	`;
 
-MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-01/";
+MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-02/";
 
 MNU.homeText = "<img src = 'https://ladybug.tools/artwork/icons_bugs/ico/ladybug.ico' height=24 >";
 MNU.homeTitle= "Ladybug Tools: free computer applications that support environmental design and education";
