@@ -21,7 +21,7 @@ This Spider team side project is an intention to document Spider gbXML Viewer co
 
 Paraphrasing the ISO 9126 terminology, our mission here may be stated as:
 
-By clarifying project priorities and converting abstract priorities to measurable values this document develops a common and sharable understanding of the objectives and capabilities of the Spider gbXML Viewer project.
+By clarifying project priorities and converting abstract priorities to measurable values this document develops a common and shareable understanding of the objectives and capabilities of the Spider gbXML Viewer project.
 
 
 </details>

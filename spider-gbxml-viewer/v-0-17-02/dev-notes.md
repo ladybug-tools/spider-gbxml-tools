@@ -5,6 +5,8 @@
 
 To do
 
+* Coding style
+* List of features
 * Scene menu items need links to help
 * Explode placards?
 * Spaces polyloops viewer
@@ -13,11 +15,12 @@ To do
 * Construction data
 * Build Well
 * Sunlight studies
+* Google analytics??
+* Animated GIF capture
 
+### Draft of issue
 
-### Draft
-
-Spider gbXML Viewer 'Maevia' v0.17.01
+Spider gbXML Viewer 'Maevia' v0.17.02
 
 This is a significant update for the following reasons (and more):
 
@@ -43,6 +46,6 @@ Things for you to look at include:
 
 ### [Spider gbXML Viewer v0.17.02]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/ )
 
-* Simpler and faster
-* Easier to use
-* Fixes errors for you
+* Simpler, faster and easier to use
+* Fixes the errors for you
+* Written in plain vanilla JavaScript
