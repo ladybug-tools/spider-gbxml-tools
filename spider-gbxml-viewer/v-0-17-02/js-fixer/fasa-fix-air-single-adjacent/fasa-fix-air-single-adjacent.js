@@ -114,7 +114,7 @@ FASA.getAirSingleAdjacent = function() {
 	const tag = FASA.surfaces.length === 0 ? "span" : "mark";
 
 	FASAsumSurfaces.innerHTML =
-		`Get air surfaces with single adjacent space
+		`Fix air surfaces with single adjacent space
 			~ <${ tag }>${ FASA.surfaces.length.toLocaleString() }</${ tag }> found
 			${ FASA.help }
 		`;

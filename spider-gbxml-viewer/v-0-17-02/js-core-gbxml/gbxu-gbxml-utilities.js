@@ -1,5 +1,8 @@
 /* globals THREE, THR, THRU, GBX */
 // jshint esversion: 6
+//@ts-check
+
+"use strict";
 
 var GBXU = {
 
@@ -45,7 +48,7 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 
 	//const bbox = new THREE.Box3().setFromObject( GBX.meshesVisible ); // clumsy
 	//GBXU.boundingBox = new THREE.Box3Helper( bbox, 0xdddd00 );
-	console.log( 'GBXU.boundingBox', GBXU.boundingBox );
+	//console.log( 'GBXU.boundingBox', GBXU.boundingBox );
 	//THR.scene.add( GBXU.boundingBox );
 
 	GBX.elevation = THRU.boundingBoxHelper.box.min.z - 0.001 * THRU.radius;

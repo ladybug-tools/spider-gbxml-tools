@@ -2,6 +2,7 @@
 // jshint esversion: 6
 // jshint loopfunc: true
 
+"use strict";
 
 var THR = {
 

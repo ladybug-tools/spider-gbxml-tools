@@ -2,6 +2,7 @@
 // jshint esversion: 6
 // jshint loopfunc: true
 
+"use strict";
 
 var GBX = {
 	script: {
@@ -200,7 +201,7 @@ GBX.getStoreysJson = function() {
 GBX.getSurfaceMeshes = function( surfaces ) {
 	// console.log( 'surfaces', surfaces );
 
-	timeStart = performance.now();
+	const timeStart = performance.now();
 
 	GBX.materialType = THR.scene.getObjectByName( 'lightAmbient') ? THREE.MeshPhongMaterial : THREE.MeshBasicMaterial;
 	//GBX.materialType = THREE.MeshBasicMaterial;
@@ -272,7 +273,7 @@ GBX.getCoordinates = function( text ) {
 GBX.getSurfaceMesh = function( arr, index, holes ) {
 	//console.log( 'array', arr, 'index', index );
 
-	surface = GBX.surfaces[ index ];
+	const surface = GBX.surfaces[ index ];
 
 	const surfaceType = surface.match( 'surfaceType="(.*?)"')[ 1 ];
 	const color = new THREE.Color( GBX.colorsDefault[ surfaceType ] );

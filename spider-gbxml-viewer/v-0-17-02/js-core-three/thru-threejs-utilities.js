@@ -2,6 +2,7 @@
 // jshint esversion: 6
 // jshint loopfunc: true
 
+"use strict";
 
 let THRU = {
 
@@ -475,8 +476,9 @@ THRU.addSomeLights2 = function() {
 
 	THRU.lightDirectional.target = THRU.targetObject;
 
-	THRU.lightPoint = new THREE.PointLight( 0xffffff, 0.5 );
-	THRU.lightPoint.position = new THREE.Vector3( 0, 0, 1 );
+	const position = new THREE.Vector3( 0, 0, 1 );
+	THRU.lightPoint = ( new THREE.PointLight( 0xffffff, 0.5, { position } ) );
+
 	THR.camera.add( THRU.lightPoint );
 	THR.scene.add( THR.camera );
 

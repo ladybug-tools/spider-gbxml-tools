@@ -1,10 +1,7 @@
 # Dev notes
 
 
-
-
-
-### 2019-07-23 ~ Theo
+## 2019-07-23 ~ Theo
 
 Mostly dealt with
 
@@ -15,7 +12,7 @@ Mostly dealt with
 
 
 
-### 2019-07-08 ~ Theo
+## 2019-07-08 ~ Theo
 
 SGV V 0.16.01-14
 

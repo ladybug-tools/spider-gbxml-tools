@@ -1,10 +1,39 @@
 # Dev Notes
 
+## 2019-08-12 ~ Theo
+
+## 15 nice things you can do with Spider gbXML Viewer 'Maevia' 0.17.02
+
+* Find errors in gbXML files and get them fixed for you with the click of a button
+* Forget unzipping and zipping, Maevia this does it for you
+* Open big files so fast, you don't have time to think
+* Find anything about any data in the gbXML with the click or two
+* Cut sections, create exploded views or add text labels with a click or two
+* Select from dozens of stylesheet themes or you roll your own
+* Use Maevia on your mobile, tablet, laptop and workstation
+* Run Maevia anywhere - local or on server - nothing to download or install
+* Edit or fork the plain vanilla JavaScript - easy to learn and easy to embed
+* Keep your data in your browser - keep you data secure
+* Become familiar with industry standards: gbXML, Three.js, WebGL, pkZip.js
+* Interact with the Spider team on GitHub
+* Join BuroHappold, Perkins Will, CJK Engineering, NREL as happy users
+* Support the move to free, open-source software
+* Tell us: what do you want next? And what do we need to fix?
+
+
 
 ## 2019-08-06
 
 To do
 
+* jsDoc comments
+	* https://en.wikipedia.org/wiki/JSDoc
+
+* Strict support //* typeScript linting
+	* https://github.com/microsoft/TypeScript/wiki/Type-Checking-JavaScript-Files
+	* https://jsdoc.app/
+* List of competitors
+* Quality standards
 * Coding style
 * List of features
 * Scene menu items need links to help
