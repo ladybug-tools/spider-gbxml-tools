@@ -2,7 +2,12 @@
 
 ## 2019-08-12 ~ Theo
 
-## 15 nice things you can do with Spider gbXML Viewer 'Maevia' 0.17.02
+### Fix
+
+
+* If a space has a raised floor above or higher than an internal floor, there is an issue
+
+### 15 nice things you can do with Spider gbXML Viewer 'Maevia' 0.17.02
 
 * Find errors in gbXML files and get them fixed for you with the click of a button
 * Forget unzipping and zipping, Maevia this does it for you
@@ -14,10 +19,10 @@
 * Run Maevia anywhere - local or on server - nothing to download or install
 * Edit or fork the plain vanilla JavaScript - easy to learn and easy to embed
 * Keep your data in your browser - keep you data secure
-* Become familiar with industry standards: gbXML, Three.js, WebGL, pkZip.js
-* Interact with the Spider team on GitHub
-* Join BuroHappold, Perkins Will, CJK Engineering, NREL as happy users
-* Support the move to free, open-source software
+* Become familiar with industry standards: gbXML, Three.js, WebGL, pkZip.js and more
+* Interact with the Ladybug Tools / Spider team on GitHub
+* Join BuroHappold, Perkins Will, CJK Engineering, NREL as happy Maevia users
+* Support the move to free, open-source software, be a Maevia consultant, teacher or programmer
 * Tell us: what do you want next? And what do we need to fix?
 
 
@@ -28,14 +33,15 @@ To do
 
 * jsDoc comments
 	* https://en.wikipedia.org/wiki/JSDoc
-
+	* Means repating everything
+	* Not useful in current module
 * Strict support //* typeScript linting
 	* https://github.com/microsoft/TypeScript/wiki/Type-Checking-JavaScript-Files
 	* https://jsdoc.app/
 * List of competitors
 * Quality standards
 * Coding style
-* List of features
+[x] List of features
 * Scene menu items need links to help
 * Explode placards?
 * Spaces polyloops viewer

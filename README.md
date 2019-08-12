@@ -165,7 +165,7 @@ gbXML Viewer is a collection of modular experiments for viewing, examining and v
 NREL include a very basic version of the Spider gbXML Viewer in current releases of OpenStudio. The Ladybug Tools / Spider team is proud to be included in the project and makes best efforts to support users.
 
 
-<img src=images/openstudio-imported-gbxml.jpg width=800 >
+<img src=https://www.ladybug.tools/spider-gbxml-tools/images/openstudio-imported-gbxml.jpg width=800 >
 _Screen capture NREL tutorial on Spider gbXML Viewer running in OpenStudio_
 
 ### Other Spider gbXML Resources
