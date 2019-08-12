@@ -1,5 +1,4 @@
 
-
 <span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page](https://www.ladybug.tools/spider-gbxml-tools/index.html#README.md "View file as a web page." ) </span>
 
 
@@ -17,9 +16,9 @@ _<small>Spider gbXML Viewer ~ [Iframe Carousel]( https://www.ladybug.tools/spide
 
 <hr>
 
-<!--
+
 ## Welcome <a href="https://www.rtcevents.com/bilt/eur18/" title="Hi Michal! Hi Ljubljana!" style=color:red; target="_blank">BILT EUR 2018</a> attendees!
--->
+
 
 ## Latest version:  [Spider gbXML Viewer 'Maevia' ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/ "this one is hot" )
 
@@ -36,11 +35,11 @@ _<small>Spider gbXML Viewer ~ [Iframe Carousel]( https://www.ladybug.tools/spide
 
 The scripts here started as a fork of the scripts at https://www.ladybug.tools/spider/. The scripts there are in the process of becoming long-term support only scripts. All significant current gbXML viewer development is occurring in this repository.
 
-<!--
+
 The intention is to provide a faster, simpler more effective user experience base on a simpler, more modular code base.
 
 The impetus for this code arose from the request by the developers of OpenStudio for a viewer that can be embedded in their code. It became quickly evident that the new codebase offered significant advantages over the the previous codebase. And, thus, the majority of ongoing development efforts have been transferred to this project. Previous releases will be supported at least to the extent of fixing bugs that that are reported.
--->
+
 
 
 <br>
@@ -114,6 +113,7 @@ gbXML Viewer is a collection of modular experiments for viewing, examining and v
 #### gbXML Home Page
 
 * <http://www.gbxml.org/>
+
 > gbXML is an industry supported schema for sharing building information between disparate building design software tools.
 
 
@@ -141,7 +141,7 @@ gbXML Viewer is a collection of modular experiments for viewing, examining and v
 
 
 * <https://twitter.com/gbXML>
-> The gbXML open schema helps facilitate the transfer of building properties stored in 3D building information models (BIM) to engineering analysis tools.
+* The gbXML open schema helps facilitate the transfer of building properties stored in 3D building information models (BIM) to engineering analysis tools.
 
 
 ### DOE / NREL / OpenStudio
@@ -156,21 +156,21 @@ gbXML Viewer is a collection of modular experiments for viewing, examining and v
 
 #### OpenStudio User Docs / Advanced Tutorials / Working with gbXML
 
-* [OpenStudio User Documentation]( http://nrel.github.io/OpenStudio-user-documentation/ )
+* [OpenStudio User Documentation]( https://nrel.github.io/OpenStudio-user-documentation/ )
 
-* [Working with gbXML]( http://nrel.github.io/OpenStudio-user-documentation/tutorials/tutorial_gbxmlimport/ )
+* [Working with gbXML]( https://nrel.github.io/OpenStudio-user-documentation/tutorials/tutorial_gbxmlimport/ )
 
 > gbXML is an industry supported file format for sharing building information between disparate building design software tools. The OpenStudio Application can import and export gbXML files through the File->Import and File->Export menus.
 
 NREL include a very basic version of the Spider gbXML Viewer in current releases of OpenStudio. The Ladybug Tools / Spider team is proud to be included in the project and makes best efforts to support users.
 
+<img src="https://www.ladybug.tools/spider-gbxml-tools/images/openstudio-imported-gbxml.jpg" width=800 >
 
-<img src=https://www.ladybug.tools/spider-gbxml-tools/images/openstudio-imported-gbxml.jpg width=800 >
 _Screen capture NREL tutorial on Spider gbXML Viewer running in OpenStudio_
 
 ### Other Spider gbXML Resources
 
-#### [Spider gbXML Sample Files]( file:///D:/Dropbox/Public/git-repos/spider/index.html#gbxml-sample-files/README.md)
+#### [Spider gbXML Sample Files]( https://www.ladybug.tools/spider/index.html#gbxml-sample-files/README.md)
 
 Access to gbXML files from a variety of sources either available by URL or availble to download or both
 
