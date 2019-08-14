@@ -179,9 +179,12 @@ GBX.getStoreysJson = function() {
 
 	const storeyLevels = GBX.storeys.map( storey => storey.match( /<Level>(.*?)<\/Level>/i )[ 0 ] );
 
-	const storeyLevelsSorted = storeyLevels.slice().sort( (a, b) => a - b );
+	//const storeyLevelsSorted = storeyLevels.slice().sort( (a, b) => a - b );
+	const storeyLevelsSorted = storeyLevels.slice().sort();
 
-	GBX.storeysJson = storeyLevelsSorted.map( ( level, index ) => {
+	//console.log( 'storeyLevelsSorted', storeyLevelsSorted );
+
+	GBX.storeysJson = storeyLevelsSorted.map( ( level, count ) => {
 		//console.log( 'level', level );
 
 		const storey = GBX.storeys.find( storey => storey.includes( level ) );
@@ -190,9 +193,13 @@ GBX.getStoreysJson = function() {
 
 		const name = storey.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
 
-		return { id, index, level, name }
+		const index = GBX.storeys.indexOf( storey );
+
+		return { id, count, index, level, name }
 
 	} );
+
+	console.log( 'GBX.storeysJson', GBX.storeysJson );
 
 };
 

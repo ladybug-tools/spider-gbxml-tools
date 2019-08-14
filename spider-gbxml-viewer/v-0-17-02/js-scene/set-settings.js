@@ -84,7 +84,7 @@ SET.getPanelSettings = function() { // add help??
 		<p>
 			<button onclick=THRU.zoomObjectBoundingSphere(GBXU.boundingBox);>zoom all</button>
 
-			<button accesskey="z" onclick=THR.controls.enableKeys=true;THR.controls.screenSpacePanning=!THR.controls.screenSpacePanning; title="Access key + B: Up/down curser kes to forward/backward or up/down" >toggle cursor keys</button>
+			<button accesskey="b" onclick=THR.controls.enableKeys=true;THR.controls.screenSpacePanning=!THR.controls.screenSpacePanning; title="Alt + B: Up/down curser keys to forward/backward or up/down" >toggle cursor keys</button>
 		</p>
 
 	`;

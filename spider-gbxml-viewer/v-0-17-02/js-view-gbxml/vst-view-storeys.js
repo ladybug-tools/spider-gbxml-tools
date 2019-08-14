@@ -80,10 +80,11 @@ VST.setViewStoreysOptions = function() {
 
 	VSTinpAttribute.value = "";
 
-	VSTselStoreys.size = GBX.storeys.length > 10 ? 10 : GBX.storeys.length;
+	VSTselStoreys.size = GBX.storeysJson.length > 10 ? 10 : GBX.storeysJson.length;
 
 	let color;
 
+	console.log( 'GBX.storeysJson', GBX.storeysJson );
 	const options = GBX.storeysJson.map( storey => {
 
 		color = color === 'pink' ? '' : 'pink';
@@ -94,7 +95,7 @@ VST.setViewStoreysOptions = function() {
 
 	VSTselStoreys.innerHTML = options;
 
-	VSTspnCount.innerHTML = `${ GBX.storeys.length } storeys found.`;
+	VSTspnCount.innerHTML = `${ GBX.storeysJson.length } storeys found.`;
 
 	THR.controls.enableKeys = false;
 

@@ -39,6 +39,12 @@ Toggle various scene display parameters
 
 <summary>Change Log</summary>
 
+### 2019-08-13 ~ Theo
+
+SET 0.17.02-1set
+
+* B: Fix cursor key toggle alt B + typ0
+
 ### 2019-08-05 ~ Theo
 
 SET 0.17.02-0set

@@ -34,6 +34,17 @@ VEX.setDetExplodedViews = function( target ) {
 			<button onclick=VEX.explodeByStoreys(); >Explode by storeys</button>
 		</p>
 
+		<p>Separate the floors of the model, type #2</p>
+
+		<p>
+
+			<button onclick=VEX.explodeByStoreysType2(); >Explode by storeys #2</button>
+		</p>
+		<p>
+
+			<input type=range oninput=VEX.explodeByStoreysType2(this.value);
+		</p>
+
 		<p>Separate the surfaces of the model</p>
 
 		<p>
@@ -60,8 +71,6 @@ VEX.explodeInit = function() {
 
 		if ( child instanceof THREE.Mesh ) {
 
-			child.updateMatrixWorld();
-
 			child.userData.positionStart = child.position.clone();
 
 		}
@@ -70,14 +79,9 @@ VEX.explodeInit = function() {
 
 	GBX.placards.children.forEach( placard => {
 
-		const child = placard.children[ 0 ];
-
-		child.updateMatrixWorld();
-
-		child.userData.positionStart = child.position.clone();
+		placard.userData.positionStart = placard.children[ 0 ].position.clone();
 
 	} );
-
 
 	VEX.explodeStart = true;
 
@@ -121,19 +125,51 @@ VEX.explodeByStoreys = function() {
 
 		child.updateMatrixWorld();
 
-		if ( !child.userData.positionCurrent ) {
+		if ( !placard.userData.positionCurrent ) {
 
 			//console.log( 'child', child.geometry );
 			child.geometry.computeBoundingSphere ();
 			const positionCurrent = child.geometry.boundingSphere.center.clone();
 			positionCurrent.applyMatrix4( child.matrixWorld );
-			child.userData.positionCurrent = positionCurrent;
+			placard.userData.positionCurrent = positionCurrent;
 
 		}
 
 		const vec = child.position.clone();
 
 		child.position.z += 1 + 3 * vec.z - THRU.radius;
+
+	} );
+
+	THRU.zoomObjectBoundingSphere( GBX.meshGroup );
+
+};
+
+
+
+VEX.explodeByStoreysType2 = function( scale = 50 ) {
+
+	scale = parseFloat( scale / 5 );
+
+	if ( VEX.explodeStart === false ) { VEX.explodeInit(); }
+
+	VEX.setViewSettings();
+
+	GBX.meshGroup.children.forEach( mesh => {
+
+		const storey =  GBX.storeysJson.find( storey => mesh.userData.storeyId === storey.id );
+
+		if ( storey ) { mesh.position.z = scale * storey.count; }
+
+	} );
+
+	GBX.placards.children.forEach( ( placard, index ) => {
+
+		const space = GBX.spacesJson[ index ];
+
+		const storey = GBX.storeysJson[ space.storeyIndex ]
+
+		placard.position.z = scale * storey.index;
 
 	} );
 
@@ -204,9 +240,9 @@ VEX.explodeMinus = function() {
 
 VEX.explodeReset = function() {
 
-	if ( VEX.explodeStart === false ) { VEX.explodeInit(); }
+	//if ( VEX.explodeStart === false ) { VEX.explodeInit(); }
 
-	GBX.meshGroup.traverse( function ( child ) {
+	GBX.meshGroup.traverse( child => {
 
 		if ( child instanceof THREE.Mesh && child.userData.positionStart ) {
 
@@ -216,13 +252,15 @@ VEX.explodeReset = function() {
 
 	} );
 
-	GBX.placards.children.forEach( placard => {
+	if ( GBX.placards.children ) {
 
-		const child = placard.children[ 0 ];
+		GBX.placards.children.forEach( placard => {
 
-		child.position.copy( child.userData.positionStart );
+			placard.children[ 0 ].position.copy( placard.userData.positionStart );
 
-	} );
+		} );
+
+	}
 
 	THRU.zoomObjectBoundingSphere( GBX.meshGroup );
 
@@ -234,4 +272,4 @@ VEX.setViewSettings = function(){
 
 	THRU.boundingBoxHelper.visible = false;
 
-}
+};
