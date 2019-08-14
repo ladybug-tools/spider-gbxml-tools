@@ -1,4 +1,4 @@
-# ZZZZZ Read Me
+# View eexploded VEX Read Me
 
 [Source code](  )
 
@@ -21,13 +21,26 @@
 <summary>Issues</summary>
 
 
+
 </details>
 
 <details>
 
 <summary>Change Log</summary>
 
-### DDDDD
+### 2019-08-13 ~ Theo
+
+VEX v0.17.02-1vex
+
+* F: Add placards explode and reset as expected
+
+
+Fixed
+
+2019-08-13 ~ Evgeny ~ Explode not resetting
+
+### 2019-08-05 ~ Theo
+
 
 * F - First commit
 

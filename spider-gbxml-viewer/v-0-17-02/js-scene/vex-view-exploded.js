@@ -1,5 +1,20 @@
+"use strict";
 
-const VEX = {}
+/* globals THREE, THR, THRU, GBX, timeStart, divSettingss */
+// jshint esversion: 6
+// jshint loopfunc: true
+
+
+const VEX = {
+
+	copyright: "Copyright 2019 Ladybug Tools authors",
+	date: "2019-08-13",
+	description: "Toggle an exploded 3D view of the model",
+	helpFile: "js-scene/vex-view-exploded.md",
+	license: "MIT License",
+	version: "0.17.02-1vex"
+
+};
 
 
 
@@ -7,22 +22,25 @@ const VEX = {}
 
 VEX.setDetExplodedViews = function( target ) {
 
-	VEX.explodeStart = false;
+	VEX.explodeStart = VEX.explodeStart || false;
 
 	target.innerHTML =
-
 	`
 		<h4>Exploded views</h4>
 
-		<p><small>Separate the floors of the building</small></p>
+		<p>Separate the floors of the model</p>
 
 		<p>
 			<button onclick=VEX.explodeByStoreys(); >Explode by storeys</button>
 		</p>
 
-		<button onclick=VEX.explodeMinus();> Minus </button>
-		<button onclick=VEX.explodeReset(); >Reset</button>
-		<button onclick=VEX.explodePlus();> Plus </button>
+		<p>Separate the surfaces of the model</p>
+
+		<p>
+			<button onclick=VEX.explodeMinus();> Minus </button>
+			<button onclick=VEX.explodeReset(); >Reset</button>
+			<button onclick=VEX.explodePlus();> Plus </button>
+		</p>
 
 	`;
 
@@ -44,11 +62,22 @@ VEX.explodeInit = function() {
 
 			child.updateMatrixWorld();
 
-			child.userData.positionStart1 = child.position.clone();
+			child.userData.positionStart = child.position.clone();
 
 		}
 
 	} );
+
+	GBX.placards.children.forEach( placard => {
+
+		const child = placard.children[ 0 ];
+
+		child.updateMatrixWorld();
+
+		child.userData.positionStart = child.position.clone();
+
+	} );
+
 
 	VEX.explodeStart = true;
 
@@ -68,22 +97,43 @@ VEX.explodeByStoreys = function() {
 
 			child.updateMatrixWorld();
 
-			if ( !child.userData.positionStart2 ) {
+			if ( !child.userData.positionCurrent ) {
 
 				//console.log( 'child', child.geometry );
 				child.geometry.computeBoundingSphere ();
-				const positionStart2 = child.geometry.boundingSphere.center.clone();
-				positionStart2.applyMatrix4( child.matrixWorld );
-				child.userData.positionStart2 = positionStart2;
+				const positionCurrent = child.geometry.boundingSphere.center.clone();
+				positionCurrent.applyMatrix4( child.matrixWorld );
+				child.userData.positionCurrent = positionCurrent;
 
 			}
 
-			child.userData.vectorStart = child.userData.positionStart2.clone();
-			const vec = child.userData.vectorStart.clone();
+			const vec = child.userData.positionCurrent.clone();
 
 			child.position.z += 3 * vec.z - THRU.radius;
 
 		}
+
+	} );
+
+	GBX.placards.children.forEach( placard => {
+
+		const child = placard.children[ 0 ];
+
+		child.updateMatrixWorld();
+
+		if ( !child.userData.positionCurrent ) {
+
+			//console.log( 'child', child.geometry );
+			child.geometry.computeBoundingSphere ();
+			const positionCurrent = child.geometry.boundingSphere.center.clone();
+			positionCurrent.applyMatrix4( child.matrixWorld );
+			child.userData.positionCurrent = positionCurrent;
+
+		}
+
+		const vec = child.position.clone();
+
+		child.position.z += 1 + 3 * vec.z - THRU.radius;
 
 	} );
 
@@ -103,7 +153,9 @@ VEX.explodePlus = function() {
 
 	GBX.meshGroup.traverse( function ( child ) {
 
-		if ( child.geometry && child.geometry.boundingSphere ) {
+		//if ( child.geometry && child.geometry.boundingSphere ) {
+
+		if ( child instanceof THREE.Mesh ) {
 
 			const position = child.geometry.boundingSphere.center.clone();
 			position.applyMatrix4( child.matrixWorld );
@@ -130,7 +182,8 @@ VEX.explodeMinus = function() {
 
 	GBX.meshGroup.traverse( function ( child ) {
 
-		if ( child.geometry && child.geometry.boundingSphere ) {
+		//if ( child.geometry && child.geometry.boundingSphere ) {
+		if ( child instanceof THREE.Mesh ) {
 
 			child.updateMatrixWorld();
 
@@ -155,11 +208,19 @@ VEX.explodeReset = function() {
 
 	GBX.meshGroup.traverse( function ( child ) {
 
-		if ( child instanceof THREE.Mesh && child.userData.positionStart1 ) {
+		if ( child instanceof THREE.Mesh && child.userData.positionStart ) {
 
-			child.position.copy( child.userData.positionStart1 );
+			child.position.copy( child.userData.positionStart );
 
 		}
+
+	} );
+
+	GBX.placards.children.forEach( placard => {
+
+		const child = placard.children[ 0 ];
+
+		child.position.copy( child.userData.positionStart );
 
 	} );
 
@@ -168,10 +229,9 @@ VEX.explodeReset = function() {
 };
 
 
+
 VEX.setViewSettings = function(){
 
 	THRU.boundingBoxHelper.visible = false;
-	//GBX.openingGroup.visible = false );
-
 
 }
