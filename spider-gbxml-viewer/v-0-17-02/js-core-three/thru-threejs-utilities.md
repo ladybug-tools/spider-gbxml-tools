@@ -43,6 +43,12 @@ Three.js Utilities: all this is a bit idiosyncratic / a random collection of stu
 
 <summary>Change Log</summary>
 
+### 2019-08-13 ~ Theo
+
+THRU 0.17.02-1thru
+
+* B: Fix zooming issues
+
 ### 2019-07-24 ~ Theo
 
 THRU 0.17.02-0thru

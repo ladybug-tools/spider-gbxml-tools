@@ -199,7 +199,7 @@ GBX.getStoreysJson = function() {
 
 	} );
 
-	console.log( 'GBX.storeysJson', GBX.storeysJson );
+	//console.log( 'GBX.storeysJson', GBX.storeysJson );
 
 };
 
