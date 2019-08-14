@@ -126,7 +126,7 @@ SET.toggleSpaceTitles = function () {
 			const center = bbox.getCenter( new THREE.Vector3() );
 			//console.log( 'center', center );
 
-			
+
 
 			const name = space.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
 
@@ -143,6 +143,8 @@ SET.toggleSpaceTitles = function () {
 		PFO.surfaceTypesActive = PFO.surfaceTypesInUse.slice();
 
 		PFO.storeyIdsActive = PFO.storeyIdsInUse.slice();
+
+		GBX.placards.visible = true;
 
 		PFO.setVisible();
 

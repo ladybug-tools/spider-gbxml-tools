@@ -209,6 +209,8 @@ PFO.onClickZoomAll = function() {
 
 PFO.setAllTypesVisible = function(){
 
+	selStorey.selectedIndex= -1;
+	
 	const buttons = divDragMoveContent.querySelectorAll( `button` );
 
 	Array.from( buttons ).forEach( button => {
@@ -221,11 +223,15 @@ PFO.setAllTypesVisible = function(){
 
 	PFO.surfaceTypesActive = PFO.surfaceTypesInUse.slice();
 
-	PFO.storeyIdsActive = PFO.storeyIdsInUse.slice(); //GBX.storeysJson.map( json => json.id );
+	PFO.storeyIdsActive = PFO.storeyIdsInUse.slice();
 
 	GBX.meshGroup.children.forEach( child => child.visible = true );
 
-	selStorey.selectedIndex= -1;
+	GBX.placards.visible = true;
+
+	GBX.placards.children
+		.forEach( mesh => mesh.visible = true );
+
 
 };
 
