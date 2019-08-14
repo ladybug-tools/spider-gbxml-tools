@@ -69,11 +69,11 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 
 		PFO.surfaceTypesInUse = GBX.surfaceTypes.filter( type => GBX.surfaces.find( surface => surface.includes( `"${ type }"` ) ) );
 
-		PFO.surfaceTypesActive = !PFO.surfaceTypesActive ? PFO.surfaceTypesInUse : PFO.surfaceTypesActive;
+		PFO.surfaceTypesActive = !PFO.surfaceTypesActive ? PFO.surfaceTypesInUse.slice() : PFO.surfaceTypesActive;
 
 		PFO.storeyIdsInUse = GBX.storeysJson.map( storey => storey.id );
 
-		PFO.storeyIdsActive = !PFO.storeyIdsActive ? PFO.storeyIdsInUse : PFO.storeyIdsActive;
+		PFO.storeyIdsActive = !PFO.storeyIdsActive ? PFO.storeyIdsInUse.slice() : PFO.storeyIdsActive;
 
 	}
 

@@ -152,7 +152,7 @@ THRU.zoomObjectBoundingSphere = function( obj = GBX.meshGroup ) {
 	//console.log( 'obj', obj );
 
 	const bbox = new THREE.Box3().setFromObject( obj );
-	console.log( 'bbox', bbox )
+	//console.log( 'bbox', bbox )
 
 	if ( bbox.isEmpty() === true ) { return; }
 

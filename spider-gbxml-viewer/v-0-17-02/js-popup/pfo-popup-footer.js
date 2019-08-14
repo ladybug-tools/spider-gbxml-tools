@@ -91,6 +91,8 @@ PFO.setScreen2 = function() {
 
 PFO.setPanelSurfaceTypes = function() {
 
+
+
 	THR.scene.remove( PIN.line, PIN.particle );
 
 	//const typesInUse = GBX.surfaceTypes.filter( type => GBX.surfaces.find( surface => surface.includes( `"${ type }"` ) ) );
@@ -115,9 +117,9 @@ PFO.setPanelSurfaceTypes = function() {
 
 	//if ( !GBX.storeysJson ) { GBX.getStoreysJson(); }
 
-	//PFO.storeyIdsInUse = GBX.storeysJson.map( storey => storey.id );
+	PFO.storeyIdsInUse = GBX.storeysJson.map( storey => storey.id );
 
-	//PFO.storeyIdsActive = !PFO.storeyIdsActive ? storeyIdsInUse : PFO.storeyIdsActive;
+	PFO.storeyIdsActive = !PFO.storeyIdsActive ? storeyIdsInUse : PFO.storeyIdsActive;
 
 	const options = GBX.storeysJson.map( storey => `<option value=${ storey.id } >${ storey.name }</option>` );
 
@@ -180,7 +182,7 @@ PFO.onClickZoomAll = function() {
 
 	GBX.placards.children.forEach( mesh => mesh.visible = false );
 
-	THRU.zoomObjectBoundingSphere( GBXU.boundingBox );
+	THRU.zoomObjectBoundingSphere();
 
 	//const time = performance.now();
 
@@ -217,9 +219,9 @@ PFO.setAllTypesVisible = function(){
 
 	const buttonsActive = divDragMoveContent.getElementsByClassName( "active" ); // collection
 
-	PFO.surfaceTypesActive = Array.from( buttonsActive ).map( button => button.innerText );
+	PFO.surfaceTypesActive = PFO.surfaceTypesInUse.slice();
 
-	PFO.storeyIdsActive = GBX.storeysJson.map( json => json.id );
+	PFO.storeyIdsActive = PFO.storeyIdsInUse.slice(); //GBX.storeysJson.map( json => json.id );
 
 	GBX.meshGroup.children.forEach( child => child.visible = true );
 
