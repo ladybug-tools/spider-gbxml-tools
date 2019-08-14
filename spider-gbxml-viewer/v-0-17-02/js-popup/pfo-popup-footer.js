@@ -5,10 +5,10 @@
 
 var PFO = {
 	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-07-24",
+	"date": "2019-08-13",
 	"description": "TooToo Menu (PFO ) generates standard HTML popup menu code and content and code that works on computers, tablets and phones",
 	"helpFile": "js-popup/pfo-popup-footer.md",
-	"version": "0.17.01-0pfo",
+	"version": "0.17.02-1pfo",
 
 };
 
@@ -129,6 +129,8 @@ PFO.setPanelSurfaceTypes = function() {
 
 			<p>
 				<button class=butEye onclick=PFO.setAllTypesVisible(); >all visible</button>
+
+				<button class=highlight onclick=SET.toggleSpaceTitles(); >toggle space titles</button>
 			</p>
 
 			<p>

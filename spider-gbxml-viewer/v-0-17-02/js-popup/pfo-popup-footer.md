@@ -13,6 +13,8 @@ Handle all popup footer events
 
 <summary>To Do / Wish List</summary>
 
+* 2019-08-13 ~ Theo ~ break up into separate modules
+
 
 </details>
 
@@ -26,6 +28,14 @@ Handle all popup footer events
 <details>
 
 <summary>Change Log</summary>
+
+### 2019-08-13 ~ Theo
+
+PFO 0.17.02-1pof
+
+* F: Add 'toggle space titles' button
+
+### 2019-08-05 ~ Theo
 
 PFO 0.17.02-0pof
 
