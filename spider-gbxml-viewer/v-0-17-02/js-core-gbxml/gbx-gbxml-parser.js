@@ -177,10 +177,10 @@ GBX.getSpacesJson = function() {
 
 GBX.getStoreysJson = function() {
 
-	const storeyLevels = GBX.storeys.map( storey => storey.match( /<Level>(.*?)<\/Level>/i )[ 0 ] );
+	const storeyLevels = GBX.storeys.map( storey => storey.match( /<Level>(.*?)<\/Level>/i )[ 1 ] );
 
-	//const storeyLevelsSorted = storeyLevels.slice().sort( (a, b) => a - b );
-	const storeyLevelsSorted = storeyLevels.slice().sort();
+	const storeyLevelsSorted = storeyLevels.slice().sort( (a, b) => a - b );
+	//const storeyLevelsSorted = storeyLevels.slice().sort();
 
 	//console.log( 'storeyLevelsSorted', storeyLevelsSorted );
 

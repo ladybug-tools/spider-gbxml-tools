@@ -24,3 +24,40 @@ Or copy this link: https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-vie
 
 
 ## Development Version: [Spider gbXML Viewer Dev ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/dev/ "Click me to run the latest app" )
+
+
+
+<details>
+
+<summary>To Do / Wish List</summary>
+
+* Embed the help buttons inside the details
+* jsHint all the files
+* Make sure all
+	* report number of items found
+	* input type=search
+* create core script?
+	* help
+	* select index
+	* select surfaces show hide
+* Add openType script
+* Try in OpenStudio
+
+</details>
+
+<details>
+
+<summary>Issues</summary>
+
+
+</details>
+
+<details>
+
+<summary>Change Log</summary>
+
+### DDDDD
+
+* F - First commit
+
+</details>

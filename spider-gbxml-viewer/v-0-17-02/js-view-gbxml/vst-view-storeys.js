@@ -115,7 +115,8 @@ VST.selStoreys = function( select ) {
 
 	PFO.setVisible();
 
-	VST.visible = GBX.meshGroup.children.filter( mesh => mesh.visible === true ).map( mesh => mesh.userData.index );
+	VST.visible = GBX.meshGroup.children.filter( mesh => mesh.visible === true )
+		.map( mesh => mesh.userData.index );
 
 	VSTdivReportsLog.innerHTML = `<p>${ VST.visible.length } surfaces visible</p>`;
 

@@ -1,6 +1,5 @@
-# ZZZZZ Read Me
+# Fixer Read Me
 
-[Source code](  )
 
 <details open >
 
@@ -9,9 +8,11 @@
 
 </details>
 
-<details>
+<details open>
 
 <summary>To Do / Wish List</summary>
+
+* 2019-08-13 ~ Theo ~ Fixer for storey IDS attached to incorrect space
 
 
 </details>
@@ -27,7 +28,7 @@
 
 <summary>Change Log</summary>
 
-### DDDDD
+### 2019-08-13 ~ Theo
 
 * F - First commit
 

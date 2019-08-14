@@ -79,7 +79,7 @@ VEX.explodeInit = function() {
 
 	GBX.placards.children.forEach( placard => {
 
-		placard.userData.positionStart = placard.children[ 0 ].position.clone();
+		placard.userData.positionStart = placard.position.clone();
 
 	} );
 
@@ -149,13 +149,15 @@ VEX.explodeByStoreys = function() {
 
 VEX.explodeByStoreysType2 = function( scale = 50 ) {
 
+	//console.log( 'scale', scale );
+
 	scale = parseFloat( scale / 5 );
 
 	if ( VEX.explodeStart === false ) { VEX.explodeInit(); }
 
 	VEX.setViewSettings();
 
-	GBX.meshGroup.children.forEach( mesh => {
+	GBX.meshGroup.children.forEach( ( mesh, index ) => {
 
 		const storey =  GBX.storeysJson.find( storey => mesh.userData.storeyId === storey.id );
 
@@ -167,9 +169,11 @@ VEX.explodeByStoreysType2 = function( scale = 50 ) {
 
 		const space = GBX.spacesJson[ index ];
 
-		const storey = GBX.storeysJson[ space.storeyIndex ]
+		//const storey = GBX.storeysJson[ space.storeyIndex ]
 
-		placard.position.z = scale * storey.index;
+		const storey = GBX.storeysJson.find( storey => storey.id === space.storeyId );
+
+		if ( storey ) { placard.position.z = scale * storey.count; }
 
 	} );
 
@@ -256,7 +260,7 @@ VEX.explodeReset = function() {
 
 		GBX.placards.children.forEach( placard => {
 
-			placard.children[ 0 ].position.copy( placard.userData.positionStart );
+			placard.position.copy( placard.userData.positionStart );
 
 		} );
 

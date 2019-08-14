@@ -103,8 +103,6 @@ GBXU.onFirstTouch = function() {
 
 	THRU.getMeshEdges( GBX.meshGroup );
 
-
-
 	window.removeEventListener( 'keyup', GBXU.onFirstTouch );
 	window.removeEventListener( 'click', GBXU.onFirstTouch );
 	window.removeEventListener( 'touchstart', GBXU.onFirstTouch );

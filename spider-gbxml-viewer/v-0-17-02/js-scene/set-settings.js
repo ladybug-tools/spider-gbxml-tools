@@ -126,6 +126,8 @@ SET.toggleSpaceTitles = function () {
 			const center = bbox.getCenter( new THREE.Vector3() );
 			//console.log( 'center', center );
 
+			
+
 			const name = space.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
 
 			const placard = THRU.drawPlacard( name, scale, 0x00ff00, center.x, center.y, center.z + 1.5 );
@@ -137,6 +139,10 @@ SET.toggleSpaceTitles = function () {
 		} );
 
 		THR.scene.add( GBX.placards );
+
+		PFO.surfaceTypesActive = PFO.surfaceTypesInUse.slice();
+
+		PFO.storeyIdsActive = PFO.storeyIdsInUse.slice();
 
 		PFO.setVisible();
 
