@@ -28,6 +28,12 @@
 
 <summary>Change Log</summary>
 
+### 2019-08-20 ~ Theo
+
+0.17.02-1gbx
+
+* B: Fix issue with identifying all storeys properly
+
 ### 2019-08-06 ~ Theo
 
 0.17.02-0gbx

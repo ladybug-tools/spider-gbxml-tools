@@ -187,7 +187,7 @@ GBX.getStoreysJson = function() {
 	GBX.storeysJson = storeyLevelsSorted.map( ( level, count ) => {
 		//console.log( 'level', level );
 
-		const storey = GBX.storeys.find( storey => storey.includes( level ) );
+		const storey = GBX.storeys.find( storey => storey.includes( `<Level>${ level }<\/Level>` ) );
 
 		const id = storey.match( / id="(.*?)"/i )[ 1 ];
 
