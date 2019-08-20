@@ -1,3 +1,5 @@
+"use strict";
+
 /* globals THR, GBX, PIN, divDragMoveContent, VSUdet, VSUselAttribute, VBSUselViewBySurfaces, VBSUspnCount */
 // jshint esversion: 6
 // jshint loopfunc: true
@@ -9,10 +11,11 @@ const VSU = {
 		copyright: "Copyright 2019 Ladybug Tools authors",
 		date: "2019-07-26",
 		description: "View Surfaces (VSU) provides HTML and JavaScript to view individual surfaces.",
-		helpFile: "../v-0-17-01/js-view-gbxml/vsu-view-surfaces.md",
+		helpFile: "s-view-gbxml/vsu-view-surfaces.md",
 		license: "MIT License",
 		sourceCode: "js-view-gbxml/vsu-view-surfaces.js",
 		version: "0.17.01-1vsu"
+		
 	}
 
 };

@@ -4,10 +4,11 @@
 
 const COR = {
 	"script": {
-		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-		"date": "2019-08-07",
+		"copyright": "Copyright 2019 Ladybug Tools authors",
+		"date": "2019-08-20",
 		"description": "core - contains local overrides",
 		"helpFile": "cor-core/README.md",
+		"license": "MIT License",
 		"version": "0.17.02-0cor",
 	}
 };

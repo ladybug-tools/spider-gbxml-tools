@@ -1,10 +1,11 @@
-# ZZZZZ Read Me
+# Template TMP Read Me
 
 
 <details open >
 
 <summary>Concept</summary>
 
+A template script to be used to create menus, fixers, viewers, etc
 
 </details>
 
@@ -26,7 +27,9 @@
 
 <summary>Change Log</summary>
 
-### DDDDD
+### 2019-08-20 ~ Theo
+
+0.17.02-0TMP
 
 * F - First commit
 

@@ -4,10 +4,11 @@
 
 
 var PFO = {
-	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
+	"copyright": "Copyright 2019 Ladybug Tools authors",
 	"date": "2019-08-13",
 	"description": "TooToo Menu (PFO ) generates standard HTML popup menu code and content and code that works on computers, tablets and phones",
 	"helpFile": "js-popup/pfo-popup-footer.md",
+		"license": "MIT License",
 	"version": "0.17.02-1pfo",
 
 };
