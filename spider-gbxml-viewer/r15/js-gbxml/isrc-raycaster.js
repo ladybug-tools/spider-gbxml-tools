@@ -13,6 +13,7 @@ ISRC.description =
 
 // used by aoioe* button #1
 // used by isso*
+
 ISRC.addNormals = function( button, selectedSurfaces = [], targetSelect = "", targetLog = "" ) {
 
 	THR.scene.remove( ISRC.normalsFaces );
@@ -132,8 +133,7 @@ ISRC.selectedSurfaceFocus = function( select ) {
 ISRC.castRaysSetIntersectionArrays = function( button ) {
 
 	button.classList.toggle( "active" );
-
-
+  
 	const normals = ISRC.normalsFaces.children;
 	//console.log( 'normals', normals );
 	let normalsCount = 0;
