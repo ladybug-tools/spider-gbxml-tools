@@ -1,12 +1,23 @@
-// Copyright 2018 Ladybug Tools authors. MIT License
-// globals THREE, GBX, ISRC, FIOEHdetAirOrInteriorOnExterior,FIOEHselAirOrInteriorOnExterior
-// jshint esversion: 6
+"use strict";
 
-// depends on ISRC
+/* globals MNU, VGC, POP, navDragMove, divDragMoveContent */
+// jshint esversion: 6
+// jshint loopfunc: true
+
 
 const FIOEH = {
 
-	"release": "R15.2", "date": "2019-03-13"
+	"script": {
+
+		"copyright": "Copyright 2019 Ladybug Tools authors",
+		"date": "2019-08-21",
+		"description": "",
+		"helpFile": "js-fixer-3d/fioeh-fix-interior-on-exterior-horizontal.md",
+		"license": "MIT License",
+		"sourceCode": "js-fixer-3d/fioeh-fix-interior-on-exterior-horizontal.js",
+		"version": "0.17.03-0FIOEH",
+
+	}
 
 };
 
@@ -18,17 +29,24 @@ FIOEH.description =
 	`;
 
 
+	//<a id=FIOEHsumHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(FINEHsumHelp,FIOEH.currentStatus);" >&nbsp; ? &nbsp;</a>
 
 FIOEH.getMenuInteriorOnExteriorHorizontal = function() {
+
+	const source =
+	`<a href=${ MNU.urlSourceCode + FIOEH.script.sourceCode } target=_blank >${ MNU.urlSourceCodeIcon } source code</a>`;
+
+	const help =
+		VGC.getHelpButton('FIOEHsumHelp',FIOEH.script.helpFile,POP.footer,source);
+
 
 	const htm =
 
 	`<details id="FIOEHdetAirOrInteriorOnExterior" ontoggle=FIOEH.getInteriorOnExteriorCheckHorizontal(); >
 
-		<summary>Interior surface on exterior horizontal<span id="FIOEHspnCount" ></span>
-		</summary>
+		<summary>Check for horizontal interior surface on exterior <span id="FIOEHspnCount" ></span></summary>
 
-		<a id=FIOEHsumHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(FIOEHsumHelp,FIOEH.currentStatus);" >&nbsp; ? &nbsp;</a>
+		${ help }
 		<p>
 			${ FIOEH.description }
 		</p>
@@ -36,27 +54,33 @@ FIOEH.getMenuInteriorOnExteriorHorizontal = function() {
 		<p>The following is work-in-progress</p>
 
 		<p>
-			1. <button onclick=ISRC.addNormals(this,FIOEH.surfaceAirInteriorIndices,FIOEHselAirOrInteriorOnExterior,FIOEHfixes); >
-				add normals to InteriorWall surfaces</button><br>
-		</p>
-
-		<p>
-			2. <button onclick=FIOEH.castRaysGetIntersections(this,FIOEHfixes); >cast rays get intersections</button><br>
-		</p>
-
-		<p>
-			3. <button onclick=ISRC.setSurfacesShowHide(this,FIOEH.surfaceIntersections,ISRC.meshesExterior); title="Starting to work!" >
-			show/hide floors with issues
+			1. <button onclick=G3NOR.addNormals(this,FIOEH.meshesInterior); >
+				Add normals to horizontal surfaces
 			</button>
 		</p>
 
 		<p>
-			<select id=FIOEHselAirOrInteriorOnExterior onchange=ISRC.selectedSurfaceFocus(this); style=width:100%; multiple size=10 >
+			2. <button onclick=FIOEH.castRaysGetIntersections(this,FIOEHfixes); >
+				Cast rays and locate intersections
+			</button>
+		</p>
+
+		<p>
+			3. <button onclick=FIOEH.setSurfacesShowHide(this,FIOEH.surfaceIntersections,FIOEH.meshesExterior); title="Starting to work!" >
+			Show/hide horizontal surfaces with issues
+			</button>
+		</p>
+
+		<p>
+			<select id=FIOEHselAirOrInteriorOnExterior
+				onchange=GF3.selectedSurfaceFocus(this);
+				style=width:100%; multiple size=10 >
 			</select>
 		</p>
 
 		<p>
-			<button onclick=ISRC.showHideSelected(this,FIOEHselAirOrInteriorOnExterior); >show/hide selected surfaces</button>
+			<button onclick=FIOEH.showHideSelected(this,FIOEHselAirOrInteriorOnExterior); >
+				show/hide selected surfaces</button>
 		</p>
 
 		<p id=FIOEHfixes ></p>
@@ -76,11 +100,15 @@ FIOEH.getMenuInteriorOnExteriorHorizontal = function() {
 
 FIOEH.getInteriorOnExteriorCheckHorizontal = function() {
 
+	const typesInt =  [ "Air", "Ceiling", "InteriorFloor", "UndergroundCeiling" ];
+	FIOEH.meshesInterior = GBX.meshGroup.children.filter( mesh => typesInt.includes( mesh.userData.surfaceType ) )
+
+	const typesExt =  [ "ExposedFloor", "RaisedFloor", "Roof", "SlabOnGrade", "UndergroundSlab" ];
+	FIOEH.meshesExterior = GBX.meshGroup.children.filter( mesh => typesExt.includes( mesh.userData.surfaceType ) );
+
+
+	/*
 	FIOEH.surfaceAirInteriorIndices = [];
-
-	const buttons = FIOEHdetAirOrInteriorOnExterior.querySelectorAll( "button" );
-
-	buttons.forEach( button => button.classList.remove( "active" ) );
 
 	FIOEHselAirOrInteriorOnExterior.innerHTML = "";
 
@@ -114,24 +142,23 @@ FIOEH.getInteriorOnExteriorCheckHorizontal = function() {
 
 	return FIOEH.surfaceAirInteriorIndices.length;
 
-};
+	*/
 
+};
 
 
 FIOEH.castRaysGetIntersections = function( button ) {
 
-	if ( !ISRC.normalsFaces ) { alert("first add the normals"); return; }
+	if ( !G3NOR.faceNormals ) { alert("first add the normals"); return; }
 
-	button.classList.toggle( "active" );
+	button.classList.add( "active" );
 
-	ISRC.meshesExterior = ISRC.getMeshesByType( [ "ExposedFloor", "RaisedFloor", "Roof", "SlabOnGrade", "UndergroundSlab" ] );
-	ISRC.meshesExterior.forEach( mesh => mesh.visible = true );
+	FIOEH.meshesExterior.forEach( mesh => mesh.visible = true );
 
-	const normals = ISRC.normalsFaces.children;
-	//console.log( 'normals', normals );
-	let normalsCount = 0;
-	const arr = [];
 	const v = ( x, y, z ) => new THREE.Vector3( x, y, z );
+	const normals = G3NOR.faceNormals.children;
+	const arr = [];
+	let normalsCount = 0;
 
 	for ( let normal of normals ) {
 
@@ -147,19 +174,17 @@ FIOEH.castRaysGetIntersections = function( button ) {
 			const direction = vertex2.clone().sub( vertex1 ).normalize();
 			//console.log( 'direction', direction );
 
-			//arr.push( ...ISRC.getExteriors( normal.userData.index, vertex1, direction ) );
-
-			indexIntersects = FIOEH.getExteriors2( normal.userData.index, vertex1, direction );
-
-			//console.log( '',  indexIntersects, normal.userData.index );
+			const indexIntersects = FIOEH.getExteriors2( normal.userData.index, vertex1, direction );
 
 			if ( indexIntersects ) {
 
-				indexChecked = FIOEH.checkForInteriorIntersections( indexIntersects, vertex1, direction );
+				// Console.log( 'indexIntersects',  indexIntersects, normal.userData.index );
+
+				const indexChecked = FIOEH.checkForInteriorIntersections( indexIntersects, vertex1, direction );
 
 				if ( indexChecked && arr.includes( indexChecked ) === false ) {
 
-					const mesh = GBX.surfaceGroup.children[ indexChecked ];
+					const mesh = GBX.meshGroup.children[ indexChecked ];
 					mesh.material = new THREE.MeshBasicMaterial( { color: 'red', side: 2 });
 					mesh.material.needsUpdate = true;
 
@@ -175,15 +200,16 @@ FIOEH.castRaysGetIntersections = function( button ) {
 
 	}
 
-	FIOEH.surfaceIntersections = arr; //.filter( ( value, index, array ) => array.indexOf ( value ) == index );
+	FIOEH.surfaceIntersections = arr;
+	//.filter( ( value, index, array ) => array.indexOf ( value ) == index );
 	//FIOEH.surfaceIntersections = [ ... new Set( arr ) ];
 	//console.log( 'FIOEH.surfaceIntersections', .surfaceIntersections );
 
-	ISRC.targetLog.innerHTML =
+	FIOEHfixes.innerHTML =
 	`
-		Surfaces: ${ FIOEH.surfaceAirInteriorIndices.length.toLocaleString() }<br>
+		Surfaces: ${ FIOEH.meshesInterior.length.toLocaleString() }<br>
 		Normals created: ${ normalsCount.toLocaleString() }<br>
-		intersections found: ${ FIOEH.surfaceIntersections.length.toLocaleString() }
+		Intersections found: ${ FIOEH.surfaceIntersections.length.toLocaleString() }
 
 		<p>Select multiple surfaces by pressing shift or control keys.</p>
 
@@ -191,29 +217,50 @@ FIOEH.castRaysGetIntersections = function( button ) {
 
 	`;
 
-	ISRC.targetSelect.innerHTML = ISRC.getSelectOptionsIndexes( FIOEH.surfaceIntersections );
+	FIOEHselAirOrInteriorOnExterior.innerHTML =
+		FIOEH.getSelectOptionsIndexes( FIOEH.surfaceIntersections );
 
 };
 
 
+FIOEH.getSelectOptionsIndexes = function( surfaceIndexes ) {
+
+	let htmOptions = '';
+	let count = 1;
+
+	for ( let index of surfaceIndexes ) {
+
+		const surfaceText = GBX.surfaces[ index ];
+		//console.log( 'surfaceText', surfaceText );
+
+		const id = surfaceText.match( 'id="(.*?)"' )[ 1 ];
+
+		const cadIdMatch = surfaceText.match( /<CADObjectId>(.*?)<\/CADObjectId>/i );
+		const cadId = cadIdMatch ? cadIdMatch[ 1 ] : "";
+
+		const type = surfaceText.match( 'surfaceType="(.*?)"' )[ 1 ];
+		let color = GBX.colors[ type ].toString( 16 );
+		color = color.length > 4 ? color : '00' + color; // otherwise greens no show
+
+		htmOptions +=
+			`<option style=background-color:#${ color } value=${ index } title="${ cadId }" >${ count ++ } - ${ id }</option>`;
+
+	}
+
+	return htmOptions;
+
+};
 
 
 FIOEH.checkForInteriorIntersections = function( index, origin, direction ) {
 
-	if ( !FIOEH.meshesInteriorVertical ) {
-
-		FIOEH.meshesInteriorVertical = ISRC.getMeshesByType( [ "Air", "Ceiling", "InteriorFloor", "UndergroundCeiling" ] );
-
-	}
-	//console.log( 'FIOEH.meshesInteriorVertical', FIOEH.meshesInteriorVertical);
-
 	const raycaster = new THREE.Raycaster();
 
 	raycaster.set( origin, direction ); // has to be the correct vertex order
-	const intersects1 = raycaster.intersectObjects( FIOEH.meshesInteriorVertical ).length;
+	const intersects1 = raycaster.intersectObjects( FIOEH.meshesInterior ).length;
 
 	raycaster.set( origin, direction.negate() );
-	const intersects2 = raycaster.intersectObjects( FIOEH.meshesInteriorVertical ).length;
+	const intersects2 = raycaster.intersectObjects( FIOEH.meshesInterior ).length;
 
 	let indexIntersects = index;
 
@@ -233,25 +280,84 @@ FIOEH.checkForInteriorIntersections = function( index, origin, direction ) {
 };
 
 
-
 FIOEH.getExteriors2 = function( index, origin, direction ) {
+
+	//console.log( 'FIOEH.meshesExterior', FIOEH.meshesExterior );
+	//console.log( 'origin, direction', origin, direction );
+
+	if ( direction.z === 0 ) { return; }
+
+	let indexIntersects;
 
 	const raycaster = new THREE.Raycaster();
 
 	raycaster.set( origin, direction ); // has to be the correct vertex order
-	const intersects1 = raycaster.intersectObjects( ISRC.meshesExterior ).length;
+	const intersects1 = raycaster.intersectObjects( FIOEH.meshesExterior ).length;
+	//console.log( 'intersects1', intersects1 );
 
 	raycaster.set( origin, direction.negate() );
-	const intersects2 = raycaster.intersectObjects( ISRC.meshesExterior ).length;
+	const intersects2 = raycaster.intersectObjects( FIOEH.meshesExterior ).length;
+	//console.log( 'intersects2', intersects2 );
 
-	let indexIntersects;
 
 	if ( intersects1 % 2 === 0 || intersects2 % 2 === 0 ) {
 
 		indexIntersects = index;
 
+	} else {
+
+		// Console.log( 'indexIntersects', indexIntersects );
+
 	}
 
+
 	return indexIntersects;
+
+};
+
+
+
+
+FIOEH.setSurfacesShowHide = function( button, surfaceIndexes = [], meshesExterior = [] ) {
+	// used by aoioe*
+	//console.log( 'surfaceIndexes', surfaceIndexes );
+
+	//const buttons = Array.from( detMenuEdit.querySelectorAll( 'button' ) );
+	//buttons.filter( item => item !== button ).map( item => item.classList.remove( "active" ) );
+
+	button.classList.toggle( "active" );
+
+	if ( button.classList.contains( 'active' ) ) {
+
+		if ( surfaceIndexes.length > 0 ) {
+
+			GBX.meshGroup.children.forEach( mesh => mesh.visible = false );
+
+			surfaceIndexes.forEach( index => GBX.meshGroup.children[ Number( index ) ].visible = true );
+
+			THR.scene.remove( G3NOR.faceNormals );
+
+			//THRU.groundHelper.visible = false;
+
+		} else {
+
+			alert( "No surfaces with issues identified");
+
+		}
+
+
+	} else {
+
+		if ( meshesExterior.length > 0 ) {
+
+			meshesExterior.forEach( mesh => mesh.visible = true );
+
+		} else {
+
+			GBX.meshGroup.children.forEach( element => element.visible = true );
+
+		}
+
+	}
 
 };

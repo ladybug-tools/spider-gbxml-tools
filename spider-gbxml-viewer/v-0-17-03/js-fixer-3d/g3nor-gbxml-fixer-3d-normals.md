@@ -1,9 +1,11 @@
-# Spider gbXML Viewer Read Me
+# gbXML Fixer 3D Normals G3NOR Read Me
+
 
 <details open >
 
 <summary>Concept</summary>
 
+Draw normal to selected surfaces
 
 </details>
 
@@ -25,9 +27,9 @@
 
 <summary>Change Log</summary>
 
-### 2019-07-21 ~ Theo
+### 2019-08-21 ~ Theo
 
-0.17.03-0SGV
+0,17.03-0G3NOR
 
 * F - First commit
 

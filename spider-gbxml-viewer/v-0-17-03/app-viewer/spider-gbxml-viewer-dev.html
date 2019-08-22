@@ -4,10 +4,10 @@
 
 <meta charset = "utf-8">
 <meta name = "copyright" content ="Ladybug Tools authors" >
-<meta name = "date" content = "2019-08-29" >
+<meta name = "date" content = "2019-08-21" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.17.02-3sgv" >
+<meta name = "version" content = "0.17.03-0sgv" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
 <title>Spider gbXML Viewer Dev</title>
@@ -113,9 +113,12 @@
 <script src = "js-fixer/fcim-fix-cad-id-missing/fcim-fix-cad-id-missing.js" ></script>
 
 
-<!-- Fixer Menu -->
+<!-- Fixer 3D Menu -->
 <script src = "js-fixer-3d/gf3-gbxml-fixer-3d.js" ></script>
+<script src = "js-fixer-3d/g3nor-gbxml-fixer-3d-normals.js" ></script>
 <script src = "js-fixer-3d/fioeh-fix-interior-on-exterior-horizontal/fioeh-fix-interior-on-exterior-horizontal.js" ></script>
+
+
 
 <!-- Settings menu -->
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-07/thm-theme/thm-theme.js" ></script>
@@ -240,16 +243,19 @@
 
 			</details>
 
-			<details ontoggle=GF3.init(); >
+			<details ontoggle=GF3.init(); open >
 
 				<summary class=sumMenuTitle >Fixer 3D menu</summary>
 
-				<div>
-					This menu is for scripts - very experimental - that utilize the Three.js linear algebra library to check for 3D errors
-					such as incorrect normals and InteriorWall surfaces on the exterior. The scripts will be available here soon.
-				</div>
+				<p>
+					This menu is for scripts - very experimental -
+					that utilize the Three.js linear algebra library
+					to check for 3D errors such as
+					incorrect normals and
+					'InteriorWall' surfaces on the exterior.
+				</p>
 
-				<div id=GF3divFixer3d >xxx</div>
+				<div id=GF3divFixer3d ></div>
 
 			</details>
 
@@ -335,8 +341,8 @@
 <script>
 
 
-//FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
-FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml";
+FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
+//FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/coventry-university-of-warwick-small.zip";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/annapolis-md-single-family-residential-2016.xml"
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/pittsburg-airport.zip";
@@ -344,6 +350,7 @@ FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristo
 
 
 init();
+
 THR.animate();
 
 function init() {
@@ -364,7 +371,7 @@ function init() {
 
 	GBX.init( GBXdivMessage ); // gets things going
 
-
+	GF3.init();
 	// Theme
 
 	THMdivMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();

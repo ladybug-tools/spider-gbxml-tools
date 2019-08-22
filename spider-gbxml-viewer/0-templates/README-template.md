@@ -1,4 +1,5 @@
-# Spider gbXML Viewer Read Me
+# ZZZZZ Read Me
+
 
 <details open >
 
@@ -25,9 +26,7 @@
 
 <summary>Change Log</summary>
 
-### 2019-07-21 ~ Theo
-
-0.17.03-0SGV
+### DDDDD
 
 * F - First commit
 

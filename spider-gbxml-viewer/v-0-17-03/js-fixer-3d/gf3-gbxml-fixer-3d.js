@@ -14,7 +14,7 @@ const GF3 = {
 		description: "Fixer menu and utility scripts",
 		helpFile: "js-fixer-3d/gf3-gbxml-fixer-3d.md",
 		license: "MIT License",
-		version: "0.17.00-0gbfx",
+		version: "0.17.03-0gbfx",
 
 	}
 
@@ -31,6 +31,7 @@ GF3.getMenuFixer3d = function() {
 	`
 		${ GF3.getHelpButton( "GBXFbutHelp", GF3.script.helpFile ) }
 
+		<!--
 		<p>
 			<button onclick=GF3
 		.runAll(); >Run all checks</button>
@@ -50,6 +51,8 @@ GF3.getMenuFixer3d = function() {
 		<p>
 			<input type=checkbox id=GBXinpIgnoreAirSurfaceType > Ignore Air surface type
 		</p>
+
+		-->
 
 		<div id=FIOEHdivInteriorOnExteriorHorizontal ></div>
 
@@ -131,8 +134,12 @@ GF3.onReaderResult = function() { GF3.setUp( FOB.reader.result ); };
 
 GF3.onFileZipLoad = function() { GF3.setUp( FOB.text ); };
 
-GF3.getHelpButton = ( id, file ) => `<button id="${ id }" class="butHelp" onclick="POP.setPopupShowHide(${id},'${file}');" >
-	? </button>`;
+GF3.getHelpButton = ( id, file ) =>
+	`
+		<button id="${ id }" class="butHelp" onclick="POP.setPopupShowHide(${id},'${file}');" >
+			?
+		</button>
+	`;
 
 
 
@@ -188,5 +195,18 @@ GF3.openAllNonZero = function( target = divFixer ){
 		}
 
 	}
+
+};
+
+
+// called by select list boxes in aoioe* & and by isso*
+GF3.selectedSurfaceFocus = function( select ) {
+
+	THR.controls.enableKeys = false;
+
+	PIN.intersected = GBX.meshGroup.children[ select.value ];
+
+	PIN.setIntersected( PIN.intersected );
+	//divPopUpData.innerHTML = POP.getIntersectedDataHtml();
 
 };

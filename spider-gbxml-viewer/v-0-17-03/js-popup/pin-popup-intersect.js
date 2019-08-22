@@ -105,7 +105,8 @@ PIN.onDocumentMouseDown = function( event ) {
 
 
 PIN.setIntersected = function( intersected = PIN.intersectedLast ) { // called by POPF.footer
-
+	// console.log( '', intersected );
+	
 	PIN.intersected = intersected;
 
 	PIN.surfaceXml = PIN.getIntersectedDataGbxml();
