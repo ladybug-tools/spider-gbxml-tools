@@ -1,0 +1,149 @@
+  <Construction id="Air">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="layer" />
+    <Name>Air</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">0.999999</U-value>
+  </Construction>
+  <Construction id="Ceiling">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="layer" />
+    <Name>Ceiling</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">0.999999</U-value>
+  </Construction>
+  <Construction id="EmbeddedColumn">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="layer" />
+    <Name>Embedded Column</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">0.999999</U-value>
+  </Construction>
+  <Construction id="ExposedFloor">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="layer" />
+    <Name>Exposed Floor</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">0.999999</U-value>
+  </Construction>
+  <Construction id="ExteriorWall">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="layer" />
+    <Name>Exterior Wall</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">0.999999</U-value>
+  </Construction>
+  <Construction id="FreestandingColumn">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="layer" />
+    <Name>Freestanding Column</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">0.999999</U-value>
+  </Construction>
+  <Construction id="InteriorFloor">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="layer" />
+    <Name>Interior Floor</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">0.999999</U-value>
+  </Construction>
+  <Construction id="InteriorWall">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="layer" />
+    <Name>Interior Wall</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">0.999999</U-value>
+  </Construction>
+  <Construction id="RaisedFloor">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="layer" />
+    <Name>Raised Floor</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">0.999999</U-value>
+  </Construction>
+  <Construction id="Roof">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="layer" />
+    <Name>Roof</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">0.999999</U-value>
+  </Construction>
+  <Construction id="Shade">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="layer" />
+    <Name>Shade</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">0.999999</U-value>
+  </Construction>
+  <Construction id="SlabOnGrade">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="layer" />
+    <Name>Slab on Grade</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">0.999999</U-value>
+  </Construction>
+  <Construction id="UndergroundCeiling">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="layer" />
+    <Name>Underground Ceiling</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">0.999999</U-value>
+  </Construction>
+  <Construction id="UndergroundSlab">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="layer" />
+    <Name>Underground Slab</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">0.999999</U-value>
+  </Construction>
+  <Construction id="UndergroundWall">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="layer" />
+    <Name>Underground Wall</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">0.999999</U-value>
+  </Construction>
+
+
+  <Construction id="FixedWindow">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="layer" />
+    <Name>Fixed Window</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">0.999999</U-value>
+  </Construction>
+  <Construction id="FixedSkylight">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="layer" />
+    <Name>Fixed Skylight</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">0.999999</U-value>
+  </Construction>
+  <Construction id="Operable Window">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="layer" />
+    <Name>Operable Window</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">0.999999</U-value>
+  </Construction>
+  <Construction id="OperableSkylight">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="layer" />
+    <Name>Operable Skylight</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">0.999999</U-value>
+  </Construction>
+  <Construction id="NonSlidingDoor">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="layer" />
+    <Name>Non Sliding Door</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">0.999999</U-value>
+  </Construction>
+  <Construction id="SlidingDoor">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="layer" />
+    <Name>Sliding Door</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">0.999999</U-value>
+  </Construction>

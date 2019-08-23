@@ -9,19 +9,20 @@ var GBXU = {
 	script: {
 
 		copyright: "Copyright 2019 Ladybug Tools authors",
-		date: "2019-07-31",
+		date: "2019-08-23",
 		description: "GbXML utilities: all this is a bit idiosyncratic / a random collection of stuff",
-		helpFile: "../js-view-gbxml/gbxu-gbxml-utilities.md",
+		helpFile: "../js-core-gbxml/gbxu-gbxml-utilities.md",
 		license: "MIT License",
 		urlSourceCode: "js-core-gbxml/gbxu-gbxml-utilities.js",
-		version: "0.17.01-1gbxu"
+		version: "0.17.03-0gbxu"
 
 	}
 
 };
 
 
-GBXU.filtersDefault = [ "Air", "ExposedFloor", "ExteriorWall", "RaisedFloor", "Roof",  "Shade" ];
+GBXU.filtersDefault = [ "Air", "ExposedFloor", "ExteriorWall", "RaisedFloor",
+	"Roof", "Shade" ];
 
 
 
@@ -38,18 +39,14 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 
 	GBXU.setSurfaceTypesVisible( GBXU.filtersDefault );
 
-	const meshes = GBX.meshGroup.children.filter( mesh => GBXU.filtersDefault.includes( mesh.userData.surfaceType) )
+	const meshes = GBX.meshGroup.children.filter( mesh =>
+		GBXU.filtersDefault.includes( mesh.userData.surfaceType) )
 		.map( mesh => mesh.clone() );
 
 	GBX.meshesVisible = new THREE.Group();
 	GBX.meshesVisible.add( ...meshes );
 
 	THRU.toggleBoundingBoxHelper( GBX.meshesVisible );
-
-	//const bbox = new THREE.Box3().setFromObject( GBX.meshesVisible ); // clumsy
-	//GBXU.boundingBox = new THREE.Box3Helper( bbox, 0xdddd00 );
-	//console.log( 'GBXU.boundingBox', GBXU.boundingBox );
-	//THR.scene.add( GBXU.boundingBox );
 
 	GBX.elevation = THRU.boundingBoxHelper.box.min.z - 0.001 * THRU.radius;
 
@@ -119,7 +116,7 @@ GBXU.setElementsJson = function() {
 
 		const openings = surface.match( /<Opening(.*?)<\/Opening>/gi ) || [];
 
-		openings.forEach( opening  => GBX.openings.push(  opening ) );
+		openings.forEach( opening => GBX.openings.push(  opening ) );
 
 	} );
 
@@ -166,7 +163,6 @@ GBXU.setElementsJson = function() {
 	GBX.messageDiv.innerHTML = GBXU.stats + "<br><b>File Statistics</b>" + FOB.fileInfo;
 
 };
-
 
 
 GBXU.getSceneInfo = function() {

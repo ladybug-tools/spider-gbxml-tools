@@ -283,7 +283,7 @@ GBX.getSurfaceMesh = function( arr, index, holes ) {
 	const surface = GBX.surfaces[ index ];
 
 	const surfaceType = surface.match( 'surfaceType="(.*?)"')[ 1 ];
-	const color = new THREE.Color( GBX.colorsDefault[ surfaceType ] );
+	const color = new THREE.Color( GBX.colors[ surfaceType ] );
 	//console.log( 'color', color );
 
 	const v = ( arr ) => new THREE.Vector3().fromArray( arr );
@@ -359,7 +359,6 @@ GBX.getSurfaceMesh = function( arr, index, holes ) {
 	mesh.userData.index = index;
 	mesh.userData.surfaceType = surfaceType;
 
-
 	GBX.meshAddGbJson( surface, mesh );
 
 	return mesh;
@@ -370,12 +369,32 @@ GBX.getSurfaceMesh = function( arr, index, holes ) {
 
 GBX.meshAddGbJson = function ( surface, mesh ) {
 
-	let surfaceId = surface.match( / id="(.*?)"/i )[ 1 ];
+	const surfaceId = surface.match( / id="(.*?)"/i )[ 1 ];
 	mesh.userData.surfaceId = surfaceId;
+
+	
+	const azimuth = surface.match( /<Azimuth>(.*?)<\/Azimuth>/i );
+	mesh.userData.azimuth = azimuth ? azimuth[ 1 ] : "";
+
+	const cadId = surface.match( /<CADObjectId>(.*?)<\/CADObjectId>/i );
+	mesh.userData.cadId = cadId ? cadId[ 1 ] : "";
+
+	const constructionIdRef = surface.match( / constructionIdRef="(.*?)"/i );
+	mesh.userData.constructionIdRef = constructionIdRef ? constructionIdRef[ 1 ] : "";
+
+	const exposedToSun = surface.match( / exposedToSun="(.*?)"/i );
+	mesh.userData.exposedToSun = exposedToSun ? exposedToSun[ 1 ] : "";
+
+	const name = surface.match( /<Name>(.*?)<\/Name>/i );
+	mesh.userData.name = name ? name[ 1 ] : "";
 
 	let spaceIds = surface.match( / spaceIdRef="(.*?)"/gi );
 	spaceIds = spaceIds ? spaceIds.map( id => id.slice( 13, -1 ) ) : [];
 	mesh.userData.spaceIds = spaceIds.slice();
+
+	const tilt = surface.match( /<Tilt>(.*?)<\/Tilt>/i );
+	mesh.userData.azimuth = tilt ? tilt[ 1 ] : "";
+
 
 	const spaceLevel = spaceIds.pop();
 	const spaceJson = GBX.spacesJson.find( item => item.spaceId === spaceLevel ) || {};
@@ -388,14 +407,14 @@ GBX.meshAddGbJson = function ( surface, mesh ) {
 
 	//console.log( 'space.storeyId', space.storeyId );
 
-	if ( spaceJson.storeyId ) {
+	// if ( spaceJson.storeyId ) {
 
-		const storey = GBX.storeys.find( storey => storey.includes( spaceJson.storeyId ) );
-		//console.log( '', storey );
+	// 	const storey = GBX.storeys.find( storey => storey.includes( spaceJson.storeyId ) );
+	// 	//console.log( '', storey );
 
-		const name = storey.match( /<Name>(.*?)<\/Name/ )[ 1 ]
-		//console.log( 'name ', name );
-	}
+	// 	//const name = storey.match( /<Name>(.*?)<\/Name/ )[ 1 ]
+	// 	//console.log( 'name ', name );
+	// }
 
 	return mesh;
 
