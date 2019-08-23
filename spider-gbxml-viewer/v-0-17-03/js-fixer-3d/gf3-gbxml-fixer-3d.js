@@ -54,7 +54,10 @@ GF3.getMenuFixer3d = function() {
 
 		-->
 
+		<div id=CNHdivCheckNormalsHorizontal ></div>
+
 		<div id=FIOEHdivInteriorOnExteriorHorizontal ></div>
+
 
 	`;
 
@@ -106,12 +109,11 @@ GF3.cadIdsDefault = {
 
 };
 
-GF3.colors = Object.assign( {}, GF3
-.colorsDefault ); // create working copy of default colors
+GF3.colors = Object.assign( {}, GF3.colorsDefault ); // create working copy of default colors
 
-GF3.surfaceTypes = Object.keys( GF3
-.colors );
+GF3.surfaceTypes = Object.keys( GF3.colors );
 
+GF3.surfaceColors = Object.values( GF3.colors );
 
 GF3.init = function( target = GF3divFixer3d ) {
 
@@ -148,6 +150,8 @@ GF3.setUp = function( text ) { // build a fresh menu any time a new file is load
 	//GBXFh1FileName.innerHTML = `File: ${ decodeURI( FOB.name ) }`;
 
 	FIOEHdivInteriorOnExteriorHorizontal.innerHTML = FIOEH.getMenuInteriorOnExteriorHorizontal();
+
+	CNHdivCheckNormalsHorizontal.innerHTML = CNH.getMenuCheckNormalsHorizontal();
 
 
 
@@ -199,7 +203,24 @@ GF3.openAllNonZero = function( target = divFixer ){
 };
 
 
-// called by select list boxes in aoioe* & and by isso*
+
+//////////
+
+
+
+GF3.addNormals = function ( button, selectedSurfaces = [] ) {
+
+	button.classList.add( "active" );
+
+	GBX.meshGroup.children.forEach( mesh => mesh.visible = false );
+
+	selectedSurfaces.forEach( mesh => mesh.visible = true );
+
+	THRU.toggleSurfaceNormalsVisible();
+
+};
+
+
 GF3.selectedSurfaceFocus = function( select ) {
 
 	THR.controls.enableKeys = false;
@@ -207,6 +228,10 @@ GF3.selectedSurfaceFocus = function( select ) {
 	PIN.intersected = GBX.meshGroup.children[ select.value ];
 
 	PIN.setIntersected( PIN.intersected );
-	//divPopUpData.innerHTML = POP.getIntersectedDataHtml();
+
+	const indexes = Array.from( select.selectedOptions ).map( option => Number( option.value ) );
+
+	GBX.meshGroup.children.forEach( mesh => mesh.visible = indexes.includes( mesh.userData.index ) ? true : false );
+
 
 };

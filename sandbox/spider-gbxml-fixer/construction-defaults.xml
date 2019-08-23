@@ -1,0 +1,98 @@
+  <Construction id="Ceiling">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="" />
+    <Name>Ceiling</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">1.8</U-value>
+  </Construction>
+  <Construction id="EmbeddedColumn">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="" />
+    <Name>Embedded Column</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">1.8</U-value>
+  </Construction>
+  <Construction id="ExposedFloor">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="" />
+    <Name>Exposed Floor</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">0.2</U-value>
+  </Construction>
+  <Construction id="ExteriorWall">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="" />
+    <Name>Exterior Wall</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">0.2</U-value>
+  </Construction>
+  <Construction id="FreestandingColumn">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="" />
+    <Name>Freestanding Column</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">1.8</U-value>
+  </Construction>
+  <Construction id="InteriorFloor">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="layer-Plasterboard-Air50mmwall-Plasterboard" />
+    <Name>Interior Wall</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">1.8</U-value>
+  </Construction>
+  <Construction id="InteriorWall">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="layer-Plasterboard-Air50mmwall-Plasterboard" />
+    <Name>Interior Wall</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">1.8</U-value>
+  </Construction>
+  <Construction id="RaisedFloor">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="" />
+    <Name>Raised Floor</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">0.3</U-value>
+  </Construction>
+  <Construction id="Roof">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="layer-Plasterboard-Air50mmceiling-ConcreteDeck-membrane-Insulation1" />
+    <Name>Roof</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">0.2</U-value>
+  </Construction>
+  <Construction id="Shade">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="" />
+    <Name>Shade</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">1.0</U-value>
+  </Construction>
+  <Construction id="SlabOnGrade">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="layer-Carpetandrubberpad-Concrete-R-25.0ci-NotionalReferenceSoil" />
+    <Name>Slab on Grade</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">0.2</U-value>
+  </Construction>
+  <Construction id="UndergroundCeiling">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="" />
+    <Name>Underground Ceiling</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">0.7</U-value>
+  </Construction>
+  <Construction id="UndergroundSlab">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="" />
+    <Name>Slab on Grade</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">0.7</U-value>
+  </Construction>
+  <Construction id="UndergroundWall">
+    <Absorptance unit="Fraction" type="ExtIR">0</Absorptance>
+    <LayerId layerIdRef="" />
+    <Name>Extrior Wall</Name>
+    <Roughness value="Rough" />
+    <U-value unit="WPerSquareMeterK">0.7</U-value>
+  </Construction>

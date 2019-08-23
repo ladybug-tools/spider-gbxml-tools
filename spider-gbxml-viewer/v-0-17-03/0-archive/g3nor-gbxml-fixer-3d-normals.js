@@ -36,13 +36,14 @@ G3NOR.addNormals = function ( button, selectedSurfaces = [] ) {
 
 	G3NOR.selectedSurfaces.forEach( mesh => mesh.visible = true );
 
-	G3NOR.addSurfaceNormalsHelpers();
+	//G3NOR.addSurfaceNormalsHelpers();
+
+	THRU.toggleSurfaceNormals();
 
 };
 
 
 G3NOR.addSurfaceNormalsHelpers = function () {
-
 
 	THR.scene.remove( G3NOR.faceNormals );
 

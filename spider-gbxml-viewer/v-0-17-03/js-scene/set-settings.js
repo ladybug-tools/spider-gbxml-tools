@@ -69,7 +69,7 @@ SET.getPanelSettings = function() { // add help??
 		<p>
 			<button onclick=THRU.toggleWireframe(); >toggle wireframe</button>
 
-			<button onclick=THRU.toggleSurfaceNormals(); title="All Three.js triangles have a normal. See them here." > toggle surface normals </button>
+			<button onclick=THRU.toggleSurfaceNormalsVisible(); title="All Three.js faces have a normal. See them here." > toggle surface normals </button>
 		</p>
 
 		<p>

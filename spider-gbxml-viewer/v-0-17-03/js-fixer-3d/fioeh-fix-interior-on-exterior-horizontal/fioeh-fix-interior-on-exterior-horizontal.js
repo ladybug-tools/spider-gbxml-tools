@@ -12,9 +12,9 @@ const FIOEH = {
 		"copyright": "Copyright 2019 Ladybug Tools authors",
 		"date": "2019-08-21",
 		"description": "",
-		"helpFile": "js-fixer-3d/fioeh-fix-interior-on-exterior-horizontal.md",
+		"helpFile": "js-fixer-3d/fioeh-fix-interior-on-exterior-horizontal/fioeh-fix-interior-on-exterior-horizontal.md",
 		"license": "MIT License",
-		"sourceCode": "js-fixer-3d/fioeh-fix-interior-on-exterior-horizontal.js",
+		"sourceCode": "js-fixer-3d/fioeh-fix-interior-on-exterior-horizontal/fioeh-fix-interior-on-exterior-horizontal.js",
 		"version": "0.17.03-0FIOEH",
 
 	}
@@ -24,12 +24,10 @@ const FIOEH = {
 
 FIOEH.description =
 	`
-		Interior Floor or Air with Tilt of 0 or 180 on Exterior (FIOEH) allows you display surface types that may be at the exterior of the model incorrectly.
-
+		Interior Floor or Air with Tilt of 0 or 180 on Exterior (FIOEH) allows you
+		to display surface types that may be at the exterior of the model incorrectly.
 	`;
 
-
-	//<a id=FIOEHsumHelp class=helpItem href="JavaScript:MNU.setPopupShowHide(FINEHsumHelp,FIOEH.currentStatus);" >&nbsp; ? &nbsp;</a>
 
 FIOEH.getMenuInteriorOnExteriorHorizontal = function() {
 
@@ -38,7 +36,6 @@ FIOEH.getMenuInteriorOnExteriorHorizontal = function() {
 
 	const help =
 		VGC.getHelpButton('FIOEHsumHelp',FIOEH.script.helpFile,POP.footer,source);
-
 
 	const htm =
 
@@ -54,13 +51,13 @@ FIOEH.getMenuInteriorOnExteriorHorizontal = function() {
 		<p>The following is work-in-progress</p>
 
 		<p>
-			1. <button onclick=G3NOR.addNormals(this,FIOEH.meshesInterior); >
+			1. <button onclick=FIOEH.addNormals(this,FIOEH.meshesInterior); >
 				Add normals to horizontal surfaces
 			</button>
 		</p>
 
 		<p>
-			2. <button onclick=FIOEH.castRaysGetIntersections(this,FIOEHfixes); >
+			2. <button onclick=FIOEH.castRaysGetIntersections(this); >
 				Cast rays and locate intersections
 			</button>
 		</p>
@@ -80,7 +77,7 @@ FIOEH.getMenuInteriorOnExteriorHorizontal = function() {
 
 		<p>
 			<button onclick=FIOEH.showHideSelected(this,FIOEHselAirOrInteriorOnExterior); >
-				show/hide selected surfaces</button>
+				Show/hide selected surfaces</button>
 		</p>
 
 		<p id=FIOEHfixes ></p>
@@ -97,7 +94,6 @@ FIOEH.getMenuInteriorOnExteriorHorizontal = function() {
 };
 
 
-
 FIOEH.getInteriorOnExteriorCheckHorizontal = function() {
 
 	const typesInt =  [ "Air", "Ceiling", "InteriorFloor", "UndergroundCeiling" ];
@@ -106,59 +102,44 @@ FIOEH.getInteriorOnExteriorCheckHorizontal = function() {
 	const typesExt =  [ "ExposedFloor", "RaisedFloor", "Roof", "SlabOnGrade", "UndergroundSlab" ];
 	FIOEH.meshesExterior = GBX.meshGroup.children.filter( mesh => typesExt.includes( mesh.userData.surfaceType ) );
 
+};
 
-	/*
-	FIOEH.surfaceAirInteriorIndices = [];
 
-	FIOEHselAirOrInteriorOnExterior.innerHTML = "";
 
-	GBX.surfaces.forEach( ( surface, index ) => {
+FIOEH.addNormals = function ( button, selectedSurfaces = [] ) {
 
-		const surfaceMatchInterior = surface.match( /surfaceType="InteriorFloor"/ );
+	// Console.log( 'selectedSurfaces', selectedSurfaces );
 
-		if ( surfaceMatchInterior ) {
+	button.classList.add( "active" );
 
-			FIOEH.surfaceAirInteriorIndices.push( index );
+	FIOEH.selectedSurfaces = selectedSurfaces;
 
-		}
+	GBX.meshGroup.children.forEach( mesh => mesh.visible = false );
 
-		const surfaceMatchCeiling = surface.match( /surfaceType="Ceiling"/ );
+	FIOEH.selectedSurfaces.forEach( mesh => mesh.visible = true );
 
-		if ( surfaceMatchCeiling ) {
+	//G3NOR.addSurfaceNormalsHelpers();
 
-			FIOEH.surfaceAirInteriorIndices.push( index );
-
-		}
-
-		const surfaceMatchAir = surface.match( /surfaceType="Air"/ );
-
-		if ( surfaceMatchAir && ( GBX.surfaces[ index ].includes( `Tilt>0<\/Tilt` ) || GBX.surfaces[ index ].includes( `Tilt>180<\/Tilt` ) ) ) {
-
-			FIOEH.surfaceAirInteriorIndices.push( index );
-
-		}
-
-	} );
-
-	return FIOEH.surfaceAirInteriorIndices.length;
-
-	*/
+	THRU.toggleSurfaceNormals();
 
 };
 
 
+
 FIOEH.castRaysGetIntersections = function( button ) {
 
-	if ( !G3NOR.faceNormals ) { alert("first add the normals"); return; }
+	if ( !THRU.helperNormalsFaces ) { alert("first add the normals"); return; }
 
 	button.classList.add( "active" );
 
 	FIOEH.meshesExterior.forEach( mesh => mesh.visible = true );
 
 	const v = ( x, y, z ) => new THREE.Vector3( x, y, z );
-	const normals = G3NOR.faceNormals.children;
+	//const normals = G3NOR.faceNormals.children;
+	const normals = THRU.helperNormalsFaces.children;
+
 	const arr = [];
-	let normalsCount = 0;
+	let raysCastCount = 0;
 
 	for ( let normal of normals ) {
 
@@ -194,21 +175,18 @@ FIOEH.castRaysGetIntersections = function( button ) {
 
 			}
 
-			normalsCount ++;
+			raysCastCount ++;
 
 		}
 
 	}
 
 	FIOEH.surfaceIntersections = arr;
-	//.filter( ( value, index, array ) => array.indexOf ( value ) == index );
-	//FIOEH.surfaceIntersections = [ ... new Set( arr ) ];
-	//console.log( 'FIOEH.surfaceIntersections', .surfaceIntersections );
 
 	FIOEHfixes.innerHTML =
 	`
 		Surfaces: ${ FIOEH.meshesInterior.length.toLocaleString() }<br>
-		Normals created: ${ normalsCount.toLocaleString() }<br>
+		Normals created: ${ raysCastCount.toLocaleString() }<br>
 		Intersections found: ${ FIOEH.surfaceIntersections.length.toLocaleString() }
 
 		<p>Select multiple surfaces by pressing shift or control keys.</p>
@@ -223,6 +201,7 @@ FIOEH.castRaysGetIntersections = function( button ) {
 };
 
 
+
 FIOEH.getSelectOptionsIndexes = function( surfaceIndexes ) {
 
 	let htmOptions = '';
@@ -230,6 +209,7 @@ FIOEH.getSelectOptionsIndexes = function( surfaceIndexes ) {
 
 	for ( let index of surfaceIndexes ) {
 
+		// Switch to mesh.userData?
 		const surfaceText = GBX.surfaces[ index ];
 		//console.log( 'surfaceText', surfaceText );
 
@@ -239,6 +219,7 @@ FIOEH.getSelectOptionsIndexes = function( surfaceIndexes ) {
 		const cadId = cadIdMatch ? cadIdMatch[ 1 ] : "";
 
 		const type = surfaceText.match( 'surfaceType="(.*?)"' )[ 1 ];
+
 		let color = GBX.colors[ type ].toString( 16 );
 		color = color.length > 4 ? color : '00' + color; // otherwise greens no show
 
@@ -270,8 +251,8 @@ FIOEH.checkForInteriorIntersections = function( index, origin, direction ) {
 
 	} else {
 
-		//console.log( 'intersects1', intersects1 );
-		//console.log( 'intersects2', intersects2 );
+		// Console.log( 'intersects1', intersects1 );
+		// Console.log( 'intersects2', intersects2 );
 
 	}
 
@@ -283,7 +264,7 @@ FIOEH.checkForInteriorIntersections = function( index, origin, direction ) {
 FIOEH.getExteriors2 = function( index, origin, direction ) {
 
 	//console.log( 'FIOEH.meshesExterior', FIOEH.meshesExterior );
-	//console.log( 'origin, direction', origin, direction );
+	// console.log( 'origin, direction', origin, direction );
 
 	if ( direction.z === 0 ) { return; }
 
@@ -299,7 +280,6 @@ FIOEH.getExteriors2 = function( index, origin, direction ) {
 	const intersects2 = raycaster.intersectObjects( FIOEH.meshesExterior ).length;
 	//console.log( 'intersects2', intersects2 );
 
-
 	if ( intersects1 % 2 === 0 || intersects2 % 2 === 0 ) {
 
 		indexIntersects = index;
@@ -310,20 +290,14 @@ FIOEH.getExteriors2 = function( index, origin, direction ) {
 
 	}
 
-
 	return indexIntersects;
 
 };
 
 
+FIOEH.setSurfacesShowHide = function( button, surfaceIndexes = [] ) {
 
-
-FIOEH.setSurfacesShowHide = function( button, surfaceIndexes = [], meshesExterior = [] ) {
-	// used by aoioe*
-	//console.log( 'surfaceIndexes', surfaceIndexes );
-
-	//const buttons = Array.from( detMenuEdit.querySelectorAll( 'button' ) );
-	//buttons.filter( item => item !== button ).map( item => item.classList.remove( "active" ) );
+	if ( !THRU.helperNormalsFaces ) { alert("first: 1. add normals and 2. locate intersections"); return; }
 
 	button.classList.toggle( "active" );
 
@@ -335,7 +309,7 @@ FIOEH.setSurfacesShowHide = function( button, surfaceIndexes = [], meshesExterio
 
 			surfaceIndexes.forEach( index => GBX.meshGroup.children[ Number( index ) ].visible = true );
 
-			THR.scene.remove( G3NOR.faceNormals );
+			THRU.helperNormalsFaces.visible = false;
 
 			//THRU.groundHelper.visible = false;
 
@@ -345,19 +319,30 @@ FIOEH.setSurfacesShowHide = function( button, surfaceIndexes = [], meshesExterio
 
 		}
 
-
 	} else {
 
-		if ( meshesExterior.length > 0 ) {
+		// if ( FIOEH.meshesExterior.length > 0 ) {
 
-			meshesExterior.forEach( mesh => mesh.visible = true );
+		// 	FIOEH.meshesExterior.forEach( mesh => mesh.visible = true );
 
-		} else {
+		// } else {
 
 			GBX.meshGroup.children.forEach( element => element.visible = true );
 
-		}
+		//}
 
 	}
 
+
+
 };
+
+
+
+FIOEH.showHideSelected = function ( button, select ) {
+
+	const selectedIndices = Array.from( select.selectedOptions ).map( option => option.value );
+
+	FIOEH.setSurfacesShowHide( button, selectedIndices );
+
+}

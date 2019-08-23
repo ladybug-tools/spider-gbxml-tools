@@ -238,7 +238,6 @@ THRU.toggleWireframe = function( obj = THR.scene ) {
 
 
 THRU.toggleSurfaceNormals = function( obj = THR.scene ) {
-	//
 
 	let material = new THREE.MeshNormalMaterial();
 
@@ -269,7 +268,9 @@ THRU.toggleSurfaceNormals = function( obj = THR.scene ) {
 					const mesh = new THREE.Mesh( geo, material );
 					mesh.rotation.copy( child.rotation );
 					mesh.position.copy( child.position );
+
 					const helperNormalsFace = new THREE.FaceNormalsHelper( mesh, 0.05 * THRU.radius, 0xff00ff, 3 );
+					helperNormalsFace.userData.index = child.userData.index;
 
 					THRU.helperNormalsFaces.add( helperNormalsFace );
 					//THRU.helperNormalsFaces.visible = false;
@@ -295,6 +296,67 @@ THRU.toggleSurfaceNormals = function( obj = THR.scene ) {
 
 };
 
+
+
+THRU.toggleSurfaceNormalsVisible = function( obj = THR.scene ) {
+
+	let material = new THREE.MeshNormalMaterial();
+
+	const types = [ 'BoxBufferGeometry', 'BufferGeometry', 'ConeBufferGeometry', 'CylinderBufferGeometry',
+		'ShapeBufferGeometry', 'SphereBufferGeometry' ];
+
+	if ( THR.scene.children.includes( THRU.helperNormalsFaces ) ) {
+
+		THR.scene.remove( THRU.helperNormalsFaces );
+
+	} else {
+
+		THRU.helperNormalsFaces = new THREE.Group();
+
+		THR.scene.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh && child.visible ) {
+
+				if ( child.geometry.type === 'Geometry' ) {
+
+					child.geometry.computeFaceNormals();
+
+					const helperNormalsFace = new THREE.FaceNormalsHelper( child, 2, 0xff00ff, 3 );
+					THRU.helperNormalsFaces.add( helperNormalsFace );
+					//THRU.helperNormalsFaces.visible = false;
+					//console.log( 'helperNormalsFace', helperNormalsFace );
+
+				} else if ( types.includes( child.geometry.type ) === true ) {
+
+					const geometry = new THREE.Geometry();
+					const geo = geometry.fromBufferGeometry( child.geometry );
+					const mesh = new THREE.Mesh( geo, material );
+					mesh.rotation.copy( child.rotation );
+					mesh.position.copy( child.position );
+
+					const helperNormalsFace = new THREE.FaceNormalsHelper( mesh, 0.05 * THRU.radius, 0xff00ff, 3 );
+					helperNormalsFace.userData.index = child.userData.index;
+
+					THRU.helperNormalsFaces.add( helperNormalsFace );
+					//THRU.helperNormalsFaces.visible = false;
+
+				} else {
+
+					//console.log( 'child.geometry.type', child.geometry.type );
+
+				}
+
+			}
+
+		} );
+
+		THRU.helperNormalsFaces.name = 'helperNormalsFaces';
+
+		THR.scene.add( THRU.helperNormalsFaces );
+
+	}
+
+};
 
 
 THRU.setObjectOpacity = function( obj = THR.scene, range = rngOpacity ) {

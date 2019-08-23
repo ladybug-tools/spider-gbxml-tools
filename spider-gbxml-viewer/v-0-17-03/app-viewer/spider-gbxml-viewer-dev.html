@@ -115,8 +115,8 @@
 
 <!-- Fixer 3D Menu -->
 <script src = "js-fixer-3d/gf3-gbxml-fixer-3d.js" ></script>
-<script src = "js-fixer-3d/g3nor-gbxml-fixer-3d-normals.js" ></script>
 <script src = "js-fixer-3d/fioeh-fix-interior-on-exterior-horizontal/fioeh-fix-interior-on-exterior-horizontal.js" ></script>
+<script src = "js-fixer-3d/cnh-check-normals-horizontal/cnh-check-normals-horizontal.js" ></script>
 
 
 
@@ -371,7 +371,8 @@ function init() {
 
 	GBX.init( GBXdivMessage ); // gets things going
 
-	GF3.init();
+	GF3.init(); // here while testing - otherwise run on toggle
+
 	// Theme
 
 	THMdivMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
