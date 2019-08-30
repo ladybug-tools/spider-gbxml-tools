@@ -6,10 +6,20 @@ This document is intended to a be a summary of lessens learned, test results and
 
 Sections of new text will will be posted to GitHub Issues under a 'lessons-learned' tag. These issues will be cclosed as and when a newer issue is posted. And actions or further investigations arsing from these reports should be opened as new issues.
 
-## 2019-08-28 ~
+## 2019-08-29 ~ Theo
+
+Bingo!
+
+After many, nany trial-and-error OpenStudio 'Run Simulations;, we have good enoough Construction,Layer,Material and WindowType data to add to a gbXML file to enable the file to run without error.
+
+See current [construction-defaults.txt]( #https://www.ladybug.tools/spider-gbxml-fixer/assets/construction-defaults.txt )
 
 
-### Failed OpenStudio 'Run simulation
+
+## 2019-08-28 ~ Theo
+
+
+### Failed OpenStudio 'Run simulation'
 
 NREL
 
