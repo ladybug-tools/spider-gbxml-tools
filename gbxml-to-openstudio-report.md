@@ -1,10 +1,56 @@
 # gbXML to OpenStudio Report
 
-The goal of the scripts in this project is to enable you to transfer data from a CAD progran to an analysis program with as few steps of human intervention as possible.
+The goal of the scripts in this project is to enable you to transfer data from a CAD program to an analysis program with as few steps of human intervention as possible.
 
 This document is intended to a be a summary of lessens learned, test results and any issues of interest that occur in the pursuance of the above goal.
 
-Sections of new text will will be posted to GitHub Issues under a 'lessons-learned' tag. These issues will be cclosed as and when a newer issue is posted. And actions or further investigations arsing from these reports should be opened as new issues
+Sections of new text will will be posted to GitHub Issues under a 'lessons-learned' tag. These issues will be cclosed as and when a newer issue is posted. And actions or further investigations arsing from these reports should be opened as new issues.
+
+## 2019-08-28 ~
+
+
+### Failed OpenStudio 'Run simulation
+
+NREL
+
+* https://github.com/NREL/openstudio-gbxml-validation/blob/master/gbxml_test_suite/tests/output/test_case_1/test_case_1.xml
+* https://github.com/NREL/openstudio-gbxml-validation/blob/master/gbxml_test_suite/tests/output/test_case_1/test_case_2.xml
+* https://github.com/NREL/openstudio-gbxml-validation/blob/master/gbxml_test_suite/tests/output/test_case_wbt1/test_case_wbt1.xml
+* https://github.com/NREL/openstudio-gbxml-validation/blob/master/gbxml_test_suite/tests/output/test_case_wbt2/test_case_wbt2.xml
+* https://github.com/NREL/openstudio-gbxml-validation/blob/master/gbxml_test_suite/tests/output/test_case_12/test_case_12.xml
+* https://github.com/NREL/OpenStudio/blob/develop/openstudiocore/resources/gbxml/TwoStoryOffice_Trane.xml
+* https://github.com/NREL/OpenStudio/blob/develop/openstudiocore/resources/gbxml/TestCubeAlternateUnits.xml
+* https://github.com/NREL/OpenStudio/blob/develop/openstudiocore/resources/gbxml/seb.xml
+* https://github.com/NREL/OpenStudio/blob/develop/openstudiocore/resources/gbxml/simpleBox_vasari.xml
+* https://github.com/NREL/OpenStudio/blob/develop/openstudiocore/resources/gbxml/ZNETH.xml
+
+gbXML
+
+* https://github.com/GreenBuildingXML/Sample_gbXML_Files/blob/master/ARCH_ASHRAE%20Headquarters%20r16_detached.xml
+* https://github.com/GreenBuildingXML/Sample_gbXML_Files/blob/master/ChapelHillOffice.xml
+* https://github.com/GreenBuildingXML/Sample_gbXML_Files/blob/master/ConferenceCenter%20(Older).xml
+* https://github.com/GreenBuildingXML/Sample_gbXML_Files/blob/master/ExerciseFacility%20(Older).xml
+* https://github.com/GreenBuildingXML/Sample_gbXML_Files/blob/master/OfficeBuilding%20(Older).xml
+* https://github.com/GreenBuildingXML/Sample_gbXML_Files/blob/master/gbXMLExport_ASHRAEHQ_Revit2017.xml
+* https://github.com/GreenBuildingXML/Sample_gbXML_Files/blob/master/gbXMLStandard%20Office%20(ASHRAE%20HQ)%202016.xml
+* https://github.com/GreenBuildingXML/Sample_gbXML_Files/blob/master/gbXMLStandard%20Office%20(Core%20%26%20Shell)%202016.xml
+* https://github.com/GreenBuildingXML/Sample_gbXML_Files/blob/master/gbXMLStandard%20Single%20Family%20Residential%202016.xml
+* https://github.com/GreenBuildingXML/Sample_gbXML_Files/blob/master/gbXMLStandard.xml
+* https://github.com/GreenBuildingXML/Sample_gbXML_Files/blob/master/gbXMLStandardv%20Retail%20Big%20Box.xml
+
+Michal
+
+* https://github.com/ladybug-tools/spider/blob/master/gbxml-sample-files/simulate-able/london-office_simulatable.xml
+
+
+### Completes
+
+* https://github.com/NREL/OpenStudio/blob/develop/openstudiocore/resources/gbxml/TestCube.xml
+
+gbXML
+
+* https://github.com/GreenBuildingXML/Sample_gbXML_Files/blob/master/gbXMLStandard%20Test%20Model%202016.xml
+* https://github.com/GreenBuildingXML/Sample_gbXML_Files/blob/master/gbXML_TRK.xml
 
 
 ## 2018-08-08 ~ Theo
