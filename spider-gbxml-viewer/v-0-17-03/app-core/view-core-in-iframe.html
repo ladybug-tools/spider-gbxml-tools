@@ -3,10 +3,10 @@
 <head>
 <meta charset = "utf-8" >
 <meta name = "viewport" content= "width=device-width, initial-scale=1" >
-<meta name = "description" content = "Spider gbXML Viewer running in an iframe that you may resize." >
+<meta name = "description" content = "Spider gbXML Viewer running in an iframe. Drag lower right corner to resize the view." >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
-<meta name = "date" content = "2019-08-20" >
-<meta name = "version" content = "0.17.02" >
+<meta name = "date" content = "2019-08-29" >
+<meta name = "version" content = "0.17.03" >
 <title></title>
 <style>
 
@@ -38,25 +38,28 @@
 			</button>
 		</p>
 
-		<p>Load files into the <code>iframe</code> via a URL</p>
+		<p>Load sample files into the <code>iframe</code> via a URL:</p>
 
 		<p>
-			<button onclick=ifrMain.contentWindow.location.hash="https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml"; >Clidton Downs</button>
+			<button onclick=ifrMain.contentWindow.location.hash="https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml"; >Clifton Downs</button>
 		</p>
 		<p>
-			<button onclick=ifrMain.contentWindow.location.hash="https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/coventry-university-of-warwick-small.zip"; >Warwick University</button>
+			<button onclick=ifrMain.contentWindow.location.hash="https://www.ladybug.tools/spider/gbxml-sample-files/zip/warwick-university-5k-surfaces.zip"; >Warwick University</button>
 		</p>
 		<p>
-			<button onclick=ifrMain.contentWindow.location.hash="https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/annapolis-md-single-family-residential-2016.xml"; >Annapolis</button>
+			<button onclick=ifrMain.contentWindow.location.hash="https://www.ladybug.tools/spider/gbxml-sample-files/annapolis-md-single-family-residential-2016.xml"; >Annapolis</button>
 		</p>
 		<p>
-			<button onclick=ifrMain.contentWindow.location.hash="https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/london-royal-arsenal-woolwich.zip"; >Royal Arsenal</button>
+			<button onclick=ifrMain.contentWindow.location.hash="https://www.ladybug.tools/spider/gbxml-sample-files/zip/royal-arsenal-woolwich.zip"; >Royal Arsenal</button>
 		</p>
 		<p>
 			<button onclick=ifrMain.contentWindow.location.hash="https://cdn.jsdelivr.net/gh/GreenBuildingXML/Sample-gbXML-Files@master/gbXML_TRK.xml"; >TRK</button>
 		</p>
 		<p>
 			Example for loading a local file. Edit the HTML file to suit your needs:<br>
+		</p>
+
+		<p>
 			<button onclick=ifrMain.contentWindow.location.hash="file:///D:/test-gbxml.xml"; >file:///D:/test-gbxml.xml</button>
 		</p>
 	</nav>

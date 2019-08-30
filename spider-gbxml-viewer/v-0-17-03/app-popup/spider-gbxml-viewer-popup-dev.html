@@ -21,11 +21,13 @@
 
 <style>
 
+	* { box-sizing: border-box; }
+
 	body { overflow: hidden; }
 
-	main { border: 0px solid red; left: 0; }
+	main { border: 0px solid red; left: 0; height: 100vh; width: 100vw;}
 
-	#divContents { border: 0px solid red; height: 100vh; max-width: 100vw; }
+	#divContents { border: 0px solid red; height: 100vh; max-width: 100vw;  }
 
 </style>
 
@@ -139,6 +141,8 @@ function init() {
 
 	//const mesh = THRU.getGeometry();
 	//THR.scene.add( mesh );
+
+	window.addEventListener ( 'hashchange', FOB.onHashChange, false );
 
 	FOB.onHashChange();
 

@@ -140,6 +140,8 @@ function init() {
 	//const mesh = THRU.getGeometry();
 	//THR.scene.add( mesh );
 
+	window.addEventListener ( 'hashchange', FOB.onHashChange, false );
+	
 	FOB.onHashChange();
 
 	//POP.setPopupShowHide( butPopupClose, POP.popup);
