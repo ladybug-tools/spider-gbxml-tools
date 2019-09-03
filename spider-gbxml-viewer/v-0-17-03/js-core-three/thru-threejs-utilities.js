@@ -4,7 +4,7 @@
 
 "use strict";
 
-let THRU = {
+var THRU = {
 
 	copyright: "Copyright 2019 Ladybug Tools authors. MIT License",
 	date: "2019-07-24",

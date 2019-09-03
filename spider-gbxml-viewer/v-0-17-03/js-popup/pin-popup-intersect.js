@@ -79,7 +79,8 @@ PIN.onDocumentMouseDown = function( event ) {
 
 	PIN.raycaster.setFromCamera( PIN.mouse, THR.camera );
 
-	PIN.intersects = PIN.raycaster.intersectObjects( GBX.meshGroup.children );
+	const objs = GBX.meshGroup ? GBX.meshGroup.children : [];
+	PIN.intersects = PIN.raycaster.intersectObjects( objs );
 	//console.log( 'PIN.intersects', PIN.intersects );
 
 	if ( PIN.intersects.length > 0 ) {
@@ -106,7 +107,7 @@ PIN.onDocumentMouseDown = function( event ) {
 
 PIN.setIntersected = function( intersected = PIN.intersectedLast ) { // called by POPF.footer
 	// console.log( '', intersected );
-	
+
 	PIN.intersected = intersected;
 
 	PIN.surfaceXml = PIN.getIntersectedDataGbxml();

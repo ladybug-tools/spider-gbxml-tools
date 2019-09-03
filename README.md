@@ -12,19 +12,27 @@
 _<small>Spider gbXML Viewer ~ [Iframe Carousel]( https://www.ladybug.tools/spider-gbxml-tools/index.html#cookbook/spider-gbxml-iframe-carousel/README.md ): display multiple interactive 3D models in a single space on any web page. Scroll zoom in display turned off so read me can scroll.</small>_
 
 
-### Welcome <a href="https://www.openstudio.net/" title="Hi Dan! Hi NREL!" style=color:red; target="_blank">Open Studio</a> fans! <br>Welcome [LinkedIn]( https://www.linkedin.com/feed/update/urn:li:activity:6458956499195568128/ ) and [discourse.ladybug.tools]( https://discourse.ladybug.tools/t/spider-gbxml-viewer-embedded-in-openstudio/4129 ) viewers
+### Welcome <a href="http://gbxml.org/" title="Hi Stephen!" target="_blank">gbXML</a> users!
+
+### Welcome <a href="https://www.openstudio.net/" title="Hi Dan! Hi NREL!" target="_blank">Open Studio</a> fans!
+
+### Welcome [LinkedIn]( https://www.linkedin.com/feed/update/urn:li:activity:6458956499195568128/ ) and [discourse.ladybug.tools]( https://discourse.ladybug.tools/t/spider-gbxml-viewer-embedded-in-openstudio/4129 ) viewers
 
 <hr>
 
+<!--
 
 ## Welcome <a href="https://www.rtcevents.com/bilt/eur18/" title="Hi Michal! Hi Ljubljana!" style=color:red; target="_blank">BILT EUR 2018</a> attendees!
+-->
+
+## Stable version:  [Spider gbXML Viewer 'Maevia' ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/ "this one is hot" )
+
+## Development version:  [Spider gbXML Viewer Dev ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/dev/ )
 
 
-## Latest version:  [Spider gbXML Viewer 'Maevia' ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/ "this one is hot" )
+### Pre-release fixer: [Spider gbXML Fixer 'Atrax' ]( https://www.ladybug.tools/spider-gbxml-fixer/ "this one is cool" )
 
 <!--
-### Latest pre-release fixer: [Spider gbXML Fixer 'Atrax' ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/fix/ "this one is cool" )
-
 ### Latest pre-release popup: [Spider gbXML Viewer Popup ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/pop/ "this one is small" )
 
 -->
