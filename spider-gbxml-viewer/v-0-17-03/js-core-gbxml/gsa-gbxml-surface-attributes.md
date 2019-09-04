@@ -30,7 +30,14 @@ Display all possible data for a particular surface
 
 <summary>Change Log</summary>
 
-## 2019-06-28 ~ Theo
+### 2019-09-04 ~ Theo
+
+0.17.03-0gsa
+
+* C: updated attribute titles
+
+
+### 2019-06-28 ~ Theo
 
 Dealt with
 
@@ -38,7 +45,7 @@ Dealt with
 * 2019-06-26 ~ Theo ~ Update the opacity of surfaces, spaces, storeys, zones
 
 
-## 2019-06-26 ~ Theo
+### 2019-06-26 ~ Theo
 
 * F - First commit of read me
 

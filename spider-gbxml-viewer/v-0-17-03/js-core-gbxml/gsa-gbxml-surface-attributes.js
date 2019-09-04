@@ -8,7 +8,7 @@ const GSA = {
 	"date": "2019-07-15",
 	"description": "Display all possible data for a surface",
 	"helpFile": "https://www.ladybug.tools/spider-gbxml-fixer/r0-4-0/gsa-get-surface-attributes/README.md",
-	"version": "0.17.01-0gsa"
+	"version": "0.17.03-0gsa"
 
 };
 
@@ -89,7 +89,7 @@ GSA.getSurfaceAttributes = function( surfaceXml, id, index ) {
 		</p>
 
 		<details>
-			<summary>AdjacentSpace ${ GSA.adjacentSpaceIds.length }</summary>
+			<summary>Adjacent Spaces: ${ GSA.adjacentSpaceIds.length }x</summary>
 			${ htmAdjacentSpace }
 		</details>
 
@@ -104,7 +104,7 @@ GSA.getSurfaceAttributes = function( surfaceXml, id, index ) {
 		</details>
 
 		<details id=GSAdetOpenings >
-			<summary>Openings ${ GSA.openings.length }</summary>
+			<summary>Openings: ${ GSA.openings.length }x</summary>
 			<div>${ htmOpenings } </div>
 		</details>
 

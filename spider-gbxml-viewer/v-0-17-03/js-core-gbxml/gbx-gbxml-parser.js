@@ -372,7 +372,7 @@ GBX.meshAddGbJson = function ( surface, mesh ) {
 	const surfaceId = surface.match( / id="(.*?)"/i )[ 1 ];
 	mesh.userData.surfaceId = surfaceId;
 
-	
+
 	const azimuth = surface.match( /<Azimuth>(.*?)<\/Azimuth>/i );
 	mesh.userData.azimuth = azimuth ? azimuth[ 1 ] : "";
 

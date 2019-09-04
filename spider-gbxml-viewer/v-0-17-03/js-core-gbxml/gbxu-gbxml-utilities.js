@@ -160,6 +160,8 @@ GBXU.setElementsJson = function() {
 		</div>`
 	).join( "");
 
+	FOB.fileInfo = FOB.fileInfo ? FOB.fileInfo : "";
+
 	GBX.messageDiv.innerHTML = GBXU.stats + "<br><b>File Statistics</b>" + FOB.fileInfo;
 
 };
