@@ -7,7 +7,7 @@
 <meta name = "date" content = "2019-08-23" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.17.03-1sgv" >
+<meta name = "version" content = "0.17.03-2sgv" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
 <title>Spider gbXML Viewer Dev</title>
@@ -148,10 +148,25 @@
 				<div>
 
 					<p>
-						See also <a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">gbXML Schema</a>
+						See also
+						<a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">
+							gbXML Schema</a>
+							/
+							<a href="https://www.ladybug.tools/spider/gbxml-viewer/r14/gv-cor-core/gv-cor.html" target="_blank">
+								R14
+							</a>
+							/
+							<a href="https://www.ladybug.tools/spider/gbxml-viewer/" target="_blank">
+								R12
+							</a>
+						</p>
+
 					</p>
 
 				</div>
+
+
+				<div id="FOBdivMessages" ></div>
 
 			</details>
 
@@ -224,7 +239,6 @@
 
 				<section id="SETsecSettings" ></section>
 
-
 				<details id=detSectionCut ontoggle="divSectionCut.innerHTML=CUT.getDetSectionViews();" >
 
 					<summary>Scene cut sections</summary>
@@ -259,7 +273,7 @@
 
 			</details>
 
-			<details>
+			<details open>
 
 				<summary class=sumMenuTitle >Settings menu</summary>
 
@@ -298,9 +312,6 @@
 
 			<div id="GBXdivMessage" >loading...</div>
 
-			<div id="FOBdivMessage" ></div>
-
-
 		</div>
 
 	</main>
@@ -312,7 +323,15 @@
 
 			<div id=divDragMoveHeader >
 
-				<span title="Move and resize me" ><img src = 'https://ladybug.tools/artwork/icons_bugs/ico/spider.ico' height=12 alt="Ladybug Tools logo" ></span>
+				<span title="Move and resize me" >
+					<img src = 'https://ladybug.tools/artwork/icons_bugs/ico/spider.ico' height=12 alt="Ladybug Tools logo" >
+				</span>
+
+				<button  onclick=PFO.onClickZoomAll(); title="Show entire campus & display attributes" >🔍</button>
+
+				<button onclick="PFO.onToggleInteriorExterior(this)" title="Exterior or interior surfaces">☂️</button>
+
+				<button onclick="THR.controls.autoRotate = !THR.controls.autoRotate;">🔄</button>
 
 				<div style=float:right; >
 					<button id=butPopupClose onclick="POP.onClickClose(butPopupClose);" >

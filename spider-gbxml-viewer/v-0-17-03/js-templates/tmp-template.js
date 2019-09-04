@@ -39,7 +39,7 @@ TMP.getMenuTemplate = function () {
 		`
 			<details ontoggle="TMPdivTmp1.innerHTML=TMP.getTemplate();" >
 
-				<summary id=TMPsumSurfaces >Template</summary>
+				<summary id=TMPsumSurfaces >Versions</summary>
 
 				${ help }
 
@@ -60,28 +60,18 @@ TMP.getTemplate = function () {
 
 	const htm =
 	`
-		<p><i>Template</i></p>
-
-		<p><button onclick=TMP.updatePopupFooter() >new popup items</button></p>
-
-		<p>${ new Date() }</p>
+		<p><i>Use whatever version you like</i></p>
 
 		<p>
-lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit,
- sed quia non numquam eius modi
-tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem.
-ut enim ad minima veniam,
-quis nostrum exercitationem ullam corporis suscipit laboriosam,
-nisi ut aliquid ex ea
-commodi consequatur? quis autem vel eum iure reprehenderit,
-qui in ea voluptate velit esse,
-quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat,
-quo voluptas nulla pariatur?
+			<a href="https://www.ladybug.tools/spider/gbxml-viewer/r14/gv-cor-core/gv-cor.html" target="_blank">
+				Ladybug Tools / Spider gbXML Viewer 'Aragog' R14
+			</a>
 		</p>
 
 		<p>
-			Time to check:
-			${ ( performance.now() - timeStart ).toLocaleString() } ms
+			<a href="https://www.ladybug.tools/spider/gbxml-viewer/" target="_blank">
+				Ladybug Tools / Spider gbXML Viewer 'Aragog' R12
+			</a>
 		</p>
 
 		<hr>
