@@ -4,10 +4,10 @@
 
 <meta charset = "utf-8">
 <meta name = "copyright" content ="Ladybug Tools authors" >
-<meta name = "date" content = "2019-08-20" >
+<meta name = "date" content = "2019-09-06" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.17.02" >
+<meta name = "version" content = "0.17.03-3sgv" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
 <title>Spider gbXML Viewer 'Maevia'</title>
@@ -35,8 +35,8 @@
 
 
 <!-- Three.js -->
-<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r106/build/three.min.js" ></script>
-<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r106/examples/js/controls/OrbitControls.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r108/build/three.min.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r108/examples/js/controls/OrbitControls.js" ></script>
 
 
 <!--TooToo ~ menus generally -->
@@ -113,9 +113,16 @@
 <script src = "js-fixer/fcim-fix-cad-id-missing/fcim-fix-cad-id-missing.js" ></script>
 
 
+<!-- Fixer 3D Menu -->
+<script src = "js-fixer-3d/gf3-gbxml-fixer-3d.js" ></script>
+<script src = "js-fixer-3d/fioeh-fix-interior-on-exterior-horizontal/fioeh-fix-interior-on-exterior-horizontal.js" ></script>
+<script src = "js-fixer-3d/cnh-check-normals-horizontal/cnh-check-normals-horizontal.js" ></script>
+
+
+
 <!-- Settings menu -->
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-07/thm-theme/thm-theme.js" ></script>
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-07/tmp-template/tmp-template.js" ></script>
+<script src = "js-templates/tmp-template.js" ></script>
 
 
 <!-- Core / local settings -->
@@ -138,13 +145,19 @@
 
 				</header>
 
-				<div>
-
-					<p>
-						See also <a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">gbXML Schema</a>
-					</p>
-
-				</div>
+				<p>
+					See also
+					<a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">
+						gbXML Schema</a>
+					/
+					<a href="https://www.ladybug.tools/spider/gbxml-viewer/r14/gv-cor-core/gv-cor.html" target="_blank">
+						R14
+					</a>
+					/
+					<a href="https://www.ladybug.tools/spider/gbxml-viewer/" target="_blank">
+						R12
+					</a>
+				</p>
 
 			</details>
 
@@ -161,7 +174,7 @@
 			</details>
 
 
-			<details >
+			<details open>
 
 				<summary class="sumMenuTitle" >File menu</summary>
 
@@ -172,6 +185,8 @@
 				<div id=GBXUdivStatsGbx ></div>
 
 				<div id=FOBdivFileSaveBasic ></div>
+
+				<div id="FOBdivMessages" ></div>
 
 			</details>
 
@@ -217,7 +232,6 @@
 
 				<section id="SETsecSettings" ></section>
 
-
 				<details id=detSectionCut ontoggle="divSectionCut.innerHTML=CUT.getDetSectionViews();" >
 
 					<summary>Scene cut sections</summary>
@@ -236,18 +250,23 @@
 
 			</details>
 
-			<details>
+			<details ontoggle=GF3.init();>
 
 				<summary class=sumMenuTitle >Fixer 3D menu</summary>
 
-				<div>
-					This menu is for scripts - very experimental - that utilize the Three.js linear algebra library to check for 3D errors
-					such as incorrect normals and InteriorWall surfaces on the exterior. The scripts will be available here soon.
-				</div>
+				<p>
+					This menu is for scripts - very experimental -
+					that utilize the Three.js linear algebra library
+					to check for 3D errors such as
+					incorrect normals and
+					'InteriorWall' surfaces on the exterior.
+				</p>
+
+				<div id=GF3divFixer3d ></div>
 
 			</details>
 
-			<details>
+			<details open>
 
 				<summary class=sumMenuTitle >Settings menu</summary>
 
@@ -286,9 +305,6 @@
 
 			<div id="GBXdivMessage" >loading...</div>
 
-			<div id="FOBdivMessage" ></div>
-
-
 		</div>
 
 	</main>
@@ -300,7 +316,15 @@
 
 			<div id=divDragMoveHeader >
 
-				<span title="Move and resize me" ><img src = 'https://ladybug.tools/artwork/icons_bugs/ico/spider.ico' height=12 alt="Ladybug Tools logo" ></span>
+				<span title="Move and resize me" >
+					<img src = 'https://ladybug.tools/artwork/icons_bugs/ico/spider.ico' height=12 alt="Ladybug Tools logo" >
+				</span>
+
+				<button  onclick=PFO.onClickZoomAll(); title="Show entire campus & display attributes" >🔍</button>
+
+				<button onclick="PFO.onToggleInteriorExterior(this)" title="Exterior or interior surfaces">☂️</button>
+
+				<button onclick="THR.controls.autoRotate = !THR.controls.autoRotate;">🔄</button>
 
 				<div style=float:right; >
 					<button id=butPopupClose onclick="POP.onClickClose(butPopupClose);" >
@@ -338,6 +362,7 @@ FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristo
 
 
 init();
+
 THR.animate();
 
 function init() {
@@ -358,6 +383,7 @@ function init() {
 
 	GBX.init( GBXdivMessage ); // gets things going
 
+	GF3.init(); // here while testing - otherwise run on toggle
 
 	// Theme
 
@@ -425,7 +451,7 @@ function init() {
 
 	MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();
 
-	
+
 	//
 	POP.init();
 

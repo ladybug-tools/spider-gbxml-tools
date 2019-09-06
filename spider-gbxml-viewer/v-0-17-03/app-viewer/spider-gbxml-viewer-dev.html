@@ -4,10 +4,10 @@
 
 <meta charset = "utf-8">
 <meta name = "copyright" content ="Ladybug Tools authors" >
-<meta name = "date" content = "2019-08-23" >
+<meta name = "date" content = "2019-09-06" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.17.03-2sgv" >
+<meta name = "version" content = "0.17.03-3sgv" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
 <title>Spider gbXML Viewer Dev</title>
@@ -35,8 +35,8 @@
 
 
 <!-- Three.js -->
-<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r107/build/three.min.js" ></script>
-<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r107/examples/js/controls/OrbitControls.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r108/build/three.min.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r108/examples/js/controls/OrbitControls.js" ></script>
 
 
 <!--TooToo ~ menus generally -->
@@ -159,8 +159,6 @@
 					</a>
 				</p>
 
-				<div id="FOBdivMessages" ></div>
-
 			</details>
 
 			<details open>
@@ -176,7 +174,7 @@
 			</details>
 
 
-			<details >
+			<details open>
 
 				<summary class="sumMenuTitle" >File menu</summary>
 
@@ -187,6 +185,8 @@
 				<div id=GBXUdivStatsGbx ></div>
 
 				<div id=FOBdivFileSaveBasic ></div>
+
+				<div id="FOBdivMessages" ></div>
 
 			</details>
 
@@ -250,7 +250,7 @@
 
 			</details>
 
-			<details ontoggle=GF3.init(); open >
+			<details ontoggle=GF3.init();>
 
 				<summary class=sumMenuTitle >Fixer 3D menu</summary>
 
