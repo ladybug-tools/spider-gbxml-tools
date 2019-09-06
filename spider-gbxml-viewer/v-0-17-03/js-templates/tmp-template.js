@@ -62,9 +62,12 @@ TMP.getTemplate = function () {
 	`
 		<p><i>Use whatever version you like</i></p>
 
-		<p>
-		<a href="https://www.ladybug.tools/spider/gbxml-viewer/r14/gv-cor-core/gv-cor.html" target="_blank">
-			Ladybug Tools / Spider gbXML Viewer 'Maevia' v0.17
+		<p>Ladybug Tools / Spider gbXML Viewer 'Maevia' v0.17:<br>
+		<a href="https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer">
+			Stable version
+		</a>
+		<a href="https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/dev/" >
+			Development version
 		</a>
 	</p>
 		<p>
