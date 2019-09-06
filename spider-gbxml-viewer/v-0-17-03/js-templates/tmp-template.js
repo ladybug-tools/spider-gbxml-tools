@@ -63,6 +63,11 @@ TMP.getTemplate = function () {
 		<p><i>Use whatever version you like</i></p>
 
 		<p>
+		<a href="https://www.ladybug.tools/spider/gbxml-viewer/r14/gv-cor-core/gv-cor.html" target="_blank">
+			Ladybug Tools / Spider gbXML Viewer 'Maevia' v0.17
+		</a>
+	</p>
+		<p>
 			<a href="https://www.ladybug.tools/spider/gbxml-viewer/r14/gv-cor-core/gv-cor.html" target="_blank">
 				Ladybug Tools / Spider gbXML Viewer 'Aragog' R14
 			</a>
