@@ -26,9 +26,9 @@ core - contains local variable settings and overrides
 
 <summary>Change Log</summary>
 
-### 2019-08-07 ~ Theo
+### 2019-09-06 ~ Theo
 
-COR Core 0.17.02-0cor
+COR Core 0.17.03-0cor
 
 * F: First commit
 

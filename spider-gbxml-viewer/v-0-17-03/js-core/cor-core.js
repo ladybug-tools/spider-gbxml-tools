@@ -5,15 +5,15 @@
 const COR = {
 	"script": {
 		"copyright": "Copyright 2019 Ladybug Tools authors",
-		"date": "2019-08-20",
+		"date": "2019-09-06",
 		"description": "core - contains local overrides",
 		"helpFile": "cor-core/README.md",
 		"license": "MIT License",
-		"version": "0.17.02-0cor",
+		"version": "0.17.03-1cor",
 	}
 };
 
-THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-06/style.css";
+THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-07/style.css";
 
 
 POP.license = "https://www.ladybug.tools/spider/pages/license.md";
@@ -29,7 +29,7 @@ MNU.description =
 		Mission: run a series of basic checks on <a href="http://gbXML.org" target="_blank">gbXML</a> files to identify, report and help you fix any issues.
 	`;
 
-MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-02/";
+MNU.urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-03/";
 
 MNU.homeText = "<img src = 'https://ladybug.tools/artwork/icons_bugs/ico/ladybug.ico' height=24 >";
 MNU.homeTitle= "Ladybug Tools: free computer applications that support environmental design and education";
