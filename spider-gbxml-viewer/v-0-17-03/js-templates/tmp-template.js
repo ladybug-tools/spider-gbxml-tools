@@ -84,6 +84,12 @@ TMP.getTemplate = function () {
 
 		<hr>
 
+		<p>
+			<a href="https://www.ladybug.tools/spider-gbxml-fixer/" target="_blank">
+				Ladybug Tools / Spider gbXML Fixer 'Atrax' v0.05</a>
+		</p>
+
+
 	`;
 
 	return htm;
