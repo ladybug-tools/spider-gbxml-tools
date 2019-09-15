@@ -77,6 +77,8 @@ THRU.setSceneDispose = function( objArr = [] ) {
 
 	objArr.forEach( obj => obj = undefined );
 
+	//THR.scene.dispose();
+
 	// for testing
 	//divRendererInfo.innerHTML = THRU.getRendererInfo();
 
@@ -495,6 +497,7 @@ THRU.toggleEdges = function( obj = THR.scene ) {
 
 
 ////////// Lights
+
 
 THRU.addSomeLights = function() {
 
