@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1" >
+<meta name = "description" content = "get repos and files" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2019-09-17" >
+<meta name = "version" content = "0.01.0" >
+<title>SGV for gbXML.org</title>
+<style>
+
+	* { box-sizing: border-box; }
+
+	:root { --mnu-width: 22rem; --screen-width: calc( 100vw ); --headerHeight: 6rem; }
+
+	html { height: 100%; }
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; padding: 0 0.5rem; }
+
+	a { color: white; text-decoration: none; }
+	a:hover, a:focus, a:active { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+
+	main { border: 0px; height: 100%; left: var( --mnu-width ); margin: 0;
+		padding: 0 1rem; position: absolute; width: calc( 100% - var( --mnu-width ) );  }
+
+	#navMenu { background-color: #4a9d36; color: #fff; height: 100%; left: 0; margin: 0; overflow: auto; padding: 0 1rem;
+		position: absolute; top: 0; width: var( --mnu-width ); }
+
+
+</style>
+</head>
+<body>
+<script>
+
+	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+	const version = document.head.querySelector( "[ name=version ]" ).content;
+	description = document.head.querySelector( "[ name=description ]" ).content;
+
+</script>
+	<nav id="navMenu" >
+
+		<h2>
+			<a href="https://github.com/GreenBuildingXML/GreenBuildingXML.github.io/tree/master/sandbox/sgv-for-gbxml-org";
+				target=_top title="Source code on GitHub" >
+				<img src=../brandmark-gbxml-small.png style=opacity:1; >
+			</a>
+			<br>
+			<a href="" title="Click to reload this page" >
+					<script>document.write( document.title + " " + version )</script>
+			</a>
+		</h2>
+
+		<p>
+			<script>document.write( description )</script>
+		</p>
+
+		<details open>
+
+			<summary>Green Building XML Repos</summary>
+
+			<div id="divRepos" ></div>
+
+		</details>
+
+		<div id="divFiles" ></div>
+
+		<div id=divLog ></div>
+
+	</nav>
+
+	<main>
+
+		<div id="divContents" style=height:600px;overflow:hidden;resize:both;width:100%; >
+			<iframe id=ifr src="../../../../spider-gbxml-tools/spider-gbxml-viewer/v-0-17-03/app-popup/spider-gbxml-viewer-popup.html" style=height:100%;width:100%; ></iframe>
+		</div>
+
+	</main>
+
+
+<script>
+//https://ladybug-tools.github.io
+
+//const user = "bhom";
+const user = "ladybug-tools";
+//const user = "greenbuildingxml";
+let repo;
+
+urlGitHubApiRepos = "https://api.github.com/users/" + user + "/repos";
+
+
+init();
+
+
+function init() {
+
+	window.addEventListener ( 'hashchange', onHashChange, false );
+
+	setMenuUserRepos();
+
+}
+
+
+function setMenuUserRepos( path = "" ) {
+
+	const url = urlGitHubApiRepos;
+
+	fetch( new Request( url ) )
+	.then( response => response.json() )
+	.then( json => callbackGitHubUserRepos( json ) );
+
+}
+
+
+function callbackGitHubUserRepos( items  ) {
+
+	const htm = items.map( item =>
+		`
+			<div style=margin-top:8px; >
+				<a href=JavaScript:fetchFiles("${ item.name }"); >
+					📁 ${ item.name }
+				</a>
+			</div>
+		`
+	).join( "" );
+
+	divRepos.innerHTML = htm;
+
+}
+
+
+function fetchFiles( rep ) {
+
+	repo = rep
+
+	const urlGitHubAPITree = `https://api.github.com/repos/${ user }/${ repo }/git/trees/master?recursive=1`;
+
+	const request = new Request( urlGitHubAPITree );
+
+	fetch( request )
+		.then( response => response.json() )
+		.then( json => callbackGitHubApiTree( json ) );
+
+}
+
+
+function callbackGitHubApiTree ( results ) {
+
+	const urlGitHubSource = `https://github.com/${ user }/${ repo }/blob/master/`;
+	const urlGitHubPage = `https://cdn.jsdelivr.net/gh/${ user }/${ repo }@master/`;
+
+	//const urlGitHubPage = `https://${ user }.github.io/${ repo }/`;
+	const iconGitHubMark = '<img src="https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/images/github-mark.png" height=14 style=vertical-align:middle>';
+
+	files = results.tree.filter( file => file.path.endsWith( ".xml" ) );
+
+	files.sort( function( a, b ) {
+
+		let nameA = a.path.toUpperCase();
+		let nameB = b.path.toUpperCase();
+
+		if (nameA < nameB) { return -1; }
+
+		if ( nameA > nameB ) { return 1; }
+
+		// names must be equal
+		return 0;
+
+	} );
+
+	const folders = [];
+
+	let txt = "";
+
+	for ( let file of files ) {
+
+		const arrFile = file.path.split( "/" )
+		const fileName = arrFile.pop();
+		const folder = arrFile.pop();
+
+		if ( folders.indexOf( folder ) === -1 ) {
+
+			folders.push( folder );
+			txt += `<h4 style=margin:0; >folder: ${ folder || "root" }</h4>`;
+
+		}
+
+		txt +=
+
+		`<div style=margin:10px; >
+
+			<a href=${ urlGitHubSource + encodeURI( file.path )  } title="Edit me" >${ iconGitHubMark }</a>
+
+			<a href=#${ urlGitHubPage + encodeURI( file.path ) } onclick=setDivLog(this); title="${ file.size } bytes" >${ fileName}</a>
+
+			<a href=https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/#${ urlGitHubPage +  encodeURI( file.path )  } title="Link to just this file" >&#x2750;</a>
+
+		</div>`;
+
+	}
+
+	divFiles.innerHTML =
+	`<h3>${ repo }</h3><p>files: ${ files.length } </p> ${ txt } <hr>`;
+
+}
+
+
+function setDivLog( that ) {
+
+	divLog.innerHTML = `loaded: ${that.innerText} <br> ${that.title}`;
+
+}
+
+
+function onHashChange() {
+
+	console.log( '', location.hash );
+	ifr.contentWindow.location.hash = location.hash;
+
+}
+
+</script>
+</body>
+</html>
