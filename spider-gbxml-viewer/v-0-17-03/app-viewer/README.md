@@ -25,6 +25,12 @@
 
 <summary>Change Log</summary>
 
+### 2019-09-23 ~ Theo
+
+0.17.03-6SGV
+
+* R: replace utf-16 text
+
 ### 2019-07-21 ~ Theo
 
 0.17.03-2SGV
