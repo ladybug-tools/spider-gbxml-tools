@@ -397,7 +397,13 @@ function init() {
 
 	THMdivMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
 
+	THM.cssBasic = "style.css";
+	//THMcssCurrent.value = THM.cssBasic;
+
+	localStorage.setItem( THM.themeUrlStorage, THM.cssBasic );
+
 	THM.init();
+
 
 	navPanel.style.backgroundColor = "white"; //THM.backgroundColor;
 

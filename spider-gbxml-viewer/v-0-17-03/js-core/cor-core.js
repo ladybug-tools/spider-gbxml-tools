@@ -13,7 +13,7 @@ const COR = {
 	}
 };
 
-THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-07/style.css";
+THM.cssBasic = "style.css";
 
 
 POP.license = "https://www.ladybug.tools/spider/pages/license.md";
