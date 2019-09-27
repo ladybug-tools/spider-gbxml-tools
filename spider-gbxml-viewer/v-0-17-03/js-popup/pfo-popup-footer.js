@@ -16,7 +16,7 @@ var PFO = {
 
 PFO.footer =
 	`
-		<div>
+		<div id=POPdivFooter >
 
 			<button  onclick=PFO.onClickZoomAll(); title="Show entire campus & display attributes" >🔍</button>
 
@@ -211,7 +211,7 @@ PFO.onClickZoomAll = function() {
 PFO.setAllTypesVisible = function(){
 
 	selStorey.selectedIndex= -1;
-	
+
 	const buttons = divDragMoveContent.querySelectorAll( `button` );
 
 	Array.from( buttons ).forEach( button => {

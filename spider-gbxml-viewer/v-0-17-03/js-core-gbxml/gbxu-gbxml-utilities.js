@@ -33,7 +33,7 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 
 	//if ( PIN.line ) THR.scene.remove( PIN.line, PIN.particle );
 
-	if ( window.navDragMove ) POP.setPopupShowHide( butPopupClose, POP.popup );
+	//if ( window.navDragMove ) POP.setPopupShowHide( butPopupClose, POP.popup );
 
 	THRU.zoomObjectBoundingSphere();
 

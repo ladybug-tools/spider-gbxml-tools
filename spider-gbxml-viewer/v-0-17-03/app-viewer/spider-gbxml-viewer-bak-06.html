@@ -4,10 +4,10 @@
 
 <meta charset = "utf-8">
 <meta name = "copyright" content ="Ladybug Tools authors" >
-<meta name = "date" content = "2019-09-26" >
+<meta name = "date" content = "2019-09-23" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.17.03-7" >
+<meta name = "version" content = "0.17.03-6sgv" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
 <title>Spider gbXML Viewer Dev</title>
@@ -17,7 +17,7 @@
 <link rel = "canonical" href = "www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/" />
 <link rel = "license" href = "https://creativecommons.org/licenses/by/4.0/" >
 <link rel = "license" href = "https://opensource.org/licenses/MIT" >
-<link rel = "stylesheet" href = "style.css" >
+<link rel = "stylesheet" href = "https://pushme-pullyou.github.io/tootoo14/js-14-07/style.css" >
 
 <style>
 
@@ -320,7 +320,7 @@
 					<img src = 'https://ladybug.tools/artwork/icons_bugs/ico/spider.ico' height=12 alt="Ladybug Tools logo" >
 				</span>
 
-				<button onclick=PFO.onClickZoomAll(); title="Show entire campus & display attributes" >🔍</button>
+				<button  onclick=PFO.onClickZoomAll(); title="Show entire campus & display attributes" >🔍</button>
 
 				<button onclick="PFO.onToggleInteriorExterior(this)" title="Exterior or interior surfaces">☂️</button>
 
@@ -352,14 +352,6 @@
 
 <script>
 
-
-POP.footer =
-
-	`<div id=POPdivFooter >
-		<button onclick=POP.requestFile(POP.popup,divDragMoveContent); >🏠</button>&nbsp;
-		<button onclick=POP.requestFile(POP.license,divDragMoveContent); >⚖️</button>&nbsp;
-		<span id=POPspanInfo >v${ POP.version } ${ POP.date }</span>
-	</div>`;
 
 FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
 //FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml";
@@ -399,7 +391,7 @@ function init() {
 
 	THM.init();
 
-	navPanel.style.backgroundColor = "white"; //THM.backgroundColor;
+	navPanel.style.backgroundColor = THM.backgroundColor;
 
 	// Menu header
 
@@ -462,7 +454,7 @@ function init() {
 	MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();
 
 
-
+	//
 	POP.init();
 
 	PIN.init();
@@ -471,18 +463,11 @@ function init() {
 
 	FOB.onHashChange();
 
+	//POP.setPopupShowHide();
 
 	aViewSource.href = MNU.urlSourceCode;
 
-	if ( window.innerWidth < 640 || window.innerHeight < 640 ) {
-
-		toggleNavPanel();
-
-	} else {
-
-		POP.setPopupShowHide();
-
-	}
+	if ( window.innerWidth < 640 || window.innerHeight < 640 ) { toggleNavPanel(); }
 
 }
 
