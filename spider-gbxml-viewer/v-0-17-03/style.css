@@ -27,7 +27,7 @@ button:hover, input[ type=button ]:hover{ background: #ccc;
 	box-shadow: 5px 5px 5px rgba(0,0,0,0.3); color: #f00 }
 
 button.active { border-color: black; font-style: oblique; font-weight: bold; margin-left: 0.3rem;
-	box-shadow: 10px 2px #888; }
+	/*box-shadow: 10px 2px #888; */ }
 
 code { background-color: #ddd; }
 
