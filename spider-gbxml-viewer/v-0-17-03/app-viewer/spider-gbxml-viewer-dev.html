@@ -4,10 +4,10 @@
 
 <meta charset = "utf-8">
 <meta name = "copyright" content ="Ladybug Tools authors" >
-<meta name = "date" content = "2019-09-26" >
+<meta name = "date" content = "2019-09-27" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.17.03-7" >
+<meta name = "version" content = "0.17.03-8" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
 <title>Spider gbXML Viewer Dev</title>
@@ -62,7 +62,7 @@
 
 
 <!-- File menu panel -->
-<script src = "js-menu/gff-github-folder-files.js" ></script>
+<script src = "js-menu/gff-github-folder-files-dev.js" ></script>
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-07/gat-github-access-token/gat-github-access-token.js" ></script>
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-07/fob-file-open-basic/fob-file-open-basic.js" ></script>
 
@@ -326,11 +326,9 @@
 
 				<button onclick="THR.controls.autoRotate = !THR.controls.autoRotate;">🔄</button>
 
-				<div style=float:right; >
-					<button id=butPopupClose onclick="POP.onClickClose(butPopupClose);" >
-						&times;
-					</button>
-				</div>
+
+
+				&nbsp; <button id=butPopupClose onclick="POP.onClickClose(butPopupClose);" >&times;</button>
 
 			</div>
 
@@ -483,6 +481,7 @@ function init() {
 	if ( window.innerWidth < 640 || window.innerHeight < 640 ) {
 
 		toggleNavPanel();
+		POP.setPopupShowHide( butPopupClose, ' ', POP.footer );
 
 	} else {
 
