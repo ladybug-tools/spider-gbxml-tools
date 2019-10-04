@@ -4,10 +4,10 @@
 
 <meta charset = "utf-8">
 <meta name = "copyright" content ="Ladybug Tools authors" >
-<meta name = "date" content = "2019-09-20" >
+<meta name = "date" content = "2019-10-03" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.17.03-5" >
+<meta name = "version" content = "0.17.03-6" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
 <title>Spider gbXML Viewer 'Maevia'</title>
@@ -121,7 +121,7 @@
 
 
 <!-- Settings menu -->
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-07/thm-theme/thm-theme.js" ></script>
+<script src = "js-theme/thm-theme.js" ></script>
 <script src = "js-templates/tmp-template.js" ></script>
 
 
@@ -131,7 +131,7 @@
 
 	<button id="expandButton" onclick="toggleNavPanel();" >☰</button>
 
-	<nav id="navPanel" >
+	<nav id="navMenu" >
 
 		<section class="secContent" >
 
@@ -286,7 +286,7 @@
 
 				</details>
 
-				<h1 onclick="navPanel.scrollTop=0;" style="cursor:pointer;text-align:center;" title="go to top of menu" >
+				<h1 onclick="navMenu.scrollTop=0;" style="cursor:pointer;text-align:center;" title="go to top of menu" >
 					<img alt="spider icon" src = "https://ladybug.tools/artwork/icons_bugs/ico/spider.ico" height=18 >
 				</h1>
 
@@ -391,7 +391,7 @@ function init() {
 
 	THM.init();
 
-	navPanel.style.backgroundColor = THM.backgroundColor;
+	navMenu.style.backgroundColor = THM.backgroundColor;
 
 	// Menu header
 
@@ -477,7 +477,7 @@ function init() {
 function toggleNavPanel() {
 
 	expandButton.classList.toggle( 'collapsed' );
-	navPanel.classList.toggle( 'collapsed' );
+	navMenu.classList.toggle( 'collapsed' );
 	main.classList.toggle( 'collapsed' );
 
 	THR.onWindowResize();
