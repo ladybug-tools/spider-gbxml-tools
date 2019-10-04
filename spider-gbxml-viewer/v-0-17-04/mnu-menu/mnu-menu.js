@@ -18,7 +18,7 @@ const MNU = {
 
 MNU.urlSourceCodeImage = "https://pushme-pullyou.github.io/github-mark-64.png";
 MNU.urlSourceCodeIcon = `<img src=${ MNU.urlSourceCodeImage } height=18 style=opacity:0.5 >`;
-MNU.urlSourceCode = `https://github.com/pushme-pullyou/tootoo14/tree/master/js-14-08/`;
+MNU.urlSourceCode = `https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-04`;
 
 MNU.title = document.title;
 
@@ -26,7 +26,7 @@ MNU.version = document.head.querySelector( '[ name=version ]' ).content || "";
 MNU.date = document.head.querySelector( '[ name=date ]' ).content || "";
 MNU.description = document.head.querySelector( '[ name=description ]' ).content || "";
 
-MNU.helpFile = "README.md";
+MNU.helpFile = "https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-04/README.md";
 
 MNU.target	= ""; //"target=_blank";
 
@@ -35,7 +35,7 @@ MNU.descriptionTooToo =
 		<i>The menu and user interface used here are built on:</i>
 		<h3>
 			<a href="https://github.com/pushme-pullyou/tootoo14" target="_blank">${ MNU.urlSourceCodeIcon }</a>
-			<a href="https://pushme-pullyou.github.io#tootoo14/README.md" target="_blank">
+			 <a href="https://pushme-pullyou.github.io#tootoo14/README.md" target="_blank">
 				TooToo14
 			</a>
 		</h3>
@@ -60,21 +60,6 @@ MNU.descriptionTooToo =
 
 
 // // For main menu header
-// MNU.homeText  = "homeText";
-// MNU.homeTitle = "homeTitle";
-// MNU.homeUrl   = "";
-
-// MNU.repoText  = "repoText";
-// MNU.repoTitle = "repoTitle";
-// MNU.repoUrl   = "";
-
-// MNU.appText  = "appText";
-// MNU.appTitle = "appTitle";
-// MNU.appUrl   = "";
-
-// MNU.footerUrl		= "#tootoo14/";
-// MNU.footerPopupUrl	= "tootoo14/";
-// MNU.footerIssues	= "https://github.com/pushme-pullyou/tootoo14/issues";
 
 
 MNU.homeText = "<img src = 'https://ladybug.tools/artwork/icons_bugs/ico/ladybug.ico' height=24 >";
@@ -123,7 +108,7 @@ MNU.getNavHeader = function() {
 			<a href=${ MNU.urlSourceCode } ${ MNU.target } title="Source code on GitHub" >
 			${ MNU.urlSourceCodeIcon }
 			</a>
-
+			&nbsp;
 			<a href="${ location.href.replace( location.hash, "" ) }" title="Click to reload this page" >${ MNU.title }
 				<span id=titleRelease >${ MNU.version }</span></a>
 
