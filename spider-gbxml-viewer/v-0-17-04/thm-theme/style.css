@@ -256,11 +256,10 @@ h1, h2, h3, h4, h5 {
 .attributeTitle {
 	font-style: italic;
 }
+
 .attributeValue {
 	color: blue;
 }
-
-
 
 #navDragMove {
 	background-color: #f1f1f1;
@@ -273,7 +272,6 @@ h1, h2, h3, h4, h5 {
 	resize: both;
 	right: 1rem;
 	top: 1rem;
-
 }
 
 #secDragMove {
@@ -288,8 +286,6 @@ h1, h2, h3, h4, h5 {
 	cursor: move;
 	opacity: 1;
 	padding: 0.5rem;
-
-
 }
 
 #divDragMoveContent {
