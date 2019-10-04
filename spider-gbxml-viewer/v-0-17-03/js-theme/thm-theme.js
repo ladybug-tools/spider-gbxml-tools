@@ -27,7 +27,7 @@ THM.script.description =
 //THM.cssDefault = "https://www.w3schools.com/lib/w3-theme-red.css";
 THM.cssDefault = "style.css";
 
-THM.themeUrlStorage = "tootoo14ThemeUrl"; // set for each instance in HTML file
+THM.themeUrlStorage = "spider-gbxml-viewer-build"; // set for each instance in HTML file
 
 THM.cssW3schools = "https://www.w3schools.com/lib/w3-theme-red.css";
 THM.themeBootswatch = "https://bootswatch.com/_vendor/bootstrap/dist/css/bootstrap.css";
