@@ -59,23 +59,39 @@ MNU.descriptionTooToo =
 //////////
 
 
-// For main menu header
-MNU.homeText  = "homeText";
-MNU.homeTitle = "homeTitle";
-MNU.homeUrl   = "";
+// // For main menu header
+// MNU.homeText  = "homeText";
+// MNU.homeTitle = "homeTitle";
+// MNU.homeUrl   = "";
 
-MNU.repoText  = "repoText";
-MNU.repoTitle = "repoTitle";
-MNU.repoUrl   = "";
+// MNU.repoText  = "repoText";
+// MNU.repoTitle = "repoTitle";
+// MNU.repoUrl   = "";
 
-MNU.appText  = "appText";
-MNU.appTitle = "appTitle";
-MNU.appUrl   = "";
+// MNU.appText  = "appText";
+// MNU.appTitle = "appTitle";
+// MNU.appUrl   = "";
 
-MNU.footerUrl		= "#tootoo14/";
-MNU.footerPopupUrl	= "tootoo14/";
-MNU.footerIssues	= "https://github.com/pushme-pullyou/tootoo14/issues";
+// MNU.footerUrl		= "#tootoo14/";
+// MNU.footerPopupUrl	= "tootoo14/";
+// MNU.footerIssues	= "https://github.com/pushme-pullyou/tootoo14/issues";
 
+
+MNU.homeText = "<img src = 'https://ladybug.tools/artwork/icons_bugs/ico/ladybug.ico' height=24 >";
+MNU.homeTitle= "Ladybug Tools: free computer applications that support environmental design and education";
+MNU.homeUrl  = "https://www.ladybug.tools";
+
+MNU.repoText ="<img src = 'https://ladybug.tools/artwork/icons_bugs/ico/spider.ico' height=24 >";
+MNU.repoTitle="Spider: 3D interactive analysis in your browser mostly written around the Three.js JavaScript library";
+MNU.repoUrl  ="https://www.ladybug.tools/spider/";
+
+MNU.appText  = "gbXML Tools";
+MNU.appTitle = "Tools to help you find, load, examine and edit gbXML files - in large numbers and sizes";
+MNU.appUrl   = "https://www.ladybug.tools/spider-gbxml-tools/";
+
+MNU.footerPopupUrl = "https://www.ladybug.tools/spider/";
+MNU.footerTarget = "target=_blank";
+MNU.footerIssues = "https://github.com/ladybug-tools/spider-gbxml-tools/issues";
 
 
 //////////
@@ -117,11 +133,9 @@ MNU.getNavHeader = function() {
 
 		<p>
 			${ MNU.description }
+		</p>
 
-
-			</p>
-
-			<p>
+		<p>
 			<button onclick=MNU.toggleDetailsOpen() >Close all menus</button>
 
 			<button class=butHelp id=butMenu onclick="POP.setPopupShowHide(butMenu,MNU.descriptionTooToo,POP.footer,'${ source }');" >?</button>
@@ -194,7 +208,7 @@ MNU.getNavFooterPopup = function() {
 
 
 
-MNU.toggleDetailsOpen = function( target = navPanel ) {
+MNU.toggleDetailsOpen = function( target = navMenu ) {
 
 	const details = target.querySelectorAll( "details" );
 

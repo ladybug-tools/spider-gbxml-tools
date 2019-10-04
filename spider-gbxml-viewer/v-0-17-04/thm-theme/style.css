@@ -12,7 +12,7 @@
 	font-size: 100%;
 	font-family: 'Lato', sans-serif;
 	--color: #4a9d36;
-	--colorLight: #9bcc31;
+	--colorLight: hsla(79, 61%, 70%, 1); /* #9bcc31; */
 	--colorBackground: #f7f8f9;
 	--mnu-width: 22rem;
 	--screen-width: calc(100vw);
@@ -35,7 +35,7 @@ a {
 a:hover,
 a:focus,
 a:active {
-	background-color: var( --colorLight )
+	background-color: var( --colorLight );
 	color: #aaa;
 	text-decoration: underline
 }
@@ -63,6 +63,7 @@ blockquote, pre {
 button,
 input[type=button] {
 	background-color: var(--colorLight );
+	box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 1px 5px 0 rgba(0,0,0,.12);
 	border: none;
 	color: #322;
 	cursor: pointer;
@@ -106,14 +107,19 @@ input[ type=range]::-webkit-slider-thumb {
 
 summary {
 	background-color: var(--colorLight );
-	color: white;
+	box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+	color: #666;
 	cursor: pointer;
 	font-size: 1.2rem;
-	font-weight: bold;
+	font-weight: normal;
 	outline: none;
 	padding: 0 0 0 0.5rem;
 }
 
+summary:hover {
+
+	color: #222;
+}
 
 .butHelp {
 	font-size: 0.7rem;
@@ -123,16 +129,12 @@ summary {
 }
 
 .dingbat {
-	color: var(--color );
-	cursor:pointer;
+	cursor: pointer;
 	font-size: 2rem;
 	font-weight: bold;
-	text-align:center;
+	text-align: center;
 }
 
-.menuInset {
-	margin: 1rem;
-}
 
 .secContents {
 	margin: 0 auto;
@@ -142,21 +144,26 @@ summary {
 .sumMenuTitle {
 	background-color: var(--color );
 	color: white;
+	padding: 0.1rem 0 0.1rem 0.5rem;
 	text-align: center;
 }
-
+.sumMenuTitle:hover {
+	background-color: var(--color );
+	color: yellow;
+}
 
 #divContents {
 	border: 0px solid red;
 	height: 100%;
 	left: var(--mnu-width);
-	padding: 0 1rem;
+	padding: 0;
 	position: absolute;
 	width: calc(100% - var(--mnu-width));
 }
 
 h1, h2, h3, h4, h5 {
 	background-color: #4a9d36 ;
+	box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
 	color: white;
 	margin: 0;
 	padding: 1rem;
@@ -164,7 +171,6 @@ h1, h2, h3, h4, h5 {
 }
 
 #divTitle h2:hover {
-
 	background-color: var(--colorLight );
 }
 
@@ -176,20 +182,6 @@ h1, h2, h3, h4, h5 {
 	transition: left 0.5s;
 	width: 32px;
 	z-index: 1;
-}
-
-
-#navMenu {
-	background-color: var(--colorBackground );
-	height: 100%;
-	left: 0;
-	margin: 0;
-	overflow: auto;
-	padding: 0;
-	position: fixed;
-	transition: left 0.5s;
-	width: var(--mnu-width);
-	z-index: 10;
 }
 
 
@@ -206,11 +198,89 @@ h1, h2, h3, h4, h5 {
 	left: 0;
 }
 
+
+#navMenu {
+	background-color: var(--colorBackground );
+	height: 100%;
+	left: 0;
+	margin: 0;
+	overflow: auto;
+	padding: 0;
+	position: fixed;
+	transition: left 0.5s;
+	width: var(--mnu-width);
+	z-index: 10;
+}
+
+#navMenu p {
+	padding: 0 1rem;
+}
+
+#MNUdivHeader h3 {
+	background-color: var(--colorLight );
+}
+
+#MNUdivHeader a {
+	color: white;
+}
+
 #navMenu.collapsed {
 	left: calc(var(--mnu-width) * -1);
 }
 
+/* Popup */
 
+.attributeTitle {
+	font-style: italic;
+}
+.attributeValue {
+	color: blue;
+}
+
+#navDragMove {
+	background-color: #f1f1f1;
+	border: 1px solid #aaa;
+	box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 5px 15px 0 rgba(0,0,0,.12);
+	max-height: 90vh;
+	max-width: 30vw;
+	overflow: auto;
+	position: fixed;
+	resize: both;
+	right: 1rem;
+	top: 1rem;
+
+}
+
+#secDragMove {
+	border: 0px solid green;
+	margin-bottom: 0.5rem;
+
+}
+
+#divDragMoveHeader {
+	background-color: var( --color );
+	color: #fff;
+	cursor: move;
+	opacity: 1;
+	padding: 0.5rem;
+
+
+}
+
+#divDragMoveContent {
+	height: 80%;
+	overflow: auto;
+	padding: 0 0 0 0.5rem;
+}
+
+#divDragMoveFooter {
+	font-size: 0.8em;
+	border: 0px solid red;
+	padding: 0.5rem 0.5rem 0 0.5rem;
+}
+
+
+/* media */
 
 @media all and (max-width: 640px) {
 

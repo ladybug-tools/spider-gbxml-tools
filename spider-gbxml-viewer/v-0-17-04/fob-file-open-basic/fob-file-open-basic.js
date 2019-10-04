@@ -334,12 +334,12 @@ FOB.onProgress = function( size = 0, note = '' ) {
 
 	FOB.fileInfo =
 	`
-		<div>
-			<div><span class=attributeTitle >Name: <span class=attributeValue >${ FOB.fileName }</span></div>
-			<div><span class=attributeTitle >Bytes loaded: </span>: <span class=attributeValue >${ size.toLocaleString() }</span></div>
-			<div><span class=attributeTitle >Time to load: </span>: <span class=attributeValue>${ timeToLoad } ms</span></div>
+		<p>
+			<span class=attributeTitle >Name: <span class=attributeValue >${ FOB.fileName }</span></br>
+			<span class=attributeTitle >Bytes loaded: </span>: <span class=attributeValue >${ size.toLocaleString() }</span></br>
+			<span class=attributeTitle >Time to load: </span>: <span class=attributeValue>${ timeToLoad } ms</span></br>
 			${ note }
-		</div>
+		</p>
 	`;
 
 	if ( FOB.divMessages ) { FOBdivInfo.innerHTML = FOB.fileInfo; }
