@@ -7,7 +7,7 @@
 <meta name = "date" content = "2019-09-27" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.17.03-9" >
+<meta name = "version" content = "0.17.03-8" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
 <title>Spider gbXML Viewer Dev</title>
@@ -121,7 +121,7 @@
 
 
 <!-- Settings menu -->
-<script src = "js-theme/thm-theme.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-07/thm-theme/thm-theme.js" ></script>
 <script src = "js-templates/tmp-template.js" ></script>
 
 
@@ -131,11 +131,9 @@
 
 	<button id="expandButton" onclick="toggleNavPanel();" >☰</button>
 
-	<nav id="navMenu" >
+	<nav id="navPanel" >
 
 		<section class="secContent" >
-
-		<div class=divMenu >
 
 			<details open>
 
@@ -147,7 +145,7 @@
 
 				</header>
 
-				<p class=menuInset >
+				<p>
 					See also
 					<a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">
 						gbXML Schema</a>
@@ -167,16 +165,13 @@
 
 				<summary class="sumMenuTitle" >gbXML samples menu</summary>
 
-				<div class=menuInset >
+				<p>gbXML files you can load, view and experiment with</p>
 
-					<p>gbXML files you can load, view and experiment with</p>
+				<div id=GFFdivGithubFoldersFiles ></div>
 
-					<div id=GFFdivGithubFoldersFiles ></div>
+				<div id=GFFdivFileInfo></div>
 
-					<div id=GFFdivFileInfo></div>
-
-					<div id="GATdivGithubAccessToken" ></div>
-				</div>
+				<div id="GATdivGithubAccessToken" ></div>
 
 			</details>
 
@@ -185,7 +180,7 @@
 
 				<summary class="sumMenuTitle" >File menu</summary>
 
-				<div class=menuInset >
+				<div id="GALdivSampleFilesGallery"></div>
 
 				<div id=FOBdivFileOpenBasic ></div>
 
@@ -194,8 +189,6 @@
 				<div id=FOBdivFileSaveBasic ></div>
 
 				<div id="FOBdivMessages" ></div>
-
-				</div>
 
 			</details>
 
@@ -300,7 +293,6 @@
 				</h1>
 
 			</footer>
-		</div>
 
 		</section>
 
@@ -383,6 +375,14 @@ THR.animate();
 
 function init() {
 
+	if ( /(iPad|iPhone|iPod)/g.test( navigator.userAgent ) ) { /* I hate having to add this */
+
+		divContents.style.width = getComputedStyle( divContents ).width;
+		divContents.style.height = getComputedStyle( divContents ).height;
+		divContents.setAttribute( 'scrolling', 'no' );
+
+	}
+
 	// Three.js
 
 	THR.getThreejs();
@@ -397,15 +397,15 @@ function init() {
 
 	THMdivMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
 
-	//THM.cssBasic = "style.css";
+	THM.cssBasic = "style.css";
 	//THMcssCurrent.value = THM.cssBasic;
 
-	//localStorage.setItem( THM.themeUrlStorage, THM.cssBasic );
+	localStorage.setItem( THM.themeUrlStorage, THM.cssBasic );
 
 	THM.init();
 
 
-	//navPanel.style.backgroundColor = "white"; //THM.backgroundColor;
+	navPanel.style.backgroundColor = "white"; //THM.backgroundColor;
 
 	// Menu header
 
@@ -499,7 +499,7 @@ function init() {
 function toggleNavPanel() {
 
 	expandButton.classList.toggle( 'collapsed' );
-	navMenu.classList.toggle( 'collapsed' );
+	navPanel.classList.toggle( 'collapsed' );
 	main.classList.toggle( 'collapsed' );
 
 	THR.onWindowResize();
