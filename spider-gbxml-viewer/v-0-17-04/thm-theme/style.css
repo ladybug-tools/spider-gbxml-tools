@@ -228,6 +228,22 @@ h1, h2, h3, h4, h5 {
 	left: calc(var(--mnu-width) * -1);
 }
 
+/* lower right */
+#aViewSource {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	padding: 8px;
+	color: #fff;
+	background-color: #555;
+	opacity: 0.7;
+}
+
+#aViewSource:hover {
+	cursor: pointer;
+	opacity: 1;
+}
+
 /* Popup */
 
 .attributeTitle {
@@ -235,6 +251,12 @@ h1, h2, h3, h4, h5 {
 }
 .attributeValue {
 	color: blue;
+}
+
+.dragDropArea {
+	border: 1px dashed gray;
+	margin: 0.5rem;
+	padding: 0 0.5rem;
 }
 
 #navDragMove {

@@ -81,7 +81,7 @@ FOB.getMenuFileOpenBasic = function( target = divContents ) {  // called from ma
 					<button onclick=FOB.reloadFile(); >Reload  previously opened file</button>
 				</p>
 				<p>
-					or drag & drop files here
+					or drag & drop files inside dotted lines
 					or enter a default file path <a class=helpItem href=https://www.ladybug.tools/spider/#pages/file-open.md title="Learn how to speed up your testing" target=-blank >?</a>
 					<!--
 						try this: https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml
