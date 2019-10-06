@@ -1,0 +1,241 @@
+/* Copyright 2019 pushMe-pullYou authors. MIT License */
+/* Forked from TooToo14 2019-06-03 0.14.5 */
+/* Used by spider-gbxml-fixer, add-a-line */
+
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700');
+
+* {
+	box-sizing: border-box;
+}
+
+:root {
+	font-size: 100%;
+	font-family: 'Lato', sans-serif;
+	--color: #4a9d36;
+	--colorLight: #9bcc31;
+	--colorBackground: #f7f8f9;
+	--mnu-width: 22rem;
+	--screen-width: calc(100vw);
+	--headerHeight: 6rem;
+}
+
+html {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+}
+
+a {
+	font-weight: bold;
+	text-decoration: none;
+}
+
+a:hover,
+a:focus,
+a:active {
+	background-color: var( --colorLight )
+	color: #aaa;
+	text-decoration: underline
+}
+
+div a {
+	color: var( --color );
+}
+
+.aTitle {
+	color: white;
+}
+
+aside {
+	border: 1px solid lightgray;
+	margin-top: 15px;
+	padding: 2px;
+}
+
+blockquote, pre {
+	background-color: var(--colorLight );
+	padding: 5px;
+}
+
+
+button,
+input[type=button] {
+	background-color: var(--colorLight );
+	border: none;
+	color: #322;
+	cursor: pointer;
+	padding: 3px 5px;
+}
+
+button:hover {
+	background: #ccc;
+	color: #fff
+}
+
+button:active {
+	background: blue;
+	color: #fff
+}
+
+code {
+	background-color: var(--colorLight );
+}
+
+input[ type=range] {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	background-color: var(--colorLight );
+	width: 90%;
+}
+
+input[ type=range]::-moz-range-thumb {
+	background-color: var(--colorLight );
+	border-radius: 0;
+	width: 10px;
+}
+
+input[ type=range]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	background-color: var(--color );
+	height: 20px;
+	width: 10px;
+}
+
+
+summary {
+	background-color: var(--colorLight );
+	color: white;
+	cursor: pointer;
+	font-size: 1.2rem;
+	font-weight: bold;
+	outline: none;
+	padding: 0 0 0 0.5rem;
+}
+
+
+.butHelp {
+	font-size: 0.7rem;
+	padding: 0 0.5rem;
+	float: right;
+
+}
+
+.dingbat {
+	color: var(--color );
+	cursor:pointer;
+	font-size: 2rem;
+	font-weight: bold;
+	text-align:center;
+}
+
+.menuInset {
+	margin: 1rem;
+}
+
+.secContents {
+	margin: 0 auto;
+	max-width: 40rem;
+}
+
+.sumMenuTitle {
+	background-color: var(--color );
+	color: white;
+	text-align: center;
+}
+
+
+#divContents {
+	border: 0px solid red;
+	height: 100%;
+	left: var(--mnu-width);
+	padding: 0 1rem;
+	position: absolute;
+	width: calc(100% - var(--mnu-width));
+}
+
+h1, h2, h3, h4, h5 {
+	background-color: #4a9d36 ;
+	color: white;
+	margin: 0;
+	padding: 1rem;
+	vertical-align: top;
+}
+
+#divTitle h2:hover {
+
+	background-color: var(--colorLight );
+}
+
+#expandButton {
+	height: 32px;
+	position: absolute;
+	left: var(--mnu-width);
+	top: 1rem;
+	transition: left 0.5s;
+	width: 32px;
+	z-index: 1;
+}
+
+
+#navMenu {
+	background-color: var(--colorBackground );
+	height: 100%;
+	left: 0;
+	margin: 0;
+	overflow: auto;
+	padding: 0;
+	position: fixed;
+	transition: left 0.5s;
+	width: var(--mnu-width);
+	z-index: 10;
+}
+
+
+#divContents.collapsed {
+	left: 0;
+	width: 100%;
+}
+
+#divTitle {
+	margin: 0;
+}
+
+#expandButton.collapsed {
+	left: 0;
+}
+
+#navMenu.collapsed {
+	left: calc(var(--mnu-width) * -1);
+}
+
+
+
+@media all and (max-width: 640px) {
+
+	#divContents {
+		left: 0;
+		padding: 0 1rem;
+		width: 100%;
+	}
+
+	#expandButton {
+		bottom: 1rem;
+	}
+
+}
+
+@media all and (max-height: 640px) {
+
+	#divContents {
+		left: 0;
+		padding: 0 1rem;
+		width: 100%;
+	}
+
+	#expandButton {
+		bottom: 1rem;
+	}
+
+}

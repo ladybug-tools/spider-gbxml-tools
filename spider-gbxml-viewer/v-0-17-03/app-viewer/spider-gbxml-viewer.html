@@ -4,10 +4,10 @@
 
 <meta charset = "utf-8">
 <meta name = "copyright" content ="Ladybug Tools authors" >
-<meta name = "date" content = "2019-09-20" >
+<meta name = "date" content = "2019-10-03" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.17.03-5" >
+<meta name = "version" content = "0.17.03-6" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
 <title>Spider gbXML Viewer 'Maevia'</title>
@@ -17,7 +17,7 @@
 <link rel = "canonical" href = "www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/" />
 <link rel = "license" href = "https://creativecommons.org/licenses/by/4.0/" >
 <link rel = "license" href = "https://opensource.org/licenses/MIT" >
-<link rel = "stylesheet" href = "https://pushme-pullyou.github.io/tootoo14/js-14-07/style.css" >
+<link rel = "stylesheet" href = "style.css" >
 
 <style>
 
@@ -121,7 +121,7 @@
 
 
 <!-- Settings menu -->
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-07/thm-theme/thm-theme.js" ></script>
+<script src = "js-theme/thm-theme.js" ></script>
 <script src = "js-templates/tmp-template.js" ></script>
 
 
@@ -131,7 +131,7 @@
 
 	<button id="expandButton" onclick="toggleNavPanel();" >☰</button>
 
-	<nav id="navPanel" >
+	<nav id="navMenu" >
 
 		<section class="secContent" >
 
@@ -146,9 +146,9 @@
 				</header>
 
 				<p>
-					See also
-					<a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">
-						gbXML Schema</a>
+					Also
+					<a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank" title="Official gbXML.org documentation" >
+						Schema</a>
 					/
 					<a href="https://www.ladybug.tools/spider/gbxml-viewer/r14/gv-cor-core/gv-cor.html" target="_blank">
 						R14
@@ -156,6 +156,14 @@
 					/
 					<a href="https://www.ladybug.tools/spider/gbxml-viewer/" target="_blank">
 						R12
+					</a>
+					/
+					<a href="https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/dev/" target="_blank" title="pre-release for testing">
+						dev
+					</a>
+					/
+					<a href="https://www.ladybug.tools/spider-gbxml-fixer/" target="_blank" title="prepare files for OpenStudio simulations">
+						fix
 					</a>
 				</p>
 
@@ -165,6 +173,7 @@
 
 				<summary class="sumMenuTitle" >gbXML samples menu</summary>
 
+					<p>gbXML files you can load, view and experiment with</p>
 				<div id=GFFdivGithubFoldersFiles ></div>
 
 				<div id=GFFdivFileInfo></div>
@@ -391,7 +400,8 @@ function init() {
 
 	THM.init();
 
-	navPanel.style.backgroundColor = THM.backgroundColor;
+
+	//navPanel.style.backgroundColor = "white"; //THM.backgroundColor;
 
 	// Menu header
 
@@ -477,7 +487,7 @@ function init() {
 function toggleNavPanel() {
 
 	expandButton.classList.toggle( 'collapsed' );
-	navPanel.classList.toggle( 'collapsed' );
+	navMenu.classList.toggle( 'collapsed' );
 	main.classList.toggle( 'collapsed' );
 
 	THR.onWindowResize();

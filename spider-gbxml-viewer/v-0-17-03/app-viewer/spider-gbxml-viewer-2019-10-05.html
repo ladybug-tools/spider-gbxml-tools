@@ -4,20 +4,20 @@
 
 <meta charset = "utf-8">
 <meta name = "copyright" content ="Ladybug Tools authors" >
-<meta name = "date" content = "2019-09-27" >
+<meta name = "date" content = "2019-09-20" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.17.03-9" >
+<meta name = "version" content = "0.17.03-5" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
-<title>Spider gbXML Viewer Dev</title>
+<title>Spider gbXML Viewer 'Maevia'</title>
 
-<base href="../" >
+<base href="https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-03/" >
 
 <link rel = "canonical" href = "www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/" />
 <link rel = "license" href = "https://creativecommons.org/licenses/by/4.0/" >
 <link rel = "license" href = "https://opensource.org/licenses/MIT" >
-<link rel = "stylesheet" href = "style.css" >
+<link rel = "stylesheet" href = "https://pushme-pullyou.github.io/tootoo14/js-14-07/style.css" >
 
 <style>
 
@@ -62,7 +62,7 @@
 
 
 <!-- File menu panel -->
-<script src = "js-menu/gff-github-folder-files-dev.js" ></script>
+<script src = "js-menu/gff-github-folder-files.js" ></script>
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-07/gat-github-access-token/gat-github-access-token.js" ></script>
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-07/fob-file-open-basic/fob-file-open-basic.js" ></script>
 
@@ -121,7 +121,7 @@
 
 
 <!-- Settings menu -->
-<script src = "js-theme/thm-theme.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-07/thm-theme/thm-theme.js" ></script>
 <script src = "js-templates/tmp-template.js" ></script>
 
 
@@ -131,11 +131,9 @@
 
 	<button id="expandButton" onclick="toggleNavPanel();" >☰</button>
 
-	<nav id="navMenu" >
+	<nav id="navPanel" >
 
 		<section class="secContent" >
-
-		<div class=divMenu >
 
 			<details open>
 
@@ -147,7 +145,7 @@
 
 				</header>
 
-				<p class=menuInset >
+				<p>
 					See also
 					<a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">
 						gbXML Schema</a>
@@ -167,16 +165,11 @@
 
 				<summary class="sumMenuTitle" >gbXML samples menu</summary>
 
-				<div class=menuInset >
+				<div id=GFFdivGithubFoldersFiles ></div>
 
-					<p>gbXML files you can load, view and experiment with</p>
+				<div id=GFFdivFileInfo></div>
 
-					<div id=GFFdivGithubFoldersFiles ></div>
-
-					<div id=GFFdivFileInfo></div>
-
-					<div id="GATdivGithubAccessToken" ></div>
-				</div>
+				<div id="GATdivGithubAccessToken" ></div>
 
 			</details>
 
@@ -185,7 +178,7 @@
 
 				<summary class="sumMenuTitle" >File menu</summary>
 
-				<div class=menuInset >
+				<div id="GALdivSampleFilesGallery"></div>
 
 				<div id=FOBdivFileOpenBasic ></div>
 
@@ -194,8 +187,6 @@
 				<div id=FOBdivFileSaveBasic ></div>
 
 				<div id="FOBdivMessages" ></div>
-
-				</div>
 
 			</details>
 
@@ -300,7 +291,6 @@
 				</h1>
 
 			</footer>
-		</div>
 
 		</section>
 
@@ -330,15 +320,17 @@
 					<img src = 'https://ladybug.tools/artwork/icons_bugs/ico/spider.ico' height=12 alt="Ladybug Tools logo" >
 				</span>
 
-				<button onclick=PFO.onClickZoomAll(); title="Show entire campus & display attributes" >🔍</button>
+				<button  onclick=PFO.onClickZoomAll(); title="Show entire campus & display attributes" >🔍</button>
 
 				<button onclick="PFO.onToggleInteriorExterior(this)" title="Exterior or interior surfaces">☂️</button>
 
 				<button onclick="THR.controls.autoRotate = !THR.controls.autoRotate;">🔄</button>
 
-
-
-				&nbsp; <button id=butPopupClose onclick="POP.onClickClose(butPopupClose);" >&times;</button>
+				<div style=float:right; >
+					<button id=butPopupClose onclick="POP.onClickClose(butPopupClose);" >
+						&times;
+					</button>
+				</div>
 
 			</div>
 
@@ -361,16 +353,8 @@
 <script>
 
 
-POP.footer =
-
-	`<div id=POPdivFooter >
-		<button onclick=POP.requestFile(POP.popup,divDragMoveContent); >🏠</button>&nbsp;
-		<button onclick=POP.requestFile(POP.license,divDragMoveContent); >⚖️</button>&nbsp;
-		<span id=POPspanInfo >v${ POP.version } ${ POP.date }</span>
-	</div>`;
-
-FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
-//FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml";
+//FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
+FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/coventry-university-of-warwick-small.zip";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/annapolis-md-single-family-residential-2016.xml"
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/pittsburg-airport.zip";
@@ -382,6 +366,14 @@ init();
 THR.animate();
 
 function init() {
+
+	if ( /(iPad|iPhone|iPod)/g.test( navigator.userAgent ) ) { /* I hate having to add this */
+
+		divContents.style.width = getComputedStyle( divContents ).width;
+		divContents.style.height = getComputedStyle( divContents ).height;
+		divContents.setAttribute( 'scrolling', 'no' );
+
+	}
 
 	// Three.js
 
@@ -397,15 +389,9 @@ function init() {
 
 	THMdivMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
 
-	//THM.cssBasic = "style.css";
-	//THMcssCurrent.value = THM.cssBasic;
-
-	//localStorage.setItem( THM.themeUrlStorage, THM.cssBasic );
-
 	THM.init();
 
-
-	//navPanel.style.backgroundColor = "white"; //THM.backgroundColor;
+	navPanel.style.backgroundColor = THM.backgroundColor;
 
 	// Menu header
 
@@ -468,7 +454,7 @@ function init() {
 	MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();
 
 
-
+	//
 	POP.init();
 
 	PIN.init();
@@ -477,19 +463,11 @@ function init() {
 
 	FOB.onHashChange();
 
+	//POP.setPopupShowHide();
 
 	aViewSource.href = MNU.urlSourceCode;
 
-	if ( window.innerWidth < 640 || window.innerHeight < 640 ) {
-
-		toggleNavPanel();
-		POP.setPopupShowHide( butPopupClose, ' ', POP.footer );
-
-	} else {
-
-		POP.setPopupShowHide();
-
-	}
+	if ( window.innerWidth < 640 || window.innerHeight < 640 ) { toggleNavPanel(); }
 
 }
 
@@ -499,7 +477,7 @@ function init() {
 function toggleNavPanel() {
 
 	expandButton.classList.toggle( 'collapsed' );
-	navMenu.classList.toggle( 'collapsed' );
+	navPanel.classList.toggle( 'collapsed' );
 	main.classList.toggle( 'collapsed' );
 
 	THR.onWindowResize();

@@ -7,7 +7,7 @@
 <meta name = "date" content = "2019-09-27" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.17.03-9" >
+<meta name = "version" content = "0.17.04-0" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
 <title>Spider gbXML Viewer Dev</title>
@@ -17,13 +17,7 @@
 <link rel = "canonical" href = "www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/" />
 <link rel = "license" href = "https://creativecommons.org/licenses/by/4.0/" >
 <link rel = "license" href = "https://opensource.org/licenses/MIT" >
-<link rel = "stylesheet" href = "style.css" >
-
-<style>
-
-	#divContents { height: 100vh; max-width: 100vw; }
-
-</style>
+<link rel = "stylesheet" href = "thm-theme/style.css" >
 
 </head>
 
@@ -35,13 +29,13 @@
 
 
 <!-- Three.js -->
-<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r108/build/three.min.js" ></script>
-<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r108/examples/js/controls/OrbitControls.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r109/build/three.min.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r109/examples/js/controls/OrbitControls.js" ></script>
 
 
 <!--TooToo ~ menus generally -->
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-07/pop-popup/pop-popup.js" ></script>
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-07/mnu-menu/mnu-menu.js" ></script>
+<script src = "pop-popup/pop-popup.js" ></script>
+<script src = "mnu-menu/mnu-menu.js" ></script>
 
 
 <!-- Spider Three.js -->
@@ -56,15 +50,15 @@
 
 
 <!-- Spider popup menu -->
-<script src = "js-popup/pin-popup-intersect.js" ></script>
-<script src = "js-popup/pco-popup-content.js" ></script>
-<script src = "js-popup/pfo-popup-footer.js" ></script>
+<script src = "js-popup2/pin-popup-intersect.js" ></script>
+<script src = "js-popup2/pco-popup-content.js" ></script>
+<script src = "js-popup2/pfo-popup-footer.js" ></script>
 
 
-<!-- File menu panel -->
-<script src = "js-menu/gff-github-folder-files-dev.js" ></script>
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-07/gat-github-access-token/gat-github-access-token.js" ></script>
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-07/fob-file-open-basic/fob-file-open-basic.js" ></script>
+<!-- File menu panel ~ From TooToo 0.14.08 -->
+<script src = "gff-github-folder-files/gff-github-folder-files-dev.js" ></script>
+<script src = "gat-github-access-token/gat-github-access-token.js" ></script>
+<script src = "fob-file-open-basic/fob-file-open-basic.js" ></script>
 
 
 <!-- View gbXML menu / items in order of appearance on menu -->
@@ -121,13 +115,13 @@
 
 
 <!-- Settings menu -->
-<script src = "js-theme/thm-theme.js" ></script>
-<script src = "js-templates/tmp-template.js" ></script>
+<script src = "thm-theme/thm-theme.js" ></script>
+<script src = "tmp-templates/tmp-template.js" ></script>
 
 
-<!-- Core / local settings -->
+<!-- Core / local settings
 <script src = "js-core/cor-core.js" ></script>
-
+-->
 
 	<button id="expandButton" onclick="toggleNavPanel();" >☰</button>
 
@@ -147,7 +141,7 @@
 
 				</header>
 
-				<p class=menuInset >
+				<p>
 					See also
 					<a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">
 						gbXML Schema</a>
@@ -167,7 +161,7 @@
 
 				<summary class="sumMenuTitle" >gbXML samples menu</summary>
 
-				<div class=menuInset >
+				<div >
 
 					<p>gbXML files you can load, view and experiment with</p>
 
@@ -185,8 +179,6 @@
 
 				<summary class="sumMenuTitle" >File menu</summary>
 
-				<div class=menuInset >
-
 				<div id=FOBdivFileOpenBasic ></div>
 
 				<div id=GBXUdivStatsGbx ></div>
@@ -194,8 +186,6 @@
 				<div id=FOBdivFileSaveBasic ></div>
 
 				<div id="FOBdivMessages" ></div>
-
-				</div>
 
 			</details>
 
@@ -295,9 +285,9 @@
 
 				</details>
 
-				<h1 onclick="navPanel.scrollTop=0;" style="cursor:pointer;text-align:center;" title="go to top of menu" >
+				<p onclick="navMenu.scrollTop=0;" class=dingbat title="go to top of menu" >
 					<img alt="spider icon" src = "https://ladybug.tools/artwork/icons_bugs/ico/spider.ico" height=18 >
-				</h1>
+				</p>
 
 			</footer>
 		</div>
@@ -473,7 +463,7 @@ function init() {
 
 	PIN.init();
 
-	COR.init();
+	//COR.init();
 
 	FOB.onHashChange();
 
