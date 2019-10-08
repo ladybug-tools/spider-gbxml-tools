@@ -25,7 +25,7 @@ THM.script.description =
 
 
 //THM.cssDefault = "https://www.w3schools.com/lib/w3-theme-red.css";
-THM.cssDefault = "thm-theme/style.css";
+THM.cssDefault = "style.css";
 
 THM.themeUrlStorage = "tootoo14ThemeUrl"; // set for each instance in HTML file
 
@@ -136,14 +136,14 @@ THM.loadCssDefault = function() {
 	localStorage.setItem( THM.themeUrlStorage, "" );
 	THMcssCurrent.value = "";
 
-	navMenu.style.backgroundColor = "#eee";
+	navMenu.style.backgroundColor = "rgb(244, 250, 244)"; // "#eee";
 	//navMenu.style.padding = "0"; // why is this needed?
 
 };
 
 
 
-//////////
+////////// https://www.w3schools.com/w3css/
 
 THM.loadCssW3schools = function() {
 

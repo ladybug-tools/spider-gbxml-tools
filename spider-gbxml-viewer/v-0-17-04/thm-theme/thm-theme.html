@@ -16,17 +16,18 @@
 
 <body>
 	<script src="thm-theme.js"></script>
-	<script src="../tmp-template/tmp-template.js"></script>
+	<script src="../tmp-templates/tmp-template.js"></script>
 
 	<button id="expandButton" onclick="toggleNavMenu();">☰</button>
 
-	<nav id="navMenu">
+	<nav id="navMenu" class=scrollable-element >
 
 		<div id="divTitle"></div>
 
 		<div class=divMenu >
 
 			<p class=menuInset >
+
 				<button onclick=setIt();>set it</button> - aaa -
 
 				<a href="" target="_blank">a link to nowhere</a>
@@ -195,7 +196,7 @@ code code code
 					<a href="" class=aTitle title="Click to reload this page" >${ document.title} ${version}</a>
 				</h2>
 
-				<div class=menuInset >${ description}</div>
+				<p class=menuInset >${ description}</p>
 			`;
 
 			return htm;

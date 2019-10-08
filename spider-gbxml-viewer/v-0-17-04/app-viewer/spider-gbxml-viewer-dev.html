@@ -4,10 +4,10 @@
 
 <meta charset = "utf-8">
 <meta name = "copyright" content ="Ladybug Tools authors" >
-<meta name = "date" content = "2019-09-27" >
+<meta name = "date" content = "2019-10-08" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.17.04-0" >
+<meta name = "version" content = "0.17.04-1" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
 <title>Spider gbXML Viewer Dev</title>
@@ -383,19 +383,15 @@ function init() {
 
 	GF3.init(); // here while testing - otherwise run on toggle
 
+
 	// Theme
+
+	THM.cssDefault = "thm-theme/style.css";
 
 	THMdivMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
 
-	//THM.cssBasic = "style.css";
-	//THMcssCurrent.value = THM.cssBasic;
-
-	//localStorage.setItem( THM.themeUrlStorage, THM.cssBasic );
-
 	THM.init();
 
-
-	//navPanel.style.backgroundColor = "white"; //THM.backgroundColor;
 
 	// Menu header
 
@@ -457,13 +453,9 @@ function init() {
 
 	MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();
 
-
-
 	POP.init();
 
 	PIN.init();
-
-	//COR.init();
 
 	FOB.onHashChange();
 
