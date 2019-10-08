@@ -7,7 +7,7 @@
 <meta name = "date" content = "2019-10-08" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.17.04-1" >
+<meta name = "version" content = "0.17.04-2" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
 <title>Spider gbXML Viewer Dev</title>
@@ -324,11 +324,9 @@
 
 				<button onclick="PFO.onToggleInteriorExterior(this)" title="Exterior or interior surfaces">☂️</button>
 
-				<button onclick="THR.controls.autoRotate = !THR.controls.autoRotate;">🔄</button>
+				<button onclick="THR.controls.autoRotate = !THR.controls.autoRotate;" title="Rotation of the scene" >🔄</button>
 
-
-
-				&nbsp; <button id=butPopupClose onclick="POP.onClickClose(butPopupClose);" >&times;</button>
+				&nbsp; <button id=butPopupClose onclick="POP.onClickClose(butPopupClose);" title="Close me" >&times;</button>
 
 			</div>
 
