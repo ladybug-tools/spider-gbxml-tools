@@ -92,8 +92,6 @@ PFO.setScreen2 = function() {
 
 PFO.setPanelSurfaceTypes = function() {
 
-
-
 	THR.scene.remove( PIN.line, PIN.particle );
 
 	//const typesInUse = GBX.surfaceTypes.filter( type => GBX.surfaces.find( surface => surface.includes( `"${ type }"` ) ) );
