@@ -177,7 +177,7 @@ THM.toggleTagsClassListW3schools= function( action = "add" ) {
 	//document.body.querySelectorAll( "a" )
 	//.forEach( item => item.classList[ action ](  "w3-text-theme", "w3-hover-shadow" ) );
 
-	document.body.querySelectorAll( "h1" )
+	document.body.querySelectorAll( "h1, #divDragMoveHeader, .sumMenuTitle " )
 		.forEach( item => item.classList[ action ]( "w3-theme-l1" ) );
 
 	document.body.querySelectorAll( "h2" )
@@ -185,7 +185,6 @@ THM.toggleTagsClassListW3schools= function( action = "add" ) {
 
 	document.body.querySelectorAll( "h3, h4, h5" )
 	.forEach( item => item.classList[ action ]( "w3-theme-l3" ) );
-
 
 	document.body.querySelectorAll( "aside, blockquote, code, input, pre" )
 	.forEach( item => item.classList[ action ]( "w3-theme-l4", "w3-small", "w3-round", "w3-border", "w3-hover-theme" ) );
@@ -213,7 +212,7 @@ THM.toggleTagsClassListW3schools= function( action = "add" ) {
 	document.body.querySelectorAll( ".dingbat" )
 		.forEach( item => item.classList[ action ]( "w3-text-theme" ) );
 
-	THM.toggleTHMDivW3schools( action );
+	//THM.toggleTHMDivW3schools( action );
 
 };
 

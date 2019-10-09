@@ -111,9 +111,9 @@ VST.selStoreys = function( select ) {
 
 	divDragMoveContent.innerHTML = PCO.getStoreyAttributes( VSTselStoreys.value );
 
-	PFO.storeyIdsActive = Array.from( select.selectedOptions ).map( option => option.value );
+	GBX.storeyIdsActive = Array.from( select.selectedOptions ).map( option => option.value );
 
-	PFO.setVisible();
+	VST.setVisible();
 
 	VST.visible = GBX.meshGroup.children.filter( mesh => mesh.visible === true )
 		.map( mesh => mesh.userData.index );
@@ -121,5 +121,24 @@ VST.selStoreys = function( select ) {
 	VSTdivReportsLog.innerHTML = `<p>${ VST.visible.length } surfaces visible</p>`;
 
 	THR.controls.enableKeys = false;
+
+};
+
+
+
+VST.setVisible = function () {
+
+	GBX.meshGroup.children.forEach( mesh => mesh.visible = false );
+
+	GBX.meshGroup.children
+		.filter( mesh => GBX.storeyIdsActive.includes( mesh.userData.storeyId ) || mesh.userData.surfaceType === "Shade" )
+		.filter( mesh => GBX.surfaceTypesActive.includes( mesh.userData.surfaceType ) )
+		.forEach( mesh => mesh.visible = true );
+
+	GBX.placards.children.forEach( mesh => mesh.visible = false );
+
+	GBX.placards.children
+		.filter( mesh => VST.storeyIdsActive.includes( mesh.userData.storeyId ) )
+		.forEach( mesh => mesh.visible = true );
 
 };

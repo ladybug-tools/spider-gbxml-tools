@@ -58,21 +58,23 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 
 	THR.controls.autoRotate = true;
 
+	GBXU.getStoreysJson();
+
 	GBXU.setElementsJson();
 
-	GBX.getStoreysJson();
+	// if ( window.PFO ) {
 
-	if ( window.PFO ) {
+	// 	PFO.surfaceTypesInUse = GBX.surfaceTypes.filter( type => GBX.surfaces.find( surface => surface.includes( `"${ type }"` ) ) );
 
-		PFO.surfaceTypesInUse = GBX.surfaceTypes.filter( type => GBX.surfaces.find( surface => surface.includes( `"${ type }"` ) ) );
+	// 	PFO.surfaceTypesActive = !PFO.surfaceTypesActive ? PFO.surfaceTypesInUse.slice() : PFO.surfaceTypesActive;
 
-		PFO.surfaceTypesActive = !PFO.surfaceTypesActive ? PFO.surfaceTypesInUse.slice() : PFO.surfaceTypesActive;
+	// 	PFO.storeyIdsInUse = GBX.storeysJson.map( storey => storey.id );
 
-		PFO.storeyIdsInUse = GBX.storeysJson.map( storey => storey.id );
+	// 	PFO.storeyIdsActive = !PFO.storeyIdsActive ? PFO.storeyIdsInUse.slice() : PFO.storeyIdsActive;
 
-		PFO.storeyIdsActive = !PFO.storeyIdsActive ? PFO.storeyIdsInUse.slice() : PFO.storeyIdsActive;
+	// }
 
-	}
+	POP.requestFile(POP.popup,divDragMoveContent);
 
 	if ( window.detMenuViewGbxml ) MNU.toggleDetailsOpen( detMenuViewGbxml );
 
@@ -106,6 +108,40 @@ GBXU.onFirstTouch = function() {
 
 };
 
+
+
+
+GBXU.getStoreysJson = function() {
+
+	const storeyLevels = GBX.storeys.map( storey => storey.match( /<Level>(.*?)<\/Level>/i )[ 1 ] );
+
+	const storeyLevelsSorted = storeyLevels.slice().sort( (a, b) => a - b );
+	//const storeyLevelsSorted = storeyLevels.slice().sort();
+
+	//console.log( 'storeyLevelsSorted', storeyLevelsSorted );
+
+	GBX.storeysJson = storeyLevelsSorted.map( ( level, count ) => {
+		//console.log( 'level', level );
+
+		const storey = GBX.storeys.find( storey => storey.includes( `<Level>${ level }<\/Level>` ) );
+
+		const id = storey.match( / id="(.*?)"/i )[ 1 ];
+
+		const name = storey.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
+
+		const index = GBX.storeys.indexOf( storey );
+
+		const active = true;
+
+		return { id, count, index, level, name, active }
+
+	} );
+
+	GBX.storeyIdsActive = GBX.storeysJson.map( storey => storey.id );
+	
+	//console.log( 'GBX.storeysJson', GBX.storeysJson );
+
+};
 
 
 GBXU.setElementsJson = function() {
@@ -248,7 +284,6 @@ GBXU.getSurfaceOpenings = function() {
 
 
 GBXU.toggleOpenings = function() {
-	//console.log( '', 22 );
 
 	if ( GBX.openingGroup && GBX.openingGroup.length === 0 ) {
 

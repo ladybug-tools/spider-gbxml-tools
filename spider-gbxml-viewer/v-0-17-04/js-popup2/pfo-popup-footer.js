@@ -30,7 +30,6 @@ PFO.footer =
 			<button class=PFObutIcon onclick="PFO.setScreen4();" title="Exploded views" >🧨</button>
 			<button class=PFObutIcon onclick="PIN.setIntersected();" title="Previously selected surface" >📌</button>
 
-
 		</div>
 	`;
 
@@ -92,13 +91,23 @@ PFO.setScreen2 = function() {
 
 PFO.setPanelSurfaceTypes = function() {
 
-
-
 	THR.scene.remove( PIN.line, PIN.particle );
 
-	//const typesInUse = GBX.surfaceTypes.filter( type => GBX.surfaces.find( surface => surface.includes( `"${ type }"` ) ) );
+	PFO.surfaceTypesInUse = GBX.surfaceTypes.filter( type => GBX.surfaces.find( surface => surface.includes( `"${ type }"` ) ) );
+	//console.log( '', PFO.surfaceTypesInUse );
 
+	PFO.surfaceTypesActive = !PFO.surfaceTypesActive ? PFO.surfaceTypesInUse.slice() : PFO.surfaceTypesActive;
 	//PFO.surfaceTypesActive = !PFO.surfaceTypesActive ? typesInUse : PFO.surfaceTypesActive;
+	console.log( 'PFO.surfaceTypesActive', PFO.surfaceTypesActive );
+
+	PFO.storeyIdsInUse = GBX.storeysJson.map( storey => storey.id );
+
+	//PFO.storeyIdsActive = !PFO.storeyIdsActive ? PFO.storeyIdsInUse.slice() : PFO.storeyIdsActive;
+	PFO.storeyIdsActive = PFO.storeyIdsInUse.slice();
+
+	const typesInUse = GBX.surfaceTypes.filter( type => GBX.surfaces.find( surface => surface.includes( `"${ type }"` ) ) );
+	PFO.surfaceTypesActive = typesInUse;
+
 
 	let colors =  PFO.surfaceTypesInUse.map( type => GBX.colorsDefault[ type ].toString( 16 ) );
 	colors = colors.map( color => color.length > 4 ? color : '00' + color ); // otherwise greens no show
@@ -149,13 +158,16 @@ PFO.setPanelSurfaceTypes = function() {
 
 PFO.toggleThisSurfaceType = function( surfaceType ) {
 
-	const buttonsActive = divDragMoveContent.getElementsByClassName( "active" ); // collection
+	const buttons = divDragMoveContent.getElementsByClassName( "button" ); // collection
 
-	Array.from( buttonsActive ).forEach( button => button.classList.remove( "active" ) );
+	Array.from( buttons ).forEach( button => button.classList.remove( "active" ) );
 
-	PFO.surfaceTypesActive = Array.from( buttonsActive ).map( button => button.innerText );
+	//PFO.surfaceTypesActive = Array.from( buttonsActive ).map( button => button.innerText );
 
-	const button = divDragMoveContent.querySelectorAll( `#but${ surfaceType }` );
+	//console.log( 'PFO.surfaceTypesActive', PFO.surfaceTypesActive );
+
+	const button = divDragMoveContent.querySelectorAll( `#but${surfaceType}` );
+	console.log( 'button', button );
 
 	PFO.toggleSurfaceByButtons( button[ 0 ] );
 
@@ -163,13 +175,17 @@ PFO.toggleThisSurfaceType = function( surfaceType ) {
 
 
 
-PFO.toggleSurfaceByButtons = function( button ) {
+PFO.toggleSurfaceByButtons = function ( buttons ) {
 
-	button.classList.toggle( "active" );
+	console.log( 'buttons', buttons );
+
+	buttons.classList.add( "active" );
 
 	const buttonsActive = divDragMoveContent.getElementsByClassName( "active" );
 
 	PFO.surfaceTypesActive = Array.from( buttonsActive ).map( button => button.innerText );
+
+	console.log( 'PFO.surfaceTypesActive', PFO.surfaceTypesActive );
 
 	PFO.setVisible();
 
@@ -183,7 +199,13 @@ PFO.onClickZoomAll = function() {
 
 	GBX.placards.children.forEach( mesh => mesh.visible = false );
 
+	GBX.surfaceTypesActive = GBX.surfaceTypes.slice( 0, -1 );
+
+	GBX.storeyIdsActive = GBX.storeysJson.map( storey => storey.id );
+
 	THRU.zoomObjectBoundingSphere();
+
+	if ( window.detMenuViewGbxml ) MNU.toggleDetailsOpen( detMenuViewGbxml ); // resets all the panels
 
 	//const time = performance.now();
 

@@ -46,6 +46,8 @@ GBX.colorsDefault = {
 GBX.colors = Object.assign( {}, GBX.colorsDefault ); // create working copy of default colors
 GBX.surfaceTypes = Object.keys( GBX.colors );
 
+GBX.surfaceTypesActive = GBX.surfaceTypes.slice( 0, -1 );
+
 //let colors =  GBX.surfaceTypes.map( type => GBX.colorsDefault[ type ].toString( 16 ) );
 //GBX.colorsHex = colors.map( color => color.length > 4 ? color : '00' + color ); // otherwise greens no show
 
@@ -110,6 +112,17 @@ GBX.parseFile = function( gbxml )  {
 	GBX.surfaces = GBX.text.match( reSurface );
 	//console.log( 'GBX.surfaces', GBX.surfaces );
 
+	const reStoreys = /<BuildingStorey(.*?)<\/BuildingStorey>/gi;
+	GBX.storeys = GBX.text.match( reStoreys );
+	GBX.storeys = Array.isArray( GBX.storeys ) ? GBX.storeys : [];
+	//console.log( 'GBX.storeys', GBX.storeys );
+
+	const reZones = /<Zone(.*?)<\/Zone>/gi;
+	GBX.zones = GBX.text.match( reZones );
+	GBX.zones = Array.isArray( GBX.zones ) ? GBX.zones : [];
+	//console.log( 'GBX.zones', GBX.zones );
+
+
 	//Do now or does it slow down loading too much?
 	GBX.spacesJson = GBX.getSpacesJson();
 	//console.log( 'GBX.spacesJson', GBX.spacesJson );
@@ -136,16 +149,6 @@ GBX.getSpacesJson = function() {
 
 	const reSpaces = /<Space(.*?)<\/Space>/gi;
 	GBX.spaces = GBX.text.match( reSpaces );
-
-	const reStoreys = /<BuildingStorey(.*?)<\/BuildingStorey>/gi;
-	GBX.storeys = GBX.text.match( reStoreys );
-	GBX.storeys = Array.isArray( GBX.storeys ) ? GBX.storeys : [];
-	//console.log( 'GBX.storeys', GBX.storeys );
-
-	const reZones = /<Zone(.*?)<\/Zone>/gi;
-	GBX.zones = GBX.text.match( reZones );
-	GBX.zones = Array.isArray( GBX.zones ) ? GBX.zones : [];
-	//console.log( 'GBX.zones', GBX.zones );
 
 	const json  = GBX.spaces.map( ( space, index ) => {
 
@@ -175,33 +178,6 @@ GBX.getSpacesJson = function() {
 
 
 
-GBX.getStoreysJson = function() {
-
-	const storeyLevels = GBX.storeys.map( storey => storey.match( /<Level>(.*?)<\/Level>/i )[ 1 ] );
-
-	const storeyLevelsSorted = storeyLevels.slice().sort( (a, b) => a - b );
-	//const storeyLevelsSorted = storeyLevels.slice().sort();
-
-	//console.log( 'storeyLevelsSorted', storeyLevelsSorted );
-
-	GBX.storeysJson = storeyLevelsSorted.map( ( level, count ) => {
-		//console.log( 'level', level );
-
-		const storey = GBX.storeys.find( storey => storey.includes( `<Level>${ level }<\/Level>` ) );
-
-		const id = storey.match( / id="(.*?)"/i )[ 1 ];
-
-		const name = storey.match( /<Name>(.*?)<\/Name>/i )[ 1 ];
-
-		const index = GBX.storeys.indexOf( storey );
-
-		return { id, count, index, level, name }
-
-	} );
-
-	//console.log( 'GBX.storeysJson', GBX.storeysJson );
-
-};
 
 
 

@@ -4,10 +4,10 @@
 
 <meta charset = "utf-8">
 <meta name = "copyright" content ="Ladybug Tools authors" >
-<meta name = "date" content = "2019-10-08" >
+<meta name = "date" content = "2019-10-09" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.17.04-3" >
+<meta name = "version" content = "0.17.04-4" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
 <title>Spider gbXML Viewer Dev</title>
@@ -197,7 +197,7 @@
 
 			</details>
 
-			<details id="detMenuViewGbxml" >
+			<details id="detMenuViewGbxml" open>
 
 				<summary class=sumMenuTitle >View gbXML menu</summary>
 
@@ -309,7 +309,7 @@
 
 		<div id="divContents" ></div>
 
-		<div id="divMessage" style=position:absolute;left:3vh;top:1vh; >
+		<div id="divMessage" >
 
 			<div id="GBXdivMessage" >loading...</div>
 
@@ -357,13 +357,7 @@
 <script>
 
 
-POP.footer =
 
-	`<div id=POPdivFooter >
-		<button onclick=POP.requestFile(POP.popup,divDragMoveContent); >🏠</button>&nbsp;
-		<button onclick=POP.requestFile(POP.license,divDragMoveContent); >⚖️</button>&nbsp;
-		<span id=POPspanInfo >v${ POP.version } ${ POP.date }</span>
-	</div>`;
 
 FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
 //FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml";

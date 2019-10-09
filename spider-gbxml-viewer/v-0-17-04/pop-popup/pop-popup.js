@@ -17,7 +17,7 @@ var POP = {
 	"version": document.head.querySelector( '[ name=version ]' ).content,
 	"date": document.head.querySelector( '[ name=date ]' ).content,
 
-	license: "../../pages/license.md",
+	license: "https://www.ladybug.tools/spider/pages/license.md",
 	txt: "lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?"
 
 };
@@ -26,14 +26,13 @@ var POP = {
 POP.footer =
 
 	`<div >
-		<button onclick=POP.requestFile(POP.popup,divDragMoveContent); >🏠</button>&nbsp;
-		<button onclick=POP.requestFile(POP.license,divDragMoveContent); >⚖️</button>&nbsp;
+		<button onclick=POP.requestFile(POP.popup,divDragMoveContent); title="Splash screen" >🏠</button>&nbsp;
+		<button onclick=POP.requestFile(POP.license,divDragMoveContent); title="Copyright and license" >⚖️</button>&nbsp;
 		<span id=POPspanInfo >v${ POP.version } - ${ POP.date }</span>
 	</div>`;
 
 
 POP.popup = "popup.md";
-
 
 
 POP.init = function() {

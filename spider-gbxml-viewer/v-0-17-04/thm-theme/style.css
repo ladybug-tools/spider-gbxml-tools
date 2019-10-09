@@ -19,12 +19,6 @@
 	--headerHeight: 6rem;
 }
 
-
-.scrollable-element {
-	scrollbar-color: red yellow;
-}
-
-
 html {
 	height: 100%;
 }
@@ -84,6 +78,14 @@ button:hover {
 button:active {
 	background: blue;
 	color: #fff
+}
+
+button.active {
+	border-color: black;
+	font-style: oblique;
+	font-weight: bold;
+	margin-left: 1rem;
+	/*box-shadow: 10px 2px #888; */
 }
 
 code {
@@ -240,6 +242,10 @@ h1, h2, h3, h4, h5 {
 	left: calc(var(--mnu-width) * -1);
 }
 
+
+#divMessage { position:absolute; left: calc( var( --mnu-width ) + 3rem ); top:2rem; }
+
+
 /* lower right */
 
 #aViewSource {
@@ -327,7 +333,7 @@ h1, h2, h3, h4, h5 {
 
 	#divContents {
 		left: 0;
-		padding: 0 1rem;
+		padding: 0;
 		width: 100%;
 	}
 

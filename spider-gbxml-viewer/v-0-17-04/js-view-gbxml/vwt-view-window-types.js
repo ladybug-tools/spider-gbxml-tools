@@ -171,7 +171,9 @@ VWT.getSurfacesFilteredWindowType = function(  ) {
 
 	GBX.meshGroup.children.forEach( element => element.visible = false );
 
-	THRU.edgeGroup.children.forEach( child =>	child.visible = false );
+	//THRU.edgeGroup.children.forEach( child => child.visible = false );
+
+	THRU.toggleEdges();
 
 	VWT.setOpenings();
 
