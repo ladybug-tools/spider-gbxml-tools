@@ -178,9 +178,6 @@ GBX.getSpacesJson = function() {
 
 
 
-
-
-
 GBX.getSurfaceMeshes = function( surfaces ) {
 	// console.log( 'surfaces', surfaces );
 

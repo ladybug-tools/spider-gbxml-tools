@@ -96,19 +96,6 @@ PFO.setPanelSurfaceTypes = function() {
 	PFO.surfaceTypesInUse = GBX.surfaceTypes.filter( type => GBX.surfaces.find( surface => surface.includes( `"${ type }"` ) ) );
 	//console.log( '', PFO.surfaceTypesInUse );
 
-	//PFO.surfaceTypesActive = !PFO.surfaceTypesActive ? PFO.surfaceTypesInUse.slice() : PFO.surfaceTypesActive;
-	//PFO.surfaceTypesActive = !PFO.surfaceTypesActive ? typesInUse : PFO.surfaceTypesActive;
-	//console.log( 'PFO.surfaceTypesActive', PFO.surfaceTypesActive );
-
-	//PFO.storeyIdsInUse = GBX.storeysJson.map( storey => storey.id );
-
-	//PFO.storeyIdsActive = !PFO.storeyIdsActive ? PFO.storeyIdsInUse.slice() : PFO.storeyIdsActive;
-	//PFO.storeyIdsActive = PFO.storeyIdsInUse.slice();
-
-	//const typesInUse = GBX.surfaceTypes.filter( type => GBX.surfaces.find( surface => surface.includes( `"${ type }"` ) ) );
-	//PFO.surfaceTypesActive = typesInUse;
-
-
 	let colors =  PFO.surfaceTypesInUse.map( type => GBX.colorsDefault[ type ].toString( 16 ) );
 	colors = colors.map( color => color.length > 4 ? color : '00' + color ); // otherwise greens no show
 
@@ -123,13 +110,7 @@ PFO.setPanelSurfaceTypes = function() {
 			</button>
 		</div>
 		`
-	);
-
-	//if ( !GBX.storeysJson ) { GBX.getStoreysJson(); }
-
-	//PFO.storeyIdsInUse = GBX.storeysJson.map( storey => storey.id );
-
-	//PFO.storeyIdsActive = !PFO.storeyIdsActive ? storeyIdsInUse : PFO.storeyIdsActive;
+	).join( "" );
 
 	const options = GBX.storeysJson.map( storey => `<option value=${ storey.id } >${ storey.name }</option>` );
 
@@ -138,8 +119,7 @@ PFO.setPanelSurfaceTypes = function() {
 			<h4>Surface types and storeys</h4>
 
 			<div id=PFOdivSurfaces >
-			${ buttonSurfaceTypes.join( '' ) }
-
+				${ buttonSurfaceTypes }
 			</div>
 
 			<p>
@@ -201,12 +181,9 @@ PFO.onClickZoomAll = function() {
 
 	if ( window.detMenuViewGbxml ) MNU.toggleDetailsOpen( detMenuViewGbxml ); // resets all the panels
 
-	//const time = performance.now();
-
 	const campusXml = PIN.parser.parseFromString( GBX.text, "application/xml").documentElement;
 
 	PFO.campusXml = campusXml;
-	//console.log( 'campusXml', campusXml.attributes );
 
 	const buildingXml = campusXml.getElementsByTagName( 'Building' )[ 0 ];
 
@@ -228,15 +205,13 @@ PFO.setAllTypesVisible = function(){
 
 	selStorey.selectedIndex= -1;
 
-	const buttons = divDragMoveContent.querySelectorAll( `button` );
+	const buttons = PFOdivSurfaces.querySelectorAll( `button` );
 
 	Array.from( buttons ).forEach( button => {
 
 		if ( !button.classList.contains( "butEye") ) { button.classList.add( "active" ); }
 
 	} );
-
-	const buttonsActive = divDragMoveContent.getElementsByClassName( "active" ); // collection
 
 	GBX.surfaceTypesActive = GBX.surfaceTypes.slice( 0, -1 );
 
@@ -248,7 +223,6 @@ PFO.setAllTypesVisible = function(){
 
 	GBX.placards.children
 		.forEach( mesh => mesh.visible = true );
-
 
 };
 
