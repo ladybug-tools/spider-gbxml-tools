@@ -96,17 +96,17 @@ PFO.setPanelSurfaceTypes = function() {
 	PFO.surfaceTypesInUse = GBX.surfaceTypes.filter( type => GBX.surfaces.find( surface => surface.includes( `"${ type }"` ) ) );
 	//console.log( '', PFO.surfaceTypesInUse );
 
-	PFO.surfaceTypesActive = !PFO.surfaceTypesActive ? PFO.surfaceTypesInUse.slice() : PFO.surfaceTypesActive;
+	//PFO.surfaceTypesActive = !PFO.surfaceTypesActive ? PFO.surfaceTypesInUse.slice() : PFO.surfaceTypesActive;
 	//PFO.surfaceTypesActive = !PFO.surfaceTypesActive ? typesInUse : PFO.surfaceTypesActive;
-	console.log( 'PFO.surfaceTypesActive', PFO.surfaceTypesActive );
+	//console.log( 'PFO.surfaceTypesActive', PFO.surfaceTypesActive );
 
-	PFO.storeyIdsInUse = GBX.storeysJson.map( storey => storey.id );
+	//PFO.storeyIdsInUse = GBX.storeysJson.map( storey => storey.id );
 
 	//PFO.storeyIdsActive = !PFO.storeyIdsActive ? PFO.storeyIdsInUse.slice() : PFO.storeyIdsActive;
-	PFO.storeyIdsActive = PFO.storeyIdsInUse.slice();
+	//PFO.storeyIdsActive = PFO.storeyIdsInUse.slice();
 
-	const typesInUse = GBX.surfaceTypes.filter( type => GBX.surfaces.find( surface => surface.includes( `"${ type }"` ) ) );
-	PFO.surfaceTypesActive = typesInUse;
+	//const typesInUse = GBX.surfaceTypes.filter( type => GBX.surfaces.find( surface => surface.includes( `"${ type }"` ) ) );
+	//PFO.surfaceTypesActive = typesInUse;
 
 
 	let colors =  PFO.surfaceTypesInUse.map( type => GBX.colorsDefault[ type ].toString( 16 ) );
@@ -117,7 +117,7 @@ PFO.setPanelSurfaceTypes = function() {
 		`
 		<div style="margin: 0.5rem 0;" >
 			<button class=butEye onclick=PFO.toggleThisSurfaceType("${ type}"); style=width:2rem; >👁️</button>
-			<button id=but${ type } class=${ PFO.surfaceTypesActive.includes( type ) ? "active" : "" }
+			&nbsp; <button id=but${ type } class=${ GBX.surfaceTypesActive.includes( type ) ? "active" : "" }
 				onclick=PFO.toggleSurfaceByButtons(this); style="background-color:#${ colors[ index ] };width:10rem;" >
 				${ type }
 			</button>
@@ -127,9 +127,9 @@ PFO.setPanelSurfaceTypes = function() {
 
 	//if ( !GBX.storeysJson ) { GBX.getStoreysJson(); }
 
-	PFO.storeyIdsInUse = GBX.storeysJson.map( storey => storey.id );
+	//PFO.storeyIdsInUse = GBX.storeysJson.map( storey => storey.id );
 
-	PFO.storeyIdsActive = !PFO.storeyIdsActive ? storeyIdsInUse : PFO.storeyIdsActive;
+	//PFO.storeyIdsActive = !PFO.storeyIdsActive ? storeyIdsInUse : PFO.storeyIdsActive;
 
 	const options = GBX.storeysJson.map( storey => `<option value=${ storey.id } >${ storey.name }</option>` );
 
@@ -137,7 +137,10 @@ PFO.setPanelSurfaceTypes = function() {
 		`
 			<h4>Surface types and storeys</h4>
 
+			<div id=PFOdivSurfaces >
 			${ buttonSurfaceTypes.join( '' ) }
+
+			</div>
 
 			<p>
 				<button class=butEye onclick=PFO.setAllTypesVisible(); >all visible</button>
@@ -158,16 +161,11 @@ PFO.setPanelSurfaceTypes = function() {
 
 PFO.toggleThisSurfaceType = function( surfaceType ) {
 
-	const buttons = divDragMoveContent.getElementsByClassName( "button" ); // collection
+	const buttonsActive = PFOdivSurfaces.getElementsByClassName( "active" ); // collection
 
-	Array.from( buttons ).forEach( button => button.classList.remove( "active" ) );
+	Array.from( buttonsActive ).forEach( button => button.classList.remove( "active" ) );
 
-	//PFO.surfaceTypesActive = Array.from( buttonsActive ).map( button => button.innerText );
-
-	//console.log( 'PFO.surfaceTypesActive', PFO.surfaceTypesActive );
-
-	const button = divDragMoveContent.querySelectorAll( `#but${surfaceType}` );
-	console.log( 'button', button );
+	const button = PFOdivSurfaces.querySelectorAll( `#but${surfaceType}` );
 
 	PFO.toggleSurfaceByButtons( button[ 0 ] );
 
@@ -177,15 +175,11 @@ PFO.toggleThisSurfaceType = function( surfaceType ) {
 
 PFO.toggleSurfaceByButtons = function ( buttons ) {
 
-	console.log( 'buttons', buttons );
-
-	buttons.classList.add( "active" );
+	buttons.classList.toggle( "active" );
 
 	const buttonsActive = divDragMoveContent.getElementsByClassName( "active" );
 
-	PFO.surfaceTypesActive = Array.from( buttonsActive ).map( button => button.innerText );
-
-	console.log( 'PFO.surfaceTypesActive', PFO.surfaceTypesActive );
+	GBX.surfaceTypesActive = Array.from( buttonsActive ).map( button => button.innerText );
 
 	PFO.setVisible();
 
@@ -244,9 +238,9 @@ PFO.setAllTypesVisible = function(){
 
 	const buttonsActive = divDragMoveContent.getElementsByClassName( "active" ); // collection
 
-	PFO.surfaceTypesActive = PFO.surfaceTypesInUse.slice();
+	GBX.surfaceTypesActive = GBX.surfaceTypes.slice( 0, -1 );
 
-	PFO.storeyIdsActive = PFO.storeyIdsInUse.slice();
+	GBX.storeyIdsActive = GBX.storeysJson.map( storey => storey.id );
 
 	GBX.meshGroup.children.forEach( child => child.visible = true );
 
@@ -262,7 +256,7 @@ PFO.setAllTypesVisible = function(){
 
 PFO.selStorey = function( select ) {
 
-	PFO.storeyIdsActive = Array.from( select.selectedOptions ).map( option => option.value );
+	GBX.storeyIdsActive = Array.from( select.selectedOptions ).map( option => option.value );
 
 	PFO.setVisible();
 
@@ -277,14 +271,14 @@ PFO.setVisible = function() {
 	GBX.meshGroup.children.forEach( mesh => mesh.visible = false );
 
 	GBX.meshGroup.children
-		.filter( mesh => PFO.storeyIdsActive.includes( mesh.userData.storeyId ) || mesh.userData.surfaceType === "Shade" )
-		.filter( mesh => PFO.surfaceTypesActive.includes( mesh.userData.surfaceType ) )
+		.filter( mesh => GBX.storeyIdsActive.includes( mesh.userData.storeyId ) || mesh.userData.surfaceType === "Shade" )
+		.filter( mesh => GBX.surfaceTypesActive.includes( mesh.userData.surfaceType ) )
 		.forEach( mesh => mesh.visible = true );
 
 	GBX.placards.children.forEach( mesh => mesh.visible = false );
 
 	GBX.placards.children
-		.filter( mesh => PFO.storeyIdsActive.includes( mesh.userData.storeyId ) )
+		.filter( mesh => GBX.storeyIdsActive.includes( mesh.userData.storeyId ) )
 		.forEach( mesh => mesh.visible = true );
 
 };
