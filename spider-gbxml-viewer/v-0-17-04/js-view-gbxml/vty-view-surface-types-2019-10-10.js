@@ -147,6 +147,32 @@ VTY.setAllTypesVisible = function(){
 };
 
 
+VTY.bbbbonToggleInteriorExterior = function( button ) {
+
+	THR.scene.remove( PIN.line, PIN.particle );
+
+	button.classList.toggle( "active" );
+
+	const array = button.classList.contains( "active" ) ?
+
+		[ "Ceiling","InteriorFloor", "InteriorWall", "UndergroundCeiling" ]
+		:
+		[ "ExposedFloor", "ExteriorWall", "RaisedFloor", "Roof", "Shade", "SlabOnGrade", "UndergroundSlab", "UndergroundWall" ]
+	;
+
+	const surfaces = GBX.surfaces;
+
+	const surfacesFiltered = array.flatMap( filter =>
+
+		surfaces.filter( surface => surface.includes( `"${ filter }"` ) )
+
+	);
+
+	GBXU.sendSurfacesToThreeJs( surfacesFiltered );
+
+};
+
+
 VTY.onToggleHorizontalVertical = function( button ) {
 
 	const buttonsActive = VTYsecViewSurfaceTypes.getElementsByClassName( "active" ); // collection
@@ -155,7 +181,7 @@ VTY.onToggleHorizontalVertical = function( button ) {
 
 	button.classList.toggle( "active" );
 
-	GBX.surfaceTypesActive = button.classList.contains( "active" ) ?
+	VTY.surfaceTypesActive = button.classList.contains( "active" ) ?
 
 		["Ceiling","ExposedFloor", "InteriorFloor","RaisedFloor", "Roof","SlabOnGrade","UndergroundCeiling", "UndergroundSlab"]
 		:
@@ -166,6 +192,35 @@ VTY.onToggleHorizontalVertical = function( button ) {
 };
 
 
+
+
+
+VTY.cccccsetSurfacesActiveByDefaults = function() {
+
+	const buttons = VTYdivSurfaceTypes.querySelectorAll( "button" );
+
+	buttons.forEach( button => VTY.filtersDefault.includes( button.innerText ) ?
+		button.classList.add( "active" ) : button.classList.remove( "active" )
+	);
+
+	VTY.sendSurfacesToThreeJs( VTY.filtersDefault );
+
+};
+
+
+
+VTY.ccccctoggleThisSurface = function( type ) {
+
+	const buttonsActive = VTYdet.getElementsByClassName( "active" ); // collection
+
+	Array.from( buttonsActive ).forEach( button => button.classList.remove( "active" ) );
+
+	VTY.sendSurfacesToThreeJs ( [ type ] );
+
+};
+
+
+
 VTY.setSurfacesActiveByFilter = function( button, filter ) {
 	// console.log( 'filter', filter );
 
@@ -174,7 +229,6 @@ VTY.setSurfacesActiveByFilter = function( button, filter ) {
 	Array.from( buttonsActive ).forEach( butt => { if ( butt !== button ) ( butt.classList.remove( "active" ) ); } );
 
 	button.classList.toggle( "active" );
-	
 
 	let surfacesFiltered;
 
@@ -189,7 +243,7 @@ VTY.setSurfacesActiveByFilter = function( button, filter ) {
 		//console.log( 'surfacesFiltered', surfacesFiltered );
 	}
 
-	VTYdivReportsLog.innerHTML = `<p> ${ GBXU.sendSurfacesToThreeJs( surfacesFiltered ) }`;
+	VTYdivReportsLog.innerHTML = GBXU.sendSurfacesToThreeJs( surfacesFiltered );
 
 	const buttons = VTYdivSurfaceTypes.querySelectorAll( "button" );
 
@@ -203,21 +257,42 @@ VTY.setSurfacesActiveByFilter = function( button, filter ) {
 
 VTY.onToggleInteriorExterior = function( button ) {
 
-	const buttonsActive = VTYdivSurfaceTypes.getElementsByClassName( "active" ); // collection
+	const buttonsActive = VTYdet.getElementsByClassName( "active" ); // collection
 
 	Array.from( buttonsActive ).forEach( butt => { if ( butt !== button ) ( butt.classList.remove( "active" ) ); } );
 
 	button.classList.toggle( "active" );
 
-	GBX.surfaceTypesActive = button.classList.contains( "active" ) ?
+	const array = button.classList.contains( "active" ) ?
 
 		[ "ExposedFloor", "ExteriorWall", "RaisedFloor", "Roof", "Shade", "SlabOnGrade", "UndergroundSlab", "UndergroundWall" ]
 		:
 		[ "Ceiling","InteriorFloor", "InteriorWall", "UndergroundCeiling" ];
 
-	VTY.setVisible();
+	VTY.sendSurfacesToThreeJs( array );
+T
+};
+
+
+
+VTY.vvvvonToggleHorizontalVertical = function( button ) {
+
+	const buttonsActive = VTYsecViewSurfaceTypes.getElementsByClassName( "active" ); // collection
+
+	Array.from( buttonsActive ).forEach( butt => { if ( butt !== button ) ( butt.classList.remove( "active" ) ); } );
+
+	button.classList.toggle( "active" );
+
+	const array = button.classList.contains( "active" ) ?
+
+		["Ceiling","ExposedFloor", "InteriorFloor","RaisedFloor", "Roof","SlabOnGrade","UndergroundCeiling", "UndergroundSlab"]
+		:
+		[ "ExteriorWall","InteriorWall","UndergroundWall" ];
+
+	VTY.sendSurfacesToThreeJs( array );
 
 };
+
 
 
 VTY.setShowAll = function( button ) {

@@ -39,7 +39,14 @@
 
 <summary>Change Log</summary>
 
-### DDDDD
+### 2019-10-10 ~ Theo
+
+All going quite well
+
+Best to have every module as standalone as possible - so you can concentate on the science and not the code
+
+Should be possible to start building some test scripts
+
 
 * F - First commit
 

@@ -47,13 +47,13 @@ PFO.onToggleInteriorExterior = function( button ) {
 		[ "ExposedFloor", "ExteriorWall", "RaisedFloor", "Roof", "Shade", "SlabOnGrade", "UndergroundSlab", "UndergroundWall" ]
 	;
 
-		const surfaces = GBX.surfaces;
+	const surfaces = GBX.surfaces;
 
-		const surfacesFiltered = array.flatMap( filter =>
+	const surfacesFiltered = array.flatMap( filter =>
 
-			surfaces.filter( surface => surface.includes( `"${ filter }"` ) )
+		surfaces.filter( surface => surface.includes( `"${ filter }"` ) )
 
-		);
+	);
 
 	GBXU.sendSurfacesToThreeJs( surfacesFiltered );
 
