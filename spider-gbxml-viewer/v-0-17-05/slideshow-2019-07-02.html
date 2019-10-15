@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1" >
+<meta name = "description" content = "Basic TooToo HTML template" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2019-06-30" >
+<meta name = "version" content = "01" >
+<title></title>
+<style>
+
+* { box-sizing: border-box; }
+
+:root { --mnu-width: 22rem; --screen-width: calc( 100vw ); --headerHeight: 6rem; }
+
+html { height: 100%; }
+
+body { font: 12pt monospace; margin: 0 auto; height: 100%; }
+
+a { color: crimson; text-decoration: none; }
+a:hover, a:focus, a:active { background-color: yellow; color: #aaa; text-decoration: underline }
+
+button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+button:hover { background: #ccc; color: #fff }
+
+main { border: 0px solid maroon; height: 100%; overflow: hidden; position: relative; resize: both; }
+
+#divContents { height: 100%;  width: 100%; }
+
+#divGraphics { border: 0px solid maroon; bottom: 0; position: relative;
+	text-align: center; top: 50%; transform: translateY( -50% ); }
+
+
+#divButtons { position: absolute; bottom: 1rem; left: 0; margin: auto; right: 0; text-align: center; }
+
+.red { color: red; }
+.green { color: green; }
+.blue { color: blue; }
+
+.rem1 { font-size: 4vw; }
+.rem2 { font-size: 6vw; }
+.rem3 { font-size: 8vw; }
+
+
+@media all and ( max-width: 640px ) {
+
+}
+
+
+</style>
+</head>
+<body>
+
+
+
+	<main>
+
+		<div id="divContents" >
+
+			<img src="https://ladybug.tools/artwork/icons_bugs/ico/spider.ico" height="48" style=position:absolute; >
+
+			<div id=divGraphics ></div>
+
+			<div id=divButtons >
+
+				<button onclick=TTS.index=1;TTS.playSlides(); style=background:pink; title="Click me!" >show slides</button> /
+				<button onclick=TTS.synth.pause(); >pause</button>
+				<button onclick=TTS.synth.resume(); >resume</button>
+				<button onclick=TTS.index=999;TTS.synth.cancel(); >stop</button> /
+				<button onclick="TTS.index=TTS.index===999?9:TTS.index;TTS.showSlide(--TTS.index);" >previous</button>
+				<button onclick="TTS.index=TTS.index===999?0:TTS.index;TTS.showSlide(++TTS.index);" >next</button>
+
+			</div>
+
+		</div>
+
+	</main>
+
+	<div id=divMessages ></div>
+
+
+<script>
+
+
+
+const TTS = {
+
+	"synth": window.speechSynthesis,
+	"voices": [],
+	"index": 999,
+	"playing": false,
+	"slides": [
+		{ "utterance": "",
+			"text": "Enjoy the 90 second 'Maevia' overview!", "classes": "red rem2" },
+		{ "utterance": "Hello! My name is 'Mayvia'. I am here to inform you about my latest updates and all the newest hot stuff",
+			"text": "Latest release / months in the making / many lessons learned / <br>&diams; almost good to go!", "classes": "red rem1"},
+		{ "utterance": "In tests, I opened a 700 megabyte file in about one minute. Yes, three quarters of a ghigabyte viewable in your browser just like that",
+		"text": "Big files are OK.<br>Open very large gbXML files, very quickly.<br>Watch them spin in real-time", "classes": "green rem2"},
+		{ "utterance": "I open, display and save gbXML files just about any way you can think of. And, hello, I take care of all your zipping and unzipping needs as well",
+			"text": "gbXML and ZIP files<br>&bull; open and save<br>&bull; local files and files on servers<br>&bull; nothing to install or download", "classes": "blue rem1"},
+		{ "utterance": "Use me anywhere. My motto is: mobile first! I'm available to you - on your construction sites or in your bed - by tablet or phone",
+			"text": "Mobile First<br>I'm working hard to provide better finger and touch support for your phone/tablet/laptop", "classes": "green rem1"},
+		{ "utterance": "My right-side popup menu has many shiny new features. I think the little menu dreams of growing up to be a gaming controller",
+			"text": "Right side popup menu<br>New buttons to expose new data reports<br>Many new screens<br>View gbXML source for every surface<br>", "classes": "blue rem1"},
+		{ "utterance": "My user experience is more streamlined. Think left brain / right brain working together. Text and numbers on the left versus touching and seeing on the right",
+			"text": "Left menu for investigating files and their data<br>Right menu for interacting with 3D models", "classes": "red rem1"},
+		{ "utterance": "Do remember that I am here to help you. I do my best to you know about every nook and cranny in your project - no matter how big or complex. ",
+			"text": "New reports for window types, construction, layers and materials and more", "classes": "blue rem2"},
+		{ "utterance": "For about a year I have been trying to help you find and fix errors in your files. Guess what? Ta Daaaa! I can fix the issues in your files faster than you can.",
+			"text": "New error-fixing modules<br>Identify, list and fix common errors in gbXML files", "classes": "green rem1"},
+		{ "utterance": "And, very soon, you should consider playing with me",
+			"text": "All code written in easy-peasy plain vanilla, free open-source JavaScript", "classes": "red rem2"},
+		{ "utterance": "Finally, I'd to give a thank you Tayo and Mickh Al and our friends for all the good efforts in making me faster, better and easier. And thank you for listening. Bye. for now!",
+			"text": "the end<br><span style=font-size:3vw;color:gray; >& a new beginning?</span>", "classes": "red rem2"},
+	]
+
+};
+
+
+
+TTS.playSlides = function() {
+
+	console.log( 'TTS.index', TTS.index );
+
+	if ( TTS.index < TTS.slides.length - 1 ) {
+
+		TTS.playing = true;
+
+		TTS.showSlide( TTS.index);
+
+		TTS.index++;
+
+	} else {
+
+		TTS.showSlide( TTS.slides.length - 1 );
+		TTS.index = 999;
+		TTS.playing = false;
+	}
+
+};
+
+
+TTS.showSlide = function( index = 1 ) {
+
+	const slide = TTS.slides[ index ];
+
+	TTS.sayThis( slide.utterance );
+	divGraphics.innerHTML = slide.text;
+	divGraphics.className = slide.classes;
+
+};
+
+
+
+TTS.sayThis = function( text ) {
+
+	TTS.synth.cancel();
+
+	TTS.utterThis = new SpeechSynthesisUtterance( text );
+
+	TTS.voices = TTS.voices.length ? TTS.voices : window.speechSynthesis.getVoices();
+
+	if ( TTS.voices.length > 0 ) {
+
+		const voice = TTS.voices.find( item => item.name === "Google UK English Female" );
+
+		const theDefault =  TTS.voices.find( item => item.default === true );
+
+		//console.log( '', voice );
+
+		//divMessages.innerHTML =
+		//`default: ${ theDefault.name }<br> ${ TTS.voices.map( item => item.name ).join("<br>") } `;
+
+
+		TTS.utterThis.voice = voice ? voice : theDefault;
+
+	}
+
+	if ( TTS.playing === true ) {
+
+		TTS.utterThis.onend = TTS.playSlides;
+	}
+
+	if ( TTS.index < 999 ) {
+
+		TTS.synth.speak( TTS.utterThis );
+
+	}
+
+
+};
+
+
+TTS.showSlide( 0 );
+
+</script>
+</body>
+</html>

@@ -4,10 +4,10 @@
 
 <meta charset = "utf-8">
 <meta name = "copyright" content ="Ladybug Tools authors" >
-<meta name = "date" content = "2019-09-27" >
+<meta name = "date" content = "2019-10-11" >
 <meta name = "description" content = "JavaScript utilities to help you identify and fix common errors in gbXML files" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.17.04-0" >
+<meta name = "version" content = "0.17.04-5" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
 <title>Spider gbXML Viewer 'Maevia'</title>
@@ -142,18 +142,26 @@
 				</header>
 
 				<p>
-					See also
-					<a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank">
-						gbXML Schema</a>
-					/
-					<a href="https://www.ladybug.tools/spider/gbxml-viewer/r14/gv-cor-core/gv-cor.html" target="_blank">
-						R14
-					</a>
-					/
-					<a href="https://www.ladybug.tools/spider/gbxml-viewer/" target="_blank">
-						R12
-					</a>
-				</p>
+						Also
+						<a href="http://gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html" target="_blank" title="Official gbXML.org documentation" >
+							Schema</a>
+						|
+						<a href="https://www.ladybug.tools/spider/gbxml-viewer/r14/gv-cor-core/gv-cor.html" target="_blank">
+							R14
+						</a>
+						|
+						<a href="https://www.ladybug.tools/spider/gbxml-viewer/" target="_blank">
+							R12
+						</a>
+						|
+						<a href="https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/dev/" target="_blank" title="stable release">
+							dev
+						</a>
+						|
+						<a href="https://www.ladybug.tools/spider-gbxml-fixer/" target="_blank" title="prepare files for OpenStudio simulations">
+							fixer
+						</a>
+					</p>
 
 			</details>
 
@@ -189,7 +197,7 @@
 
 			</details>
 
-			<details id="detMenuViewGbxml" >
+			<details id="detMenuViewGbxml">
 
 				<summary class=sumMenuTitle >View gbXML menu</summary>
 
@@ -301,7 +309,7 @@
 
 		<div id="divContents" ></div>
 
-		<div id="divMessage" style=position:absolute;left:3vh;top:1vh; >
+		<div id="divMessage" >
 
 			<div id="GBXdivMessage" >loading...</div>
 
@@ -324,11 +332,9 @@
 
 				<button onclick="PFO.onToggleInteriorExterior(this)" title="Exterior or interior surfaces">☂️</button>
 
-				<button onclick="THR.controls.autoRotate = !THR.controls.autoRotate;">🔄</button>
+				<button onclick="THR.controls.autoRotate = !THR.controls.autoRotate;" title="Rotation of the scene" >🔄</button>
 
-
-
-				&nbsp; <button id=butPopupClose onclick="POP.onClickClose(butPopupClose);" >&times;</button>
+				&nbsp; <button id=butPopupClose onclick="POP.onClickClose(butPopupClose);" title="Close me" >&times;</button>
 
 			</div>
 
@@ -351,20 +357,15 @@
 <script>
 
 
-POP.footer =
 
-	`<div id=POPdivFooter >
-		<button onclick=POP.requestFile(POP.popup,divDragMoveContent); >🏠</button>&nbsp;
-		<button onclick=POP.requestFile(POP.license,divDragMoveContent); >⚖️</button>&nbsp;
-		<span id=POPspanInfo >v${ POP.version } ${ POP.date }</span>
-	</div>`;
 
-FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
+//FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
 //FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/coventry-university-of-warwick-small.zip";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/annapolis-md-single-family-residential-2016.xml"
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/pittsburg-airport.zip";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/GreenBuildingXML/Sample-gbXML-Files@master/gbXML_TRK.xml";
+FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/bilt-2019-template.zip";
 
 
 init();
@@ -383,19 +384,15 @@ function init() {
 
 	GF3.init(); // here while testing - otherwise run on toggle
 
+
 	// Theme
+
+	THM.cssDefault = "thm-theme/style.css";
 
 	THMdivMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
 
-	//THM.cssBasic = "style.css";
-	//THMcssCurrent.value = THM.cssBasic;
-
-	//localStorage.setItem( THM.themeUrlStorage, THM.cssBasic );
-
 	THM.init();
 
-
-	//navPanel.style.backgroundColor = "white"; //THM.backgroundColor;
 
 	// Menu header
 
@@ -457,13 +454,9 @@ function init() {
 
 	MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();
 
-
-
 	POP.init();
 
 	PIN.init();
-
-	//COR.init();
 
 	FOB.onHashChange();
 
