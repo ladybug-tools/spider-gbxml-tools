@@ -30,6 +30,11 @@ Very easy to use with an iframe in order to embed a 3D view in a web page
 
 <summary>Change Log</summary>
 
+### 2019-10-17 ~ Theo
+
+SGV Core 0.17.05
+
+* Udate links: three.js 108, tt 14.08
 
 ### 2019-08-06 ~ Theo
 

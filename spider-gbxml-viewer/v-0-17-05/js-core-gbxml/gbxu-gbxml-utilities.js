@@ -9,12 +9,12 @@ var GBXU = {
 	script: {
 
 		copyright: "Copyright 2019 Ladybug Tools authors",
-		date: "2019-08-23",
+		date: "2019-10-17",
 		description: "GbXML utilities: all this is a bit idiosyncratic / a random collection of stuff",
 		helpFile: "../js-core-gbxml/gbxu-gbxml-utilities.md",
 		license: "MIT License",
 		urlSourceCode: "js-core-gbxml/gbxu-gbxml-utilities.js",
-		version: "0.17.04-0gbxu"
+		version: "0.17.05-0gbxu"
 
 	}
 
@@ -62,7 +62,7 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 
 	GBXU.setElementsJson();
 
-	POP.requestFile( POP.popup, divDragMoveContent );
+	if ( window.POP ) POP.requestFile( POP.popup, divDragMoveContent );
 
 	if ( window.detMenuViewGbxml ) MNU.toggleDetailsOpen( detMenuViewGbxml );
 

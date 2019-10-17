@@ -33,6 +33,12 @@ Various utilities to help with display of gbXML data
 
 <summary>Change Log</summary>
 
+### 2019-10-17 ~ Theo
+
+0.17.05-0gbxu
+
+* B: Add check if POP exists before running
+
 ### 2019-08-06 ~ Theo
 
 

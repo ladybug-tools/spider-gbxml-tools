@@ -30,6 +30,12 @@
 
 <summary>Change Log</summary>
 
+### 2019-10-17 ~ Theo
+
+SGV POP 0.17.05
+
+* Update th three.js 109 and tt 14.08
+
 ## 2019-07-26 ~ Theo
 
 SGV Pop 0.17.01-0
