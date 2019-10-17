@@ -100,7 +100,6 @@ MNU.getNavHeader = function() {
 
 
 		<h2>
-
 			<a href=${ MNU.urlSourceCode } ${ MNU.target } title="Source code on GitHub" >
 			${ MNU.urlSourceCodeIcon }
 			</a>
@@ -109,7 +108,6 @@ MNU.getNavHeader = function() {
 				<span id=titleRelease >${ MNU.version }</span></a>
 
 			<button class=butHelp id=butTitle onclick="POP.setPopupShowHide(butTitle,MNU.helpFile);" title="Click me!" >?</button>
-
 		</h2>
 
 		<p>

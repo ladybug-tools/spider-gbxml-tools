@@ -35,12 +35,12 @@ a {
 a:hover,
 a:focus,
 a:active {
-	background-color: var( --colorLight );
+	background-color: #eee; /* var( --colorLight ); */
 	color: #aaa;
 	text-decoration: underline
 }
 
-div a {
+a {
 	color: var( --color );
 }
 
@@ -100,14 +100,14 @@ input[ type=range] {
 }
 
 input[ type=range]::-moz-range-thumb {
-	background-color: var(--colorLight );
+	/* background-color: var(--colorLight ); */
 	border-radius: 0;
 	width: 10px;
 }
 
 input[ type=range]::-webkit-slider-thumb {
 	-webkit-appearance: none;
-	background-color: var(--color );
+	background-color: #aaa; /* var(--color ); */
 	height: 20px;
 	width: 10px;
 }

@@ -212,7 +212,7 @@ THM.toggleTagsClassListW3schools= function( action = "add" ) {
 	document.body.querySelectorAll( ".dingbat" )
 		.forEach( item => item.classList[ action ]( "w3-text-theme" ) );
 
-	//THM.toggleTHMDivW3schools( action );
+	THM.toggleTHMDivW3schools( action );
 
 };
 
