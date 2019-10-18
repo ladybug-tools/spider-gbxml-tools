@@ -379,7 +379,7 @@ function init() {
 
 	THMdivMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
 
-	THM.init();
+
 
 
 	// Menu header
@@ -442,9 +442,12 @@ function init() {
 
 	MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();
 
+
 	POP.init();
 
 	PIN.init();
+
+
 
 	FOB.onHashChange();
 
@@ -456,11 +459,16 @@ function init() {
 		toggleNavPanel();
 		POP.setPopupShowHide( butPopupClose, ' ', POP.footer );
 
+		THM.init();
+		
 	} else {
 
 		POP.setPopupShowHide();
+		THM.init();
 
 	}
+
+
 
 }
 

@@ -177,7 +177,7 @@ THM.toggleTagsClassListW3schools= function( action = "add" ) {
 	//document.body.querySelectorAll( "a" )
 	//.forEach( item => item.classList[ action ](  "w3-text-theme", "w3-hover-shadow" ) );
 
-	document.body.querySelectorAll( "h1, #divDragMoveHeader, .sumMenuTitle " )
+	document.body.querySelectorAll( "h1, #divDragMoveHeader, .sumMenuTitle" )
 		.forEach( item => item.classList[ action ]( "w3-theme-l1" ) );
 
 	document.body.querySelectorAll( "h2" )
@@ -286,7 +286,7 @@ THM.toggleTagsClassListBootswatch = function ( action = "add" ) {
 	document.body.querySelectorAll( "a" )
 		.forEach( item => item.classList[ action ]( "text-primary" ) );
 
-	document.body.querySelectorAll( "h1, h2, h3, h4, h5" )
+	document.body.querySelectorAll( "h1, h2, h3, h4, h5, #divDragMoveHeader, .sumMenuTitle" )
 		.forEach( item => item.classList[ action ]( "bg-primary", "text-light" ) );
 
 	document.body.querySelectorAll( "aside, blockquote, code, input, pre" )
@@ -303,6 +303,13 @@ THM.toggleTagsClassListBootswatch = function ( action = "add" ) {
 
 	document.body.querySelectorAll( "summary" )
 		.forEach( item => item.classList[ action ]( "nav-link", "btn", "btn-primary" ) );
+
+
+	document.body.querySelectorAll( ".sumMenuTitle" )
+		.forEach( item => item.classList[ action ]( "bg-primary", "text-light" ) );
+
+	document.body.querySelectorAll( "#navMenu" )
+		.forEach( item => item.classList[ action ]( "w3-theme-l5" ) );
 
 	document.body.querySelectorAll( ".aTitle" )
 		.forEach( item => item.classList[ action ]( "text-light" ) );
