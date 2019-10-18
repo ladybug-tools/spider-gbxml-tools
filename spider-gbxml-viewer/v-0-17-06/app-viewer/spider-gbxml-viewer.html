@@ -5,7 +5,7 @@
 
 	<meta charset="utf-8">
 	<meta name="copyright" content="Ladybug Tools authors">
-	<meta name="date" content="2019-10-17">
+	<meta name="date" content="2019-10-11">
 	<meta name="description" content="JavaScript utilities to help you identify and fix common errors in gbXML files">
 	<meta name="keywords" content="gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS">
 	<meta name="version" content="0.17.05-0">
@@ -17,10 +17,10 @@
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-129035557-5"></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
-		function gtag() { dataLayer.push( arguments ); }
-		gtag( 'js', new Date() );
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
 
-		gtag( 'config', 'UA-129035557-5' );
+		gtag('config', 'UA-129035557-5');
 	</script>
 
 
@@ -47,7 +47,6 @@
 
 	<!--TooToo ~ menus generally -->
 	<script src="pop-popup/pop-popup.js"></script>
-	<script src="mnu-menu/mas-menu-app-switch.js"></script>
 	<script src="mnu-menu/mnu-menu.js"></script>
 
 
@@ -149,8 +148,6 @@
 					<summary class="sumMenuTitle">Menu bar header</summary>
 
 					<header>
-
-						<h3 id="MNUdivAppSwitch"></h3>
 
 						<div id="MNUdivHeader"></div>
 
@@ -387,10 +384,10 @@
 
 			THMdivMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
 
+			THM.init();
+
 
 			// Menu header
-
-			MNUdivAppSwitch.innerHTML = MAS.getAppSwitch;
 
 			MNUdivHeader.innerHTML = MNU.getNavHeader();
 
@@ -450,12 +447,9 @@
 
 			MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();
 
-
 			POP.init();
 
 			PIN.init();
-
-
 
 			FOB.onHashChange();
 
@@ -467,16 +461,11 @@
 				toggleNavPanel();
 				POP.setPopupShowHide( butPopupClose, ' ', POP.footer );
 
-				THM.init();
-
 			} else {
 
 				POP.setPopupShowHide();
-				THM.init();
 
 			}
-
-
 
 		}
 
