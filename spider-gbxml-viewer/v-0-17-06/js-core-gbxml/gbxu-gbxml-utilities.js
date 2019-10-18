@@ -14,7 +14,7 @@ var GBXU = {
 		helpFile: "../js-core-gbxml/gbxu-gbxml-utilities.md",
 		license: "MIT License",
 		urlSourceCode: "js-core-gbxml/gbxu-gbxml-utilities.js",
-		version: "0.17.05-0gbxu"
+		version: "0.17.06-0gbxu"
 
 	}
 

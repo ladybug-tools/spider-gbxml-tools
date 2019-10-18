@@ -5,10 +5,10 @@
 
 	<meta charset="utf-8">
 	<meta name="copyright" content="Ladybug Tools authors">
-	<meta name="date" content="2019-10-11">
+	<meta name="date" content="2019-10-18">
 	<meta name="description" content="JavaScript utilities to help you identify and fix common errors in gbXML files">
 	<meta name="keywords" content="gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS">
-	<meta name="version" content="0.17.05-0">
+	<meta name="version" content="0.17.06-0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<title>Spider gbXML Viewer 'Maevia'</title>
@@ -17,14 +17,13 @@
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-129035557-5"></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
+		function gtag() { dataLayer.push( arguments ); }
+		gtag( 'js', new Date() );
 
-		gtag('config', 'UA-129035557-5');
+		gtag( 'config', 'UA-129035557-5' );
 	</script>
 
-
-	<base href="https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-05/">
+	<base href="https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-06/">
 
 	<link rel="canonical" href="www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/" />
 	<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
@@ -47,6 +46,7 @@
 
 	<!--TooToo ~ menus generally -->
 	<script src="pop-popup/pop-popup.js"></script>
+	<script src="mnu-menu/mas-menu-app-switch.js"></script>
 	<script src="mnu-menu/mnu-menu.js"></script>
 
 
@@ -148,6 +148,8 @@
 					<summary class="sumMenuTitle">Menu bar header</summary>
 
 					<header>
+
+						<h3 id="MNUdivAppSwitch"></h3>
 
 						<div id="MNUdivHeader"></div>
 
@@ -350,8 +352,6 @@
 	<script>
 
 
-
-
 		//FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
 		//FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml";
 		//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/coventry-university-of-warwick-small.zip";
@@ -384,10 +384,10 @@
 
 			THMdivMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
 
-			THM.init();
-
 
 			// Menu header
+
+			MNUdivAppSwitch.innerHTML = MAS.getAppSwitch();
 
 			MNUdivHeader.innerHTML = MNU.getNavHeader();
 
@@ -461,9 +461,12 @@
 				toggleNavPanel();
 				POP.setPopupShowHide( butPopupClose, ' ', POP.footer );
 
+				THM.init();
+
 			} else {
 
 				POP.setPopupShowHide();
+				THM.init();
 
 			}
 
