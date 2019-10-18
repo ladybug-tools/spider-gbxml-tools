@@ -7,11 +7,11 @@
 var THR = {
 
 	copyright: "Copyright 2019 Ladybug Tools authors. MIT License",
-	date: "2019-07-24",
+	date: "2019-10-18",
 	description: "Three.js core - the basic function to bring Three.js up in your browser",
-	helpFile: "../js-view-threejs/thr-threejs.md",
+	helpFile: "../core-thr-threejs/thr-threejs.md",
 	license: "MIT License",
-	version: "0.17.01-0thr"
+	version: "0.17.06-0thr"
 
 };
 

@@ -1,7 +1,5 @@
 # THRU Three.js Utilities 0.Read Me
 
-[Source code](  )
-
 <details open >
 
 <summary>Concept</summary>
@@ -42,6 +40,12 @@ Three.js Utilities: all this is a bit idiosyncratic / a random collection of stu
 <details>
 
 <summary>Change Log</summary>
+
+### 2019-10-18 ~ Theo
+
+THRU 0.17.06
+
+* First commit
 
 ### 2019-08-13 ~ Theo
 

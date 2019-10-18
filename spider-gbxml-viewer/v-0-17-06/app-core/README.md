@@ -9,6 +9,7 @@ Basic file that opens a gbXML file and displays it in 3D
 
 Very easy to use with an iframe in order to embed a 3D view in a web page
 
+[view core in iframe]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-06/app-core/view-core-in-iframe.html )
 
 </details>
 
@@ -30,11 +31,17 @@ Very easy to use with an iframe in order to embed a 3D view in a web page
 
 <summary>Change Log</summary>
 
+### 2019-10-19 ~ Theo
+
+SGV Core 0.17.06
+
+* Update readme
+
 ### 2019-10-17 ~ Theo
 
 SGV Core 0.17.05
 
-* Udate links: three.js 108, tt 14.08
+* Update links: three.js 108, tt 14.08
 
 ### 2019-08-06 ~ Theo
 
