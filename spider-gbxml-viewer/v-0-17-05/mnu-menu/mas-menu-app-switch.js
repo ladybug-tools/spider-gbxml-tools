@@ -26,7 +26,7 @@ MAS.arrApps = [
 		title: "3D interactive analysis in your browser mostly written around the Three.js JavaScript library"
 	},
 	{
-		text: "Spider gbXML Viewer R12 Aragog", url: "https://https://www.ladybug.tools/spider/gbxml-viewer/",
+		text: "Spider gbXML Viewer R12 Aragog", url: "https://www.ladybug.tools/spider/gbxml-viewer/",
 		title: "A popular release"
 	},
 	{
