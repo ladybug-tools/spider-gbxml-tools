@@ -21,7 +21,7 @@ var GBXU = {
 };
 
 
-GBXU.filtersDefault = [ "Air", "ExposedFloor", "ExteriorWall", "RaisedFloor",
+GBXU.filtersDefault = [ "ExposedFloor", "ExteriorWall", "RaisedFloor",
 	"Roof", "Shade" ];
 
 
