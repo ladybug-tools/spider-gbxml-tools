@@ -27,6 +27,14 @@
 
 <summary>Change Log</summary>
 
+### 2019-10-21 ~ Theo
+
+THRU 0.17.06-odev
+
+* R: single quotes to double
+* R: pass through jsHint
+* R: cleanup html & css
+
 ### 2019-07-24 ~ Theo
 
 * F - First commit

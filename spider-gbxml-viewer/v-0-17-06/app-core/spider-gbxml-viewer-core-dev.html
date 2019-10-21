@@ -24,6 +24,8 @@ body { font: 11pt monospace; margin: 0; overflow: hidden; }
 
 #divContents {  height: 100vh; width: 100vw; }
 
+#divRendererInfo { position: absolute; left:1rem; top:1rem;}
+
 </style>
 
 <base href="../" >
@@ -38,7 +40,7 @@ body { font: 11pt monospace; margin: 0; overflow: hidden; }
 
 <!-- Three.js -->
 <script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r109/build/three.min.js" ></script>
-<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r108/examples/js/controls/OrbitControls.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r109/examples/js/controls/OrbitControls.js" ></script>
 
 <!-- Tootoo -->
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-08/fob-file-open-basic/fob-file-open-basic.js" ></script>
@@ -53,11 +55,9 @@ body { font: 11pt monospace; margin: 0; overflow: hidden; }
 <script src = "core-gbx-gbxml/gbxu-gbxml-utilities.js" ></script>
 
 
-	<div id="divRendererInfo" style=position:absolute; ></div>
-
 	<div id="divContents" ></div>
 
-	<div style=position:absolute;left:3vh;top:1vh; >
+	<div id="divRendererInfo" >
 
 		<!-- following not required -->
 
@@ -70,12 +70,12 @@ body { font: 11pt monospace; margin: 0; overflow: hidden; }
 <script>
 
 
-FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
+//FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
+FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/bilt-2019-template.zip";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/coventry-university-of-warwick-small.zip";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/annapolis-md-single-family-residential-2016.xml"
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/pittsburg-airport.zip";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/GreenBuildingXML/Sample-gbXML-Files@master/gbXML_TRK.xml";
-
 
 
 init();
@@ -87,7 +87,7 @@ function init() {
 
 		divContents.style.width = getComputedStyle( divContents ).width;
 		divContents.style.height = getComputedStyle( divContents ).height;
-		divContents.setAttribute( 'scrolling', 'no' );
+		divContents.setAttribute( "scrolling", "no" );
 
 	}
 
@@ -97,7 +97,7 @@ function init() {
 
 	GBX.init( GBXdivMessage );  // parameter not required
 
-	window.addEventListener ( 'hashchange', FOB.onHashChange, false );
+	window.addEventListener ( "hashchange", FOB.onHashChange, false );
 
 	FOB.onHashChange( divContents );
 

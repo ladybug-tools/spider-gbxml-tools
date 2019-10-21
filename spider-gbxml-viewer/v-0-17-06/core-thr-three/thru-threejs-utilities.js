@@ -1,4 +1,4 @@
-/* global THREE, THR, Stats, rngOpacity, outOpacity */
+/* global THREE, THR, GBX, Stats, rngOpacity, outOpacity */
 // jshint esversion: 6
 // jshint loopfunc: true
 
@@ -32,10 +32,9 @@ THRU.init= function( radius = 50 ) {
 	//THRU.toggleEdges();
 	//THRU.toggleBoundingBoxHelper();
 
-
-	window.addEventListener( 'keyup', THRU.onSetRotate , false );
-	THR.renderer.domElement.addEventListener( 'click', THRU.onSetRotate, false );
-	THR.renderer.domElement.addEventListener( 'touchstart', THRU.onSetRotate, false );
+	window.addEventListener( "keyup", THRU.onSetRotate , false );
+	THR.renderer.domElement.addEventListener( "click", THRU.onSetRotate, false );
+	THR.renderer.domElement.addEventListener( "touchstart", THRU.onSetRotate, false );
 
 };
 
@@ -45,9 +44,9 @@ THRU.onSetRotate = function() {
 
 	THR.controls.autoRotate = false;
 
-	window.removeEventListener( 'keyup', THRU.onSetRotate );
-	THR.renderer.domElement.removeEventListener( 'click', THRU.onSetRotate );
-	THR.renderer.domElement.removeEventListener( 'touchstart', THRU.onSetRotate );
+	window.removeEventListener( "keyup", THRU.onSetRotate );
+	THR.renderer.domElement.removeEventListener( "click", THRU.onSetRotate );
+	THR.renderer.domElement.removeEventListener( "touchstart", THRU.onSetRotate );
 
 };
 
@@ -56,7 +55,7 @@ THRU.onSetRotate = function() {
 ////////// Scene
 
 THRU.setSceneDispose = function( objArr = [] ) {
-	// console.log( 'THR.scene', THR.scene );
+	// console.log( "THR.scene", THR.scene );
 
 	THR.scene.traverse( child => {
 
@@ -87,10 +86,10 @@ THRU.setSceneDispose = function( objArr = [] ) {
 ////////// Camera and Controls
 
 THRU.zoomObjectBoundingSphere = function( obj = GBX.meshGroup ) {
-	//console.log( 'obj', obj );
+	//console.log( "obj", obj );
 
 	const bbox = new THREE.Box3().setFromObject( obj );
-	//console.log( 'bbox', bbox )
+	//console.log( "bbox", bbox )
 
 	if ( bbox.isEmpty() === true ) { return; }
 
@@ -125,16 +124,15 @@ THRU.zoomObjectBoundingSphere = function( obj = GBX.meshGroup ) {
 
 ////////// Visibility
 
-
-THRU.getMeshesVisible = function ( objThree = THR.scene ) { // not??
-	//console.log( '', objThree );
+THRU.getMeshesVisible = function ( objThree = THR.scene ) { // used by??
+	//console.log( "", objThree );
 
 	THRU.meshGroupVisible = new THREE.Object3D();
 
 	const arr = objThree.children.filter( mesh => mesh.visible ).map ( mesh => mesh.clone() );
 	THRU.meshGroupVisible.add( ...arr );
 
-	//console.log( 'THRU.meshGroupVisible', THRU.meshGroupVisible );
+	//console.log( "THRU.meshGroupVisible", THRU.meshGroupVisible );
 
 	return THRU.meshGroupVisible;
 
@@ -180,7 +178,7 @@ THRU.toggleWireframe = function( obj = THR.scene ) {
 THRU.setObjectOpacity = function( obj = THR.scene, range = rngOpacity ) {
 
 	const opacity = parseInt( range.value, 10 );
-	outOpacity.value = opacity + '%';
+	outOpacity.value = opacity + "%";
 
 	obj.traverse( function ( child ) {
 
@@ -204,7 +202,7 @@ THRU.addSomeLights = function() {
 	THR.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 	THRU.lightAmbient = new THREE.AmbientLight( 0x888888 );
-	THRU.lightAmbient.name = 'lightAmbient';
+	THRU.lightAmbient.name = "lightAmbient";
 	THR.scene.add( THRU.lightAmbient );
 
 	THRU.light1 = new THREE.DirectionalLight( 0xffffff, 0.75 );
@@ -226,7 +224,7 @@ THRU.addSomeLights2 = function() {
 	THR.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 	THRU.lightAmbient = new THREE.AmbientLight( 0x444444 );
-	THRU.lightAmbient.name = 'lightAmbient';
+	THRU.lightAmbient.name = "lightAmbient";
 	THR.scene.add( THRU.lightAmbient );
 
 	THRU.lightDirectional = new THREE.DirectionalLight( 0xffffff, 1 );
@@ -248,10 +246,11 @@ THRU.addSomeLights2 = function() {
 
 };
 
+
 ////////// Info / move to a view menu??
 
 THRU.getRendererInfo = function() {
-	//console.log( 'THR.renderer.info', THR.renderer.info );
+	//console.log( "THR.renderer.info", THR.renderer.info );
 
 	const htm =
 	`
@@ -284,7 +283,7 @@ THRU.getRendererInfo = function() {
 
 THRU.setStats = function() {
 
-	const script = document.createElement('script');
+	const script = document.createElement("script");
 
 	script.onload = function() {
 
@@ -302,7 +301,7 @@ THRU.setStats = function() {
 
 	};
 
-	script.src = 'https://rawgit.com/mrdoob/stats.js/master/build/stats.min.js';
+	script.src = "https://cdn.jsdelivr.net/gh/mrdoob/stats.js@master/build/stats.min.js";
 
 	document.head.appendChild( script );
 
