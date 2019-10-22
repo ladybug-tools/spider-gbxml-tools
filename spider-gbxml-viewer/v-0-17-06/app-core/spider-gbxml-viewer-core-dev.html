@@ -4,10 +4,10 @@
 
 <meta charset = "utf-8">
 <meta name = "copyright" content ="Ladybug Tools authors" >
-<meta name = "date" content = "2019-10-17" >
+<meta name = "date" content = "2019-10-21" >
 <meta name = "description" content = "Basic file that opens a gbXML file and displays it in 3D" >
 <meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.17.06-0ordev" >
+<meta name = "version" content = "0.17.06-1dev cor" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
 <title>Spider gbXML Viewer Core Dev</title>
@@ -18,13 +18,13 @@
 
 <style>
 
-* { box-sizing: border-box; }
+	* { box-sizing: border-box; }
 
-body { font: 11pt monospace; margin: 0; overflow: hidden; }
+	body { font: 11pt monospace; margin: 0; overflow: hidden; }
 
-#divContents {  height: 100vh; width: 100vw; }
+	#divContents {  height: 100vh; width: 100vw; }
 
-#divRendererInfo { position: absolute; left:1rem; top:1rem;}
+	#divRendererInfo { position: absolute; left:1rem; top:1rem;}
 
 </style>
 
@@ -43,7 +43,7 @@ body { font: 11pt monospace; margin: 0; overflow: hidden; }
 <script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r109/examples/js/controls/OrbitControls.js" ></script>
 
 <!-- Tootoo -->
-<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-08/fob-file-open-basic/fob-file-open-basic.js" ></script>
+<script src = "fob-file-open-basic/fob-file-open-basic.js" ></script>
 
 <!-- Spider Three.js -->
 <script src = "core-thr-three/thr-threejs.js" ></script>
@@ -70,9 +70,9 @@ body { font: 11pt monospace; margin: 0; overflow: hidden; }
 <script>
 
 
-//FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
 FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/bilt-2019-template.zip";
-//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/coventry-university-of-warwick-small.zip";
+//FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
+//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/warwick-university-5k-surfaces.zip";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/annapolis-md-single-family-residential-2016.xml"
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/pittsburg-airport.zip";
 //FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/GreenBuildingXML/Sample-gbXML-Files@master/gbXML_TRK.xml";

@@ -9,7 +9,7 @@ var GBXU = {
 	script: {
 
 		copyright: "Copyright 2019 Ladybug Tools authors",
-		date: "2019-10-17",
+		date: "2019-10-21",
 		description: "GbXML utilities: all this is a bit idiosyncratic / a random collection of stuff",
 		helpFile: "../js-core-gbxml/gbxu-gbxml-utilities.md",
 		license: "MIT License",
@@ -37,7 +37,8 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 
 	THRU.zoomObjectBoundingSphere();
 
-	GBXU.setSurfaceTypesVisible( GBXU.filtersDefault );
+
+	if ( FOB.size > 5000000 ) { GBXU.setSurfaceTypesVisible( GBXU.filtersDefault ); }
 
 	const meshes = GBX.meshGroup.children.filter( mesh =>
 		GBXU.filtersDefault.includes( mesh.userData.surfaceType) )
@@ -70,9 +71,9 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 
 	GBX.storeyIdsActive = GBX.storeysJson.map( storey => storey.id );
 
-	window.addEventListener( 'keyup', GBXU.onFirstTouch , false );
-	window.addEventListener( 'click', GBXU.onFirstTouch, false );
-	window.addEventListener( 'touchstart', GBXU.onFirstTouch, false );
+	window.addEventListener( "keyup", GBXU.onFirstTouch , false );
+	window.addEventListener( "click", GBXU.onFirstTouch, false );
+	window.addEventListener( "touchstart", GBXU.onFirstTouch, false );
 
 };
 
@@ -94,9 +95,9 @@ GBXU.onFirstTouch = function() {
 
 	THRU.getMeshEdges( GBX.meshGroup );
 
-	window.removeEventListener( 'keyup', GBXU.onFirstTouch );
-	window.removeEventListener( 'click', GBXU.onFirstTouch );
-	window.removeEventListener( 'touchstart', GBXU.onFirstTouch );
+	window.removeEventListener( "keyup", GBXU.onFirstTouch );
+	window.removeEventListener( "click", GBXU.onFirstTouch );
+	window.removeEventListener( "touchstart", GBXU.onFirstTouch );
 
 };
 
@@ -110,10 +111,10 @@ GBXU.getStoreysJson = function() {
 	const storeyLevelsSorted = storeyLevels.slice().sort( (a, b) => a - b );
 	//const storeyLevelsSorted = storeyLevels.slice().sort();
 
-	//console.log( 'storeyLevelsSorted', storeyLevelsSorted );
+	//console.log( "storeyLevelsSorted", storeyLevelsSorted );
 
 	GBX.storeysJson = storeyLevelsSorted.map( ( level, count ) => {
-		//console.log( 'level', level );
+		//console.log( "level", level );
 
 		const storey = GBX.storeys.find( storey => storey.includes( `<Level>${ level }<\/Level>` ) );
 
@@ -131,7 +132,7 @@ GBXU.getStoreysJson = function() {
 
 	GBX.storeyIdsActive = GBX.storeysJson.map( storey => storey.id );
 
-	//console.log( 'GBX.storeysJson', GBX.storeysJson );
+	//console.log( "GBX.storeysJson", GBX.storeysJson );
 
 };
 
@@ -150,7 +151,7 @@ GBXU.setElementsJson = function() {
 
 
 	//const verticesCount = GBX.surfaces.map( surfaces => GBX.getCoordinates( surfaces ) );
-	//console.log( 'vertices', vertices );
+	//console.log( "vertices", vertices );
 
 	GBX.constructions = GBX.text.match( /<Construction(.*?)<\/Construction>/gi ) || [];
 
@@ -177,7 +178,7 @@ GBXU.setElementsJson = function() {
 	};
 
 	const keys = Object.keys( items );
-	//console.log( 'keys', keys );
+	//console.log( "keys", keys );
 
 	GBXU.stats =
 		`<b>gbXML Statistics</b>` +
@@ -230,7 +231,7 @@ GBXU.getSurfaceOpenings = function() {
 		const reSurface = /<Opening(.*?)<\/Opening>/g;
 		const openings = surfaceText.match( reSurface );
 
-		//console.log( 'o', openings );
+		//console.log( "o", openings );
 
 		if ( !openings ) { continue; }
 
@@ -238,13 +239,13 @@ GBXU.getSurfaceOpenings = function() {
 
 			const polyloops = GBX.getPolyLoops( opening );
 
-			//console.log( 'bb', polyloops );
+			//console.log( "bb", polyloops );
 
 			for ( let polyloop of polyloops ) {
 
 				const coordinates = GBX.getCoordinates( polyloop );
 
-				//console.log( 'coordinates', coordinates );
+				//console.log( "coordinates", coordinates );
 
 				const vertices = [];
 
@@ -254,10 +255,10 @@ GBXU.getSurfaceOpenings = function() {
 
 				}
 
-				//console.log( 'vertices', vertices );
+				//console.log( "vertices", vertices );
 
 				const geometry = new THREE.Geometry().setFromPoints( vertices );
-				//console.log( 'geometry', geometry );
+				//console.log( "geometry", geometry );
 
 				const line = new THREE.LineLoop( geometry, material );
 				openingGroup.push( line );
@@ -280,9 +281,9 @@ GBXU.toggleOpenings = function() {
 	if ( GBX.openingGroup && GBX.openingGroup.length === 0 ) {
 
 		GBX.openingGroup = new THREE.Group();
-		GBX.openingGroup.name = 'GBX.openingGroup';
+		GBX.openingGroup.name = "GBX.openingGroup";
 		const openingGroup = GBXU.getSurfaceOpenings();
-		//console.log( 'openingGroup', openingGroup );
+		//console.log( "openingGroup", openingGroup );
 
 		if ( !openingGroup.length ) { return; }
 
@@ -343,7 +344,7 @@ GBXU.setSurfaceTypesVisible = function ( typesArray ) {
 
 
 GBXU.sendSurfacesToThreeJs = function( surfacesText = [] ) {
-	//console.log( 'surfacesText', surfacesText );
+	//console.log( "surfacesText", surfacesText );
 
 	GBX.meshGroup.children.forEach( surface=> surface.visible = false );
 	//const timeStart = performance.now();
@@ -372,7 +373,7 @@ GBXU.sendSurfacesToThreeJs = function( surfacesText = [] ) {
 GBXU.addMeshes = function( timestamp ) {
 
 	if ( GBX.count < GBX.surfacesTmp.length ) {
-		//console.log( 'GBX.count', GBX.count );
+		//console.log( "GBX.count", GBX.count );
 
 		const delta = timestamp - GBX.lastTimestamp;
 		GBX.lastTimestamp = timestamp;

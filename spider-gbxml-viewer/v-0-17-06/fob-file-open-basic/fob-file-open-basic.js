@@ -332,6 +332,8 @@ FOB.onProgress = function( size = 0, note = '' ) {
 
 	const timeToLoad = ( performance.now() - FOB.timeStart ).toLocaleString();
 
+	FOB.size = size;
+
 	FOB.fileInfo =
 	`
 		<p>
