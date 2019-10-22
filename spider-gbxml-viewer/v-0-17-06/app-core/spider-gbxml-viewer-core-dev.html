@@ -20,11 +20,33 @@
 
 	* { box-sizing: border-box; }
 
-	body { font: 11pt monospace; margin: 0; overflow: hidden; }
+	:root {
+		--background-color: #f7f6ee;
+		--secondary-color: #fbfefb;
+		--text-dark: #101010;
+		--text: #333333;
+		--text-light: #7b7b85;
+	}
+
+	body { font: 11pt monospace; margin: 0; overflow: hidden;
+		background: var(--background-color);
+		color: var(--text);
+	}
 
 	#divContents {  height: 100vh; width: 100vw; }
 
 	#divRendererInfo { position: absolute; left:1rem; top:1rem;}
+
+	@media (prefers-color-scheme: dark) {
+		:root {
+			--background-color: #1e1f23;
+			--secondary-color: #232428;
+			--text-dark: #efefef;
+			--text: #c4c5c9;
+			--text-light: #6c6d71;
+			--text-lighter: #8e8f93;
+		}
+	}
 
 </style>
 

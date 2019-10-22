@@ -26,7 +26,14 @@
 
 <summary>Change Log</summary>
 
-### 2019-10-17 ~ Thep
+### 2019-10-22 ~ Theo
+
+SGV v0.17.06-1thm
+
+* F: Now works with OS dark/light modes
+
+
+### 2019-10-17 ~ Theo
 
 SGV v0.17.05-0thm
 

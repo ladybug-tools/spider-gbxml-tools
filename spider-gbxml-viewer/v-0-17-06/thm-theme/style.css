@@ -13,7 +13,8 @@
 	font-family: 'Lato', sans-serif;
 	--color: #6ec071; /* #4a9d36; */
 	--colorLight: #b7dfb8; /* #93cf95; hsla(79, 61%, 70%, 1); #9bcc31; */
-	--colorBackground: rgb(244, 250, 244); /* #f7f8f9; */
+	--background-color:  #f7f6ee; /* #f7f8f9; */
+	--secondary-color: rgb(240, 250, 244);
 	--mnu-width: 22rem;
 	--screen-width: calc(100vw);
 	--headerHeight: 6rem;
@@ -25,6 +26,9 @@ html {
 
 body {
 	margin: 0;
+
+	background: var(--background-color);
+
 }
 
 a {
@@ -214,7 +218,7 @@ h1, h2, h3, h4, h5 {
 
 
 #navMenu {
-	background-color: var(--colorBackground );
+	background-color: var(--secondary-color );
 	height: 100%;
 	left: 0;
 	margin: 0;
@@ -342,3 +346,14 @@ h1, h2, h3, h4, h5 {
 	}
 
 }
+
+@media (prefers-color-scheme: dark) {
+	:root {
+	  --background-color: #1e1f23;
+	  --secondary-color: #235528;
+	  --text-dark: #efefef;
+	  --text: #c4c5c9;
+	  --text-light: #6c6d71;
+	  --text-lighter: #8e8f93;
+	}
+  }

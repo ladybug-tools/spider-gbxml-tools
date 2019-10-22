@@ -5,11 +5,11 @@
 const THM = {
 
 	script: {
-		"copyright": "Copyright 2019 pushMe-pullYou authors. MIT License",
-		"date": "2019-09-30",
+		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
+		"date": "2019-10-22",
 		"helpFile": "",
 		"license": "MIT License",
-		"version": "0.14.08-0",
+		"version": "0.17.06-1thhm",
 	},
 
 
@@ -136,7 +136,8 @@ THM.loadCssDefault = function() {
 	localStorage.setItem( THM.themeUrlStorage, "" );
 	THMcssCurrent.value = "";
 
-	navMenu.style.backgroundColor = "rgb(244, 250, 244)"; // "#eee";
+	//navMenu.style.backgroundColor = "rgb(244, 250, 244)"; // "#eee";
+	navMenu.style.backgroundColor = "var( --secondary-color"; /* "#eee"; */
 	//navMenu.style.padding = "0"; // why is this needed?
 
 };
