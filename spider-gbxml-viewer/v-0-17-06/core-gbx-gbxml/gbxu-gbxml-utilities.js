@@ -37,7 +37,6 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 
 	THRU.zoomObjectBoundingSphere();
 
-
 	if ( FOB.size > 5000000 ) { GBXU.setSurfaceTypesVisible( GBXU.filtersDefault ); }
 
 	const meshes = GBX.meshGroup.children.filter( mesh =>

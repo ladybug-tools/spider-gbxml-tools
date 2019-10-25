@@ -5,8 +5,8 @@
 <meta name = "viewport" content= "width=device-width, initial-scale=1" >
 <meta name = "description" content = "Spider gbXML Viewer running in an iframe. Drag lower right corner to resize the view." >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
-<meta name = "date" content = "2019-10-17" >
-<meta name = "version" content = "0.17.06" >
+<meta name = "date" content = "2019-10-24" >
+<meta name = "version" content = "0.00.00" >
 <title></title>
 <style>
 
@@ -27,13 +27,15 @@
 	main { border: 0px; height: 100%; left: var( --mnu-width ); margin: 0;
 		padding: 0 1rem; position: absolute; width: calc( 100% - var( --mnu-width ) );  }
 
-	#navMenu { background-color: #eee; left: 0; margin: 0; padding: 0 1rem;
+	#navMenu { background-color: #eee; height: 100vh; left: 0; margin: 0; padding: 0 1rem;
 		position: absolute; top: 0; width: var( --mnu-width ); }
 
 
 </style>
 </head>
 <body>
+<script src=https://pushme-pullyou.github.io/tootoo14/js-14-08/gat-github-access-token/gat-github-access-token.js ></script>
+
 
 	<nav id="navMenu" >
 
@@ -69,36 +71,49 @@
 		<p>
 			<button onclick=ifrMain.contentWindow.location.hash="file:///D:/test-gbxml.xml"; >file:///D:/test-gbxml.xml</button>
 		</p>
+
+		<div id=divGAT ></p>
+
 	</nav>
 
 	<main>
 
 		<div id="divContents" ></div>
 
-		<div style="height:30rem; overflow:auto; /* needed */ resize: both; width: 100%;" >
+			<div style="height:30rem; overflow:auto; /* needed */ resize: both; width: 100%;" >
 
-			<iframe id=ifrMain src=../../../spider-gbxml-viewer/v-0-17-06/app-core/spider-gbxml-viewer-core.html style=height:100%;width:100%; ></iframe>
+				<iframe id=ifrMain src=../../../spider-gbxml-viewer/v-0-17-06/app-core/spider-gbxml-viewer-core.html style=height:100%;width:100%; ></iframe>
 
-		</div>
+			</div>
+
+			<p><textarea id=txtMsg style=width:100% placeholder="enter messages here" ></textarea></p>
+
+			<p><input type=checkbox id=chkLeader >leader &nbsp; <button onclick=putJson(); >putJson</button></p>
 
 		<div>
 
 
-		<p id=pData >
-
+		<p>
 			<div id=divThreejsData >bbb</div>
-
-
 		</p>
+
+		<div id=divMessages > </div>
+
+		<div id=divToSend ></div>
+
+		<div id=divGithubResponse ></div>
 	</main>
 
 
 <script>
 
+const url = "https://api.github.com/repos/ladybug-tools/spider-gbxml-tools/contents/sandbox/spider-gbxml-collaborator/spider-gbxml-collaborator.json";
+
+const tmp = {}
 var ifr;
 
-const urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-01/app-core/view-core-in-iframe.html";
-const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-64.png";
+const urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-collaborator/v-0-00";
+const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-32.png";
 
 init();
 
@@ -108,21 +123,127 @@ function init() {
 
 	ifr = ifrMain.contentWindow;
 
-	ifr.onload = () => { console.log( 'on load', ifr.GBX );
+	ifr.onload = () => {
+
+		//console.log( 'on load', ifr.GBX );
+
+		//setInterval( getData, 500 );
+
+		setTimeout( function() {
+
+			ifr.THR.controls.autoRotate = false;
+
+			getJson();
+
+			initGetJson();
 
 
-	setInterval( getData, 500 );
+		}, 200 );
 
-} // not needed - just to show it's available
+	}
+
+	divGAT.innerHTML = GAT.getMenuGitHubAccessToken();
+
+	txtMsg.value=Math.random();
+
+}
+
+
+function initGetJson() {
+
+	setInterval( getJson, 500 );
+
+}
+
+function getJson() {
+
+	if ( chkLeader.checked === true ) return;
+
+	const request = new Request( url )
+
+	fetch( request ).then( response => response.json() )
+	.then( data => {
+
+		//console.log( 'data', data.content );
+
+		const decodedData = window.atob( data.content ); // decode the string
+
+		json = JSON.parse( decodedData );
+
+		keys = Object.keys( json );
+		htm = keys.map( key => `<div>${ key }: ${ json[ key ] }` )
+		divThreejsData.innerHTML = htm;
+
+		if ( json.message !== tmp.messagePrevious ) {
+
+			divMessages.innerHTML += `<div>${ json.message }</div>`;
+
+		}
+
+		tmp.messagePrevious = json.message;
+
+		if ( json.position ) { ifr.THR.camera.position.set( ...json.position ); }
+
+		logFileContent = decodedData;
+		logFileSha = data.sha;
+
+
+	} ).catch( ( err ) => {
+
+		console.warn( 'Something went wrong.', err );
+
+	} );
+
+
+
+}
+
+
+function putJson() {
+
+	const json = {};
+	json.position = Object.values( ifr.THR.camera.position );
+	json.message = txtMsg.value;
+	json.date = new Date().toISOString();
+	json.uuid = getUuidv4();
+
+	const content = JSON.stringify( json );
+
+	//divToSend.innerHTML = content;
+
+	const codedData = window.btoa( content );
+
+	const request = new Request( url );
+
+	fetch( request, {
+		method: "PUT",
+		headers: { "Authorization": "token " + GAT.accessToken, "Content-Type": "text/plain" },
+		body: JSON.stringify( {
+			"branch": "master",
+			"content": codedData,
+			"message": "add to file",
+			"sha": logFileSha
+		} ),
+
+	} )
+	.then( response => response.json() )
+	.then( data => {
+
+		//divGithubResponse.innerText = (JSON.stringify( data ) );
+
+	} )
+	.catch(  err => console.warn( 'Something went wrong.', err ) );
 
 }
 
 
 
 
-function getData() {
+function getUuidv4() {
 
-	divThreejsData.innerHTML = JSON.stringify( ifr.THR.camera.position );
+	return ( [ 1e7 ] + -1e3 + -4e3 + -8e3 + -1e11 ).replace( /[018]/g, c =>
+		( c ^ crypto.getRandomValues( new Uint8Array( 1 )  )[ 0 ] & 15 >> c / 4 ).toString( 16 )
+	);
 
 }
 
