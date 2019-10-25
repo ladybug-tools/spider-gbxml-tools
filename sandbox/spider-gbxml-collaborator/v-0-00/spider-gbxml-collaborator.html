@@ -132,7 +132,7 @@ function init() {
 
 		setTimeout( function() {
 
-			//ifr.THR.controls.autoRotate = false;
+			ifr.THR.controls.autoRotate = false;
 
 			//getJson();
 
@@ -212,10 +212,10 @@ function getJsonApi() {
 	fetch( request ).then( response => response.json() )
 	.then( json => {
 
-		logFileSha = data.sha;
+		logFileSha = json.sha;
 
 	} );
-	
+
 }
 
 
