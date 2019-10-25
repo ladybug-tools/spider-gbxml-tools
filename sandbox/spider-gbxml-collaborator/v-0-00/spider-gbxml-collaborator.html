@@ -161,7 +161,7 @@ function getJson() {
 
 	const request = new Request( url )
 
-	fetch( request ).then( response => response.json() )
+	fetch( request,  {cache: "no-store"} ).then( response => response.json() )
 	.then( data => {
 
 		//console.log( 'data', data.content );
