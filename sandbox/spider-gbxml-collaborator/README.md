@@ -49,7 +49,7 @@ Open this script in two tabs, windows or devices. Check the 'editor' box in one 
 
 <details>
 
-<summary>To Do / Wish List</summary>
+<summary open>To Do / Wish List</summary>
 
 * 2019-10-25 ~ Theo ~ Add camera 'tweeing' - smooth transitions between camera positions
 * 2019-10-25 ~ Theo ~ Add user details such as IP address or Lat/Lon
