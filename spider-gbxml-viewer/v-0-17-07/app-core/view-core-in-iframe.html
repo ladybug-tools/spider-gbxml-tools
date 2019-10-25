@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1" >
+<meta name = "description" content = "Spider gbXML Viewer running in an iframe. Drag lower right corner to resize the view." >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2019-10-17" >
+<meta name = "version" content = "0.17.06" >
+<title></title>
+<style>
+
+	* { box-sizing: border-box; }
+
+	:root { --mnu-width: 22rem; --screen-width: calc( 100vw ); --headerHeight: 6rem; }
+
+	html { height: 100%; }
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; padding: 0 0.5rem; }
+
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus, a:active { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+</style>
+</head>
+<body>
+
+	<nav id="navMenu" >
+
+		<div id="divTitle" ></div>
+
+		<p>
+			<button id=but onclick=ifrMain.contentDocument.body.style.backgroundColor="black"; accessKey= 'z' title='access key: z '>
+				update background color in iframe
+			</button>
+		</p>
+
+		<p>Load sample files into the <code>iframe</code> via a URL:</p>
+
+		<p>
+			<button onclick=ifrMain.contentWindow.location.hash="https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml"; >Clifton Downs</button>
+		</p>
+		<p>
+			<button onclick=ifrMain.contentWindow.location.hash="https://www.ladybug.tools/spider/gbxml-sample-files/zip/warwick-university-5k-surfaces.zip"; >Warwick University</button>
+		</p>
+		<p>
+			<button onclick=ifrMain.contentWindow.location.hash="https://www.ladybug.tools/spider/gbxml-sample-files/annapolis-md-single-family-residential-2016.xml"; >Annapolis</button>
+		</p>
+		<p>
+			<button onclick=ifrMain.contentWindow.location.hash="https://www.ladybug.tools/spider/gbxml-sample-files/zip/royal-arsenal-woolwich.zip"; >Royal Arsenal</button>
+		</p>
+		<p>
+			<button onclick=ifrMain.contentWindow.location.hash="https://cdn.jsdelivr.net/gh/GreenBuildingXML/Sample-gbXML-Files@master/gbXML_TRK.xml"; >TRK</button>
+		</p>
+		<p>
+			Example for loading a local file. Edit the HTML file to suit your needs:<br>
+		</p>
+
+		<p>
+			<button onclick=ifrMain.contentWindow.location.hash="file:///D:/test-gbxml.xml"; >file:///D:/test-gbxml.xml</button>
+		</p>
+	</nav>
+
+	<main>
+
+		<div id="divContents" ></div>
+
+		<div style="height:30rem; overflow:auto; /* needed */ resize: both; width: 100%;" >
+
+			<iframe id=ifrMain src=spider-gbxml-viewer-core-dev.html style=height:100%;width:100%; ></iframe>
+
+		</div>
+
+
+	</main>
+
+
+<script>
+
+var ifr;
+
+const urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/blob/master/spider-gbxml-viewer/v-0-17-01/app-core/view-core-in-iframe.html";
+const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-64.png";
+
+init();
+
+function init() {
+
+	divTitle.innerHTML = getTitle();
+
+	ifr = ifrMain.contentWindow;
+
+	ifr.onload = () => { console.log( 'on load', ifr.GBX ); } // not needed - just to show it's available
+
+}
+
+
+
+
+function getTitle() {
+
+	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+	const version = document.head.querySelector( "[ name=version ]" ).content;
+
+	const htm =
+	`
+		<h2>
+			<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
+				<img src=${ urlSourceCodeIcon } height=18 style=opacity:0.5; >
+			</a>
+			<a href="" title="Click to reload this page" >${ document.title } ${ version }</a>
+		</h2>
+
+		<p>
+			${ document.head.querySelector( "[ name=description ]" ).content }
+		</p>
+	`;
+
+	return htm;
+
+}
+
+</script>
+</body>
+</html>
