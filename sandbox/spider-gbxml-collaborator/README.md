@@ -24,7 +24,7 @@ If the model appears to be moving by itself, there is probably somebody updating
 
 ### Usage
 
-Open this script in two tabs, windows or devices. Check the 'editor' box in one tab and rotate the model or enter a message in the text box. Press 'send data to server' and see the other tab update.
+Open this script in two tabs, windows or devices. Uncheck the 'Follow the leadee' box in one tab and rotate the model or enter a message in the text box. Press 'send data to server' and see the other tab update.
 
 ### Versions
 
