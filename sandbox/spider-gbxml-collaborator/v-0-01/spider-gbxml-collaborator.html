@@ -6,7 +6,7 @@
 <meta name = "description" content = "Spider gbXML Viewer running in an iframe. Drag lower right corner to resize the view." >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
 <meta name = "date" content = "2019-10-24" >
-<meta name = "version" content = "0.00.00" >
+<meta name = "version" content = "0.01.00" >
 <title></title>
 <style>
 
@@ -108,7 +108,9 @@
 <script>
 
 
-const url = "https://api.github.com/repos/ladybug-tools/spider-gbxml-tools/contents/sandbox/spider-gbxml-collaborator/spider-gbxml-collaborator.json";
+let url = "https://jsonbox.io/box_b89a6b17fbef17980b5c";
+
+let json;
 
 const tmp = {}
 var ifr;
@@ -136,9 +138,6 @@ function init() {
 
 			initGetJson();
 
-			//getJson();
-
-
 		}, 800 );
 
 	}
@@ -162,6 +161,8 @@ function initGetJson() {
 
 	intervalId = setInterval( getJson, 500 );
 
+	//getJson();
+
 }
 
 
@@ -177,15 +178,14 @@ function getJson() {
 		return;
 
 	}
-	
 
-	const url = "https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-collaborator/spider-gbxml-collaborator.json";
 
 	const request = new Request( url )
 
 	fetch( request, { cache: "no-store" } ).then( response => response.json() )
-	.then( json => {
+	.then( data => {
 
+		json = JSON.parse( data[ 0 ].content );
 		keys = Object.keys( json );
 		htm = keys.map( key => `<div>${ key }: ${ json[ key ] }` )
 		divThreejsData.innerHTML = htm;
@@ -199,6 +199,8 @@ function getJson() {
 		tmp.messagePrevious = json.message;
 
 		if ( json.position ) { ifr.THR.camera.position.set( ...json.position ); }
+
+		//console.log( 'json', json );
 
 	} );
 
@@ -217,7 +219,7 @@ function getJsonApi() {
 	const request = new Request( url )
 
 	fetch( request ).then( response => response.json() )
-	.then( json => {
+	.then( data => {
 
 		logFileSha = json.sha;
 
@@ -240,23 +242,20 @@ function putJson() {
 
 	const codedData = window.btoa( content );
 
-	const request = new Request( url );
+	const request = new Request( url + "/5db27779bfc79a0017cb9e84");
 
 	fetch( request, {
 		method: "PUT",
-		headers: { "Authorization": "token " + GAT.accessToken, "Content-Type": "text/plain" },
+		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify( {
-			"branch": "master",
-			"content": codedData,
-			"message": "add to file",
-			"sha": logFileSha
+			"content": content
 		} ),
 
 	} )
 	.then( response => response.json() )
 	.then( data => {
 
-		//divGithubResponse.innerText = (JSON.stringify( data ) );
+		divGithubResponse.innerText = (JSON.stringify( data ) );
 
 	} )
 	.catch(  err => console.warn( 'Something went wrong.', err ) );
@@ -265,6 +264,23 @@ function putJson() {
 
 
 
+function deleteJson() {
+
+id = json[ 1 ]._id;
+
+fetch( url + "/" + id, {
+	method: "DELETE",
+	headers: { "content-type": "application/json" }
+
+} )
+.then( response => response.json() )
+.then( data => {
+
+	divContents.innerText += `${ JSON.stringify( data ) }\n\n`;
+
+} )
+
+}
 
 function getUuidv4() {
 
