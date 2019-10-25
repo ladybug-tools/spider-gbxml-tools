@@ -46,7 +46,7 @@
 
 	<!--TooToo ~ menus generally -->
 	<script src="pop-popup/pop-popup.js"></script>
-	<script src="mnu-menu/mas-menu-app-switch.js"></script>
+	<script src="../../lib/mas-menu-app-switch/mas-menu-app-switch-0-00.js"></script>
 	<script src="mnu-menu/mnu-menu.js"></script>
 
 
@@ -349,6 +349,14 @@
 
 	</nav>
 
+	<dialog id=dia style="margin:1rem 1rem 1rem auto;max-width: 50ch;" >
+
+		<div id=diaDivContents ></div>
+
+		<button onclick=dia.close(); >OK</button>
+
+	</dialog>
+
 
 	<script>
 
@@ -469,6 +477,22 @@
 				THM.init();
 
 			}
+
+			diaDivContents.innerHTML =
+`
+<h3>2019-10-22</h3>
+
+<p>This could be the start of a new way of handling the popup menu. It's built on the <code>&lt;dialog></code> element available in recent versions of browsers. {ignore the lack of style for now.)</p>
+
+<p>If your operating system supports switching between light and dark mode, then try switching now. Maevia now supports your darkest fantasies. And note slight update in light background color.</p>
+
+<p>'Lazy loading' is now turned off for files smaller than 5 MB. Lazy loading is the feature that completes loading the model file only when you click on the screen.</p>
+
+<p>Left menu 'breadcrumbs' are now a dropdown select element. You may try many different Spider tools with a click or two. This feature will be ported to all the versions of the viewer.</p>
+
+<p>And, of course there have been bug fixes and cleanups but the big fin: See Michal's LinkedIn post for the <a href="https://www.linkedin.com/posts/michal-dengusiak-a8028020_ladybugspidergbxmlviewer-maeviaver17-introduction-activity-6591373256895283200-Vo5O" target="_blank">latest instruction video</a></p>
+
+`;
 
 		}
 

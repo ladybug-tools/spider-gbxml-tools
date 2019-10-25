@@ -6,7 +6,7 @@
 <summary>Concept</summary>
 
 
-## [Spider gbXML Collaborator]( file:///D:/Dropbox/Public/git-repos/spider-gbxml-tools/sandbox/spider-gbxml-collaborator/v-0-01/spider-gbxml-collaborator.html )
+## [Spider gbXML Collaborator]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-collaborator/v-0-01/spider-gbxml-collaborator.html )
 
 From time to time several people may need to collaborate on the same gbXML file.
 
