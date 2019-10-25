@@ -88,7 +88,7 @@
 
 			<p><textarea id=txtMsg style=width:100% placeholder="enter messages here" ></textarea></p>
 
-			<p><input type=checkbox id=chkLeader onclick=onCheckboxChange() >leader &nbsp; <button onclick=putJson(); >putJson</button></p>
+			<p><input type=checkbox id=chkLeader onclick=onCheckboxChange() >editor &nbsp; <button onclick=putJson(); >send data to server</button></p>
 
 		<div>
 
@@ -140,7 +140,7 @@ function init() {
 
 	divGAT.innerHTML = GAT.getMenuGitHubAccessToken();
 
-	txtMsg.value=Math.random();
+	//txtMsg.value=Math.random();
 
 }
 
@@ -208,8 +208,6 @@ function getJson() {
 
 		tmp.messagePrevious = json.message;
 
-		if ( tmp.uuid !== json.uuid ) { chkLeader.checked = false; }
-
 		if ( json.position ) { ifr.THR.camera.position.set( ...json.position ); }
 
 		//console.log( 'json', json );
@@ -258,11 +256,9 @@ function putJson() {
 	.then( response => response.json() )
 	.then( data => {
 
-		divGithubResponse.innerText = (JSON.stringify( data ) );
+		//divGithubResponse.innerText = (JSON.stringify( data ) );
 
-	} )
-	.catch(  err => console.warn( 'Something went wrong.', err ) );
-
+	} );
 }
 
 
