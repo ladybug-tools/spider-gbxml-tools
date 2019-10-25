@@ -88,7 +88,7 @@
 
 			<p><textarea id=txtMsg style=width:100% placeholder="enter messages here" ></textarea></p>
 
-			<p><input type=checkbox id=chkLeader onchange=getJsonApi() >leader &nbsp; <button onclick=putJson(); >putJson</button></p>
+			<p><input type=checkbox id=chkLeader onclick=onCheckboxChange() >leader &nbsp; <button onclick=putJson(); >putJson</button></p>
 
 		<div>
 
@@ -128,10 +128,6 @@ function init() {
 
 	ifr.onload = () => {
 
-		//console.log( 'on load', ifr.GBX );
-
-		//setInterval( getData, 500 );
-
 		setTimeout( function() {
 
 			ifr.THR.controls.autoRotate = false;
@@ -167,7 +163,7 @@ function initGetJson() {
 
 
 
-function getJson() {
+function onCheckboxChange() {
 
 	if ( chkLeader.checked === true ) {
 
@@ -175,19 +171,33 @@ function getJson() {
 
 		console.log( 'gtJson stopped', intervalId );
 
+		setControls( true );
+
 		return;
+
+	} else {
+
+		setControls( false );
+
+		intervalId = setInterval( getJson, 500 );
 
 	}
 
+}
+
+
+
+function getJson() {
 
 	const request = new Request( url )
 
 	fetch( request, { cache: "no-store" } ).then( response => response.json() )
 	.then( data => {
 
-		json = JSON.parse( data[ 0 ].content );
-		keys = Object.keys( json );
-		htm = keys.map( key => `<div>${ key }: ${ json[ key ] }` )
+		const json = JSON.parse( data[ 0 ].content );
+		const keys = Object.keys( json );
+		const htm = keys.map( key => `<div>${ key }: ${ json[ key ] }` )
+
 		divThreejsData.innerHTML = htm;
 
 		if ( json.message !== tmp.messagePrevious ) {
@@ -197,6 +207,8 @@ function getJson() {
 		}
 
 		tmp.messagePrevious = json.message;
+
+		if ( tmp.uuid !== json.uuid ) { chkLeader.checked = false; }
 
 		if ( json.position ) { ifr.THR.camera.position.set( ...json.position ); }
 
@@ -208,22 +220,13 @@ function getJson() {
 
 
 
-function getJsonApi() {
+function setControls( bool = true ) {
 
-	ifr.THR.controls.enableRotate = true;
+	ifr.THR.controls.enableRotate = bool;
 
-	ifr.THR.controls.enableZoom = true;
+	ifr.THR.controls.enableZoom = bool;
 
-	ifr.THR.controls.enablePan = true;
-
-	const request = new Request( url )
-
-	fetch( request ).then( response => response.json() )
-	.then( data => {
-
-		logFileSha = json.sha;
-
-	} );
+	ifr.THR.controls.enablePan = bool;
 
 }
 
@@ -266,19 +269,19 @@ function putJson() {
 
 function deleteJson() {
 
-id = json[ 1 ]._id;
+	const id = json[ 1 ]._id;
 
-fetch( url + "/" + id, {
-	method: "DELETE",
-	headers: { "content-type": "application/json" }
+	fetch( url + "/" + id, {
+		method: "DELETE",
+		headers: { "content-type": "application/json" }
 
-} )
-.then( response => response.json() )
-.then( data => {
+	} )
+	.then( response => response.json() )
+	.then( data => {
 
-	divContents.innerText += `${ JSON.stringify( data ) }\n\n`;
+		divContents.innerText += `${ JSON.stringify( data ) }\n\n`;
 
-} )
+	} )
 
 }
 
