@@ -88,7 +88,7 @@
 
 			<p><textarea id=txtMsg style=width:100% placeholder="enter messages here" ></textarea></p>
 
-			<p><input type=checkbox id=chkLeader >leader &nbsp; <button onclick=putJson(); >putJson</button></p>
+			<p><input type=checkbox id=chkLeader onchange=getJsonApi() >leader &nbsp; <button onclick=putJson(); >putJson</button></p>
 
 		<div>
 
@@ -106,6 +106,7 @@
 
 
 <script>
+
 
 const url = "https://api.github.com/repos/ladybug-tools/spider-gbxml-tools/contents/sandbox/spider-gbxml-collaborator/spider-gbxml-collaborator.json";
 
@@ -131,14 +132,16 @@ function init() {
 
 		setTimeout( function() {
 
-			ifr.THR.controls.autoRotate = false;
+			//ifr.THR.controls.autoRotate = false;
 
-			getJson();
+			//getJson();
 
 			initGetJson();
 
+			//getJson();
 
-		}, 200 );
+
+		}, 800 );
 
 	}
 
@@ -151,24 +154,30 @@ function init() {
 
 function initGetJson() {
 
+	ifr.GBXU.onFirstTouch();
+
+	ifr.THR.controls.enableRotate = false;
+
+	ifr.THR.controls.enableZoom = false;
+
+	ifr.THR.controls.enablepan = false
+
 	setInterval( getJson, 500 );
 
 }
+
+
 
 function getJson() {
 
 	if ( chkLeader.checked === true ) return;
 
+	const url = "https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-collaborator/spider-gbxml-collaborator.json";
+
 	const request = new Request( url )
 
-	fetch( request,  {cache: "no-store"} ).then( response => response.json() )
-	.then( data => {
-
-		//console.log( 'data', data.content );
-
-		const decodedData = window.atob( data.content ); // decode the string
-
-		json = JSON.parse( decodedData );
+	fetch( request, { cache: "no-store" } ).then( response => response.json() )
+	.then( json => {
 
 		keys = Object.keys( json );
 		htm = keys.map( key => `<div>${ key }: ${ json[ key ] }` )
@@ -184,18 +193,29 @@ function getJson() {
 
 		if ( json.position ) { ifr.THR.camera.position.set( ...json.position ); }
 
-		logFileContent = decodedData;
-		logFileSha = data.sha;
-
-
-	} ).catch( ( err ) => {
-
-		console.warn( 'Something went wrong.', err );
-
 	} );
 
+}
 
 
+
+function getJsonApi() {
+
+	ifr.THR.controls.enableRotate = true;
+
+	ifr.THR.controls.enableZoom = true;
+
+	ifr.THR.controls.enablePan = true;
+
+	const request = new Request( url )
+
+	fetch( request ).then( response => response.json() )
+	.then( json => {
+
+		logFileSha = data.sha;
+
+	} );
+	
 }
 
 
