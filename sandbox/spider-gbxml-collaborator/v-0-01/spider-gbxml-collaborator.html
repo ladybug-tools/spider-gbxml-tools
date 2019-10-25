@@ -3,7 +3,7 @@
 <head>
 <meta charset = "utf-8" >
 <meta name = "viewport" content= "width=device-width, initial-scale=1" >
-<meta name = "description" content = "Spider gbXML Viewer running in an iframe. Drag lower right corner to resize the view." >
+<meta name = "description" content = "Open this script in two tabs, windows or devices. Check the 'editor' box in one tab and rotate the model or enter a message in the text box. Press 'send data to server' and see the other tab update " >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
 <meta name = "date" content = "2019-10-24" >
 <meta name = "version" content = "0.01.00" >
@@ -34,18 +34,16 @@
 </style>
 </head>
 <body>
-<script src=https://pushme-pullyou.github.io/tootoo14/js-14-08/gat-github-access-token/gat-github-access-token.js ></script>
-
 
 	<nav id="navMenu" >
 
 		<div id="divTitle" ></div>
 
-		<p>
+		<!-- <p>
 			<button id=but onclick=ifrMain.contentDocument.body.style.backgroundColor="black"; accessKey= 'z' title='access key: z '>
 				update background color in iframe
 			</button>
-		</p>
+		</p> -->
 
 		<p>Load sample files into the <code>iframe</code> via a URL:</p>
 
@@ -71,8 +69,6 @@
 		<p>
 			<button onclick=ifrMain.contentWindow.location.hash="file:///D:/test-gbxml.xml"; >file:///D:/test-gbxml.xml</button>
 		</p>
-
-		<div id=divGAT ></p>
 
 	</nav>
 
@@ -102,6 +98,7 @@
 		<div id=divToSend ></div>
 
 		<div id=divGithubResponse ></div>
+
 	</main>
 
 
@@ -115,7 +112,7 @@ let json;
 const tmp = {}
 var ifr;
 
-const urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-collaborator/v-0-00";
+const urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-collaborator/";
 const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-32.png";
 
 init();
@@ -137,8 +134,6 @@ function init() {
 		}, 800 );
 
 	}
-
-	divGAT.innerHTML = GAT.getMenuGitHubAccessToken();
 
 	//txtMsg.value=Math.random();
 
