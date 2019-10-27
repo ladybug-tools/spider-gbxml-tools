@@ -93,7 +93,6 @@ POP.setPopupShowHide = function( id = butPopupClose, text = POP.popup, footer = 
 		POPspanInfo.innerHTML = info ? info : `v${POP.version} - ${POP.date}`;
 
 
-
 	} else {
 
 		POP.onClickClose();
@@ -153,8 +152,6 @@ POP.callbackMarkdown = function( markdown, target ) {
 	THM.init();
 	
 	navDragMove.hidden = false; // wait until loaded before showing
-
-
 
 };
 
