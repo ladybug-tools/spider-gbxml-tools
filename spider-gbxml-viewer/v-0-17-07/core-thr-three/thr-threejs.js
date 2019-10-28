@@ -11,7 +11,7 @@ var THR = {
 	description: "Three.js core - the basic function to bring Three.js up in your browser",
 	helpFile: "../core-thr-threejs/thr-threejs.md",
 	license: "MIT License",
-	version: "0.17.06-0thr"
+	version: "0.17.07-0thr"
 
 };
 

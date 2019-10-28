@@ -29,7 +29,7 @@
 
 ### 2019-10-21 ~ Theo
 
-GBXU 0.17.06-0
+GBXU 0.17.07-0
 
 * F: Add lazy loading only if file size > 5000000
 

@@ -56,6 +56,12 @@ Or copy this link: https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-vie
 
 <summary>Change Log</summary>
 
+### 2019-10-28 ~ Theo
+
+v0.17.07-2
+
+* B: Stop splash popup appearing in mobile view
+
 ### 2019-10-03 ~ Theo
 
 v0.17.04-0

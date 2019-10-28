@@ -7,12 +7,12 @@ To Do
 * add custom scrollbar - see css.30seconds
 * Add zebra striped list - see css.30seconds
 * Drag and drop not working
-* Check splash screen on mobile
 * Cleanup module by module
 
 
 ## Done
 
+* 2019-10-28 ~ Check splash screen on mobile
 * Core CSS: auto switch between light and dark mode
 * THRU cleaned up a bit
 * lazy loading only if file size > 5000000

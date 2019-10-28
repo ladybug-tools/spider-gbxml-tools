@@ -18,7 +18,7 @@ const MNU = {
 
 MNU.urlSourceCodeImage = "https://pushme-pullyou.github.io/github-mark-32.png";
 MNU.urlSourceCodeIcon = `<img src=${ MNU.urlSourceCodeImage } height=18 style=opacity:0.5 >`;
-MNU.urlSourceCode = `https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-06`;
+MNU.urlSourceCode = `https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-07`;
 
 MNU.title = document.title;
 
@@ -26,7 +26,7 @@ MNU.version = document.head.querySelector( '[ name=version ]' ).content || "";
 MNU.date = document.head.querySelector( '[ name=date ]' ).content || "";
 MNU.description = document.head.querySelector( '[ name=description ]' ).content || "";
 
-MNU.helpFile = "https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-06/README.md";
+MNU.helpFile = "https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-07/README.md";
 
 MNU.target	= ""; //"target=_blank";
 

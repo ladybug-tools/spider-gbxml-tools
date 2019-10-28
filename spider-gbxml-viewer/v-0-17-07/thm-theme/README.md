@@ -28,7 +28,7 @@
 
 ### 2019-10-22 ~ Theo
 
-SGV v0.17.06-1thm
+SGV v0.17.07-1thm
 
 * F: Now works with OS dark/light modes
 

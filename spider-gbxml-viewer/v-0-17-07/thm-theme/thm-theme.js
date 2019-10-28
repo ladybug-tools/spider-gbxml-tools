@@ -9,7 +9,7 @@ const THM = {
 		"date": "2019-10-22",
 		"helpFile": "",
 		"license": "MIT License",
-		"version": "0.17.06-1thhm",
+		"version": "0.17.07-1thhm",
 	},
 
 

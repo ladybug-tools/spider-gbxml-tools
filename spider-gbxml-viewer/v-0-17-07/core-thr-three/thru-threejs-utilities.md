@@ -43,7 +43,7 @@ Three.js Utilities: all this is a bit idiosyncratic / a random collection of stu
 
 ### 2019-10-18 ~ Theo
 
-THRU 0.17.06
+THRU 0.17.07
 
 * First commit
 

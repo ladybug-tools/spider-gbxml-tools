@@ -14,7 +14,7 @@ var GBXU = {
 		helpFile: "../js-core-gbxml/gbxu-gbxml-utilities.md",
 		license: "MIT License",
 		urlSourceCode: "js-core-gbxml/gbxu-gbxml-utilities.js",
-		version: "0.17.06-0gbxu"
+		version: "0.17.07-0gbxu"
 
 	}
 
@@ -62,7 +62,7 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 
 	GBXU.setElementsJson();
 
-	if ( window.POP ) POP.requestFile( POP.popup, divDragMoveContent );
+	//if ( window.POP ) POP.requestFile( POP.popup, divDragMoveContent );
 
 	if ( window.detMenuViewGbxml ) MNU.toggleDetailsOpen( detMenuViewGbxml );
 

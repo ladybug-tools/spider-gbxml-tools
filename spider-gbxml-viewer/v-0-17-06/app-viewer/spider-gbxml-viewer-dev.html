@@ -5,10 +5,10 @@
 
 	<meta charset="utf-8">
 	<meta name="copyright" content="Ladybug Tools authors">
-	<meta name="date" content="2019-10-22">
+	<meta name="date" content="2019-10-28">
 	<meta name="description" content="JavaScript utilities to help you identify and fix common errors in gbXML files">
 	<meta name="keywords" content="gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS">
-	<meta name="version" content="0.17.06-1">
+	<meta name="version" content="0.17.06-2">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<title>Spider gbXML Viewer Dev</title>
@@ -459,25 +459,6 @@
 
 			PIN.init();
 
-			FOB.onHashChange();
-
-
-			aViewSource.href = MNU.urlSourceCode;
-
-			if ( window.innerWidth < 640 || window.innerHeight < 640 ) {
-
-				toggleNavPanel();
-				POP.setPopupShowHide( butPopupClose, ' ', POP.footer );
-
-				THM.init();
-
-			} else {
-
-				POP.setPopupShowHide();
-				THM.init();
-
-			}
-
 			diaDivContents.innerHTML =
 `
 <h3>2019-10-22</h3>
@@ -493,6 +474,24 @@
 <p>And, of course there have been bug fixes and cleanups but the big fin: See Michal's LinkedIn post for the <a href="https://www.linkedin.com/posts/michal-dengusiak-a8028020_ladybugspidergbxmlviewer-maeviaver17-introduction-activity-6591373256895283200-Vo5O" target="_blank">latest instruction video</a></p>
 
 `;
+
+			FOB.onHashChange();
+
+			aViewSource.href = MNU.urlSourceCode;
+
+			if ( window.innerWidth < 640 || window.innerHeight < 640 ) {
+
+				toggleNavPanel();
+				POP.popupId = butPopupClose;
+				POP.setPopupShowHide( butPopupClose, "", POP.footer );
+
+			} else {
+
+				POP.setPopupShowHide();
+				THM.init();
+
+			}
+
 
 		}
 

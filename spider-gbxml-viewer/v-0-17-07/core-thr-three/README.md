@@ -29,7 +29,7 @@
 
 ### 2019-10-21 ~ Theo
 
-THRU 0.17.06-odev
+THRU 0.17.07-odev
 
 * R: single quotes to double
 * R: pass through jsHint

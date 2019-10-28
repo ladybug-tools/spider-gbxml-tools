@@ -1,6 +1,6 @@
 # THR Three.js Read Me
 
-[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-06/core-thr-three )
+[Source code]( https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-07/core-thr-three )
 
 <details open >
 
@@ -53,7 +53,7 @@ All the basic necessities to create a typical Three.js scene graph
 
 ### 2019-10-18 ~ Theo
 
-0.17.06-0thr
+0.17.07-0thr
 
 
 ### 2019-07-10 ~ Theo

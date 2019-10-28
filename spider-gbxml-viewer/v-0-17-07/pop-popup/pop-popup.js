@@ -83,7 +83,7 @@ POP.setPopupShowHide = function( id = butPopupClose, text = POP.popup, footer = 
 
 		} else {
 
-			divDragMoveContent.innerHTML = text;
+			divDragMoveContent.innerHTML = "";
 			navDragMove.hidden = true;
 
 		}
@@ -149,8 +149,6 @@ POP.callbackMarkdown = function( markdown, target ) {
 	target.innerHTML = html;
 	//console.log( 'html', html );
 
-	THM.init();
-	
 	navDragMove.hidden = false; // wait until loaded before showing
 
 };

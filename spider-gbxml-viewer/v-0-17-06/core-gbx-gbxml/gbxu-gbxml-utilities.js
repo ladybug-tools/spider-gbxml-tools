@@ -62,7 +62,7 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 
 	GBXU.setElementsJson();
 
-	if ( window.POP ) POP.requestFile( POP.popup, divDragMoveContent );
+	//if ( window.POP ) POP.requestFile( POP.popup, divDragMoveContent );
 
 	if ( window.detMenuViewGbxml ) MNU.toggleDetailsOpen( detMenuViewGbxml );
 

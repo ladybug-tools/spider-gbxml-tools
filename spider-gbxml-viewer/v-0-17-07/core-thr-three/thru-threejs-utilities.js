@@ -11,7 +11,7 @@ var THRU = {
 	description: "Three.js utilities",
 	helpFile: "../core-thr-three/thru-threejs-utilities.md",
 	license: "MIT License",
-	version: "0.17.06-0thru"
+	version: "0.17.07-0thru"
 
 };
 

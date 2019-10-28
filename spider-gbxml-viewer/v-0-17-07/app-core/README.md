@@ -9,7 +9,7 @@ Basic file that opens a gbXML file and displays it in 3D
 
 Very easy to use with an iframe in order to embed a 3D view in a web page
 
-[view core in iframe]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-06/app-core/view-core-in-iframe.html )
+[view core in iframe]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-07/app-core/view-core-in-iframe.html )
 
 </details>
 
@@ -33,7 +33,7 @@ Very easy to use with an iframe in order to embed a 3D view in a web page
 
 ### 2019-10-19 ~ Theo
 
-SGV Core 0.17.06
+SGV Core 0.17.07
 
 * Update readme
 
