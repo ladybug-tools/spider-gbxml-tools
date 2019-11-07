@@ -56,6 +56,13 @@ Or copy this link: https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-vie
 
 <summary>Change Log</summary>
 
+### 2019-11-07 ~ Theo
+
+v0.17.07.02 dev
+
+* Reset bristol clifton downs as default
+
+
 ### 2019-10-03 ~ Theo
 
 v0.17.04-0
