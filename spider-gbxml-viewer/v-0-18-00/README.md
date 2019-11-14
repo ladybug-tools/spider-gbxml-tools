@@ -4,7 +4,7 @@
 ## [Spider gbXML Viewer 0.18.00 'LT']( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-18-00/ )
 
 * 2019-11-14 ~ First commit
-* Solution to challenge or instructions oe problem  proposed by [Stephen Roth]( https://www.linkedin.com/in/stephenbroth/ )
+* Solution to challenge or instructions or problem  proposed by [Stephen Roth]( https://www.linkedin.com/in/stephenbroth/ )
 	* Build a version of Spider gbXML Viewer that makes the building data in gbXML files look good
 	* Build a highly interactive and intuitive user experience for viewing gbXML data in 3D
 * First pass
