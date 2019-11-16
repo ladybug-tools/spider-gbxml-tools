@@ -65,7 +65,7 @@ GBX.init = function( target ) {
 
 	document.body.addEventListener('OXHonXmlFileLoad', () => {
 
-		console.log('', 23333);
+		//console.log('OXHonXmlFileLoad', 23 );
 
 		GBX.parseFile(OXH.text)
 	}, false);
