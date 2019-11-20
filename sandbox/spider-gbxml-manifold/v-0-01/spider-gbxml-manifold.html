@@ -6,8 +6,8 @@
 
 <meta name="description" content="Ascertain if a collection of points is water tight or manifold">
 <meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2019-11-11" >
-<meta name = "version" content = "0.00.0" >
+<meta name = "date" content = "2019-11-19" >
+<meta name = "version" content = "0.01.0" >
 <title></title>
 <style>
 /* copyright 2019 Theo Armour. MIT license. */
@@ -38,7 +38,7 @@ summary { font-weight: bold; }
 #main { border: 0px; left: var( --mnu-width ); margin: 0;
 	padding: 0 3rem; position: absolute; width: calc( 100% - var( --mnu-width ) );  }
 
-#divContent { border: 0px solid red; margin: 0 auto; max-width: 40rem; }
+#divContent { border: 0px solid red; margin: 0 auto; max-width: 40rem; z-index: -1; }
 
 #navMenu { background-color: #eee; height: 100%; left: 0; margin: 0;opacity: 0.9; overflow: auto;
 	padding: 0 1rem; position: fixed; transition: left 0.5s; top: 0; width: var( --mnu-width ); z-index: 1; }
@@ -72,6 +72,7 @@ summary { font-weight: bold; }
 	left: 0;
 	padding: 0;
 	width: 100%;
+	z-index: -1;
 }
 
 #expandButton {
@@ -147,7 +148,7 @@ summary { font-weight: bold; }
 
 	<main id=main >
 
-		<div id="divContent" ></div>
+		<div id="divContent" style=Max-height:29ch;overflow:auto; ></div>
 
 	</main>
 
@@ -159,6 +160,7 @@ const urlSourceCode = `https://github.com/`;
 const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-32.png";
 
 let meshGroup;
+let exteriors = [ "ExposedFloor", "ExteriorWall", "RaisedFloor", "Roof", "Shade", "SlabOnGrade", "UndergroundSlab", "UndergroundWall" ];
 
 let sceneRotation = 1;
 let renderer, camera, controls, scene;
@@ -207,13 +209,14 @@ function init() {
 
 function onHashChange() {
 
-	//console.log( '', location.hash );
-
 	url = location.hash.slice( 1 );
+
+	divContent.innerHTML = url.split( "/" ).pop() + "<br>";
 
 	fetchXml( url );
 
 }
+
 
 
 const fetchXml = async function( url ) {
@@ -226,7 +229,7 @@ const fetchXml = async function( url ) {
 	const charSet = (arr8.slice(0, 2).join() === "255,254") ? "utf-16le" : "utf-8";
 
 	let text = new TextDecoder( charSet ).decode(buffer);
-	text = text.replace( /\r\n|\n/g, '' );
+	text = text.replace( /\r\n|\n/g, "" );
 
 	parseFile( text );
 
@@ -235,100 +238,172 @@ const fetchXml = async function( url ) {
 
 function parseFile( text ) {
 
-	surfaces = text.match( /<Surface(.*?)<\/Surface>/gi );
-
-	//console.log( 'surfaces', surfaces.length );
-
-	vertices  = surfaces.flatMap( surface => {
-
-		polyloopsText = surface.match( /<polyloop(.*?)<\/polyloop>/gi );
-
-		polyloops = polyloopsText[ 0 ];
-
-		pointLoops = polyloops.match( /<CartesianPoint>(.*?)<\/CartesianPoint>/gi );
-		//console.log( 'loops', loops );
-
-		points = pointLoops.map( point => point.match( ( /<Coordinate>(.*?)<\/Coordinate>/gi ) ) );
-
-		vertices = points.map( coordinates => {
-			//console.log( 'coordinates', coordinates );
-
-			vertex = coordinates.map( coordinateText => {
-
-				coordinate = coordinateText.match( /<Coordinate>(.*?)<\/Coordinate>/i )[ 1 ]
-				//console.log( 'coordinate', coordinate;
-
-				return Number( coordinate );
-
-			} )
-
-			return vertex;
-
-		} )
-
-		return vertices;
-
-	} )
-
-	//console.log( 'vertices', vertices );
-
-	verticesString = vertices.map( vertex => vertex.join() );
-
-	uniqueArray = [...new Set(verticesString)];
-
-	//console.log( 'uniqueArray', uniqueArray );
-
 	scene.remove( meshGroup );
 
 	meshGroup = new THREE.Group();
 
+	surfacesTextArray = text.match( /<Surface(.*?)<\/Surface>/gi );
+	//console.log( 'surfacesTextArray', surfacesTextArray.length );
+
+	surfaces = surfacesTextArray.map( surface => {
+
+		type = surface.match( /surfaceType="(.*?)"/i )[ 1 ]
+		//console.log( 'type', type );
+
+		id = surface.match( / id="(.*?)"/i )[ 1 ]
+		//console.log( 'id', id );
+
+		planar = surface.match( /<PlanarGeometry>(.*?)<\/PlanarGeometry>/i )[ 1 ];
+		polyloopsText = planar.match( /<polyloop>(.*?)<\/polyloop>/gi );
+		//console.log( 'polyloopsText', polyloopsText );
+
+		polyloops = polyloopsText[ 0 ];
+
+		pointLoops = polyloops.match( /<CartesianPoint>(.*?)<\/CartesianPoint>/gi );
+
+		points = pointLoops.map( point => point.match( ( /<Coordinate>(.*?)<\/Coordinate>/gi ) ) );
+
+		vertices = points.map( coordinates =>
+			//console.log( 'coordinates', coordinates );
+
+			coordinates.map( coordinateText =>
+				Number( coordinateText.match( /<Coordinate>(.*?)<\/Coordinate>/i )[ 1 ] )
+			)
+
+		)
+		//console.log( 'vertices', vertices );
+
+		count = 0;
+
+		return { type, id, vertices, count };
+
+	} )
+
+	//console.log( 'surfaces', surfaces );
+
+	verticesString = surfaces.flatMap( surface => surface.vertices.map( vertex => vertex.join() ) );
+	//console.log( 'verticesString', verticesString );
+
+	uniqueArray = [...new Set(verticesString)];
+	//console.log( 'uniqueArray', uniqueArray );
+
 	positions = [];
+	positionsAll = [];
+	duplicates = [];
 
-	for ( let i = 0; i < vertices.length; i++ ) {
+	for ( let i = 0; i < surfaces.length; i++ ) {
 
-		vertex = vertices[ i ];
+		surface = surfaces[ i ];
 
-		if ( positions.includes( vertex.join() ) ) {
+		vertices = surface.vertices;
+		let color;
 
-			index = positions.indexOf( vertex.join() );
-			//console.log( 'index', index );
-			mesh = meshGroup.children[ index ];
-			mesh.userData.count ++;
-			mesh.material = new THREE.MeshBasicMaterial(
-				{ color: new THREE.Color().setHSL( 0.08 * mesh.userData.count, 0.9, 0.5 ) } );
+		for ( vertex of vertices ) {
 
-		} else {
-
-			positions.push( vertex.join() );
 			const geometry = new THREE.BoxGeometry( 0.5, 0.5, 0.5  );
-			const material = new THREE.MeshBasicMaterial( { color: 0xaaaaaa } );
-			const mesh = new THREE.Mesh( geometry, material );
-			mesh.userData.count = 1;
-			mesh.position.set( ...vertex );
-			meshGroup.add( mesh );
+
+			if ( surface.type === "Shade" ) {
+
+				color = "gray";
+
+			} else if ( exteriors.includes( surface.type ) ) {
+
+				color = "cyan";
+
+				if ( positions.includes( vertex.join() ) ) {
+
+					const index = positions.indexOf( vertex.join() )
+
+					duplicates[ index ] ++
+
+
+				} else {
+
+					vertices = vertex.join();
+					positions.push( vertex.join() );
+					duplicates.push( 1 );
+
+
+				}
+
+			} else {
+
+				color= "yellow";
+
+			}
+
+			if ( positionsAll.includes( vertex.join() ) === false  ) {
+
+				const material = new THREE.MeshBasicMaterial( { color: color } );
+				const mesh = new THREE.Mesh( geometry, material );
+				mesh.position.set( ...vertex );
+				meshGroup.add( mesh );
+				surface.mesh = mesh;
+
+			}
+
 		}
 
 	}
 
 	scene.add( meshGroup );
 
+	for ( let i = 0; i < surfaces.length; i++ ) {
+
+		surface = surfaces[ i ];
+
+		vertices = surface.vertices.map( vertex => new THREE.Vector3().fromArray( vertex ) );
+
+
+		geometry = new THREE.Geometry();
+		geometry.vertices = vertices
+		material = new THREE.LineBasicMaterial( { color: 0x000000 } );
+		line = new THREE.Line( geometry, material );
+
+		meshGroup.add( line )
+
+	}
+
 	zoomObjectBoundingSphere( meshGroup );
 
 	console.log( 'pl', positions.length );
 
-	checkVertices()
+	checkVertices();
 
 }
 
 
 function checkVertices() {
 
+	errors = surfaces.filter( surface => ( exteriors.includes( surface.type ) && surface.count < 3 ) )
+
+	verts = [];
+
+	for ( let i = 0; i< duplicates.length; i ++) {
+
+		if ( duplicates[ i ] < 2 ) {
+
+			verts.push( positions[ i ] );
+
+		}
+	}
+
+	msg = verts.length ? verts.join( "<br>" ) : "<p>No isolated vertices found</p>"
+	divContent.innerHTML += msg;
 
 	for ( mesh of meshGroup.children ) {
 
-		console.log( '', mesh.userData.count );
+		if ( verts.includes( mesh.position.toArray().join() ) ) {
+
+			mesh.material = new THREE.MeshBasicMaterial( { color: "magenta" } );
+
+		}
+
 	}
 }
+
+
+
 
 
 function zoomObjectBoundingSphere( obj = scene ) {
