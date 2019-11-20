@@ -64,9 +64,7 @@
 		<p>
 			<button onclick=ifrMain.contentWindow.location.hash="https://cdn.jsdelivr.net/gh/GreenBuildingXML/Sample-gbXML-Files@master/gbXML_TRK.xml"; >TRK</button>
 		</p>
-		<p>
-			<button onclick=ifrMain.contentWindow.THRU.zoomObjectBoundingSphere(); >reset view</button>
-		</p>
+
 		<p>
 			If nothing is visible, try un-checking 'Follow the leader' and clicking 'reset view'
 		</p>
@@ -95,6 +93,8 @@
 			<p title="Uncheck to gain control of your view" >
 				<input type=checkbox id=chkLeader onclick=onCheckboxChange() checked >Follow the leader &nbsp;
 				<button onclick=putJson(); title="Send messages even while following" >send your data to server</button>
+
+				<button onclick=ifrMain.contentWindow.THRU.zoomObjectBoundingSphere(); title="if you see nothing, 'unfollow' and click here" >reset view</button>
 			</p>
 
 			<p id=divThreejsData></p>

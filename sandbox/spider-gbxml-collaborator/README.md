@@ -13,18 +13,22 @@
 
 From time to time several people may need to collaborate on the same gbXML file.
 
-Spider gbXML Collaborator is an attempt to create a script that operates on a collaborative manner - similar to the way that Google Docs operates.
+Spider gbXML Collaborator is an attempt to create a script that operates on a collaborative manner - similar to the way that Google Docs enables multiple users to edit a single document.
 
 This project is an early stage work-in-progress. Only camera position, camera target and text messages are synchronized. More features will be added in future versions.
 
 When viewing models, the file must be loaded by clicking the same button on each instance.
 
-If the model appears to be moving by itself, there is probably somebody updating the model at the same time you are. All differences are same to the same single file at [jsonbox.io]( https://jsonbox.io/ )
+If the model appears to be moving by itself, there is probably somebody updating the model at the same time you are. All differences are sent to the same single file at [jsonbox.io]( https://jsonbox.io/ )
+
+### Vision
+
+Theo: This script is kind of a big breakthrough for me. Personally, I never thought a person of with my limited skill set could ever tackle a project like this. Generally, you can see that collaboration is likely to be more ubiquitous.
 
 
 ### Usage
 
-Open this script in two tabs, windows or devices. Uncheck the 'Follow the leadee' box in one tab and rotate the model or enter a message in the text box. Press 'send data to server' and see the other tab update.
+Open this script in two tabs, windows or devices. Un-check the 'Follow the leader' box in one tab and rotate the model or enter a message in the text box. Press 'send data to server' and see the other tab update.
 
 ### Versions
 
@@ -32,6 +36,7 @@ Open this script in two tabs, windows or devices. Uncheck the 'Follow the leadee
 
 * Add sync to camera target - enables full rotate, zoom and pan sync
 * Updates the UI a bit
+* v0.02.02: Add 'reset view' button and code
 
 ### [Spider gbXML Collaborator V0.01]( https://www.ladybug.tools/spider-gbxml-tools/sandbox/spider-gbxml-collaborator/v-0-01/spider-gbxml-collaborator.html )
 
@@ -47,11 +52,11 @@ Open this script in two tabs, windows or devices. Uncheck the 'Follow the leadee
 
 </details>
 
-<details>
+<details open>
 
-<summary open>To Do / Wish List</summary>
+<summary>To Do / Wish List</summary>
 
-* 2019-10-25 ~ Theo ~ Add camera 'tweeing' - smooth transitions between camera positions
+* 2019-10-25 ~ Theo ~ Add camera 'tweening' - smooth transitions between camera positions
 * 2019-10-25 ~ Theo ~ Add user details such as IP address or Lat/Lon
 * 2019-10-25 ~ Theo ~ Add currently loaded URL is synchronized
 * 2019-10-25 ~ Theo ~ Allow multiple users to load the same file from disk and keep views in sync
@@ -65,9 +70,25 @@ Open this script in two tabs, windows or devices. Uncheck the 'Follow the leadee
 
 </details>
 
-<details>
+<details open>
+
+<summary>Links of interest</summary>
+
+* https://jsonbox.io/ << many thanks!
+
+</details>
+
+<details open>
 
 <summary>Change Log</summary>
+
+### 2019-11-15 ~ Theo
+
+SGC v0.02.02
+
+* F: Add 'reset view' button and code
+* C: Update menu text
+
 
 ### 2019-10-25 ~ Theo
 
