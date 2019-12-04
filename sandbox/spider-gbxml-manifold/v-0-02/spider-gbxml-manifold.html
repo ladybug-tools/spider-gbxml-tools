@@ -5,8 +5,8 @@
 <meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
 <meta name="description" content="Ascertain if a collection of points is water tight or manifold">
 <meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2019-11-19" >
-<meta name = "version" content = "0.01.0" >
+<meta name = "date" content = "2019-12-03" >
+<meta name = "version" content = "0.02.0" >
 <title></title>
 <style>
 /* copyright 2019 Theo Armour. MIT license. */
@@ -93,7 +93,18 @@ summary { font-weight: bold; }
 <script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/build/three.min.js" ></script>
 <script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/controls/TrackballControls.js" ></script>
 
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/lines/LineSegmentsGeometry.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/lines/LineGeometry.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/lines/LineMaterial.js" ></script>
+
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/lines/LineSegments2.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/lines/Line2.js" ></script>
+
 <script src="https://pushme-pullyou.github.io/tootoo14/js-14-08/gff-github-folder-files/gff-github-folder-files-02.js"></script>
+
+<script src="src/swi-surfaces-with-issues.js" ></script>
+
+
 
 
 	<button id="expandButton" onclick="toggleNavMenu();" >☰</button>
@@ -119,6 +130,10 @@ summary { font-weight: bold; }
 
 
 		<div id=GFFdivGithubFoldersFiles ></div>
+
+		<br>
+
+		<div id=SWIdivSurfacesWithIssues ></div>
 
 		<br>
 
@@ -160,6 +175,8 @@ summary { font-weight: bold; }
 
 const urlSourceCode = `https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-manifold`;
 const urlSourceCodeIcon = "../../../assets/github-mark.png";
+
+let duplicates;
 
 let meshGroup;
 let exteriors = [ "ExposedFloor", "ExteriorWall", "RaisedFloor", "Roof", "Shade", "SlabOnGrade", "UndergroundSlab", "UndergroundWall" ];
@@ -203,11 +220,16 @@ function init() {
 	const mesh = new THREE.Mesh( geometry, material );
 	//scene.add( mesh );
 
+	addSomeLights();
+
 	window.addEventListener( "hashchange", onHashChange, false);
 
 	url = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/bristol-clifton-down-road.xml";
 
 	location.hash = url;
+
+	SWIdivSurfacesWithIssues.innerHTML = SWI.getMenu()
+
 
 }
 
@@ -220,6 +242,10 @@ function onHashChange() {
 	divContent.innerHTML = url.split( "/" ).pop() + "<br>";
 
 	fetchXml( url );
+
+	SWIdetMenu.open = false;
+
+	SWIdivSurfacesNearby.innerHTML = "";
 
 }
 
@@ -248,24 +274,24 @@ function parseFile( text ) {
 
 	meshGroup = new THREE.Group();
 
-	surfacesTextArray = text.match( /<Surface(.*?)<\/Surface>/gi );
+	const surfacesTextArray = text.match( /<Surface(.*?)<\/Surface>/gi );
 	//console.log( 'surfacesTextArray', surfacesTextArray.length );
 
 	surfaces = surfacesTextArray.map( surface => {
 
-		type = surface.match( /surfaceType="(.*?)"/i )[ 1 ]
+		const type = surface.match( /surfaceType="(.*?)"/i )[ 1 ]
 		//console.log( 'type', type );
 
-		id = surface.match( / id="(.*?)"/i )[ 1 ]
+		const id = surface.match( / id="(.*?)"/i )[ 1 ]
 		//console.log( 'id', id );
 
-		planar = surface.match( /<PlanarGeometry>(.*?)<\/PlanarGeometry>/i )[ 1 ];
-		polyloopsText = planar.match( /<polyloop>(.*?)<\/polyloop>/gi );
+		const planar = surface.match( /<PlanarGeometry>(.*?)<\/PlanarGeometry>/i )[ 1 ];
+		const polyloopsText = planar.match( /<polyloop>(.*?)<\/polyloop>/gi );
 		//console.log( 'polyloopsText', polyloopsText );
 
-		polyloops = polyloopsText[ 0 ];
+		const polyloops = polyloopsText[ 0 ];
 
-		pointLoops = polyloops.match( /<CartesianPoint>(.*?)<\/CartesianPoint>/gi );
+		const pointLoops = polyloops.match( /<CartesianPoint>(.*?)<\/CartesianPoint>/gi );
 
 		points = pointLoops.map( point => point.match( ( /<Coordinate>(.*?)<\/Coordinate>/gi ) ) );
 
@@ -306,15 +332,17 @@ function parseFile( text ) {
 
 		for ( vertex of vertices ) {
 
-			const geometry = new THREE.BoxGeometry( 0.5, 0.5, 0.5  );
+			const geometry = new THREE.BoxGeometry( 0.8, 0.8, 0.5  );
 
 			if ( surface.type === "Shade" ) {
 
-				color = "gray";
+				surface.color = "gray";
+				surface.colorLine = "lightgray";
 
 			} else if ( exteriors.includes( surface.type ) ) {
 
-				color = "cyan";
+				surface.color = "cyan";
+				surface.colorLine = "lightblue";
 
 				if ( positions.includes( vertex.join() ) ) {
 
@@ -322,27 +350,28 @@ function parseFile( text ) {
 
 					duplicates[ index ] ++
 
-
 				} else {
 
 					vertices = vertex.join();
 					positions.push( vertex.join() );
 					duplicates.push( 1 );
 
-
 				}
 
 			} else {
 
-				color= "yellow";
+				surface.color= "yellow";
+				surface.colorLine = "goldenrod";
 
 			}
 
 			if ( positionsAll.includes( vertex.join() ) === false  ) {
 
-				const material = new THREE.MeshBasicMaterial( { color: color } );
+				const material = new THREE.MeshLambertMaterial( { color: surface.color } );
 				const mesh = new THREE.Mesh( geometry, material );
 				mesh.position.set( ...vertex );
+				mesh.userData.index = i;
+
 				meshGroup.add( mesh );
 				surface.mesh = mesh;
 
@@ -356,23 +385,43 @@ function parseFile( text ) {
 
 	for ( let i = 0; i < surfaces.length; i++ ) {
 
-		surface = surfaces[ i ];
+		const surface = surfaces[ i ];
+		//console.log( '', surface.color );
+		//vertices = surface.vertices.map( vertex => new THREE.Vector3().fromArray( vertex ) );
 
-		vertices = surface.vertices.map( vertex => new THREE.Vector3().fromArray( vertex ) );
+		vertices = surface.vertices.flatMap( vertex => vertex );
+		//console.log( '', vertices );
 
 
-		geometry = new THREE.Geometry();
-		geometry.vertices = vertices
-		material = new THREE.LineBasicMaterial( { color: 0x000000 } );
-		line = new THREE.Line( geometry, material );
+		const geometry = new THREE.LineGeometry();
+		geometry.setPositions( vertices );
+		//geometry.vertices = vertices;
+		//material = new THREE.LineBasicMaterial( { color: 0x000000 } );
+		//line = new THREE.Line( geometry, material );
 
-		meshGroup.add( line )
+		const lineMaterial = new THREE.LineMaterial( {
+
+			color: surface.colorLine,
+			linewidth: 3, // in pixels
+			//vertexColors: THREE.VertexColors,
+			resolution:  new THREE.Vector2( window.innerWidth, window.innerHeight ),
+			//dashed: false
+
+		} );
+
+		//lineMaterial.resolution.set( window.innerWidth, window.innerHeight ); // important, for now...
+
+		const line = new THREE.Line2( geometry, lineMaterial );
+		//line.computeLineDistances();
+		//line.scale.set( 1, 1, 1 );
+
+		scene.add( line );
 
 	}
 
 	zoomObjectBoundingSphere( meshGroup );
 
-	console.log( 'pl', positions.length );
+	//console.log( 'pl', positions.length );
 
 	checkVertices();
 
@@ -381,8 +430,8 @@ function parseFile( text ) {
 
 function checkVertices() {
 
-	const errors = surfaces.filter( surface => ( exteriors.includes( surface.type ) && surface.count < 3 ) )
-
+	//errors = surfaces.filter( surface => ( exteriors.includes( surface.type ) && surface.count < 3 ) )
+	//console.log( 'errors', errors );
 	const verts = [];
 
 	for ( let i = 0; i< duplicates.length; i ++) {
@@ -394,9 +443,11 @@ function checkVertices() {
 		}
 	}
 
-	msg = verts.length ? verts.join( "<br>" ) : "<p>No isolated vertices found</p>";
+	const msg = verts.length ? verts.join( "<br>" ) : "<p>No isolated vertices found</p>";
 
 	divContent.innerHTML += msg;
+
+	issues = [];
 
 	for ( mesh of meshGroup.children ) {
 
@@ -404,9 +455,14 @@ function checkVertices() {
 
 			mesh.material = new THREE.MeshBasicMaterial( { color: "magenta" } );
 
+			surface = surfaces[ mesh.userData.index ]
+
+			if ( surface.color === "cyan" ) { issues.push( mesh ) };
+
 		}
 
 	}
+
 }
 
 
@@ -424,8 +480,29 @@ function toggleMagenta() {
 
 	}
 
+}
+
+
+
+
+function addSomeLights() {
+
+	lightAmbient = new THREE.AmbientLight( 0x888888 );
+	lightAmbient.name = "lightAmbient";
+	scene.add( lightAmbient );
+
+	lightDirectional = new THREE.DirectionalLight( 0xffffff, 0.75 );
+	lightDirectional.name = "lightDirectional";
+	lightDirectional.position.set( 1, 1, 1 ).normalize();
+	scene.add( lightDirectional );
+
+	//var helper = new THREE.DirectionalLightHelper( lightDirectional, 50, 0xff00ff  );
+
+	//scene.add( helper );
 
 }
+
+
 
 function zoomObjectBoundingSphere( obj = meshGroup ) {
 

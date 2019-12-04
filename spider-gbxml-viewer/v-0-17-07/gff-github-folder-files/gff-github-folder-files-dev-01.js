@@ -4,12 +4,15 @@
 
 
 const GFF = {
-	"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
-	"date": "2019-05-31",
-	"description": "Get data from selected GitHub folders and files and display as links in details/summary that update location.hash",
-	"helpFile": "gff-github-folder-files/README.md",
-	"urlSourceCode": "",
-	"version": "0.14.0-1",
+
+	script: {
+		"copyright": "Copyright 2019 Ladybug Tools authors. MIT License",
+		"date": "2019-12-02",
+		"description": "Get data from selected GitHub folders and files and display as links in details/summary that update location.hash",
+		"helpFile": "gff-github-folder-files/README.md",
+		"urlSourceCode": "",
+		"version": "0.17.07-00gc=ff",
+	}
 };
 
 
