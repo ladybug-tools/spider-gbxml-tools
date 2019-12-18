@@ -16,7 +16,7 @@ const MNU = {
 
 ////////// boilerplate for downstream users
 
-MNU.urlSourceCodeImage = "https://pushme-pullyou.github.io/github-mark-32.png";
+MNU.urlSourceCodeImage = "github-mark-32.png";
 MNU.urlSourceCodeIcon = `<img src=${ MNU.urlSourceCodeImage } height=18 style=opacity:0.5 >`;
 MNU.urlSourceCode = `https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-0-17-07`;
 

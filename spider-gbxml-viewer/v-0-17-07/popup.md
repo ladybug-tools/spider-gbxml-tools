@@ -12,4 +12,4 @@ Press Control-Shift-J|Command-Option-J to see if the JavaScript console reports 
 
 Axes: Red/Green/Blue = X/Y/Z directions
 
-<button onclick="navDragMove.style +='width:60%;left:30%;';divDragMoveContent.style +='height:500px;';divDragMoveContent.innerHTML='<iframe id=ifr frameBorder=10 src=slideshow-2019-07-02.html style=height:300px;width:100%; ></iframe>';" >&#x1f508; View the 'Maevia' slide show</button> &nbsp; <button onclick=dia.show(); title="Not working in FireFox" ><mark> 2019-10-22 </mark></button>
+<button onclick="navDragMove.style +='width:60%;left:30%;';divDragMoveContent.style +='height:500px;';divDragMoveContent.innerHTML='<iframe id=ifr frameBorder=10 src=slideshow-2019-07-02.html style=height:300px;width:100%; ></iframe>';" >&#x1f508; View the 'Maevia' slide show</button>
