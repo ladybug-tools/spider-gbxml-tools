@@ -56,6 +56,13 @@ Or copy this link: https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-vie
 
 <summary>Change Log</summary>
 
+### 2019-12-18 ~ Theo
+
+v0.17.07.04 dev
+
+* Drop text dialog element / not Safari compatible
+
+
 ### 2019-11-07 ~ Theo
 
 v0.17.07.02 dev
