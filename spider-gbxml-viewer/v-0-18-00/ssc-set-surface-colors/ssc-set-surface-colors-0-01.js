@@ -264,6 +264,5 @@ SSC.updateOpacitySurfaces = function() {
 
 	);
 
-
 };
 

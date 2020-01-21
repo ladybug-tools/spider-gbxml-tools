@@ -67,7 +67,8 @@ GBX.init = function( target ) {
 
 		//console.log('OXHonXmlFileLoad', 23 );
 
-		GBX.parseFile(OXH.text)
+		GBX.parseFile( OXH.text );
+		
 	}, false);
 
 

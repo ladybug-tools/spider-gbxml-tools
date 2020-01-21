@@ -61,7 +61,7 @@ Please have a look at the following document:
 
 All Spider are designed to open, run and update in your browser. Typically, you click on a link to the script, it loads, opens a default file to let you know it's working and then you select files to work on using the file open dialog box, clicking on a link or dragging and dropping a file into the designated box.
 
-Once you have opened a file for viewing you can click on any 'surface' in the model to view its attributes in the popup menu on the right. Using the left menu you may view the model by applying filters. You mau also locate and fix rrors in the file.
+Once you have opened a file for viewing you can click on any 'surface' in the model to view its attributes in the popup menu on the right. Using the left menu you may view the model by applying filters. You mau also locate and fix errors in the file.
 
 Just about every menu panel has an associated help file you may access by clicking the "?" button to the right of the menu.
 
