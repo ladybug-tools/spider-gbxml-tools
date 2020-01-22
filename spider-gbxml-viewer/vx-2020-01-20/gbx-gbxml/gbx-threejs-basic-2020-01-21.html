@@ -52,7 +52,7 @@ input[ type=range ]::-webkit-slider-thumb { -webkit-appearance: none; background
 
 <body>
 <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r112/build/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r112/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r112/examples/js/controls/TrackballControls.js"></script>
 
 <script src="gbxp-gbxml-parser-2020-01-20.js"></script>
 
@@ -105,7 +105,7 @@ input[ type=range ]::-webkit-slider-thumb { -webkit-appearance: none; background
 //urlDefaultFile = "https://cdn.jsdelivr.net/gh/GreenBuildingXML/Sample-gbXML-Files@master/gbXML_TRK.xml";
 urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/aspen-co-resort-retail.xml"
 
-aSource = "https://github.com/zzzzz/xxxxx.html";
+aSource = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/v-2020-01-20/gbx-gbxml";
 imgIcon.src = "https://pushme-pullyou.github.io/github-mark-32.png";
 
 sTitle.innerHTML= document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
@@ -114,7 +114,7 @@ sVersion.innerHTML = version ? version.content : "";
 divDescription.innerHTML = document.head.querySelector( "[ name=description ]" ).content;
 
 
-let mesh, meshGroup;
+let mesh, meshGroup, axesHelper, lightDirectional, cameraHelper;
 let sceneRotation = 1;
 let renderer, camera, controls, scene;
 
@@ -142,7 +142,7 @@ function init() {
 	renderer.shadowMap.enabled = true;
 	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-	controls = new THREE.OrbitControls( camera, renderer.domElement );
+	controls = new THREE.TrackballControls( camera, renderer.domElement );
 	controls.maxDistance = 5000;
 	controls.rotateSpeed = 2;
 	//controls.maxPolarAngle = Math.PI * 0.5;
@@ -155,7 +155,7 @@ function init() {
 
 	addLights();
 
-	const axesHelper = new THREE.AxesHelper( 100 );
+	axesHelper = new THREE.AxesHelper( 100 );
 	scene.add( axesHelper );
 
 	addGround();
@@ -183,13 +183,15 @@ function requestFile( url ) {
 
 }
 
+
+
 function onLoad( xhr ) {
 
-const response = xhr.target.response;
+	const response = xhr.target.response;
 
-//console.log( 'response', response );
+	//console.log( 'response', response );
 
-GBX.parseResponse( response );
+	GBX.parseResponse( response );
 
 }
 
@@ -227,12 +229,27 @@ function zoomObjectBoundingSphere( obj = meshGroup ) {
 
 	distance = controls.target.distanceTo( camera.position );
 
-	camera.zoom = distance / ( 2 * radius ) ;
+	//camera.zoom = distance / ( 2 * radius ) ;
 
-	//camera.position.copy( center.clone().add( new THREE.Vector3( -2 * radius, 2 * radius, 1.0 * radius ) ) );
+	camera.position.copy( center.clone().add( new THREE.Vector3( -2 * radius, 2 * radius, 1.0 * radius ) ) );
 	camera.near = 0.001 * radius; //2 * camera.position.length();
 	camera.far = 50 * radius; //2 * camera.position.length();
 	camera.updateProjectionMatrix();
+
+	axesHelper.position.copy( center );
+
+	if ( lightDirectional ) {
+
+		lightDirectional.position.copy( center.clone().add( new THREE.Vector3( 1.5 * radius, -1.5 * radius, 1.5 * radius ) ) );
+		lightDirectional.shadow.camera.scale.set( 0.2 * radius, 0.2 * radius, 0.01 * radius );
+
+		//targetObject.position.copy( center );
+
+		scene.remove( cameraHelper );
+		cameraHelper = new THREE.CameraHelper( lightDirectional.shadow.camera );
+		scene.add( cameraHelper );
+
+	}
 
 	let event = new Event( "onresetthree", {"bubbles": true, "cancelable": false, detail: true } );
 
@@ -254,21 +271,21 @@ function addLights() {
 	pointLight.position.copy( camera.position );
 	camera.add( pointLight );
 
-	const light = new THREE.DirectionalLight( 0xffffff, 0.5 );
-	light.position.set( -50, -200, 100 );
-	light.castShadow = true;
-	light.shadow.mapSize.width = 1024;
-	light.shadow.mapSize.height = 1024;
+	lightDirectional = new THREE.DirectionalLight( 0xffffff, 0.9 );
+	lightDirectional.position.set( -50, -200, 100 );
+	lightDirectional.castShadow = true;
+	lightDirectional.shadow.mapSize.width = 1024;
+	lightDirectional.shadow.mapSize.height = 1024;
 
-	var d = 100;
-	light.shadow.camera.left = - d;
-	light.shadow.camera.right = d;
-	light.shadow.camera.top = d;
-	light.shadow.camera.bottom = - d;
-	light.shadow.camera.far = 500;
-	scene.add( light );
+	var d = 10;
+	lightDirectional.shadow.camera.left = - d;
+	lightDirectional.shadow.camera.right = d;
+	lightDirectional.shadow.camera.top = d;
+	lightDirectional.shadow.camera.bottom = - d;
+	lightDirectional.shadow.camera.far = 500;
+	scene.add( lightDirectional );
 
-	//scene.add( new THREE.CameraHelper( light.shadow.camera ) );
+	//scene.add( new THREE.CameraHelper( lightDirectional.shadow.camera ) );
 
 }
 

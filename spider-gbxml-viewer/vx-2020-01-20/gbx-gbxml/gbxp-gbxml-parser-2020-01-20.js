@@ -222,8 +222,20 @@ GBX.getShape3d = function ( vertices = [], holes = [], color = 0xff0000 ) {
 	const material = new THREE.MeshPhongMaterial( { color: color, opacity: 0.9, side: THREE.DoubleSide, transparent: true, wireframe: false } );
 
 	const mesh = new THREE.Mesh( shapeGeometry, material );
+
+	geometry = mesh.geometry;
+
+	geometry.verticesNeedUpdate = true;
+	geometry.elementsNeedUpdate = true;
+	geometry.morphTargetsNeedUpdate = true;
+	geometry.uvsNeedUpdate = true;
+	geometry.normalsNeedUpdate = true;
+	geometry.colorsNeedUpdate = true;
+	geometry.tangentsNeedUpdate = true;
+
 	mesh.castShadow = true;
 	mesh.receiveShadow = true;
+	mesh.material.needsUpdate = true;
 	//scene.add( mesh );
 
 	return mesh;
