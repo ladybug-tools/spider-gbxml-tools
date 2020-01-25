@@ -216,26 +216,32 @@ GBX.getShape3d = function ( vertices = [], holes = [], color = 0xff0000 ) {
 	const shapeGeometry = new THREE.ShapeGeometry( shape );
 	//console.log( 'shapeGeometry', shapeGeometry );
 
-	shapeGeometry.vertices = vertices;
 
 	//const material = new THREE.MeshNormalMaterial( { opacity: 0.7, side: THREE.DoubleSide, transparent: true, wireframe: false } );
 	const material = new THREE.MeshPhongMaterial( { color: color, opacity: 0.9, side: THREE.DoubleSide, transparent: true, wireframe: false } );
 
 	const mesh = new THREE.Mesh( shapeGeometry, material );
 
+	const box = new THREE.Box3().setFromObject(mesh);
+	const size = new THREE.Vector3();
+
+	box.getSize(size);
+
+	mesh.geometry.faceVertexUvs[0].forEach( fvUvs => {
+		fvUvs.forEach(fvUv => {
+			fvUv.x = (fvUv.x - box.min.x) / size.x; fvUv.y = 1 - (fvUv.y - box.min.y) / size.y;
+		});
+	} );
+
+	mesh.geometry.vertices = vertices;
+
 	geometry = mesh.geometry;
 
-	geometry.verticesNeedUpdate = true;
-	geometry.elementsNeedUpdate = true;
-	geometry.morphTargetsNeedUpdate = true;
-	geometry.uvsNeedUpdate = true;
-	geometry.normalsNeedUpdate = true;
-	geometry.colorsNeedUpdate = true;
-	geometry.tangentsNeedUpdate = true;
+	mesh.geometry.computeVertexNormals();
 
 	mesh.castShadow = true;
 	mesh.receiveShadow = true;
-	mesh.material.needsUpdate = true;
+
 	//scene.add( mesh );
 
 	return mesh;
