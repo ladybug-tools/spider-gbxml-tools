@@ -26,6 +26,8 @@ Or copy this link: https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-vie
 ## Development Version: [Spider gbXML Viewer Dev ]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/dev/ "Click me to run the latest app" )
 
 
+## [Experimental version]( https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/vx-2020-01-29/gbx-gbxml/gbx-threejs-basic-2020-01-29.html )
+
 ***
 
 
