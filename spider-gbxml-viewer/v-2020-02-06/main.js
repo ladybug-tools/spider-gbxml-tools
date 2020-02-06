@@ -6,7 +6,7 @@
 // jshint loopfunc: true
 
 
-aSource.href = "https://github.com/pushme-pullyou/templates-01/tree/master//threejs-hamburger";
+aSource.href = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/";
 imgIcon.src = "assets/github-mark-32.png";
 
 sTitle.innerHTML = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
