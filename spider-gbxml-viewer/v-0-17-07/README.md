@@ -56,17 +56,6 @@ Or copy this link: https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-vie
 
 <summary>Change Log</summary>
 
-### 2020-04-29 ~ Theo
-
-v0-17.07.05 dev
-
-* Drop requirement that given file must include the word "xmlns"
-
-Files that do not include this work now permitted to be parsed. Will cause more issues when people open the wrong file type by error.
-
-The fix does indicate that there could be better methods for identifying valid and invalide gbXML files
-
-
 ### 2019-12-18 ~ Theo
 
 v0.17.07.04 dev

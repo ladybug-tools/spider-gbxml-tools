@@ -274,7 +274,7 @@ FOB.onInputFileOpen = function( files ) {
 
 
 
-FOB.fileOpenXml = function( text ) {  // event listen by GBX.parser
+FOB.fileOpenXml = function( text ) {
 	//console.log( 'file', files.files[ 0 ] );
 
 		FOB.text = text;

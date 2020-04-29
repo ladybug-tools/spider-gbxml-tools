@@ -108,7 +108,7 @@ GBX.parseFile = function( gbxml )  {
 	GBX.text = gbxml.replace( /\r\n|\n/g, '' );
 	//console.log( 'GBX.text', GBX.text );
 
-	const reSurface = /<Surface(.*?)<\/Surface>/gi;
+	const reSurface = /<Surface(.*?)<\/surface>/gi;
 	GBX.surfaces = GBX.text.match( reSurface );
 	//console.log( 'GBX.surfaces', GBX.surfaces );
 
@@ -179,7 +179,7 @@ GBX.getSpacesJson = function() {
 
 
 GBX.getSurfaceMeshes = function( surfaces ) {
-	//console.log( 'surfaces', surfaces );
+	// console.log( 'surfaces', surfaces );
 
 	const timeStart = performance.now();
 
