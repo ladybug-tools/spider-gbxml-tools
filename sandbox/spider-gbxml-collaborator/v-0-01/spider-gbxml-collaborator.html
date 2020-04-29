@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1" >
+<meta name = "description" content = "Open this script in two tabs, windows or devices. Check the 'editor' box in one tab and rotate the model or enter a message in the text box. Press 'send data to server' and see the other tab update." >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2019-10-24" >
+<meta name = "version" content = "0.01.00" >
+<title></title>
+<style>
+
+	* { box-sizing: border-box; }
+
+	:root { --mnu-width: 22rem; --screen-width: calc( 100vw ); --headerHeight: 6rem; }
+
+	html { height: 100%; }
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; padding: 0 0.5rem; }
+
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus, a:active { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	main { border: 0px; height: 100%; left: var( --mnu-width ); margin: 0;
+		padding: 0 1rem; position: absolute; width: calc( 100% - var( --mnu-width ) );  }
+
+	#navMenu { background-color: #eee; height: 100vh; left: 0; margin: 0; padding: 0 1rem;
+		position: absolute; top: 0; width: var( --mnu-width ); }
+
+
+</style>
+</head>
+<body>
+
+	<nav id="navMenu" >
+
+		<div id="divTitle" ></div>
+
+		<p>See the <a href="https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-collaborator" target="_blank">read me</a> for more details.</p>
+
+		<!-- <p>
+			<button id=but onclick=ifrMain.contentDocument.body.style.backgroundColor="black"; accessKey= 'z' title='access key: z '>
+				update background color in iframe
+			</button>
+		</p> -->
+
+		<p>Load sample files into the <code>iframe</code> via a URL:</p>
+
+		<p>
+			<button onclick=ifrMain.contentWindow.location.hash="https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml"; >Clifton Downs</button>
+		</p>
+		<p>
+			<button onclick=ifrMain.contentWindow.location.hash="https://www.ladybug.tools/spider/gbxml-sample-files/zip/warwick-university-5k-surfaces.zip"; >Warwick University</button>
+		</p>
+		<p>
+			<button onclick=ifrMain.contentWindow.location.hash="https://www.ladybug.tools/spider/gbxml-sample-files/annapolis-md-single-family-residential-2016.xml"; >Annapolis</button>
+		</p>
+		<p>
+			<button onclick=ifrMain.contentWindow.location.hash="https://www.ladybug.tools/spider/gbxml-sample-files/zip/royal-arsenal-woolwich.zip"; >Royal Arsenal</button>
+		</p>
+		<p>
+			<button onclick=ifrMain.contentWindow.location.hash="https://cdn.jsdelivr.net/gh/GreenBuildingXML/Sample-gbXML-Files@master/gbXML_TRK.xml"; >TRK</button>
+		</p>
+		<p>
+			Example for loading a local file. Edit the HTML file to suit your needs:<br>
+		</p>
+
+		<!-- <p>
+			<button onclick=ifrMain.contentWindow.location.hash="file:///D:/test-gbxml.xml"; >file:///D:/test-gbxml.xml</button>
+		</p> -->
+
+	</nav>
+
+	<main>
+
+		<div id="divContents" ></div>
+
+			<div style="height:30rem; overflow:auto; /* needed */ resize: both; width: 100%;" >
+
+				<iframe id=ifrMain src=../../../spider-gbxml-viewer/v-0-17-06/app-core/spider-gbxml-viewer-core.html style=height:100%;width:100%; ></iframe>
+
+			</div>
+
+			<p><textarea id=txtMsg style=width:100% placeholder="enter messages here" ></textarea></p>
+
+			<p><input type=checkbox id=chkLeader onclick=onCheckboxChange() >editor &nbsp; <button onclick=putJson(); >send data to server</button></p>
+
+		<div>
+
+
+		<p>
+			<div id=divThreejsData >bbb</div>
+		</p>
+
+		<div id=divMessages > </div>
+
+		<div id=divToSend ></div>
+
+		<div id=divGithubResponse ></div>
+
+	</main>
+
+
+<script>
+
+
+let url = "https://jsonbox.io/box_b89a6b17fbef17980b5c";
+
+let json;
+
+const tmp = {}
+var ifr;
+
+const urlSourceCode = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-collaborator/";
+const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-32.png";
+
+init();
+
+function init() {
+
+	divTitle.innerHTML = getTitle();
+
+	ifr = ifrMain.contentWindow;
+
+	ifr.onload = () => {
+
+		setTimeout( function() {
+
+			ifr.THR.controls.autoRotate = false;
+
+			initGetJson();
+
+		}, 800 );
+
+	}
+
+	//txtMsg.value=Math.random();
+
+}
+
+
+function initGetJson() {
+
+	ifr.GBXU.onFirstTouch();
+
+	ifr.THR.controls.enableRotate = false;
+
+	ifr.THR.controls.enableZoom = false;
+
+	ifr.THR.controls.enablepan = false
+
+	intervalId = setInterval( getJson, 500 );
+
+	//getJson();
+
+}
+
+
+
+function onCheckboxChange() {
+
+	if ( chkLeader.checked === true ) {
+
+		clearInterval( intervalId );
+
+		console.log( 'gtJson stopped', intervalId );
+
+		setControls( true );
+
+		return;
+
+	} else {
+
+		setControls( false );
+
+		intervalId = setInterval( getJson, 500 );
+
+	}
+
+}
+
+
+
+function getJson() {
+
+	const request = new Request( url )
+
+	fetch( request, { cache: "no-store" } ).then( response => response.json() )
+	.then( data => {
+
+		const json = JSON.parse( data[ 0 ].content );
+		const keys = Object.keys( json );
+		const htm = keys.map( key => `<div>${ key }: ${ json[ key ] }` )
+
+		divThreejsData.innerHTML = htm;
+
+		if ( json.message !== tmp.messagePrevious ) {
+
+			divMessages.innerHTML += `<div>${ json.message }</div>`;
+
+		}
+
+		tmp.messagePrevious = json.message;
+
+		if ( json.position ) { ifr.THR.camera.position.set( ...json.position ); }
+
+		//console.log( 'json', json );
+
+	} );
+
+}
+
+
+
+function setControls( bool = true ) {
+
+	ifr.THR.controls.enableRotate = bool;
+
+	ifr.THR.controls.enableZoom = bool;
+
+	ifr.THR.controls.enablePan = bool;
+
+}
+
+
+function putJson() {
+
+	const json = {};
+	json.position = Object.values( ifr.THR.camera.position );
+	json.message = txtMsg.value;
+	json.date = new Date().toISOString();
+	json.uuid = getUuidv4();
+
+	const content = JSON.stringify( json );
+
+	//divToSend.innerHTML = content;
+
+	const codedData = window.btoa( content );
+
+	const request = new Request( url + "/5db27779bfc79a0017cb9e84");
+
+	fetch( request, {
+		method: "PUT",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify( {
+			"content": content
+		} ),
+
+	} )
+	.then( response => response.json() )
+	.then( data => {
+
+		//divGithubResponse.innerText = (JSON.stringify( data ) );
+
+	} );
+}
+
+
+
+function deleteJson() {
+
+	const id = json[ 1 ]._id;
+
+	fetch( url + "/" + id, {
+		method: "DELETE",
+		headers: { "content-type": "application/json" }
+
+	} )
+	.then( response => response.json() )
+	.then( data => {
+
+		divContents.innerText += `${ JSON.stringify( data ) }\n\n`;
+
+	} )
+
+}
+
+function getUuidv4() {
+
+	return ( [ 1e7 ] + -1e3 + -4e3 + -8e3 + -1e11 ).replace( /[018]/g, c =>
+		( c ^ crypto.getRandomValues( new Uint8Array( 1 )  )[ 0 ] & 15 >> c / 4 ).toString( 16 )
+	);
+
+}
+
+
+function getTitle() {
+
+	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+	const version = document.head.querySelector( "[ name=version ]" ).content;
+
+	const htm =
+	`
+		<h2>
+			<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
+				<img src=${ urlSourceCodeIcon } height=18 style=opacity:0.5; >
+			</a>
+			<a href="" title="Click to reload this page" >${ document.title } ${ version }</a>
+		</h2>
+
+		<p>
+			${ document.head.querySelector( "[ name=description ]" ).content }
+		</p>
+	`;
+
+	return htm;
+
+}
+
+</script>
+</body>
+</html>

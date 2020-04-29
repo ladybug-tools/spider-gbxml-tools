@@ -37,7 +37,6 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 
 	THRU.zoomObjectBoundingSphere();
 
-
 	if ( FOB.size > 5000000 ) { GBXU.setSurfaceTypesVisible( GBXU.filtersDefault ); }
 
 	const meshes = GBX.meshGroup.children.filter( mesh =>
@@ -63,7 +62,7 @@ GBXU.onGbxParse = function() { // see GBX.parseFile
 
 	GBXU.setElementsJson();
 
-	if ( window.POP ) POP.requestFile( POP.popup, divDragMoveContent );
+	//if ( window.POP ) POP.requestFile( POP.popup, divDragMoveContent );
 
 	if ( window.detMenuViewGbxml ) MNU.toggleDetailsOpen( detMenuViewGbxml );
 

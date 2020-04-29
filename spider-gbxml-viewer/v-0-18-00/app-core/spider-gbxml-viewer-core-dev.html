@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+
+<meta charset = "utf-8">
+<meta name = "copyright" content ="Ladybug Tools authors" >
+<meta name = "date" content = "2019-11-08" >
+<meta name = "description" content = "Basic file that opens a gbXML file and displays it in 3D" >
+<meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
+<meta name = "version" content = "0.18.00-0dev cor" >
+<meta name = "viewport" content = "width=device-width, initial-scale=1" >
+
+<title>Spider gbXML Viewer Core Dev</title>
+
+<link rel = "canonical" href = "www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/cor" />
+<link rel = "license" href = "https://creativecommons.org/licenses/by/4.0/" >
+<link rel = "license" href = "https://opensource.org/licenses/MIT" >
+
+<style>
+
+	* { box-sizing: border-box; }
+
+	:root {
+		--background-color: #f7f6ee;
+		--secondary-color: #fbfefb;
+		--text-dark: #101010;
+		--text: #333333;
+		--text-light: #7b7b85;
+	}
+
+	body { font: 11pt monospace; margin: 0; overflow: hidden;
+		background: var(--background-color);
+		color: var(--text);
+	}
+
+	#divContent {  height: 100vh; width: 100vw; }
+
+	#divRendererInfo { position: absolute; left:1rem; top:1rem;}
+
+	@media (prefers-color-scheme: dark) {
+		:root {
+			--background-color: #1e1f23;
+			--secondary-color: #232428;
+			--text-dark: #efefef;
+			--text: #c4c5c9;
+			--text-light: #6c6d71;
+			--text-lighter: #8e8f93;
+		}
+	}
+
+</style>
+
+<base href="../" >
+
+</head>
+
+<body>
+
+<!-- utility libraries -->
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js" ></script>
+
+<!-- Three.js -->
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/build/three.min.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/controls/OrbitControls.js" ></script>
+
+<!-- Tootoo -->
+<script src="oxh-open-xml-hash/oxh-open-xml-hash.js" ></script>
+
+<!-- Spider Three.js -->
+<script src = "core-thr-three/thr-threejs.js" ></script>
+<script src = "core-thr-three/thru-threejs-utilities.js" ></script>
+<script src = "core-thr-three/tdh-three-draw-helpers.js" ></script>
+
+<!-- Spider gbXML -->
+<script src = "core-gbx-gbxml/gbx-gbxml-parser.js" ></script>
+<script src = "core-gbx-gbxml/gbxu-gbxml-utilities.js" ></script>
+
+
+	<div id="divContent" ></div>
+
+	<div id="divRendererInfo" >
+
+		<!-- following not required -->
+
+		<div id="GBXdivMessage" >loading...</div>
+
+		<div id="OXHdivFileInfo" ></div>
+
+	</div>
+
+<script>
+
+
+//OXH.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/bilt-2019-template.zip";
+//OXH.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
+//OXH.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/warwick-university-5k-surfaces.zip";
+//OXH.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/annapolis-md-single-family-residential-2016.xml"
+//OXH.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/pittsburg-airport.zip";
+//OXH.urlDefaultFile = "https://cdn.jsdelivr.net/gh/GreenBuildingXML/Sample-gbXML-Files@master/gbXML_TRK.xml";
+
+
+init();
+THR.animate();
+
+function init() {
+
+	if ( /(iPad|iPhone|iPod)/g.test( navigator.userAgent ) ) { /* I hate having to add this */
+
+		divContents.style.width = getComputedStyle( divContents ).width;
+		divContents.style.height = getComputedStyle( divContents ).height;
+		divContents.setAttribute( "scrolling", "no" );
+
+	}
+
+	THR.getThreejs();
+
+	THRU.init();
+
+	GBX.init( GBXdivMessage );  // parameter not required
+
+	//window.addEventListener ( "hashchange", OXH.onHashChange, false );
+
+	OXH.onHashChange( divContent );
+
+}
+
+</script>
+</body>
+</html>

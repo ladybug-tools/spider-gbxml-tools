@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+
+<meta name="description" content="Ascertain if a collection of points is water tight or manifold">
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2019-11-11" >
+<meta name = "version" content = "0.00.0" >
+<title></title>
+<style>
+/* copyright 2019 Theo Armour. MIT license. */
+
+:root { --mnu-width: 22rem; --screen-width: calc( 100vw ); --headerHeight: 6rem; }
+
+* { box-sizing: border-box; }
+
+body { font: 12pt monospace; margin: 0; overflow: hidden; }
+
+a { color: crimson; text-decoration: none; }
+a:hover, a:focus, a:active { background-color: yellow; color: #aaa; text-decoration: underline }
+
+button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+button:hover { background: #ccc; color: #fff }
+
+button { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+input[ type = range ] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; height: 2ch; width: 100%; }
+input[ type = range ]::-moz-range-thumb { background-color: #888; border-radius: 0; height: 3ch; width: 10px; }
+input[ type = range ]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 3ch; width: 10px; }
+
+center { font-size: 2ch; }
+
+summary { font-weight: bold; }
+
+#main { border: 0px; left: var( --mnu-width ); margin: 0;
+	padding: 0 3rem; position: absolute; width: calc( 100% - var( --mnu-width ) );  }
+
+#divContent { border: 0px solid red; margin: 0 auto; max-width: 40rem; }
+
+#navMenu { background-color: #eee; height: 100%; left: 0; margin: 0;opacity: 0.9; overflow: auto;
+	padding: 0 1rem; position: fixed; transition: left 0.5s; top: 0; width: var( --mnu-width ); z-index: 1; }
+
+#expandButton { height: 32px; position: fixed; left: var( --mnu-width ); top: 2ch;
+	transition: left 0.5s; width: 32px; z-index: 1; }
+
+
+#expandButton.collapsed { left: 0; }
+#navMenu.collapsed { left: calc( var( --mnu-width ) * -1 ); padding: 0; }
+#main.collapsed { left: 0; width: 100%; }
+
+
+
+/* media */
+
+@media all and (max-width: 640px) {
+#main {
+	left: 0;
+	padding: 0 1rem;
+	width: 100%;
+}
+
+#expandButton {
+	top: 90vh
+}
+}
+
+@media all and (max-height: 640px) {
+#main {
+	left: 0;
+	padding: 0;
+	width: 100%;
+}
+
+#expandButton {
+	top: 90vh;
+}
+}
+
+@media (prefers-color-scheme: dark) {
+:root {
+	background-color: #1e1f23;
+	color: #aaa;
+}
+#navMenu { background-color: #555; }
+}
+</style>
+
+</head>
+<body>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/build/three.min.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/controls/TrackballControls.js" ></script>
+<script src="https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-07/gff-github-folder-files/gff-github-folder-files.js"></script>
+
+
+	<button id="expandButton" onclick="toggleNavMenu();" >☰</button>
+
+	<nav id="navMenu" >
+
+		<header id="hdrTitle" ></header>
+
+
+		<details open>
+
+			<summary class="sumMenuTitle">gbXML samples menu</summary>
+
+			<div>
+
+				<p>gbXML files you can load, view and experiment with</p>
+
+				<div id=GFFdivGithubFoldersFiles></div>
+
+				<div id=GFFdivFileInfo></div>
+
+				<div id="GATdivGithubAccessToken"></div>
+			</div>
+
+		</details>
+
+		<details>
+
+			<summary class="sumMenuTitle" >details</summary>
+
+			<p>
+				<button onclick="sceneRotation = sceneRotation === 1 ? 0 : 1;" >rotation</button>
+			</p>
+
+			<p>
+				<input type="range" id="inpSpeed" onclick="sceneRotation=0.03 * this.value;" />
+			</p>
+
+
+		</details>
+
+		<footer>
+
+			<hr>
+
+			<center title="hello! click me to go up to the top"><a href=javascript:navMenu.scrollTo(0,0); style=text-decoration:none; > ❦ </a></center>
+
+		</footer>
+
+
+	</nav>
+
+	<main id=main >
+
+		<div id="divContent" ></div>
+
+	</main>
+
+
+<script>
+
+
+const urlSourceCode = `https://github.com/`;
+const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-32.png";
+
+let meshGroup;
+
+let sceneRotation = 1;
+let renderer, camera, controls, scene;
+
+init();
+animate();
+
+function init() {
+
+	hdrTitle.innerHTML = getTitle();
+
+	GFFdivGithubFoldersFiles.innerHTML = GFF.getMenuGithubFoldersFiles();
+
+	renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true } );
+	renderer.setPixelRatio( window.devicePixelRatio );
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	document.body.appendChild( renderer.domElement );
+
+	camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
+	camera.position.set( - 5000, - 500, 500 );
+	camera.up.set( 0, 0, 1 );
+
+	controls = new THREE.TrackballControls( camera, renderer.domElement );
+	controls.rotateSpeed = 4;
+
+	scene = new THREE.Scene();
+
+	window.addEventListener( 'resize', onWindowResize, false );
+	window.addEventListener( 'orientationchange', onWindowResize, false );
+	window.addEventListener( 'keyup', () => sceneRotation = 0, false );
+	renderer.domElement.addEventListener( 'click', () => sceneRotation = 0, false );
+
+	const axesHelper = new THREE.AxesHelper( 100 );
+	scene.add( axesHelper );
+
+	const geometry = new THREE.BoxGeometry( 50, 50, 50 );
+	const material = new THREE.MeshNormalMaterial();
+	const mesh = new THREE.Mesh( geometry, material );
+	//scene.add( mesh );
+
+	window.addEventListener( "hashchange", onHashChange, false);
+
+}
+
+
+
+function onHashChange() {
+
+	//console.log( '', location.hash );
+
+	url = location.hash.slice( 1 );
+
+	fetchXml( url );
+
+}
+
+
+const fetchXml = async function( url ) {
+
+	const buffer = await fetch(new Request(url))
+		.then(response => response.arrayBuffer());
+
+	const arr8 = new Uint8Array(buffer);
+
+	const charSet = (arr8.slice(0, 2).join() === "255,254") ? "utf-16le" : "utf-8";
+
+	let text = new TextDecoder( charSet ).decode(buffer);
+	text = text.replace( /\r\n|\n/g, '' );
+
+	parseFile( text );
+
+}
+
+
+function parseFile( text ) {
+
+	surfaces = text.match( /<Surface(.*?)<\/Surface>/gi );
+
+	//console.log( 'surfaces', surfaces.length );
+
+	vertices  = surfaces.flatMap( surface => {
+
+		polyloopsText = surface.match( /<polyloop(.*?)<\/polyloop>/gi );
+
+		polyloops = polyloopsText[ 0 ];
+
+		pointLoops = polyloops.match( /<CartesianPoint>(.*?)<\/CartesianPoint>/gi );
+		//console.log( 'loops', loops );
+
+		points = pointLoops.map( point => point.match( ( /<Coordinate>(.*?)<\/Coordinate>/gi ) ) );
+
+		vertices = points.map( coordinates => {
+			//console.log( 'coordinates', coordinates );
+
+			vertex = coordinates.map( coordinateText => {
+
+				coordinate = coordinateText.match( /<Coordinate>(.*?)<\/Coordinate>/i )[ 1 ]
+				//console.log( 'coordinate', coordinate;
+
+				return Number( coordinate );
+
+			} )
+
+			return vertex;
+
+		} )
+
+		return vertices;
+
+	} )
+
+	//console.log( 'vertices', vertices );
+
+	verticesString = vertices.map( vertex => vertex.join() );
+
+	uniqueArray = [...new Set(verticesString)];
+
+	//console.log( 'uniqueArray', uniqueArray );
+
+	scene.remove( meshGroup );
+
+	meshGroup = new THREE.Group();
+
+	positions = [];
+
+	for ( let i = 0; i < vertices.length; i++ ) {
+
+		vertex = vertices[ i ];
+
+		if ( positions.includes( vertex.join() ) ) {
+
+			index = positions.indexOf( vertex.join() );
+			//console.log( 'index', index );
+			mesh = meshGroup.children[ index ];
+			mesh.userData.count ++;
+			mesh.material = new THREE.MeshBasicMaterial(
+				{ color: new THREE.Color().setHSL( 0.08 * mesh.userData.count, 0.9, 0.5 ) } );
+
+		} else {
+
+			positions.push( vertex.join() );
+			const geometry = new THREE.BoxGeometry( 0.5, 0.5, 0.5  );
+			const material = new THREE.MeshBasicMaterial( { color: 0xaaaaaa } );
+			const mesh = new THREE.Mesh( geometry, material );
+			mesh.userData.count = 1;
+			mesh.position.set( ...vertex );
+			meshGroup.add( mesh );
+		}
+
+	}
+
+	scene.add( meshGroup );
+
+	zoomObjectBoundingSphere( meshGroup );
+
+	console.log( 'pl', positions.length );
+
+	checkVertices()
+
+}
+
+
+function checkVertices() {
+
+
+	for ( mesh of meshGroup.children ) {
+
+		console.log( '', mesh.userData.count );
+	}
+}
+
+
+function zoomObjectBoundingSphere( obj = scene ) {
+
+	const bbox = new THREE.Box3().setFromObject( obj );
+
+	if ( bbox.isEmpty() === true ) { return; }
+
+	const sphere = bbox.getBoundingSphere( new THREE.Sphere() );
+	const center = sphere.center;
+	const radius = sphere.radius;
+
+	//console.log( 'center', center );
+	//console.log( 'radius', radius );
+
+	controls.target.copy( center );
+	controls.maxDistance = 5 * radius;
+
+	camera.position.copy( center.clone().add( new THREE.Vector3( 1.5 * radius, 1.5 * radius, 1.5 * radius ) ) );
+	camera.near = 0.1 * radius;
+	camera.far = 10 * radius;
+	camera.updateProjectionMatrix();
+
+	scene.userData.objCenter = center;
+	scene.userData.objRadius = radius;
+
+}
+
+
+
+
+function toggleNavMenu() {
+
+	expandButton.classList.toggle( 'collapsed' );
+	navMenu.classList.toggle( 'collapsed' );
+	main.classList.toggle( 'collapsed' );
+
+}
+
+
+function getTitle() {
+
+	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+	const version = document.head.querySelector( "[ name=version ]" ).content;
+	const description = document.head.querySelector( "[ name=description ]" ).content;
+
+	const htm =
+	`
+		<h2>
+			<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
+				<img src="${ urlSourceCodeIcon }" alt="GitHub logo" height=18 style=opacity:0.5; >
+			</a>
+			<a href="" title="Click to reload this page" >${ document.title } ${ version }</a>
+		</h2>
+
+		<p>
+			${ document.head.querySelector( "[ name=description ]" ).content }
+		</p>
+	`;
+
+	return htm;
+
+}
+
+
+
+function onWindowResize() {
+
+camera.aspect = window.innerWidth / window.innerHeight;
+camera.updateProjectionMatrix();
+
+renderer.setSize( window.innerWidth, window.innerHeight );
+
+controls.handleResize();
+
+//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+}
+
+
+
+function animate() {
+
+	requestAnimationFrame( animate );
+	renderer.render( scene, camera );
+	controls.update();
+	//scene.rotation.z += sceneRotation / 1000;
+
+}
+
+</script>
+</body>
+</html>

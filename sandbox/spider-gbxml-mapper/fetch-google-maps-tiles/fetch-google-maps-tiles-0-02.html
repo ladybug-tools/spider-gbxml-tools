@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="Real-time 3D in your browser using the Three.js JavaScript library" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2019-10-25" >
+<title></title>
+<style>
+
+	body { font: 11pt monospace; margin: 0; overflow: hidden; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	#divMenu { margin: 0 20px; max-width: 640px; position: absolute; }
+
+
+<style>
+
+* { box-sizing: border-box; }
+
+:root {
+	--background-color: #f7f6ee;
+	--secondary-color: #fbfefb;
+	--text-dark: #101010;
+	--text: #333333;
+	--text-light: #7b7b85;
+}
+
+body { font: 11pt monospace; margin: 0; overflow: hidden;
+	background: var(--background-color);
+	color: var(--text);
+}
+
+#divContents {  height: 100vh; width: 100vw; }
+
+#divRendererInfo { position: absolute; left:1rem; top:1rem;}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--background-color: #1e1f23;
+		--secondary-color: #232428;
+		--text-dark: #efefef;
+		--text: #c4c5c9;
+		--text-light: #6c6d71;
+		--text-lighter: #8e8f93;
+	}
+}
+
+</style>
+
+</style>
+</head>
+<body>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r109/build/three.min.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r109/examples/js/controls/OrbitControls.js" ></script>
+<script src = "../../../spider-gbxml-viewer/v-0-17-07/core-thr-three/thr-threejs.js" ></script>
+<script src = "../../../spider-gbxml-viewer/v-0-17-07/core-thr-three/thru-threejs-utilities.js" ></script>
+<script src = "../../../spider-gbxml-viewer/v-0-17-07/core-thr-three/tdh-three-draw-helpers.js" ></script>
+<script src = "fetch-google-maps-tiles-0-02.js" ></script>
+
+
+	<div id = "divMenu" >
+
+		<div id = "divTitle" ></div>
+
+		<p>
+			latitude <input id=inpLat onchange=MAP.getTiles(); value=37.796 > - longitude <input id=inpLon onchange=MAP.getTiles(); value=-122.398 >
+		</p>
+
+		<p>
+			
+			<button onclick=MAP.getTiles(); >get map </button></p>
+
+		<p>
+			<button onclick="sceneRotation = sceneRotation === 1 ? 0 : 1;" >rotation</button>
+		</p>
+
+		<div id = "divLog" ></div>
+
+	</div>
+
+	<div id=divContents > </div>
+
+<script>
+
+
+
+let sceneRotation = 1;
+
+let renderer, camera, controls, scene;
+
+init();
+
+THR.animate();
+
+function init() {
+
+	const title = location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' );
+	//const title = document.title;
+
+	divTitle.innerHTML =
+	`<h1>
+		<a href="" >${title}</a>
+	</h1>`;
+
+	if ( /(iPad|iPhone|iPod)/g.test( navigator.userAgent ) ) { /* I hate having to add this */
+
+		divContents.style.width = getComputedStyle( divContents ).width;
+		divContents.style.height = getComputedStyle( divContents ).height;
+		divContents.setAttribute( "scrolling", "no" );
+
+	}
+
+	THR.getThreejs();
+
+	THRU.init();
+
+}
+
+
+
+
+
+function onWindowResize() {
+
+	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.updateProjectionMatrix();
+
+	renderer.setSize( window.innerWidth, window.innerHeight );
+
+	//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+}
+
+
+
+function animate() {
+
+	requestAnimationFrame( animate );
+	renderer.render( scene, camera );
+	controls.update();
+	//scene.rotation.z += sceneRotation / 1000;
+
+}
+
+</script>
+</body>
+</html>

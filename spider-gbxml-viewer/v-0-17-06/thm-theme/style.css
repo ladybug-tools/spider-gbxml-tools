@@ -26,7 +26,6 @@ html {
 
 body {
 	margin: 0;
-
 	background: var(--background-color);
 
 }
@@ -129,7 +128,6 @@ summary {
 }
 
 summary:hover {
-
 	color: #222;
 }
 
@@ -137,7 +135,6 @@ summary:hover {
 	font-size: 0.7rem;
 	padding: 0 0.5rem;
 	float: right;
-
 }
 
 .dingbat {
@@ -323,7 +320,7 @@ h1, h2, h3, h4, h5 {
 
 	#divContents {
 		left: 0;
-		padding: 0 1rem;
+		padding: 0;
 		width: 100%;
 	}
 

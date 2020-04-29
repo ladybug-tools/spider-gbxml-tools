@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8">
+	<meta name="copyright" content="Ladybug Tools authors">
+	<meta name="date" content="2019-10-18">
+	<meta name="description" content="JavaScript utilities to help you identify and fix common errors in gbXML files">
+	<meta name="keywords" content="gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS">
+	<meta name="version" content="0.17.07-0">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Spider gbXML Viewer 'Maevia'</title>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-129035557-5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push( arguments ); }
+		gtag( 'js', new Date() );
+
+		gtag( 'config', 'UA-129035557-5' );
+	</script>
+
+	<base href="https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-07/">
+
+	<link rel="canonical" href="www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/" />
+	<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+	<link rel="license" href="https://opensource.org/licenses/MIT">
+	<link rel="stylesheet" href="thm-theme/style.css">
+
+</head>
+
+<body>
+
+	<!-- utility libraries -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
+
+
+	<!-- Three.js -->
+	<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r109/build/three.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r109/examples/js/controls/OrbitControls.js"></script>
+
+
+	<!--TooToo ~ menus generally -->
+	<script src="pop-popup/pop-popup.js"></script>
+	<script src="mnu-menu/mas-menu-app-switch.js"></script>
+	<script src="mnu-menu/mnu-menu.js"></script>
+
+
+	<!-- Spider Three.js -->
+	<script src="js-core-three/thr-threejs.js"></script>
+	<script src="js-core-three/thru-threejs-utilities.js"></script>
+
+
+	<!-- Spider gbXML -->
+	<script src="js-core-gbxml/gbx-gbxml-parser.js"></script>
+	<script src="js-core-gbxml/gbxu-gbxml-utilities.js"></script>
+	<script src="js-core-gbxml/gsa-gbxml-surface-attributes.js"></script>
+
+
+	<!-- Spider popup menu -->
+	<script src="js-popup2/pin-popup-intersect.js"></script>
+	<script src="js-popup2/pco-popup-content.js"></script>
+	<script src="js-popup2/pfo-popup-footer.js"></script>
+
+
+	<!-- File menu panel ~ From TooToo 0.14.08 -->
+	<script src="gff-github-folder-files/gff-github-folder-files-dev.js"></script>
+	<script src="gat-github-access-token/gat-github-access-token.js"></script>
+	<script src="fob-file-open-basic/fob-file-open-basic.js"></script>
+
+
+	<!-- View gbXML menu / items in order of appearance on menu -->
+	<script src="js-view-gbxml/0-vgc-view-gbxml-core.js"></script>
+	<script src="js-view-gbxml/vg-view-gbxml.js"></script>
+	<script src="js-view-gbxml/vty-view-surface-types.js"></script>
+	<script src="js-view-gbxml/vsu-view-surfaces.js"></script>
+	<script src="js-view-gbxml/vsp-view-spaces.js"></script>
+	<script src="js-view-gbxml/vst-view-storeys.js"></script>
+	<script src="js-view-gbxml/vzo-view-zones.js"></script>
+	<script src="js-view-gbxml/vop-view-openings.js"></script>
+	<script src="js-view-gbxml/vot-view-opening-types.js"></script>
+	<script src="js-view-gbxml/vci-view-cad-object-id.js"></script>
+	<script src="js-view-gbxml/vcio-view-cad-object-id-open.js"></script>
+	<script src="js-view-gbxml/vco-view-constructions.js"></script>
+	<script src="js-view-gbxml/vla-view-layers.js"></script>
+	<script src="js-view-gbxml/vma-view-materials.js"></script>
+	<script src="js-view-gbxml/vwt-view-window-types.js"></script>
+	<script src="js-view-gbxml/vdo-view-documents.js"></script>
+
+
+	<!-- Scene menu -->
+	<script src="js-scene/set-settings.js"></script>
+	<script src="js-scene/cut-section-cut.js"></script>
+	<script src="js-scene/vex-view-exploded.js"></script>
+
+
+	<!-- Fixer Menu -->
+	<script src="js-fixer/gbxf-gbxml-fixer.js"></script>
+	<script src="js-fixer/ggd-get-gbxml-data/ggd-get-gbxml-data.js"></script>
+	<script src="js-fixer/gss-get-surface-statistics/gss-get-surface-statistics.js"></script>
+	<script src="js-fixer/gcs-get-check-strings/gcs-get-check-strings.js"></script>
+	<script src="js-fixer/gco-get-check-offset/gco-get-check-offset.js"></script>
+	<script src="js-fixer/ocv-openings-check-vertices/ocv-openings-check-vertices.js"></script>
+	<script src="js-fixer/ocs-openings-check-size/ocs-openings-check-size.js"></script>
+	<script src="js-fixer/gwv-get-watertight-vertices/gwv-get-watertight-vertices.js"></script>
+	<script src="js-fixer/gws-get-watertight-spaces/gws-get-watertight-spaces.js"></script>
+	<script src="js-fixer/fxa-fix-xml-attributes/fxa-fix-xml-attributes.js"></script>
+	<script src="js-fixer/fstn-fix-surface-type-name/fstn-fix-surface-type-name.js"></script>
+	<script src="js-fixer/fets-fix-exposed-to-sun/fets-fix-exposed-to-sun.js"></script>
+	<script src="js-fixer/fdpc-fix-duplicate-planar-coordinates/fdpc-fix-duplicate-planar-coordinates.js"></script>
+	<script src="js-fixer/fasst-fix-adjacent-space-surface-type/fasst-fix-adjacent-space-surface-type.js"></script>
+	<script src="js-fixer/fase-fix-adjacent-space-extra/fase-fix-adjacent-space-extra.js"></script>
+	<script src="js-fixer/fasd-fix-adjacent-space-duplicate/fasd-fix-adjacent-space-duplicate.js"></script>
+	<script src="js-fixer/fasa-fix-air-single-adjacent/fasa-fix-air-single-adjacent.js"></script>
+	<script src="js-fixer/fcim-fix-cad-id-missing/fcim-fix-cad-id-missing.js"></script>
+
+
+	<!-- Fixer 3D Menu -->
+	<script src="js-fixer-3d/gf3-gbxml-fixer-3d.js"></script>
+	<script
+		src="js-fixer-3d/fioeh-fix-interior-on-exterior-horizontal/fioeh-fix-interior-on-exterior-horizontal.js"></script>
+	<script src="js-fixer-3d/cnh-check-normals-horizontal/cnh-check-normals-horizontal.js"></script>
+
+
+	<!-- Settings menu -->
+	<script src="thm-theme/thm-theme.js"></script>
+	<script src="tmp-templates/tmp-template.js"></script>
+
+
+	<!-- Core / local settings
+<script src = "js-core/cor-core.js" ></script>
+-->
+
+	<button id="expandButton" onclick="toggleNavPanel();">☰</button>
+
+	<nav id="navMenu">
+
+		<section class="secContent">
+
+			<div class=divMenu>
+
+				<details open>
+
+					<summary class="sumMenuTitle">Menu bar header</summary>
+
+					<header>
+
+						<h3 id="MNUdivAppSwitch"></h3>
+
+						<div id="MNUdivHeader"></div>
+
+					</header>
+
+				</details>
+
+				<details open>
+
+					<summary class="sumMenuTitle">gbXML samples menu</summary>
+
+					<div>
+
+						<p>gbXML files you can load, view and experiment with</p>
+
+						<div id=GFFdivGithubFoldersFiles></div>
+
+						<div id=GFFdivFileInfo></div>
+
+						<div id="GATdivGithubAccessToken"></div>
+					</div>
+
+				</details>
+
+
+				<details open>
+
+					<summary class="sumMenuTitle">File menu</summary>
+
+					<div id=FOBdivFileOpenBasic></div>
+
+					<div id=GBXUdivStatsGbx></div>
+
+					<div id=FOBdivFileSaveBasic></div>
+
+					<div id="FOBdivMessages"></div>
+
+				</details>
+
+				<details id="detMenuViewGbxml">
+
+					<summary class=sumMenuTitle>View gbXML menu</summary>
+
+					<section id="VGsecViewGbxml"></section>
+
+					<section id="VTYsecViewSurfaceTypes"></section>
+
+					<section id="VSUsecViewSurfaces"></section>
+
+					<section id="VSPsecViewSpaces"></section>
+
+					<section id="VSTsecViewStoreys"></section>
+
+					<section id="VZOsecViewZones"></section>
+
+					<section id="VCIsecViewCadObjectId"></section>
+
+					<section id="VCIOsecViewCadObjectIdOpen"></section>
+
+					<section id="VOPsecViewOpenings"></section>
+
+					<section id="VOTsecViewOpeningTypes"></section>
+
+					<section id="VCOsecViewConstructions"></section>
+
+					<section id="VMAsecViewMaterials"></section>
+
+					<section id="VLAsecViewLayers"></section>
+
+					<section id="VWTsecViewWindowTypes"></section>
+
+					<section id="VDOsecViewDocuments"></section>
+
+				</details>
+
+				<details>
+
+					<summary class=sumMenuTitle>Scene menu</summary>
+
+					<section id="SETsecSettings"></section>
+
+					<details id=detSectionCut ontoggle="divSectionCut.innerHTML=CUT.getDetSectionViews();">
+
+						<summary>Scene cut sections</summary>
+
+						<div id="divSectionCut"></div>
+
+					</details>
+
+				</details>
+
+				<details ontoggle=GBXF.init();>
+
+					<summary class=sumMenuTitle>Fixer menu</summary>
+
+					<div id=divFixer></div>
+
+				</details>
+
+				<details ontoggle=GF3.init();>
+
+					<summary class=sumMenuTitle>Fixer 3D menu</summary>
+
+					<p>
+						This menu is for scripts - very experimental -
+						that utilize the Three.js linear algebra library
+						to check for 3D errors such as
+						incorrect normals and
+						'InteriorWall' surfaces on the exterior.
+					</p>
+
+					<div id=GF3divFixer3d></div>
+
+				</details>
+
+				<details open>
+
+					<summary class=sumMenuTitle>Settings menu</summary>
+
+					<div id=THMdivMenuThemeSelect></div>
+
+					<div id=TMPdivTemplate></div>
+
+				</details>
+
+				<footer>
+
+					<details>
+
+						<summary class=sumMenuTitle>Help menu</summary>
+
+						<div id="MNUdivFooterPopup"></div>
+
+					</details>
+
+					<p onclick="navMenu.scrollTop=0;" class=dingbat title="go to top of menu">
+						<img alt="spider icon" src="https://ladybug.tools/artwork/icons_bugs/ico/spider.ico" height=18>
+					</p>
+
+				</footer>
+			</div>
+
+		</section>
+
+	</nav>
+
+
+	<main id="main">
+
+		<div id="divContents"></div>
+
+		<div id="divMessage">
+
+			<div id="GBXdivMessage">loading...</div>
+
+		</div>
+
+	</main>
+
+
+	<nav id="navDragMove">
+
+		<section id="secDragMove">
+
+			<div id=divDragMoveHeader>
+
+				<span title="Move and resize me">
+					<img src='https://ladybug.tools/artwork/icons_bugs/ico/spider.ico' height=12
+						alt="Ladybug Tools logo">
+				</span>
+
+				<button onclick=PFO.onClickZoomAll(); title="Show entire campus & display attributes">🔍</button>
+
+				<button onclick="PFO.onToggleInteriorExterior(this)" title="Exterior or interior surfaces">☂️</button>
+
+				<button onclick="THR.controls.autoRotate = !THR.controls.autoRotate;"
+					title="Rotation of the scene">🔄</button>
+
+				&nbsp; <button id=butPopupClose onclick="POP.onClickClose(butPopupClose);"
+					title="Close me">&times;</button>
+
+			</div>
+
+			<div id="divDragMoveContent"></div>
+
+			<div id="divDragMoveFooter"></div>
+
+		</section>
+
+	</nav>
+
+
+	<nav>
+
+		<a href="" id="aViewSource" target="_blank">view source</a>
+
+	</nav>
+
+
+	<script>
+
+
+		//FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
+		//FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-fixed.xml";
+		//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/coventry-university-of-warwick-small.zip";
+		//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/annapolis-md-single-family-residential-2016.xml"
+		//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/pittsburg-airport.zip";
+		//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/GreenBuildingXML/Sample-gbXML-Files@master/gbXML_TRK.xml";
+		FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/bilt-2019-template.zip";
+
+
+		init();
+
+		THR.animate();
+
+		function init() {
+
+			// Three.js
+
+			THR.getThreejs();
+
+			THRU.init();
+
+			GBX.init( GBXdivMessage ); // gets things going
+
+			GF3.init(); // here while testing - otherwise run on toggle
+
+			// Theme
+
+			THM.cssDefault = "thm-theme/style.css";
+
+			THMdivMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
+
+
+			// Menu header
+
+			MNUdivAppSwitch.innerHTML = MAS.getAppSwitch();
+
+			MNUdivHeader.innerHTML = MNU.getNavHeader();
+
+
+			// File menu
+
+			GFFdivGithubFoldersFiles.innerHTML = GFF.getMenuGithubFoldersFiles();
+
+			GATdivGithubAccessToken.innerHTML = GAT.getMenuGitHubAccessToken();
+
+			FOBdivFileOpenBasic.innerHTML = FOB.getMenuFileOpenBasic();
+
+			FOBdivFileSaveBasic.innerHTML = FOB.getMenuFileSaveBasic();
+
+
+			// View gbXML menu
+
+			VGsecViewGbxml.innerHTML = VG.getMenuViewGbxml();
+
+			VTYsecViewSurfaceTypes.innerHTML = VTY.getMenuViewSurfaceTypes();
+
+			VSUsecViewSurfaces.innerHTML = VSU.getMenuViewSurfaces();
+
+			VSPsecViewSpaces.innerHTML = VSP.getMenuViewSpaces();
+
+			VSTsecViewStoreys.innerHTML = VST.getMenuViewStoreys();
+
+			VZOsecViewZones.innerHTML = VZO.getMenuViewZones();
+
+			VOPsecViewOpenings.innerHTML = VOP.getMenuViewOpenings();
+
+			VOTsecViewOpeningTypes.innerHTML = VOT.getMenuViewOpeningTypes();
+
+			VCIsecViewCadObjectId.innerHTML = VCI.getMenuViewCadObjectId();
+
+			VCIOsecViewCadObjectIdOpen.innerHTML = VCIO.getMenuViewCadObjectIdOpen();
+
+			VCOsecViewConstructions.innerHTML = VCO.getMenuViewConstructions();
+
+			VLAsecViewLayers.innerHTML = VLA.getMenuViewLayers();
+
+			VMAsecViewMaterials.innerHTML = VMA.getMenuViewMaterials();
+
+			VWTsecViewWindowTypes.innerHTML = VWT.getMenuViewWindowTypes();
+
+			VDOsecViewDocuments.innerHTML = VDO.getMenuViewDocuments();
+
+
+			// Settings menu
+
+			SETsecSettings.innerHTML = SET.getMenuSettings()
+
+			TMPdivTemplate.innerHTML = TMP.getMenuTemplate();
+
+
+			// Help menu
+
+			MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();
+
+			POP.init();
+
+			PIN.init();
+
+			FOB.onHashChange();
+
+
+			aViewSource.href = MNU.urlSourceCode;
+
+			if ( window.innerWidth < 640 || window.innerHeight < 640 ) {
+
+				toggleNavPanel();
+				POP.setPopupShowHide( butPopupClose, ' ', POP.footer );
+
+				THM.init();
+
+			} else {
+
+				POP.setPopupShowHide();
+				THM.init();
+
+			}
+
+		}
+
+
+		// to TooToo MNU??
+
+		function toggleNavPanel() {
+
+			expandButton.classList.toggle( 'collapsed' );
+			navMenu.classList.toggle( 'collapsed' );
+			main.classList.toggle( 'collapsed' );
+
+			THR.onWindowResize();
+
+		}
+
+
+	</script>
+</body>
+
+</html>
