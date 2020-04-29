@@ -87,9 +87,9 @@ var PFO = {} || PFO;
 
 
 GBX.parseFile = function( gbxml )  {
-	//console.log( 'gbxml', gbxml );
+	console.log( 'gbxml', gbxml );
 
-	if ( !gbxml || gbxml.includes( "xmlns" ) === false ) { return; }
+	//if ( !gbxml || gbxml.includes( "xmlns" ) === false ) { return; }
 
 	GBX.timeStart = performance.now();
 
@@ -106,11 +106,11 @@ GBX.parseFile = function( gbxml )  {
 	GBX.placards = new THREE.Group();
 
 	GBX.text = gbxml.replace( /\r\n|\n/g, '' );
-	//console.log( 'GBX.text', GBX.text );
+	console.log( 'GBX.text', GBX.text );
 
-	const reSurface = /<Surface(.*?)<\/surface>/gi;
+	const reSurface = /<Surface(.*?)<\/Surface>/gi;
 	GBX.surfaces = GBX.text.match( reSurface );
-	//console.log( 'GBX.surfaces', GBX.surfaces );
+	console.log( 'GBX.surfaces', GBX.surfaces );
 
 	const reStoreys = /<BuildingStorey(.*?)<\/BuildingStorey>/gi;
 	GBX.storeys = GBX.text.match( reStoreys );
@@ -179,7 +179,7 @@ GBX.getSpacesJson = function() {
 
 
 GBX.getSurfaceMeshes = function( surfaces ) {
-	// console.log( 'surfaces', surfaces );
+	//console.log( 'surfaces', surfaces );
 
 	const timeStart = performance.now();
 
