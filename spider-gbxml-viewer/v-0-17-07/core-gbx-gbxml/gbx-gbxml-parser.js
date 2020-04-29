@@ -89,7 +89,7 @@ var PFO = {} || PFO;
 GBX.parseFile = function( gbxml )  {
 	//console.log( 'gbxml', gbxml );
 
-	if ( !gbxml || gbxml.includes( "xmlns" ) === false ) { return; }
+	//if ( !gbxml || gbxml.includes( "xmlns" ) === false ) { return; }
 
 	GBX.timeStart = performance.now();
 
