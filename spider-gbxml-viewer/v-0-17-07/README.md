@@ -56,6 +56,12 @@ Or copy this link: https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-vie
 
 <summary>Change Log</summary>
 
+### 2020-04-29 ~ Theo
+
+v0.17.07.05 dev
+
+* Fix xmlns issue
+
 ### 2019-12-18 ~ Theo
 
 v0.17.07.04 dev
