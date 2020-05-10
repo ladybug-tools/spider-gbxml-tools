@@ -17,7 +17,7 @@ var THRU = {
 
 
 
-THRU.init= function( radius = 50 ) {
+THRU.init = function ( radius = 50 ) {
 
 	// called from main html / assumes three.js is loaded
 
