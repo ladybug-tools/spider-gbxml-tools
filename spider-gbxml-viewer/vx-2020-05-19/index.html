@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1" >
+<meta name = "description" content = "View Honeybee and Dragonfly Schema files in 3D" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+
+<title>Spider gbXML Viewer</title>
+
+<link rel="stylesheet" href="./style.css">
+
+<style>
+
+/* Copyright 2020 Theo Armour. MIT License */
+
+
+:root { --mnu-width: 25rem; --screen-width: calc( 100vw ); --headerHeight: 6rem; }
+
+details { margin: 1rem 0 1rem 0; }
+
+main { border: 0px solid red; height: 100vh; left: var( --mnu-width ); margin: 0;
+	overflow: auto; padding: 0 1rem; position: absolute; width: calc( 100% - var( --mnu-width ) );  }
+
+summary {font-size: 120%; font-weight: bold; }
+
+#navMenu:hover { overflow: auto; }
+
+#navMenu { 	background-color: #eee; margin-left: 0; padding-left: 1rem;width: var( --mnu-width ); }
+
+
+</style>
+</head>
+<body>
+
+<nav id="navMenu" >
+
+	<header id="hdrTitle" >
+
+		<h2 style=vertical-align:middle; >
+
+			<a href="https://glitch.com/~honeybee-viewer-lt-2020-05" target="_top" title="Source code on Glitch">
+				<img width="18" src="https://cdn.glitch.com/2250d667-1452-448b-8cd3-e0bdfd5adb3c%2Fglitch-icon.svg" >
+			</a>
+
+			<a href="https://github.com/ladybug-tools/honeybee-viewer/tree/master/viewer-lt" target=_top title="Source code on GitHub" >
+				<img src=https://cdn.glitch.com/7af242e2-0cf2-4179-8c41-b2f2cb982c5a%2Fmark-github.svg >
+			</a>
+
+			<a href="" title="Click to reload this page" >
+				Honeybee Viewer
+
+				2020-05-19
+
+			</a>
+			&nbsp;
+			<span class="info" >&#x24d8;<span id=divDescription class="infotooltip" >
+				View Honeybee and Dragonfly Schema files in 3D
+			</span></span>
+
+		</h2>
+
+	</header>
+
+
+	<div id=divNavFilesHoneybee ></div>
+
+	<div id=divNavFilesDragonfly ></div>
+
+	<div>
+		<hr>
+		<p>
+			<center title="go to top of menu" ><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >
+			<img src=https://cdn.glitch.com/7af242e2-0cf2-4179-8c41-b2f2cb982c5a%2Fspider.ico width=16 ></a>
+			</center>
+		</p>
+
+	</div>
+
+</nav>
+
+<main>
+
+
+	<div class="glitch-embed-wrap" style="height: 80vh; overflow: hidden; width: 100%; resize: both; ">
+
+		<iframe id="ifr"
+		src="honeybee-viewer-lt.html"
+		title="honeybee-viewer-lt-2020-05-03 on Glitch"
+		style="height: 100%; width: 100%; border: 0;">
+		</iframe>
+
+
+	</div>
+
+	<p>Sample files are displayed in a resizable iframe
+
+	<span style=float:right; >
+		<button class=ftrButton onclick=openInNewTab() ><img width=32 src=https://cdn.glitch.com/7af242e2-0cf2-4179-8c41-b2f2cb982c5a%2Ficon-external-link.svg ></button>
+	</span>
+
+	</p>
+</main>
+
+
+<script>
+
+const urlNewTab = "https://www.ladybug.tools";
+
+
+init();
+
+function init() {
+
+	
+
+	getFilesSpiderGbxmlSamples()
+
+}
+
+
+
+function getFilesSpiderGbxmlSamples () {
+
+	const urlApiSpiderGbxmlSamples = "https://api.github.com/repos/ladybug-tools/spider/git/trees/master?recursive=1"
+	
+	requestFile( urlApiSpiderGbxmlSamples, onLoadSpiderSamples );
+
+}
+
+
+
+function onLoadSpiderSamples( response ) {
+
+	const json = JSON.parse( response );
+	console.log( "json", json );
+
+	let files = json.tree
+		.filter( file => file.type === "blob" )
+		.map( file => file.path )
+		.filter( file => file.includes( "gbxml-sample-files/" ) && file.endsWith( ".xml" )  )
+		.filter( file => ! file.includes( "index" ) && ! file.includes( "readme" ) )
+		.map( file => file.slice( file.indexOf( "/" ) + 1 ) );
+	console.log( 'files', files );
+
+	const folders = [];
+
+	const htm = files.map ( ( path, index )  => {
+
+		const strings = path.split( "/" )
+		const folder = strings[ 0 ];
+
+		let str = "";
+
+		// if ( ! folders.includes( folder ) ) {
+
+		// 	folders.push( folder );
+		// 	str = `<h3>${ folder }</h3>`;
+
+		// }
+
+		const url = "https://github.com/ladybug-tools/honeybee-schema/blob/master/samples/";
+		const urlCdn = "https://cdn.jsdelivr.net/gh/ladybug-tools/honeybee-schema/samples/";
+		urlTop = "https://ladybug.tools/honeybee-viewer/viewer-lt/v-2020-05-19/honeybee-viewer-lt.html#" + urlCdn;
+
+		return `
+		${ str }
+		<div>
+			<a href="${ url }${ path }" title="Source code on GitHub" >
+				<img src=https://cdn.glitch.com/7af242e2-0cf2-4179-8c41-b2f2cb982c5a%2Fmark-github.svg ></a>
+			${ index } <a href="#${ urlCdn }${ path }" >${ strings.pop() }</a>
+			<a href="${ urlTop }${ path }" target="_blank">
+				<img width=16 src=https://cdn.glitch.com/7af242e2-0cf2-4179-8c41-b2f2cb982c5a%2Ficon-external-link.svg ></a>
+
+		</div>`
+
+	} ).join( "" );
+
+	divNavFilesHoneybee.innerHTML = `
+	<details>
+		<summary>Honeyee Schema Sample Files</summary>
+		${ htm }
+	</details>`;
+
+}
+
+
+
+
+
+
+function openInNewTab() {
+
+	const url = "https://www.ladybug.tools/";
+
+	window.location.href = url + location.hash;
+
+}
+
+
+
+function requestFile( url, callback ) {
+
+	xhr = new XMLHttpRequest();
+	xhr.open( 'GET', url, true );
+	xhr.onerror = ( xhr ) => console.log( 'error:', xhr  );
+	//xhr.onprogress = ( xhr ) => console.log( 'bytes loaded:', xhr.loaded );
+	xhr.onload = ( xhr ) => callback( xhr.target.response );
+	xhr.send( null );
+
+}
+
+</script>
+</body>
+</html>

@@ -86,7 +86,7 @@ var PIN = {} || PIN;
 var PFO = {} || PFO;
 
 
-GBX.parseFile = function( gbxml )  {
+GBX.parseFile = function ( gbxml ) {
 	//console.log( 'gbxml', gbxml );
 
 	//if ( !gbxml || gbxml.includes( "xmlns" ) === false ) { return; }
@@ -286,14 +286,14 @@ GBX.getSurfaceMesh = function( arr, index, holes ) {
 
 	} else if ( arr.length === 12 && holes.length === 0 ) {
 
-			points = [
+		points = [
 
-				v( arr.slice( 0, 3 ) ), v( arr.slice( 3, 6 ) ), v( arr.slice( 6, 9 ) ),
-				v( arr.slice( 0, 3 ) ),  v( arr.slice( 6, 9 ) ), v( arr.slice( 9, 12 ) )
+			v( arr.slice( 0, 3 ) ), v( arr.slice( 3, 6 ) ), v( arr.slice( 6, 9 ) ),
+			v( arr.slice( 0, 3 ) ),  v( arr.slice( 6, 9 ) ), v( arr.slice( 9, 12 ) )
 
-			];
+		];
 
-			mesh = GBX.getBufferGeometry( points, color );
+		mesh = GBX.getBufferGeometry( points, color );
 
 	} else {
 

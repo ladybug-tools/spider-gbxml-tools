@@ -176,29 +176,35 @@ MNU.toggleDetailsOpen = function( target = navMenu ) {
 
 //////////
 
-MNU.showFps = function(){
+MNU.showFps = function () {
 
-	const script = document.body.appendChild( document.createElement('script') );
+	const script = document.head.appendChild( document.createElement( "script" ) );
+	script.onload = () => {
 
-	script.onload = function() {
+		const stats = new Stats();
+		const sts = document.body.appendChild( stats.dom );
+		sts.style.left = "";
+		sts.style.right = "0px";
+		requestAnimationFrame( function loop () {
 
-		MNU.stats = new Stats();
+			stats.update(); requestAnimationFrame( loop );
 
-		document.body.appendChild( MNU.stats.dom );
-
-		loop();
+		} );
 
 	};
 
-	script.src = 'https://cdn.jsdelivr.net/gh/mrdoob/stats.js@master/build/stats.min.js';
+	script.src = "https://raw.githack.com/mrdoob/stats.js/master/build/stats.min.js";
 
 
-	function loop(){
-
-		MNU.stats.update();
-		requestAnimationFrame( loop );
-
-	}
+	const render = THR.renderer.info.render;
+	const divRendererInfo = document.body.appendChild( document.createElement( "div" ) );
+	divRendererInfo.style.cssText = "background-color: white; padding: 1ch; position: absolute; right: 0; top: 5rem;";
+	divRendererInfo.innerHTML = `
+	Renderer Info<br>
+	Calls: ${render.calls }<br>
+	Lines: ${ render.lines }<br>
+	Triangles: ${render.triangles.toLocaleString() }<br>
+	`;
 
 };
 
