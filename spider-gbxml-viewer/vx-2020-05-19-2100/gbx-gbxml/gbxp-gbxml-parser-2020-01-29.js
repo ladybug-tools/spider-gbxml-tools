@@ -32,6 +32,11 @@ GBX.parseResponse = function ( response ) {
 
 	GBX.timeStart = performance.now();
 
+	scene.remove( GBX.meshGroup );
+
+	GBX.meshGroup = new THREE.Group();
+	GBX.meshGroup.name = 'GBX.meshGroup';
+
 	GBX.string = response.replace( /[\t\n\r]/gm, "" );
 	//console.log( 'GBX.string', GBX.string );
 
@@ -39,9 +44,21 @@ GBX.parseResponse = function ( response ) {
 
 	const meshes = GBX.getSurfaceMeshes( GBX.surfaces );
 	//console.log( 'meshes', meshes );
+ 
 
-	GBX.addMeshes( meshes );
+	//GBX.addMeshes( meshes );
 
+	GBX.meshGroup.add( ...meshes );
+	
+	
+	
+	zoomObjectBoundingSphere( GBX.meshGroup );
+	
+	console.log( '', ( performance.now() - GBX.timeStart ).toLocaleString() );
+	
+	divLog.innerHTML = `time to load: ${ ( ( performance.now() - GBX.timeStart ) / 1000 ).toLocaleString() } seconds`
+	
+	scene.add( GBX.meshGroup );
 
 
 };
@@ -49,19 +66,7 @@ GBX.parseResponse = function ( response ) {
 
 GBX.addMeshes = function ( meshes ) {
 
-	scene.remove( GBX.meshGroup );
 
-	GBX.meshGroup = new THREE.Group();
-	GBX.meshGroup.name = 'GBX.meshGroup';
-	GBX.meshGroup.add( ...meshes );
-
-	scene.add( GBX.meshGroup );
-
-	zoomObjectBoundingSphere( GBX.meshGroup );
-
-	console.log( '', ( performance.now() - GBX.timeStart ).toLocaleString() );
-
-	divLog.innerHTML = `time to load: ${ ( ( performance.now() - GBX.timeStart ) / 1000 ).toLocaleString() } seconds`
 
 };
 
@@ -142,6 +147,8 @@ GBX.getSurfaceMeshes = function( surfaces ) {
 
 	} );
 
+	
+
 	return meshes;
 
 };
@@ -201,7 +208,19 @@ GBX.parseOpenings = function ( verticesArray ) {
 
 GBX.getShape3d = function ( vertices = [], holes = [], color = 0xff0000 ) {
 
+	if ( vertices.length < 3 ) { console.log( "vs", vertices );}
+
 	const tempVertices = GBX.getTempVertices( vertices );
+
+	const area = THREE.ShapeUtils.area( tempVertices )
+
+	if ( area === 0 ) {
+
+		console.log( 'area', area, tempVertices );
+
+		//return  ( new THREE.Mesh() ); 
+
+	}
 
 	const shape = new THREE.Shape( tempVertices );
 
@@ -210,6 +229,7 @@ GBX.getShape3d = function ( vertices = [], holes = [], color = 0xff0000 ) {
 		holes.forEach( hole => {
 
 			shape.holes.push( hole.path );
+			
 			vertices = vertices.concat( hole.vertices.reverse());
 			//console.log( 'vertices', vertices );
 
@@ -218,35 +238,37 @@ GBX.getShape3d = function ( vertices = [], holes = [], color = 0xff0000 ) {
 	}
 
 	const shapeGeometry = new THREE.ShapeGeometry( shape );
-	//console.log( 'shapeGeometry', shapeGeometry );
 
+	shapeGeometry.vertices = vertices;
+
+	//bufferGeometry = new THREE.BufferGeometry().fromGeometry( shapeGeometry )
 
 	//const material = new THREE.MeshNormalMaterial( { opacity: 0.7, side: THREE.DoubleSide, transparent: true, wireframe: false } );
 	const material = new THREE.MeshPhongMaterial( { color: color, opacity: 0.9, side: THREE.DoubleSide, transparent: true, wireframe: false } );
 
+	
 	const mesh = new THREE.Mesh( shapeGeometry, material );
+	// const box = new THREE.Box3().setFromObject(mesh);
+	// const size = new THREE.Vector3();
+	
+	// box.getSize(size);
 
-	const box = new THREE.Box3().setFromObject(mesh);
-	const size = new THREE.Vector3();
-
-	box.getSize(size);
-
-	mesh.geometry.faceVertexUvs[0].forEach( fvUvs => {
-		fvUvs.forEach(fvUv => {
-			fvUv.x = (fvUv.x - box.min.x) / size.x; fvUv.y = 1 - (fvUv.y - box.min.y) / size.y;
-		});
-	} );
-
-	mesh.geometry.vertices = vertices;
-
-
+	// mesh.geometry.faceVertexUvs[0].forEach( fvUvs => {
+	// 	fvUvs.forEach(fvUv => {
+	// 		fvUv.x = (fvUv.x - box.min.x) / size.x; fvUv.y = 1 - (fvUv.y - box.min.y) / size.y;
+	// 	});
+	// } );
+	
+	
 	mesh.castShadow = true;
 	mesh.receiveShadow = true;
 
 	mesh.geometry.computeVertexNormals();
 	mesh.geometry.computeFaceNormals();
 	mesh.geometry.computeBoundingBox();
-	//mesh.geometry.computeBoundingSphere();
+	mesh.geometry.computeBoundingSphere();
+
+	//console.log( "mgeo", mesh.geometry);
 	mesh.updateMatrixWorld();
 
 	//scene.add( mesh );
@@ -259,7 +281,12 @@ GBX.getShape3d = function ( vertices = [], holes = [], color = 0xff0000 ) {
 
 GBX.getTempVertices = function ( vertices ) {
 
-	const triangle = new THREE.Triangle( vertices[ 2 ], vertices[ 1 ], vertices[ 0 ] );
+	let triangle = new THREE.Triangle( vertices[ 2 ], vertices[ 1 ], vertices[ 0 ] );
+	const area = triangle.getArea()
+	if ( area === 0 ) { 
+		//console.log( "", area, vertices );
+		//triangle = new THREE.Triangle( vertices[ 3 ], vertices[ 1 ], vertices[ 0 ] );
+	}
 	const normal = triangle.getNormal( new THREE.Vector3() );
 	const baseNormal = new THREE.Vector3( 0, 0, 1 );
 	const quaternion = new THREE.Quaternion().setFromUnitVectors( normal, baseNormal );

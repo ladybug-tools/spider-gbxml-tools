@@ -147,7 +147,7 @@ footer {
 //urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/pittsburg-airport.zip";
 //urlDefaultFile = "https://cdn.jsdelivr.net/gh/GreenBuildingXML/Sample-gbXML-Files@master/gbXML_TRK.xml";
 //urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/aspen-co-resort-retail.xml"
-urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/samples-2/Berlin_Office_SAM2017.xml"
+urlDefaultFile = "https://GreenBuildingXML.github.io/Sample_gbXML_Files/ChapelHillOffice.xml"
 
 aSource.href = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer/vx-2020-01-29/gbx-gbxml";
 imgIcon.src = "https://pushme-pullyou.github.io/github-mark-32.png";
@@ -291,31 +291,31 @@ function onLoadXml( xhr ) {
 function zoomObjectBoundingSphere( obj = GBX.meshGroup ) {
 	//console.log( "obj", obj );
 
-	center = new THREE.Vector3( 0, 0, 0 );
-	radius=  50;
+	let center = new THREE.Vector3( 0, 0, 0 );
+	let radius =  50;
 
 	const bbox = new THREE.Box3().setFromObject( obj );
-	//console.log( 'bbox', bbox );
+	// //console.log( 'bbox', bbox );
 
 	if ( bbox.max.x !== Infinity ) {
 
 		const sphere = bbox.getBoundingSphere( new THREE.Sphere() );
+		console.log( "sphere", sphere );
 
 		center = sphere.center;
 		radius = sphere.radius;
-		//console.log( "sphere", sphere )
+
 	}
 
-	controls.target.copy( center ); // needed because model may be far from origin
-	controls.maxDistance = 20 * radius;
 
-	delta = camera.position.clone().sub( controls.target ).normalize();
+
+	delta = camera.position.clone().sub( center ).normalize();
 	//console.log( 'delta', delta );
 
-	position = controls.target.clone().add( delta.multiplyScalar( 2 * radius ) );
+	position = center.clone().add( delta.multiplyScalar( 2 * radius ) );
 	//console.log( 'position', position );
 
-	distance = controls.target.distanceTo( camera.position );
+	//distance = controls.target.distanceTo( camera.position );
 
 	//camera.zoom = distance / ( 2 * radius ) ;
 
@@ -324,33 +324,37 @@ function zoomObjectBoundingSphere( obj = GBX.meshGroup ) {
 	camera.far = 50 * radius; //2 * camera.position.length();
 	camera.updateProjectionMatrix();
 
-	axesHelper.position.copy( center );
+		// console.log( "center", center );
+	controls.target.set( center.x, center.y, center.z ); // needed because model may be far from origin
+	controls.maxDistance = 20 * radius;
 
-	groundHelper.position.copy( center );
-	groundHelper.position.z = -1;
+	// axesHelper.position.copy( center );
 
-	if ( lightDirectional ) {
+	// groundHelper.position.copy( center );
+	// groundHelper.position.z = -1;
 
-		lightDirectional.position.copy( center.clone().add(
-			new THREE.Vector3( - 1.5 * radius, 1.5 * radius, 1.5 * radius ) ) );
-		lightDirectional.shadow.camera.scale.set( 0.2 * radius, 0.2 * radius, 0.01 * radius );
+	// if ( lightDirectional ) {
 
-		lightDirectional.target = axesHelper
+	// 	lightDirectional.position.copy( center.clone().add(
+	// 		new THREE.Vector3( - 1.5 * radius, 1.5 * radius, 1.5 * radius ) ) );
+	// 	lightDirectional.shadow.camera.scale.set( 0.2 * radius, 0.2 * radius, 0.01 * radius );
 
-		scene.remove( cameraHelper );
-		cameraHelper = new THREE.CameraHelper( lightDirectional.shadow.camera );
-		scene.add( cameraHelper );
+	// 	lightDirectional.target = axesHelper
 
-	}
+	// 	scene.remove( cameraHelper );
+	// 	cameraHelper = new THREE.CameraHelper( lightDirectional.shadow.camera );
+	// 	scene.add( cameraHelper );
 
-	let event = new Event( "onresetthree", {"bubbles": true, "cancelable": false, detail: true } );
+	// }
 
-	//window.addEventListener( "onrresetthree", doThings, false );
+	// let event = new Event( "onresetthree", {"bubbles": true, "cancelable": false, detail: true } );
 
-	// listening: or-object-rotation-xx.js
-	// listening: dss-display-scene-settings-xx.js
+	// //window.addEventListener( "onrresetthree", doThings, false );
 
-	window.dispatchEvent( event );
+	// // listening: or-object-rotation-xx.js
+	// // listening: dss-display-scene-settings-xx.js
+
+	// window.dispatchEvent( event );
 
 };
 

@@ -135,7 +135,7 @@ function getFilesSpiderGbxmlSamples () {
 function onLoadSpiderSamples( response ) {
 
 	const json = JSON.parse( response );
-	console.log( "json", json );
+	//console.log( "json", json );
 
 	let files = json.tree
 		.filter( file => file.type === "blob" )
@@ -206,7 +206,7 @@ function getFilesGbxmlOrgSamples () {
 function onLoadGbxmlOrgSamples( response ) {
 
 const json = JSON.parse( response );
-console.log( "json", json );
+//console.log( "json", json );
 
 let files = json.tree
 	.filter( file => file.type === "blob" )
