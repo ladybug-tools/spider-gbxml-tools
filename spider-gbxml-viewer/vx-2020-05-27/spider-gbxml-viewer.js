@@ -12,7 +12,7 @@ const version = "2020-05-27";
 urlGbxmlDefault = "https://www.ladybug.tools/spider/gbxml-sample-files/samples-2/Berlin_Office_SAM2017.xml";
 //urlGbxmlDefault = "https://GreenBuildingXML.github.io/Sample_gbXML_Files/ChapelHillOffice.xml"
 
-aGithubHref = "https://github.com/ladybug-tools/spider-gbxml-tools/";
+aGithubHref = "https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/spider-gbxml-viewer";
 
 const description = `
 Online interactive gbXML in 3D viewer in your browser 
