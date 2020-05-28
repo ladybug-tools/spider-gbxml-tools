@@ -78,11 +78,13 @@ FRX.onLoad = function () {
 	THR.updateGroup(GBX.meshGroup); 
 
 	divFileData.innerHTML = `
+	<p>
 		name: ${ files.files[ 0 ].name }<br>
 		size: ${ files.files[ 0 ].size.toLocaleString() } bytes<br>
 		type: ${ files.files[ 0 ].type }<br>
 		modified: ${files.files[ 0 ].lastModifiedDate.toLocaleDateString() }<br>
-		time to load: ${ ( performance.now() - FRX.timeStart ).toLocaleString() } ms`;
+		time to load: ${ ( performance.now() - FRX.timeStart ).toLocaleString() } ms
+	</p>`;
 
 	console.log( '', files.files );
 	console.log( '', event );

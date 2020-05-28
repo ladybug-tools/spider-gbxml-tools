@@ -8,7 +8,7 @@
 	<meta name="description" content="Part of a series of online interactive AEC viewers designed to be forked, hacked and remixed  with real-time interactive 3D graphics in your browser using the WebGL and the Three.js JavaScript library" />
 	<meta name="keywords" content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" />
 
-	<title>Three Modular</title>
+	<title>Spider gbXML Viewer</title>
 
 	<link rel="stylesheet" href="./style-2020-05-27.css">
 
@@ -62,7 +62,7 @@
 
 			</header>
 
-			<p>Click or touch a panel to view its details. Click &sdotb; icon to display all the panels.</p>
+			<p>Click or touch a surface to view its details. Click &sdotb; icon to display all the surfaces.</p>
 
 			<details id=detFile ontoggle=FRXdivFileReaderXml.innerHTML=FRX.init(); >
 
@@ -89,14 +89,16 @@
 				<summary class="sumPrimary gmd-1" title="Browse the deta in the JSON file" >data menu</summary>
 				
 				<div id=GXDdivData ></div>
-
+					<p>
+						<i>We need to decide what data should appear here.</i>
+					</p>	
 				<div id=GXDdivSurfaceData >
+
+				
 					<p>
 						Selected surface data will appear here when a surface in the 3D model is clicked on or touched.
 					</p>
-					<p>
-						We need to decide what data should appear here.
-					</p>
+
 				</div>
 
 				<hr>
@@ -112,7 +114,7 @@
 
 	</details>
 
-	<div id="divPopUp" class="gmd-2">When you touch a panel,<br>the rotation will stop<br>and its details will appear here </div>
+	<div id="divPopUp" class="gmd-2">When you touch a surface,<br>the rotation will stop<br>and its details will appear here </div>
 
 	<footer>
 
