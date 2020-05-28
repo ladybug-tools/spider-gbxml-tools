@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" />
+	<meta name="description" content="Part of a series of online interactive AEC viewers designed to be forked, hacked and remixed  with real-time interactive 3D graphics in your browser using the WebGL and the Three.js JavaScript library" />
+	<meta name="keywords" content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" />
+
+	<title>Three Modular</title>
+
+	<link rel="stylesheet" href="./style-2020-05-27.css">
+
+</head>
+
+<body>
+	<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r116/build/three.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r116/examples/js/controls/OrbitControls.js"></script>
+
+	<script src="js/frx-file-reader-xml-2020-05-27.js"></script>
+	<script src="js/thr-threejs-aec-2020-05-27.js"></script>
+	<script src="js/ray-raycaster-sam-2020-05-27.js"></script>
+
+	<script src="js/hrt-heart-2020-05-27.js"></script>
+	<script src="js/scc-screen-ccapture-2020-05-23.js"></script>
+
+	<script src="gbx-gbxml-parser-2020-05-27.js"></script>
+	<script src="gxv-gbxml-view-2020-05-27.js"></script>
+	<script src="gxd-gbxml-data-2020-05-27.js"></script>
+	
+
+
+
+	<details id=detNavMenu >
+
+		<summary id=sumNavMenu class="sumPrimary gmd-1">show || hide menu</summary>
+
+		<nav id="navMenu" class="gmd-2">
+
+			<header id="hdrTitle">
+
+				<h2>
+
+					<a id=aGlitch class=aButton href="" target="_top" title="Source code on Glitch">
+						<img width="18" src="https://cdn.glitch.com/2250d667-1452-448b-8cd3-e0bdfd5adb3c%2Fglitch-icon.svg">
+					</a>
+
+					<a id=aGithub href="" target="_top" title="Source code on GitHub">
+						<img src="https://cdn.glitch.com/7af242e2-0cf2-4179-8c41-b2f2cb982c5a%2Fmark-github.svg?v=1589095846856">
+					</a>
+
+					<a id=aTitle href="" title="Click to reload this page">
+						Spider gbXML Viewer
+					</a>
+					&nbsp;
+					<span class="info"><img width=24 style=opacity:0.5; src="https://cdn.glitch.com/7af242e2-0cf2-4179-8c41-b2f2cb982c5a%2Fnoun_Information_585560.svg"> <span id="divDescription" class="infoTooltip gmd-5">
+
+					</span></span>
+
+				</h2>
+
+			</header>
+
+			<p>Click or touch a panel to view its details. Click &sdotb; icon to display all the panels.</p>
+
+			<details id=detFile ontoggle=FRXdivFileReaderXml.innerHTML=FRX.init(); >
+
+				<summary class="sumPrimary gmd-1" title="Open files on your device: ">file menu</summary>
+
+				<div id="FRXdivFileReaderXml"></div>
+
+				<div id="divFileData"></div>
+
+				<div id="THRdivRenderStats"> </div>
+
+			</details>
+
+			<details id=detView ontoggle=GXVdivTypes.innerHTML=GXV.init() >
+
+				<summary class="sumPrimary gmd-1" title="View selected surfaces" >view menu</summary>
+
+				<div id=GXVdivTypes ></div>
+
+			</details>
+
+			<details id=detData  >
+
+				<summary class="sumPrimary gmd-1" title="Browse the deta in the JSON file" >data menu</summary>
+				
+				<div id=GXDdivData ></div>
+
+				<div id=GXDdivSurfaceData >
+					<p>
+						Selected surface data will appear here when a surface in the 3D model is clicked on or touched.
+					</p>
+					<p>
+						We need to decide what data should appear here.
+					</p>
+				</div>
+
+				<hr>
+
+			</details>
+
+			<br>
+
+			<center><img style=color:green; title="Single finger for single method!" height="32" width="32" 
+				src="../../assets/noun_buildings_1825113.svg"> </center>
+
+		</nav>
+
+	</details>
+
+	<div id="divPopUp" class="gmd-2">When you touch a panel,<br>the rotation will stop<br>and its details will appear here </div>
+
+	<footer>
+
+		<button onclick="THR.controls.reset();" title="reset the view" class="ftrButton"><img height=32 width=32 src="https://cdn.glitch.com/7af242e2-0cf2-4179-8c41-b2f2cb982c5a%2Fnoun_Home_3359355.svg"> </button>
+
+		<button onclick="THR.controls.autoRotate=!THR.controls.autoRotate" title="toggle the rotation" class=ftrButton>&circlearrowright;</button>
+
+		<button onclick="GXV.setAllVisible();" title="Show all surfaces" class=ftrButton>&sdotb;</button>
+
+		<button onclick="THR.setStats();" title="View frames per second and number of draw calls" class=ftrButton>fps</button>
+
+	</footer>
+
+
+	<script src="spider-gbxml-viewer.js"></script>
+
+	<script>
+		init(); // see script-sam-viewer.js
+
+		detNavMenu.open = window.innerWidth > 640;
+
+	</script>
+
+</body>
+
+</html>
