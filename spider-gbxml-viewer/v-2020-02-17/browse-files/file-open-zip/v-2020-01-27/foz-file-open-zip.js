@@ -52,7 +52,7 @@ FOZ.onLoadFile = function () {
 
 	FOZ.timeStart = performance.now();
 
-	FOZ.fileOpenZip( FO.data );
+	FOZ.fileOpenZip();
 
 };
 
