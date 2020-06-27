@@ -22,7 +22,7 @@
 
 </details>
 
-<details>
+<details open>
 
 <summary>Change Log</summary>
 
