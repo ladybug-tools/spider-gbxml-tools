@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+
+<meta charset = "utf-8">
+<meta name = "copyright" content ="Ladybug Tools authors" >
+<meta name = "date" content = "2019-10-21" >
+<meta name = "description" content = "Basic file that opens a gbXML file and displays it in 3D" >
+<meta name = "keywords" content = "gbXML,Three.js,WebGL,JavaScript,GitHub,FOSS" >
+<meta name = "version" content = "0.17.07-1dev cor" >
+<meta name = "viewport" content = "width=device-width, initial-scale=1" >
+
+<title>Spider gbXML Viewer Core 'Maevia'</title>
+
+<link rel = "canonical" href = "www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/" />
+<link rel = "license" href = "https://creativecommons.org/licenses/by/4.0/" >
+<link rel = "license" href = "https://opensource.org/licenses/MIT" >
+
+<style>
+
+	* { box-sizing: border-box; }
+
+	body { font: 11pt monospace; margin: 0; overflow: hidden; }
+
+	#divContents {  height: 100vh; width: 100vw; }
+
+	#divRendererInfo { position: absolute; left:1rem; top:1rem;}
+
+</style>
+
+<base href="https://www.ladybug.tools/spider-gbxml-tools/spider-gbxml-viewer/v-0-17-07/" >
+
+</head>
+
+<body>
+
+<!-- utility libraries -->
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js" ></script>
+
+<!-- Three.js -->
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r109/build/three.min.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r109/examples/js/controls/OrbitControls.js" ></script>
+
+<!-- Tootoo -->
+<script src = "fob-file-open-basic/fob-file-open-basic.js" ></script>
+
+<!-- Spider Three.js -->
+<script src = "core-thr-three/thr-threejs.js" ></script>
+<script src = "core-thr-three/thru-threejs-utilities.js" ></script>
+<script src = "core-thr-three/tdh-three-draw-helpers.js" ></script>
+
+<!-- Spider gbXML -->
+<script src = "core-gbx-gbxml/gbx-gbxml-parser.js" ></script>
+<script src = "core-gbx-gbxml/gbxu-gbxml-utilities.js" ></script>
+
+
+	<div id="divContents" ></div>
+
+	<div id="divRendererInfo" >
+
+		<!-- following not required -->
+
+		<div id="GBXdivMessage" >loading...</div>
+
+		<div id="FOBdivMessage" ></div>
+
+	</div>
+
+<script>
+
+
+FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/bilt-2019-template.zip";
+//FOB.urlDefaultFile = "https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml";
+//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/warwick-university-5k-surfaces.zip";
+//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/annapolis-md-single-family-residential-2016.xml"
+//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/zip/pittsburg-airport.zip";
+//FOB.urlDefaultFile = "https://cdn.jsdelivr.net/gh/GreenBuildingXML/Sample-gbXML-Files@master/gbXML_TRK.xml";
+
+
+init();
+THR.animate();
+
+function init() {
+
+	THR.getThreejs();
+
+	THRU.init();
+
+	GBX.init( GBXdivMessage );  // parameter not required
+
+	window.addEventListener ( "hashchange", FOB.onHashChange, false );
+
+	FOB.onHashChange( divContents );
+
+}
+
+</script>
+</body>
+</html>

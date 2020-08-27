@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Ascertain if a collection of points is water tight or manifold">
+	<meta name="keywords" content="JavaScript,GitHub,FOSS">
+	<meta name="date" content="2019-11-19">
+	<meta name="version" content="0.00.0">
+	<title></title>
+	<style>
+
+		* {
+			box-sizing: border-box;
+		}
+
+		:root {
+			font: 100% monospace;
+			--mnu-width: 22rem;
+			--screen-width: calc(100vw);
+			--headerHeight: 6rem;
+		}
+
+		html {
+			height: 100%;
+		}
+
+		body {
+			margin: 0;
+		}
+
+		a {
+			color: crimson;
+			text-decoration: none;
+		}
+
+		a:hover,
+		a:focus,
+		a:active {
+			background-color: yellow;
+			color: #aaa;
+			text-decoration: underline
+		}
+
+		button,
+		input[type=button] {
+			background-color: #ddd;
+			border: none;
+			color: #322;
+			cursor: pointer;
+			padding: 3px 5px;
+		}
+
+		button:hover {
+			background: #ccc;
+			color: #fff
+		}
+
+		button:active {
+			background: blue;
+			color: #fff
+		}
+
+		summary {
+			font-weight: bold;
+		}
+
+
+		.secMainContent {
+			margin: 0 auto;
+			max-width: 40rem;
+		}
+
+
+		#divMain {
+			border: 0px solid red;
+			height: 100%;
+			left: var(--mnu-width);
+			padding: 0 1rem;
+			position: absolute;
+			width: calc(100% - var(--mnu-width));
+		}
+
+
+		#expandButton {
+			height: 32px;
+			position: absolute;
+			left: var(--mnu-width);
+			transition: left 0.5s;
+			width: 32px;
+			z-index: 1;
+		}
+
+
+		#navMenu {
+			background-color: #eee;
+			height: 100%;
+			left: 0;
+			overflow: auto;
+			padding: 0 1rem;
+			position: fixed;
+			transition: left 0.5s;
+			top: 0;
+			width: var(--mnu-width);
+			z-index: 10;
+		}
+
+
+		#divContent.collapsed {
+			left: 0;
+			width: 100%;
+		}
+
+		#expandButton.collapsed {
+			left: 0;
+		}
+
+		#navMenu.collapsed {
+			left: calc(var(--mnu-width) * -1);
+			padding: 0;
+		}
+
+
+
+		@media all and (max-width: 640px) {
+
+			#divContents {
+				left: 0;
+				padding: 0 1rem;
+				width: 100%;
+			}
+
+			#expandButton {
+				bottom: 1rem;
+			}
+
+		}
+
+		@media all and (max-height: 640px) {
+
+			#divContents {
+				left: 0;
+				padding: 0 1rem;
+				width: 100%;
+			}
+
+			#expandButton {
+				bottom: 1rem;
+			}
+
+		}
+
+	</style>
+</head>
+
+<body>
+
+	<script src="gff-github-folder-files-dev-01.js"></script>
+
+	<button id="expandButton" onclick="toggleNavMenu();">☰</button>
+
+	<nav id="navMenu">
+
+		<header id="hdrTitle" ></header>
+
+
+		<details open>
+
+			<summary class="sumMenuTitle">gbXML samples menu</summary>
+
+			<div>
+
+				<p>gbXML files you can load, view and experiment with</p>
+
+				<div id=GFFdivGithubFoldersFiles></div>
+
+				<div id=GFFdivFileInfo></div>
+
+				<div id="GATdivGithubAccessToken"></div>
+				
+			</div>
+
+		</details>
+
+
+		<footer>
+
+			<hr>
+
+			<center title="hello! click me to go up to the top"><a href=javascript:navMenu.scrollTo(0,0); > ❦ </a></center>
+
+		</footer>
+
+	</nav>
+
+	<div id="divMain">
+
+		<section class="secMainContent">
+
+			<header id="hdrMainTitle"></header>
+
+			<main id="mainContent">
+
+				<div id=divContent ></div>
+
+			</main>
+
+			<footer>
+
+				<center title="hello! click me to go up to the top"><a href=javascript:navMenu.scrollTop=0; > ❦ </a></center>
+
+			</footer>
+
+		</section>
+
+	</div>
+
+
+	<script>
+
+
+		const urlSourceCode = "https://github.com/zzzzz/xxxxx.html";
+		const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-64.png";
+
+
+		init();
+
+
+		function init() {
+
+			hdrTitle.innerHTML = hdrMainTitle.innerHTML = getTitle();
+
+			GFFdivGithubFoldersFiles.innerHTML = GFF.getMenuGithubFoldersFiles();
+
+			if ( window.innerWidth < 640 || window.innerHeight < 640 ) {
+				toggleNavMenu();
+			}
+
+		}
+
+
+
+		function setIt() {
+
+			mainContents.innerHTML += `<p>${( performance.now() )} - Howdy! </p>`;
+
+		}
+
+
+
+		function getTitle() {
+
+			document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' );
+			const version = document.head.querySelector( "[ name=version ]" ).content;
+			const description = document.head.querySelector( "[ name=description ]" ).content;
+
+			const htm =
+				`
+				<h2>
+					<a href=${ urlSourceCode} target=_top title="Source code on GitLab" >
+						<img src=${ urlSourceCodeIcon} height=18 style=opacity:0.5; >
+					</a>
+
+					<a href="" title="Click to reload this page" >${ document.title} ${version}</a>
+				</h2>
+
+				<p>${ description}</p>
+			`;
+
+			return htm;
+
+		}
+
+
+		function toggleNavMenu() {
+
+			expandButton.classList.toggle( 'collapsed' );
+			navMenu.classList.toggle( 'collapsed' );
+			divContents.classList.toggle( 'collapsed' );
+
+		}
+
+
+	</script>
+</body>
+
+</html>
