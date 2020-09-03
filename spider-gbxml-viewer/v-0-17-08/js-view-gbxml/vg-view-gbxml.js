@@ -97,7 +97,6 @@ VG.setViewGbxml = function( target = VGdivReport ) {
 		</p>
 
 
-
 	`;
 
 	target.innerHTML = htm;
