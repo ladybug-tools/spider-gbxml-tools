@@ -4,10 +4,10 @@
 
 <meta charset = "utf-8" >
 <meta name = "copyright" content ="Ladybug Tools authors" >
-<meta name = "date" content = "2019-08-12" >
+<meta name = "date" content = "2020-10-09" >
 <meta name = "description" content = "Spider gbXML Tools" >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
-<meta name = "version" content = "0.03.01" >
+<meta name = "version" content = "0.03.02" >
 <meta name = "viewport" content = "width=device-width, initial-scale=1" >
 
 <title>Spider gbXML Tools</title>
@@ -52,6 +52,9 @@
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-07/thm-theme/thm-theme.js" ></script>
 <script src = "https://pushme-pullyou.github.io/tootoo14/js-14-07/tmp-template/tmp-template.js" ></script>
 
+
+<script src="https://ladybug.tools/spider-2020/lib/gbxml/mas-menu-app-switch-2020-10-09.js"></script>
+
 <script src = "" ></script>
 
 
@@ -64,6 +67,9 @@
 			<details open>
 
 			<summary class="sumMenuTitle" >Menu bar header</summary>
+
+
+				<div id="MASdivMenuAppSwitch" style="margin:1rem 0;" ></div>
 
 				<header>
 
@@ -195,13 +201,13 @@ THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-07/style.css";
 // For main menu header
 MNU.urlSourceCode ="https://github.com/ladybug-tools/spider-gbxml-tools/";
 
-MNU.homeText = "<img src='https://ladybug.tools/artwork/icons_bugs/ico/ladybug.ico' height=24 >";
-MNU.homeTitle ="Ladybug Tools: free computer applications that support environmental design and education";
-MNU.homeUrl = "https://www.ladybug.tools";
+MNU.homeText = ""; // "<img src='https://ladybug.tools/artwork/icons_bugs/ico/ladybug.ico' height=24 >";
+MNU.homeTitle = ""; // "Ladybug Tools: free computer applications that support environmental design and education";
+MNU.homeUrl = ""; // "https://www.ladybug.tools";
 
-MNU.repoText="<img src='https://ladybug.tools/artwork/icons_bugs/ico/spider.ico' height=24 >";
-MNU.repoTitle="Spider: 3D interactive analysis in your browser mostly written around the Three.js JavaScript library";
-MNU.repoUrl="https://www.ladybug.tools/spider/";
+MNU.repoText= ""; // "<img src='https://ladybug.tools/artwork/icons_bugs/ico/spider.ico' height=24 >";
+MNU.repoTitle= ""; // "Spider: 3D interactive analysis in your browser mostly written around the Three.js JavaScript library";
+MNU.repoUrl= ""; // "https://www.ladybug.tools/spider/";
 
 MNU.appText= ""; //"gbXML Tools";
 MNU.appTitle = ""; //"Tools to help you find, load, examine and edit gbXML files - in large numbers and sizes";
@@ -228,6 +234,8 @@ function init() {
 		divContents.setAttribute( 'scrolling', 'no' );
 
 	}
+
+	MASdivMenuAppSwitch.innerHTML = MAS.getAppSwitch();
 
 	THMdivMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
 
